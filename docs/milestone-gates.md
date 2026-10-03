@@ -30,4 +30,12 @@ criteria do not satisfy phase completion.
 
 M0 evals are deterministic validation-contract scenarios. Model-behavior evals,
 PR risk corpora and runner execution are inapplicable until their features exist.
-M0 ships a local release; remote publication requires a configured destination.
+Completion requires source and version tag pushed to the configured GitHub
+repository, a published GitHub release with notes and downloadable artifacts,
+and verification that the uploaded artifacts match the local checksums. A local
+tag/archive is a release candidate and does not close a phase.
+
+Deployable service milestones also require applicable OCI images to be built,
+tested, scanned and published with immutable digests. M0's CLI/contracts scope
+does not require an image. M1 introduces the API/worker deployment boundary and
+must include its container packaging before completion.
