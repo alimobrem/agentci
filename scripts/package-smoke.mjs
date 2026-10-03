@@ -1,15 +1,18 @@
-import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, rm, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { resolve, join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const archive = resolve(process.argv[2] ?? 'releases/agentci-0.1.0-m0.tgz');
+const expectedVersion = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')).version;
+const arguments_ = process.argv.slice(2);
+const offline = arguments_.includes('--offline');
+const archive = resolve(arguments_.find(argument => !argument.startsWith('--')) ?? `releases/agentci-${expectedVersion}.tgz`);
 const root = await mkdtemp(join(tmpdir(), 'agentci-package-'));
 try {
-  execFileSync('npm', ['install', '--offline', '--omit=dev', '--no-audit', '--no-fund', '--prefix', root, archive], { stdio: 'pipe' });
+  execFileSync('npm', ['install', ...(offline ? ['--offline'] : []), '--omit=dev', '--no-audit', '--no-fund', '--prefix', root, archive], { stdio: 'pipe' });
   const cli = join(root, 'node_modules/.bin/agentci');
   const version = execFileSync(cli, ['--version'], { encoding: 'utf8' }).trim();
-  if (version !== '0.1.0-m0') throw new Error('Unexpected packaged version');
+  if (version !== expectedVersion) throw new Error('Unexpected packaged version');
   await mkdir(join(root, 'project/specs'), { recursive: true });
   await writeFile(join(root, 'project/agentci.yaml'), `apiVersion: agentci.io/v1alpha1
 kind: AgentProject

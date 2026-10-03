@@ -11,37 +11,44 @@ OpenTelemetry, and deployment systems remain the integration foundations.
 
 ## Current state
 
-**M0 is released. M1 has not started.** AgentCI cannot review PRs yet.
+The M1 build adds deterministic semantic PR review, signed scoped webhook
+receipt, PostgreSQL evidence, Temporal processing, and advisory GitHub Checks.
+The private GitHub App is installed only on `alimobrem/agentci`. Trusted
+GitHub-hosted review reads immutable PR data and retains evidence before publishing
+Checks; it does not execute PR code with credentials.
 
-| Available in M0 | Planned next |
+| Available in M1 | Later milestones |
 | --- | --- |
-| Versioned project, requirement, finding, and evidence schemas | Semantic PR diff and deterministic risk rules |
-| CLI validation of explicit repository contracts | GitHub App and advisory PR Checks |
-| Local API skeleton for schema/document validation | Durable PR-review orchestration |
-| Source-linked implementation inventory and contract evals | Stored evidence tied to the exact PR head |
+| Versioned project, requirement, finding and evidence schemas | Behavioral eval execution (M2) |
+| Semantic diff for specs, models/config, explicit tools, configured permissions/policies, prompts and dependencies | Runtime tracing and production feedback |
+| Deterministic risk with verified versus inferred findings | Model-assisted review and controlled repair |
+| Signed webhook ingestion, immutable PR evidence and advisory Checks | Production SaaS and multi-tenant deployment |
 
-[M0 release and downloads](https://github.com/alimobrem/agentci/releases/tag/v0.1.0-m0)
+[M1 release and downloads](https://github.com/alimobrem/agentci/releases/tag/v0.2.0-m1)
 · [Implementation status](specs/implementation-status.md)
-· [Release verification](docs/releases/m0.md)
+· [M1 verification and completion state](docs/releases/m1.md)
+· [Deployment and operations](docs/m1-setup.md)
 
-M0 is a contracts prerelease. Its API is a local development skeleton without
-persistence or authentication. Model reviews, behavioral eval execution, OCI
-service images, and Temporal integration are not included.
+M1 reviews are advisory. A neutral Check reports a completed deterministic review,
+not behavioral correctness. Invalid or unsupported input fails explicitly.
+The local deployment is for a single repository; production Temporal and hosted
+API deployment are later work. See [STATUS.md](STATUS.md) for current milestone
+completion and publication status.
 
 ## Try the released CLI
 
-Requires **Node.js >=22.17** and npm. The compiled package needs production
+Requires **Node.js 26.10.0 (26.x)** and npm. The compiled package needs production
 dependencies only; it is downloaded from the GitHub release, not the npm registry.
 
 ```sh
-mkdir agentci-m0-demo
-cd agentci-m0-demo
+mkdir agentci-m1-demo
+cd agentci-m1-demo
 npm init -y
-npm install https://github.com/alimobrem/agentci/releases/download/v0.1.0-m0/agentci-0.1.0-m0.tgz
+npm install https://github.com/alimobrem/agentci/releases/download/v0.2.0-m1/agentci-0.2.0-m1.tgz
 npx agentci --version
 ```
 
-Expected version: `0.1.0-m0`. To validate an existing repository containing an
+Expected version: `0.2.0-m1`. To validate an existing repository containing an
 `agentci.yaml` project manifest:
 
 ```sh
@@ -68,8 +75,9 @@ repository validation, and status freshness checks. API integration tests need
 loopback access. A successful repository validation reports an inventory count;
 that count is not a count of implemented product features.
 
-See the [development guide](docs/development.md) for API usage, packaging, smoke
-tests, and status maintenance.
+See the [development guide](docs/development.md) for the M0 API and status
+maintenance. M1's separate control API and service packaging are in the
+[M1 setup guide](docs/m1-setup.md), with its [OpenAPI contract](specs/api/openapi.json).
 
 ## What counts as complete?
 
@@ -94,3 +102,8 @@ sequence. Product completion is separate from milestone completion.
 - [Release notes](CHANGELOG.md)
 
 License: not yet selected.
+
+Development uses [small tasks and measured feedback loops](docs/delivery-workflow.md).
+Run `npm run check:fast` for local feedback and `npm run delivery -- report` for
+timings. M1's first live [dogfood Check](docs/dogfood/m1-first-check.md) is verified;
+the milestone remains in progress until its release and distribution gates pass.

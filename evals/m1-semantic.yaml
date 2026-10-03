@@ -1,0 +1,64 @@
+revision: m1-semantic-v1
+threshold: 1.0
+scenarios:
+  - id: documentation
+    base: {}
+    head: { README.md: "Updated instructions." }
+    risk: low
+  - id: all-core-surfaces
+    base: {}
+    head:
+      specs/product.md: "Requirement prose changed."
+      models/route.json: '{"model":"new-model"}'
+      tools/restart.yaml: "name: restart"
+      permissions/rbac.yaml: "role: operator"
+      policies/approval.yaml: "requireApproval: false"
+      prompts/system.md: "New prompt."
+      package.json: '{"dependencies":{"library":"2.0.0"}}'
+    risk: high
+    categories: [specification, model, tool, permission, policy, prompt, dependency]
+  - id: production-write
+    base: {}
+    head:
+      permissions/production.yaml: |
+        apiVersion: agentci.io/v1alpha1
+        kind: PermissionManifest
+        permissions:
+          - id: deploy
+            environment: production
+            actions: [write]
+            resources: [cluster]
+    risk: high
+    verifiedRules: [production-mutation-added]
+  - id: secret-read
+    base: {}
+    head:
+      permissions/secrets.yaml: |
+        apiVersion: agentci.io/v1alpha1
+        kind: PermissionManifest
+        permissions:
+          - id: read-secret
+            environment: non-production
+            actions: [read]
+            resources: [secrets]
+    risk: high
+    verifiedRules: [secret-read-added]
+  - id: safety-removal
+    base:
+      specs/safety.yaml: "id: SAFE-1\ntitle: Approval\ntype: safety\nstatus: active\ntext: Require approval.\n"
+    head: {}
+    risk: high
+    verifiedRules: [active-safety-requirement-change]
+  - id: model-only
+    base: { models/route.json: '{"model":"old"}' }
+    head: { models/route.json: '{"model":"new"}' }
+    risk: medium
+    verifiedRules: [model-route-change]
+  - id: malformed-policy
+    base: {}
+    head: { policies/approval.yaml: "allow: [unterminated" }
+    expectFailure: true
+  - id: path-escape
+    base: {}
+    head: { ../outside: "untrusted" }
+    expectFailure: true

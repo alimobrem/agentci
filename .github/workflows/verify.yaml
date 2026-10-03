@@ -1,0 +1,109 @@
+name: Verify
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  workflow_call:
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  fast-feedback:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0, cache: npm }
+      - run: npm install --global npm@12.2.0
+      - run: npm ci
+      - run: npm run check:fast
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with: { name: fast-feedback, path: .agentci/artifacts/delivery/fast-latest.json, include-hidden-files: true }
+  contracts-and-runtime:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+        env:
+          POSTGRES_PASSWORD: agentci-ci-only
+          POSTGRES_DB: agentci
+        ports: [5432:5432]
+        options: --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 3s --health-retries 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0, cache: npm }
+      - run: npm install --global npm@12.2.0
+      - run: npm ci
+      - run: npm run check:fast
+      - run: npm run check:api:compat
+      - run: npm run check:workflows
+      - run: npm run build
+      - run: npm audit --audit-level=high
+      - name: Start isolated Temporal
+        run: docker run -d --name agentci-ci-temporal -p 127.0.0.1:7233:7233 temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e server start-dev --ip 0.0.0.0 --headless
+      - name: Wait for Temporal
+        run: |
+          node --input-type=module - <<'JS'
+          import {Connection} from '@temporalio/client';
+          let connected=false;
+          for(let i=0;i<30;i++) { try { const c=await Connection.connect({address:'127.0.0.1:7233',connectTimeout:'2 seconds'});await c.close();connected=true;break; } catch { await new Promise(r=>setTimeout(r,1000)); } }
+          if(!connected)throw new Error('Temporal unavailable');
+          JS
+      - run: npm run test:integration
+        env:
+          AGENTCI_TEST_DATABASE_URL: postgresql://postgres:agentci-ci-only@127.0.0.1:5432/agentci
+          AGENTCI_TEST_TEMPORAL_ADDRESS: 127.0.0.1:7233
+      - run: mkdir -p releases && npm pack --pack-destination releases && node scripts/package-smoke.mjs
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
+      - name: Build API image
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
+        with:
+          context: .
+          target: api
+          load: true
+          tags: agentci-api:ci
+          cache-from: type=gha,scope=agentci-api
+          cache-to: type=gha,scope=agentci-api,mode=max
+      - name: Build worker image
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
+        with:
+          context: .
+          target: worker
+          load: true
+          tags: agentci-worker:ci
+          cache-from: type=gha,scope=agentci-worker
+          cache-to: type=gha,scope=agentci-worker,mode=max
+      - name: Scan service images
+        run: |
+          mkdir -p scan-results
+          docker volume create agentci-trivy-cache
+          for role in api worker; do
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v agentci-trivy-cache:/root/.cache/trivy aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa image --scanners vuln --format json agentci-$role:ci > scan-results/$role.json
+            node scripts/check-scan.mjs scan-results/$role.json
+          done
+      - name: Verify compiled containers
+        run: node scripts/image-smoke.mjs ci > .agentci/artifacts/image-smoke.json
+      - name: Collect verification evidence
+        run: node scripts/verification-summary.mjs
+        env:
+          AGENTCI_CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: m1-verification
+          include-hidden-files: true
+          if-no-files-found: error
+          path: |
+            releases/*.tgz
+            scan-results/*.json
+            .agentci/artifacts/verification.json
+            .agentci/artifacts/delivery/fast-latest.json
+            .agentci/artifacts/api-compatibility.json
+            .agentci/artifacts/image-smoke.json

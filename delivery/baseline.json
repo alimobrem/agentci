@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-03T22:33:58.999Z",
+  "cohort": "baseline",
+  "note": "Before delivery-workflow optimization; current Node 26 / UBI 10 stack. Small baseline, not a causal delivery-speed estimate.",
+  "local": {
+    "sampledAt": "2026-10-03T22:22:09.293Z",
+    "node": "v26.10.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "command": "npm run check",
+    "samples": [
+      {
+        "seconds": 1.762391458,
+        "exitCode": 0
+      },
+      {
+        "seconds": 1.7555532919999999,
+        "exitCode": 0
+      },
+      {
+        "seconds": 1.722437125,
+        "exitCode": 0
+      }
+    ]
+  },
+  "ci": [
+    {
+      "runId": 37157836784,
+      "sourceCommit": "39f508e4cc1d9c93d62ef5e99f2555fa5249f8a0",
+      "url": "https://github.com/alimobrem/agentci/actions/runs/37157836784",
+      "jobSeconds": 140,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1
+        },
+        {
+          "name": "Initialize containers",
+          "seconds": 10
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0",
+          "seconds": 3
+        },
+        {
+          "name": "Run npm ci",
+          "seconds": 7
+        },
+        {
+          "name": "Run npm run check",
+          "seconds": 6
+        },
+        {
+          "name": "Run npm run build",
+          "seconds": 1
+        },
+        {
+          "name": "Run npm audit --audit-level=high",
+          "seconds": 0
+        },
+        {
+          "name": "Start isolated Temporal",
+          "seconds": 4
+        },
+        {
+          "name": "Wait for Temporal",
+          "seconds": 0
+        },
+        {
+          "name": "Run npm run test:integration",
+          "seconds": 5
+        },
+        {
+          "name": "Run mkdir -p releases && npm pack --pack-destination releases && node scripts/package-smoke.mjs",
+          "seconds": 10
+        },
+        {
+          "name": "Build service images",
+          "seconds": 25
+        },
+        {
+          "name": "Scan service images",
+          "seconds": 52
+        },
+        {
+          "name": "Verify compiled containers",
+          "seconds": 5
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 2
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0
+        },
+        {
+          "name": "Stop containers",
+          "seconds": 1
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0
+        }
+      ]
+    }
+  ]
+}

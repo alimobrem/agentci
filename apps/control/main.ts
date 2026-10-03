@@ -1,0 +1,19 @@
+import { Pool } from 'pg';
+import { runtimeConfig } from '../../packages/runtime/config.ts';
+import { Store } from '../../packages/storage/postgres.ts';
+import { createControlApi } from './server.ts';
+const config = await runtimeConfig(false);
+const pool = new Pool({ connectionString: config.databaseUrl, max: 10, connectionTimeoutMillis: 5000, query_timeout: 10_000 });
+const store = new Store(pool, config.organizationId, config.repository);
+await store.ready();
+const server = createControlApi(config, store);
+server.requestTimeout = 10_000; server.headersTimeout = 10_000;
+const port = Number(process.env.AGENTCI_PORT ?? 3000);
+if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('Invalid port');
+server.listen(port, '0.0.0.0', () => console.log(`AgentCI control API listening on ${port}`));
+let closing = false;
+for (const signal of ['SIGINT', 'SIGTERM'] as const) process.on(signal, () => {
+  if (closing) return; closing = true;
+  const deadline = setTimeout(() => { server.closeAllConnections(); process.exitCode = 1; }, 15_000); deadline.unref();
+  server.close(() => { clearTimeout(deadline); void pool.end(); });
+});

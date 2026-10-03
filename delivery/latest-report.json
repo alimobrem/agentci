@@ -1,0 +1,121 @@
+{
+  "baselineCiSeconds": 140,
+  "optimizedCiMedianSeconds": 126,
+  "optimizedSamples": 3,
+  "firstPassAttempts": 2,
+  "firstPassFailures": 0,
+  "preliminaryCiReductionPercent": 10,
+  "baselineLocalMedianSeconds": 1.7555532919999999,
+  "latestFastCheckSeconds": 0.437038584,
+  "tasks": [
+    {
+      "id": "M1-APP",
+      "status": "done",
+      "cycleSeconds": null,
+      "blockedSeconds": null
+    },
+    {
+      "id": "M1-WEBHOOK",
+      "status": "in-progress",
+      "cycleSeconds": null,
+      "blockedSeconds": null
+    },
+    {
+      "id": "M1-RESOLVE",
+      "status": "in-progress",
+      "cycleSeconds": null,
+      "blockedSeconds": null
+    },
+    {
+      "id": "M1-DIFF",
+      "status": "in-progress",
+      "cycleSeconds": null,
+      "blockedSeconds": null
+    },
+    {
+      "id": "M1-RISK",
+      "status": "in-progress",
+      "cycleSeconds": null,
+      "blockedSeconds": null
+    },
+    {
+      "id": "M1-EVIDENCE",
+      "status": "in-progress",
+      "cycleSeconds": null,
+      "blockedSeconds": null
+    },
+    {
+      "id": "M1-CHECK",
+      "status": "in-progress",
+      "cycleSeconds": null,
+      "blockedSeconds": null
+    },
+    {
+      "id": "DEV-FAST",
+      "status": "done",
+      "cycleSeconds": null,
+      "blockedSeconds": null
+    },
+    {
+      "id": "DEV-CACHE",
+      "status": "done",
+      "cycleSeconds": null,
+      "blockedSeconds": null
+    },
+    {
+      "id": "DEV-API",
+      "status": "done",
+      "cycleSeconds": null,
+      "blockedSeconds": null
+    },
+    {
+      "id": "DEV-GATES",
+      "status": "done",
+      "cycleSeconds": null,
+      "blockedSeconds": null
+    }
+  ],
+  "openReleaseGates": [
+    "scope",
+    "correctness",
+    "api",
+    "evals",
+    "reproducibility",
+    "runtime",
+    "safety",
+    "documentation",
+    "release-identity",
+    "publication",
+    "distribution",
+    "demo",
+    "closure",
+    "live-dogfood",
+    "api-image",
+    "worker-image"
+  ],
+  "interpretation": "Feedback-loop timings only; no historical task-delivery baseline. Caches, suite size and runner conditions affect results; small samples do not prove causality.",
+  "ciByCache": {
+    "cold": {
+      "samples": 1,
+      "medianSeconds": 204,
+      "reductionPercent": -45.714285714285715
+    },
+    "warm": {
+      "samples": 2,
+      "medianSeconds": 115.5,
+      "reductionPercent": 17.5
+    },
+    "unknown": {
+      "samples": 0,
+      "medianSeconds": null,
+      "reductionPercent": null
+    }
+  },
+  "quality": {
+    "firstPassFailures": 0,
+    "reopenedTasks": 0,
+    "recordedEscapedDefects": 0,
+    "recordedDogfoodDefects": 2,
+    "note": "Recorded events since tracking began; zero does not establish absence of unreported defects."
+  }
+}

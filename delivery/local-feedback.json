@@ -1,0 +1,44 @@
+{
+  "sampledAt": "2026-10-03T22:47:15.844Z",
+  "sourceCommit": "b35617b468496759bfe1b965f23b799cb510445c",
+  "dirty": true,
+  "node": "v26.10.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "samples": [
+    {
+      "mode": "sequential",
+      "seconds": 2.070874583,
+      "exitCode": 0
+    },
+    {
+      "mode": "parallel",
+      "seconds": 0.561219208,
+      "exitCode": 0
+    },
+    {
+      "mode": "sequential",
+      "seconds": 2.017007125,
+      "exitCode": 0
+    },
+    {
+      "mode": "parallel",
+      "seconds": 0.5369547090000005,
+      "exitCode": 0
+    },
+    {
+      "mode": "sequential",
+      "seconds": 2.0944965410000003,
+      "exitCode": 0
+    },
+    {
+      "mode": "parallel",
+      "seconds": 0.5701245840000001,
+      "exitCode": 0
+    }
+  ],
+  "sequentialMedianSeconds": 2.070874583,
+  "parallelMedianSeconds": 0.561219208,
+  "reductionPercent": 72.89941106974318,
+  "note": "Three alternating same-machine samples; same current local verification scope. Feedback improvement only, not overall task delivery acceleration. Integration, compatibility, packaging and release checks remain outside both commands."
+}

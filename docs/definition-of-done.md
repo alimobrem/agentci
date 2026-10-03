@@ -36,6 +36,7 @@ the published artifact checks pass.
 | Release identity | Source commit and immutable version/tag identify the tested build | Commit SHA, tag, build inputs, artifact checksums |
 | Publication | Source/tag pushed; GitHub release and required assets available | Repository URL, release URL, asset URLs and version |
 | Distribution | Downloaded release assets match manifest; installed download passes smoke checks | Downloaded checksums/digests and clean-install results |
+| Demo | Give the user a working demo of what shipped and how it works, including an applicable failure case | Version/digest, reproducible steps or recording, observed outputs and limitations |
 | Closure | Status and release evidence updated; intended source branch synced with remote | Completion record, remaining limitations and next milestone |
 
 CI runs on the intended release source are required for M1 onward. Preserve run
@@ -94,6 +95,7 @@ CI/scan evidence:
 Packages/images: URLs, checksums/digests, downloaded smoke results:
 GitHub release URL:
 Documentation verified:
+User demo: steps/recording, observed success and failure behavior:
 Exceptions, deferred work and limitations:
 Remaining blockers:
 Next milestone: not-started until current milestone is complete
@@ -102,3 +104,29 @@ Next milestone: not-started until current milestone is complete
 The user-facing completion report must identify the release and evidence, state
 material limitations, and say which milestone is next. Report partial progress as
 partial progress. A test count alone cannot support a claim of complete.
+
+At each milestone completion, present the demo to the user as part of the
+completion report. Explain the inputs, observable behavior, and outputs in plain
+language, with reproducible commands or a usable interface. Demonstrate the
+milestone's acceptance scenario using the released build; identify anything
+simulated. A local simulation cannot stand in for a live integration exit criterion.
+
+## M1 retrospective before M2
+
+After M1's release gates pass and the user receives the released-build demo,
+conduct the [M1 retrospective](retrospectives/m1.md) with the user before starting
+M2. Use recorded evidence to identify what worked, what caused delays or rework,
+and which improvements will help the next phases. Record concrete actions with
+owners, a target milestone and a measurable success criterion. Keep feedback-loop
+speed separate from end-to-end delivery time; missing historical data stays
+unknown. Carry agreed actions into the next milestone's task board and workflow.
+
+## Automated completion record
+
+Use `releases/m1-gates.json` and `npm run release:check -- --require-complete`
+for the M1 gate record. The command rejects incomplete gate sets, pending checks,
+missing evidence, changed file hashes and evidence for another release source.
+CI supplies a source-identified evidence bundle. This validates the record's
+integrity; it does not replace reviewing assertions or verifying external assets.
+See [delivery workflow and measurement](delivery-workflow.md). Speed comparisons
+never authorize skipping a mandatory phase gate.

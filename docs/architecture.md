@@ -1,19 +1,21 @@
 # Architecture choices
 
-2026-10-03; M0 implementation and recommendations for M1.
+2026-10-03; M0 release and M1 local candidate implementation.
 
-Implemented: TypeScript for CLI/API and shared validation, Node.js >=22.17,
+Implemented: TypeScript for CLI/API and shared validation, Node.js 26.10.0 (26.x),
 JSON Schema draft-07, Ajv with formats, and YAML parsing. Validators do not coerce,
 remove fields, insert defaults, or execute repository code. Strict core objects
 catch misspellings; namespaced extensions allow provider capabilities. Independent
 project/evidence schema versions start at v1alpha1.
 
-The API is a loopback-only development skeleton with health, schema retrieval,
-and document validation. Persistence, tenancy, authentication, webhooks, and GitHub
-publishing are future work. Implement those controls before hosting the service.
+The M0 API remains a development skeleton with health, schema retrieval and
+document validation. M1 adds a separate control API: signed GitHub webhooks,
+installation/repository allowlisting, durable receipt/outbox and bearer-protected
+evidence. PostgreSQL is bound to one organization/repository; shared multi-tenant
+hosting is not implemented. The API contract is `specs/api/openapi.json`.
 
-Recommended: Temporal for durable orchestration starting with M1 PR review.
-Discussed with the user; no deployment or SDK is added to M0. AgentCI needs retries,
+Adopted in the M1 local candidate: Temporal for durable PR-review orchestration.
+No deployment or SDK was part of the immutable M0 release. AgentCI needs retries,
 cancellation on new PR heads, parallel eval/reviewer steps, external CI completion,
 approval waits, and long-running incident/repair flows. Workflows carry immutable
 commit/artifact references; activities perform external I/O and must be idempotent
@@ -33,11 +35,13 @@ dependencies. It fits a smaller independent-job MVP. AgentCI's full workflow sco
 favors Temporal to avoid building multi-step durable coordination ourselves. This
 is an architecture assessment, not a performance benchmark.
 
-Remaining recommended defaults: PostgreSQL evidence metadata, GitHub App with
-least privilege and advisory checks first, deterministic structured policy rules
-with optional OPA integration, and separate provider/CI adapters. During M1, choose
-deployment packaging, database migrations, authentication, tenant model and
-artifact backend. M0 does not implement them.
+The M1 candidate uses PostgreSQL evidence metadata and an SQL initialization
+migration, least-privilege GitHub App adapters and advisory Checks, deterministic
+structured rules and explicit manifests, and non-root Red Hat UBI 10 minimal with official Node.js 26.10.0 API/worker images pinned by digest, as requested by the user. Review
+activities fetch exact Git objects through the official Octokit SDK without
+executing PR code. GHCR is the selected registry; publication and live App
+installation remain pending. See `docs/m1-setup.md` for local configuration,
+verification and current limits. OPA and object storage are not implemented.
 
 Sources: [Temporal workflows](https://docs.temporal.io/workflows),
 [Temporal TypeScript SDK](https://docs.temporal.io/develop/typescript),

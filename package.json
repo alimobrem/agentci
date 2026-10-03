@@ -1,11 +1,24 @@
 {
   "name": "agentci",
-  "version": "0.1.0-m0",
+  "version": "0.2.0-m1",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=22.17" },
-  "bin": { "agentci": "dist/cmd/agentci/main.js" },
-  "files": ["dist", "agentci.yaml", "specs", "docs", "README.md", "CHANGELOG.md"],
+  "engines": {
+    "node": ">=26.10.0 <27"
+  },
+  "bin": {
+    "agentci": "dist/cmd/agentci/main.js"
+  },
+  "files": [
+    "dist",
+    "agentci.yaml",
+    "specs",
+    "docs",
+    "README.md",
+    "CHANGELOG.md",
+    "deploy",
+    "npm-shrinkwrap.json"
+  ],
   "scripts": {
     "agentci": "node --import tsx cmd/agentci/main.ts",
     "api": "node --import tsx apps/api/main.ts",
@@ -15,16 +28,37 @@
     "eval:contracts": "node --import tsx scripts/eval-contracts.ts",
     "build": "tsc -p tsconfig.build.json && node scripts/build-assets.mjs",
     "prepack": "npm run build",
-    "check": "npm run typecheck && npm test && npm run eval:contracts && npm run agentci -- validate && npm run status -- --check"
+    "check": "npm run typecheck && npm test && npm run check:api && npm run eval:contracts && npm run eval:review && npm run agentci -- validate && npm run status -- --check && npm run check:delivery",
+    "control": "node dist/apps/control/main.js",
+    "worker": "node dist/apps/worker/main.js",
+    "check:api": "node --import tsx scripts/check-api.ts",
+    "test:integration": "node --import tsx --test tests/integration/*.test.ts",
+    "eval:review": "node --import tsx scripts/eval-review.ts",
+    "check:fast": "node scripts/check-fast.mjs",
+    "check:delivery": "node --import tsx scripts/delivery.ts check",
+    "check:api:compat": "node scripts/api-compatibility.mjs --self-test",
+    "delivery": "node --import tsx scripts/delivery.ts",
+    "release:check": "node --import tsx scripts/delivery.ts release",
+    "setup:github": "node scripts/github-app-setup.mjs",
+    "check:workflows": "node scripts/check-workflows.mjs"
   },
   "dependencies": {
-    "ajv": "^8.17.1",
+    "@octokit/auth-app": "^8.3.1",
+    "@octokit/rest": "^22.0.1",
+    "@temporalio/client": "^1.24.0",
+    "@temporalio/worker": "^1.24.0",
+    "@temporalio/workflow": "^1.24.0",
+    "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
-    "yaml": "^2.8.1"
+    "minimatch": "^10.2.6",
+    "pg": "^8.23.1",
+    "yaml": "^2.9.1"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
-    "tsx": "^4.20.0",
-    "typescript": "^5.9.0"
+    "@apidevtools/swagger-parser": "^13.1.0",
+    "@types/node": "^26.6.4",
+    "@types/pg": "^8.23.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
   }
 }

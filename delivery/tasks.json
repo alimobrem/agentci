@@ -1,0 +1,287 @@
+{
+  "schemaVersion": 1,
+  "milestone": "M1",
+  "trackingStartedAt": "2026-10-03T22:37:12.749908Z",
+  "note": "Existing work has unknown start time; do not invent historical cycle times. Log all future task transitions.",
+  "tasks": [
+    {
+      "id": "M1-APP",
+      "title": "Create and install the repository-scoped App",
+      "requirementIds": [
+        "SPEC-40-014"
+      ],
+      "status": "done",
+      "startedAt": null,
+      "completedAt": "2026-10-03T22:37:12.749908Z",
+      "acceptance": [
+        {
+          "text": "App is installed on only alimobrem/agentci with declared minimal permissions",
+          "status": "passed",
+          "evidence": [
+            "docs/dogfood/m1-first-check.md"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M1-WEBHOOK",
+      "title": "Signed durable webhook receipt",
+      "requirementIds": [
+        "SPEC-40-015"
+      ],
+      "status": "in-progress",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Signed events queue once; invalid signatures, wrong scopes and conflicting replays fail",
+          "status": "passed",
+          "evidence": [
+            "tests/control-api.test.ts",
+            "tests/integration/m1.test.ts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M1-RESOLVE",
+      "title": "Resolve immutable base/head Git objects",
+      "requirementIds": [
+        "SPEC-40-016"
+      ],
+      "status": "in-progress",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Exact commits and blob identity verified; malformed/truncated inputs fail; no PR code executes",
+          "status": "passed",
+          "evidence": [
+            "tests/github.test.ts",
+            "tests/review.test.ts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M1-DIFF",
+      "title": "Classify every v1 semantic surface",
+      "requirementIds": [
+        "SPEC-40-017",
+        "SPEC-40-021",
+        "SPEC-40-022",
+        "SPEC-40-023",
+        "SPEC-40-024",
+        "SPEC-40-025",
+        "SPEC-40-026",
+        "SPEC-40-027"
+      ],
+      "status": "in-progress",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Spec, model, explicit tools, configured policy/permissions, prompts and dependencies have golden fixtures",
+          "status": "passed",
+          "evidence": [
+            "evals/m1-semantic.yaml"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M1-RISK",
+      "title": "Deterministic risk and honest uncertainty",
+      "requirementIds": [
+        "SPEC-40-018"
+      ],
+      "status": "in-progress",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Verified production permission changes and inferred requirement weakening are distinguished",
+          "status": "passed",
+          "evidence": [
+            "tests/review.test.ts",
+            "evals/m1-semantic.yaml"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M1-EVIDENCE",
+      "title": "Immutable PR-specific evidence",
+      "requirementIds": [
+        "SPEC-40-020"
+      ],
+      "status": "in-progress",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Concurrent repeats reuse immutable evidence; different PRs stay distinct; unauthorized evidence GET fails",
+          "status": "passed",
+          "evidence": [
+            "tests/integration/m1.test.ts",
+            "docs/dogfood/m1-first-check.md"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M1-CHECK",
+      "title": "Advisory AgentCI check on every PR",
+      "requirementIds": [
+        "SPEC-40-019",
+        "SPEC-40-029"
+      ],
+      "status": "in-progress",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Real PR webhook publishes exact-head advisory Check with usable authenticated evidence",
+          "status": "passed",
+          "evidence": [
+            "docs/dogfood/m1-first-check.md"
+          ]
+        },
+        {
+          "text": "Reliable deployment covers every PR; retries and stale heads are verified",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "DEV-FAST",
+      "title": "Fast measured local feedback",
+      "requirementIds": [
+        "SPEC-2.1-005"
+      ],
+      "status": "done",
+      "startedAt": null,
+      "completedAt": "2026-10-03T23:07:33.183Z",
+      "acceptance": [
+        {
+          "text": "All existing local verification remains in the fast runner; failures return nonzero",
+          "status": "passed",
+          "evidence": [
+            "delivery/ci-evidence.json"
+          ]
+        },
+        {
+          "text": "Repeated same-machine benchmark recorded with scope and sample limits",
+          "status": "passed",
+          "evidence": [
+            "delivery/local-feedback.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "DEV-CACHE",
+      "title": "Cached full CI without skipping checks",
+      "requirementIds": [
+        "SPEC-2.1-005"
+      ],
+      "status": "done",
+      "startedAt": null,
+      "completedAt": "2026-10-03T23:07:33.663Z",
+      "acceptance": [
+        {
+          "text": "Image cache and shared scan database reduce repeated work",
+          "status": "passed",
+          "evidence": [
+            "delivery/ci-evidence.json"
+          ]
+        },
+        {
+          "text": "Cold and warm successful CI measurements preserve full verification",
+          "status": "passed",
+          "evidence": [
+            "delivery/runs/37159885979-attempt-2.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "DEV-API",
+      "title": "Shared fixtures and API compatibility",
+      "requirementIds": [
+        "SPEC-40-015",
+        "SPEC-40-020"
+      ],
+      "status": "done",
+      "startedAt": null,
+      "completedAt": "2026-10-03T23:07:34.146Z",
+      "acceptance": [
+        {
+          "text": "All control operations exercise responses against the shared contract",
+          "status": "passed",
+          "evidence": [
+            "delivery/ci-evidence.json"
+          ]
+        },
+        {
+          "text": "oasdiff checks compatibility against the documented candidate baseline",
+          "status": "passed",
+          "evidence": [
+            "delivery/ci-evidence.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "DEV-GATES",
+      "title": "Automated completion evidence and task tracking",
+      "requirementIds": [
+        "SPEC-40-029"
+      ],
+      "status": "done",
+      "startedAt": null,
+      "completedAt": "2026-10-03T23:07:34.610Z",
+      "acceptance": [
+        {
+          "text": "Unknown requirements, missing acceptance evidence and incomplete release gates fail validation",
+          "status": "passed",
+          "evidence": [
+            "tests/delivery.test.ts"
+          ]
+        },
+        {
+          "text": "CI emits source-identified verification evidence; task events and timing reports are reproducible",
+          "status": "passed",
+          "evidence": [
+            "delivery/ci-evidence.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M1-RELIABLE",
+      "title": "GitHub-hosted durable advisory review and artifact evidence",
+      "requirementIds": [
+        "SPEC-40-019",
+        "SPEC-40-020",
+        "SPEC-40-029"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-03T23:18:28.516Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Trusted main code reviews PRs on GitHub-hosted runners without executing PR code; artifact evidence is uploaded before Checks publish",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Real repository-only App workflow succeeds and evidence can be downloaded independently of local tunnel",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    }
+  ]
+}
