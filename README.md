@@ -11,26 +11,29 @@ OpenTelemetry, and deployment systems remain the integration foundations.
 
 ## Current state
 
-**M0 is released. M1 is in progress.** The M1 local candidate has a deterministic
-review CLI, signed webhook ingestion, PostgreSQL evidence and Temporal processing.
-The repository-scoped GitHub App has reviewed live PR commits. GitHub-hosted
-review is being verified; GHCR publication and the M1 release remain pending.
-See the [local demo and App setup](docs/m1-setup.md).
+The M1 build adds deterministic semantic PR review, signed scoped webhook
+receipt, PostgreSQL evidence, Temporal processing, and advisory GitHub Checks.
+The private GitHub App is installed only on `alimobrem/agentci`. Trusted
+GitHub-hosted review reads immutable PR data and retains evidence before publishing
+Checks; it does not execute PR code with credentials.
 
-| Available in M0 | Planned next |
+| Available in M1 | Later milestones |
 | --- | --- |
-| Versioned project, requirement, finding, and evidence schemas | Semantic PR diff and deterministic risk rules |
-| CLI validation of explicit repository contracts | GitHub App and advisory PR Checks |
-| Local API skeleton for schema/document validation | Durable PR-review orchestration |
-| Source-linked implementation inventory and contract evals | Stored evidence tied to the exact PR head |
+| Versioned project, requirement, finding and evidence schemas | Behavioral eval execution (M2) |
+| Semantic diff for specs, models/config, explicit tools, configured permissions/policies, prompts and dependencies | Runtime tracing and production feedback |
+| Deterministic risk with verified versus inferred findings | Model-assisted review and controlled repair |
+| Signed webhook ingestion, immutable PR evidence and advisory Checks | Production SaaS and multi-tenant deployment |
 
-[M0 release and downloads](https://github.com/alimobrem/agentci/releases/tag/v0.1.0-m0)
+[M1 release and downloads](https://github.com/alimobrem/agentci/releases/tag/v0.2.0-m1)
 · [Implementation status](specs/implementation-status.md)
-· [Release verification](docs/releases/m0.md)
+· [M1 verification and completion state](docs/releases/m1.md)
+· [Deployment and operations](docs/m1-setup.md)
 
-The published M0 build is a contracts prerelease. Its API is a local development skeleton without
-persistence or authentication. Model reviews, behavioral eval execution, OCI
-service images, and Temporal integration are not included.
+M1 reviews are advisory. A neutral Check reports a completed deterministic review,
+not behavioral correctness. Invalid or unsupported input fails explicitly.
+The local deployment is for a single repository; production Temporal and hosted
+API deployment are later work. See [STATUS.md](STATUS.md) for current milestone
+completion and publication status.
 
 ## Try the released CLI
 
@@ -38,14 +41,14 @@ Requires **Node.js 26.10.0 (26.x)** and npm. The compiled package needs producti
 dependencies only; it is downloaded from the GitHub release, not the npm registry.
 
 ```sh
-mkdir agentci-m0-demo
-cd agentci-m0-demo
+mkdir agentci-m1-demo
+cd agentci-m1-demo
 npm init -y
-npm install https://github.com/alimobrem/agentci/releases/download/v0.1.0-m0/agentci-0.1.0-m0.tgz
+npm install https://github.com/alimobrem/agentci/releases/download/v0.2.0-m1/agentci-0.2.0-m1.tgz
 npx agentci --version
 ```
 
-Expected version: `0.1.0-m0`. To validate an existing repository containing an
+Expected version: `0.2.0-m1`. To validate an existing repository containing an
 `agentci.yaml` project manifest:
 
 ```sh

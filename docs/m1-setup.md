@@ -1,7 +1,8 @@
 # M1 local deployment and GitHub App setup
 
-M1 is in progress. This is a single-repository development deployment, not a
-production SaaS deployment. No AgentCI images have been published to GHCR yet.
+This is a single-repository development deployment. Consult
+[the M1 release record](releases/m1.md) for publication and completion evidence.
+Production SaaS deployment is outside M1.
 Local image names are `agentci-api:0.2.0-m1` and
 `agentci-worker:0.2.0-m1`; intended registry names are
 `ghcr.io/alimobrem/agentci-api` and `ghcr.io/alimobrem/agentci-worker`.
@@ -221,7 +222,7 @@ symlinks/submodules, missing specifications and malformed selected contracts fai
 scripts, hooks, workflows, dependency installation or eval commands are executed
 by review activities. Behavioral evals remain M2 work.
 
-## Release and completion remain pending
+## Verify release and completion
 
 The checked-in workflows prepare CI, scans, package verification and GHCR
 publication. Publication is a manual candidate workflow after verification.
@@ -230,7 +231,7 @@ workflow success is not automatically milestone completion. Changing workflow
 files requires the token's repository-scoped Workflows permission. Package
 visibility must be verified public separately from repository visibility.
 
-M1 still needs live App/PR verification, successful CI on the release SHA,
+M1 completion requires live App/PR verification, successful CI on the release SHA,
 scan disposition, published/downloaded images, an immutable release and its user
 demo. M2 remains not-started until all M1 gates pass.
 
