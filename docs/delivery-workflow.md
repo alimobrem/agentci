@@ -135,8 +135,8 @@ use attempt 1 and retain failed runs separately from successful reruns.
 | --- | --- | --- | --- |
 | Same current local checks, sequential vs parallel | 2.07 s | 0.56 s | Three alternating runs per mode; 72.9% less feedback time |
 | Full CI, first cache population | 140 s | 204 s | One run each; cold population was slower |
-| Full CI, cache reuse | 140 s | 105 s | One warm run; 25% shorter, preliminary |
-| Separate fast CI job | No separate early result | 24 s cold / 19 s warm | Full verification remains required |
+| Full CI, cache reuse | 140 s | 105 / 126 s; median 115.5 s | Two warm runs; median 17.5% shorter, preliminary |
+| Separate fast CI job | No separate early result | 24 s cold / 19–17 s warm | Full verification remains required |
 
 Two dogfood defects were recorded: the persistent Temporal volume startup issue,
 and an evidence collector that initially listed historical manifests outside the
@@ -146,3 +146,9 @@ bundle as download-verified until every listed file is present and its hash matc
 Source-identified records are in `delivery/runs/` and `delivery/local-feedback.json`.
 The baseline and new CI suites differ (new compatibility, gate and persistent-volume
 checks were added), so these observations do not isolate caching as the sole cause.
+
+The corrected verification bundle from [CI run 37160392578](https://github.com/alimobrem/agentci/actions/runs/37160392578)
+was downloaded; all three listed artifact hashes match. It passed 58 tests,
+14 evals, real integration, packaging, compatibility and runtime verification.
+The tested merge SHA and candidate SHA are separate in `delivery/ci-evidence.json`.
+Workflow task closure does not close M1 release gates.

@@ -160,19 +160,23 @@
       "requirementIds": [
         "SPEC-2.1-005"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": null,
-      "completedAt": null,
+      "completedAt": "2026-10-03T23:07:33.183Z",
       "acceptance": [
         {
           "text": "All existing local verification remains in the fast runner; failures return nonzero",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/ci-evidence.json"
+          ]
         },
         {
           "text": "Repeated same-machine benchmark recorded with scope and sample limits",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/local-feedback.json"
+          ]
         }
       ]
     },
@@ -182,19 +186,23 @@
       "requirementIds": [
         "SPEC-2.1-005"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": null,
-      "completedAt": null,
+      "completedAt": "2026-10-03T23:07:33.663Z",
       "acceptance": [
         {
           "text": "Image cache and shared scan database reduce repeated work",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/ci-evidence.json"
+          ]
         },
         {
           "text": "Cold and warm successful CI measurements preserve full verification",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/runs/37159885979-attempt-2.json"
+          ]
         }
       ]
     },
@@ -205,19 +213,23 @@
         "SPEC-40-015",
         "SPEC-40-020"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": null,
-      "completedAt": null,
+      "completedAt": "2026-10-03T23:07:34.146Z",
       "acceptance": [
         {
           "text": "All control operations exercise responses against the shared contract",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/ci-evidence.json"
+          ]
         },
         {
           "text": "oasdiff checks compatibility against the documented candidate baseline",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/ci-evidence.json"
+          ]
         }
       ]
     },
@@ -227,19 +239,23 @@
       "requirementIds": [
         "SPEC-40-029"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": null,
-      "completedAt": null,
+      "completedAt": "2026-10-03T23:07:34.610Z",
       "acceptance": [
         {
           "text": "Unknown requirements, missing acceptance evidence and incomplete release gates fail validation",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "tests/delivery.test.ts"
+          ]
         },
         {
           "text": "CI emits source-identified verification evidence; task events and timing reports are reproducible",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/ci-evidence.json"
+          ]
         }
       ]
     }

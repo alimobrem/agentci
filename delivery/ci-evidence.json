@@ -1,0 +1,44 @@
+{
+  "sourceCommit": "a42ffb891bfbf3a3083a541f70458c0d3dbc92c1",
+  "candidateCommit": "77b0641bf3f3228240208ba12c9dc80b536c975b",
+  "runUrl": "https://github.com/alimobrem/agentci/actions/runs/37160392578",
+  "downloadVerifiedAt": "2026-10-03T23:04:52.441Z",
+  "artifactChecksums": [
+    {
+      "path": "releases/agentci-0.2.0-m1-dev.tgz",
+      "sha256": "6bfe3aa8d1cf2b9168066f4f32a5f05fa862e5fc17a8d3acf4ef1a2cadee9043"
+    },
+    {
+      "path": "scan-results/api.json",
+      "sha256": "978aa1b5b6757e9f05275636eb9acc22e4c8d6f4a401bdaa73a05aeac464b28a"
+    },
+    {
+      "path": "scan-results/worker.json",
+      "sha256": "8d9dface4e05f8b298c9f175071a783835403de65dda3f4a2586266b0ed91506"
+    }
+  ],
+  "fastChecksPassed": true,
+  "apiCompatibilityExitCode": 0,
+  "containerRuntime": {
+    "result": "passed",
+    "version": "ci",
+    "platform": "x64",
+    "checks": [
+      "non-root API/worker startup",
+      "readiness",
+      "signature rejection",
+      "evidence authentication",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  },
+  "testSummary": [
+    "ℹ tests 58",
+    "ℹ pass 58",
+    "ℹ fail 0",
+    "ℹ skipped 0"
+  ],
+  "releaseComplete": false
+}
