@@ -128,3 +128,21 @@ Use actual IDs and proof paths. Reopening starts a new measured iteration and
 retains earlier events. Quality counts cover recorded observations only; zero
 recorded escaped defects is not proof that none exist. First-pass failure counts
 use attempt 1 and retain failed runs separately from successful reruns.
+
+## Initial observations on 2026-10-03
+
+| Measure | Before | After | Samples and interpretation |
+| --- | --- | --- | --- |
+| Same current local checks, sequential vs parallel | 2.07 s | 0.56 s | Three alternating runs per mode; 72.9% less feedback time |
+| Full CI, first cache population | 140 s | 204 s | One run each; cold population was slower |
+| Full CI, cache reuse | 140 s | 105 s | One warm run; 25% shorter, preliminary |
+| Separate fast CI job | No separate early result | 24 s cold / 19 s warm | Full verification remains required |
+
+Two dogfood defects were recorded: the persistent Temporal volume startup issue,
+and an evidence collector that initially listed historical manifests outside the
+uploaded bundle. The latter was found by downloading artifacts and checking their
+inventory; the collector now matches the upload paths. Do not count an artifact
+bundle as download-verified until every listed file is present and its hash matches.
+Source-identified records are in `delivery/runs/` and `delivery/local-feedback.json`.
+The baseline and new CI suites differ (new compatibility, gate and persistent-volume
+checks were added), so these observations do not isolate caching as the sole cause.
