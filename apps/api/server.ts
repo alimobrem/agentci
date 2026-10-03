@@ -1,5 +1,6 @@
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
 import { schemaNames, schemas, validateDocument, type SchemaName } from '../../packages/schemas/index.ts';
+import { VERSION } from '../../packages/version.ts';
 
 const MAX_BODY = 1024 * 1024;
 function reply(res: ServerResponse, status: number, body: unknown) {
@@ -26,7 +27,7 @@ export function createApi() {
   return createServer(async (req, res) => {
     const path = (req.url ?? '/').split('?')[0];
     if (req.method === 'GET' && path === '/healthz') {
-      reply(res, 200, { status: 'ok', milestone: 'M0', version: '0.1.0-m0' }); return;
+      reply(res, 200, { status: 'ok', milestone: 'M0', version: VERSION }); return;
     }
     const match = /^\/v1\/schemas\/([a-z-]+)$/.exec(path!);
     const name = match?.[1] as SchemaName;

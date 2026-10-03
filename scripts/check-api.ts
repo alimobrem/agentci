@@ -1,0 +1,14 @@
+import SwaggerParser from '@apidevtools/swagger-parser';
+import { readFile } from 'node:fs/promises';
+import { deepStrictEqual, strictEqual } from 'node:assert';
+import { VERSION } from '../packages/version.ts';
+await SwaggerParser.validate(new URL('../specs/api/openapi.json', import.meta.url).pathname);
+const contract = JSON.parse(await readFile(new URL('../specs/api/openapi.json', import.meta.url), 'utf8'));
+const { $schema, ...analysis } = JSON.parse(await readFile(new URL('../packages/review/analysis.schema.json', import.meta.url), 'utf8'));
+deepStrictEqual(contract.components.schemas.Analysis, analysis, 'API and domain analysis schemas must not drift');
+const lock = JSON.parse(await readFile(new URL('../package-lock.json', import.meta.url), 'utf8'));
+const shrinkwrap = JSON.parse(await readFile(new URL('../npm-shrinkwrap.json', import.meta.url), 'utf8'));
+deepStrictEqual(shrinkwrap, lock, 'Distributed npm dependency lock must match the source lock');
+const manifest = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
+strictEqual(VERSION, manifest.version); strictEqual(contract.info.version, VERSION);
+console.log('M1 OpenAPI contract valid');

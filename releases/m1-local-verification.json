@@ -1,0 +1,116 @@
+{
+  "milestone": "M1",
+  "state": "in-progress",
+  "version": "0.2.0-m1-dev",
+  "date": "2026-10-03",
+  "branch": "codex/m1-semantic-review",
+  "sourceCommit": null,
+  "sourceIdentityNote": "Local candidate identified by code-file fingerprint; no release SHA or CI run claimed",
+  "codeFingerprint": "4bf76f7616341a5f9edabd592f94218a3eab2f89d708767c17b31641add1c66d",
+  "codeFiles": {
+    "apps/api/main.ts": "c788ac2757e36c983b4cbbf73815dd753d5c3ba91e13128df65ae009c792f6d6",
+    "apps/api/server.ts": "33dbc548946b841675b07ab4c4ebaff4d005afff6ca9f176f317856cdef6a592",
+    "apps/control/main.ts": "f187bf374ee592dadf969e25f2e4af7bf902ab33503de990f3683e6a8bb4f7a6",
+    "apps/control/server.ts": "80e9b3f2e749f5b2ca42859ceb0f1d07fee82bd4c6f34986f992d1ea34e5d25f",
+    "apps/worker/activities.ts": "26dfc120b1ff9a0a137a61f081bee0a5230076f96163ee8b30be5ef71aca66ae",
+    "apps/worker/main.ts": "75c0ae7da838ac701ece72ac87fe14b2430452b5c3297c80aa049fb2de4fc545",
+    "apps/worker/workflows.ts": "684f00bcd65637edfddc0cbabbc685d95950b369ae4b8187ea6473b4fa945088",
+    "cmd/agentci/main.ts": "fdb4fd884e8ae76c6887c66ed1dd11f907cb8cf5ae002f7ba21338142a0aebb8",
+    "packages/github/client.ts": "ee6df69b1cb922ffbd278f499ff34bc85b8c6afdc77030001691140beb2ea2c2",
+    "packages/github/webhook.ts": "91ee878b2b5149c5ff74fe01b1ba9e7d65e99d3776b1945ff50bb2f2b9ec1481",
+    "packages/project/index.ts": "4db4240a13bde5e39900b023d37ed9f515ae8769cc9ebddb081d704a674c5f60",
+    "packages/review/analysis.schema.json": "464535fcf09f918b5603f2fc21b7146b8be7e1740030a6c95dda77ff1b0d9651",
+    "packages/review/engine.ts": "0e33b096b32b45f5a3c4cbcb23a5fcbdac76d661062622e95b7d762053b64557",
+    "packages/review/git.ts": "d2720c9fb9791bd06ed7ed63b43b562ef7f07d6f01d9998a203a403c9eebd556",
+    "packages/review/types.ts": "8493786098e190a3db928afb1eaa45073a185808699eafbd85a642b9a00d4de5",
+    "packages/runtime/config.ts": "7a96a4bf4f9caddda7879f9aeb0c5acfce6b56b2a5b5104400b51222d849c3f9",
+    "packages/schemas/index.ts": "989f82d3bf8d2294cc7ca19235243975743cf146f15cc0ce150fb122e66bb4ca",
+    "packages/schemas/json/agent-project.schema.json": "8322727e6918e625dad664787581d35b09f8f9e919a2b387e707928d62f5a7d5",
+    "packages/schemas/json/evidence.schema.json": "9733ce350ca09a4357b3839672072416eef3b8f621d39d9dcab6d891b84bc4eb",
+    "packages/schemas/json/finding.schema.json": "9c39eca2ab45bfba61081aae852b8f54c43a759e4b4cb39d202ea030937fbed3",
+    "packages/schemas/json/requirement.schema.json": "c52c1a827b798aae6041144568c90111a62d98ef21a11915313650e5a0310e92",
+    "packages/storage/postgres.ts": "4fdb27d83748153de8e1a63ff14dd399a025d0ebcefbc0b9b508ed2851bdc797",
+    "packages/version.ts": "d408300bf54e80bea58e63340886d2ca28d76fd2345ac934f91ce5bc2c0f395c",
+    "deploy/compose.yaml": "d412f503c2524cb5012a6c7432b7cd1e627474bbcaf95f8738b813a86210da98",
+    "deploy/migrations/001_m1.sql": "53072e1d3b68241d139715fa072cf919b6b705effcb91713590f09b14e779217",
+    "Dockerfile": "c7e12ea0ee0f27648a5ab13941d059da4eb35b4d7f4b35c2f34148ec91c587c4",
+    "package.json": "b42b519c6a851a88fdcd7f8523a37e36f4d11e73bd89035681df18777c871729",
+    "package-lock.json": "2b5a2e7ba5b587d86564e97c0e67d145cf8ab184e44cd718b304b5beb7a7fa89",
+    "npm-shrinkwrap.json": "2b5a2e7ba5b587d86564e97c0e67d145cf8ab184e44cd718b304b5beb7a7fa89",
+    "tsconfig.json": "bcead2ef8d07674a573f4966e42bc8a749fac03bb184426e6152cce21ffd4c0c",
+    "tsconfig.build.json": "623c1600e035cccd96bbe4d75496bc30abba7a45104e9d83232054099ce1a5fb"
+  },
+  "tests": {
+    "unitApiAdapter": {
+      "passed": 50,
+      "failed": 0,
+      "skipped": 0
+    },
+    "postgresTemporalIntegration": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "evals": {
+    "M0Contract": 6,
+    "M1SemanticRisk": 8,
+    "riskThreshold": 1.0,
+    "behavioral": "not applicable until M2"
+  },
+  "package": {
+    "path": "releases/agentci-0.2.0-m1-dev.tgz",
+    "sha256": "28df75eed6000470cfe710722293898c1e4d76b61bbdf8a00e1ab47444799fb4",
+    "cleanProductionInstall": "passed"
+  },
+  "images": {
+    "base": "registry.access.redhat.com/ubi9/nodejs-22-minimal@sha256:ca1c79182159009eb15a041bc6bb16f390a4e738b9d57d6cc4975f3b2981788b",
+    "runtimeSmoke": {
+      "result": "passed",
+      "version": "0.2.0-m1-dev",
+      "platform": "arm64",
+      "checks": [
+        "non-root API/worker startup",
+        "readiness",
+        "signature rejection",
+        "evidence authentication",
+        "signed closed delivery",
+        "graceful shutdown"
+      ],
+      "github": "synthetic credentials; no live GitHub review claimed"
+    },
+    "registryPublication": "not-started",
+    "scans": {
+      "api": {
+        "report": ".agentci/artifacts/m1/api-trivy.json",
+        "sha256": "a1d2669e050ec6dd0044df04162c16d5183f10f51cbf4c423514dd53ea3f9a8e",
+        "counts": {
+          "MEDIUM": 282,
+          "LOW": 143,
+          "HIGH": 45
+        },
+        "fixableHighOrCritical": 0,
+        "disposition": "open; no risk acceptance claimed"
+      },
+      "worker": {
+        "report": ".agentci/artifacts/m1/worker-trivy.json",
+        "sha256": "8e5f0f664134c0ef1068ff754a090b803fe284b3cb33bdcdc65d71b1610c595e",
+        "counts": {
+          "MEDIUM": 282,
+          "LOW": 143,
+          "HIGH": 45
+        },
+        "fixableHighOrCritical": 0,
+        "disposition": "open; no risk acceptance claimed"
+      }
+    }
+  },
+  "remainingGates": [
+    "Live selected-repository GitHub App and reachable webhook",
+    "Advisory check on AgentCI PRs",
+    "CI on release SHA",
+    "Vendor vulnerability disposition",
+    "Public GHCR digests and downloaded-image smoke",
+    "GitHub release/assets and completed-phase demo"
+  ]
+}

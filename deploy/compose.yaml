@@ -1,0 +1,47 @@
+name: agentci-m1
+services:
+  postgres:
+    image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    environment:
+      POSTGRES_USER: agentci
+      POSTGRES_DB: agentci
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U agentci -d agentci]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  temporal:
+    image: temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e
+    command: [server, start-dev, --ip, 0.0.0.0, --db-filename, /data/temporal.db]
+    volumes: [temporal-data:/data]
+    ports: ["127.0.0.1:8233:8233"]
+  api:
+    user: "${AGENTCI_UID:-1001}:${AGENTCI_GID:-0}"
+    image: agentci-api:0.2.0-m1-dev
+    build: { context: .., target: api }
+    env_file: ${AGENTCI_ENV_FILE:-../.env}
+    environment:
+      DATABASE_URL: postgresql://agentci:${POSTGRES_PASSWORD}@postgres:5432/agentci
+      TEMPORAL_ADDRESS: temporal:7233
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on: { postgres: { condition: service_healthy }, temporal: { condition: service_started } }
+    restart: unless-stopped
+  worker:
+    user: "${AGENTCI_UID:-1001}:${AGENTCI_GID:-0}"
+    image: agentci-worker:0.2.0-m1-dev
+    build: { context: .., target: worker }
+    env_file: ${AGENTCI_ENV_FILE:-../.env}
+    environment:
+      DATABASE_URL: postgresql://agentci:${POSTGRES_PASSWORD}@postgres:5432/agentci
+      TEMPORAL_ADDRESS: temporal:7233
+      GITHUB_PRIVATE_KEY_FILE: /run/secrets/github-app.pem
+    volumes: ["${GITHUB_PRIVATE_KEY_FILE:?Set GITHUB_PRIVATE_KEY_FILE}:/run/secrets/github-app.pem:ro"]
+    depends_on: { postgres: { condition: service_healthy }, temporal: { condition: service_started } }
+    restart: unless-stopped
+volumes:
+  postgres-data:
+  temporal-data:

@@ -11,7 +11,10 @@ OpenTelemetry, and deployment systems remain the integration foundations.
 
 ## Current state
 
-**M0 is released. M1 has not started.** AgentCI cannot review PRs yet.
+**M0 is released. M1 is in progress.** The M1 local candidate has a deterministic
+review CLI, signed webhook ingestion, PostgreSQL evidence and Temporal processing.
+Live GitHub App dogfooding, CI, GHCR publication and the M1 release remain pending.
+See the [local demo and App setup](docs/m1-setup.md).
 
 | Available in M0 | Planned next |
 | --- | --- |
@@ -24,7 +27,7 @@ OpenTelemetry, and deployment systems remain the integration foundations.
 · [Implementation status](specs/implementation-status.md)
 · [Release verification](docs/releases/m0.md)
 
-M0 is a contracts prerelease. Its API is a local development skeleton without
+The published M0 build is a contracts prerelease. Its API is a local development skeleton without
 persistence or authentication. Model reviews, behavioral eval execution, OCI
 service images, and Temporal integration are not included.
 
@@ -68,8 +71,9 @@ repository validation, and status freshness checks. API integration tests need
 loopback access. A successful repository validation reports an inventory count;
 that count is not a count of implemented product features.
 
-See the [development guide](docs/development.md) for API usage, packaging, smoke
-tests, and status maintenance.
+See the [development guide](docs/development.md) for the M0 API and status
+maintenance. M1's separate control API and service packaging are in the
+[M1 setup guide](docs/m1-setup.md), with its [OpenAPI contract](specs/api/openapi.json).
 
 ## What counts as complete?
 

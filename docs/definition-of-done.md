@@ -36,6 +36,7 @@ the published artifact checks pass.
 | Release identity | Source commit and immutable version/tag identify the tested build | Commit SHA, tag, build inputs, artifact checksums |
 | Publication | Source/tag pushed; GitHub release and required assets available | Repository URL, release URL, asset URLs and version |
 | Distribution | Downloaded release assets match manifest; installed download passes smoke checks | Downloaded checksums/digests and clean-install results |
+| Demo | Give the user a working demo of what shipped and how it works, including an applicable failure case | Version/digest, reproducible steps or recording, observed outputs and limitations |
 | Closure | Status and release evidence updated; intended source branch synced with remote | Completion record, remaining limitations and next milestone |
 
 CI runs on the intended release source are required for M1 onward. Preserve run
@@ -94,6 +95,7 @@ CI/scan evidence:
 Packages/images: URLs, checksums/digests, downloaded smoke results:
 GitHub release URL:
 Documentation verified:
+User demo: steps/recording, observed success and failure behavior:
 Exceptions, deferred work and limitations:
 Remaining blockers:
 Next milestone: not-started until current milestone is complete
@@ -102,3 +104,9 @@ Next milestone: not-started until current milestone is complete
 The user-facing completion report must identify the release and evidence, state
 material limitations, and say which milestone is next. Report partial progress as
 partial progress. A test count alone cannot support a claim of complete.
+
+At each milestone completion, present the demo to the user as part of the
+completion report. Explain the inputs, observable behavior, and outputs in plain
+language, with reproducible commands or a usable interface. Demonstrate the
+milestone's acceptance scenario using the released build; identify anything
+simulated. A local simulation cannot stand in for a live integration exit criterion.

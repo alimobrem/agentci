@@ -1,5 +1,14 @@
 # Releases
 
+## Unreleased — M1 development candidate
+
+- Deterministic immutable-commit semantic diff and advisory risk CLI.
+- Signed scoped GitHub webhook API, transactional PostgreSQL outbox/evidence,
+  Temporal workflow and least-privilege GitHub Check adapters.
+- Versioned OpenAPI contract, API/adapter tests, risk corpus and durable-service
+  integration tests; non-root UBI API/worker packaging and local demo/setup guide.
+- No M1 release, live App dogfooding or GHCR publication is claimed.
+
 ## 0.1.0-m0 — 2026-10-03
 
 M0 contracts release. Includes AgentProject, requirement, finding and evidence

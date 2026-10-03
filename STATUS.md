@@ -11,8 +11,15 @@ Live requirement coverage is in
 
 Delivered: four versioned schemas, CLI validation, API skeleton, trace mapping,
 source-linked inventory, tests, contract evals, compiled package and release docs.
-M1 has not started. M0's GitHub release gate has now passed.
-AgentCI cannot review its own PRs yet.
+M1 is in progress; M0's GitHub release gate has passed. Local M1 preview code
+includes semantic diff/risk, signed scoped webhook ingestion, PostgreSQL evidence,
+Temporal orchestration and GitHub Check adapters. Unit/API tests, deterministic
+risk cases, real local persistence/workflow tests and compiled containers have
+verification evidence. See [M1 setup/demo](docs/m1-setup.md).
+
+M1 is not complete. App installation, a reachable webhook, real advisory Checks
+on AgentCI PRs, CI on the release SHA, scan disposition, GHCR publication/download
+verification and the release/demo gates remain open. M2 is not-started.
 
 Run `npm run check` for TypeScript, tests, contract evals, repository validation and
 status freshness. API tests need loopback access. Run the packaged CLI smoke test
@@ -21,6 +28,7 @@ as documented in the development guide before any new release. Follow
 before reporting new work complete. M1 onward also requires recorded CI
 results and published service-image verification.
 
-Temporal is recommended for M1 and is not installed. See docs/architecture.md.
+The official Temporal SDK is installed; local development orchestration has been
+tested. Production Temporal deployment remains undecided. See docs/architecture.md.
 The supplied spec is preserved at the root and copied to specs/agentci-full-spec.md.
 No earlier cloud M0 source was imported.
