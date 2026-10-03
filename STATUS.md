@@ -16,8 +16,10 @@ AgentCI cannot review its own PRs yet.
 
 Run `npm run check` for TypeScript, tests, contract evals, repository validation and
 status freshness. API tests need loopback access. Run the packaged CLI smoke test
-as documented in README before any new release. Finish each milestone's tests,
-applicable evals, packaging, docs and release before moving to the next.
+as documented in the development guide before any new release. Follow
+[the definition of done](docs/definition-of-done.md) and milestone-specific gates
+before reporting new work complete. M1 onward also requires recorded CI
+results and published service-image verification.
 
 Temporal is recommended for M1 and is not installed. See docs/architecture.md.
 The supplied spec is preserved at the root and copied to specs/agentci-full-spec.md.

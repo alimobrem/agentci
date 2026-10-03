@@ -5,14 +5,9 @@ subsequent phase until the current phase passes its complete applicable gates.
 This expands completion validation as requested by the user; it does not move
 future feature implementation into earlier milestones.
 
-Each milestone must have its specification scope and acceptance criteria mapped
-to status/evidence, all relevant deterministic tests and evals passing, build and
-package verification from a clean installation, dependency checks, updated usage
-and operations docs, release notes, a versioned release artifact with checksum,
-and a recorded release identity. Record inapplicable eval classes with reasons.
-Infrastructure failure, unrun checks and skipped applicable gates never count
-as success. Feature-level deferred work needs explicit rationale; deferred exit
-criteria do not satisfy phase completion.
+The [definition of done](definition-of-done.md) is the release-completion policy.
+The table below adds each milestone's product acceptance scenario. Both must pass.
+Requirement status, milestone status, and product readiness are distinct.
 
 | Phase | Scope | Product exit |
 | --- | --- | --- |
@@ -39,3 +34,7 @@ Deployable service milestones also require applicable OCI images to be built,
 tested, scanned and published with immutable digests. M0's CLI/contracts scope
 does not require an image. M1 introduces the API/worker deployment boundary and
 must include its container packaging before completion.
+
+For M1 onward, record the acceptance scenario, tests/evals, CI, scans, clean
+package/image verification and published-release evidence before marking complete.
+M0's historical evidence remains in [its release record](releases/m0.md).

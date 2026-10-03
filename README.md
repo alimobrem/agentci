@@ -1,54 +1,94 @@
 # AgentCI
 
-M0: repository contracts, CLI validation and local API skeleton.
-Primary spec: [specs/agentci-full-spec.md](specs/agentci-full-spec.md).
-Live status: [specs/implementation-status.md](specs/implementation-status.md).
+AgentCI is an engineering control plane for AI-generated and agentic software.
+It connects specifications, code changes, evaluations, and release evidence so
+reviewers can understand what changed and how it was verified.
 
-Requires Node.js >=22.17 and npm. From the repository root:
+The first product goal is a GitHub pull-request check that explains changes to
+requirements, permissions, tools, models, prompts, and risk. Later milestones add
+runtime tracing, production feedback, and controlled repair. Git, existing CI,
+OpenTelemetry, and deployment systems remain the integration foundations.
+
+## Current state
+
+**M0 is released. M1 has not started.** AgentCI cannot review PRs yet.
+
+| Available in M0 | Planned next |
+| --- | --- |
+| Versioned project, requirement, finding, and evidence schemas | Semantic PR diff and deterministic risk rules |
+| CLI validation of explicit repository contracts | GitHub App and advisory PR Checks |
+| Local API skeleton for schema/document validation | Durable PR-review orchestration |
+| Source-linked implementation inventory and contract evals | Stored evidence tied to the exact PR head |
+
+[M0 release and downloads](https://github.com/alimobrem/agentci/releases/tag/v0.1.0-m0)
+· [Implementation status](specs/implementation-status.md)
+· [Release verification](docs/releases/m0.md)
+
+M0 is a contracts prerelease. Its API is a local development skeleton without
+persistence or authentication. Model reviews, behavioral eval execution, OCI
+service images, and Temporal integration are not included.
+
+## Try the released CLI
+
+Requires **Node.js >=22.17** and npm. The compiled package needs production
+dependencies only; it is downloaded from the GitHub release, not the npm registry.
 
 ```sh
+mkdir agentci-m0-demo
+cd agentci-m0-demo
+npm init -y
+npm install https://github.com/alimobrem/agentci/releases/download/v0.1.0-m0/agentci-0.1.0-m0.tgz
+npx agentci --version
+```
+
+Expected version: `0.1.0-m0`. To validate an existing repository containing an
+`agentci.yaml` project manifest:
+
+```sh
+npx agentci validate --root /path/to/repository --json
+```
+
+`agentci init` is not implemented. To try a ready-to-validate project, use the
+AgentCI source checkout below. The CLI checks configuration, explicit YAML or
+Markdown-front-matter requirements, unique IDs, and eval YAML syntax. It does not
+execute evaluations or infer accepted requirements from ordinary prose.
+
+## Develop from source
+
+```sh
+git clone https://github.com/alimobrem/agentci.git
+cd agentci
 npm ci
 npm run check
 npm run agentci -- validate
-npm run agentci -- validate --root /path/to/project --json
-npm run api
 ```
 
-Install the local M0 release with
-`npm install /absolute/path/to/releases/agentci-0.1.0-m0.tgz`, then run
-`npx agentci --version` or `npx agentci validate --root /path/to/project`.
-The archive contains compiled JavaScript and needs only production dependencies.
-To rebuild and smoke-test the package:
+`npm run check` runs TypeScript checks, deterministic tests, contract evals,
+repository validation, and status freshness checks. API integration tests need
+loopback access. A successful repository validation reports an inventory count;
+that count is not a count of implemented product features.
 
-```sh
-npm pack --pack-destination releases
-node scripts/package-smoke.mjs releases/agentci-0.1.0-m0.tgz
-```
+See the [development guide](docs/development.md) for API usage, packaging, smoke
+tests, and status maintenance.
 
-The smoke test uses npm's offline cache and fails if required production packages
-are not cached. The ordinary installation command may fetch them from npm.
+## What counts as complete?
 
-The API binds to `127.0.0.1:3000`; set `AGENTCI_PORT` to change it. Routes:
-`GET /healthz`, `GET /v1/schemas/{agent-project,requirement,finding,evidence}`,
-`POST /v1/validate` with JSON `{ "schema": "requirement", "document": {...} }`.
-Valid documents return 200; invalid contracts 422; malformed requests 400;
-unsupported content types 415; bodies above 1 MiB 413. Nothing is persisted.
+A milestone is complete only after its acceptance criteria are met, applicable
+checks pass, packages install and run from a clean environment, docs are current,
+and the source, tag, release, and required artifacts are published and verified.
+A local build or tag is a release candidate. Deployable service milestones also
+require published OCI images with tested immutable digests.
 
-CLI validation checks the project schema, explicit YAML requirements or Markdown
-front matter, unique IDs, and eval YAML syntax. It reads data only. Ordinary prose
-is not inferred into accepted requirements. Future eval-schema validation and
-execution begin in M2. Full commit IDs/digests are required where schemas specify
-them; abbreviated identifiers in spec examples are illustrative.
+The [definition of done](docs/definition-of-done.md) specifies the evidence and
+blocking rules. The [milestone gates](docs/milestone-gates.md) preserve the M0–M10
+sequence. Product completion is separate from milestone completion.
 
-CLI exit codes: 0 valid, 1 invalid input, 2 unsupported invocation/infrastructure
-failure. Future commands fail explicitly. Schema validity does not prove findings,
-enforce blocking policy or tenancy, persist immutable evidence, or verify digests.
+## Project references
 
-Update `specs/requirements.yaml`, add code/test evidence, then run `npm run status`.
-`npm run status -- --check` detects a stale Markdown view. Draft inventory entries
-include explanatory prose to avoid gaps; explicit M0 work items are active. Keep
-existing IDs stable when refining requirements. See [architecture](docs/architecture.md)
-and [trace mapping](docs/trace-mapping.md).
+- [Full product and technical specification](specs/agentci-full-spec.md)
+- [Architecture choices](docs/architecture.md), including the Temporal recommendation
+- [Trace mapping contract](docs/trace-mapping.md)
+- [Current project status](STATUS.md)
+- [Release notes](CHANGELOG.md)
 
-Next: M1 semantic PR review, GitHub App, deterministic diff/risk, evidence and
-advisory Checks. AgentCI cannot review its own PRs yet.
+License: not yet selected.
