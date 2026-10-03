@@ -27,7 +27,7 @@ jobs:
       AGENTCI_REPOSITORY: alimobrem/agentci
       GITHUB_APP_ID: '5179954'
       GITHUB_INSTALLATION_ID: '167655696'
-      GITHUB_PRIVATE_KEY_FILE: ${{ runner.temp }}/agentci-app.pem
+      GITHUB_PRIVATE_KEY_FILE: .agentci/local/hosted-app.pem
       DATABASE_URL: postgresql://postgres:agentci-ci-only@127.0.0.1:5432/agentci
       TEMPORAL_ADDRESS: 127.0.0.1:7233
     steps:
@@ -45,6 +45,7 @@ jobs:
           python3 - <<'PY'
           import os
           if not os.environ.get('APP_KEY'): raise SystemExit('Missing repository App secret')
+          os.makedirs('.agentci/local', mode=0o700, exist_ok=True)
           with open(os.environ['GITHUB_PRIVATE_KEY_FILE'], 'w', opener=lambda p,f: os.open(p,f,0o600)) as key:
               key.write(os.environ['APP_KEY'])
           PY
