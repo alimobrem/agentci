@@ -111,6 +111,16 @@ language, with reproducible commands or a usable interface. Demonstrate the
 milestone's acceptance scenario using the released build; identify anything
 simulated. A local simulation cannot stand in for a live integration exit criterion.
 
+## M1 retrospective before M2
+
+After M1's release gates pass and the user receives the released-build demo,
+conduct the [M1 retrospective](retrospectives/m1.md) with the user before starting
+M2. Use recorded evidence to identify what worked, what caused delays or rework,
+and which improvements will help the next phases. Record concrete actions with
+owners, a target milestone and a measurable success criterion. Keep feedback-loop
+speed separate from end-to-end delivery time; missing historical data stays
+unknown. Carry agreed actions into the next milestone's task board and workflow.
+
 ## Automated completion record
 
 Use `releases/m1-gates.json` and `npm run release:check -- --require-complete`
