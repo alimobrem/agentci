@@ -2,7 +2,7 @@
 
 2026-10-03; M0 release and M1 local candidate implementation.
 
-Implemented: TypeScript for CLI/API and shared validation, Node.js >=22.17,
+Implemented: TypeScript for CLI/API and shared validation, Node.js 26.10.0 (26.x),
 JSON Schema draft-07, Ajv with formats, and YAML parsing. Validators do not coerce,
 remove fields, insert defaults, or execute repository code. Strict core objects
 catch misspellings; namespaced extensions allow provider capabilities. Independent
@@ -37,8 +37,7 @@ is an architecture assessment, not a performance benchmark.
 
 The M1 candidate uses PostgreSQL evidence metadata and an SQL initialization
 migration, least-privilege GitHub App adapters and advisory Checks, deterministic
-structured rules and explicit manifests, and non-root Red Hat UBI 9 Node.js 22
-minimal API/worker images pinned by digest, as requested by the user. Review
+structured rules and explicit manifests, and non-root Red Hat UBI 10 minimal with official Node.js 26.10.0 API/worker images pinned by digest, as requested by the user. Review
 activities fetch exact Git objects through the official Octokit SDK without
 executing PR code. GHCR is the selected registry; publication and live App
 installation remain pending. See `docs/m1-setup.md` for local configuration,

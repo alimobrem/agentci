@@ -6,7 +6,7 @@
   "branch": "codex/m1-semantic-review",
   "sourceCommit": null,
   "sourceIdentityNote": "Local candidate identified by code-file fingerprint; no release SHA or CI run claimed",
-  "codeFingerprint": "4bf76f7616341a5f9edabd592f94218a3eab2f89d708767c17b31641add1c66d",
+  "codeFingerprint": "bf04ff8c3407c97c7e0daaf4d2afefd546ddb09a8350c6905f06f84f9708c631",
   "codeFiles": {
     "apps/api/main.ts": "c788ac2757e36c983b4cbbf73815dd753d5c3ba91e13128df65ae009c792f6d6",
     "apps/api/server.ts": "33dbc548946b841675b07ab4c4ebaff4d005afff6ca9f176f317856cdef6a592",
@@ -31,14 +31,19 @@
     "packages/schemas/json/requirement.schema.json": "c52c1a827b798aae6041144568c90111a62d98ef21a11915313650e5a0310e92",
     "packages/storage/postgres.ts": "4fdb27d83748153de8e1a63ff14dd399a025d0ebcefbc0b9b508ed2851bdc797",
     "packages/version.ts": "d408300bf54e80bea58e63340886d2ca28d76fd2345ac934f91ce5bc2c0f395c",
-    "deploy/compose.yaml": "d412f503c2524cb5012a6c7432b7cd1e627474bbcaf95f8738b813a86210da98",
+    "deploy/compose.yaml": "5fe781aea184d017af3ff201b7ed43c7a12175fca71574b0727c10f0e452a377",
     "deploy/migrations/001_m1.sql": "53072e1d3b68241d139715fa072cf919b6b705effcb91713590f09b14e779217",
-    "Dockerfile": "c7e12ea0ee0f27648a5ab13941d059da4eb35b4d7f4b35c2f34148ec91c587c4",
-    "package.json": "b42b519c6a851a88fdcd7f8523a37e36f4d11e73bd89035681df18777c871729",
-    "package-lock.json": "2b5a2e7ba5b587d86564e97c0e67d145cf8ab184e44cd718b304b5beb7a7fa89",
-    "npm-shrinkwrap.json": "2b5a2e7ba5b587d86564e97c0e67d145cf8ab184e44cd718b304b5beb7a7fa89",
+    "Dockerfile": "c515aa6c54034de24142fdb9ac4df563b0aad2d8a663657c5517bba570b890c3",
+    "package.json": "1ee32e1962c676e236056ff2979202ab45287af9464df350a251bd4f11a58aa8",
+    "package-lock.json": "1f64a6b52fc3b854a440c228fe280131bd0f42ea994c45e2cd7e266eb020145b",
+    "npm-shrinkwrap.json": "1f64a6b52fc3b854a440c228fe280131bd0f42ea994c45e2cd7e266eb020145b",
     "tsconfig.json": "bcead2ef8d07674a573f4966e42bc8a749fac03bb184426e6152cce21ffd4c0c",
-    "tsconfig.build.json": "623c1600e035cccd96bbe4d75496bc30abba7a45104e9d83232054099ce1a5fb"
+    "tsconfig.build.json": "623c1600e035cccd96bbe4d75496bc30abba7a45104e9d83232054099ce1a5fb",
+    ".node-version": "10e4e07fe7b63d3da1d899ea0f9a7a3d78c116051fae44b9f245a53d6f665a41",
+    ".github/workflows/verify.yaml": "a2d0c1270e2097aa79f0e64ebd87c8cd33331d78ca28d63e8f5877bc6099bbc7",
+    ".github/workflows/images.yaml": "d47af5bda66c69c10bb18aeb418983a28438c4c90ea4c51bf7e1513adb9057b9",
+    "scripts/image-smoke.mjs": "14bd4aebecdd5e9f8d50e83ed6d4ef8c43683caaa91dbc2bfb486444ebfeaa30",
+    "scripts/package-smoke.mjs": "223bb222373c56986c1f0dde59618c86929bd089c2412ab021ccd03919decdb8"
   },
   "tests": {
     "unitApiAdapter": {
@@ -60,11 +65,11 @@
   },
   "package": {
     "path": "releases/agentci-0.2.0-m1-dev.tgz",
-    "sha256": "28df75eed6000470cfe710722293898c1e4d76b61bbdf8a00e1ab47444799fb4",
+    "sha256": "c2cb798fd8e268b6860df3bbc410ff90ab3e2bc5ec904907e072b1c72e3d9263",
     "cleanProductionInstall": "passed"
   },
   "images": {
-    "base": "registry.access.redhat.com/ubi9/nodejs-22-minimal@sha256:ca1c79182159009eb15a041bc6bb16f390a4e738b9d57d6cc4975f3b2981788b",
+    "base": "registry.access.redhat.com/ubi10/ubi-minimal@sha256:204e1531cee54562b107fb31e0b327062fc3d5d67af7cc0d2e66b2c572b9044f",
     "runtimeSmoke": {
       "result": "passed",
       "version": "0.2.0-m1-dev",
@@ -83,25 +88,39 @@
     "scans": {
       "api": {
         "report": ".agentci/artifacts/m1/api-trivy.json",
-        "sha256": "a1d2669e050ec6dd0044df04162c16d5183f10f51cbf4c423514dd53ea3f9a8e",
+        "sha256": "b5d6e514a51b16efe4a8799e2c09da826b8dfafe15ba829e37612d4c8e7ccf32",
         "counts": {
-          "MEDIUM": 282,
-          "LOW": 143,
-          "HIGH": 45
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0,
+          "UNKNOWN": 0
         },
         "fixableHighOrCritical": 0,
-        "disposition": "open; no risk acceptance claimed"
+        "disposition": "No known findings in detected packages; native binary and vendor coverage assessment remains open",
+        "scanner": "Trivy 0.75.0",
+        "detectedOs": {
+          "Family": "redhat",
+          "Name": "10.2"
+        }
       },
       "worker": {
         "report": ".agentci/artifacts/m1/worker-trivy.json",
-        "sha256": "8e5f0f664134c0ef1068ff754a090b803fe284b3cb33bdcdc65d71b1610c595e",
+        "sha256": "15c0b759a1c949971e60235cc7bd6fb391aa8b21be480c8932f2bafc3cc56b0a",
         "counts": {
-          "MEDIUM": 282,
-          "LOW": 143,
-          "HIGH": 45
+          "CRITICAL": 0,
+          "HIGH": 0,
+          "MEDIUM": 0,
+          "LOW": 0,
+          "UNKNOWN": 0
         },
         "fixableHighOrCritical": 0,
-        "disposition": "open; no risk acceptance claimed"
+        "disposition": "No known findings in detected packages; native binary and vendor coverage assessment remains open",
+        "scanner": "Trivy 0.75.0",
+        "detectedOs": {
+          "Family": "redhat",
+          "Name": "10.2"
+        }
       }
     }
   },
@@ -112,5 +131,13 @@
     "Vendor vulnerability disposition",
     "Public GHCR digests and downloaded-image smoke",
     "GitHub release/assets and completed-phase demo"
-  ]
+  ],
+  "runtime": {
+    "node": "26.10.0",
+    "npm": "12.2.0",
+    "typescript": "7.0.2",
+    "postgres": "18.6",
+    "nodeReleaseLine": "Current",
+    "directDependenciesLatestVerified": "2026-10-03"
+  }
 }

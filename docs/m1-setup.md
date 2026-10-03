@@ -5,12 +5,15 @@ production SaaS deployment. No AgentCI images have been published to GHCR yet.
 Local image names are `agentci-api:0.2.0-m1-dev` and
 `agentci-worker:0.2.0-m1-dev`; intended registry names are
 `ghcr.io/alimobrem/agentci-api` and `ghcr.io/alimobrem/agentci-worker`.
-Both service images use Red Hat UBI 9 Node.js 22 minimal, pinned by digest.
-PostgreSQL and the local Temporal development server use their upstream images.
+Both service images use Red Hat UBI 10 minimal with official Node.js 26.10.0, pinned by digest.
+PostgreSQL 18.6 and the local Temporal development server use their upstream images.
+PostgreSQL 18 mounts `/var/lib/postgresql`; its separate `postgres18-data` volume
+leaves earlier PostgreSQL 17 volumes intact. Existing data requires a reviewed
+`pg_upgrade` or dump/restore migration; switching image versions does not migrate it.
 
 ## Local preview without GitHub credentials
 
-Requires Node.js >=22.17, npm, Git, Docker and its running daemon.
+Requires Node.js 26.10.0 (26.x), npm, Git, Docker and its running daemon.
 
 ```sh
 npm ci

@@ -33,7 +33,7 @@ service images, and Temporal integration are not included.
 
 ## Try the released CLI
 
-Requires **Node.js >=22.17** and npm. The compiled package needs production
+Requires **Node.js 26.10.0 (26.x)** and npm. The compiled package needs production
 dependencies only; it is downloaded from the GitHub release, not the npm registry.
 
 ```sh

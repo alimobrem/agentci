@@ -1,6 +1,9 @@
 # Development and verification
 
-Run commands from the source checkout. Node.js >=22.17 and npm are required.
+Run commands from the source checkout. Node.js 26.10.0 (26.x) and npm 12.2.0 are required.
+See [the dependency policy](dependency-policy.md) for version choices.
+Use the versions in `.node-version` and `package.json`; install npm with
+`npm install --global npm@12.2.0` before `npm ci`.
 
 ## Local API
 
