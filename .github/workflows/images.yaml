@@ -1,0 +1,56 @@
+name: Publish service images
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Immutable candidate version; must match package.json
+        required: true
+permissions:
+  contents: read
+  packages: write
+jobs:
+  verify:
+    uses: ./.github/workflows/verify.yaml
+    permissions: { contents: read }
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with: { persist-credentials: false }
+      - name: Validate candidate identity
+        env: { CANDIDATE_VERSION: "${{ inputs.version }}" }
+        run: |
+          node -e 'const p=require("./package.json");if(process.env.CANDIDATE_VERSION!==p.version||!/^\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?$/.test(p.version))process.exit(1)'
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
+      - uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130
+        with: { platforms: arm64 }
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
+        id: api
+        with:
+          context: .
+          target: api
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ghcr.io/alimobrem/agentci-api:${{ inputs.version }}
+          labels: "org.opencontainers.image.source=https://github.com/alimobrem/agentci\norg.opencontainers.image.revision=${{ github.sha }}"
+      - uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
+        id: worker
+        with:
+          context: .
+          target: worker
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ghcr.io/alimobrem/agentci-worker:${{ inputs.version }}
+          labels: "org.opencontainers.image.source=https://github.com/alimobrem/agentci\norg.opencontainers.image.revision=${{ github.sha }}"
+      - name: Record published identities
+        env:
+          API_DIGEST: ${{ steps.api.outputs.digest }}
+          WORKER_DIGEST: ${{ steps.worker.outputs.digest }}
+        run: |
+          printf 'API: ghcr.io/alimobrem/agentci-api@%s\nWorker: ghcr.io/alimobrem/agentci-worker@%s\n' "$API_DIGEST" "$WORKER_DIGEST" >> "$GITHUB_STEP_SUMMARY"
