@@ -1,0 +1,8 @@
+# Synthetic review data only; this file grants no actual infrastructure access.
+apiVersion: agentci.io/v1alpha1
+kind: PermissionManifest
+permissions:
+  - id: m1-demo-production-write
+    environment: production
+    actions: [write]
+    resources: [demo-cluster]
