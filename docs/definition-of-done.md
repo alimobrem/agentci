@@ -27,6 +27,7 @@ the published artifact checks pass.
 | --- | --- | --- |
 | Scope | Every milestone build item and exit criterion mapped; no silent scope reduction | Requirement IDs, implementation paths, acceptance scenario |
 | Correctness | Appropriate unit, integration, negative-path, and regression checks pass on the release source | Commands/run links, source SHA, passed/failed/skipped counts |
+| API correctness | Changed interfaces pass the [API correctness gates](api-quality.md), including contract, behavior and compatibility verification | Contract revision, operation coverage, integration results and compatibility decision |
 | Evals | Applicable deterministic/behavioral/adversarial cases meet defined thresholds | Corpus/suite revision, results, thresholds; explicit inapplicability reasons |
 | Reproducibility | Clean checkout of release source installs locked dependencies, builds and verifies | Node/tool versions, lockfile, clean-build record |
 | Runtime | The built CLI/services work from a production-dependency installation | Smoke results against compiled/package output, startup and failure behavior |

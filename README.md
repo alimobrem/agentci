@@ -80,7 +80,9 @@ A local build or tag is a release candidate. Deployable service milestones also
 require published OCI images with tested immutable digests.
 
 The [definition of done](docs/definition-of-done.md) specifies the evidence and
-blocking rules. The [milestone gates](docs/milestone-gates.md) preserve the M0–M10
+blocking rules. [API correctness](docs/api-quality.md) is a release blocker:
+contracts, errors, access controls, retries, and compatibility must be verified.
+The [milestone gates](docs/milestone-gates.md) preserve the M0–M10
 sequence. Product completion is separate from milestone completion.
 
 ## Project references
