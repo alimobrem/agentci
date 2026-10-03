@@ -258,6 +258,30 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M1-RELIABLE",
+      "title": "GitHub-hosted durable advisory review and artifact evidence",
+      "requirementIds": [
+        "SPEC-40-019",
+        "SPEC-40-020",
+        "SPEC-40-029"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-03T23:18:28.516Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Trusted main code reviews PRs on GitHub-hosted runners without executing PR code; artifact evidence is uploaded before Checks publish",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Real repository-only App workflow succeeds and evidence can be downloaded independently of local tunnel",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

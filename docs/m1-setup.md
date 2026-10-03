@@ -2,8 +2,8 @@
 
 M1 is in progress. This is a single-repository development deployment, not a
 production SaaS deployment. No AgentCI images have been published to GHCR yet.
-Local image names are `agentci-api:0.2.0-m1-dev` and
-`agentci-worker:0.2.0-m1-dev`; intended registry names are
+Local image names are `agentci-api:0.2.0-m1` and
+`agentci-worker:0.2.0-m1`; intended registry names are
 `ghcr.io/alimobrem/agentci-api` and `ghcr.io/alimobrem/agentci-worker`.
 Both service images use Red Hat UBI 10 minimal with official Node.js 26.10.0, pinned by digest.
 PostgreSQL 18.6 and the local Temporal development server use their upstream images.
@@ -20,8 +20,8 @@ npm ci
 npm run check
 npm run build
 node scripts/demo-m1.mjs
-docker build --target api -t agentci-api:0.2.0-m1-dev .
-docker build --target worker -t agentci-worker:0.2.0-m1-dev .
+docker build --target api -t agentci-api:0.2.0-m1 .
+docker build --target worker -t agentci-worker:0.2.0-m1 .
 node scripts/image-smoke.mjs
 ```
 
@@ -155,6 +155,34 @@ deduplicated; conflicting reuse returns 409. Failed workflows may restart on
 redelivery while their outbox entry is still pending. Already-dispatched failed
 workflows need an operator retry in Temporal or a new GitHub delivery ID; accepting
 the same delivery again does not automatically rerun a dispatched workflow.
+
+## GitHub-hosted repository dogfood
+
+The `AgentCI advisory review` workflow runs trusted `main` code on GitHub-hosted
+runners for PR events and main-branch updates. A 30-minute recovery schedule and
+manual dispatch reconcile every open PR, including changes to its base. Scheduled
+runs can be delayed by GitHub; this is advisory CI coverage, not an uptime SLA.
+The workflow never checks out or executes the PR head with credentials. It reads
+immutable Git objects through the repository-only App instead.
+
+The repository secret `AGENTCI_APP_PRIVATE_KEY` holds the encrypted App key.
+Only trusted main-branch workflows may use it. Changes to trusted workflows or
+dependencies deserve careful review; this key grants the App's declared access.
+GitHub's workflow token has Contents read only. Checks write comes from the App.
+
+Each run uses isolated PostgreSQL and Temporal. Evidence and workflow history are
+uploaded as immutable Actions artifacts before a neutral Check is published.
+The Check links directly to the artifact; download requires GitHub authentication.
+Records contain exact PR/base/head identities, analysis digests and the producer
+version/source. Artifact retention is 90 days; download important records before
+expiry. Local webhook deployments keep their separate persistent PostgreSQL
+records and bearer-authenticated evidence API.
+
+A failed run is visible in Actions; workflow activity failures attempt an
+`action_required` Check. No neutral Check is published when evidence upload fails.
+Rerun after restoring credentials or dependencies, or dispatch the workflow to
+reconcile current open PRs. The next event/recovery run also retries missed work.
+Closed or superseded PR heads are skipped after a final identity check.
 
 ## Explicit inputs and limits
 

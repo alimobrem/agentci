@@ -13,7 +13,8 @@ OpenTelemetry, and deployment systems remain the integration foundations.
 
 **M0 is released. M1 is in progress.** The M1 local candidate has a deterministic
 review CLI, signed webhook ingestion, PostgreSQL evidence and Temporal processing.
-Live GitHub App dogfooding, CI, GHCR publication and the M1 release remain pending.
+The repository-scoped GitHub App has reviewed live PR commits. GitHub-hosted
+review is being verified; GHCR publication and the M1 release remain pending.
 See the [local demo and App setup](docs/m1-setup.md).
 
 | Available in M0 | Planned next |

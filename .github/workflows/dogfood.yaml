@@ -1,0 +1,81 @@
+name: AgentCI advisory review
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+  push:
+    branches: [main]
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: agentci-dogfood
+  cancel-in-progress: false
+jobs:
+  review:
+    if: github.repository == 'alimobrem/agentci'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    services:
+      postgres:
+        image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+        env: { POSTGRES_PASSWORD: agentci-ci-only, POSTGRES_DB: agentci }
+        ports: [5432:5432]
+        options: --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 3s --health-retries 20
+    env:
+      AGENTCI_REPOSITORY: alimobrem/agentci
+      GITHUB_APP_ID: '5179954'
+      GITHUB_INSTALLATION_ID: '167655696'
+      GITHUB_PRIVATE_KEY_FILE: ${{ runner.temp }}/agentci-app.pem
+      DATABASE_URL: postgresql://postgres:agentci-ci-only@127.0.0.1:5432/agentci
+      TEMPORAL_ADDRESS: 127.0.0.1:7233
+    steps:
+      # Never check out the PR head or execute files/dependencies from it with secrets.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { ref: main, persist-credentials: false }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0, cache: npm }
+      - run: npm install --global npm@12.2.0
+      - run: npm ci && npm run build
+      - name: Load repository-scoped App key
+        env:
+          APP_KEY: ${{ secrets.AGENTCI_APP_PRIVATE_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os
+          if not os.environ.get('APP_KEY'): raise SystemExit('Missing repository App secret')
+          with open(os.environ['GITHUB_PRIVATE_KEY_FILE'], 'w', opener=lambda p,f: os.open(p,f,0o600)) as key:
+              key.write(os.environ['APP_KEY'])
+          PY
+      - name: Start Temporal
+        run: docker run -d --name agentci-dogfood-temporal -p 127.0.0.1:7233:7233 temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e server start-dev --ip 0.0.0.0 --headless
+      - name: Wait for Temporal
+        run: |
+          node --input-type=module - <<'JS'
+          import { Connection } from '@temporalio/client';
+          let ready=false;
+          for(let i=0;i<60;i++) {try {const c=await Connection.connect({address:process.env.TEMPORAL_ADDRESS,connectTimeout:'2 seconds'});await c.close();ready=true;break;} catch {await new Promise(r=>setTimeout(r,1000));}}
+          if(!ready)throw new Error('Temporal unavailable');
+          JS
+      - name: Review exact open PR revisions
+        id: prepare
+        run: node dist/cmd/dogfood/main.js prepare
+      - name: Retain evidence before publishing Checks
+        id: evidence
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: agentci-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .agentci/artifacts/dogfood/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 90
+      - name: Publish advisory Checks with retained evidence
+        if: success()
+        env:
+          AGENTCI_ARTIFACT_URL: ${{ steps.evidence.outputs.artifact-url }}
+        run: node dist/cmd/dogfood/main.js publish
+      - name: Remove ephemeral key
+        if: always()
+        run: rm -f "$GITHUB_PRIVATE_KEY_FILE"
