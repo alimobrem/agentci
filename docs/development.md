@@ -46,10 +46,11 @@ npm pack --pack-destination releases
 node scripts/package-smoke.mjs releases/agentci-0.1.0-m0.tgz
 ```
 
-The smoke test uses npm's offline cache. It performs a clean production-only
-installation and checks the executable version, valid input, and invalid-input
-exit code. It fails if dependencies are not cached. Ordinary installation may
-fetch production dependencies from npm.
+The current smoke test performs a clean production-only installation and checks
+the executable version, valid input, and invalid-input exit code. Installation
+may fetch dependencies/registry metadata from npm. Add `--offline` only when the
+cache is populated; missing cache entries then fail the check. The historical
+M0-tag script uses offline mode by default.
 
 Build output includes compiled JavaScript, TypeScript declarations and JSON Schema
 assets. The CLI works without tsx/TypeScript in the installed production package.

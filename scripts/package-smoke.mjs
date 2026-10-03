@@ -4,10 +4,12 @@ import { resolve, join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 
 const expectedVersion = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')).version;
-const archive = resolve(process.argv[2] ?? `releases/agentci-${expectedVersion}.tgz`);
+const arguments_ = process.argv.slice(2);
+const offline = arguments_.includes('--offline');
+const archive = resolve(arguments_.find(argument => !argument.startsWith('--')) ?? `releases/agentci-${expectedVersion}.tgz`);
 const root = await mkdtemp(join(tmpdir(), 'agentci-package-'));
 try {
-  execFileSync('npm', ['install', '--offline', '--omit=dev', '--no-audit', '--no-fund', '--prefix', root, archive], { stdio: 'pipe' });
+  execFileSync('npm', ['install', ...(offline ? ['--offline'] : []), '--omit=dev', '--no-audit', '--no-fund', '--prefix', root, archive], { stdio: 'pipe' });
   const cli = join(root, 'node_modules/.bin/agentci');
   const version = execFileSync(cli, ['--version'], { encoding: 'utf8' }).trim();
   if (version !== expectedVersion) throw new Error('Unexpected packaged version');
