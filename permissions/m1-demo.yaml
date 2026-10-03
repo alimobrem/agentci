@@ -1,8 +1,8 @@
-# Deliberately invalid synthetic review input; this branch is never merged.
+# Synthetic review data only; this branch is never merged.
 apiVersion: agentci.io/v1alpha1
 kind: PermissionManifest
 permissions:
   - id: m1-demo-production-write
     environment: production
-    actions: [administrator]
+    actions: [write]
     resources: [demo-cluster]
