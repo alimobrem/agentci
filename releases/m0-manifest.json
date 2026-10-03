@@ -1,0 +1,31 @@
+{
+  "version": "0.1.0-m0",
+  "milestone": "M0",
+  "releaseType": "local",
+  "date": "2026-10-03",
+  "sourceTag": "v0.1.0-m0",
+  "artifact": "releases/agentci-0.1.0-m0.tgz",
+  "sha256": "7612f704c844f85c27ccee2b8fe9625597724a3c693c03cd5b96f665becfacbc",
+  "specSha256": "7ced118d5ac3456e78e3096d069043c9abf3070fde63c0f02b6d56b073690e17",
+  "verification": {
+    "typecheck": "passed",
+    "tests": {
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0
+    },
+    "contractEvals": {
+      "passed": 6,
+      "failed": 0
+    },
+    "repositoryValidation": "passed",
+    "statusFreshness": "passed",
+    "packageSmoke": "passed",
+    "dependencyVulnerabilities": 0
+  },
+  "limitations": [
+    "Local release; not published to npm or GitHub",
+    "M1 not started; no PR review",
+    "API is a local development skeleton"
+  ]
+}

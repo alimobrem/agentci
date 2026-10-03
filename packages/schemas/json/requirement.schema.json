@@ -1,0 +1,191 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentci.io/schemas/v1alpha1/requirement.schema.json",
+  "title": "requirement",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "functional",
+        "nonfunctional",
+        "safety",
+        "security",
+        "privacy",
+        "performance",
+        "cost",
+        "availability",
+        "compliance",
+        "human-approval",
+        "business-invariant"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verification": {
+      "type": "object",
+      "properties": {
+        "deterministicPolicy": {
+          "type": "string",
+          "enum": [
+            "required",
+            "optional",
+            "not-applicable"
+          ]
+        },
+        "behavioralEval": {
+          "type": "string",
+          "enum": [
+            "required",
+            "optional",
+            "not-applicable"
+          ]
+        },
+        "deterministicTest": {
+          "type": "string",
+          "enum": [
+            "required",
+            "optional",
+            "not-applicable"
+          ]
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "risk": {
+      "type": "object",
+      "properties": {
+        "severity": {
+          "type": "string",
+          "enum": [
+            "informational",
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        }
+      },
+      "required": [
+        "severity"
+      ],
+      "additionalProperties": false
+    },
+    "owners": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 0,
+      "uniqueItems": true
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "section": {
+          "type": "string",
+          "minLength": 1
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": [
+        "path",
+        "section",
+        "line"
+      ],
+      "additionalProperties": false
+    },
+    "implementation": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "not-started",
+            "in-progress",
+            "implemented",
+            "tested",
+            "deferred"
+          ]
+        },
+        "milestone": {
+          "type": "string",
+          "enum": [
+            "M0",
+            "M1",
+            "M2",
+            "M3",
+            "M4",
+            "M5",
+            "M6",
+            "M7",
+            "M8",
+            "M9",
+            "M10"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "status",
+        "milestone",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "type",
+    "status",
+    "text"
+  ],
+  "additionalProperties": false
+}

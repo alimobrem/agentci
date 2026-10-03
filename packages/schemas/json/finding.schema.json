@@ -1,0 +1,187 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentci.io/schemas/v1alpha1/finding.schema.json",
+  "title": "finding",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]*$"
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "model-review",
+            "static-analysis",
+            "test",
+            "eval",
+            "policy",
+            "replay",
+            "production",
+            "human"
+          ]
+        },
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producerVersion": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "informational",
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "deduplicated",
+        "reproduction-pending",
+        "confirmed",
+        "unconfirmed",
+        "false-positive",
+        "resolved"
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]*$"
+              },
+              "uri": {
+                "type": "string",
+                "format": "uri"
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "reproduction": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "confirmed",
+            "unconfirmed",
+            "false-positive",
+            "not-applicable"
+          ]
+        },
+        "test": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]*$"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "blocking": {
+      "type": "boolean"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "subject": {
+      "type": "object",
+      "properties": {
+        "gitSha": {
+          "type": "string",
+          "pattern": "^[a-fA-F0-9]{40}([a-fA-F0-9]{24})?$"
+        },
+        "pullRequest": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "gitSha"
+      ],
+      "additionalProperties": false
+    },
+    "extensions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "id",
+    "source",
+    "category",
+    "severity",
+    "claim",
+    "evidence",
+    "reproduction",
+    "blocking"
+  ],
+  "additionalProperties": false
+}

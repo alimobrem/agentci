@@ -1,0 +1,322 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentci.io/schemas/v1alpha1/agent-project.schema.json",
+  "title": "agent-project",
+  "type": "object",
+  "properties": {
+    "apiVersion": {
+      "const": "agentci.io/v1alpha1"
+    },
+    "kind": {
+      "const": "AgentProject"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]*$"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "object",
+          "properties": {
+            "defaultBranch": {
+              "type": "string",
+              "minLength": 1
+            },
+            "repository": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "defaultBranch"
+          ],
+          "additionalProperties": false
+        },
+        "specifications": {
+          "type": "object",
+          "properties": {
+            "include": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "include"
+          ],
+          "additionalProperties": false
+        },
+        "implementation": {
+          "type": "object",
+          "properties": {
+            "include": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "include"
+          ],
+          "additionalProperties": false
+        },
+        "evals": {
+          "type": "object",
+          "properties": {
+            "include": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "include"
+          ],
+          "additionalProperties": false
+        },
+        "policies": {
+          "type": "object",
+          "properties": {
+            "include": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "include"
+          ],
+          "additionalProperties": false
+        },
+        "prompts": {
+          "type": "object",
+          "properties": {
+            "include": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "include"
+          ],
+          "additionalProperties": false
+        },
+        "models": {
+          "type": "object",
+          "properties": {
+            "allowedProviders": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]*$"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "defaultRoute": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]*$"
+            },
+            "providerExtensions": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              }
+            }
+          },
+          "required": [
+            "allowedProviders",
+            "defaultRoute"
+          ],
+          "additionalProperties": false
+        },
+        "ci": {
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "github-actions",
+                "tekton",
+                "jenkins",
+                "gitlab",
+                "generic"
+              ]
+            }
+          },
+          "required": [
+            "provider"
+          ],
+          "additionalProperties": false
+        },
+        "telemetry": {
+          "type": "object",
+          "properties": {
+            "protocol": {
+              "const": "otlp"
+            },
+            "contentCapture": {
+              "type": "string",
+              "enum": [
+                "none",
+                "metadata-only",
+                "redacted",
+                "full-encrypted",
+                "customer-local"
+              ],
+              "default": "metadata-only"
+            },
+            "capture": {
+              "type": "object",
+              "properties": {
+                "modelInput": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "metadata-only",
+                    "redacted",
+                    "full-encrypted",
+                    "customer-local"
+                  ]
+                },
+                "modelOutput": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "metadata-only",
+                    "redacted",
+                    "full-encrypted",
+                    "customer-local"
+                  ]
+                },
+                "toolArguments": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "metadata-only",
+                    "redacted",
+                    "full-encrypted",
+                    "customer-local"
+                  ]
+                },
+                "toolOutput": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "metadata-only",
+                    "redacted",
+                    "full-encrypted",
+                    "customer-local"
+                  ]
+                },
+                "retrievedContext": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "metadata-only",
+                    "redacted",
+                    "full-encrypted",
+                    "customer-local"
+                  ]
+                },
+                "systemInstructions": {
+                  "type": "string",
+                  "enum": [
+                    "none",
+                    "metadata-only",
+                    "redacted",
+                    "full-encrypted",
+                    "customer-local"
+                  ]
+                }
+              },
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "protocol",
+            "contentCapture"
+          ],
+          "additionalProperties": false
+        },
+        "review": {
+          "type": "object",
+          "properties": {
+            "requiredCheckName": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "requiredCheckName"
+          ],
+          "additionalProperties": false
+        },
+        "extensions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "source",
+        "specifications",
+        "implementation",
+        "evals",
+        "policies",
+        "prompts",
+        "models",
+        "ci",
+        "telemetry",
+        "review"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+  ],
+  "additionalProperties": false
+}

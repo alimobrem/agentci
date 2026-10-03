@@ -1,0 +1,68 @@
+# Deterministic M0 contract corpus; not the future M2 eval manifest contract.
+scenarios:
+  - id: M0-EVAL-01
+    description: Explicit safety requirement is accepted
+    schema: requirement
+    document: {id: SAFETY-1, title: Approval, type: safety, status: active, text: Production restart requires approval.}
+    expectedValid: true
+  - id: M0-EVAL-02
+    description: Missing requirement text is rejected
+    schema: requirement
+    document: {id: SAFETY-2, title: Approval, type: safety, status: active}
+    expectedValid: false
+  - id: M0-EVAL-03
+    description: Typo in verification contract is rejected
+    schema: requirement
+    document:
+      id: SAFETY-3
+      title: Approval
+      type: safety
+      status: active
+      text: Production restart requires approval.
+      verification: {behaviorEval: required}
+    expectedValid: false
+  - id: M0-EVAL-04
+    description: Unconfirmed model assertion remains representable
+    schema: finding
+    document:
+      id: finding-1
+      source: {type: model-review, provider: customer-provider, model: example}
+      category: security
+      severity: high
+      claim: Potential approval bypass, not yet reproduced.
+      evidence: {files: [src/approval.ts:10]}
+      reproduction: {status: unconfirmed}
+      blocking: false
+    expectedValid: true
+  - id: M0-EVAL-05
+    description: Unknown reproduction certainty is rejected
+    schema: finding
+    document:
+      id: finding-2
+      source: {type: model-review}
+      category: security
+      severity: high
+      claim: Potential bypass.
+      evidence: {}
+      reproduction: {status: definitely-proven-by-consensus}
+      blocking: true
+    expectedValid: false
+  - id: M0-EVAL-06
+    description: Evidence cannot use an abbreviated commit
+    schema: evidence
+    document:
+      schemaVersion: v1alpha1
+      id: 826c017c-30f7-44b0-821b-2f63cebd0381
+      organizationId: 723c017c-30f7-44b0-821b-2f63cebd0381
+      kind: Finding
+      version: 1
+      createdAt: '2026-10-03T00:00:00Z'
+      subject: {gitSha: abc123}
+      claim:
+        sourceType: model-review
+        confidence: 0.5
+        verificationStatus: asserted
+        producer: {name: reviewer, version: '0.1.0'}
+      artifacts: []
+      edges: []
+    expectedValid: false

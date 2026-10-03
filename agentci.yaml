@@ -1,0 +1,36 @@
+apiVersion: agentci.io/v1alpha1
+kind: AgentProject
+metadata:
+  name: agentci
+spec:
+  source:
+    defaultBranch: main
+  specifications:
+    include:
+      - specs/agentci-full-spec.md
+      - specs/requirements.yaml
+  implementation:
+    include:
+      - apps/**
+      - cmd/**
+      - packages/**
+      - scripts/**
+  evals:
+    include:
+      - evals/**/*.yaml
+  policies:
+    include:
+      - policies/**
+  prompts:
+    include:
+      - prompts/**
+  models:
+    allowedProviders: [openai, anthropic, xai, google]
+    defaultRoute: standard
+  ci:
+    provider: auto
+  telemetry:
+    protocol: otlp
+    contentCapture: metadata-only
+  review:
+    requiredCheckName: agentci/review
