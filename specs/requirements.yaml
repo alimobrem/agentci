@@ -13778,11 +13778,12 @@ requirements:
       section: "40"
       line: 2064
     implementation:
-      status: in-progress
+      status: tested
       milestone: M1
       evidence:
         - packages/github/client.ts
         - docs/m1-setup.md
+        - docs/dogfood/m1-first-check.md
   - id: SPEC-40-015
     title: Milestone 1 - Semantic PR Review MVP
     type: functional
@@ -13862,6 +13863,7 @@ requirements:
       evidence:
         - packages/github/client.ts
         - apps/worker/activities.ts
+        - docs/dogfood/m1-first-check.md
   - id: SPEC-40-020
     title: Milestone 1 - Semantic PR Review MVP
     type: functional
@@ -13877,6 +13879,7 @@ requirements:
       evidence:
         - packages/storage/postgres.ts
         - tests/integration/m1.test.ts
+        - docs/dogfood/m1-first-check.md
   - id: SPEC-40-021
     title: Milestone 1 - Semantic PR Review MVP
     type: functional
@@ -14011,9 +14014,10 @@ requirements:
       section: "40"
       line: 2083
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M1
-      evidence: []
+      evidence:
+        - docs/dogfood/m1-first-check.md
   - id: SPEC-40-030
     title: Milestone 2 - Eval orchestration
     type: functional

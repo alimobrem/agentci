@@ -1,0 +1,9 @@
+{
+  "baseline": "M1 candidate contract captured before delivery-workflow changes; not a previous release",
+  "operations": [
+    { "operationId": "healthz", "method": "get", "path": "/healthz", "requirementIds": ["SPEC-40-015"], "tests": ["tests/control-api.test.ts"], "scenarios": ["healthy version response"] },
+    { "operationId": "readyz", "method": "get", "path": "/readyz", "requirementIds": ["SPEC-40-015"], "tests": ["tests/control-api.test.ts"], "scenarios": ["dependency ready", "dependency unavailable with sanitized 503"] },
+    { "operationId": "ingestGitHubWebhook", "method": "post", "path": "/v1/webhooks/github", "requirementIds": ["SPEC-40-015"], "tests": ["tests/control-api.test.ts", "tests/integration/m1.test.ts"], "scenarios": ["signed receipt", "duplicate and conflicting replay", "scope/signature/header/body failures", "persistence unavailable", "no work on rejected inputs"] },
+    { "operationId": "getEvidence", "method": "get", "path": "/v1/evidence/{id}", "requirementIds": ["SPEC-40-020"], "tests": ["tests/control-api.test.ts", "tests/integration/m1.test.ts"], "scenarios": ["immutable record and digest", "authorization before ID disclosure", "invalid/missing IDs", "unsupported method"] }
+  ]
+}

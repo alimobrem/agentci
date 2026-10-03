@@ -8,20 +8,19 @@ import { Ajv } from 'ajv';
 import { createRequire } from 'node:module';
 import { createControlApi } from '../apps/control/server.ts';
 import { DeliveryConflict } from '../packages/storage/postgres.ts';
-const config = { repository: 'example/repo', installationId: 12, secret: 's'.repeat(32), evidenceToken: 'e'.repeat(32) };
-const payload = { action: 'opened', number: 1, installation: { id: 12 }, repository: { full_name: 'example/repo' }, pull_request: { number: 1, base: { sha: 'a'.repeat(40), repo: { full_name: 'example/repo' } }, head: { sha: 'b'.repeat(40) } } };
+import { webhookConfig as config, openedPullRequest as payload, evidenceFixture } from './fixtures/control.ts';
 const contract: any = await SwaggerParser.dereference(JSON.parse(readFileSync(new URL('../specs/api/openapi.json', import.meta.url), 'utf8')));
 const ajv = new Ajv({ strict: false }); createRequire(import.meta.url)('ajv-formats')(ajv);
-async function api(t: any) {
+async function api(t: any, options: { unavailable?: boolean; evidence?: boolean; storageFailure?: boolean } = {}) {
   const deliveries = new Map<string, string>(); const jobs: unknown[] = [];
   const server = createControlApi(config, {
-    ready: async () => {}, evidence: async () => undefined,
-    recordDelivery: async (id, hash, job) => { if (deliveries.has(id)) { if (deliveries.get(id) !== hash) throw new DeliveryConflict(); return 'duplicate'; } deliveries.set(id, hash); if (job) jobs.push(job); return 'accepted'; },
+    ready: async () => { if (options.unavailable) throw new Error('fixture dependency unavailable'); }, evidence: async id => options.evidence && id === evidenceFixture().id ? evidenceFixture() : undefined,
+    recordDelivery: async (id, hash, job) => { if (options.storageFailure) throw new Error('fixture database failure'); if (deliveries.has(id)) { if (deliveries.get(id) !== hash) throw new DeliveryConflict(); return 'duplicate'; } deliveries.set(id, hash); if (job) jobs.push(job); return 'accepted'; },
   });
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   t.after(() => new Promise<void>(resolve => server.close(() => resolve())));
   const address = server.address(); if (!address || typeof address === 'string') throw new Error('Missing address');
-  const send = (body: string, id = randomUUID(), signature?: string) => fetch(`http://127.0.0.1:${address.port}/v1/webhooks/github`, { method: 'POST', headers: { 'content-type': 'application/json', 'x-github-event': 'pull_request', 'x-github-delivery': id, 'x-hub-signature-256': signature ?? `sha256=${createHmac('sha256', config.secret).update(body).digest('hex')}` }, body });
+  const send = (body: string, id: string = randomUUID(), signature?: string) => fetch(`http://127.0.0.1:${address.port}/v1/webhooks/github`, { method: 'POST', headers: { 'content-type': 'application/json', 'x-github-event': 'pull_request', 'x-github-delivery': id, 'x-hub-signature-256': signature ?? `sha256=${createHmac('sha256', config.secret).update(body).digest('hex')}` }, body });
   return { url: `http://127.0.0.1:${address.port}`, jobs, send };
 }
 async function matches(response: Response, path: string, method: string): Promise<Record<string, unknown>> {
@@ -54,4 +53,24 @@ test('evidence API requires credentials before revealing IDs and matches documen
   const invalid = await fetch(`${url}/v1/evidence/not-a-uuid`, { headers: { authorization: `Bearer ${config.evidenceToken}` } }); assert.equal(invalid.status, 400); await matches(invalid, path, 'get');
   const missing = await fetch(`${url}/v1/evidence/${randomUUID()}`, { headers: { authorization: `Bearer ${config.evidenceToken}` } }); assert.equal(missing.status, 404); await matches(missing, path, 'get');
   const health = await fetch(`${url}/healthz`); assert.equal(health.status, 200); await matches(health, '/healthz', 'get');
+});
+
+test('readiness covers healthy and unavailable dependencies; evidence success matches the shared contract', async t => {
+  const healthy = await api(t, { evidence: true });
+  const ready = await fetch(`${healthy.url}/readyz`); assert.equal(ready.status, 200); await matches(ready, '/readyz', 'get');
+  const record = await fetch(`${healthy.url}/v1/evidence/${evidenceFixture().id}`, { headers: { authorization: `Bearer ${config.evidenceToken}` } });
+  assert.equal(record.status, 200); assert.deepEqual(await matches(record, '/v1/evidence/{id}', 'get'), evidenceFixture());
+  const method = await fetch(`${healthy.url}/v1/evidence/${evidenceFixture().id}`, { method: 'POST' });
+  assert.equal(method.status, 405); assert.equal(method.headers.get('allow'), 'GET'); await matches(method, '/v1/evidence/{id}', 'get');
+  const broken = await api(t, { unavailable: true }); const response = await fetch(`${broken.url}/readyz`);
+  assert.equal(response.status, 503); const body = await matches(response, '/readyz', 'get'); assert(!JSON.stringify(body).includes('fixture dependency'));
+});
+test('webhook media, delivery headers and persistence failures match the contract without dispatch', async t => {
+  const healthy = await api(t), raw = JSON.stringify(payload);
+  const media = await fetch(`${healthy.url}/v1/webhooks/github`, { method: 'POST', body: raw });
+  assert.equal(media.status, 415); await matches(media, '/v1/webhooks/github', 'post');
+  const invalidId = await healthy.send(raw, 'not-a-uuid'); assert.equal(invalidId.status, 400); await matches(invalidId, '/v1/webhooks/github', 'post');
+  const broken = await api(t, { storageFailure: true }); const failure = await broken.send(raw);
+  assert.equal(failure.status, 503); const body = await matches(failure, '/v1/webhooks/github', 'post'); assert(!JSON.stringify(body).includes('fixture database'));
+  assert.equal(healthy.jobs.length, 0); assert.equal(broken.jobs.length, 0);
 });

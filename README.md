@@ -98,3 +98,8 @@ sequence. Product completion is separate from milestone completion.
 - [Release notes](CHANGELOG.md)
 
 License: not yet selected.
+
+Development uses [small tasks and measured feedback loops](docs/delivery-workflow.md).
+Run `npm run check:fast` for local feedback and `npm run delivery -- report` for
+timings. M1's first live [dogfood Check](docs/dogfood/m1-first-check.md) is verified;
+the milestone remains in progress until its release and distribution gates pass.

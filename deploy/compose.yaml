@@ -16,9 +16,15 @@ services:
       retries: 20
   temporal:
     image: temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e
-    command: [server, start-dev, --ip, 0.0.0.0, --db-filename, /data/temporal.db]
-    volumes: [temporal-data:/data]
+    command: [server, start-dev, --ip, 0.0.0.0, --db-filename, /home/temporal/temporal.db]
+    volumes: [temporal-dev-data:/home/temporal]
     ports: ["127.0.0.1:8233:8233"]
+    healthcheck:
+      test: [CMD, temporal, operator, cluster, health, --address, "127.0.0.1:7233"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
   api:
     user: "${AGENTCI_UID:-1001}:${AGENTCI_GID:-0}"
     image: agentci-api:0.2.0-m1-dev
@@ -28,7 +34,7 @@ services:
       DATABASE_URL: postgresql://agentci:${POSTGRES_PASSWORD}@postgres:5432/agentci
       TEMPORAL_ADDRESS: temporal:7233
     ports: ["127.0.0.1:3000:3000"]
-    depends_on: { postgres: { condition: service_healthy }, temporal: { condition: service_started } }
+    depends_on: { postgres: { condition: service_healthy }, temporal: { condition: service_healthy } }
     restart: unless-stopped
   worker:
     user: "${AGENTCI_UID:-1001}:${AGENTCI_GID:-0}"
@@ -40,8 +46,8 @@ services:
       TEMPORAL_ADDRESS: temporal:7233
       GITHUB_PRIVATE_KEY_FILE: /run/secrets/github-app.pem
     volumes: ["${GITHUB_PRIVATE_KEY_FILE:?Set GITHUB_PRIVATE_KEY_FILE}:/run/secrets/github-app.pem:ro"]
-    depends_on: { postgres: { condition: service_healthy }, temporal: { condition: service_started } }
+    depends_on: { postgres: { condition: service_healthy }, temporal: { condition: service_healthy } }
     restart: unless-stopped
 volumes:
   postgres18-data:
-  temporal-data:
+  temporal-dev-data:

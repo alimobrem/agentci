@@ -76,3 +76,12 @@ cases, access-control failures, or unverified retry semantics block completion.
 M1 must establish these gates for its API and webhook surface before it can be
 called complete. Future milestones extend the contracts and verification with
 their own shipped operations; they do not bypass the gates.
+
+## Current M1 automation
+
+`specs/api/operations.json` maps every control operation to requirements and HTTP
+scenarios. Shared fixtures are in `tests/fixtures/control.ts`. Fast checks reject
+unmapped operations or API/domain schema drift. Full CI runs checksum-verified
+oasdiff against the documented M1 candidate baseline and a deliberate breaking
+endpoint-removal case. The baseline is not a prior release; after M1 publication,
+use the immutable released contract and review behavioral compatibility separately.

@@ -1066,13 +1066,13 @@ Milestone assignments outside the build-plan list are planning estimates, not am
 | SPEC-40-011 | 40 / 2057 | - `agentci validate` validates this repository | M0 | in-progress | tests/project.test.ts |
 | SPEC-40-012 | 40 / 2058 | - schemas have tests | M0 | in-progress | tests/schemas.test.ts |
 | SPEC-40-013 | 40 / 2062 | Build: | M1 | in-progress | docs/m1-setup.md |
-| SPEC-40-014 | 40 / 2064 | - GitHub App | M1 | in-progress | packages/github/client.ts, docs/m1-setup.md |
+| SPEC-40-014 | 40 / 2064 | - GitHub App | M1 | tested | packages/github/client.ts, docs/m1-setup.md, docs/dogfood/m1-first-check.md |
 | SPEC-40-015 | 40 / 2065 | - webhook ingestion | M1 | tested | apps/control/server.ts, tests/control-api.test.ts, tests/integration/m1.test.ts |
 | SPEC-40-016 | 40 / 2066 | - base/head checkout/resolution | M1 | in-progress | packages/review/git.ts, packages/github/client.ts, tests/review.test.ts |
 | SPEC-40-017 | 40 / 2067 | - semantic diff v1 | M1 | tested | packages/review/engine.ts, tests/review.test.ts, evals/m1-semantic.yaml |
 | SPEC-40-018 | 40 / 2068 | - deterministic risk rules | M1 | tested | packages/review/engine.ts, tests/review.test.ts, evals/m1-semantic.yaml |
-| SPEC-40-019 | 40 / 2069 | - GitHub Check publishing | M1 | in-progress | packages/github/client.ts, apps/worker/activities.ts |
-| SPEC-40-020 | 40 / 2070 | - evidence records | M1 | in-progress | packages/storage/postgres.ts, tests/integration/m1.test.ts |
+| SPEC-40-019 | 40 / 2069 | - GitHub Check publishing | M1 | in-progress | packages/github/client.ts, apps/worker/activities.ts, docs/dogfood/m1-first-check.md |
+| SPEC-40-020 | 40 / 2070 | - evidence records | M1 | in-progress | packages/storage/postgres.ts, tests/integration/m1.test.ts, docs/dogfood/m1-first-check.md |
 | SPEC-40-021 | 40 / 2072 | V1 semantic diff MUST detect: | M1 | tested | packages/review/engine.ts, evals/m1-semantic.yaml |
 | SPEC-40-022 | 40 / 2074 | - spec changes | M1 | tested | packages/review/engine.ts, tests/review.test.ts, evals/m1-semantic.yaml |
 | SPEC-40-023 | 40 / 2075 | - model/config changes | M1 | tested | packages/review/engine.ts, tests/review.test.ts, evals/m1-semantic.yaml |
@@ -1081,7 +1081,7 @@ Milestone assignments outside the build-plan list are planning estimates, not am
 | SPEC-40-026 | 40 / 2078 | - prompt changes | M1 | tested | packages/review/engine.ts, tests/review.test.ts, evals/m1-semantic.yaml |
 | SPEC-40-027 | 40 / 2079 | - dependency changes | M1 | tested | packages/review/engine.ts, tests/review.test.ts, evals/m1-semantic.yaml |
 | SPEC-40-028 | 40 / 2081 | Exit criteria: | M1 | not-started |  |
-| SPEC-40-029 | 40 / 2083 | - AgentCI repository uses advisory AgentCI check on every PR | M1 | not-started |  |
+| SPEC-40-029 | 40 / 2083 | - AgentCI repository uses advisory AgentCI check on every PR | M1 | in-progress | docs/dogfood/m1-first-check.md |
 | SPEC-40-030 | 40 / 2087 | Build: | M2 | not-started |  |
 | SPEC-40-031 | 40 / 2089 | - eval manifest | M2 | not-started |  |
 | SPEC-40-032 | 40 / 2090 | - native command runner | M2 | not-started |  |

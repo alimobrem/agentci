@@ -110,3 +110,13 @@ completion report. Explain the inputs, observable behavior, and outputs in plain
 language, with reproducible commands or a usable interface. Demonstrate the
 milestone's acceptance scenario using the released build; identify anything
 simulated. A local simulation cannot stand in for a live integration exit criterion.
+
+## Automated completion record
+
+Use `releases/m1-gates.json` and `npm run release:check -- --require-complete`
+for the M1 gate record. The command rejects incomplete gate sets, pending checks,
+missing evidence, changed file hashes and evidence for another release source.
+CI supplies a source-identified evidence bundle. This validates the record's
+integrity; it does not replace reviewing assertions or verifying external assets.
+See [delivery workflow and measurement](delivery-workflow.md). Speed comparisons
+never authorize skipping a mandatory phase gate.

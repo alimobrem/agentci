@@ -7,7 +7,7 @@ import { Octokit } from '@octokit/rest';
 import { currentPullRequest, publishCheck, remoteSnapshot } from '../packages/github/client.ts';
 import { analyze } from '../packages/review/engine.ts';
 import { readFileSync } from 'node:fs';
-const job = { repository: 'example/repo', installationId: 12, pullRequest: 1, baseSha: 'a'.repeat(40), headSha: 'b'.repeat(40) };
+import { reviewJob as job } from './fixtures/control.ts';
 async function provider(t: any) {
   const files = { 'agentci.yaml': readFileSync(new URL('../agentci.yaml', import.meta.url), 'utf8'), 'specs/agentci-full-spec.md': 'Example spec.' };
   const blobs = Object.entries(files).map(([path, text]) => ({ path, bytes: Buffer.from(text), sha: createHash('sha1').update(`blob ${Buffer.byteLength(text)}\0`).update(text).digest('hex') }));

@@ -40,6 +40,21 @@ separate: see `tests/integration/m1.test.ts` and the verification workflow.
 
 ## Register and install the App
 
+The owner-authorized private `AgentCI-alimobrem` App is now installed only on
+`alimobrem/agentci`. Its first real Check and evidence are recorded in
+[the dogfood record](dogfood/m1-first-check.md). This local instance uses a temporary
+tunnel and is not a continuously available release deployment.
+
+For a new registration, `npm run setup:github` implements GitHub's manifest flow.
+Set `AGENTCI_SETUP_URL` to a reachable HTTPS origin forwarding to localhost:3000;
+run the helper before the API binds that port. Open its one-session setup URL,
+create the private App, select only `alimobrem/agentci`, and install. It verifies
+scope through the App API, writes `.env` with mode 0600, and stores the PEM under
+ignored `.agentci/local/` with private permissions. It refuses to overwrite `.env`.
+Stop the helper before starting Compose. Keep the tunnel alive afterward.
+The helper is specific to this repository and never prints credentials.
+
+
 In GitHub Settings → Developer settings → GitHub Apps, create an App with a unique
 name and homepage pointing to the AgentCI repository. Set its webhook URL to
 `https://YOUR_REACHABLE_ORIGIN/v1/webhooks/github` and enable webhook delivery.
@@ -56,7 +71,7 @@ Set a randomly generated webhook secret. Request repository permissions:
 
 Subscribe to `Pull request`. Install the App using **Only select repositories →
 alimobrem/agentci**. Do not request contents write, organization access, or repair
-permissions. Download its private key outside the repository, keep mode 0600, and
+permissions. Download its private key outside tracked source, keep mode 0600, and
 record the App ID and installation ID. Do not paste secrets or private keys into
 chat, source, logs, or GitHub Actions output.
 

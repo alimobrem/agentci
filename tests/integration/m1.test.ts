@@ -9,6 +9,7 @@ import { Store, DeliveryConflict } from '../../packages/storage/postgres.ts';
 import { analyze, canonical, digest } from '../../packages/review/engine.ts';
 import { parseYaml } from '../../packages/project/index.ts';
 import { stringify } from 'yaml';
+import { reviewJob as job } from '../fixtures/control.ts';
 const databaseUrl = process.env.AGENTCI_TEST_DATABASE_URL;
 const temporalAddress = process.env.AGENTCI_TEST_TEMPORAL_ADDRESS;
 if (!databaseUrl || !temporalAddress) throw new Error('Integration tests require AGENTCI_TEST_DATABASE_URL and AGENTCI_TEST_TEMPORAL_ADDRESS; never silently skip');
@@ -18,7 +19,6 @@ test('PostgreSQL: concurrent webhook replay, transactional outbox, immutable evi
   try {
     await pool.query(await readFile(new URL('../../deploy/migrations/001_m1.sql', import.meta.url), 'utf8'));
     const store = new Store(pool, '00000000-0000-4000-8000-000000000001', 'example/repo'); await store.ready();
-    const job = { repository: 'example/repo', installationId: 12, pullRequest: 1, baseSha: 'a'.repeat(40), headSha: 'b'.repeat(40) };
     const id = randomUUID();
     const results = await Promise.all(Array.from({ length: 10 }, () => store.recordDelivery(id, 'digest', job)));
     assert.equal(results.filter(result => result === 'accepted').length, 1);
@@ -62,7 +62,6 @@ test('Temporal: durable activity retries, stale-head outcome, duplicate-start fe
   const worker = await Worker.create({ connection: native, taskQueue: queue, workflowsPath, activities });
   const run = worker.run();
   try {
-    const job = { repository: 'example/repo', installationId: 12, pullRequest: 1, baseSha: 'a'.repeat(40), headSha: 'b'.repeat(40) };
     const workflowId = randomUUID();
     const handle = await client.workflow.start('reviewPullRequest', { args: [job], workflowId, taskQueue: queue, workflowIdReusePolicy: 'REJECT_DUPLICATE' });
     assert.equal(await handle.result(), 'published'); assert.equal(attempts, 2); assert.equal(publications, 1);
