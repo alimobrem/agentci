@@ -1189,6 +1189,24 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M2-READINESS-EVIDENCE",
+      "title": "Refresh M2 readiness against merged source and verified CI evidence",
+      "requirementIds": [
+        "SPEC-34.2-003",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T18:12:33.335Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Retain independently verified Docker/default and cache-fix source/tree/artifact CI checkpoints and CI timing attempts; update current M2 guidance to distinguish merged hosted capability, real hosted acceptance, historical fourteen versus current fifteen integration groups, distribution follow-ups and still-pending release gates. Validate links, task ledger and phase status without claiming completion.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
