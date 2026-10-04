@@ -22,7 +22,8 @@
   Report local feedback, full CI, cycle time, blockers and quality separately.
   Never equate a faster check with proven total delivery acceleration.
 - Never commit `.env`, App keys, local credential files or artifact logs containing
-  credentials. App access stays limited to `alimobrem/agentci`. The temporary
+  credentials. The original App stays limited to `alimobrem/agentci`. The user-approved separate
+  onboarding App is limited to `alimobrem/agentci-onboarding-demo`. The temporary
   tunnel is a development endpoint; reliable every-PR operation is a release gate.
 - Give the user meaningful progress updates about once a minute during active
   work, and a released-build success/failure demo at each phase completion.

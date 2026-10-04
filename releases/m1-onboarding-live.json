@@ -1,0 +1,84 @@
+{
+  "state": "candidate-live-passed-publication-pending",
+  "candidateVersion": "0.2.1-m1",
+  "candidateCheckout": "0cb7eb2984d053a896337dc0a378473a2d1459bd",
+  "observedAt": "2026-10-04T04:19:25.159Z",
+  "repository": "https://github.com/alimobrem/agentci-onboarding-demo",
+  "pullRequest": "https://github.com/alimobrem/agentci-onboarding-demo/pull/1",
+  "app": {
+    "appId": 5182307,
+    "slug": "agentci-onboarding-demo",
+    "installationId": 167710386,
+    "repository": "alimobrem/agentci-onboarding-demo",
+    "permissions": {
+      "checks": "write",
+      "contents": "read",
+      "metadata": "read",
+      "pull_requests": "read"
+    },
+    "publicUrl": "https://mitchell-peer-filled-quick.trycloudflare.com",
+    "registeredAt": "2026-10-04T04:10:11.546Z"
+  },
+  "generatedFilesMatchCli": true,
+  "reviews": [
+    {
+      "id": "44c5753f-91a8-432e-a496-986bd48a36b2",
+      "repository": "alimobrem/agentci-onboarding-demo",
+      "pullRequest": 1,
+      "baseSha": "694456b234ac4974b03b0e898d983fd582ec7f31",
+      "headSha": "432323673b2b4682c67bfc4c5dbc5fd90b8b9383",
+      "digest": "sha256:4514bb5f3cb730eef85c67b26762b517ccaab466b858aaaf15b2f47323874b5f",
+      "risk": "high"
+    },
+    {
+      "id": "03854296-fe79-4e26-b153-1552e54e5b42",
+      "repository": "alimobrem/agentci-onboarding-demo",
+      "pullRequest": 1,
+      "baseSha": "694456b234ac4974b03b0e898d983fd582ec7f31",
+      "headSha": "6b7d877cb87e3596ed0f6f409807162e6cc0eb03",
+      "digest": "sha256:80665169bbf2849fe459a07c794557c7298525b792c26f29bd57c831355a9d8d",
+      "risk": "high"
+    }
+  ],
+  "failure": {
+    "headSha": "eeb191b987d908d30813dbe4454771284a06af2f",
+    "check": "https://github.com/alimobrem/agentci-onboarding-demo/pull/1/checks?check_run_id=111360228540",
+    "conclusion": "action_required",
+    "title": "AgentCI review unavailable",
+    "noEvidenceClaimed": true
+  },
+  "successCheck": "https://github.com/alimobrem/agentci-onboarding-demo/pull/1/checks?check_run_id=111359769003",
+  "agentClient": {
+    "installedPackage": true,
+    "ready": true,
+    "digestVerified": true,
+    "exactIdentityVerified": true,
+    "unauthorized401": true,
+    "wrongHeadRejected": true
+  },
+  "runtime": {
+    "apiPort": 3002,
+    "temporalUiPort": 8234,
+    "composeProject": "agentci-customer",
+    "base": "UBI 10 minimal",
+    "worker": "RUNNING",
+    "nativeArchitecture": "arm64",
+    "hostPathRecovery": "Colima does not share private/tmp; moved private key into ignored shared project local directory"
+  },
+  "limitations": [
+    "Candidate images locally built; released-build and anonymous download verification still pending.",
+    "Temporary development tunnel; no customer production availability claim.",
+    "Existing AgentCI App unchanged; new private key stored locally only."
+  ],
+  "recoveryChecks": [
+    {
+      "id": 111360447702,
+      "headSha": "6b7d877cb87e3596ed0f6f409807162e6cc0eb03",
+      "status": "completed",
+      "conclusion": "neutral",
+      "url": "https://github.com/alimobrem/agentci-onboarding-demo/runs/111360447702",
+      "title": "AgentCI advisory: high risk",
+      "summary": "Advisory deterministic review. Risk: **high**.\nBase: 694456b234ac4974b03b0e898d983fd582ec7f31; head: 6b7d877cb87e3596ed0f6f409807162e6cc0eb03.\nChanged files: 1. Behavioral evals: not applicable in M1.\n- permissions/production.yaml: permission, policy\n- high / inferred: Configured policy or permission input changed; access impact needs review.\n- high / verified: Explicit production write permission added.\n[Detailed evidence](https://mitchell-peer-filled-quick.trycloudflare.com/v1/evidence/03854296-fe79-4e26-b153-1552e54e5b42)"
+    }
+  ]
+}

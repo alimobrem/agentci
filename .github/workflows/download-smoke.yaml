@@ -1,28 +1,56 @@
 name: Verify published image downloads
 on:
   workflow_dispatch:
+    inputs:
+      source_commit:
+        description: Full immutable release source SHA
+        required: true
+      version:
+        description: Package version at the release source
+        required: true
+      api_image:
+        description: Public API image with sha256 digest
+        required: true
+      worker_image:
+        description: Public worker image with sha256 digest
+        required: true
 permissions:
   contents: read
 jobs:
   smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      RELEASE_SOURCE: ${{ inputs.source_commit }}
+      RELEASE_VERSION: ${{ inputs.version }}
+      API_IMAGE: ${{ inputs.api_image }}
+      WORKER_IMAGE: ${{ inputs.worker_image }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
-          ref: 620230fd49d09e788d9a6a2783b57428882f5927
+          ref: ${{ inputs.source_commit }}
           persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with: { node-version: 26.10.0 }
+      - name: Validate immutable release inputs
+        run: |
+          node --input-type=module - <<'JS'
+          import {readFileSync} from 'node:fs';
+          if(!/^[a-f0-9]{40}$/.test(process.env.RELEASE_SOURCE))throw new Error('Full source SHA required');
+          if(JSON.parse(readFileSync('package.json')).version!==process.env.RELEASE_VERSION)throw new Error('Version mismatch');
+          for(const role of ['api','worker'])if(!new RegExp('^ghcr\\.io/alimobrem/agentci-'+role+'@sha256:[a-f0-9]{64}$').test(process.env[role.toUpperCase()+'_IMAGE']))throw new Error('Immutable image digest required');
+          JS
+          test "$(git rev-parse HEAD)" = "$RELEASE_SOURCE"
       - name: Anonymously pull the immutable release digests
         run: |
-          docker pull ghcr.io/alimobrem/agentci-api@sha256:35ff1317c2b91aa39be4289e7a0ccc8427611aadd69ac5a24f416db3497b5063
-          docker pull ghcr.io/alimobrem/agentci-worker@sha256:c1dc99cd51b7490e1033362e30e14c7e967e09e659f73aaeaae1faa1a4186a88
-          docker tag ghcr.io/alimobrem/agentci-api@sha256:35ff1317c2b91aa39be4289e7a0ccc8427611aadd69ac5a24f416db3497b5063 agentci-api:downloaded
-          docker tag ghcr.io/alimobrem/agentci-worker@sha256:c1dc99cd51b7490e1033362e30e14c7e967e09e659f73aaeaae1faa1a4186a88 agentci-worker:downloaded
+          export DOCKER_CONFIG="$(mktemp -d)"
+          docker pull "$API_IMAGE"
+          docker pull "$WORKER_IMAGE"
+          docker tag "$API_IMAGE" agentci-api:downloaded
+          docker tag "$WORKER_IMAGE" agentci-worker:downloaded
           for role in api worker; do
             test "$(docker image inspect --format '{{.Architecture}}' agentci-$role:downloaded)" = amd64
-            test "$(docker image inspect --format '{{index .Config.Labels "org.opencontainers.image.revision"}}' agentci-$role:downloaded)" = 620230fd49d09e788d9a6a2783b57428882f5927
+            test "$(docker image inspect --format '{{index .Config.Labels "org.opencontainers.image.revision"}}' agentci-$role:downloaded)" = "$RELEASE_SOURCE"
           done
       - name: Verify native amd64 published runtime
         run: node scripts/image-smoke.mjs downloaded > downloaded-image-smoke.json

@@ -52,6 +52,7 @@ of total delivery acceleration.
 
 The user added fresh-repository onboarding and agent/API usage gates before M2.
 Current candidate `0.2.1-m1` is in-progress with 18 pending release gates; it is
-not released or customer-validated. The historical `0.2.0-m1` release remains
+not released. Live candidate customer onboarding passed; released-build acceptance
+and distribution remain pending. The historical `0.2.0-m1` release remains
 immutable. M2 is not-started. A separate demo App is required for a live fresh-repo
 acceptance scenario; the existing App stays restricted to alimobrem/agentci.

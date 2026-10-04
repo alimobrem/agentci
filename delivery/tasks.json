@@ -347,7 +347,7 @@
         "SPEC-40-019",
         "SPEC-40-029"
       ],
-      "status": "blocked",
+      "status": "in-progress",
       "startedAt": "2026-10-04T00:41:40.241Z",
       "completedAt": null,
       "acceptance": [
@@ -361,8 +361,25 @@
           "status": "pending",
           "evidence": []
         }
+      ]
+    },
+    {
+      "id": "M1-DOWNLOAD-VERIFY",
+      "title": "Verify any immutable M1 candidate on native downloaded images",
+      "requirementIds": [
+        "SPEC-40-019",
+        "SPEC-40-029"
       ],
-      "blockedReason": "Explicit separate demo repository/App approval pending; existing App scope remains only alimobrem/agentci"
+      "status": "in-progress",
+      "startedAt": "2026-10-04T04:16:42.529Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Workflow validates explicit source/version/digests and native amd64 published runtime; actionlint and real release run pass",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

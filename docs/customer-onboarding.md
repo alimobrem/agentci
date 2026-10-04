@@ -92,7 +92,10 @@ use that API port in readiness/client URLs. The generated `.env` retains both po
 The `.env` binds App/installation/repository, organization UUID, webhook secret,
 evidence bearer token and a database password. Compose supplies database and
 Temporal addresses. Expose only the webhook API through trusted HTTPS. Keep the
-key host path shared with Docker and readable by the chosen UID. UBI 10 amd64
+key host path shared with Docker and readable by the chosen UID. With Colima on
+macOS, a deployment under `/private/tmp` may not be shared; use a private directory
+under your shared home directory and confirm the mounted key is a file before
+starting the worker. A ready API alone does not confirm a running worker. UBI 10 amd64
 requires x86-64-v3. The included persistent Temporal development server supports
 the local onboarding preview, not production service operation. Production
 Temporal hosting, retention/backup automation and uptime are outside this claim.
