@@ -3,6 +3,7 @@ import {evalSuite} from '../fixtures/evals.ts';
 import {runIsolated,snapshotInputs,validateRunnerPolicy} from '../../packages/evals/runner.ts';
 import {normalizeTrial} from '../../packages/evals/adapters.ts';
 import {execFileSync} from 'node:child_process';
+import {executeComparison} from '../../packages/evals/execution.ts';
 const image=process.env.AGENTCI_TEST_RUNNER_IMAGE;
 test('runner rejects mutable images and credential/escaping snapshot inputs',()=>{
   assert.throws(()=>validateRunnerPolicy({image:'runner:latest'}),/pinned/);
@@ -36,4 +37,8 @@ test('real isolated UBI runner: boundaries, pytest failures, timeouts, cancellat
     const raw=await run(script,{runner:{...native.spec.runner,maxOutputBytes:1024}});assert.equal(raw.reportError,'missing-or-invalid-report');assert.equal(normalizeTrial(native,raw).error,'missing-report');
   }
   assert.equal(containers(),before,'all created containers must be removed, including aborted runners');
+  const repeated=evalSuite({runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:5000},trials:{count:3,passRate:1,confidenceMethod:'wilson'}});
+  const comparison=await executeComparison('owner/repo',{sha:'c'.repeat(40),files:{'check.mjs':'process.exit(0)'}},{sha:'d'.repeat(40),files:{'check.mjs':'process.exit(1)'}},repeated,policy);
+  assert.equal(comparison.base.status,'passed');assert.equal(comparison.head.status,'failed');assert.deepEqual(comparison.regressions,['safe-response']);assert.equal(comparison.head.scenarios[0]!.failed,3);
+  assert.equal(containers(),before);
 });

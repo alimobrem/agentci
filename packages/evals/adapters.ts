@@ -18,7 +18,7 @@ export function normalizeTrial(suite:EvalSuite,run:RunnerResult):Normalized {
   const fail=(error:string):Normalized=>({results:Object.fromEntries(suite.spec.scenarios.map(s=>[s.id,{status:'error'}])),error});
   if(run.status!=='completed')return fail(run.status);
   if(run.exitCode===null)return fail('missing-exit-code');
-  if(suite.spec.runner.adapter==='command')return [0,1].includes(run.exitCode)?{results:{[suite.spec.scenarios[0]!.id]:{status:run.exitCode===0?'passed':'failed',latencyMs:run.latencyMs}}}:fail('command-execution-error');
+  if(suite.spec.runner.adapter==='command')return [0,1].includes(run.exitCode)?{results:{[suite.spec.scenarios[0]!.id]:{status:run.exitCode===0?'passed':'failed',...(run.latencyMs===undefined?{}:{latencyMs:run.latencyMs})}}}:fail('command-execution-error');
   if(run.reportError||run.report===undefined)return fail('missing-report');
   if(Buffer.byteLength(run.report)>(suite.spec.runner.maxOutputBytes??1048576))return fail('report-limit');
   try{
