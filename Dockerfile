@@ -127,11 +127,14 @@ RUN case "$TARGETARCH" in \
 # Copy only the CLI component into UBI; no Docker daemon or upstream Alpine filesystem ships.
 FROM docker:29.8.2-cli@sha256:b1805116a6a86cc591b5d5f60a910a0715cdcc9d18d866ad68b1457ead25c35c AS docker-cli
 FROM runtime AS eval-worker
+ARG TARGETARCH
 USER 0
 COPY --from=docker-cli /usr/local/bin/docker /usr/local/bin/docker
 COPY --from=podman-cli /usr/local/bin/podman /usr/local/bin/podman
 COPY deploy/licenses/podman-LICENSE /licenses/podman-LICENSE
 COPY deploy/security/docker-cli-vendor.mod /licenses/docker-cli/go.mod
+COPY deploy/security/podman-client-go.mod /licenses/podman-client/go.mod
+COPY deploy/security/podman-client-${TARGETARCH}.json /licenses/podman-client/compiled.json
 COPY deploy/licenses/docker-cli-LICENSE /licenses/docker-cli-LICENSE
 RUN microdnf remove -y microdnf rpm rpm-libs libdnf libmodulemd librepo libsolv dnf-data rpm-sequoia && mkdir -p /opt/agentci/docker-config /opt/agentci/podman-config/containers /opt/agentci/podman-runtime/libpod && chmod 0555 /opt/agentci/docker-config && chown -R 1001:0 /opt/agentci/podman-config /opt/agentci/podman-runtime && chmod 0700 /opt/agentci/podman-config /opt/agentci/podman-config/containers /opt/agentci/podman-runtime && chmod 1700 /opt/agentci/podman-runtime/libpod && \
     docker --version | grep '29.8.2'

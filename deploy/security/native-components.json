@@ -30,5 +30,39 @@
       "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
       "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
     }
+  },
+  "podmanClient": {
+    "version": "6.1.3",
+    "sourceCommit": "85b994955e0b4e30fbce9c8351cab85676140ede",
+    "goVersion": "go1.27.1",
+    "upstreamRelease": "https://github.com/podman-container-tools/podman/releases/tag/v6.1.3",
+    "archiveSha256": {
+      "arm64": "a0e949d1df0198bd5fe4a8aa4aa57b3038dd1946acbb2088ab318ea0e89bd349",
+      "amd64": "23ee4f71873810a864389b78ffe0d7536296432bb96d0c2acfbbfc7d50ee9c1b"
+    },
+    "binarySha256": {
+      "arm64": "fa9e571ed39a0c78cd08afb36b565bd38a02673427cc7318edb103e5a77baef5",
+      "amd64": "61b4d46042f40a9f2af1f3f5754d337c4f9179bc319771ebec883d98463a9e6a"
+    },
+    "compiledInventories": {
+      "arm64": {
+        "path": "deploy/security/podman-client-arm64.json",
+        "sha256": "7df955b820a0b2d139047a9806659644fbb0b833cb64a5de476ed9d43b76bd17",
+        "modules": 133
+      },
+      "amd64": {
+        "path": "deploy/security/podman-client-amd64.json",
+        "sha256": "2f462e2819fccb6bc426401ee98d4c426ce1425b64ae5c712b0b2225e2b242ac",
+        "modules": 133
+      }
+    },
+    "sourceManifest": {
+      "upstreamUrl": "https://raw.githubusercontent.com/podman-container-tools/podman/85b994955e0b4e30fbce9c8351cab85676140ede/go.mod",
+      "sha256": "8abab2ab49421804b6416c14f5bdc1783a07d2c7d96a7daa71210e6d12a66fa5",
+      "runtimePath": "/licenses/podman-client/go.mod",
+      "coverage": "Upstream source graph, including dependencies excluded from the remote binary."
+    },
+    "licenseSha256": "62fb8a3a9621dc2388174caaabe9c2317b694bb9a1d46c98bcf5655b68f51be3",
+    "coverage": "133 modules per Linux remote binary extracted with official Go 1.27.1 version -m. Exact official binary hashes bind these inventories; not an inventory of the operator engine/server or OS libraries. Official release metadata reports vcs.modified=true and module v6.1.3+dirty; preserved explicitly."
   }
 }

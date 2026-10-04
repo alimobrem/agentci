@@ -146,6 +146,12 @@ jobs:
           done
       - name: Verify compiled containers
         run: node scripts/image-smoke.mjs ci > .agentci/artifacts/image-smoke.json
+      - name: Verify native artifact provenance
+        run: |
+          for role in worker eval-worker; do
+            image=$(docker image inspect "agentci-$role:ci" --format '{{.Id}}')
+            node scripts/verify-native-provenance.mjs "$image" > ".agentci/artifacts/native-provenance-$role.json"
+          done
       - name: Verify isolated eval worker runtime
         run: node scripts/eval-worker-image-smoke.mjs agentci-eval-worker:ci agentci-eval-runner:ci > .agentci/artifacts/eval-worker-image-smoke.json
       - name: Collect verification evidence
@@ -166,3 +172,4 @@ jobs:
             .agentci/artifacts/api-compatibility.json
             .agentci/artifacts/image-smoke.json
             .agentci/artifacts/eval-worker-image-smoke.json
+            .agentci/artifacts/native-provenance-*.json
