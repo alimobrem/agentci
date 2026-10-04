@@ -1173,6 +1173,24 @@
       ]
     },
     {
+      "id": "M2-CACHE-RESILIENCE",
+      "title": "Keep optional cache export failures from preventing hosted behavioral verification",
+      "requirementIds": [
+        "SPEC-34.2-003",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T17:52:09.149Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Retain the failed hosted cache reservation attempts; use supported cache policy so read-only cache contexts do not export and cache-service failures do not invalidate successful image outputs. Preserve strict build, runtime, scan, evidence and publication checks; validate workflow configuration and actual hosted execution before closure.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
       "id": "M2-IMAGE-PUBLICATION",
       "title": "Publish all M2 UBI image roles with immutable version guards and platform evidence",
       "requirementIds": [

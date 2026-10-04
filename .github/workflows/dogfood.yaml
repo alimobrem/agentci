@@ -24,7 +24,7 @@ jobs:
         ports: [5432:5432]
         options: --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 3s --health-retries 20
     env:
-      # Explicit transitional compatibility until hosted native Podman acceptance passes.
+      # Owner-approved M2 Docker release default; Podman adoption remains deferred.
       AGENTCI_CONTAINER_ENGINE: docker
       AGENTCI_REPOSITORY: alimobrem/agentci
       GITHUB_APP_ID: '5179954'
@@ -52,7 +52,7 @@ jobs:
           load: true
           tags: agentci-eval-agentci:hosted
           cache-from: type=gha,scope=agentci-eval-agentci
-          cache-to: type=gha,scope=agentci-eval-agentci,mode=max
+          cache-to: ${{ github.event_name != 'pull_request_target' && 'type=gha,scope=agentci-eval-agentci,mode=max,ignore-error=true' || '' }}
       - name: Build separate trusted evaluator
         uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
         with:
@@ -61,7 +61,7 @@ jobs:
           load: true
           tags: agentci-eval-worker:hosted
           cache-from: type=gha,scope=agentci-eval-worker
-          cache-to: type=gha,scope=agentci-eval-worker,mode=max
+          cache-to: ${{ github.event_name != 'pull_request_target' && 'type=gha,scope=agentci-eval-worker,mode=max,ignore-error=true' || '' }}
       - name: Pin hosted execution images
         run: |
           runner=$(docker image inspect agentci-eval-agentci:hosted --format '{{.Id}}')
