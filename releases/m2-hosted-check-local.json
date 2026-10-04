@@ -1,0 +1,33 @@
+{
+  "kind": "M2-hosted-Check-publication-local-candidate",
+  "sourceFiles": {
+    "packages/github/eval-check.ts": "88150c6772aa9335dbe3f33f0b1297ca9b37cd2c0035487e9bcfa27b97be86d5",
+    "tests/integration/eval-check.test.ts": "942afa25667e2fcbfc6aca67bae9066815a7388d61e87d15b1cb966759de69a7"
+  },
+  "requirements": [
+    "SPEC-40-037",
+    "SPEC-40-039"
+  ],
+  "verification": {
+    "fastChecks": 8,
+    "nativeIntegrationGroups": 1,
+    "skips": 0,
+    "nativeDurationMs": 1023.549083
+  },
+  "logs": {
+    "agentci-hosted-check-final-fast.log": "8b7baf2b1440ecd6127ff405054683e6191d91129567bd0cc0ea72ca7b5072c3",
+    "agentci-hosted-check-native.log": "1f9ae9035becbb947f01ca79e42f24538c8182b5700a61a16cb6a10caaa1b109"
+  },
+  "checks": [
+    "Completed frozen regression remains failed advisory outcome with repository-scoped retained artifact URL and exact export filename.",
+    "Wrong repository URL and mismatched attempt reject before writes.",
+    "PR changing after Check reconciliation reads prevents publication.",
+    "Unavailable attempt uses action_required with retained artifact and no nonexistent API URL.",
+    "Existing deployed authenticated comparison links and SQL-lock acceptance continue passing in the same integration group."
+  ],
+  "limitations": [
+    "Hosted controller and evaluator pipeline not yet wired.",
+    "This caller must verify retained producer/export provenance before publication; helper does not establish artifact upload occurred.",
+    "No hosted live acceptance or M2 release is claimed."
+  ]
+}

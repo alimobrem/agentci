@@ -1,6 +1,7 @@
 import type {Octokit} from '@octokit/rest';
 import type {ReviewJob} from './webhook.ts';
 import {currentPullRequest} from './client.ts';
+import {artifactUrl} from './dogfood.ts';
 import {EvalExportVerifier,frameExport,type ExportItem,type ExportIdentity,type ExportSummary,type ExportHeader} from '../evals/export.ts';
 export interface EvalCheckEvidence {comparisonId:string;reviewId:string;attemptId:string;identity:ExportIdentity;snapshotDigest:string;endDigest:string;summary:ExportSummary;text:string;abbreviated:boolean;coverageGaps:number;selectionGaps:number;suiteChanges:number;regressions:number}
 const escape=(value:string)=>value.replace(/[\x00-\x1f\x7f\u2028\u2029]/g,' ').replace(/[\\`*_{}\[\]()<>#!]/g,'\\$&');
@@ -51,13 +52,32 @@ export async function publishEvalProgress(client:Octokit,appId:number,job:Review
   const url=`${origin(publicUrl)}/v1/eval-comparisons/${header.id}`;
   return reconcile(client,appId,job,attemptId,{title:'AgentCI evals in progress',summary:`Evaluation in progress. No completed behavioral result is claimed. Base: ${job.baseSha}; head: ${job.headSha}; planned units: ${header.unitCount}; comparison: ${header.id}; attempt: ${attemptId}. [Authenticated evidence](${url})`},undefined,url,'in_progress');
 }
-export async function publishEvalCheck(client:Octokit,appId:number,job:ReviewJob,attemptId:string,evidence:EvalCheckEvidence,publicUrl:string):Promise<'published'|'superseded'>{
+function completedCheckOutput(job:ReviewJob,attemptId:string,evidence:EvalCheckEvidence,links:string,notice:string){
   const identity=evidence.identity;
   if(evidence.attemptId!==attemptId||identity.attemptId!==attemptId||identity.repository!==job.repository||identity.pullRequest!==job.pullRequest||identity.baseSha!==job.baseSha||identity.headSha!==job.headSha||evidence.summary.state!=='completed'||evidence.summary.outcome==='pending')throw new Error('Check attempt identity mismatch');
-  const url=`${origin(publicUrl)}/v1/eval-comparisons/${evidence.comparisonId}`,s=evidence.summary;
-  const summary=[`Advisory behavioral evaluation: **${s.outcome}**.`, `Base: ${job.baseSha}; head: ${job.headSha}.`,`Units: ${s.unitCount}; paired comparisons: ${s.comparisonCount}; regressions: ${evidence.regressions}; suite changes: ${evidence.suiteChanges}; requirement gaps: ${evidence.coverageGaps}; selection gaps: ${evidence.selectionGaps}; execution gaps: ${s.executionGaps.length}.`,`Comparison: ${evidence.comparisonId}; review: ${evidence.reviewId}; attempt: ${attemptId}.`,`Snapshot: ${evidence.snapshotDigest}; completed export: ${evidence.endDigest}.`,evidence.text,evidence.abbreviated?'Display abbreviated; full results and gaps remain in the authenticated evidence export.':'',`[Detailed evidence](${url}) · [Complete export](${url}/export)`,`Agent evidence access requires the deployment bearer token; credentials are never included in these links.`].filter(Boolean).join('\n');
+  const s=evidence.summary;
+  const summary=[`Advisory behavioral evaluation: **${s.outcome}**.`, `Base: ${job.baseSha}; head: ${job.headSha}.`,`Units: ${s.unitCount}; paired comparisons: ${s.comparisonCount}; regressions: ${evidence.regressions}; suite changes: ${evidence.suiteChanges}; requirement gaps: ${evidence.coverageGaps}; selection gaps: ${evidence.selectionGaps}; execution gaps: ${s.executionGaps.length}.`,`Comparison: ${evidence.comparisonId}; review: ${evidence.reviewId}; attempt: ${attemptId}.`,`Snapshot: ${evidence.snapshotDigest}; completed export: ${evidence.endDigest}.`,evidence.text,evidence.abbreviated?'Display abbreviated; full results and gaps remain in the authenticated evidence export.':'',links,notice].filter(Boolean).join('\n');
   if(Buffer.byteLength(summary)>60000)throw new Error('Check summary exceeds display budget');
-  return reconcile(client,appId,job,attemptId,{title:`AgentCI evals: ${s.outcome}`,summary},s.outcome==='error'||s.outcome==='insufficient'?'action_required':'neutral',url);
+  return {output:{title:`AgentCI evals: ${s.outcome}`,summary},conclusion:(s.outcome==='error'||s.outcome==='insufficient'?'action_required':'neutral') as 'action_required'|'neutral'};
+}
+export async function publishEvalCheck(client:Octokit,appId:number,job:ReviewJob,attemptId:string,evidence:EvalCheckEvidence,publicUrl:string):Promise<'published'|'superseded'>{
+  const url=`${origin(publicUrl)}/v1/eval-comparisons/${evidence.comparisonId}`;
+  const {output,conclusion}=completedCheckOutput(job,attemptId,evidence,`[Detailed evidence](${url}) · [Complete export](${url}/export)`,'Agent evidence access requires the deployment bearer token; credentials are never included in these links.');
+  return reconcile(client,appId,job,attemptId,output,conclusion,url);
+}
+/** Hosted evidence is retained before this call; ephemeral SQL cannot supply a service URL. */
+export async function publishHostedEvalCheck(client:Octokit,appId:number,job:ReviewJob,attemptId:string,evidence:EvalCheckEvidence,retainedArtifact:string):Promise<'published'|'superseded'>{
+  const url=artifactUrl(retainedArtifact,job.repository);
+  if(!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(evidence.comparisonId))throw new Error('Invalid hosted export identity');
+  const {output,conclusion}=completedCheckOutput(job,attemptId,evidence,`[Retained evidence and complete export](${url})`,'Complete export file: comparison-'+evidence.comparisonId+'.ndjson. GitHub artifact access and retention apply; no service bearer token or live API is required.');
+  return reconcile(client,appId,job,attemptId,output,conclusion,url);
+}
+export async function publishHostedEvalUnavailable(client:Octokit,appId:number,job:ReviewJob,attemptId:string,retainedArtifact:string,header?:ExportHeader):Promise<'published'|'superseded'>{
+  const url=artifactUrl(retainedArtifact,job.repository);
+  if(!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(attemptId))throw new Error('Invalid hosted attempt identity');
+  if(header&&(header.attemptId!==attemptId||header.subject.repository!==job.repository||header.subject.pullRequest!==job.pullRequest||header.subject.baseSha!==job.baseSha||header.subject.headSha!==job.headSha))throw new Error('Retained comparison identity mismatch');
+  const summary=[`Evaluation infrastructure/input failure or cancellation. No passing behavioral result is claimed. Base: ${job.baseSha}; head: ${job.headSha}; attempt: ${attemptId}.`,header?`Comparison: ${header.id}; review: ${header.reviewId}. Retained observations may be partial; export file: comparison-${header.id}.ndjson.`:'No staged comparison evidence is available.',`[Retained hosted evidence](${url})`,'Resolve the cause and dispatch a fresh hosted review. Each hosted run uses a new attempt; replaying an old attempt does not rerun it.'].join('\n');
+  return reconcile(client,appId,job,attemptId,{title:'AgentCI evals unavailable',summary},'action_required',url,'completed',true);
 }
 export async function publishEvalUnavailable(client:Octokit,appId:number,job:ReviewJob,attemptId:string,reason:'unavailable'|'cancelled'='unavailable',retained?:{header:ExportHeader;publicUrl:string}):Promise<'published'|'superseded'>{
   let url:string|undefined,identity='';
