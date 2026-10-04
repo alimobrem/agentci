@@ -29,7 +29,11 @@ RUN microdnf install -y openssl-libs bzip2-libs libffi zlib xz-libs sqlite-libs 
 COPY --from=python-build /opt/python /opt/python
 COPY LICENSE /licenses/AgentCI-MIT.txt
 ENV PATH=/opt/python/bin:/usr/local/bin:/usr/bin:/bin PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
-RUN ln -s /opt/python/bin/python3.14 /usr/local/bin/python && ln -s /opt/python/bin/python3.14 /usr/local/bin/python3
+RUN ln -s /opt/python/bin/python3.14 /usr/local/bin/python && ln -s /opt/python/bin/python3.14 /usr/local/bin/python3 && \
+    rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx && \
+    /opt/python/bin/python3.14 -m pip uninstall --yes pip && \
+    rm -rf /opt/python/lib/python3.14/ensurepip /opt/python/bin/pip* && \
+    /opt/python/bin/python3.14 -c 'import ssl, sqlite3, bz2, lzma, pytest; assert pytest.__version__ == "9.1.1"'
 USER 1001
 WORKDIR /workspace
 CMD ["node", "--version"]
