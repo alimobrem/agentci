@@ -1,115 +1,313 @@
 {
   "milestone": "M1",
   "version": "0.2.1-m1",
-  "sourceCommit": "15232a92d22e7640298f78ba190f098312919a17",
+  "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
   "gates": [
     {
       "id": "scope",
-      "status": "pending",
-      "evidence": [],
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-closure.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "51a0ec84b3d1b5529d6a3299d025c999174926cf257a1715ad5735ac014bfb6a"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "correctness",
-      "status": "pending",
-      "evidence": [],
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-ci.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "74c46c10e0039047060f43b1908d69e46b572a56d35622e429b8b8b568b89583"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "api",
-      "status": "pending",
-      "evidence": [],
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-ci.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "74c46c10e0039047060f43b1908d69e46b572a56d35622e429b8b8b568b89583"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "evals",
-      "status": "pending",
-      "evidence": [],
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-ci.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "74c46c10e0039047060f43b1908d69e46b572a56d35622e429b8b8b568b89583"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "reproducibility",
-      "status": "pending",
-      "evidence": [],
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-ci.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "74c46c10e0039047060f43b1908d69e46b572a56d35622e429b8b8b568b89583"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "runtime",
-      "status": "pending",
-      "evidence": [],
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-images.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "28f556f3f29febcce6b39870c177f93e22cc9e5a912a2999188116574cbed85d"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "safety",
-      "status": "pending",
-      "evidence": [],
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-images.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "28f556f3f29febcce6b39870c177f93e22cc9e5a912a2999188116574cbed85d"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "documentation",
-      "status": "pending",
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately.",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "docs/releases/m1-onboarding.md",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "dab16a59c01a3a95548087524b9d055d6764e7c4686e06d348bd88adfd0c8d55"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "release-identity",
-      "status": "pending",
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately.",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-distribution.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "9f5c54c863bccbbe1e12484ad4bd3fb1cfe09008493c7fa04cac833037dd9977"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "publication",
-      "status": "pending",
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately.",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-manifest.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "07fbcc68c5ed3a1cf3cd5b39df4cf63d44b77515b89c2e6f0fb2e6a971cc221a"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "distribution",
-      "status": "pending",
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately.",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-distribution.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "9f5c54c863bccbbe1e12484ad4bd3fb1cfe09008493c7fa04cac833037dd9977"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "demo",
-      "status": "pending",
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately.",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-demo.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "f9169c71db05221b362b7e389d99381c2bab577ec52e7b2f8f39f71ffc45a584"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "closure",
-      "status": "pending",
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately.",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-closure.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "51a0ec84b3d1b5529d6a3299d025c999174926cf257a1715ad5735ac014bfb6a"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "live-dogfood",
-      "status": "pending",
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately.",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-demo.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "f9169c71db05221b362b7e389d99381c2bab577ec52e7b2f8f39f71ffc45a584"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "api-image",
-      "status": "pending",
-      "evidence": [],
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-images.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "28f556f3f29febcce6b39870c177f93e22cc9e5a912a2999188116574cbed85d"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "worker-image",
-      "status": "pending",
-      "evidence": [],
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-images.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "28f556f3f29febcce6b39870c177f93e22cc9e5a912a2999188116574cbed85d"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "customer-onboarding",
-      "status": "pending",
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately.",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-distribution.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "9f5c54c863bccbbe1e12484ad4bd3fb1cfe09008493c7fa04cac833037dd9977"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     },
     {
       "id": "agent-api",
-      "status": "pending",
-      "reason": "Final documentation source freeze; prior source 15232 preflight evidence is preserved separately.",
-      "evidence": []
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-onboarding-distribution.json",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+          "sha256": "9f5c54c863bccbbe1e12484ad4bd3fb1cfe09008493c7fa04cac833037dd9977"
+        },
+        {
+          "kind": "url",
+          "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+          "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+        }
+      ]
     }
   ],
   "customerAcceptance": true

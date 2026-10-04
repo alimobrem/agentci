@@ -1,0 +1,26 @@
+{
+  "version": "0.2.1-m1",
+  "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+  "run": "https://github.com/alimobrem/agentci/actions/runs/37178131543",
+  "conclusion": "success",
+  "unitApiAdapterTests": 66,
+  "realPostgresTemporalTests": 2,
+  "contractRiskEvals": 14,
+  "apiCompatibilityExitCode": 0,
+  "packageSha256": "071b50682d7e648bbf100b1fbce194fc7828d708a28e2738d2d99a1c5ce18e51",
+  "runtime": {
+    "result": "passed",
+    "version": "ci",
+    "platform": "x64",
+    "checks": [
+      "non-root API/worker startup",
+      "readiness",
+      "signature rejection",
+      "evidence authentication",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  }
+}

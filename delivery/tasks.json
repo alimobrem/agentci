@@ -322,21 +322,23 @@
       "requirementIds": [
         "SPEC-40-020"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T00:22:09.830Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T05:02:48.400Z",
       "acceptance": [
         {
           "text": "Published client fetches evidence with bearer authentication, validates identity/digest and reports typed failures without credentials",
           "status": "passed",
           "evidence": [
-            "tests/client.test.ts"
+            "releases/m1-onboarding-distribution.json"
           ]
         },
         {
           "text": "Executable fresh-project demo documents success, unauthorized access and invalid input without executing repository code",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m1-onboarding-demo.json"
+          ]
         }
       ]
     },
@@ -347,19 +349,23 @@
         "SPEC-40-019",
         "SPEC-40-029"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T00:41:40.241Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T05:02:49.048Z",
       "acceptance": [
         {
           "text": "Fresh repository demonstrates real GitHub PR review and agent evidence consumption from the released build",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m1-onboarding-distribution.json"
+          ]
         },
         {
           "text": "Tests, evals, API compatibility, packaging, scans, native downloaded images, docs and new immutable release all verified",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m1-onboarding-closure.json"
+          ]
         }
       ]
     },
@@ -370,14 +376,16 @@
         "SPEC-40-019",
         "SPEC-40-029"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T04:48:58.850Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T05:02:47.736Z",
       "acceptance": [
         {
           "text": "Workflow validates explicit source/version/digests and native amd64 published runtime; actionlint and real release run pass",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m1-onboarding-images.json"
+          ]
         }
       ]
     }

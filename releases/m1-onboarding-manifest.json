@@ -1,0 +1,45 @@
+{
+  "milestone": "M1",
+  "version": "0.2.1-m1",
+  "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+  "sourceTag": "v0.2.1-m1",
+  "date": "2026-10-03",
+  "release": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+  "files": {
+    "agentci-0.2.1-m1.tgz": "071b50682d7e648bbf100b1fbce194fc7828d708a28e2738d2d99a1c5ce18e51",
+    "m1-onboarding-security.md": "79271d19e1f68b034e625c45b77b6282c1c31049d33e511964224d78d4b3de52",
+    "m1-onboarding-demo.json": "f9169c71db05221b362b7e389d99381c2bab577ec52e7b2f8f39f71ffc45a584",
+    "m1-onboarding-verification.tar.gz": "0aaeb213813453caaf4e0de996082917cd98c61ff26fa6b4c6ee425b63f0cc16"
+  },
+  "images": {
+    "version": "0.2.1-m1",
+    "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+    "platforms": [
+      "linux/amd64",
+      "linux/arm64"
+    ],
+    "api": "ghcr.io/alimobrem/agentci-api@sha256:4daa24e229ad3eb1917c103224cd6065c55b1f9103c5002d73d70bde8f19947f",
+    "worker": "ghcr.io/alimobrem/agentci-worker@sha256:ce45627ffac5dcb13873772d881dc8744a97d48d10769fbaaecbb0d575674da3"
+  },
+  "runtime": [
+    "Node 26.10.0",
+    "npm 12.2.0",
+    "UBI 10 minimal; amd64 requires x86-64-v3"
+  ],
+  "verification": {
+    "ci": "https://github.com/alimobrem/agentci/actions/runs/37178131543",
+    "publication": "https://github.com/alimobrem/agentci/actions/runs/37178142545",
+    "nativeAmd64Downloads": "https://github.com/alimobrem/agentci/actions/runs/37178345111",
+    "unitApiAdapterTests": 66,
+    "realPostgresTemporalTests": 2,
+    "contractRiskEvals": 14,
+    "knownFindingsInPublishedScans": 0,
+    "downloadedImageSmoke": "passed native arm64 and native amd64"
+  },
+  "limitations": [
+    "Customer App registration used candidate package; release setup/client modules are byte-identical and freshly generated project matches the actual public GitHub baseline.",
+    "Customer service demo uses published immutable images and a temporary development tunnel.",
+    "Hosted AgentCI self-review runs without the laptop; App key remains an encrypted secret only in agentci.",
+    "No behavioral eval execution or production hosted control-plane claim in M1."
+  ]
+}

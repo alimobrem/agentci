@@ -25,8 +25,8 @@ an action-required failure and recovery. Local evidence authentication returned
 401/200 as expected. The local worker is stopped after the demo; hosted dogfood
 continues independently of the temporary tunnel.
 
-M2 is not-started. [M1 retrospective findings and proposed actions](docs/retrospectives/m1.md)
-are ready for discussion with the user before next-phase implementation.
+M2 is not-started. The M1 extension retrospective is complete and its development
+actions are adopted under the user's instruction to build all phases.
 Broad inventory milestone assignments remain provisional; only explicit M1
 section 40 build/exit requirements are closed by this release.
 
@@ -50,9 +50,14 @@ of total delivery acceleration.
 
 ## Customer acceptance extension
 
-The user added fresh-repository onboarding and agent/API usage gates before M2.
-Current candidate `0.2.1-m1` is in-progress with 18 pending release gates; it is
-not released. Live candidate customer onboarding passed; released-build acceptance
-and distribution remain pending. The historical `0.2.0-m1` release remains
-immutable. M2 is not-started. A separate demo App is required for a live fresh-repo
-acceptance scenario; the existing App stays restricted to alimobrem/agentci.
+M1 customer onboarding is complete in immutable public
+[v0.2.1-m1](https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1), source
+`b25931cb4fc484e5f55139e01bd8825432191fd6`. All 18 gates passed: final-source
+66 tests, two integration tests, 14 evals, API compatibility, clean packaging,
+four zero-known-finding scans, both native downloaded image platforms, six
+anonymous release-asset downloads and installed CLI/client verification.
+The separate approved customer repository demonstrated real failure/recovery and
+exact-identity authenticated evidence. Success/failure demo screenshots and links
+were delivered to the user. [Release record](docs/releases/m1-onboarding.md).
+Original App access remains only agentci; customer App only agentci-onboarding-demo.
+M2 can begin after this closure record is synced; no M2 implementation has started.

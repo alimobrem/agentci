@@ -1,0 +1,229 @@
+{
+  "version": "0.2.1-m1",
+  "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+  "observedAt": "2026-10-04T04:58:56.888994+00:00",
+  "images": {
+    "version": "0.2.1-m1",
+    "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+    "platforms": [
+      "linux/amd64",
+      "linux/arm64"
+    ],
+    "api": "ghcr.io/alimobrem/agentci-api@sha256:4daa24e229ad3eb1917c103224cd6065c55b1f9103c5002d73d70bde8f19947f",
+    "worker": "ghcr.io/alimobrem/agentci-worker@sha256:ce45627ffac5dcb13873772d881dc8744a97d48d10769fbaaecbb0d575674da3"
+  },
+  "package": {
+    "version": "0.2.1-m1",
+    "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+    "productionOnlyInstall": true,
+    "initAndValidatePassed": true,
+    "overwriteExitCode": 2,
+    "bootstrapMatchesFreshGitHubProject": true,
+    "registeredSetupAndClientMatchReleaseModules": {
+      "packages/onboarding/init.js": "285b41f599b569a82b49383935e567cdff6628aab00fddfaa8ac3be416c1429f",
+      "packages/onboarding/config.js": "3638648e1d6fd186308a9c1913c54a568b166aee5fb328d4e30955e86d2a44b2",
+      "packages/onboarding/setup.js": "b9c089d71cafd38a6e2acc9a9b793b3e7bf723d76a99c36e4934204a11de267d",
+      "packages/client/index.js": "fb313fad4233bb40ab1aee786ff720778e45ade65386cbe2a2d65921ea563a54"
+    },
+    "privateCredentialsIncluded": false,
+    "sha256": "071b50682d7e648bbf100b1fbce194fc7828d708a28e2738d2d99a1c5ce18e51"
+  },
+  "failure": {
+    "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+    "images": {
+      "version": "0.2.1-m1",
+      "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "api": "ghcr.io/alimobrem/agentci-api@sha256:4daa24e229ad3eb1917c103224cd6065c55b1f9103c5002d73d70bde8f19947f",
+      "worker": "ghcr.io/alimobrem/agentci-worker@sha256:ce45627ffac5dcb13873772d881dc8744a97d48d10769fbaaecbb0d575674da3"
+    },
+    "baseSha": "694456b234ac4974b03b0e898d983fd582ec7f31",
+    "headSha": "7cb4b4318a591b41ff9004eb5f36dd8d7dca8780",
+    "checks": [
+      {
+        "id": 111365824286,
+        "headSha": "7cb4b4318a591b41ff9004eb5f36dd8d7dca8780",
+        "status": "completed",
+        "conclusion": "action_required",
+        "url": "https://github.com/alimobrem/agentci-onboarding-demo/runs/111365824286",
+        "title": "AgentCI review unavailable",
+        "summary": "Verification infrastructure/input failure after retries. No clean or successful review is claimed. Operator recovery and webhook redelivery are required."
+      }
+    ],
+    "evidenceRecordCount": 0
+  },
+  "success": {
+    "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+    "images": {
+      "version": "0.2.1-m1",
+      "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "api": "ghcr.io/alimobrem/agentci-api@sha256:4daa24e229ad3eb1917c103224cd6065c55b1f9103c5002d73d70bde8f19947f",
+      "worker": "ghcr.io/alimobrem/agentci-worker@sha256:ce45627ffac5dcb13873772d881dc8744a97d48d10769fbaaecbb0d575674da3"
+    },
+    "baseSha": "694456b234ac4974b03b0e898d983fd582ec7f31",
+    "headSha": "2178f602bf9259c070870e0083b6e22cd4e825b3",
+    "checks": [
+      {
+        "id": 111365993296,
+        "headSha": "2178f602bf9259c070870e0083b6e22cd4e825b3",
+        "status": "completed",
+        "conclusion": "neutral",
+        "url": "https://github.com/alimobrem/agentci-onboarding-demo/runs/111365993296",
+        "title": "AgentCI advisory: high risk",
+        "summary": "Advisory deterministic review. Risk: **high**.\nBase: 694456b234ac4974b03b0e898d983fd582ec7f31; head: 2178f602bf9259c070870e0083b6e22cd4e825b3.\nChanged files: 1. Behavioral evals: not applicable in M1.\n- permissions/production.yaml: permission, policy\n- high / inferred: Configured policy or permission input changed; access impact needs review.\n- high / verified: Explicit production write permission added.\n[Detailed evidence](https://mitchell-peer-filled-quick.trycloudflare.com/v1/evidence/d1a850fb-6967-4787-ace4-ef197fe56d32)"
+      }
+    ],
+    "evidenceRecordCount": 1,
+    "record": {
+      "id": "d1a850fb-6967-4787-ace4-ef197fe56d32",
+      "digest": "sha256:85d04bf6ec746e9d1592305d8edfac1f880a3971934353a06ef55a214a9d84b6",
+      "evidence": {
+        "id": "d1a850fb-6967-4787-ace4-ef197fe56d32",
+        "kind": "PullRequest",
+        "claim": {
+          "producer": {
+            "name": "agentci",
+            "version": "0.2.1-m1"
+          },
+          "confidence": 1,
+          "sourceType": "static-analysis",
+          "verificationStatus": "verified"
+        },
+        "edges": [],
+        "subject": {
+          "gitSha": "2178f602bf9259c070870e0083b6e22cd4e825b3",
+          "pullRequest": 1
+        },
+        "version": 1,
+        "artifacts": [
+          {
+            "uri": "urn:agentci:analysis:d1a850fb-6967-4787-ace4-ef197fe56d32",
+            "digest": "sha256:85d04bf6ec746e9d1592305d8edfac1f880a3971934353a06ef55a214a9d84b6",
+            "mediaType": "application/json"
+          }
+        ],
+        "createdAt": "2026-10-04T04:57:22.559Z",
+        "schemaVersion": "v1alpha1",
+        "organizationId": "e98f9136-8930-43b5-8f46-ac3aa7b65521"
+      },
+      "analysis": {
+        "risk": "high",
+        "evals": {
+          "reason": "Behavioral eval execution starts in M2; this analysis verifies deterministic repository changes only.",
+          "status": "not-applicable"
+        },
+        "baseSha": "694456b234ac4974b03b0e898d983fd582ec7f31",
+        "changes": [
+          {
+            "path": "permissions/production.yaml",
+            "fields": [
+              {
+                "pointer": "",
+                "operation": "added",
+                "afterDigest": "sha256:3e60ba31b0d6ae5a0721a49cdac3b0feaf45981788388f14af16b751c6f0dec2"
+              }
+            ],
+            "operation": "added",
+            "categories": [
+              "permission",
+              "policy"
+            ],
+            "afterDigest": "sha256:d4b8b00d006bf9167d281fb6332d4e270ce00b1a8a922733730e4e75482c7c2b"
+          }
+        ],
+        "headSha": "2178f602bf9259c070870e0083b6e22cd4e825b3",
+        "advisory": true,
+        "findings": [
+          {
+            "id": "70e8f758cb56b178f394b36a",
+            "rule": "policy-permission-change",
+            "claim": "Configured policy or permission input changed; access impact needs review.",
+            "paths": [
+              "permissions/production.yaml"
+            ],
+            "severity": "high",
+            "verification": "inferred"
+          },
+          {
+            "id": "05a9a50ccd5177c687e24e2b",
+            "rule": "production-mutation-added",
+            "claim": "Explicit production write permission added.",
+            "paths": [
+              "permissions/production.yaml"
+            ],
+            "severity": "high",
+            "verification": "verified"
+          }
+        ],
+        "repository": "alimobrem/agentci-onboarding-demo",
+        "schemaVersion": "v1alpha1"
+      }
+    },
+    "agent": {
+      "ready": true,
+      "canonicalDigestVerified": true,
+      "exactCommitsVerified": true,
+      "unauthorized401": true,
+      "wrongHeadRejected": true,
+      "clientFromExactCiPackage": true
+    }
+  },
+  "agent": {
+    "ready": true,
+    "canonicalDigestVerified": true,
+    "exactCommitsVerified": true,
+    "unauthorized401": true,
+    "wrongHeadRejected": true,
+    "clientFromExactCiPackage": true
+  },
+  "appScopes": [
+    {
+      "appId": 5182307,
+      "installationId": 167710386,
+      "repository": "alimobrem/agentci-onboarding-demo",
+      "selection": "selected",
+      "repositoryCount": 1,
+      "permissions": {
+        "checks": "write",
+        "contents": "read",
+        "metadata": "read",
+        "pull_requests": "read"
+      }
+    },
+    {
+      "appId": 5179954,
+      "installationId": 167655696,
+      "repository": "alimobrem/agentci",
+      "selection": "selected",
+      "repositoryCount": 1,
+      "permissions": {
+        "checks": "write",
+        "contents": "read",
+        "metadata": "read",
+        "pull_requests": "read"
+      }
+    }
+  ],
+  "selfReview": {
+    "pullRequest": "https://github.com/alimobrem/agentci/pull/4",
+    "run": "https://github.com/alimobrem/agentci/actions/runs/37178143884",
+    "check": "https://github.com/alimobrem/agentci/runs/111362191481",
+    "trustedSource": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+    "head": "93faf2d2299634ed0959f49d127fba9e716d67f8",
+    "risk": "high",
+    "artifactId": 11294160894
+  },
+  "limitations": [
+    "Customer App registration used candidate package; release setup/client modules are byte-identical and freshly generated project matches the actual public GitHub baseline.",
+    "Customer service demo uses published immutable images and a temporary development tunnel.",
+    "Hosted AgentCI self-review runs without the laptop; App key remains an encrypted secret only in agentci.",
+    "No behavioral eval execution or production hosted control-plane claim in M1."
+  ]
+}

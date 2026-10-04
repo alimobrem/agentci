@@ -1,8 +1,7 @@
 # AgentCI development workflow
 
-- Follow the primary spec in milestone order. Original M1 scope has published release
-  evidence. Its customer-onboarding extension is in-progress; M2 remains
-  not-started until the expanded acceptance gates and retrospective pass. Finish
+- Follow the primary spec in milestone order. M0 and expanded M1 have published release
+  evidence. M1 customer acceptance and retrospective passed; M2 is next. Finish
   each phase's tests, evals, packaging, docs, publication, download verification,
   release and user demo gates before the next. Use `docs/definition-of-done.md`.
 - Before new implementation, add or start a small task in `delivery/tasks.json`

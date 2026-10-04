@@ -1,0 +1,64 @@
+{
+  "version": "0.2.1-m1",
+  "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+  "images": {
+    "version": "0.2.1-m1",
+    "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+    "platforms": [
+      "linux/amd64",
+      "linux/arm64"
+    ],
+    "api": "ghcr.io/alimobrem/agentci-api@sha256:4daa24e229ad3eb1917c103224cd6065c55b1f9103c5002d73d70bde8f19947f",
+    "worker": "ghcr.io/alimobrem/agentci-worker@sha256:ce45627ffac5dcb13873772d881dc8744a97d48d10769fbaaecbb0d575674da3"
+  },
+  "publicationRun": "https://github.com/alimobrem/agentci/actions/runs/37178142545",
+  "nativeAmd64Run": "https://github.com/alimobrem/agentci/actions/runs/37178345111",
+  "nativeArm64": {
+    "result": "passed",
+    "version": "downloaded-final",
+    "platform": "arm64",
+    "checks": [
+      "non-root API/worker startup",
+      "readiness",
+      "signature rejection",
+      "evidence authentication",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  },
+  "nativeAmd64": {
+    "result": "passed",
+    "version": "downloaded",
+    "platform": "x64",
+    "checks": [
+      "non-root API/worker startup",
+      "readiness",
+      "signature rejection",
+      "evidence authentication",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  },
+  "scans": {
+    "api-amd64-scan.json": {
+      "sha256": "71128f24c7344576154033cc198df0b9737de59bbe896d8f4c334b4252ee3d7c",
+      "knownFindings": 0
+    },
+    "api-arm64-scan.json": {
+      "sha256": "44b3ea78222596e5fc188d44a98757d84799fceb44c136f3cd53003b79046a63",
+      "knownFindings": 0
+    },
+    "worker-arm64-scan.json": {
+      "sha256": "de03f7e120d23edcf7d891c5cc55a2bdf19a6fc756e4f084574795aae7a78f0b",
+      "knownFindings": 0
+    },
+    "worker-amd64-scan.json": {
+      "sha256": "cad15dd8216f95785e13c4d4a8ace6f8c4f5d7805da0c562bf35487146598950",
+      "knownFindings": 0
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+  "version": "0.2.1-m1",
+  "scope": "Section 40 M1 build/exit criteria and user-added fresh-customer/agent-API acceptance. Product-wide provisional M1 assignments are not claimed complete.",
+  "requirements": [
+    "SPEC-40-014",
+    "SPEC-40-015",
+    "SPEC-40-016",
+    "SPEC-40-017",
+    "SPEC-40-018",
+    "SPEC-40-019",
+    "SPEC-40-020",
+    "SPEC-40-021",
+    "SPEC-40-022",
+    "SPEC-40-023",
+    "SPEC-40-024",
+    "SPEC-40-025",
+    "SPEC-40-026",
+    "SPEC-40-027",
+    "SPEC-40-029"
+  ],
+  "acceptance": {
+    "githubApp": "releases/m1-onboarding-demo.json",
+    "webhook": "tests/control-api.test.ts",
+    "exactGit": "tests/github.test.ts",
+    "semanticDiff": "evals/m1-semantic.yaml",
+    "risk": "tests/review.test.ts",
+    "checkAndEvidence": "tests/integration/m1.test.ts",
+    "everyPrIndependentOfLaptop": "releases/m1-onboarding-demo.json",
+    "freshCustomer": "releases/m1-onboarding-distribution.json",
+    "agentApi": "releases/m1-onboarding-distribution.json"
+  },
+  "robustness": [
+    "signed payload and conflicting replay rejection",
+    "durable transactional outbox and evidence",
+    "idempotent publication and stale-head rejection",
+    "malformed input action-required with no successful evidence",
+    "automatic recovery on corrected PR",
+    "native persistent Temporal restart and graceful shutdown",
+    "bounded Git/client content and authenticated exact-identity evidence"
+  ],
+  "documentation": "docs/releases/m1-onboarding.md",
+  "retrospective": "docs/retrospectives/m1.md",
+  "nextMilestone": "M2"
+}

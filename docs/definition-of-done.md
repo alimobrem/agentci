@@ -74,7 +74,8 @@ evidence must not be rewritten to imply they were already tested.
   checking authentication failure, exact PR/base/head identity and evidence digest.
   Identify supported API operations and the limits of agent-driven orchestration.
 - Missing external access leaves these gates pending; it cannot be labeled passed
-  or inapplicable. Existing App access remains limited to alimobrem/agentci.
+  or inapplicable. The original App remains limited to alimobrem/agentci; the separately approved
+  onboarding App remains limited to alimobrem/agentci-onboarding-demo.
 
 ## Blocking rules
 

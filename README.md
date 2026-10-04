@@ -12,7 +12,7 @@ and release decisions. Its first working milestone reviews changes to requiremen
 permissions, tools, models, prompts and dependencies, then publishes an advisory
 GitHub Check. That is the first capability of the control plane, not its full scope.
 
-[Try M1](#quickstart) · [Architecture](#architecture) · [Demo](docs/dogfood/m1-release-demo.md) · [Roadmap](docs/milestone-gates.md) · [Contributing](#contributing)
+[Try M1](#quickstart) · [Architecture](#architecture) · [Demo](docs/releases/m1-onboarding.md) · [Roadmap](docs/milestone-gates.md) · [Contributing](#contributing)
 
 ## Why AgentCI?
 
@@ -56,7 +56,7 @@ deterministic semantic PR review.
 ## What works today?
 
 M1 distribution version: [0.2.1-m1](https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1).
-The release page supplies published artifacts; the [gate ledger](https://github.com/alimobrem/agentci/blob/main/releases/m1-gates.json)
+This public immutable prerelease has verified downloadable artifacts; the [gate ledger](https://github.com/alimobrem/agentci/blob/main/releases/m1-gates.json)
 records completion separately. AgentCI uses its own advisory review on pull requests.
 
 | Available now | Planned in later milestones |
@@ -157,14 +157,13 @@ are release requirements.
 
 ## Roadmap and project status
 
-There are 11 milestones, M0–M10. M0 contracts and M1 semantic review are complete;
-The M1 customer-onboarding extension is in-progress with fresh-repository and
-agent/API acceptance gates. M2 eval orchestration remains not-started.
+There are 11 milestones, M0–M10. M0 contracts and M1 semantic review, including customer
+onboarding and agent/API acceptance, are complete. M2 eval orchestration is next.
 
 - [Milestones and acceptance scenarios](docs/milestone-gates.md)
 - [Current status](STATUS.md) and [release notes](CHANGELOG.md)
 - [Full specification](specs/agentci-full-spec.md) and [implementation inventory](specs/implementation-status.md)
-- [M1 release verification](docs/releases/m1.md) and [retrospective](docs/retrospectives/m1.md)
+- [M1 release verification](docs/releases/m1-onboarding.md) and [retrospective](docs/retrospectives/m1.md)
 
 ## License
 
