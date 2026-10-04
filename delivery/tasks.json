@@ -854,12 +854,33 @@
         "SPEC-40-039",
         "SPEC-11.2-001"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T09:59:22.196Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T10:18:57.298Z",
       "acceptance": [
         {
           "text": "Controller compiles exact Git base/head plans, freezes baseline suites for both subjects, keeps added suites head-only, expands every configured model variant, pins operator runner/provider identities and enforces total budgets. Scoped staging is idempotent by review/attempt, retains zero-selected/gapped plans, returns only identifiers to workflow history, and real provider/PostgreSQL acceptance verifies retry and identity conflicts before child dispatch.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-pr-staging-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-PR-PARENT",
+      "title": "Durable PR parent orchestration with child cleanup and replay",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T10:12:26.150Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "New PR evaluation parent stages exact identifiers, dispatches separate evaluator children with deterministic identity, waits for completion and cancellation cleanup, retains cancelled evidence on stale PR or failure, and preserves M1 replay. Real PostgreSQL/Temporal/isolated runner tests prove baseline/head results, no source/credentials in histories, stale/cancel cleanup and replay before Check publication is wired.",
           "status": "pending",
           "evidence": []
         }

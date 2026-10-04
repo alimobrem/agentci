@@ -1,6 +1,6 @@
 import type {Octokit} from '@octokit/rest';
 import {ApplicationFailure} from '@temporalio/activity';
-import {remoteSnapshot} from '../../packages/github/client.ts';
+import {remoteSnapshot,currentPullRequest} from '../../packages/github/client.ts';
 import type {ReviewJob} from '../../packages/github/webhook.ts';
 import {planComparison} from '../../packages/evals/plan.ts';
 import {compileEvalUnits,EvalPlanConfigurationError,type EvalPlanPolicy} from '../../packages/evals/orchestration.ts';
@@ -9,9 +9,27 @@ import {ImmutableEvalConflict,type EvalStore} from '../../packages/storage/evals
 
 /** Fetch data only in the App controller; evaluator workflow history receives identifiers only. */
 export function createEvalReviewActivities(client:Octokit,store:Store,evals:EvalStore,config:{repository:string;installationId:number},policy:EvalPlanPolicy){
+  const scoped=(job:ReviewJob)=>job.repository===config.repository&&job.installationId===config.installationId&&evals.repository===config.repository&&store.repository===config.repository&&store.organizationId===evals.organizationId&&Number.isSafeInteger(job.pullRequest)&&job.pullRequest>0&&/^[a-f0-9]{40}$/.test(job.baseSha)&&/^[a-f0-9]{40}$/.test(job.headSha)&&job.baseSha!==job.headSha;
+  const validAttempt=(id:string)=>/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(id);
   return {
+    async isEvalCurrent(job:ReviewJob):Promise<boolean>{
+      if(!scoped(job))throw ApplicationFailure.nonRetryable('Invalid scoped eval review identity','EvalReviewIdentity');
+      try{return await currentPullRequest(client,job);}catch{throw ApplicationFailure.retryable('PR identity lookup unavailable','EvalReviewUnavailable');}
+    },
+    async cancelEvalReview(job:ReviewJob,attemptId:string,comparisonId:string):Promise<void>{
+      if(!scoped(job)||!validAttempt(attemptId)||!validAttempt(comparisonId))throw ApplicationFailure.nonRetryable('Invalid scoped eval review identity','EvalReviewIdentity');
+      try{
+        // Read only the header, then close the snapshot transaction before the cancellation write.
+        const items=evals.exportComparison(comparisonId);let first;
+        try{first=await items.next();}finally{await items.return(undefined);}
+        if(first.done||first.value.type!=='header')throw ApplicationFailure.nonRetryable('Unknown eval comparison identity','EvalReviewIdentity');
+        const header=first.value.data;
+        if(header.attemptId!==attemptId||header.subject.repository!==job.repository||header.subject.pullRequest!==job.pullRequest||header.subject.baseSha!==job.baseSha||header.subject.headSha!==job.headSha)throw ApplicationFailure.nonRetryable('Eval comparison identity mismatch','EvalReviewIdentity');
+        await evals.cancel(comparisonId);
+      }catch(error){if(error instanceof ApplicationFailure)throw error;throw ApplicationFailure.retryable('Eval cancellation unavailable','EvalReviewUnavailable');}
+    },
     async stageEvalReview(job:ReviewJob,attemptId:string):Promise<{reviewId:string;comparisonId:string;unitIds:string[]}>{
-      if(job.repository!==config.repository||job.installationId!==config.installationId||evals.repository!==config.repository||store.repository!==config.repository||store.organizationId!==evals.organizationId||!Number.isSafeInteger(job.pullRequest)||job.pullRequest<1||! /^[a-f0-9]{40}$/.test(job.baseSha)||! /^[a-f0-9]{40}$/.test(job.headSha)||job.baseSha===job.headSha||! /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(attemptId))throw ApplicationFailure.nonRetryable('Invalid scoped eval review identity','EvalReviewIdentity');
+      if(!scoped(job)||!validAttempt(attemptId))throw ApplicationFailure.nonRetryable('Invalid scoped eval review identity','EvalReviewIdentity');
       try{
         const base=await remoteSnapshot(client,job.repository,job.baseSha),head=await remoteSnapshot(client,job.repository,job.headSha);
         const plan=planComparison({repository:job.repository,base,head}),units=compileEvalUnits(plan,base,head,policy);

@@ -32,7 +32,7 @@ test('Git HTTP and PostgreSQL staging retain exact plans, retry identity, gaps a
     requests.push(req.url!);res.setHeader('Content-Type','application/json');
     if(fail){res.statusCode=503;res.end(JSON.stringify({message:'private-fixture-response'}));return;}
     const path=new URL(req.url!,'http://localhost').pathname.split('/'),id=path.at(-1),operation=path.at(-2);
-    const value=operation==='commits'&&snapshots.some(s=>s.sha===id)?{sha:id,tree:{sha:id}}:operation==='trees'?trees.get(id!):operation==='blobs'?blobs.get(id!):undefined;
+    const value=operation==='pulls'&&id==='73'?{state:'open',base:{sha:base.sha},head:{sha:head.sha}}:operation==='commits'&&snapshots.some(s=>s.sha===id)?{sha:id,tree:{sha:id}}:operation==='trees'?trees.get(id!):operation==='blobs'?blobs.get(id!):undefined;
     if(!value)res.statusCode=404;res.end(JSON.stringify(value??{message:'unknown'}));
   });server.listen(0,'127.0.0.1');await once(server,'listening');
   try{
@@ -41,6 +41,7 @@ test('Git HTTP and PostgreSQL staging retain exact plans, retry identity, gaps a
     const client=new Octokit({baseUrl:`http://127.0.0.1:${(server.address() as {port:number}).port}`,auth:'private-fixture-token',log:{debug(){},info(){},warn(){},error(){}}});
     const policy=controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:'sha256:'+'a'.repeat(64)}),scope={repository,installationId:12};
     const activities=createEvalReviewActivities(client,store,evals,scope,policy),job={...scope,pullRequest:73,baseSha:base.sha,headSha:head.sha},attempt=randomUUID();
+    assert.equal(await activities.isEvalCurrent(job),true);assert.equal(await activities.isEvalCurrent({...job,headSha:'f'.repeat(40)}),false);
     const staged=await activities.stageEvalReview(job,attempt),retry=await activities.stageEvalReview(job,attempt);assert.deepEqual(retry,staged);assert.equal(staged.unitIds.length,4);
     assert.deepEqual(Object.keys(staged).sort(),['comparisonId','reviewId','unitIds']);assert.ok(!JSON.stringify(staged).includes('private-fixture'));assert.ok(!JSON.stringify(staged).includes('must-not-enter-history'));
     assert.ok(requests.includes(`/repos/example/repo/git/commits/${base.sha}`));assert.ok(requests.includes(`/repos/example/repo/git/commits/${head.sha}`));
@@ -53,6 +54,8 @@ test('Git HTTP and PostgreSQL staging retain exact plans, retry identity, gaps a
     assert.deepEqual(empty.unitIds,[]);assert.deepEqual(await activities.stageEvalReview(emptyJob,emptyAttempt),empty);
     const emptyComparison=(await evals.comparison(empty.comparisonId))!;assert.equal(emptyComparison.comparison.summary.outcome,'insufficient');assert.ok(emptyComparison.comparison.coverageGaps.includes('REQ-NEW'));
     const frames=[];for await(const frame of evals.exportComparison(empty.comparisonId))frames.push(frame);assert.equal(frames.at(-2)!.type,'summary');assert.equal(frames.at(-1)!.type,'end');
+    await assert.rejects(activities.cancelEvalReview(job,randomUUID(),staged.comparisonId),e=>e instanceof ApplicationFailure&&e.nonRetryable===true);assert.equal((await evals.comparison(staged.comparisonId))!.comparison.cancelRequested,false);
+    await activities.cancelEvalReview(job,attempt,staged.comparisonId);await activities.cancelEvalReview(job,attempt,staged.comparisonId);assert.equal((await evals.comparison(staged.comparisonId))!.comparison.summary.state,'cancelled');
     fail=true;await assert.rejects(activities.stageEvalReview(job,randomUUID()),e=>e instanceof ApplicationFailure&&!e.nonRetryable&&e.type==='EvalReviewUnavailable'&&!JSON.stringify(e).includes('private-fixture')&&e.cause===undefined);
   }finally{await new Promise<void>(resolve=>server.close(()=>resolve()));await pool.end();}
 });

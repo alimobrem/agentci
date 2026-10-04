@@ -124,6 +124,25 @@ Provider endpoints and authentication remain private evaluator configuration.
 `AGENTCI_EVAL_MAX_TOTAL_TRIALS` defaults to 2000 (maximum 100000), summed across
 every selected suite, model and subject. Exceeding a budget fails before staging.
 
-This activity is not yet registered in the controller or connected to a parent
-workflow. Local acceptance uses a real HTTP Git fixture and PostgreSQL; live App
-dispatch, stale-PR publication protection and customer PR acceptance remain open.
+Staging passed exact-source CI 37194473084: 117 unit/API/domain tests, eleven
+real integration groups, zero skips, package/container probes and immutable-M1
+API compatibility. The source tree and artifact hashes are recorded in
+[the staging CI evidence](../releases/m2-pr-staging-ci.json).
+
+The candidate `evaluatePullRequest` parent runs alongside the original M1 workflow
+without changing its command sequence. It dispatches deterministic unit-ID child
+workflows on the evaluator queue, checks current PR identity before dispatch and
+after completion, and polls every 30 seconds while work runs. Supersession,
+workflow cancellation and child failure cancel the SQL comparison and wait for
+child cancellation/container cleanup. Cancellation during staging first retains
+the committed comparison identifiers so cleanup can address them. The parent
+returns ready UUIDs or superseded; it does not publish a GitHub Check.
+
+Local lifecycle acceptance uses real PostgreSQL, Temporal and isolated Docker
+children on separate task queues. The test process hosts both queue workers;
+production process/credential isolation is covered by the separate worker image
+acceptance. Final-source lifecycle CI remains required. These eval activities
+are not yet registered by the production controller. Locked Check publication,
+live App dispatch and customer PR acceptance remain open. Abrupt server-side
+workflow termination/deadline recovery also remains for production integration;
+cancellation tests exercise cooperative cancellation and failed-child cleanup.

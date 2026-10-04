@@ -8,10 +8,90 @@
       "type": "activity",
       "input": "Repository/installation-scoped PR number and exact base/head SHAs, plus immutable review-attempt UUID",
       "output": "Review UUID, comparison UUID and eval-unit UUIDs only",
-      "requirementIds": ["SPEC-40-037", "SPEC-40-039", "SPEC-11.2-001"],
-      "tests": ["tests/eval-orchestration.test.ts", "tests/integration/eval-review-staging.test.ts"],
-      "scenarios": ["exact Git object integrity", "frozen baseline suites/models/thresholds", "head-only added suites", "operator runner/provider provenance", "total trial and unit budgets", "idempotent attempt retry", "immutable attempt conflict", "zero selected suites with explicit coverage gaps", "scope rejection before remote IO", "credential-free SDK failures"]
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039",
+        "SPEC-11.2-001"
+      ],
+      "tests": [
+        "tests/eval-orchestration.test.ts",
+        "tests/integration/eval-review-staging.test.ts"
+      ],
+      "scenarios": [
+        "exact Git object integrity",
+        "frozen baseline suites/models/thresholds",
+        "head-only added suites",
+        "operator runner/provider provenance",
+        "total trial and unit budgets",
+        "idempotent attempt retry",
+        "immutable attempt conflict",
+        "zero selected suites with explicit coverage gaps",
+        "scope rejection before remote IO",
+        "credential-free SDK failures"
+      ]
+    },
+    {
+      "operationId": "isEvalCurrent",
+      "type": "activity",
+      "input": "Repository/installation-scoped PR number and exact base/head SHAs",
+      "output": "Boolean current open PR identity",
+      "requirementIds": [
+        "SPEC-40-039"
+      ],
+      "tests": [
+        "tests/integration/eval-review-staging.test.ts"
+      ],
+      "scenarios": [
+        "scope rejection before IO",
+        "exact base/head and open-state match",
+        "SDK error request/cause redaction"
+      ]
+    },
+    {
+      "operationId": "cancelEvalReview",
+      "type": "activity",
+      "input": "Scoped PR identity, immutable attempt UUID and comparison UUID",
+      "output": "No data; monotonic SQL cancellation retained",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "tests": [
+        "tests/integration/eval-review-staging.test.ts",
+        "tests/integration/eval-pr-parent.test.ts"
+      ],
+      "scenarios": [
+        "header-only identity verification and closed read transaction",
+        "wrong attempt rejection",
+        "idempotent cancellation",
+        "queued/running unit cancellation retains completed evidence"
+      ]
+    },
+    {
+      "operationId": "evaluatePullRequest",
+      "type": "workflow",
+      "input": "Scoped PR identity, immutable attempt UUID and trusted evaluator task queue",
+      "output": "Superseded, or ready with review and comparison UUIDs; no Check publication",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "tests": [
+        "tests/integration/eval-pr-parent.test.ts",
+        "tests/integration/m1.test.ts"
+      ],
+      "scenarios": [
+        "separate evaluator children with deterministic UUID-based workflow identity",
+        "baseline/head regression",
+        "cancellation during committed staging",
+        "running child container cancellation waits for cleanup",
+        "stale identity before and during execution",
+        "failed child cancels comparison",
+        "M1 and new parent/child history replay",
+        "no source snapshots in parent history"
+      ]
     }
   ],
-  "releaseState": "M2 candidate activity implementation only; parent workflow registration/dispatch and all milestone release gates remain pending"
+  "releaseState": "M2 candidate lifecycle only; production controller registration and locked Check publication remain pending"
 }
