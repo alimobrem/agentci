@@ -25,6 +25,15 @@ test('task completion requires known requirements, passed acceptance and explici
 test('timing summaries do not invent empty samples and use median rather than best run', () => {
   assert.equal(median([]),null); assert.equal(median([100,10,11]),11); assert.equal(median([3,1,4,2]),2.5);
 });
+test('deferral preserves unfinished acceptance and rejects absent evidence, escapes and false completion',()=>{
+  const task:Task={id:'T1',title:'Deferred adoption',requirementIds:['R1'],status:'deferred',startedAt:'2026-10-03T00:00:00Z',completedAt:null,acceptance:[{text:'Native acceptance',status:'pending',evidence:[]}],deferral:{at:'2026-10-03T00:01:00Z',reason:'Owner approved release default change',evidence:'docs/m2-container-engine.md'}};
+  validateTasks([task],new Set(['R1']));
+  for(const invalid of [{...task,deferral:undefined},{...task,completedAt:'2026-10-03T00:02:00Z'},{...task,deferral:{...task.deferral!,evidence:'../secret'}},{...task,deferral:{...task.deferral!,at:'2026-10-02T00:00:00Z'}},{...task,deferral:{...task.deferral!,reason:''}}])assert.throws(()=>validateTasks([invalid],new Set(['R1'])),/Deferral|deferral/);
+  const events=[{task:'T1',action:'block',at:'2026-10-03T00:00:10Z'},{task:'T1',action:'defer',at:'2026-10-03T00:00:30Z'}];
+  assert.equal(blockedSeconds(task,events,Date.parse('2026-10-03T01:00:00Z')),20);
+  validateTasks([{...task,status:'in-progress'}],new Set(['R1']));
+  assert.throws(()=>validateTasks([{...task,status:'done',completedAt:'2026-10-03T00:02:00Z'}],new Set(['R1'])),/not passed/);
+});
 test('blocked time is separate from cycle time and unknown starts stay unknown', () => {
   const task:Task={id:'T1',title:'Example',requirementIds:['R1'],status:'done',startedAt:'2026-10-03T00:00:00Z',completedAt:'2026-10-03T00:01:00Z',acceptance:[]};
   const events=[{task:'T1',action:'block',at:'2026-10-03T00:00:10Z'},{task:'T1',action:'start',at:'2026-10-03T00:00:30Z'}];

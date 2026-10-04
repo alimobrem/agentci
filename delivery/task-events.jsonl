@@ -157,3 +157,10 @@
 {"at":"2026-10-04T15:00:51.249Z","task":"M2-VELOCITY-PLAN","action":"done","sourceCommit":"0c645e33c4ff88802fdf922119f7edb84a39919a","details":null}
 {"at":"2026-10-04T15:27:23.707Z","task":"M2-PODMAN-DEFAULT","action":"start","sourceCommit":"67b52ffe1f816eb2a398ec52b8e338835801a516","details":null}
 {"at":"2026-10-04T16:34:40.128Z","task":"M2-PODMAN-RUNNER-STABILITY","action":"start","sourceCommit":"cc8fcbddce918df6bab473018be3fac78c262d8e","details":null}
+{"at":"2026-10-04T16:53:25.509Z","task":"M2-DOCKER-RELEASE-DEFAULT","action":"start","sourceCommit":"70bdfae4a1256e3bf8b178896d523836c5fa2883","details":null}
+{"at":"2026-10-04T17:01:50.371Z","task":"M2-DELIVERY-DEFERRAL","action":"start","sourceCommit":"70bdfae4a1256e3bf8b178896d523836c5fa2883","details":null}
+{"at":"2026-10-04T17:02:55.206Z","task":"M2-PODMAN-DEFAULT","action":"defer","sourceCommit":"70bdfae4a1256e3bf8b178896d523836c5fa2883","details":{"at":"2026-10-04T17:02:55.206Z","evidence":"docs/m2-container-engine.md","reason":"Owner-approved Docker default for M2"}}
+{"at":"2026-10-04T17:03:34.655Z","task":"M2-PODMAN-DEFAULT","action":"defer","sourceCommit":"70bdfae4a1256e3bf8b178896d523836c5fa2883","details":{"at":"2026-10-04T17:03:34.655Z","evidence":"docs/m2-container-engine.md","reason":"Owner-approved Docker default for M2; Podman security and hosted adoption acceptance remains unfinished"}}
+{"at":"2026-10-04T17:03:34.884Z","task":"M2-PODMAN-RUNNER-STABILITY","action":"defer","sourceCommit":"70bdfae4a1256e3bf8b178896d523836c5fa2883","details":{"at":"2026-10-04T17:03:34.884Z","evidence":"docs/m2-container-engine.md","reason":"Owner-approved Docker release default; retain unresolved Podman runner failure and diagnostic evidence for future adoption"}}
+{"at":"2026-10-04T17:04:52.860Z","task":"M2-DELIVERY-DEFERRAL","action":"accept","sourceCommit":"70bdfae4a1256e3bf8b178896d523836c5fa2883","details":null}
+{"at":"2026-10-04T17:04:53.089Z","task":"M2-DELIVERY-DEFERRAL","action":"done","sourceCommit":"70bdfae4a1256e3bf8b178896d523836c5fa2883","details":null}

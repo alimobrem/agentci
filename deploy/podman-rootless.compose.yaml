@@ -2,6 +2,14 @@
 # Socket access confers authority over that executor; never share the controller/App daemon.
 services:
   eval-worker:
+    environment:
+      AGENTCI_CONTAINER_ENGINE: podman
+    volumes:
+      - type: bind
+        source: ${AGENTCI_CONTAINER_SOCKET_PATH:?Set explicit rootless Podman socket}
+        target: /run/agentci/engine.sock
+        bind: { create_host_path: false }
+    tmpfs: ["/opt/agentci/podman-runtime:rw,nosuid,nodev,size=16m,mode=1777"]
     userns_mode: "keep-id:uid=1001,gid=0"
     # The trusted remote-client service must access the host socket under SELinux.
     # Untrusted eval children are independently created with SELinux enabled and no socket.

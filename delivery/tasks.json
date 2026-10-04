@@ -1095,7 +1095,7 @@
         "SPEC-40-038",
         "SPEC-11.4-007"
       ],
-      "status": "in-progress",
+      "status": "deferred",
       "startedAt": "2026-10-04T15:27:23.707Z",
       "completedAt": null,
       "acceptance": [
@@ -1104,7 +1104,12 @@
           "status": "pending",
           "evidence": []
         }
-      ]
+      ],
+      "deferral": {
+        "at": "2026-10-04T17:03:34.655Z",
+        "evidence": "docs/m2-container-engine.md",
+        "reason": "Owner-approved Docker default for M2; Podman security and hosted adoption acceptance remains unfinished"
+      }
     },
     {
       "id": "M2-PODMAN-RUNNER-STABILITY",
@@ -1113,7 +1118,7 @@
         "SPEC-40-032",
         "SPEC-40-038"
       ],
-      "status": "in-progress",
+      "status": "deferred",
       "startedAt": "2026-10-04T16:34:40.128Z",
       "completedAt": null,
       "acceptance": [
@@ -1121,6 +1126,49 @@
           "text": "Diagnose the retained failed native pytest attempt without weakening assertions or hiding failed attempts. Add the necessary regression coverage and verify the fix through concurrent native Podman execution, runner cancellation/recovery and complete integration acceptance. Record exact source/runtime/image evidence; passing retries alone do not establish a resolved cause.",
           "status": "pending",
           "evidence": []
+        }
+      ],
+      "deferral": {
+        "at": "2026-10-04T17:03:34.884Z",
+        "evidence": "docs/m2-container-engine.md",
+        "reason": "Owner-approved Docker release default; retain unresolved Podman runner failure and diagnostic evidence for future adoption"
+      }
+    },
+    {
+      "id": "M2-DOCKER-RELEASE-DEFAULT",
+      "title": "Release M2 with Docker-default engine-specific UBI evaluator packaging",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-038",
+        "SPEC-11.4-007"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T16:53:25.509Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Operator defaults consistently select Docker for M2. The released Docker evaluator contains only its pinned Docker CLI and native inventories; Podman remains an explicit separate development image with tracked security/stability/hosted acceptance. Reject mismatched packaged engine configuration before database/Temporal connection. Verify full native Docker execution/recovery, packaged service, API/config compatibility, license/native provenance and vulnerability coverage, docs, and hosted CI. Preserve all Podman findings and failed attempts; do not claim Podman adoption complete or remove any product requirement.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-DELIVERY-DEFERRAL",
+      "title": "Record approved task deferrals without fabricating completion or blocker time",
+      "requirementIds": [
+        "SPEC-34.2-003"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T17:01:50.371Z",
+      "completedAt": "2026-10-04T17:04:53.089Z",
+      "acceptance": [
+        {
+          "text": "The delivery CLI records deferred status with an explicit reason, bounded repository evidence path and timestamp; keeps original starts and pending acceptance, emits a deferral event, and never counts deferral as completion. Resuming preserves deferral history and cannot invent historical dates. Validation rejects missing/escaped evidence, inconsistent timestamps and false completion; blocked-time accounting stops at deferral. Use the approved M2 Docker engine decision for Podman task deferrals.",
+          "status": "passed",
+          "evidence": [
+            "tests/delivery.test.ts"
+          ]
         }
       ]
     }

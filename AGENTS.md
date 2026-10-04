@@ -30,5 +30,7 @@
 - Prefer Red Hat technologies where they meet the requirement: UBI service images,
   Podman container execution, Buildah/Skopeo image tooling, and Tekton/OpenShift
   in their planned integration phases. Keep justified interoperable fallbacks.
-  Podman default adoption requires real execution/isolation/recovery acceptance;
+  The owner approved Docker as the M2 release default; retain Podman adoption
+  tracking until security, stability and hosted acceptance pass. Podman default
+  adoption requires real execution/isolation/recovery acceptance;
   a Docker-compatible CLI/API alone does not prove support. Preserve milestone order.

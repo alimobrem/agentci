@@ -11,7 +11,7 @@ export async function evalWorkerConfig(env:NodeJS.ProcessEnv=process.env){
   const databaseUrl=required('AGENTCI_EVAL_DATABASE_URL');
   let url:URL;try{url=new URL(databaseUrl);}catch{throw new Error('Invalid eval database URL');}
   if(!['postgres:','postgresql:'].includes(url.protocol)||!url.hostname||url.hash)throw new Error('Invalid eval database URL');
-  const engine=containerEngine(env.AGENTCI_CONTAINER_ENGINE??'podman');
+  const engine=containerEngine(env.AGENTCI_CONTAINER_ENGINE??'docker');
   const image=required('AGENTCI_EVAL_RUNNER_IMAGE'),enginesImage=env.AGENTCI_EVAL_ENGINES_IMAGE;
   validateRunnerPolicy({image});if(enginesImage)validateRunnerPolicy({image:enginesImage});
   let providers:HttpProviderPolicy[]=[];

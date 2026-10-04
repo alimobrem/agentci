@@ -52,10 +52,13 @@ is `docs/phases/m2.md`, specification section 40 M2 and section 11.
    `releases/m2-forge-backport-ci.json`. Other scanner coverage and digest-bound
    published-platform remediation records remain pending.
    The official Podman 6.1.3 remote client additionally contains two HIGH gRPC
-   findings. The latest CI attempt `37217458910` fails scan policy; native binary
+   findings. Combined-client CI attempts `37217458910` and `37218263332` fail scan policy; native binary
    analysis confirms affected symbols are present. See
    [native security evidence](m2-native-security.md). No exemption or clean-scan
-   claim is made; client remediation or concrete release assessment is required.
+   claim is made. The owner approved Docker-only M2 packaging; Podman adoption
+   and its unresolved findings remain deferred with decision evidence in
+   `docs/m2-container-engine.md`. Released Docker platforms still require their
+   own complete scan, inventory, execution and recovery acceptance.
 4. Finish requirement/status, customer setup, migration/upgrade/rollback,
    observability, architecture and release documentation against final behavior.
    Review delivery metrics with comparable suite/cache/runner cohorts; faster local

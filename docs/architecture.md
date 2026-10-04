@@ -60,12 +60,12 @@ Sources: [Temporal workflows](https://docs.temporal.io/workflows),
 ## Red Hat technology preference
 
 The owner requested Red Hat technologies as the default where suitable on
-2026-10-04. UBI remains the service-image base. Podman is the selected preferred
-OCI execution engine. The M2 runner now defaults to Podman through an operator-owned
-engine setting; native local rootless execution and SIGKILL recovery have passed.
-Hosted CI and the deployed evaluator remain explicit Docker compatibility cohorts
-until Podman service/deployment and hosted acceptance passes.
-Docker is an explicit interoperability fallback, not proof of Podman support.
+2026-10-04. UBI remains the service-image base. Podman remains the preferred future OCI engine once its acceptance passes.
+The owner approved Docker as the M2 release default on 2026-10-04 after native
+Podman security findings and unfinished hosted/stability acceptance. Engine
+selection is operator-owned; the M2 release target packages only Docker, while
+Podman has a separate development image. This decision does not claim Podman
+support or waive its failed gates. See `docs/m2-container-engine.md`.
 Buildah/Skopeo are preferred image tooling where the integration and current stable
 versions fit; Tekton/OpenShift retain their planned M7 integration. This preference
 does not replace Temporal, protocol libraries or other appropriate components with

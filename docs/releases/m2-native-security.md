@@ -1,7 +1,10 @@
 # M2 native dependency evidence (release pending)
 
-The evaluator packages the official Podman 6.1.3 static remote client and Docker
-29.8.2 CLI in UBI. `deploy/security/native-components.json` pins their source and
+The earlier combined-client evaluator packaged the official Podman 6.1.3 static
+remote client and Docker 29.8.2 CLI in UBI. The owner subsequently approved a
+Docker-only M2 release image, with Podman in a separate development target; see
+[engine decision](../m2-container-engine.md). Findings below remain recorded for
+that Podman client and are not exemptions. `deploy/security/native-components.json` pins their source and
 binary identities, official release archive checksums, licenses and inventories.
 Podman compiled inventories for amd64 and arm64 were extracted from the verified
 release binaries with official Go 1.27.1 `go version -m`; each contains 133 modules.

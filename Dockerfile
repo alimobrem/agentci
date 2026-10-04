@@ -126,18 +126,30 @@ RUN case "$TARGETARCH" in \
 
 # Copy only the CLI component into UBI; no Docker daemon or upstream Alpine filesystem ships.
 FROM docker:29.8.2-cli@sha256:b1805116a6a86cc591b5d5f60a910a0715cdcc9d18d866ad68b1457ead25c35c AS docker-cli
-FROM runtime AS eval-worker
-ARG TARGETARCH
+FROM runtime AS eval-worker-base
 USER 0
-COPY --from=docker-cli /usr/local/bin/docker /usr/local/bin/docker
-COPY --from=podman-cli /usr/local/bin/podman /usr/local/bin/podman
-COPY deploy/licenses/podman-LICENSE /licenses/podman-LICENSE
-COPY deploy/security/docker-cli-vendor.mod /licenses/docker-cli/go.mod
-COPY deploy/security/podman-client-go.mod /licenses/podman-client/go.mod
-COPY deploy/security/podman-client-${TARGETARCH}.json /licenses/podman-client/compiled.json
-COPY deploy/licenses/docker-cli-LICENSE /licenses/docker-cli-LICENSE
-RUN microdnf remove -y microdnf rpm rpm-libs libdnf libmodulemd librepo libsolv dnf-data rpm-sequoia && mkdir -p /opt/agentci/docker-config /opt/agentci/podman-config/containers /opt/agentci/podman-runtime/libpod && chmod 0555 /opt/agentci/docker-config && chown -R 1001:0 /opt/agentci/podman-config /opt/agentci/podman-runtime && chmod 0700 /opt/agentci/podman-config /opt/agentci/podman-config/containers /opt/agentci/podman-runtime && chmod 1700 /opt/agentci/podman-runtime/libpod && \
-    docker --version | grep '29.8.2'
-ENV DOCKER_CONFIG=/opt/agentci/docker-config DOCKER_HOST=unix:///var/run/docker.sock XDG_CONFIG_HOME=/opt/agentci/podman-config XDG_RUNTIME_DIR=/opt/agentci/podman-runtime/private
+RUN microdnf remove -y microdnf rpm rpm-libs libdnf libmodulemd librepo libsolv dnf-data rpm-sequoia
 USER 1001
 CMD ["node", "dist/apps/eval-worker/main.js"]
+
+# Development target; Podman security, stability and hosted release acceptance remain open.
+FROM eval-worker-base AS eval-worker-podman
+ARG TARGETARCH
+USER 0
+COPY --from=podman-cli /usr/local/bin/podman /usr/local/bin/podman
+COPY deploy/licenses/podman-LICENSE /licenses/podman-LICENSE
+COPY deploy/security/podman-client-go.mod /licenses/podman-client/go.mod
+COPY deploy/security/podman-client-${TARGETARCH}.json /licenses/podman-client/compiled.json
+RUN mkdir -p /opt/agentci/podman-config/containers /opt/agentci/podman-runtime && chown -R 1001:0 /opt/agentci/podman-config /opt/agentci/podman-runtime && chmod 0700 /opt/agentci/podman-config /opt/agentci/podman-config/containers /opt/agentci/podman-runtime
+ENV AGENTCI_CONTAINER_ENGINE=podman XDG_CONFIG_HOME=/opt/agentci/podman-config XDG_RUNTIME_DIR=/opt/agentci/podman-runtime/private CONTAINER_HOST=unix:///run/agentci/engine.sock
+USER 1001
+
+# M2 release target: only the selected Docker client ships in the evaluator.
+FROM eval-worker-base AS eval-worker
+USER 0
+COPY --from=docker-cli /usr/local/bin/docker /usr/local/bin/docker
+COPY deploy/security/docker-cli-vendor.mod /licenses/docker-cli/go.mod
+COPY deploy/licenses/docker-cli-LICENSE /licenses/docker-cli-LICENSE
+RUN mkdir -p /opt/agentci/docker-config && chmod 0555 /opt/agentci/docker-config && docker --version | grep '29.8.2'
+ENV AGENTCI_CONTAINER_ENGINE=docker DOCKER_CONFIG=/opt/agentci/docker-config DOCKER_HOST=unix:///run/agentci/engine.sock
+USER 1001

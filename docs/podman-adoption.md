@@ -1,14 +1,16 @@
 # Podman adoption status
 
-Podman is the default engine selected by `AGENTCI_CONTAINER_ENGINE`; only `podman`
-and `docker` are accepted. Repository manifests cannot choose an executable.
+The owner approved Docker as the M2 release default on 2026-10-04. Only
+`podman` and `docker` are accepted by `AGENTCI_CONTAINER_ENGINE`. Podman adoption
+remains tracked until its security, stability and hosted acceptance pass. Repository manifests cannot choose an executable.
 Worker configuration carries the same selection into execution and fenced
-orphan/cancelled-unit cleanup. Docker is an explicit compatibility setting.
+orphan/cancelled-unit cleanup. The M2 release-target UBI evaluator packages only Docker; `eval-worker-podman` is a
+separate development build target. Neither image packages the other client.
 
 The local acceptance environment uses a dedicated rootless Podman 6.1.3 Fedora
 CoreOS machine, with matching official client/server versions. It does not mount
 the home directory or replace the shared Docker socket. Official release assets
-are checksum pinned; the evaluator remains UBI and includes the official static
+are checksum pinned; the Podman development evaluator remains UBI and includes the official static
 remote client and upstream license.
 
 Native acceptance has passed real command/pytest/model comparison, immutable
@@ -30,21 +32,25 @@ This is an implementation checkpoint, not completed Podman support or an M2
 release. A complete native run passed 14 of 15 tests; a pytest runner case returned
 an infrastructure error. The retry passed all 15 tests, and a further focused
 runner pass succeeded. The earlier failure is retained as an unresolved
-intermittent issue. The freshly packaged evaluator passed rootless Podman Compose
+intermittent issue. The combined-client implementation checkpoint passed rootless Podman Compose
 and explicit Docker service acceptance; the full Docker cohort passed all 15
 tests. Remaining gates include resolving the intermittent runner failure, hosted
 workflow, both published platforms and native binary inventory/scan coverage.
-Hosted workflows currently select Docker explicitly; hosted Podman acceptance
-must pass before those defaults change.
+Hosted workflows continue to select Docker; a future Podman default requires
+its full acceptance. No failed Podman gate is marked complete by this decision.
+See [M2 engine decision](m2-container-engine.md).
 
 Evaluator socket configuration is operator-owned:
 
-- `AGENTCI_CONTAINER_ENGINE=podman` (default).
-- `AGENTCI_CONTAINER_SOCKET_PATH` points to the dedicated Podman socket.
+- `AGENTCI_CONTAINER_ENGINE=docker` (M2 default); explicit `podman` is for the
+  separate development image.
+- `AGENTCI_CONTAINER_SOCKET_PATH` points to the dedicated engine socket; the
+  Docker default is `/var/run/docker.sock`, while Podman requires its explicit
+  rootless socket path.
 - `AGENTCI_CONTAINER_SOCKET_GID` describes its accessible group.
 - The service mounts only that socket at `/run/agentci/engine.sock` and uses
   `CONTAINER_HOST=unix:///run/agentci/engine.sock`.
-- Explicit Docker fallback uses `AGENTCI_CONTAINER_ENGINE=docker`; legacy
+- Docker deployments use `AGENTCI_CONTAINER_ENGINE=docker`; legacy
   `AGENTCI_DOCKER_SOCKET_PATH/GID` aliases remain accepted by Compose.
 
 The official remote client requires runtime-directory writes even during version

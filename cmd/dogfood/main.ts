@@ -50,7 +50,7 @@ if(process.argv[2]==='publish'){
   const socket=process.env.AGENTCI_CONTAINER_SOCKET_PATH??(engine==='docker'?'/var/run/docker.sock':`/run/user/${process.getuid!()}/podman/podman.sock`);
   if(!/^\/[A-Za-z0-9_./-]+$/.test(socket))throw new Error('Invalid operator evaluator socket path');
   const serviceNamespace=engine==='podman'?['--userns','keep-id:uid=1001,gid=0','--security-opt','label=disable']:[];
-  const clientRuntime=engine==='podman'?['--mount','type=tmpfs,destination=/opt/agentci/podman-runtime,tmpfs-size=16m,tmpfs-mode=1777,tmpcopyup=false']:['--tmpfs','/opt/agentci/podman-runtime:rw,nosuid,nodev,size=16m,mode=1777'];
+  const clientRuntime=engine==='podman'?['--mount','type=tmpfs,destination=/opt/agentci/podman-runtime,tmpfs-size=16m,tmpfs-mode=1777,tmpcopyup=false']:[];
   const socketGid=container(['run','--rm','--network','none','--read-only',...serviceNamespace,...clientRuntime,'-v',`${socket}:/run/agentci/engine.sock`,'--entrypoint','node',evaluatorImage,'-e',"const s=require('node:fs').statSync('/run/agentci/engine.sock');if(!s.isSocket())process.exit(1);console.log(s.gid)"]);
   if(!/^\d+$/.test(socketGid))throw new Error('Invalid evaluator socket group');
   evaluator=`agentci-hosted-evaluator-${randomUUID()}`;

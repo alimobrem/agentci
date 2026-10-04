@@ -27,7 +27,7 @@ function streamContainer(engine:ContainerEngine,args:string[],input:string,signa
 }
 export type ContainerEngine='podman'|'docker';
 /** Operator-owned fixed executable selection. Never accept a path or command from repository inputs. */
-export function containerEngine(value:unknown=process.env.AGENTCI_CONTAINER_ENGINE??'podman'):ContainerEngine {
+export function containerEngine(value:unknown=process.env.AGENTCI_CONTAINER_ENGINE??'docker'):ContainerEngine {
   if(value!=='podman'&&value!=='docker')throw new Error('Invalid operator container engine');
   return value;
 }
