@@ -55,12 +55,12 @@ test('PR eval parent: separate children, baseline/head regression, cancellation,
     assert.equal((await evals.comparison(stages.get(stageCancelAttempt)!.comparisonId))!.comparison.summary.state,'cancelled');
     const stagedHistory=await stageCancel.fetchHistory();assert.ok(!JSON.stringify(stagedHistory).includes('startChildWorkflowExecutionInitiatedEventAttributes'));await Worker.runReplayHistory({workflowsPath},stagedHistory,stageCancel.workflowId);
     current=true;hang=true;const cancelAttempt=randomUUID(),cancel=await start(cancelAttempt);
-    let live=false;for(let i=0;i<200;i++){const staged=stages.get(cancelAttempt);if(staged&&(await docker(['ps','--quiet','--filter',`label=agentci.eval.unit=${staged.unitIds[0]}`]))){live=true;break;}await delay(25);}assert.ok(live,'parent cancellation must interrupt actual evaluator containers');
+    let live=false;for(let i=0;i<200;i++){const staged=stages.get(cancelAttempt);if(staged&&(await Promise.all(staged.unitIds.map(id=>docker(['ps','--quiet','--filter',`label=agentci.eval.unit=${id}`])))).every(Boolean)){live=true;break;}await delay(25);}assert.ok(live,'parent cancellation must interrupt every actual evaluator child container');
     await cancel.cancel();await assert.rejects(cancel.result());
     for(const id of stages.get(cancelAttempt)!.unitIds){assert.equal(await docker(['ps','--all','--quiet','--filter',`label=agentci.eval.unit=${id}`]),'');assert.equal((await evals.unit(id))!.status,'cancelled');}
     assert.equal((await evals.comparison(stages.get(cancelAttempt)!.comparisonId))!.comparison.summary.state,'cancelled');await Worker.runReplayHistory({workflowsPath},await cancel.fetchHistory(),cancel.workflowId);
     current=true;const runningStaleAttempt=randomUUID(),runningStale=await start(runningStaleAttempt);
-    live=false;for(let i=0;i<200;i++){const staged=stages.get(runningStaleAttempt);if(staged&&(await docker(['ps','--quiet','--filter',`label=agentci.eval.unit=${staged.unitIds[0]}`]))){live=true;break;}await delay(25);}assert.ok(live,'stale detection must interrupt actually running children');
+    live=false;for(let i=0;i<200;i++){const staged=stages.get(runningStaleAttempt);if(staged&&(await Promise.all(staged.unitIds.map(id=>docker(['ps','--quiet','--filter',`label=agentci.eval.unit=${id}`])))).every(Boolean)){live=true;break;}await delay(25);}assert.ok(live,'stale detection must interrupt every actually running child');
     current=false;assert.deepEqual(await runningStale.result(),{status:'superseded'});
     for(const id of stages.get(runningStaleAttempt)!.unitIds){assert.equal(await docker(['ps','--all','--quiet','--filter',`label=agentci.eval.unit=${id}`]),'');assert.equal((await evals.unit(id))!.status,'cancelled');}
     await Worker.runReplayHistory({workflowsPath},await runningStale.fetchHistory(),runningStale.workflowId);

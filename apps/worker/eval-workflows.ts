@@ -14,15 +14,16 @@ export async function evaluatePullRequest(job:ReviewJob,attemptId:string,evalTas
 type Staged=Awaited<ReturnType<EvalReviewActivities['stageEvalReview']>>;
 async function evaluateStagedPullRequest(job:ReviewJob,attemptId:string,staged:Staged,evalTaskQueue:string,timeoutMs?:number):Promise<PrEvaluationResult>{
   const childrenScope=timeoutMs===undefined?new CancellationScope():new CancellationScope({cancellable:true,timeout:timeoutMs}),monitorScope=new CancellationScope();
-  let children:Promise<string[]>|undefined,monitor:Promise<'superseded'>|undefined;
+  let children:Promise<string[]>|undefined,childResults:Promise<string>[]=[];let monitor:Promise<'superseded'>|undefined;
   const cancel=()=>CancellationScope.nonCancellable(async()=>{
     // Preserve the SQL cancellation even if a child was never started or temporarily unreachable.
     childrenScope.cancel();monitorScope.cancel();
-    try{await cleanup.cancelEvalReview(job,attemptId,staged.comparisonId);}finally{if(children)await Promise.allSettled([children]);}
+    // Promise.all rejects after the first child settles; retain each child so cleanup waits for all of them.
+    try{await cleanup.cancelEvalReview(job,attemptId,staged.comparisonId);}finally{await Promise.allSettled(childResults);}
   });
   try{
     if(!await activities.isEvalCurrent(job)){await cancel();return {status:'superseded'};}
-    children=childrenScope.run(()=>Promise.all(staged.unitIds.map(id=>executeChild('evaluateUnit',{args:[id],taskQueue:evalTaskQueue,workflowId:`agentci:eval:${staged.comparisonId}:${id}`,cancellationType:ChildWorkflowCancellationType.WAIT_CANCELLATION_COMPLETED,parentClosePolicy:ParentClosePolicy.REQUEST_CANCEL}))));
+    children=childrenScope.run(()=>{childResults=staged.unitIds.map(id=>executeChild('evaluateUnit',{args:[id],taskQueue:evalTaskQueue,workflowId:`agentci:eval:${staged.comparisonId}:${id}`,cancellationType:ChildWorkflowCancellationType.WAIT_CANCELLATION_COMPLETED,parentClosePolicy:ParentClosePolicy.REQUEST_CANCEL}));return Promise.all(childResults);});
     monitor=monitorScope.run(async()=>{for(;;){await sleep('30 seconds');if(!await activities.isEvalCurrent(job))return 'superseded' as const;}});
     const outcome=await Promise.race([children.then(result=>({status:'completed' as const,result})),monitor.then(()=>({status:'superseded' as const}))]);
     if(outcome.status==='superseded'){await cancel();return {status:'superseded'};}

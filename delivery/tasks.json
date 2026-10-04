@@ -875,16 +875,14 @@
         "SPEC-40-039",
         "SPEC-11.4-007"
       ],
-      "status": "done",
-      "startedAt": "2026-10-04T10:12:26.150Z",
-      "completedAt": "2026-10-04T10:29:23.771Z",
+      "status": "in-progress",
+      "startedAt": "2026-10-04T11:31:15.553Z",
+      "completedAt": null,
       "acceptance": [
         {
           "text": "New PR evaluation parent stages exact identifiers, dispatches separate evaluator children with deterministic identity, waits for completion and cancellation cleanup, retains cancelled evidence on stale PR or failure, and preserves M1 replay. Real PostgreSQL/Temporal/isolated runner tests prove baseline/head results, no source/credentials in histories, stale/cancel cleanup and replay before Check publication is wired.",
-          "status": "passed",
-          "evidence": [
-            "releases/m2-pr-parent-ci.json"
-          ]
+          "status": "pending",
+          "evidence": []
         }
       ]
     },
