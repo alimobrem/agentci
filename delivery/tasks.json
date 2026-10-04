@@ -895,14 +895,16 @@
         "SPEC-40-037",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T12:03:16.921Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T12:16:11.818Z",
       "acceptance": [
         {
           "text": "Completed SQL snapshot exports produce bounded Check summaries containing exact base/head, suite/model deltas, regressions, added/removed/changed scenarios, coverage/selection/execution gaps and immutable evidence references. Publication rechecks current PR identity under the shared lock, reconciles only this App and exact attempt, rejects pending/cancelled or mismatched evidence, sanitizes SDK failures and preserves M1 Check behavior. Actual HTTP provider/PostgreSQL tests prove stale identity, retries including ambiguous writes, lock contention and no false passing summaries before production workflow wiring.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-check-history-ci.json"
+          ]
         }
       ]
     },
@@ -960,6 +962,24 @@
       "acceptance": [
         {
           "text": "Separate M2 controller and restricted evaluator deployment receives actual signed events from the approved demo App/repository, publishes immutable baseline/head behavioral Checks, exposes verified client evidence, demonstrates failure/recovery, and records exact source and limitations. Published-build replay is required for the milestone demo gate.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-OPERATOR-RETRY",
+      "title": "Scoped operator review CLI with fresh attempts and safe ambiguous submission retries",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-32-002"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T12:11:25.227Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Installed agentci review reads only a private strict operator config and existing scoped App/webhook credentials, fetches current open PR identity from GitHub, submits an HMAC-signed request to the existing route with a fresh UUID, validates queued/duplicate response and emits only receipt metadata. Supplied UUID safely repeats ambiguous transport submission without rewriting cancelled evidence. Tests reject unsafe config/permissions/origin, closed/mismatched PRs, redirects, forged/oversized replies, secret leakage and read-only evidence-token scheduling; native controller and real customer acceptance prove a new review without close/reopen. Docs, operation/scenario mapping, packaging and exact-source full CI pass before completion.",
           "status": "pending",
           "evidence": []
         }

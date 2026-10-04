@@ -17,6 +17,11 @@ try {
   const cli = join(root, 'node_modules/.bin/agentci');
   const version = execFileSync(cli, ['--version'], { encoding: 'utf8' }).trim();
   if (version !== expectedVersion) throw new Error('Unexpected packaged version');
+  if(!execFileSync(cli,['--help'],{encoding:'utf8'}).includes('review --config PRIVATE_JSON'))throw new Error('Installed operator review command missing');
+  const operatorTemplate=JSON.parse(await readFile(join(root,'node_modules/agentci/deploy/review-operator.example.json'),'utf8'));
+  if(Object.keys(operatorTemplate).sort().join(',')!=='appId,installationId,privateKeyFile,repository,url,webhookSecretFile')throw new Error('Unexpected packaged operator credential boundary');
+  try{execFileSync(cli,['review','--config',join(root,'missing-private-operator.json'),'--pr','1'],{encoding:'utf8',stdio:'pipe'});throw new Error('Installed operator accepted missing private config');}catch(error){if(error.status!==2||JSON.parse(error.stderr).error.code!=='invalid-private-operator-file')throw error;}
+  try{execFileSync(cli,['review','--pr','0'],{encoding:'utf8',stdio:'pipe'});throw new Error('Installed operator accepted invalid arguments');}catch(error){if(error.status!==2||JSON.parse(error.stderr).error.code!=='invalid-review-arguments')throw error;}
   const template=await readFile(join(root,'node_modules/agentci/.env.example'),'utf8');
   if(!template.includes('AGENTCI_EVAL_RUNNER_IMAGE=REPLACE_WITH_IMMUTABLE_RUNNER_IMAGE_OR_DIGEST')||!template.includes('AGENTCI_EVAL_REVIEW_TIMEOUT_MS=86400000'))throw new Error('Packaged controller configuration template missing');
   try{await readFile(join(root,'node_modules/agentci/.env'));throw new Error('Private deployment environment entered package');}catch(error){if(error.code!=='ENOENT')throw error;}

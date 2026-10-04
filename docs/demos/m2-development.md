@@ -21,6 +21,11 @@ a local daemon; production evaluator infrastructure must be separate.
 4. After restoring the evaluator and reopening the disposable PR, a fresh signed
    attempt on the same repaired commit passes 2/2 baseline and 2/2 head trials.
    The prior failure remains cancelled in storage and retained as a separate Check.
+5. The production-only installed M2 candidate CLI requests another review on the
+   same open PR with `agentci review`, without closing/reopening or moving it.
+   Repeating its UUID returns a duplicate receipt and creates no extra Check.
+   The installed client verifies the new passed result and complete export; both
+   earlier attempts remain retained.
 
 Behavioral outcomes are advisory in M2. GitHub's neutral conclusion accompanies
 an explicit passed/failed behavioral title and summary; it does not enforce merge
@@ -35,12 +40,14 @@ Recorded candidate evidence:
 
 - [Behavioral regression](../../releases/m2-customer-behavior-local.json)
 - [Infrastructure failure and recovery](../../releases/m2-customer-recovery-local.json)
+- [Installed operator request](../../releases/m2-operator-review-local.json)
 - [Deployment startup](../../releases/m2-customer-startup-local.json)
 - [Evaluator deployment guide](../eval-deployment.md)
 
 GitHub's default Check listing hides older attempts. The demo revealed that
 reconciliation must explicitly request all attempts; the finding and regression
 are retained in [the Check lookup record](../../releases/m2-check-filter-finding.json).
-This follow-up fix requires its own final-source CI before publication is accepted.
-Reopening this disposable PR demonstrates recovery but does not replace the
-supported operator retry interface still required before M2 completion.
+The reconciliation fix passed source- and artifact-verified CI 37201053254.
+The [operator command](../operator-review.md) now has native integration, installed
+package and actual customer evidence. Its final-source full CI and the remaining
+M2 release gates are still required.
