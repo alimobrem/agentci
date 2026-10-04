@@ -24,3 +24,23 @@ test('added suites and removed scenarios remain explicit; malformed and duplicat
  assert.throws(()=>suiteCatalog({sha:'a'.repeat(40),files:{...base,'evals/duplicate.yaml':base['evals/suite.yaml']}}),/Duplicate/);
  assert.throws(()=>suiteCatalog({sha:'a'.repeat(40),files:{...base,'evals/suite.yaml':stringify({...evalSuite(),kind:'Typo'})}}),/Invalid/);
 });
+test('head-only defensive suites cannot conceal missing baseline impact coverage',()=>{
+ const scoped=structuredClone(config);scoped.spec.extensions={'agentci.io/review':{tools:['tools/**']}};
+ const base={...fixture(),'agentci.yaml':stringify(scoped),'tools/schema.json':'{"name":"read"}'};
+ const head={...base,'tools/schema.json':'{"name":"write"}','evals/contract.yaml':stringify(evalSuite({class:'contract'},'tool-contract'))};
+ const plan=planComparison(input(base,head));
+ assert.ok(plan.analysis.changes.some(c=>c.categories.includes('tool')));
+ assert.ok(plan.suites.some(s=>s.metadata.id==='tool-contract'));
+ assert.deepEqual(plan.selectionGaps,['missing-tool-contract-suite']);
+ const covered={...base,'evals/contract.yaml':head['evals/contract.yaml']};
+ assert.deepEqual(planComparison(input(covered,head)).selectionGaps,[]);
+});
+test('permission expansion requires defenses from the frozen baseline catalog',()=>{
+ const scoped=structuredClone(config);scoped.spec.extensions={'agentci.io/review':{permissions:['permissions/**']}};
+ const base={...fixture(),'agentci.yaml':stringify(scoped),'permissions/access.json':JSON.stringify({apiVersion:'agentci.io/v1alpha1',permissions:[]})};
+ const head={...base,'permissions/access.json':JSON.stringify({apiVersion:'agentci.io/v1alpha1',permissions:[{id:'write',environment:'production',actions:['write'],resources:['service']}]})};
+ assert.deepEqual(planComparison(input(base,head)).selectionGaps,['missing-adversarial-suite','missing-policy-suite']);
+ const defenses={'evals/policy.yaml':stringify(evalSuite({class:'policy'},'policy')),'evals/adversarial.yaml':stringify(evalSuite({class:'adversarial'},'adversarial'))};
+ assert.deepEqual(planComparison(input(base,{...head,...defenses})).selectionGaps,['missing-adversarial-suite','missing-policy-suite']);
+ assert.deepEqual(planComparison(input({...base,...defenses},{...head,...defenses})).selectionGaps,[]);
+});

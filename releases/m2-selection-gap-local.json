@@ -1,0 +1,29 @@
+{
+  "kind": "M2-selection-gap-local-checkpoint",
+  "recordedAt": "2026-10-04T09:02:45.914101+00:00",
+  "parentCommit": "29f6c4dbd496124146257dd3db1d571b97ff9c9d",
+  "releaseAcceptance": false,
+  "files": {
+    "packages/evals/contracts.ts": "5a506730bd68fcbd8aeaf229649a9d8300ba8c1acf004b771007f93e443e999c",
+    "tests/eval-contracts.test.ts": "a5f2701621a44303a562443f0eebd759bf883917883d7cda03350a29a767f976",
+    "tests/eval-plan.test.ts": "c9fc15399b90b849f7b14cb329fd4b9047f8adcbbe507815642e3f7d663c9247"
+  },
+  "checks": [
+    "missing tool contract class is explicit",
+    "policy/adversarial classes independently required on permission/policy impact",
+    "unrelated impact has no fabricated class gaps",
+    "head-only defensive suites do not erase frozen baseline gaps"
+  ],
+  "localFastChecks": "passed, 8 checks; 103 unit/API/domain tests",
+  "failedAttempts": [
+    {
+      "result": "failed",
+      "cause": "regression fixture used nonexistent top-level tools selector",
+      "correction": "use released agentci.io/review extension contract; no product schema widening"
+    }
+  ],
+  "limitations": [
+    "final-source full CI pending",
+    "customer PR/API integration and all M2 release gates open"
+  ]
+}

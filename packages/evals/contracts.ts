@@ -88,6 +88,12 @@ export function selectSuites(values:unknown[],impact:ChangeImpact):{suites:EvalS
       (['source','dependency','api','data-schema','deployment'].some(c=>categories.has(c))&&(['unit','integration','regression'].includes(spec.class)||mapped));
   }).sort((a,b)=>a.metadata.id.localeCompare(b.metadata.id));
   const selectionGaps:string[]=[];
+  // An absent impact-required class must remain visible even with no mapped requirements.
+  if(categories.has('tool')&&!selected.some(s=>s.spec.class==='contract'))selectionGaps.push('missing-tool-contract-suite');
+  if(categories.has('permission')||categories.has('policy')){
+    if(!selected.some(s=>s.spec.class==='policy'))selectionGaps.push('missing-policy-suite');
+    if(!selected.some(s=>s.spec.class==='adversarial'))selectionGaps.push('missing-adversarial-suite');
+  }
   if(categories.has('model')){
     const representative=selected.filter(s=>s.spec.representative);
     if(!representative.length)selectionGaps.push('missing-representative-suite');

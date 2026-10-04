@@ -761,6 +761,25 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M2-SELECTION-GAPS",
+      "title": "Expose missing impact-required eval classes",
+      "requirementIds": [
+        "SPEC-11.2-001",
+        "SPEC-11.2-004",
+        "SPEC-11.2-006"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T09:00:42.413Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Tool changes without contract suites and permission/policy changes without policy or adversarial suites report explicit selection gaps, including through frozen-base comparison plans; unrelated changes do not fabricate gaps. Regression checks and full CI pass.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

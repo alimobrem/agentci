@@ -53,3 +53,18 @@ test('model-impact selection reports missing representative suites and incomplet
   assert.deepEqual(selectSuites([evalSuite({representative:true})],impact).selectionGaps,['missing-model-matrix:behavior']);
   assert.deepEqual(selectSuites([evalSuite({representative:true,models:['a','b']})],impact).selectionGaps,[]);
 });
+test('missing tool contracts and permission defenses remain explicit without requirement mappings',()=>{
+  const impact=(category:string)=>({changes:[{path:'changed/file',categories:[category]}],requirementIds:[]});
+  const suite=(cl:EvalClass)=>evalSuite({class:cl,impact:{categories:[],include:[]}},cl);
+  assert.deepEqual(selectSuites([],impact('tool')).selectionGaps,['missing-tool-contract-suite']);
+  assert.deepEqual(selectSuites([suite('tool-use')],impact('tool')).selectionGaps,['missing-tool-contract-suite']);
+  assert.deepEqual(selectSuites([suite('contract')],impact('tool')).selectionGaps,[]);
+  for(const category of ['permission','policy']){
+    assert.deepEqual(selectSuites([suite('safety')],impact(category)).selectionGaps,['missing-adversarial-suite','missing-policy-suite']);
+    assert.deepEqual(selectSuites([suite('policy')],impact(category)).selectionGaps,['missing-adversarial-suite']);
+    assert.deepEqual(selectSuites([suite('adversarial')],impact(category)).selectionGaps,['missing-policy-suite']);
+    assert.deepEqual(selectSuites([suite('policy'),suite('adversarial')],impact(category)).selectionGaps,[]);
+  }
+  assert.deepEqual(selectSuites([],impact('prompt')).selectionGaps,[]);
+  assert.deepEqual(selectSuites([],impact('source')).selectionGaps,[]);
+});
