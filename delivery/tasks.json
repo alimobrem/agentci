@@ -1189,6 +1189,25 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M2-IMAGE-PUBLICATION",
+      "title": "Publish all M2 UBI image roles with immutable version guards and platform evidence",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-034",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T17:34:47.377Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Publication workflow covers API/controller, evaluator, default runner, optional engines and trusted self-eval dependency image for amd64/arm64; exact source/version labels and digest manifests bind all inputs. Existing version tags cannot be overwritten, including on ambiguous registry/auth/network failure. Every published platform is scanned, native service inventories are independently verified, and failed attempts retain evidence. Validate guards, workflows and applicable checks before hosted publication; publication/download/runtime gates remain pending until exercised.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
