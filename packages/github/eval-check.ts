@@ -59,6 +59,14 @@ export async function publishEvalCheck(client:Octokit,appId:number,job:ReviewJob
   if(Buffer.byteLength(summary)>60000)throw new Error('Check summary exceeds display budget');
   return reconcile(client,appId,job,attemptId,{title:`AgentCI evals: ${s.outcome}`,summary},s.outcome==='error'||s.outcome==='insufficient'?'action_required':'neutral',url);
 }
-export async function publishEvalUnavailable(client:Octokit,appId:number,job:ReviewJob,attemptId:string,reason:'unavailable'|'cancelled'='unavailable'):Promise<'published'|'superseded'>{
-  return reconcile(client,appId,job,attemptId,{title:`AgentCI evals ${reason}`,summary:`${reason==='cancelled'?'Evaluation cancelled.':'Evaluation infrastructure/input failure after retries.'} No passing behavioral result is claimed. Base: ${job.baseSha}; head: ${job.headSha}; attempt: ${attemptId}. Retained observations may be partial; operator recovery and webhook redelivery are required.`},'action_required',undefined,'completed',true);
+export async function publishEvalUnavailable(client:Octokit,appId:number,job:ReviewJob,attemptId:string,reason:'unavailable'|'cancelled'='unavailable',retained?:{header:ExportHeader;publicUrl:string}):Promise<'published'|'superseded'>{
+  let url:string|undefined,identity='';
+  if(retained){
+    const h=retained.header,s=h.subject;
+    if(h.attemptId!==attemptId||s.repository!==job.repository||s.pullRequest!==job.pullRequest||s.baseSha!==job.baseSha||s.headSha!==job.headSha)throw new Error('Retained comparison identity mismatch');
+    url=`${origin(retained.publicUrl)}/v1/eval-comparisons/${h.id}`;
+    identity=`Comparison: ${h.id}; review: ${h.reviewId}; attempt: ${attemptId}.\n[Retained authenticated evidence](${url}) · [Complete export](${url}/export)\nEvidence requires the deployment bearer token; credentials are never included in these links.`;
+  }
+  const summary=[`${reason==='cancelled'?'Evaluation cancelled.':'Evaluation infrastructure/input failure after retries.'} No passing behavioral result is claimed. Base: ${job.baseSha}; head: ${job.headSha}; attempt: ${attemptId}.`,identity||'No staged comparison evidence is available.', 'Retained observations may be partial. After resolving the cause, request a fresh attempt with agentci review using your private operator config and this PR number. Repeating or redelivering this failed request UUID does not rerun it.'].join('\n');
+  return reconcile(client,appId,job,attemptId,{title:`AgentCI evals ${reason}`,summary},'action_required',url,'completed',true);
 }

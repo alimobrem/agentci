@@ -67,3 +67,10 @@ native integration groups, with zero skips, released-M1 compatibility, packaging
 and UBI service/evaluator probes. Source trees and artifact hashes are verified
 in [the CI checkpoint](../releases/m2-operator-review-ci.json). Milestone
 publication and released-build acceptance remain separate gates.
+
+Cancelled or unavailable behavioral Checks direct you to create a fresh attempt
+after resolving its cause. When staging produced a comparison, the Check links
+to retained authenticated evidence and its complete export, with review/attempt
+identity. Use the deployment evidence token through the client; tokens are not
+embedded in links. Pre-stage failures have no comparison link. Repeating the old
+request UUID recovers only its receipt and does not rerun a terminal attempt.

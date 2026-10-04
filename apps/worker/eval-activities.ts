@@ -45,7 +45,16 @@ export function createEvalReviewActivities(client:Octokit,store:Store,evals:Eval
     },
     async failEvalReview(job:ReviewJob,attemptId:string):Promise<'published'|'superseded'>{
       if(!scoped(job)||!validAttempt(attemptId)||!canPublish())throw ApplicationFailure.nonRetryable('Invalid eval publication identity or configuration','EvalReviewIdentity');
-      try{return await store.withPublicationLock(evalPublicationKey(job),()=>publishEvalUnavailable(client,config.appId!,job,attemptId));}
+      try{return await store.withPublicationLock(evalPublicationKey(job),async()=>{
+        const plan=await evals.recoveryPlan(attemptId);let retained;
+        if(plan){
+          const items=evals.exportComparison(plan.id);let first;
+          try{first=await items.next();}finally{await items.return(undefined);}
+          if(first.done||first.value.type!=='header')throw new Error('Retained comparison unavailable');
+          retained={header:first.value.data,publicUrl:config.publicUrl!};
+        }
+        return publishEvalUnavailable(client,config.appId!,job,attemptId,'unavailable',retained);
+      });}
       catch{throw ApplicationFailure.retryable('Eval failure publication unavailable','EvalReviewUnavailable');}
     },
     async isEvalCurrent(job:ReviewJob):Promise<boolean>{
@@ -63,7 +72,7 @@ export function createEvalReviewActivities(client:Octokit,store:Store,evals:Eval
         if(header.attemptId!==attemptId||header.subject.repository!==job.repository||header.subject.pullRequest!==job.pullRequest||header.subject.baseSha!==job.baseSha||header.subject.headSha!==job.headSha)throw ApplicationFailure.nonRetryable('Eval comparison identity mismatch','EvalReviewIdentity');
         await store.withPublicationLock(evalPublicationKey(job),async()=>{
           await evals.cancel(comparisonId);
-          if(canPublish())await publishEvalUnavailable(client,config.appId!,job,attemptId,'cancelled');
+          if(canPublish())await publishEvalUnavailable(client,config.appId!,job,attemptId,'cancelled',{header,publicUrl:config.publicUrl!});
         });
       }catch(error){if(error instanceof ApplicationFailure)throw error;throw ApplicationFailure.retryable('Eval cancellation unavailable','EvalReviewUnavailable');}
     },

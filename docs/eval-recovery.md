@@ -43,6 +43,16 @@ killed and its daemon container outlived its cleared execution lease. Concurrent
 deletions retry within a bounded window; persistent cleanup/ownership failure
 remains an error. The cancelled attempt and its observations stay intact.
 
+Cancelled/unavailable Checks now explain that repeating the failed UUID cannot
+rerun it and direct the operator to request a fresh `agentci review` attempt. A
+staged scoped comparison adds its review/attempt identity, retained evidence and
+complete export links. Those links require the deployment bearer token and never
+include credentials. A failure before staging explicitly reports that no staged
+comparison evidence is available. The Check remains unavailable even if retained
+observations include passing units; the links do not certify a successful review.
+This guidance correction is awaiting final-source CI and installed customer
+verification under `M2-RECOVERY-GUIDANCE`.
+
 Native tests observe both containers actually running before termination and
 before restricted-evaluator SIGKILL. They kill a separate reconciler after SQL
 cancellation but before a Check response, restart it in another process and

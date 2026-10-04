@@ -68,7 +68,9 @@
         "queued/running unit cancellation retains completed evidence",
         "shared publication lock",
         "configured current PR Check invalidated as cancelled",
-        "stale PR cancellation makes no Check write"
+        "stale PR cancellation may terminalize only an existing exact unavailable Check",
+        "retained exact comparison evidence and complete export links require bearer authentication without credentials in URLs",
+        "fresh operator attempt guidance; immutable failed UUID redelivery does not rerun"
       ]
     },
     {
@@ -139,7 +141,10 @@
         "same App and exact attempt reconciliation",
         "infrastructure failure action-required Check",
         "stale PR cannot publish failure",
-        "recovery republishes retained exact completed evidence"
+        "recovery republishes retained exact completed evidence",
+        "retained exact comparison evidence and complete export links require bearer authentication without credentials in URLs",
+        "fresh operator attempt guidance; immutable failed UUID redelivery does not rerun",
+        "pre-stage failure explicitly has no comparison; mismatched retained subject cannot publish"
       ]
     },
     {
@@ -257,5 +262,5 @@
       ]
     }
   ],
-  "releaseState": "M2 recovery candidate; final-source native/container CI and live customer acceptance remain pending"
+  "releaseState": "M2 candidate component recovery accepted; Check recovery guidance correction awaiting final-source CI and installed customer verification; milestone release gates remain open"
 }
