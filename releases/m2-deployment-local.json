@@ -1,0 +1,35 @@
+{
+  "component": "M2 separate evaluator deployment candidate",
+  "sourceFiles": {
+    "deploy/eval-worker.compose.yaml": "e4bc397ffaee53201e6825c962d11ad481ea6aefa71d639d475341bc35e45e10",
+    "deploy/eval-worker.env.example": "7f1d92a4fcdd002861029f3450bc84ab628bb541582c754aa53399951a664227",
+    "deploy/local-eval-network.compose.yaml": "a89f9dd9c3c734b052222bd046bcd47bb5c0dde48f05ef8d2413bce856ca039b",
+    "scripts/check-eval-deployment.mjs": "1e7b3790edb4e27ef054fd796b9b1de14f17e58b0b97c5d81b00a6ccb1d7fcf3",
+    "docs/eval-deployment.md": "53d771bad70c4c6608e742a45f9ea8c528785f0f2d121cd81fd56c440f1352aa"
+  },
+  "localVerification": {
+    "composeModes": [
+      "dedicated evaluator",
+      "development external controller network"
+    ],
+    "environment": "explicit evaluator-only allowlist; synthetic inherited controller secrets and key path absent from both rendered modes",
+    "runtimeRestrictions": [
+      "UID 1001",
+      "explicit socket GID",
+      "read-only root",
+      "bounded tmpfs",
+      "capabilities dropped",
+      "no-new-privileges",
+      "private provider file mount"
+    ],
+    "servicesStarted": false,
+    "fastChecks": 8,
+    "fastSeconds": 0.83,
+    "workflowContexts": "passed"
+  },
+  "releaseAcceptance": false,
+  "limitations": [
+    "Rendered configuration validation does not prove running deployment or private network reachability.",
+    "Final-source packaged runtime, live customer PR and complete release gates remain required."
+  ]
+}

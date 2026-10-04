@@ -1,0 +1,8 @@
+# Development only: join the controller network without copying its environment or key.
+services:
+  eval-worker:
+    networks: [controller]
+networks:
+  controller:
+    external: true
+    name: ${AGENTCI_CONTROLLER_NETWORK:?Set existing local controller Compose network}

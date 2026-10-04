@@ -64,6 +64,9 @@ completion and retains no trial observation. A subsequent fenced owner removes
 the orphan and executes a new trial. HTTP units do not invoke the Docker cleanup
 backend; external retries use the [provider deduplication contract](http-eval-provider.md).
 
+See [the evaluator deployment guide](eval-deployment.md) for separate Compose
+configuration, restricted login provisioning and temporary local demo wiring.
+
 ## UBI image checkpoint
 
 The `eval-worker` Dockerfile target runs on UBI 10 with Node 26.10.0 and the

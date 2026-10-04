@@ -44,6 +44,8 @@ jobs:
       - run: npm run check:fast
       - run: npm run check:api:compat
       - run: npm run check:workflows
+      - name: Verify evaluator deployment boundary
+        run: node scripts/check-eval-deployment.mjs
       - run: npm run build
       - run: npm audit --audit-level=high
       - name: Start isolated Temporal

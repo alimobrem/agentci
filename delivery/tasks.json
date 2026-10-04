@@ -922,6 +922,24 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M2-DEPLOYMENT",
+      "title": "Separate evaluator deployment bundle and customer operator setup",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T11:34:39.926Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Packaged separate evaluator Compose configuration renders with only restricted evaluator environment, explicit dedicated daemon socket group, immutable image pins, read-only filesystem and private provider mount; customer instructions provision restricted SQL login and expose development endpoints without implying production hosting. Real rendered configuration and separate worker runtime validate the boundary before live demo.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
