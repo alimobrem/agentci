@@ -1,0 +1,61 @@
+{
+  "kind": "M2-hosted-self-runner-local-candidate",
+  "basedOnCommit": "5b20e2bc749479c3c3e686db32f5d63034365d21",
+  "sourceFiles": {
+    "Dockerfile": "42e20554e038450f010e8ee86fc0f591401ef2c36b130615ff3206ca778e82db",
+    ".dockerignore": "4d588b5e330c312bef4b8db99b9fb41bfe77c4e05d55e1a6fcad344281fcca3e",
+    ".github/workflows/verify.yaml": "ef2673719031e525968f3b02340d32a783dffa9985e0009bdfda602e9583801f",
+    "scripts/agentci-self-eval.mjs": "ea16f64576556006d17c1d993bea1cd66695f70156d499a4767e770ae93d125f",
+    "evals/agentci-self.yaml": "61b3ee1dd91c110e18d06b7c898746b5c651c80fba5964fb1f8c2f0eb1a5d1d1",
+    "tests/integration/agentci-self-eval.test.ts": "a3b78ae47a9d52b74ef86ad1bf77bc7556304e96c82357a565584be142bb62a7",
+    "docs/hosted-evals.md": "c108ad9bea328cc26e8da5f5a663afd421213893cf0818afc7062edd415748a2"
+  },
+  "platform": "linux/arm64",
+  "runnerImage": "sha256:483b038980355ef6c833af89ac0751a2afb33fb05f84a4ee8892f2e85bbbec32",
+  "verification": {
+    "fastChecks": 8,
+    "unitApiDomainTests": 124,
+    "nativeIntegrationGroups": 15,
+    "nativeSkips": 0,
+    "nativeDurationMs": 42795.095708,
+    "finalSelfGroup": "passed after explicit manifest guard",
+    "workflowContexts": "passed",
+    "scanFindings": 0
+  },
+  "logs": {
+    "agentci-self-runtime-fixed-build.log": "aecaeaa48c4f6b1413f60b5e3d61709da8cf91107d73ab083228bd945be6f9e1",
+    "agentci-self-runtime-fixed-scan.json": "ccb99a9657d376e3499d79578b4eb5caa4f661bb5708bae5d8168267ed9a44d4",
+    "agentci-self-full-native.log": "194b8d57fe4aebe4949199e3c3f7b0f89051a9909115431d88c90b252d2197c1",
+    "agentci-self-runtime-final-native.log": "441a506d803797ab7f8ff12848c5a0b72352afb8cec3ff577d7eaef6e0a100b2",
+    "agentci-self-runtime-final-fast.log": "674ae43b2e5c3e56be715e2bb9c88cdfce1a540b3816653f8278dc4197739adb",
+    "agentci-self-runtime-final-workflows.log": "92fced675e3ad4ced28f76ac188af3d56051c5f24027bb88fbd8930dfa893185"
+  },
+  "observedBehavior": [
+    "Six baseline contract scenarios pass using trusted installed dependencies.",
+    "Constant trial request identity fails despite reviewed head replacing its wrapper and test with process.exit(0).",
+    "Early source process.exit(0) is infrastructure error, not success.",
+    "Completed executions leave no self-runner containers."
+  ],
+  "rework": [
+    {
+      "issue": "Initial all-development-dependencies runner scan found ten HIGH and one MEDIUM issues in unused Go-based TypeScript native typechecker.",
+      "initialImage": "sha256:0c2551a7e459ebf9e3b95f56e4d7562f14e40b12beca242588b9bca607536c62",
+      "scanSha256": "b894682f1a4005ecfb1849a2b74558918bf83692d7c84ef092c12c9db365a8ec",
+      "resolution": "Package production dependencies plus tsx/esbuild only. Full typechecking remains required in build and CI; no scanner suppression."
+    },
+    {
+      "issue": "Replacement build assumed two dependencies absent from current pinned tsx.",
+      "resolution": "Verified lockfile dependency graph and removed nonexistent get-tsconfig/resolve-pkg-maps COPY paths."
+    },
+    {
+      "issue": "Fast typecheck exposed possibly undefined fixture/manifest inputs.",
+      "resolution": "Explicit presence assertions; all eight final fast checks pass."
+    }
+  ],
+  "limitations": [
+    "Local candidate evidence, not exact-source final CI.",
+    "Full fifteen-group run preceded final presence guard; final focused self-group passed after guard.",
+    "Trusted-main hosted M2 controller, separate hosted evaluator and artifact-before-Check publication are not implemented.",
+    "No M2 release, registry publication or released customer acceptance is claimed."
+  ]
+}

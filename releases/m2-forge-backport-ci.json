@@ -1,0 +1,141 @@
+{
+  "kind": "M2-source-verified-CI-checkpoint",
+  "candidateCommit": "5b20e2bc749479c3c3e686db32f5d63034365d21",
+  "ciCommit": "b3cb75f7a12076a4597ba79aaf35814e776ed42f",
+  "verifiedTree": "e98d3272eba4f35dabd220acf379139000346065",
+  "run": {
+    "id": 37208366195,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37208366195",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11305524315,
+    "name": "m1-verification",
+    "sha256": "736595d20a45dfd6551feb593e3c2f4a69bda2181999c4f640ccc7ca60ec5df1"
+  },
+  "verification": {
+    "unitApiDomainTests": 124,
+    "integrationGroups": 14,
+    "skips": 0,
+    "apiCompatibility": 0,
+    "runtime": {
+      "result": "passed",
+      "version": "ci",
+      "platform": "x64",
+      "checks": [
+        "non-root API/worker startup",
+        "M2 schema readiness",
+        "signature rejection",
+        "evidence authentication",
+        "comparison authentication/UUID/scoped lookup",
+        "compiled comparison API/client reads actual queued database evidence",
+        "compiled snapshot export/client completion",
+        "signed closed delivery",
+        "non-root persistent Temporal database startup/restart",
+        "graceful shutdown"
+      ],
+      "github": "synthetic credentials; no live GitHub review claimed"
+    },
+    "evalWorkerRuntime": {
+      "result": "passed",
+      "platform": "linux/amd64",
+      "workerImage": "sha256:a34c8047563c3379340a9983174583f0cd59df42d74e89b24593d8a2b79e0cf6",
+      "runnerImage": "sha256:0ed0c72f716615302556f02909e0b1030ad3519ceeed53e536bda91dc62a61da",
+      "uid": 1001,
+      "node": "v26.10.0",
+      "cli": "Docker version 29.8.2, build 7fc2dff",
+      "license": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+      "checks": [
+        "UBI non-root read-only runtime",
+        "no package installers/App keys",
+        "official pinned Docker CLI compatibility",
+        "separately authenticated restricted database login",
+        "real Temporal workflow and isolated child execution",
+        "child has no database/App/socket credentials",
+        "behavioral failure preserved",
+        "worker graceful shutdown/restart",
+        "all owned children removed"
+      ],
+      "github": "no live GitHub publication claimed"
+    },
+    "scans": [
+      {
+        "path": "scan-results/api.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "findings": 1,
+        "issues": [
+          {
+            "id": "CVE-2026-85393",
+            "severity": "HIGH",
+            "package": "node-forge",
+            "fixed": null
+          }
+        ]
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-worker.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/worker.json",
+        "findings": 0,
+        "issues": []
+      }
+    ],
+    "declaredArtifacts": [
+      {
+        "path": ".agentci/artifacts/eval-worker-image-smoke.json",
+        "sha256": "6b95b533a88a4375509e3e6dd350ec5a13763f9993478fa919308716f56c88ac"
+      },
+      {
+        "path": "releases/agentci-0.3.0-m2.tgz",
+        "sha256": "0daf124566ad09b73155786baecefc110022e774106e3f4cbe2eb9c25bc08c52"
+      },
+      {
+        "path": "scan-results/api.json",
+        "sha256": "24f0e01643282dc032484a23fd679d5ddbc34cb5174716b511df2d51815b0c3f"
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "sha256": "9585c2790028a871a81ed0c115726cacfa5a1a82762a8563e7fb02506b3f7b7e"
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "sha256": "6ecda8d02a433d968b24d2a6f5aad1c6bafac5e4d656f19c53801b2eaeaa3b9c"
+      },
+      {
+        "path": "scan-results/eval-worker.json",
+        "sha256": "f4a9ef1a76b401a45f26401d3690d0dd020b09e494c273927025731d61ec5984"
+      },
+      {
+        "path": "scan-results/worker.json",
+        "sha256": "09bfc36a217628ffb8476c9d5be58f5cda208dfbce05135e7aeef7cdfc9d55e3"
+      }
+    ]
+  },
+  "limitations": [
+    "CI covers the pinned RSA backport on linux/amd64; the local record separately covers linux/arm64.",
+    "Scanner still reports upstream node-forge 1.4.0; installed patched RSA source is hash-verified and the malformed-input regression is exercised. No official 1.4.1 or clean-inventory claim.",
+    "Subsequent self-eval runner/manifest and hosted pipeline are not covered by this source.",
+    "Full scanner coverage assessment, publication and anonymous downloads, released-build demo and all M2 phase gates remain open."
+  ],
+  "componentEvidence": [
+    "releases/m2-forge-backport-local.json",
+    "deploy/engines/patches/README.md"
+  ],
+  "cacheEvidence": {
+    "npmCacheRestored": true,
+    "cachedBuildSteps": 80
+  }
+}

@@ -32,6 +32,11 @@ is `docs/phases/m2.md`, specification section 40 M2 and section 11.
    performs M1 semantic review. M2 behavioral self-review must use isolated
    evaluators and retain source-bound evidence before exact-head publication,
    without a laptop or secrets exposed to reviewed code.
+   The local self-runner foundation now passes six frozen contract scenarios,
+   regression/test-weakening and incomplete-execution probes, all fifteen native
+   groups without skips, and a zero-finding arm64 image scan. Evidence is
+   `releases/m2-hosted-self-runner-local.json`; final-source CI and the hosted
+   controller/evaluator/artifact publication pipeline remain pending.
 3. Complete `M2-SECURITY-RELEASE`. Include inventories and scanner coverage for all
    introduced service/runner/optional-engine platforms and current official pins.
    The optional image has `node-forge` 1.4.0 / GHSA-86w9-cpqp-85rv. The official
@@ -39,8 +44,10 @@ is `docs/phases/m2.md`, specification section 40 M2 and section 11.
    or concrete applicability evidence and explicit release treatment; this document
    does not waive the finding or claim a clean optional-engine scan. The local
    downstream backport now matches pinned upstream source and passes the RSA
-   regression suite and all fourteen native groups. Exact-source CI and
-   digest-bound published-platform remediation records remain pending.
+   regression suite and all fourteen native groups. Exact-source x64 CI
+   `37208366195` also passes, with verified tree and artifact hashes in
+   `releases/m2-forge-backport-ci.json`. Other scanner coverage and digest-bound
+   published-platform remediation records remain pending.
 4. Finish requirement/status, customer setup, migration/upgrade/rollback,
    observability, architecture and release documentation against final behavior.
    Review delivery metrics with comparable suite/cache/runner cohorts; faster local

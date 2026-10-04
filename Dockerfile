@@ -62,17 +62,31 @@ ENV PATH=/opt/promptfoo/node_modules/.bin:/opt/python/bin:/usr/local/bin:/usr/bi
 USER 1001
 CMD ["node", "--version"]
 
-FROM node AS build
+FROM node AS dependencies
 USER 0
 WORKDIR /app
 COPY package.json package-lock.json npm-shrinkwrap.json ./
 RUN npm install --global npm@12.2.0 --no-audit --no-fund && npm ci --no-audit --no-fund
+
+FROM dependencies AS build
 COPY tsconfig*.json ./
 COPY apps ./apps
 COPY cmd ./cmd
 COPY packages ./packages
 COPY scripts/build-assets.mjs ./scripts/build-assets.mjs
 RUN npm run build && npm prune --omit=dev --no-audit --no-fund
+
+# Trusted lockfile dependencies for AgentCI self-evals. Reviewed source stays in /workspace.
+# Root-level module resolution supplies read-only deps without any PR dependency installation.
+FROM eval-runner AS eval-agentci
+USER 0
+COPY --from=build /app/node_modules /node_modules
+# Self-evals execute TypeScript with tsx; the unused Go-based typechecker stays in build/CI.
+COPY --from=dependencies /app/node_modules/tsx /node_modules/tsx
+COPY --from=dependencies /app/node_modules/esbuild /node_modules/esbuild
+COPY --from=dependencies /app/node_modules/@esbuild /node_modules/@esbuild
+COPY --from=dependencies /app/npm-shrinkwrap.json /licenses/AgentCI-self-eval-shrinkwrap.json
+USER 1001
 
 FROM node AS runtime
 USER 0
