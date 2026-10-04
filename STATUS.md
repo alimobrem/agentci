@@ -60,8 +60,11 @@ The separate approved customer repository demonstrated real failure/recovery and
 exact-identity authenticated evidence. Success/failure demo screenshots and links
 were delivered to the user. [Release record](docs/releases/m1-onboarding.md).
 Original App access remains only agentci; customer App only agentci-onboarding-demo.
-M1 closure is synced. M2 planning and phase-isolated gates are complete; strict
-eval contracts and impact selection passed full CI. The UBI native/pytest runner
-and negative-path isolation tests pass locally and are now mandatory in CI. Runner
-acceptance awaits full CI; optional adapters, repeated base/head execution, durable
-PR/API integration and all M2 release gates remain open. [M2 acceptance plan](docs/phases/m2.md).
+M1 closure is synced. M2 planning and phase-isolated gates are complete. The UBI
+native/pytest runner passed full CI, real integration, clean packaging and all
+three zero-finding image scans; runner acceptance is closed. Model matrix and
+suite-change planning passed that CI. Fixed baseline assertion provenance passes
+locally and needs new full CI. Optional engines, durable PR/API integration and
+all M2 release gates remain open. The CI database URL uses separate test-only
+PG variables and passed both full verification and hosted dogfood.
+[M2 acceptance plan](docs/phases/m2.md).

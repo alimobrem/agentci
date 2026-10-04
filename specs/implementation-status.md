@@ -346,7 +346,7 @@ Milestone assignments outside the build-plan list are planning estimates, not am
 | SPEC-11.3-002 | 11.3 / 683 | Critical safety assertions SHOULD default to zero tolerated violations in the configured sample. | M2 | in-progress | packages/evals/statistics.ts, tests/eval-statistics.test.ts |
 | SECTION-11.4 | 11.4 / 685 | 11.4 Pluggable eval engines | M2 | not-started |  |
 | SPEC-11.4-001 | 11.4 / 687 | Adapters SHOULD support: | M2 | not-started |  |
-| SPEC-11.4-002 | 11.4 / 689 | - pytest/custom test commands | M2 | not-started |  |
+| SPEC-11.4-002 | 11.4 / 689 | - pytest/custom test commands | M2 | tested | releases/m2-runner-ci.json, tests/integration/eval-runner.test.ts |
 | SPEC-11.4-003 | 11.4 / 690 | - DeepEval | M2 | not-started |  |
 | SPEC-11.4-004 | 11.4 / 691 | - Promptfoo | M2 | not-started |  |
 | SPEC-11.4-005 | 11.4 / 692 | - custom HTTP eval providers | M2 | not-started |  |
@@ -1084,14 +1084,14 @@ Milestone assignments outside the build-plan list are planning estimates, not am
 | SPEC-40-029 | 40 / 2083 | - AgentCI repository uses advisory AgentCI check on every PR | M1 | tested | docs/dogfood/m1-first-check.md, docs/releases/m1.md |
 | SPEC-40-030 | 40 / 2087 | Build: | M2 | in-progress | docs/phases/m2.md |
 | SPEC-40-031 | 40 / 2089 | - eval manifest | M2 | tested | packages/evals/contracts.ts, tests/eval-contracts.test.ts, tests/project.test.ts |
-| SPEC-40-032 | 40 / 2090 | - native command runner | M2 | not-started |  |
-| SPEC-40-033 | 40 / 2091 | - pytest adapter | M2 | not-started |  |
+| SPEC-40-032 | 40 / 2090 | - native command runner | M2 | tested | releases/m2-runner-ci.json, tests/integration/eval-runner.test.ts |
+| SPEC-40-033 | 40 / 2091 | - pytest adapter | M2 | tested | releases/m2-runner-ci.json, tests/integration/eval-runner.test.ts |
 | SPEC-40-034 | 40 / 2092 | - Promptfoo/DeepEval adapter as optional plugins | M2 | not-started |  |
 | SPEC-40-035 | 40 / 2093 | - result normalization | M2 | in-progress | packages/evals/contracts.ts, tests/eval-contracts.test.ts |
 | SPEC-40-036 | 40 / 2094 | - statistical trial handling | M2 | in-progress | packages/evals/statistics.ts, tests/eval-statistics.test.ts |
-| SPEC-40-037 | 40 / 2095 | - base/head comparison | M2 | not-started |  |
+| SPEC-40-037 | 40 / 2095 | - base/head comparison | M2 | in-progress | packages/evals/execution.ts, docs/phases/m2.md |
 | SPEC-40-038 | 40 / 2097 | Exit criteria: | M2 | in-progress | docs/phases/m2.md, releases/m2-gates.json |
-| SPEC-40-039 | 40 / 2099 | - PR shows behavioral deltas and regression scenarios | M2 | not-started |  |
+| SPEC-40-039 | 40 / 2099 | - PR shows behavioral deltas and regression scenarios | M2 | in-progress | packages/evals/execution.ts, docs/phases/m2.md |
 | SPEC-40-040 | 40 / 2103 | Build: | M3 | not-started |  |
 | SPEC-40-041 | 40 / 2105 | - provider abstraction | M3 | not-started |  |
 | SPEC-40-042 | 40 / 2106 | - OpenAI adapter | M3 | not-started |  |

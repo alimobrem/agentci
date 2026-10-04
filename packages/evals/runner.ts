@@ -31,14 +31,29 @@ export function validateRunnerPolicy(policy:RunnerPolicy):Required<RunnerPolicy>
   if(!Number.isSafeInteger(limits.memoryMb)||limits.memoryMb<64||limits.memoryMb>4096||!Number.isFinite(limits.cpus)||limits.cpus<0.1||limits.cpus>4||!Number.isSafeInteger(limits.pids)||limits.pids<16||limits.pids>256)throw new Error('Invalid runner resource limits');
   return limits;
 }
+function protectedInput(path:string):boolean {
+  const parts=path.split('/'),name=parts.at(-1)!;
+  return parts.some(p=>['.git','.ssh','.aws','node_modules'].includes(p))||path.startsWith('.agentci/local/')||/^\.env(?:\.|$)/.test(name)||['.npmrc','.pypirc','.netrc','id_rsa','id_ed25519'].includes(name)||/\.(?:pem|key)$/i.test(name);
+}
+/** Explicit projection for orchestration. Omitted tracked credential/template paths are retained as provenance. */
+export function projectEvalInputs(snapshot:Snapshot):{snapshot:Snapshot;omitted:string[]} {
+  const files:Record<string,string>={},omitted:string[]=[];
+  const entries=Object.entries(snapshot.files);if(entries.length>10000)throw new Error('Invalid snapshot file count');let bytes=0;
+  for(const [path,text] of entries){
+    if(!safeEvalPath(path)||typeof text!=='string'||text.includes('\0'))throw new Error('Invalid snapshot path/content');
+    const size=Buffer.byteLength(text);bytes+=size;if(size>2*1024*1024||bytes>32*1024*1024)throw new Error('Snapshot exceeds runner content limits');
+    if(protectedInput(path))omitted.push(path);else Object.defineProperty(files,path,{value:text,enumerable:true,writable:true,configurable:true});
+  }
+  const projected={sha:snapshot.sha,files};snapshotInputs(projected);
+  return {snapshot:projected,omitted:omitted.sort()};
+}
 export function snapshotInputs(snapshot:Snapshot):[string,string][] {
   if(!/^[a-f0-9]{40}$/.test(snapshot.sha))throw new Error('Exact snapshot commit required');
   const entries=Object.entries(snapshot.files);if(!entries.length||entries.length>10000)throw new Error('Invalid snapshot file count');
   let bytes=0;
   for(const [path,text] of entries){
     if(!safeEvalPath(path)||typeof text!=='string'||text.includes('\0'))throw new Error('Invalid snapshot path/content');
-    const parts=path.split('/'),name=parts.at(-1)!;
-    if(parts.some(p=>['.git','.ssh','.aws','node_modules'].includes(p))||path.startsWith('.agentci/local/')||/^\.env(?:\.|$)/.test(name)||['.npmrc','.pypirc','.netrc','id_rsa','id_ed25519'].includes(name)||/\.(?:pem|key)$/i.test(name))throw new Error('Credential or dependency directory is not an eval input');
+    if(protectedInput(path))throw new Error('Credential or dependency directory is not an eval input');
     const size=Buffer.byteLength(text);bytes+=size;
     if(size>2*1024*1024||bytes>32*1024*1024)throw new Error('Snapshot exceeds runner content limits');
   }

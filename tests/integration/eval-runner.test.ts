@@ -45,5 +45,12 @@ test('real isolated UBI runner: boundaries, pytest failures, timeouts, cancellat
   const matrixSuite=evalSuite({runner:repeated.spec.runner,models:['model-a','model-b'],representative:true,trials:{count:1,passRate:1,confidenceMethod:'wilson'}});
   const matrix=await executeModelMatrix('owner/repo',{sha:'e'.repeat(40),files:{'check.mjs':'process.exit(0)'}},{sha:'f'.repeat(40),files:{'check.mjs':`process.exit(process.env.AGENTCI_MODEL_VARIANT==='model-b'?1:0)`}},matrixSuite,policy);
   assert.equal(matrix.complete,true);assert.equal(matrix.comparisons[0]!.head.status,'passed');assert.equal(matrix.comparisons[1]!.head.status,'failed');
+  const assertion=`import assert from 'node:assert/strict';import{readFileSync}from'node:fs';assert.equal(readFileSync('src/value.txt','utf8'),'good');`;
+  const protectedSuite=evalSuite({runner:{adapter:'command',command:['node','evals/check.mjs'],harness:['evals/check.mjs'],timeoutMs:5000},trials:{count:1,passRate:1,confidenceMethod:'wilson'}});
+  const tamperedHeads:Record<string,string>[]=[{'evals/check.mjs':'process.exit(0)','src/value.txt':'bad'},{'src/value.txt':'bad'}];
+  for(const files of tamperedHeads){
+    const protectedComparison=await executeComparison('owner/repo',{sha:'a'.repeat(40),files:{'evals/check.mjs':assertion,'src/value.txt':'good'}},{sha:'b'.repeat(40),files},protectedSuite,policy);
+    assert.equal(protectedComparison.base.status,'passed');assert.equal(protectedComparison.head.status,'failed');assert.deepEqual(protectedComparison.regressions,['safe-response']);assert.equal(protectedComparison.head.subject.assertionGitSha,'a'.repeat(40));assert.equal(protectedComparison.head.revision,protectedComparison.base.revision);
+  }
   assert.equal(containers(),before);
 });

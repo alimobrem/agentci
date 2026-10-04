@@ -1,11 +1,13 @@
 import {randomUUID} from 'node:crypto';
-import {suiteRevision,validateEvalSuite,validateEvalRun,type EvalSuite,type EvalRun} from './contracts.ts';
-import {runIsolated,validateRunnerPolicy,type RunnerPolicy,type RunnerResult} from './runner.ts';
+import {validateEvalSuite,validateEvalRun,type EvalSuite,type EvalRun} from './contracts.ts';
+import {runIsolated,validateRunnerPolicy,projectEvalInputs,type RunnerPolicy,type RunnerResult} from './runner.ts';
 import {normalizeTrial} from './adapters.ts';
 import {aggregateScenario,combinedStatus,type TrialResult} from './statistics.ts';
 import type {Snapshot} from '../review/types.ts';
+import {baselineHarness} from './harness.ts';
+import {canonical,digest} from '../review/engine.ts';
 
-export interface ExecutionOptions {signal?:AbortSignal;model?:string;maxTrials?:number}
+export interface ExecutionOptions {signal?:AbortSignal;model?:string;maxTrials?:number;assertionSnapshot?:Snapshot}
 type TrialExecutor=(snapshot:Snapshot,suite:EvalSuite,policy:RunnerPolicy,options:ExecutionOptions)=>Promise<RunnerResult>;
 /** Sequential, bounded trials. The default executor always uses the isolated container boundary. */
 export async function executeSuite(repository:string,snapshot:Snapshot,value:EvalSuite,policy:RunnerPolicy,options:ExecutionOptions={},executor:TrialExecutor=runIsolated):Promise<EvalRun> {
@@ -15,10 +17,13 @@ export async function executeSuite(repository:string,snapshot:Snapshot,value:Eva
   if(!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repository)||!/^[a-f0-9]{40}$/.test(snapshot.sha))throw new Error('Exact repository/snapshot identity required');
   if(suite.spec.models?.length&&!options.model)throw new Error('Model matrix requires an explicit variant');
   if(options.model!==undefined&&!suite.spec.models?.includes(options.model))throw new Error('Unconfigured model variant');
+  const assertions=options.assertionSnapshot??snapshot,harness=baselineHarness(suite,assertions,snapshot);
+  const projected=projectEvalInputs(harness.snapshot);
+  if(harness.paths.some(path=>projected.omitted.includes(path)))throw new Error('Baseline harness includes a protected input');
   const observations:Record<string,TrialResult[]>=Object.fromEntries(suite.spec.scenarios.map(s=>[s.id,[]]));
   for(let trial=0;trial<suite.spec.trials.count;trial++){
     if(options.signal?.aborted)break;
-    const result=await executor(snapshot,suite,policy,options);
+    const result=await executor(projected.snapshot,suite,policy,options);
     if(result.sourceSha!==snapshot.sha||result.image!==policy.image)throw new Error('Runner result identity mismatch');
     const normalized=normalizeTrial(suite,result);
     for(const scenario of suite.spec.scenarios)observations[scenario.id]!.push(normalized.results[scenario.id]!);
@@ -26,12 +31,12 @@ export async function executeSuite(repository:string,snapshot:Snapshot,value:Eva
     if(result.status==='cancelled')break;
   }
   const scenarios=suite.spec.scenarios.map(s=>aggregateScenario(suite,s.id,observations[s.id]!));
-  return validateEvalRun({apiVersion:'agentci.io/v1alpha1',kind:'EvalRun',id:randomUUID(),suite:suite.metadata.id,revision:suiteRevision(suite),subject:{repository,gitSha:snapshot.sha},...(options.model===undefined?{}:{model:options.model}),trials:suite.spec.trials.count,status:combinedStatus(scenarios),scenarios,artifacts:[]});
+  return validateEvalRun({apiVersion:'agentci.io/v1alpha1',kind:'EvalRun',id:randomUUID(),suite:suite.metadata.id,revision:harness.revision,subject:{repository,gitSha:snapshot.sha,assertionGitSha:assertions.sha,inputDigest:digest(canonical(projected.snapshot.files)),omittedInputs:projected.omitted},runnerImage:policy.image,...(options.model===undefined?{}:{model:options.model}),trials:suite.spec.trials.count,status:combinedStatus(scenarios),scenarios,artifacts:[]});
 }
 export interface BehavioralDelta {scenario:string;baseStatus:string;headStatus:string;passRateDelta?:number;regression:boolean;criticalFailureDelta:number}
 export function compareRuns(baseValue:EvalRun,headValue:EvalRun):{base:EvalRun;head:EvalRun;deltas:BehavioralDelta[];regressions:string[]} {
   const base=validateEvalRun(baseValue),head=validateEvalRun(headValue);
-  if(base.subject.repository!==head.subject.repository||base.subject.gitSha===head.subject.gitSha||base.suite!==head.suite||base.revision!==head.revision||base.trials!==head.trials||base.model!==head.model)throw new Error('Comparison requires exact base/head identities and the same baseline suite configuration');
+  if(base.subject.repository!==head.subject.repository||base.subject.gitSha===head.subject.gitSha||base.subject.assertionGitSha!==head.subject.assertionGitSha||base.runnerImage!==head.runnerImage||base.suite!==head.suite||base.revision!==head.revision||base.trials!==head.trials||base.model!==head.model)throw new Error('Comparison requires exact base/head identities and the same baseline suite configuration');
   if(base.scenarios.length!==head.scenarios.length||base.scenarios.some(s=>!head.scenarios.some(h=>h.id===s.id)))throw new Error('Comparison scenario coverage mismatch');
   const deltas=base.scenarios.map(b=>{
     const h=head.scenarios.find(s=>s.id===b.id)!;
@@ -45,8 +50,9 @@ export function compareRuns(baseValue:EvalRun,headValue:EvalRun):{base:EvalRun;h
 /** Use the baseline definition for BOTH subjects; head manifests cannot remove assertions. */
 export async function executeComparison(repository:string,base:Snapshot,head:Snapshot,baselineSuite:EvalSuite,policy:RunnerPolicy,options:ExecutionOptions={},executor:TrialExecutor=runIsolated) {
   if(base.sha===head.sha)throw new Error('Distinct base and head commits required');
-  const baseRun=await executeSuite(repository,base,baselineSuite,policy,options,executor);
-  const headRun=await executeSuite(repository,head,baselineSuite,policy,options,executor);
+  const shared={...options,assertionSnapshot:base};
+  const baseRun=await executeSuite(repository,base,baselineSuite,policy,shared,executor);
+  const headRun=await executeSuite(repository,head,baselineSuite,policy,shared,executor);
   return compareRuns(baseRun,headRun);
 }
 export async function executeModelMatrix(repository:string,base:Snapshot,head:Snapshot,value:EvalSuite,policy:RunnerPolicy,options:Omit<ExecutionOptions,'model'>&{maxTotalTrials?:number}={},executor:TrialExecutor=runIsolated) {

@@ -12,7 +12,7 @@ export interface EvalSuite {
   spec: {
     class: EvalClass; requirements: string[];
     impact: { categories: string[]; include: string[] };
-    runner: { adapter: 'command'|'native'|'pytest'|'promptfoo'|'deepeval'|'http'; command: string[]; report?: string; timeoutMs: number; maxOutputBytes?: number };
+    runner: { adapter: 'command'|'native'|'pytest'|'promptfoo'|'deepeval'|'http'; command: string[]; report?: string; harness?: string[]; timeoutMs: number; maxOutputBytes?: number };
     scenarios: { id: string; critical?: boolean; selector?: string }[];
     trials: { count: number; passRate: number; maxCriticalFailures?: number; confidenceMethod: 'wilson'; confidenceLevel?: 0.9|0.95|0.99 };
     models?: string[]; representative?: boolean;
@@ -25,7 +25,7 @@ export interface ScenarioResult {
 }
 export interface EvalRun {
   apiVersion:'agentci.io/v1alpha1'; kind:'EvalRun'; id:string; suite:string; revision:string;
-  subject:{repository:string;gitSha:string}; model?:string; trials:number; status:EvalStatus;
+  subject:{repository:string;gitSha:string;assertionGitSha:string;inputDigest:string;omittedInputs:string[]}; runnerImage:string; model?:string; trials:number; status:EvalStatus;
   scenarios:ScenarioResult[]; artifacts:{digest:string;mediaType:string;uri:string}[];
 }
 const ajv = new Ajv({strict:true,allErrors:true});
@@ -42,6 +42,7 @@ export function validateEvalSuite(value:unknown):EvalSuite {
   if(new Set(selectors).size!==selectors.length)throw new Error('Duplicate scenario selector');
   if(spec.runner.command.some(arg=>arg.includes('\0'))||Buffer.byteLength(JSON.stringify(spec.runner.command))>65536)throw new Error('Invalid runner arguments');
   if (spec.impact.include.some(p=>!safeEvalPath(p,true))) throw new Error('Unsafe impact selector');
+  if(spec.runner.harness?.some(path=>!safeEvalPath(path)))throw new Error('Unsafe harness input path');
   if (spec.runner.report && !safeEvalPath(spec.runner.report)) throw new Error('Unsafe result report path');
   if (['native','pytest','promptfoo','deepeval','http'].includes(spec.runner.adapter) && !spec.runner.report) throw new Error('Adapter requires a structured result report');
   if (spec.runner.adapter==='command' && spec.scenarios.length!==1) throw new Error('Exit-code adapter requires exactly one scenario');

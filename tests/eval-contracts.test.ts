@@ -32,7 +32,7 @@ test('impact selection includes required tool, model, permission and implementat
   assert.throws(()=>selectSuites(catalog,{changes:[{path:'../secret',categories:[]}],requirementIds:[]}),/Unsafe/);
 });
 test('normalized results cannot hide infrastructure errors, skipped trials, count or identity contradictions',()=>{
-  const result:EvalRun={apiVersion:'agentci.io/v1alpha1',kind:'EvalRun',id:'00000000-0000-4000-8000-000000000001',suite:'behavior',revision:suiteRevision(evalSuite()),subject:{repository:'example/repo',gitSha:'a'.repeat(40)},trials:20,status:'passed',scenarios:[{id:'safe-response',passed:20,failed:0,errors:0,skipped:0,criticalFailures:0,status:'passed',passRate:1}],artifacts:[]};
+  const result:EvalRun={apiVersion:'agentci.io/v1alpha1',kind:'EvalRun',id:'00000000-0000-4000-8000-000000000001',suite:'behavior',revision:suiteRevision(evalSuite()),subject:{repository:'example/repo',gitSha:'a'.repeat(40),assertionGitSha:'a'.repeat(40),inputDigest:'sha256:'+'b'.repeat(64),omittedInputs:[]},runnerImage:'sha256:'+'f'.repeat(64),trials:20,status:'passed',scenarios:[{id:'safe-response',passed:20,failed:0,errors:0,skipped:0,criticalFailures:0,status:'passed',passRate:1}],artifacts:[]};
   assert.deepEqual(validateEvalRun(result),result);
   const mutate=(change:Record<string,unknown>)=>({...result,scenarios:[{...result.scenarios[0]!,...change}]});
   assert.throws(()=>validateEvalRun(mutate({passed:19,skipped:1})),/Incomplete/);

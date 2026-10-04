@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "kind": "M2-runner-ci-checkpoint",
+  "candidateCommit": "952c55feca815fb6bfc53e350f86e9039b8f58e3",
+  "ciSourceCommit": "b2e2a18e26e82b4150d9d6b7f2d04e658babc383",
+  "verifiedIdenticalSourceTree": "1b21f17cebbb170c107dbd47e4cf753bd502e9fc",
+  "runId": 37181526012,
+  "runUrl": "https://github.com/alimobrem/agentci/actions/runs/37181526012",
+  "conclusion": "success",
+  "verificationArtifact": {
+    "id": 11294673978,
+    "name": "m1-verification",
+    "digest": "sha256:ab3d5e7317c70fa9e3fdb8e352beb672863664fc7c4a0f2a207847dc6152554e"
+  },
+  "unitApiAdapterTests": 88,
+  "integration": "Real PostgreSQL/Temporal and real native/pytest/model-matrix isolation tests passed",
+  "packaging": "Clean production-only candidate CLI/client/init/setup/validation passed",
+  "apiCompatibility": "Released M1 contract retained",
+  "images": {
+    "api": {
+      "platform": "linux/amd64",
+      "findings": 0,
+      "scanSha256": "73e66dafbc42e9ef80e42d363decd301cb7c8eb5c966f00d9135381a53350ef3"
+    },
+    "worker": {
+      "platform": "linux/amd64",
+      "findings": 0,
+      "scanSha256": "669568e7e932c5c19ca858d2214b3c9fb9dcaac5c641247d6bdebb8df9fb26a5"
+    },
+    "eval-runner": {
+      "platform": "linux/amd64",
+      "findings": 0,
+      "scanSha256": "0ebef65d0ee29c52457594f1ed661fc021f622ec46d99c4269904be876e5affa"
+    }
+  },
+  "publishedRelease": false,
+  "milestoneComplete": false,
+  "note": "CI acceptance checkpoint only; assertion provenance changes after this candidate require new full CI. All M2 release gates remain open."
+}

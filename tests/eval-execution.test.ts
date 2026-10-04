@@ -12,7 +12,7 @@ test('baseline-configured repeated trials expose behavioral regression and prese
   assert.equal(observed.length,6);assert.equal(comparison.base.subject.gitSha,base.sha);assert.equal(comparison.head.subject.gitSha,head.sha);
   assert.deepEqual(comparison.regressions,['safe-response']);assert.equal(comparison.deltas[0]!.passRateDelta,-1);assert.equal(comparison.head.scenarios[0]!.criticalFailures,3);
   assert.throws(()=>compareRuns(comparison.base,{...comparison.head,revision:'sha256:'+'0'.repeat(64)}),/same baseline/);
-  assert.throws(()=>compareRuns(comparison.base,{...comparison.head,subject:{repository:'wrong/repo',gitSha:head.sha}}),/identities/);
+  assert.throws(()=>compareRuns(comparison.base,{...comparison.head,subject:{...comparison.head.subject,repository:'wrong/repo',gitSha:head.sha}}),/identities/);
 });
 test('model matrix evaluates every configured variant on both commits with a total budget',async()=>{
   const suite=evalSuite({models:['model-a','model-b'],representative:true,trials:{count:2,passRate:1,confidenceMethod:'wilson'}});

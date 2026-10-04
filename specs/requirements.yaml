@@ -4383,9 +4383,11 @@ requirements:
       section: "11.4"
       line: 689
     implementation:
-      status: not-started
+      status: tested
       milestone: M2
-      evidence: []
+      evidence:
+        - releases/m2-runner-ci.json
+        - tests/integration/eval-runner.test.ts
   - id: SPEC-11.4-003
     title: 11.4 Pluggable eval engines
     type: functional
@@ -14081,9 +14083,11 @@ requirements:
       section: "40"
       line: 2090
     implementation:
-      status: not-started
+      status: tested
       milestone: M2
-      evidence: []
+      evidence:
+        - releases/m2-runner-ci.json
+        - tests/integration/eval-runner.test.ts
   - id: SPEC-40-033
     title: Milestone 2 - Eval orchestration
     type: functional
@@ -14094,9 +14098,11 @@ requirements:
       section: "40"
       line: 2091
     implementation:
-      status: not-started
+      status: tested
       milestone: M2
-      evidence: []
+      evidence:
+        - releases/m2-runner-ci.json
+        - tests/integration/eval-runner.test.ts
   - id: SPEC-40-034
     title: Milestone 2 - Eval orchestration
     type: functional
@@ -14150,9 +14156,11 @@ requirements:
       section: "40"
       line: 2095
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - packages/evals/execution.ts
+        - docs/phases/m2.md
   - id: SPEC-40-038
     title: Milestone 2 - Eval orchestration
     type: functional
@@ -14178,9 +14186,11 @@ requirements:
       section: "40"
       line: 2099
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - packages/evals/execution.ts
+        - docs/phases/m2.md
   - id: SPEC-40-040
     title: Milestone 3 - Multi-model review
     type: functional

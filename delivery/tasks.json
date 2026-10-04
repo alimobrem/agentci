@@ -454,14 +454,16 @@
         "SPEC-40-032",
         "SPEC-40-033"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T05:19:26.667Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T06:08:33.753Z",
       "acceptance": [
         {
           "text": "Real isolated commands and pytest produce passed/failed/error outcomes; timeout/cancellation/output limits and controller-secret isolation are verified",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-runner-ci.json"
+          ]
         }
       ]
     },
@@ -564,12 +566,32 @@
       "requirementIds": [
         "SPEC-29.3-001"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T05:55:23.131Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T06:12:36.965Z",
       "acceptance": [
         {
           "text": "Verification and hosted dogfood use credential-free loopback database URLs with separate test-only PG environment; parameter resolution and full CI verify connectivity",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-ci-connection.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-BASELINE-HARNESS",
+      "title": "Bind comparison assertions to immutable baseline inputs",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-035"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T06:03:11.650Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Base/head execute the same baseline eval source and manifest, with assertion commit and bundle digest in results; head assertion edits/deletion cannot suppress a regression and subject source remains the requested commit",
           "status": "pending",
           "evidence": []
         }
