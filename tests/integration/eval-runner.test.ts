@@ -1,6 +1,7 @@
+import {randomUUID} from 'node:crypto';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {evalSuite} from '../fixtures/evals.ts';
-import {runIsolated,snapshotInputs,validateRunnerPolicy} from '../../packages/evals/runner.ts';
+import {runIsolated as runContainer,snapshotInputs,validateRunnerPolicy} from '../../packages/evals/runner.ts';
 import {normalizeTrial} from '../../packages/evals/adapters.ts';
 import {execFileSync} from 'node:child_process';
 import {executeComparison,executeModelMatrix} from '../../packages/evals/execution.ts';
@@ -10,8 +11,10 @@ test('runner rejects mutable images and credential/escaping snapshot inputs',()=
   for(const path of ['../escape','.env','.ssh/key','node_modules/exploit.js','x.pem'])assert.throws(()=>snapshotInputs({sha:'a'.repeat(40),files:{[path]:'text'}}));
 });
 test('real isolated UBI runner: boundaries, pytest failures, timeouts, cancellation and output limits',{skip:!image,timeout:120000},async()=>{
+  const ownership={unitId:randomUUID(),leaseToken:randomUUID()};
+  const runIsolated=(snapshot:Parameters<typeof runContainer>[0],suite:Parameters<typeof runContainer>[1],policy:Parameters<typeof runContainer>[2],options:NonNullable<Parameters<typeof runContainer>[3]>={})=>runContainer(snapshot,suite,policy,{...options,ownership});
   const policy={image:image!};
-  const containers=()=>execFileSync('docker',['ps','-aq','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.runner.image=${image}`],{encoding:'utf8'}).trim();
+  const containers=()=>execFileSync('docker',['ps','-aq','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.eval.unit=${ownership.unitId}`],{encoding:'utf8'}).trim();
   const before=containers();
   const run=(script:string,overrides:Parameters<typeof evalSuite>[0]={},signal?:AbortSignal)=>runIsolated({sha:'a'.repeat(40),files:{'check.mjs':script}},evalSuite({runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:5000},...overrides}),policy,{signal});
   const originalToken=process.env.AGENTCI_EVIDENCE_TOKEN;process.env.AGENTCI_EVIDENCE_TOKEN='synthetic-controller-token-for-boundary-test';
@@ -24,7 +27,7 @@ test('real isolated UBI runner: boundaries, pytest failures, timeouts, cancellat
   const limit=await run(`while(true)process.stdout.write('x'.repeat(4096));`,{runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:5000,maxOutputBytes:1024}});assert.equal(limit.status,'error');assert.equal(limit.error,'output-limit');
   const abort=new AbortController();const pending=run('setInterval(()=>{},1000)',{runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:30000}},abort.signal);
   let live=false;for(let i=0;i<200;i++){if(containers()!==before){live=true;break;}await new Promise(resolve=>setTimeout(resolve,50));}
-  abort.abort();assert.equal((await pending).status,'cancelled');assert.ok(live,'a live runner must carry the exact image ownership label so cleanup can detect it');
+  abort.abort();assert.equal((await pending).status,'cancelled');assert.ok(live,'a live runner must carry the exact unit ownership label so cleanup can detect it');
   const suite=evalSuite({runner:{adapter:'pytest',command:['python','-m','pytest','-q','test_example.py'],report:'junit.xml',timeoutMs:10000},scenarios:[{id:'one',selector:'test_example.test_one'}]});
   for(const [code,expected] of [['assert True','passed'],['assert False','failed'],['import pytest; pytest.skip("skip")','skipped']] as const){
     const raw=await runIsolated({sha:'b'.repeat(40),files:{'test_example.py':`def test_one():\n    ${code}\n`}},suite,policy);
@@ -42,16 +45,16 @@ test('real isolated UBI runner: boundaries, pytest failures, timeouts, cancellat
   }
   assert.equal(containers(),before,'all created containers must be removed, including aborted runners');
   const repeated=evalSuite({runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:5000},trials:{count:3,passRate:1,confidenceMethod:'wilson'}});
-  const comparison=await executeComparison('owner/repo',{sha:'c'.repeat(40),files:{'check.mjs':'process.exit(0)'}},{sha:'d'.repeat(40),files:{'check.mjs':'process.exit(1)'}},repeated,policy);
+  const comparison=await executeComparison('owner/repo',{sha:'c'.repeat(40),files:{'check.mjs':'process.exit(0)'}},{sha:'d'.repeat(40),files:{'check.mjs':'process.exit(1)'}},repeated,policy,{},runIsolated);
   assert.equal(comparison.base.status,'passed');assert.equal(comparison.head.status,'failed');assert.deepEqual(comparison.regressions,['safe-response']);assert.equal(comparison.head.scenarios[0]!.failed,3);
   const matrixSuite=evalSuite({runner:repeated.spec.runner,models:['model-a','model-b'],representative:true,trials:{count:1,passRate:1,confidenceMethod:'wilson'}});
-  const matrix=await executeModelMatrix('owner/repo',{sha:'e'.repeat(40),files:{'check.mjs':'process.exit(0)'}},{sha:'f'.repeat(40),files:{'check.mjs':`process.exit(process.env.AGENTCI_MODEL_VARIANT==='model-b'?1:0)`}},matrixSuite,policy);
+  const matrix=await executeModelMatrix('owner/repo',{sha:'e'.repeat(40),files:{'check.mjs':'process.exit(0)'}},{sha:'f'.repeat(40),files:{'check.mjs':`process.exit(process.env.AGENTCI_MODEL_VARIANT==='model-b'?1:0)`}},matrixSuite,policy,{},runIsolated);
   assert.equal(matrix.complete,true);assert.equal(matrix.comparisons[0]!.head.status,'passed');assert.equal(matrix.comparisons[1]!.head.status,'failed');
   const assertion=`import assert from 'node:assert/strict';import{readFileSync}from'node:fs';assert.equal(readFileSync('src/value.txt','utf8'),'good');`;
   const protectedSuite=evalSuite({runner:{adapter:'command',command:['node','evals/check.mjs'],harness:['evals/check.mjs'],timeoutMs:5000},trials:{count:1,passRate:1,confidenceMethod:'wilson'}});
   const tamperedHeads:Record<string,string>[]=[{'evals/check.mjs':'process.exit(0)','src/value.txt':'bad'},{'src/value.txt':'bad'}];
   for(const files of tamperedHeads){
-    const protectedComparison=await executeComparison('owner/repo',{sha:'a'.repeat(40),files:{'evals/check.mjs':assertion,'src/value.txt':'good'}},{sha:'b'.repeat(40),files},protectedSuite,policy);
+    const protectedComparison=await executeComparison('owner/repo',{sha:'a'.repeat(40),files:{'evals/check.mjs':assertion,'src/value.txt':'good'}},{sha:'b'.repeat(40),files},protectedSuite,policy,{},runIsolated);
     assert.equal(protectedComparison.base.status,'passed');assert.equal(protectedComparison.head.status,'failed');assert.deepEqual(protectedComparison.regressions,['safe-response']);assert.equal(protectedComparison.head.subject.assertionGitSha,'a'.repeat(40));assert.equal(protectedComparison.head.revision,protectedComparison.base.revision);
   }
   assert.equal(containers(),before);

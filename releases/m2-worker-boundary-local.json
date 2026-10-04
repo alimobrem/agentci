@@ -1,0 +1,44 @@
+{
+  "kind": "M2-eval-worker-boundary-local-checkpoint",
+  "recordedAt": "2026-10-04T08:04:52.176Z",
+  "releaseAcceptance": false,
+  "parentCommit": "ecdc31f3a9721b7876898f36943d2e0a054c8365",
+  "files": {
+    "apps/eval-worker/config.ts": "ad2eb306d3bd64412f02973689cceb03564dd6ab70890166e12840a17b13c1b3",
+    "apps/eval-worker/privileges.ts": "1685c776c697de4afd45268a95b8d1b466237178c2fa7912e3fc78d0caeb63a0",
+    "deploy/migrations/002_m2_eval_role.sql": "270d5aa276952a6dacd4f309f6284fa5fd53c5cae950cce2caac2af902ee6795",
+    "tests/eval-worker-config.test.ts": "014d32694b0918cdaa7d35322147e314d55d59538a0b9bc108e597bfcd1a7006",
+    "tests/integration/eval-storage.test.ts": "c1917ce5f41cdb977b208fdc98f52d5da6694b15d1f5c7d6096970d02b44230b",
+    "tests/integration/eval-runner.test.ts": "e9ba7062b1ce0800a49dc7545c0cc4bf17c6a3b1333c8ce618b39a56df85b09e",
+    "tests/integration/eval-engines.test.ts": "7395aa848c7224873da08ea22e6d3d53767b76a597df2e230f44ddb2b8cf3f98"
+  },
+  "verification": {
+    "fastChecks": 8,
+    "fastPassed": true,
+    "concurrentIntegrationGroups": 5,
+    "passed": 5,
+    "skipped": 0,
+    "durationMs": 5928.310583,
+    "platform": "linux/arm64",
+    "restrictedLogin": "ephemeral separately authenticated LOGIN with executor group; removed after test",
+    "permissionRejections": [
+      "all three controller table reads",
+      "public schema DDL",
+      "eval job cancellation mutation",
+      "unit definition update"
+    ],
+    "restrictedExecution": "real three-trial eval completed with retained provenance",
+    "images": {
+      "default": "sha256:37fa3c150ddd20aaf53f54f2cb89474842002f15ceba727611e5a078dd155aca",
+      "optional": "sha256:bbc60b72169d164579c278841687f8fda02938149fd429bc154c3a426c940945"
+    }
+  },
+  "limitations": [
+    "Temporal activity startup/retry/cancellation/history replay pending",
+    "published eval-worker service image pending",
+    "stable HTTP retry request IDs pending",
+    "cleanup-failure injection pending",
+    "corrected final-source full CI pending",
+    "all M2 release gates open"
+  ]
+}

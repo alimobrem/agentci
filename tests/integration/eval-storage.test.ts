@@ -16,6 +16,7 @@ import {executeSuite} from '../../packages/evals/execution.ts';
 import {runIsolated} from '../../packages/evals/runner.ts';
 import {evalSuite} from '../fixtures/evals.ts';
 import {executeStoredUnit} from '../../apps/eval-worker/unit.ts';
+import {requireEvalPrivileges} from '../../apps/eval-worker/privileges.ts';
 const databaseUrl=process.env.AGENTCI_TEST_DATABASE_URL,image=process.env.AGENTCI_TEST_RUNNER_IMAGE;
 if(!databaseUrl||!image)throw new Error('M2 durable eval tests require real PostgreSQL and an immutable runner image; never silently skip');
 const org='00000000-0000-4000-8000-000000000001',repository='example/repo';
@@ -104,5 +105,21 @@ test('PostgreSQL eval recovery: immutable exact inputs, fenced leases, retained 
     try{await assert.rejects(executeStoredUnit(store,abortId,{image:image!},{signal:abort.signal}),/cancelled/);}finally{clearTimeout(abortTimer);}
     assert.equal((await store.unit(abortId))!.status,'cancelled');assert.equal((await store.unit(abortId))!.result,undefined);
     assert.equal(await docker(['ps','--all','--quiet','--filter',`label=agentci.eval.unit=${abortId}`]),'');
+    await pool.query(await readFile(new URL('../../deploy/migrations/002_m2_eval_role.sql',import.meta.url),'utf8'));
+    await assert.rejects(requireEvalPrivileges(pool),/restricted database login/);
+    const login='agentci_test_eval_'+randomUUID().replaceAll('-',''),password=randomUUID()+randomUUID();
+    await pool.query(`CREATE ROLE ${login} LOGIN PASSWORD '${password}' NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS IN ROLE agentci_eval_executor`);
+    const loginUrl=new URL(databaseUrl!);loginUrl.username=login;loginUrl.password=password;
+    const restricted=new Pool({connectionString:loginUrl.toString(),max:2});
+    try{
+      await requireEvalPrivileges(restricted);
+      assert.equal((await restricted.query('SELECT current_user AS name')).rows[0].name,login,'must authenticate as a separate login, not SET ROLE on admin');
+      for(const table of ['agentci_reviews','agentci_deliveries','agentci_jobs'])await assert.rejects(restricted.query(`SELECT * FROM ${table} LIMIT 1`),error=>(error as {code:string}).code==='42501');
+      await assert.rejects(restricted.query('CREATE TABLE public.agentci_forbidden_eval_table(id integer)'),error=>(error as {code:string}).code==='42501');
+      await assert.rejects(restricted.query('UPDATE agentci_eval_jobs SET cancel_requested=true WHERE id=$1',[job.id]),error=>(error as {code:string}).code==='42501');
+      await assert.rejects(restricted.query('UPDATE agentci_eval_units SET definition=$2 WHERE id=$1',[baseId,{}]),error=>(error as {code:string}).code==='42501');
+      const scoped=new EvalStore(restricted,org,repository),leastJob=await store.stage(review.id,randomUUID(),base,head,definitions,plan);
+      assert.equal((await executeStoredUnit(scoped,leastJob.unitIds[0]!,{image:image!})).status,'passed','separate least-privilege login must execute and retain all trials');
+    }finally{await restricted.end();await pool.query(`DROP OWNED BY ${login}`);await pool.query(`DROP ROLE ${login}`);}
   }finally{await restartPool.end();await pool.end();}
 });

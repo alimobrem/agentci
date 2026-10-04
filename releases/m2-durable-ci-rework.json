@@ -1,0 +1,16 @@
+{
+  "kind": "M2-durable-recovery-CI-rework",
+  "recordedAt": "2026-10-04T08:04:16.004Z",
+  "candidateCommit": "ecdc31f3a9721b7876898f36943d2e0a054c8365",
+  "run": {
+    "id": 37187413826,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37187413826",
+    "attempt": 1,
+    "conclusion": "failure"
+  },
+  "failedStep": "Integration tests with mandatory real eval isolation",
+  "failure": "Default runner cleanup assertion counted a concurrent durable recovery container using the same immutable image.",
+  "correction": "Each default/optional runner test has a unique unit/lease owner; both live ownership probes and cleanup assertions filter the exact unit. Comparison executors inject test ownership separately from durable contexts.",
+  "retainedAttempt": "delivery/runs/37187413826-attempt-1.json",
+  "acceptance": "reopened; corrected full CI pending"
+}

@@ -78,8 +78,11 @@ Durable eval storage and the unit execution driver now pass local real PostgreSQ
 and Docker recovery tests: retained trials resume after restart, stale leases
 cannot write or clean up, SIGKILL orphans are removed before a replacement run,
 other units are preserved, and cancellation removes containers without publishing
-success. This work is not yet verified in full CI. Credential-free worker startup,
-least-privilege SQL grants, real Temporal retry/cancellation/replay, durable PR/API
-integration and all M2 release gates remain open. The CI database URL uses separate
+success. This work is not yet verified in full CI. Credential-isolated configuration and a separately authenticated restricted SQL login
+now pass local execution/permission tests. The first durable full CI attempt failed
+because same-image tests shared a cleanup filter; the failed attempt is retained,
+unit-scoped assertions pass all five groups concurrently, and corrected full CI
+remains pending. Real Temporal worker startup/retry/cancellation/replay, durable
+PR/API integration and all M2 release gates remain open. The CI database URL uses separate
 test-only PG variables; its cleanup is in the open M2 PR, not GitHub main.
 [M2 acceptance plan](docs/phases/m2.md).

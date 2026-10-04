@@ -630,16 +630,14 @@
         "SPEC-40-032",
         "SPEC-40-034"
       ],
-      "status": "done",
-      "startedAt": "2026-10-04T06:53:30.394Z",
-      "completedAt": "2026-10-04T07:36:08.680Z",
+      "status": "in-progress",
+      "startedAt": "2026-10-04T08:03:21.812Z",
+      "completedAt": null,
       "acceptance": [
         {
           "text": "Native/default and optional engine groups run concurrently without counting one another as leaks; cleanup still asserts no new containers for each immutable image. Failed CI attempt is retained and full CI reruns.",
-          "status": "passed",
-          "evidence": [
-            "releases/m2-engines-ci.json"
-          ]
+          "status": "pending",
+          "evidence": []
         }
       ]
     },

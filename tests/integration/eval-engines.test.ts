@@ -1,16 +1,19 @@
+import {randomUUID} from 'node:crypto';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
 import {evalSuite} from '../fixtures/evals.ts';
-import {runIsolated} from '../../packages/evals/runner.ts';
+import {runIsolated as runContainer} from '../../packages/evals/runner.ts';
 import {normalizeTrial} from '../../packages/evals/adapters.ts';
 const image=process.env.AGENTCI_TEST_ENGINES_IMAGE;
 test('real optional UBI engines: Promptfoo and DeepEval passing assertions, regressions and infrastructure errors',{skip:!image,timeout:120000},async()=>{
-  const containers=()=>execFileSync('docker',['ps','-aq','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.runner.image=${image}`],{encoding:'utf8'}).trim();
+  const ownership={unitId:randomUUID(),leaseToken:randomUUID()};
+  const runIsolated=(snapshot:Parameters<typeof runContainer>[0],suite:Parameters<typeof runContainer>[1],policy:Parameters<typeof runContainer>[2],options:NonNullable<Parameters<typeof runContainer>[3]>={})=>runContainer(snapshot,suite,policy,{...options,ownership});
+  const containers=()=>execFileSync('docker',['ps','-aq','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.eval.unit=${ownership.unitId}`],{encoding:'utf8'}).trim();
   const before=containers();
   const abort=new AbortController();const pending=runIsolated({sha:'a'.repeat(40),files:{'probe.mjs':'setInterval(()=>{},1000)'}},evalSuite({runner:{adapter:'command',command:['node','probe.mjs'],timeoutMs:30000}}),{image:image!},{signal:abort.signal});
   let live=false;for(let i=0;i<200;i++){if(containers()!==before){live=true;break;}await new Promise(resolve=>setTimeout(resolve,50));}
-  abort.abort();assert.equal((await pending).status,'cancelled');assert.ok(live,'the exact optional image label must expose live owned containers');
+  abort.abort();assert.equal((await pending).status,'cancelled');assert.ok(live,'the exact optional unit label must expose live owned containers');
   const promptfoo=evalSuite({runner:{adapter:'promptfoo',command:['promptfoo','eval','-c','evals/promptfoo.yaml'],report:'result.jsonl',timeoutMs:30000},scenarios:[{id:'greeting',selector:'0:0'}]});
   const config="prompts: ['greet']\nproviders: ['exec:node provider.mjs']\ntests:\n  - assert:\n      - type: equals\n        value: hello\n";
   // Exec providers run relative to the config directory, as documented by Promptfoo.
