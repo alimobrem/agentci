@@ -1,12 +1,15 @@
 import { Pool } from 'pg';
 import { runtimeConfig } from '../../packages/runtime/config.ts';
 import { Store } from '../../packages/storage/postgres.ts';
+import {EvalStore} from '../../packages/storage/evals.ts';
 import { createControlApi } from './server.ts';
 const config = await runtimeConfig(false);
 const pool = new Pool({ connectionString: config.databaseUrl, max: 10, connectionTimeoutMillis: 5000, query_timeout: 10_000 });
 const store = new Store(pool, config.organizationId, config.repository);
 await store.ready();
-const server = createControlApi(config, store);
+const comparisons=new EvalStore(pool,config.organizationId,config.repository);
+await comparisons.ready();
+const server = createControlApi(config, store, comparisons);
 server.requestTimeout = 10_000; server.headersTimeout = 10_000;
 const port = Number(process.env.AGENTCI_PORT ?? 3000);
 if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('Invalid port');

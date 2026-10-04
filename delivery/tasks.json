@@ -793,12 +793,50 @@
         "SPEC-40-037",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T09:08:45.810Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T09:28:06.956Z",
       "acceptance": [
         {
           "text": "Strict comparison evidence binds organization/repository/PR/base/head/review/attempt and planned unit provenance, recomputes deltas/outcome, cannot pass missing or cancelled execution/coverage, exposes no projected source or credentials, and rejects forged identities/digests/summary. Real durable storage snapshot read and full CI verify it before API/PR integration.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-comparison-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-COMPARISON-API",
+      "title": "Authenticated eval comparison API and installed agent client",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T09:21:01.636Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Additive OpenAPI/domain/shared fixtures match authenticated comparison GET, typed identity/digest errors and bounded responses; unauthorized callers cannot disclose IDs, scopes cannot cross, storage failures are sanitized, M1 compatibility passes, compiled API and installed client consume actual durable evidence. Full CI validates final source.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-COMPARISON-CAPACITY",
+      "title": "Bounded complete access to large comparison evidence",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Valid large comparison evidence remains fully consumable using bounded snapshot-consistent traversal or export; stale snapshots have explicit retry semantics, no result loss/truncation or false passing summary, and real persistence/API/installed-client tests verify capacity before phase closure.",
           "status": "pending",
           "evidence": []
         }

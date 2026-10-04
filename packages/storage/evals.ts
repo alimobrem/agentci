@@ -47,6 +47,9 @@ export class EvalStore {
   async ready():Promise<void> {
     const row=(await this.pool.query('SELECT organization_id,repository FROM agentci_scope WHERE id=1')).rows[0];
     if(row?.organization_id!==this.organizationId.toLowerCase()||row?.repository!==this.repository)throw new Error('Eval database belongs to another deployment scope');
+    await this.pool.query('SELECT id FROM agentci_eval_jobs LIMIT 0');
+    await this.pool.query('SELECT id FROM agentci_eval_units LIMIT 0');
+    await this.pool.query('SELECT unit_id FROM agentci_eval_trials LIMIT 0');
   }
   private scope='j.repository=$2 AND EXISTS(SELECT 1 FROM agentci_scope s WHERE s.id=1 AND s.repository=$2 AND s.organization_id=$3::uuid)';
   async stage(reviewId:string,attemptKey:string,base:Snapshot,head:Snapshot,units:EvalUnitDefinition[],plan:EvalPlan):Promise<{id:string;unitIds:string[]}> {

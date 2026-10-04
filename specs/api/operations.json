@@ -70,6 +70,28 @@
         "unsupported method",
         "Agent client consumes the contracted operation; evidence checks exact identity and canonical digest"
       ]
+    },
+    {
+      "operationId": "getEvalComparison",
+      "method": "get",
+      "path": "/v1/eval-comparisons/{id}",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039"
+      ],
+      "tests": [
+        "tests/eval-comparison-api.test.ts",
+        "tests/integration/eval-storage.test.ts"
+      ],
+      "scenarios": [
+        "authorization before ID lookup",
+        "exact scoped snapshot and canonical digest",
+        "identity, threshold, summary and digest tamper rejected",
+        "unknown/malformed IDs and method/media-independent read",
+        "unavailable or integrity-failing storage sanitized",
+        "bounded API/client response and explicit oversized error",
+        "real durable evidence consumed by agent client"
+      ]
     }
   ]
 }

@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "AgentCI M1 control API",
+    "title": "AgentCI control API",
     "version": "0.3.0-m2",
-    "description": "Single-repository semantic PR review and authenticated immutable evidence. Customer onboarding extension in progress; no multi-tenant hosting claim."
+    "description": "Single-repository PR review and authenticated exact-identity semantic/eval evidence. M2 comparison reads are additive; no multi-tenant hosting claim."
   },
   "paths": {
     "/healthz": {
@@ -251,6 +251,23 @@
               }
             }
           },
+          "405": {
+            "description": "Method not allowed; Allow header advertises the supported method",
+            "headers": {
+              "Allow": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
           "409": {
             "description": "Delivery identity conflict",
             "content": {
@@ -359,23 +376,6 @@
                     "error"
                   ],
                   "additionalProperties": false
-                }
-              }
-            }
-          },
-          "405": {
-            "description": "Method not allowed; Allow header advertises the supported method",
-            "headers": {
-              "Allow": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
                 }
               }
             }
@@ -497,6 +497,23 @@
               }
             }
           },
+          "405": {
+            "description": "Method not allowed; Allow header advertises the supported method",
+            "headers": {
+              "Allow": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
           "503": {
             "description": "Persistence unavailable",
             "content": {
@@ -524,20 +541,223 @@
                 }
               }
             }
-          },
-          "405": {
-            "description": "Method not allowed; Allow header advertises the supported method",
-            "headers": {
-              "Allow": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
+          }
+        }
+      }
+    },
+    "/v1/eval-comparisons/{id}": {
+      "get": {
+        "operationId": "getEvalComparison",
+        "description": "Authenticated, scoped read of planned units and retained normalized results. Authorization precedes UUID lookup. No snapshots, scripts, leases or credentials are returned. At most 4 MiB; oversized evidence returns explicit 413 rather than truncation or a passing summary.",
+        "security": [
+          {
+            "evidenceBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consistent comparison snapshot; digest binds this exact snapshot. Results are immutable, but execution/cancellation may change the snapshot digest.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/EvalComparisonRecord"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid comparison UUID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "invalid-comparison-id"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid bearer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "unauthorized"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown comparison within this deployment scope",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "not-found"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported method",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "method-not-allowed"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Comparison exceeds the 4 MiB response budget",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "comparison-too-large"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Storage unavailable or integrity failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "service-unavailable"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
                 }
               }
             }
@@ -1279,6 +1499,730 @@
         },
         "required": [
           "error"
+        ],
+        "additionalProperties": false
+      },
+      "EvalComparison": {
+        "type": "object",
+        "properties": {
+          "apiVersion": {
+            "enum": [
+              "agentci.io/v1alpha1"
+            ]
+          },
+          "kind": {
+            "enum": [
+              "EvalComparison"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "reviewId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "attemptId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "organizationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "subject": {
+            "type": "object",
+            "properties": {
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+              },
+              "pullRequest": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "baseSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              },
+              "headSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              }
+            },
+            "required": [
+              "repository",
+              "pullRequest",
+              "baseSha",
+              "headSha"
+            ],
+            "additionalProperties": false
+          },
+          "cancelRequested": {
+            "type": "boolean"
+          },
+          "units": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "suite": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+                },
+                "revision": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "side": {
+                  "enum": [
+                    "base",
+                    "head"
+                  ]
+                },
+                "assertionSide": {
+                  "enum": [
+                    "base",
+                    "head"
+                  ]
+                },
+                "model": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+                },
+                "trials": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000
+                },
+                "scenarioIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+                  },
+                  "maxItems": 1000,
+                  "minItems": 1,
+                  "uniqueItems": true
+                },
+                "runnerImage": {
+                  "type": "string",
+                  "pattern": "^(?:sha256:[a-f0-9]{64}|[a-z0-9][a-z0-9._/:~-]*@sha256:[a-f0-9]{64})$"
+                },
+                "runnerProvider": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+                    },
+                    "revision": {
+                      "type": "string",
+                      "pattern": "^sha256:[a-f0-9]{64}$"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "revision"
+                  ],
+                  "additionalProperties": false
+                },
+                "status": {
+                  "enum": [
+                    "queued",
+                    "running",
+                    "completed",
+                    "cancelled"
+                  ]
+                },
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "apiVersion": {
+                      "enum": [
+                        "agentci.io/v1alpha1"
+                      ]
+                    },
+                    "kind": {
+                      "enum": [
+                        "EvalRun"
+                      ]
+                    },
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "suite": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+                    },
+                    "revision": {
+                      "type": "string",
+                      "pattern": "^sha256:[a-f0-9]{64}$"
+                    },
+                    "subject": {
+                      "type": "object",
+                      "properties": {
+                        "repository": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+                        },
+                        "gitSha": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{40}$"
+                        },
+                        "assertionGitSha": {
+                          "type": "string",
+                          "pattern": "^[a-f0-9]{40}$"
+                        },
+                        "inputDigest": {
+                          "type": "string",
+                          "pattern": "^sha256:[a-f0-9]{64}$"
+                        },
+                        "omittedInputs": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 4096
+                          },
+                          "maxItems": 10000,
+                          "uniqueItems": true
+                        }
+                      },
+                      "required": [
+                        "repository",
+                        "gitSha",
+                        "assertionGitSha",
+                        "inputDigest",
+                        "omittedInputs"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "model": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+                    },
+                    "trials": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 1000
+                    },
+                    "status": {
+                      "enum": [
+                        "passed",
+                        "failed",
+                        "error",
+                        "insufficient"
+                      ]
+                    },
+                    "scenarios": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+                          },
+                          "passed": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1000000
+                          },
+                          "failed": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1000000
+                          },
+                          "errors": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1000000
+                          },
+                          "skipped": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1000000
+                          },
+                          "criticalFailures": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1000000
+                          },
+                          "status": {
+                            "enum": [
+                              "passed",
+                              "failed",
+                              "error",
+                              "insufficient"
+                            ]
+                          },
+                          "passRate": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "confidenceInterval": {
+                            "type": "object",
+                            "properties": {
+                              "lower": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "upper": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "level": {
+                                "enum": [
+                                  0.9,
+                                  0.95,
+                                  0.99
+                                ]
+                              },
+                              "method": {
+                                "enum": [
+                                  "wilson"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "lower",
+                              "upper",
+                              "level",
+                              "method"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "metrics": {
+                            "type": "object",
+                            "properties": {
+                              "p95LatencyMs": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "avgCostUsd": {
+                                "type": "number",
+                                "minimum": 0
+                              },
+                              "totalTokens": {
+                                "type": "integer",
+                                "minimum": 0
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "passed",
+                          "failed",
+                          "errors",
+                          "skipped",
+                          "criticalFailures",
+                          "status"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "minItems": 1,
+                      "maxItems": 1000,
+                      "uniqueItems": true
+                    },
+                    "artifacts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "digest": {
+                            "type": "string",
+                            "pattern": "^sha256:[a-f0-9]{64}$"
+                          },
+                          "mediaType": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 512
+                          },
+                          "uri": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 2048
+                          }
+                        },
+                        "required": [
+                          "digest",
+                          "mediaType",
+                          "uri"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "minItems": 0,
+                      "maxItems": 1000,
+                      "uniqueItems": true
+                    },
+                    "runnerImage": {
+                      "type": "string",
+                      "pattern": "^(?:sha256:[a-f0-9]{64}|[a-z0-9][a-z0-9._/:~-]*@sha256:[a-f0-9]{64})$"
+                    },
+                    "runnerProvider": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+                        },
+                        "revision": {
+                          "type": "string",
+                          "pattern": "^sha256:[a-f0-9]{64}$"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "revision"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "apiVersion",
+                    "kind",
+                    "id",
+                    "suite",
+                    "revision",
+                    "subject",
+                    "trials",
+                    "status",
+                    "scenarios",
+                    "artifacts"
+                  ],
+                  "additionalProperties": false,
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "runnerImage": {},
+                        "runnerProvider": {
+                          "not": {}
+                        }
+                      },
+                      "required": [
+                        "runnerImage"
+                      ]
+                    },
+                    {
+                      "properties": {
+                        "runnerProvider": {},
+                        "runnerImage": {
+                          "not": {}
+                        }
+                      },
+                      "required": [
+                        "runnerProvider"
+                      ]
+                    }
+                  ]
+                },
+                "passRate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "maxCriticalFailures": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 1000
+                }
+              },
+              "required": [
+                "id",
+                "suite",
+                "revision",
+                "side",
+                "assertionSide",
+                "trials",
+                "scenarioIds",
+                "status",
+                "passRate",
+                "maxCriticalFailures"
+              ],
+              "additionalProperties": false,
+              "oneOf": [
+                {
+                  "required": [
+                    "runnerImage"
+                  ],
+                  "properties": {
+                    "runnerProvider": {
+                      "not": {}
+                    },
+                    "runnerImage": {}
+                  }
+                },
+                {
+                  "required": [
+                    "runnerProvider"
+                  ],
+                  "properties": {
+                    "runnerImage": {
+                      "not": {}
+                    },
+                    "runnerProvider": {}
+                  }
+                }
+              ]
+            },
+            "maxItems": 10000
+          },
+          "suiteChanges": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "suite": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+                },
+                "kind": {
+                  "enum": [
+                    "added",
+                    "removed",
+                    "modified"
+                  ]
+                },
+                "baseRevision": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "headRevision": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "removedScenarios": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  },
+                  "maxItems": 10000,
+                  "uniqueItems": true
+                },
+                "addedScenarios": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  },
+                  "maxItems": 10000,
+                  "uniqueItems": true
+                }
+              },
+              "required": [
+                "suite",
+                "kind",
+                "removedScenarios",
+                "addedScenarios"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 10000
+          },
+          "coverageGaps": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "maxItems": 10000,
+            "uniqueItems": true
+          },
+          "selectionGaps": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "maxItems": 10000,
+            "uniqueItems": true
+          },
+          "summary": {
+            "type": "object",
+            "properties": {
+              "state": {
+                "enum": [
+                  "queued",
+                  "running",
+                  "completed",
+                  "cancelled"
+                ]
+              },
+              "outcome": {
+                "enum": [
+                  "pending",
+                  "passed",
+                  "failed",
+                  "error",
+                  "insufficient",
+                  "no-evals"
+                ]
+              },
+              "executionGaps": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 4096
+                },
+                "maxItems": 10000,
+                "uniqueItems": true
+              },
+              "comparisons": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "suite": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+                    },
+                    "model": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+                    },
+                    "baseRunId": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "headRunId": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "deltas": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "scenario": {
+                            "type": "string",
+                            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+                          },
+                          "baseStatus": {
+                            "enum": [
+                              "passed",
+                              "failed",
+                              "error",
+                              "insufficient"
+                            ]
+                          },
+                          "headStatus": {
+                            "enum": [
+                              "passed",
+                              "failed",
+                              "error",
+                              "insufficient"
+                            ]
+                          },
+                          "passRateDelta": {
+                            "type": "number",
+                            "minimum": -1,
+                            "maximum": 1
+                          },
+                          "criticalFailureDelta": {
+                            "type": "integer"
+                          },
+                          "regression": {
+                            "type": "boolean"
+                          }
+                        },
+                        "required": [
+                          "scenario",
+                          "baseStatus",
+                          "headStatus",
+                          "criticalFailureDelta",
+                          "regression"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "maxItems": 1000
+                    },
+                    "regressions": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4096
+                      },
+                      "maxItems": 10000,
+                      "uniqueItems": true
+                    }
+                  },
+                  "required": [
+                    "suite",
+                    "baseRunId",
+                    "headRunId",
+                    "deltas",
+                    "regressions"
+                  ],
+                  "additionalProperties": false
+                },
+                "maxItems": 10000
+              }
+            },
+            "required": [
+              "state",
+              "outcome",
+              "executionGaps",
+              "comparisons"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "apiVersion",
+          "kind",
+          "id",
+          "reviewId",
+          "attemptId",
+          "organizationId",
+          "subject",
+          "cancelRequested",
+          "units",
+          "suiteChanges",
+          "coverageGaps",
+          "selectionGaps",
+          "summary"
+        ],
+        "additionalProperties": false
+      },
+      "EvalComparisonRecord": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "comparison": {
+            "$ref": "#/components/schemas/EvalComparison"
+          }
+        },
+        "required": [
+          "id",
+          "digest",
+          "comparison"
         ],
         "additionalProperties": false
       }

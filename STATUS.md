@@ -88,3 +88,5 @@ The new UBI eval-worker image passes local native arm64 restricted startup, real
 [M2 acceptance plan](docs/phases/m2.md).
 
 Impact-required selection gaps passed full CI 37191102179: 103 unit/API/domain tests and ten real integration groups, zero skips, source-tree and artifact verification. The selection task is accepted. Durable comparison evidence now passes local strict-contract checks and real PostgreSQL/runner tests; final-source CI, authenticated API/client access and PR publication remain pending.
+
+Comparison resource acceptance passed verified full CI 37191703149 (106 unit/API/domain tests, ten real integration groups, zero skips). Additive authenticated comparison API/client work now passes local checks, released-M1 compatibility, real database/runner HTTP consumption and production-only package smoke. Final-source compiled-container CI, large-response capacity, PR staging/publication and all release gates remain open.

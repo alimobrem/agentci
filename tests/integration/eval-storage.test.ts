@@ -16,6 +16,8 @@ import {Store} from '../../packages/storage/postgres.ts';
 import {EvalStore,EvalLeaseLost,ImmutableEvalConflict,type EvalUnitDefinition} from '../../packages/storage/evals.ts';
 import {executeSuite} from '../../packages/evals/execution.ts';
 import {validateComparisonRecord} from '../../packages/evals/comparison.ts';
+import {createControlApi} from '../../apps/control/server.ts';
+import {AgentCIClient} from '../../packages/client/index.ts';
 import {runIsolated} from '../../packages/evals/runner.ts';
 import {evalSuite} from '../fixtures/evals.ts';
 import {executeStoredUnit} from '../../apps/eval-worker/unit.ts';
@@ -74,6 +76,11 @@ test('PostgreSQL eval recovery: immutable exact inputs, fenced leases, retained 
     assert.equal(regressed.status,'failed');assert.equal(regressed.scenarios[0]!.failed,3);assert.equal((await store.complete(headId,headToken,regressed)).status,'failed');
     const comparison=validateComparisonRecord((await restarted.comparison(job.id))!);assert.equal(comparison.comparison.summary.state,'completed');assert.equal(comparison.comparison.summary.outcome,'failed');assert.deepEqual(comparison.comparison.summary.comparisons[0]!.regressions,['safe-response']);assert.equal(comparison.comparison.reviewId,review.id);assert.equal(comparison.comparison.attemptId,attempt);
     assert.deepEqual(await store.comparison(job.id),comparison);
+    const api=createControlApi({repository,installationId:12,secret:'s'.repeat(32),evidenceToken:'e'.repeat(32)},reviewStore,store);api.listen(0,'127.0.0.1');await once(api,'listening');
+    try{
+      const client=new AgentCIClient({url:`http://127.0.0.1:${(api.address() as {port:number}).port}`,token:'e'.repeat(32)});
+      assert.deepEqual(await client.evalComparison(job.id,{...comparison.comparison.subject,organizationId:org,reviewId:review.id,attemptId:attempt}),comparison);
+    }finally{await new Promise<void>(resolve=>api.close(()=>resolve()));}
     assert.equal(await new EvalStore(pool,randomUUID(),repository).comparison(job.id),undefined);assert.equal(await new EvalStore(pool,org,'other/repo').comparison(job.id),undefined);
     await assert.rejects(pool.query('UPDATE agentci_eval_jobs SET inputs=$2 WHERE id=$1',[job.id,{}]),/Immutable eval job/);
     await assert.rejects(pool.query('UPDATE agentci_eval_units SET result=$2 WHERE id=$1',[baseId,{}]),/Immutable eval unit/);

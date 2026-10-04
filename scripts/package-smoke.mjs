@@ -21,6 +21,13 @@ try {
   if (!freshResult.valid || freshResult.requirements !== 1) throw new Error('Installed initializer produced invalid project');
   try { execFileSync(cli, ['init', '--root', fresh], { stdio: 'pipe' }); throw new Error('Initializer overwrote existing project'); } catch (error) { if (error.status !== 2) throw error; }
   execFileSync(process.execPath, ['--input-type=module', '-e', "import {AgentCIClient} from 'agentci/client';new AgentCIClient({url:'http://127.0.0.1:3000',token:'x'.repeat(32)});"], { cwd: root, stdio: 'pipe' });
+  const comparison=JSON.parse(await readFile(join(root,'node_modules/agentci/specs/api/fixtures/eval-comparison.json'),'utf8'));
+  const comparisonServer=createServer((req,res)=>{if(req.headers.authorization!=='Bearer '+ 'x'.repeat(32)||req.url!==`/v1/eval-comparisons/${comparison.id}`){res.writeHead(401);res.end('{}');return;}res.writeHead(200,{'content-type':'application/json'});res.end(JSON.stringify(comparison));});
+  comparisonServer.listen(0,'127.0.0.1');await once(comparisonServer,'listening');
+  try{
+    const code=`import {AgentCIClient} from 'agentci/client';const value=${JSON.stringify(comparison)};const c=value.comparison;const client=new AgentCIClient({url:'http://127.0.0.1:${comparisonServer.address().port}',token:'x'.repeat(32)});const result=await client.evalComparison(value.id,{...c.subject,organizationId:c.organizationId,reviewId:c.reviewId,attemptId:c.attemptId});if(result.digest!==value.digest||result.comparison.summary.outcome!=='failed')throw new Error('Installed comparison client failed');`;
+    const child=spawn(process.execPath,['--input-type=module','-e',code],{cwd:root,stdio:['ignore','pipe','pipe']});const [exit]=await once(child,'exit');if(exit!==0)throw new Error('Installed comparison client/schema smoke failed');
+  }finally{await new Promise(resolve=>comparisonServer.close(resolve));}
   if (!(await readFile(join(root, 'node_modules/agentci/LICENSE'), 'utf8')).includes('MIT License')) throw new Error('Package license missing');
   const listener = createServer(); listener.listen(0, '127.0.0.1'); await once(listener, 'listening');
   const port = listener.address().port; await new Promise(resolve => listener.close(resolve));

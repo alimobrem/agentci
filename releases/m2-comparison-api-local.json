@@ -1,0 +1,48 @@
+{
+  "kind": "M2-authenticated-comparison-API-local-checkpoint",
+  "recordedAt": "2026-10-04T09:31:27.574426+00:00",
+  "parentCommit": "cb3c5f174dddc59a78bcb8eea125dd05c862a408",
+  "releaseAcceptance": false,
+  "files": {
+    "apps/control/main.ts": "e6406002db8420c4e83b09401bd8661b6027df9475d99418ab99359142053839",
+    "apps/control/server.ts": "c50b94db76b748c268a0f65e1958fffed746fd7c379811afc56818bf90321541",
+    "packages/client/index.ts": "75aa9f41baf2383a4577dd53441d47640f7907fc1140af3f5e92427254344e83",
+    "packages/storage/evals.ts": "a9246e282a0114935fb4845834286142e7083567c9f926fe8651fde9b24519d1",
+    "packages/evals/openapi.ts": "9f623b77a11d3a38c930e9651805ad146ca2e7d834a057671293ff9854fe578c",
+    "specs/api/openapi.json": "a7fd000f7d85b36c65586fdc45b5d29bfa7fdcb9238d6db2bd64a1c62f9222b6",
+    "specs/api/operations.json": "c941181bb3a4c957bf90b9c4ecebc82d1aad7ca7976430a15831645996ee88df",
+    "specs/api/fixtures/eval-comparison.json": "8e431287f105be078c39d56ccf5e8c99c34542cc2f014b7daa5f8591f6a7b460",
+    "scripts/check-api.ts": "6b908387eed21c405639561af73c576b450de52de1e5ec92049bf54fffc5a786",
+    "scripts/image-smoke.mjs": "98843292d567c5a0888a17f05a4a4d124a544fce67790f0ca65d686fc45ccadd",
+    "scripts/package-smoke.mjs": "d9b5c877ea8fffb75c751e152b66eea255b0922b54c39793fcbf02e14a6252ca",
+    "tests/eval-comparison-api.test.ts": "468ad0d2306836a02ac43f0444e7eb3e1d8b6f2850103ae92cc25a3c3f26f205",
+    "tests/fixtures/comparison.ts": "717dd3156c182f42cd66a0980967a7b4f20d39c2e92e0dbbd9e30d91d3f01a38",
+    "tests/integration/eval-storage.test.ts": "2368d3449f363db3dc056fca13ce0f0d89531b061181d160139848967c68eeba"
+  },
+  "verification": {
+    "fastChecks": 8,
+    "unitApiDomainTests": 110,
+    "realStorageApiClient": "tests/integration/eval-storage.test.ts passed with actual PostgreSQL/immutable runner; authenticated HTTP client consumes completed regression evidence",
+    "apiCompatibility": "passed against immutable released M1 0.2.1",
+    "productionPackage": "production-only installed client consumes shared synthetic comparison through real HTTP; CLI/init/setup/license checks pass",
+    "scenarios": [
+      "authentication before UUID lookup",
+      "scope/source/review/attempt/digest/summary validation",
+      "typed sanitized failure and redirect refusal",
+      "API/client 4 MiB response budget; no truncation",
+      "M2 database schema readiness required"
+    ]
+  },
+  "failedAttempts": [
+    {
+      "reason": "initial OpenAPI conversion treated boolean keyword values as boolean schemas and retained empty required arrays",
+      "correction": "convert only schema positions; preserve keyword booleans and omit semantically empty required arrays; strict OpenAPI/domain checks pass"
+    }
+  ],
+  "limitations": [
+    "compiled API image probe final-source native CI pending",
+    "latest documentation packaging requires final-source CI",
+    "large-result traversal/export remains tracked release-capacity requirement",
+    "PR orchestration/publication and all M2 release gates remain open"
+  ]
+}
