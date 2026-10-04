@@ -14,17 +14,47 @@ on:
       worker_image:
         description: Public worker image with sha256 digest
         required: true
+      eval_worker_image:
+        description: Public eval-worker image with sha256 digest
+        required: true
+      eval_runner_image:
+        description: Public eval-runner image with sha256 digest
+        required: true
+      eval_engines_image:
+        description: Public eval-engines image with sha256 digest
+        required: true
+      eval_agentci_image:
+        description: Public eval-agentci image with sha256 digest
+        required: true
 permissions:
   contents: read
 jobs:
   smoke:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { runner: ubuntu-24.04, arch: amd64 }
+          - { runner: ubuntu-24.04-arm, arch: arm64 }
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 35
     env:
+      AGENTCI_CONTAINER_ENGINE: docker
       RELEASE_SOURCE: ${{ inputs.source_commit }}
       RELEASE_VERSION: ${{ inputs.version }}
+      RELEASE_ARCH: ${{ matrix.arch }}
       API_IMAGE: ${{ inputs.api_image }}
       WORKER_IMAGE: ${{ inputs.worker_image }}
+      EVAL_WORKER_IMAGE: ${{ inputs.eval_worker_image }}
+      EVAL_RUNNER_IMAGE: ${{ inputs.eval_runner_image }}
+      EVAL_ENGINES_IMAGE: ${{ inputs.eval_engines_image }}
+      EVAL_AGENTCI_IMAGE: ${{ inputs.eval_agentci_image }}
+    services:
+      postgres:
+        image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+        env: { POSTGRES_PASSWORD: agentci-ci-only, POSTGRES_DB: agentci }
+        ports: [5432:5432]
+        options: --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 3s --health-retries 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -32,30 +62,66 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with: { node-version: 26.10.0 }
-      - name: Validate immutable release inputs
+      - name: Validate release source and version
         run: |
           node --input-type=module - <<'JS'
-          import {readFileSync} from 'node:fs';
-          if(!/^[a-f0-9]{40}$/.test(process.env.RELEASE_SOURCE))throw new Error('Full source SHA required');
+          import {readFileSync} from 'node:fs'; import {execFileSync} from 'node:child_process';
+          if(!/^[a-f0-9]{40}$/.test(process.env.RELEASE_SOURCE)||execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()!==process.env.RELEASE_SOURCE)throw new Error('Full matching source SHA required');
           if(JSON.parse(readFileSync('package.json')).version!==process.env.RELEASE_VERSION)throw new Error('Version mismatch');
-          for(const role of ['api','worker'])if(!new RegExp('^ghcr\\.io/alimobrem/agentci-'+role+'@sha256:[a-f0-9]{64}$').test(process.env[role.toUpperCase()+'_IMAGE']))throw new Error('Immutable image digest required');
           JS
-          test "$(git rev-parse HEAD)" = "$RELEASE_SOURCE"
-      - name: Anonymously pull the immutable release digests
+      - name: Anonymously download and bind all six role digests
+        run: node scripts/published-downloads.mjs
+      - run: npm install --global npm@12.2.0
+      - run: npm ci
+      - run: npm run build
+      - name: Bind downloaded execution images
         run: |
-          export DOCKER_CONFIG="$(mktemp -d)"
-          docker pull "$API_IMAGE"
-          docker pull "$WORKER_IMAGE"
-          docker tag "$API_IMAGE" agentci-api:downloaded
-          docker tag "$WORKER_IMAGE" agentci-worker:downloaded
-          for role in api worker; do
-            test "$(docker image inspect --format '{{.Architecture}}' agentci-$role:downloaded)" = amd64
-            test "$(docker image inspect --format '{{index .Config.Labels "org.opencontainers.image.revision"}}' agentci-$role:downloaded)" = "$RELEASE_SOURCE"
+          for mapping in RUNNER:eval-runner ENGINES:eval-engines SELF:eval-agentci; do
+            key=${mapping%%:*}
+            role=${mapping#*:}
+            id=$(docker image inspect "agentci-$role:downloaded" --format '{{.Id}}')
+            test -n "$id"
+            echo "AGENTCI_TEST_${key}_IMAGE=$id" >> "$GITHUB_ENV"
           done
-      - name: Verify native amd64 published runtime
+      - name: Start isolated Temporal
+        run: docker run -d --name agentci-download-temporal -p 127.0.0.1:7233:7233 temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e server start-dev --ip 0.0.0.0 --headless
+      - name: Wait for Temporal
+        run: |
+          node --input-type=module - <<'JS'
+          import {Connection} from '@temporalio/client';
+          let connected=false;
+          for(let i=0;i<30;i++){try{const c=await Connection.connect({address:'127.0.0.1:7233',connectTimeout:'2 seconds'});await c.close();connected=true;break;}catch{await new Promise(r=>setTimeout(r,1000));}}
+          if(!connected)throw new Error('Temporal unavailable');
+          JS
+      - name: Mandatory native integration using downloaded execution images
+        env:
+          AGENTCI_TEST_DATABASE_URL: postgresql://127.0.0.1:5432/agentci
+          PGUSER: postgres
+          PGPASSWORD: agentci-ci-only
+          AGENTCI_TEST_TEMPORAL_ADDRESS: 127.0.0.1:7233
+        run: |
+          npm run test:integration > downloaded-integration.log 2>&1 || { cat downloaded-integration.log; exit 1; }
+          cat downloaded-integration.log
+          node --input-type=module - <<'JS'
+          import {readFileSync} from 'node:fs'; const log=readFileSync('downloaded-integration.log','utf8');
+          if(!/ℹ tests 15\b/.test(log)||!/ℹ skipped 0\b/.test(log)||!/ℹ fail 0\b/.test(log))throw new Error('All fifteen native integration groups must run without skips');
+          JS
+      - name: Verify downloaded API and worker runtime
         run: node scripts/image-smoke.mjs downloaded > downloaded-image-smoke.json
+      - name: Verify downloaded evaluator isolation and recovery
+        run: node scripts/eval-worker-image-smoke.mjs agentci-eval-worker:downloaded agentci-eval-runner:downloaded > downloaded-eval-worker-smoke.json
+      - name: Verify downloaded worker native artifact provenance
+        run: |
+          node scripts/verify-native-provenance.mjs "$WORKER_IMAGE" > downloaded-worker-native.json
+          node scripts/verify-native-provenance.mjs "$EVAL_WORKER_IMAGE" > downloaded-eval-worker-native.json
+      - name: Remove acceptance Temporal
+        if: always()
+        run: docker rm -f agentci-download-temporal || true
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
         with:
-          name: published-amd64-runtime
-          path: downloaded-image-smoke.json
+          name: published-${{ matrix.arch }}-runtime
+          path: |
+            downloaded-*.json
+            downloaded-integration.log
           if-no-files-found: error

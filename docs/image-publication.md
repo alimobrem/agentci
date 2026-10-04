@@ -31,8 +31,16 @@ Before a release is complete, independently download each public image anonymous
 by its recorded digest, validate source/version/platform identity, and execute the
 applicable startup, isolation, integration and failure/recovery checks on each
 claimed platform. Retain the actual engine, host architecture and any emulation.
-The existing M1 download-smoke workflow covers API/worker only; extending it to all
-M2 images and native platform acceptance remains required work. Likewise, this
+The expanded download-smoke workflow accepts all six role digests and runs on
+native amd64/arm64 GitHub hosts. It starts with an empty Docker credential
+configuration, validates repository/digest/source/version/platform identity, and
+runs all fifteen integration groups without skips using the downloaded execution
+images, plus API/worker and eval-worker isolation/recovery smoke checks. It retains
+per-platform identities, integration logs and runtime/native reports even on
+failure. Configuring this workflow is not proof it passed: actual runs against
+published M2 digests remain required. Source-installed host dependencies support
+the acceptance harness; the service/execution images themselves are downloaded.
+Clean installation of the anonymously downloaded CLI package is a separate gate. Likewise, this
 publisher does not create the GitHub release, CLI archive, checksums, configuration
 examples or user demo. Follow [definition of done](definition-of-done.md) and the
 [M2 readiness record](releases/m2-readiness.md) for those gates.
