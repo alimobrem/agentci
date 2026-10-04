@@ -49,5 +49,7 @@ reconciliation must explicitly request all attempts; the finding and regression
 are retained in [the Check lookup record](../../releases/m2-check-filter-finding.json).
 The reconciliation fix passed source- and artifact-verified CI 37201053254.
 The [operator command](../operator-review.md) now has native integration, installed
-package and actual customer evidence. Its final-source full CI and the remaining
-M2 release gates are still required.
+package and actual customer evidence. Its source-verified full CI 37202131590 passed. The remaining M2 release gates
+are still required. The subsequent UUID case-consistency audit finding reopens
+comparison API acceptance and is recorded separately; this demo does not
+conceal it.

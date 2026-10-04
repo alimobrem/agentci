@@ -813,16 +813,14 @@
         "SPEC-40-035",
         "SPEC-40-039"
       ],
-      "status": "done",
-      "startedAt": "2026-10-04T09:21:01.636Z",
-      "completedAt": "2026-10-04T09:46:52.887Z",
+      "status": "in-progress",
+      "startedAt": "2026-10-04T12:28:18.799Z",
+      "completedAt": null,
       "acceptance": [
         {
           "text": "Additive OpenAPI/domain/shared fixtures match authenticated comparison GET, typed identity/digest errors and bounded responses; unauthorized callers cannot disclose IDs, scopes cannot cross, storage failures are sanitized, M1 compatibility passes, compiled API and installed client consume actual durable evidence. Full CI validates final source.",
-          "status": "passed",
-          "evidence": [
-            "releases/m2-comparison-api-ci.json"
-          ]
+          "status": "pending",
+          "evidence": []
         }
       ]
     },
@@ -974,14 +972,16 @@
         "SPEC-40-039",
         "SPEC-32-002"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T12:11:25.227Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T12:34:04.711Z",
       "acceptance": [
         {
           "text": "Installed agentci review reads only a private strict operator config and existing scoped App/webhook credentials, fetches current open PR identity from GitHub, submits an HMAC-signed request to the existing route with a fresh UUID, validates queued/duplicate response and emits only receipt metadata. Supplied UUID safely repeats ambiguous transport submission without rewriting cancelled evidence. Tests reject unsafe config/permissions/origin, closed/mismatched PRs, redirects, forged/oversized replies, secret leakage and read-only evidence-token scheduling; native controller and real customer acceptance prove a new review without close/reopen. Docs, operation/scenario mapping, packaging and exact-source full CI pass before completion.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-operator-review-ci.json"
+          ]
         }
       ]
     }

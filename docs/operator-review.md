@@ -62,6 +62,8 @@ complete export. Operator receipts contain no evidence token. See the
 [development customer demo](demos/m2-development.md). Production-only package smoke, all fourteen native integration groups and real
 customer acceptance through the installed CLI/client passed; the recorded
 [local proof](../releases/m2-operator-review-local.json) includes exact source
-hashes and the retained Check identities. Final-source full CI remains required
-before this candidate command is complete. Milestone publication and released
-build acceptance remain separate gates.
+hashes and the retained Check identities. Exact-source full CI 37202131590 passed 122 unit/API/domain tests and fourteen
+native integration groups, with zero skips, released-M1 compatibility, packaging
+and UBI service/evaluator probes. Source trees and artifact hashes are verified
+in [the CI checkpoint](../releases/m2-operator-review-ci.json). Milestone
+publication and released-build acceptance remain separate gates.
