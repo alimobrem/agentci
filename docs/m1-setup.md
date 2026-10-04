@@ -1,5 +1,9 @@
 # M1 local deployment and GitHub App setup
 
+This guide records the original M1 deployment. The new `0.2.1-m1` customer
+onboarding candidate and configurable setup are documented in
+[the customer guide](customer-onboarding.md); its live acceptance is still pending.
+
 This is a single-repository development deployment. Consult
 [the M1 release record](releases/m1.md) for publication and completion evidence.
 Production SaaS deployment is outside M1.
@@ -55,7 +59,9 @@ create the private App, select only `alimobrem/agentci`, and install. It verifie
 scope through the App API, writes `.env` with mode 0600, and stores the PEM under
 ignored `.agentci/local/` with private permissions. It refuses to overwrite `.env`.
 Stop the helper before starting Compose. Keep the tunnel alive afterward.
-The helper is specific to this repository and never prints credentials.
+The released development helper was specific to this repository. The new
+candidate takes explicit repository/account configuration; consult the customer
+guide rather than using these historical defaults. Credentials are never printed.
 
 
 In GitHub Settings → Developer settings → GitHub Apps, create an App with a unique

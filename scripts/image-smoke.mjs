@@ -7,7 +7,7 @@ const prefix = `agentci-smoke-${randomUUID().slice(0, 8)}`;
 const docker = (...args) => execFileSync('docker', args, { encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'], timeout: 60_000 }).trim();
 const containers = [], directory = await mkdtemp(join(tmpdir(), 'agentci-image-smoke-'));
 const temporalVolume = `${prefix}-temporal-data`;
-const roles = process.argv[2] ?? '0.2.0-m1';
+const roles = process.argv[2] ?? '0.2.1-m1';
 const create = (name, ...args) => { containers.push(name); return docker('create', '--name', name, '--label', 'agentci.purpose=image-smoke', '--network', prefix, ...args); };
 const pause = () => new Promise(resolve => setTimeout(resolve, 250));
 async function wait(probe) { for (let i = 0; i < 80; i++) { try { if (probe()) return; } catch {} await pause(); } throw new Error('Service did not become ready'); }

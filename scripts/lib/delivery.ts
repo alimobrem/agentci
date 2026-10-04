@@ -1,7 +1,8 @@
 export const gateIds = ['scope', 'correctness', 'api', 'evals', 'reproducibility', 'runtime', 'safety', 'documentation', 'release-identity', 'publication', 'distribution', 'demo', 'closure', 'live-dogfood', 'api-image', 'worker-image'] as const;
 export interface Proof { kind: 'file' | 'url'; value: string; sourceCommit: string; sha256?: string }
 export interface Gate { id: string; status: 'pending' | 'passed' | 'failed' | 'inapplicable'; reason?: string; evidence: Proof[] }
-export interface Release { milestone: string; version: string; sourceCommit: string | null; gates: Gate[] }
+export const customerGateIds = ['customer-onboarding', 'agent-api'] as const;
+export interface Release { milestone: string; version: string; sourceCommit: string | null; gates: Gate[]; customerAcceptance?: boolean }
 export interface Task { id: string; title: string; requirementIds: string[]; status: 'not-started' | 'in-progress' | 'blocked' | 'done'; startedAt: string | null; completedAt: string | null; acceptance: { text: string; status: 'pending' | 'passed'; evidence: string[] }[]; blockedReason?: string }
 export function safePath(path: string) { return !!path && !path.startsWith('/') && !path.split(/[\\/]/).includes('..') && !/[\x00-\x1f]/.test(path); }
 export function validateTasks(tasks: Task[], requirementIds: Set<string>) {
@@ -20,7 +21,8 @@ export function validateTasks(tasks: Task[], requirementIds: Set<string>) {
 export function validateRelease(record: Release, requireComplete = false) {
   if (!/^M\d+$/.test(record.milestone) || !record.version) throw new Error('Invalid release identity');
   if (record.sourceCommit !== null && !/^[a-f0-9]{40}$/.test(record.sourceCommit)) throw new Error('Release requires full source SHA');
-  if (new Set(record.gates.map(g => g.id)).size !== record.gates.length || gateIds.some(id => !record.gates.some(g => g.id === id)) || record.gates.some(g => !gateIds.includes(g.id as any))) throw new Error('Release gate set is incomplete or duplicated');
+  const requiredGates: readonly string[] = record.customerAcceptance ? [...gateIds, ...customerGateIds] : gateIds;
+  if (new Set(record.gates.map(g => g.id)).size !== record.gates.length || requiredGates.some(id => !record.gates.some(g => g.id === id)) || record.gates.some(g => !requiredGates.includes(g.id))) throw new Error('Release gate set is incomplete or duplicated');
   for (const gate of record.gates) {
     if (!['pending', 'passed', 'failed', 'inapplicable'].includes(gate.status)) throw new Error(`Invalid gate status ${gate.id}`);
     if (gate.status === 'inapplicable' && (!gate.reason || record.milestone === 'M1' || ['live-dogfood', 'api-image', 'worker-image'].includes(gate.id))) throw new Error(`Invalid scope exception ${gate.id}`);

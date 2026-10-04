@@ -32,6 +32,7 @@ COPY --from=build --chown=1001:0 /app/package.json ./package.json
 COPY --from=build --chown=1001:0 /app/node_modules ./node_modules
 COPY --from=build --chown=1001:0 /app/dist ./dist
 COPY --chown=1001:0 deploy/migrations ./deploy/migrations
+COPY --chown=1001:0 LICENSE ./LICENSE
 USER 1001
 STOPSIGNAL SIGTERM
 

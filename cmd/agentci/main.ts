@@ -4,7 +4,7 @@ import { gitSnapshot } from '../../packages/review/git.ts';
 import { analyze } from '../../packages/review/engine.ts';
 import { VERSION } from '../../packages/version.ts';
 
-const help = `AgentCI v0.1.0-m0 — M0 contracts
+const help = `AgentCI ${VERSION} — semantic review and evidence
 Installed usage: agentci validate [--root DIRECTORY] [--json]
 Usage: npm run agentci -- validate [--root DIRECTORY] [--json]
        npm run agentci -- --help
@@ -13,12 +13,22 @@ Usage: npm run agentci -- validate [--root DIRECTORY] [--json]
 validate  Validate agentci.yaml and explicit requirements; parse eval YAML.
 diff --base REF --head REF --repository OWNER/REPO [--root DIRECTORY]
   Produce deterministic advisory analysis of tracked immutable Git snapshots.
-Future milestones: init, eval, review, evidence, replay, repair.
+init --root EMPTY_DIRECTORY  Create a minimal agent project.
+setup  Register a repository-scoped App using AGENTCI_SETUP_* environment variables.
+Future milestones: eval, review, replay, repair.
 `;
 
 export async function main(args: string[]): Promise<number> {
   if (!args.length || args[0] === '--help' || args[0] === 'help') { console.log(help); return 0; }
   if (args[0] === '--version') { console.log(VERSION); return 0; }
+  if (args[0] === 'init') {
+    if (args.length !== 3 || args[1] !== '--root' || !args[2] || args[2].startsWith('--')) { console.error('init requires --root EMPTY_DIRECTORY'); return 2; }
+    try { const { initProject } = await import('../../packages/onboarding/init.ts'); await initProject(args[2]); console.log('Initialized agent project. Run agentci validate --root DIRECTORY.'); return 0; } catch (error) { console.error(error instanceof Error ? error.message : 'Initialization failed'); return 2; }
+  }
+  if (args[0] === 'setup') {
+    if (args.length !== 1) { console.error('setup uses AGENTCI_SETUP_* environment variables'); return 2; }
+    try { const { startAppSetup } = await import('../../packages/onboarding/setup.ts'); await startAppSetup(); return 0; } catch (error) { console.error(error instanceof Error ? error.message : 'Setup failed'); return 2; }
+  }
   if (args[0] === 'diff') {
     const options: Record<string, string> = {};
     for (let i = 1; i < args.length; i += 2) {

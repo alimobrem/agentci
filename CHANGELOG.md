@@ -1,5 +1,12 @@
 # Releases
 
+## Unreleased — 0.2.1-m1 customer onboarding candidate
+
+- Empty-project initialization and configurable customer-owned GitHub App setup.
+- Agent evidence client with identity/digest verification and typed errors.
+- Fresh-customer and agent/API completion gates; live acceptance and publication pending.
+
+
 ## 0.2.0-m1 — 2026-10-03
 
 - Deterministic immutable-commit semantic diff and advisory risk CLI.

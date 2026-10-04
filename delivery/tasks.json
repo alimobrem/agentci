@@ -288,6 +288,74 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M1-CUSTOMER-SETUP",
+      "title": "Portable single-repository bootstrap and GitHub App setup",
+      "requirementIds": [
+        "SPEC-40-014",
+        "SPEC-40-015"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T00:22:09.609Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Fresh project bootstrap validates without AgentCI source checkout; no overwrite of existing customer files",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Setup takes explicit customer repository and account type; installation must match exactly one configured repo and minimal permissions",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M1-AGENT-API",
+      "title": "Agent-facing evidence client and executable API demo",
+      "requirementIds": [
+        "SPEC-40-020"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T00:22:09.830Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Published client fetches evidence with bearer authentication, validates identity/digest and reports typed failures without credentials",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Executable fresh-project demo documents success, unauthorized access and invalid input without executing repository code",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M1-CUSTOMER-RELEASE",
+      "title": "Customer onboarding acceptance and new immutable M1 release",
+      "requirementIds": [
+        "SPEC-40-019",
+        "SPEC-40-029"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Fresh repository demonstrates real GitHub PR review and agent evidence consumption from the released build",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Tests, evals, API compatibility, packaging, scans, native downloaded images, docs and new immutable release all verified",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

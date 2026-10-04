@@ -1,0 +1,215 @@
+{
+  "milestone": "M1",
+  "version": "0.2.0-m1",
+  "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+  "gates": [
+    {
+      "id": "scope",
+      "status": "passed",
+      "reason": "Explicit section 40 M1 build and exit scope mapped and verified.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-original-release-record.md",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "a9c4b8dd58771f5ee3f3ad01a0b86619d1a8ba034cbae31c6d540634ce073ac9"
+        }
+      ]
+    },
+    {
+      "id": "correctness",
+      "status": "passed",
+      "reason": "Release-source CI passed 60 tests and two real integration tests.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-ci.json",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "bd983bb3c7690e3a79d2f0af3e846e9a7513b029166d835e1f433aa099f7445f"
+        }
+      ]
+    },
+    {
+      "id": "api",
+      "status": "passed",
+      "reason": "Four control operations covered; shared contracts and compatibility including negative regression passed.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-ci.json",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "bd983bb3c7690e3a79d2f0af3e846e9a7513b029166d835e1f433aa099f7445f"
+        }
+      ]
+    },
+    {
+      "id": "evals",
+      "status": "passed",
+      "reason": "Six contract and eight deterministic risk cases passed; behavioral execution belongs to M2.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-ci.json",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "bd983bb3c7690e3a79d2f0af3e846e9a7513b029166d835e1f433aa099f7445f"
+        }
+      ]
+    },
+    {
+      "id": "reproducibility",
+      "status": "passed",
+      "reason": "Clean locked release-source installation, build and package verification passed.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-ci.json",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "bd983bb3c7690e3a79d2f0af3e846e9a7513b029166d835e1f433aa099f7445f"
+        }
+      ]
+    },
+    {
+      "id": "runtime",
+      "status": "passed",
+      "reason": "Production-only public package and native downloaded services passed smoke.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-distribution.json",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "afbe8b1bcbab7a87bc923e53e3b48a9e4de0a1d962c713aef9a1438f4545f2b1"
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "status": "passed",
+      "reason": "Trust boundaries verified; four published platform scans have zero known findings with native coverage limits assessed.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "docs/releases/m1-security.md",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "5dccd39918c32c62c5a3178028872181605cfbfe05ee7865216aee3098a24670"
+        }
+      ]
+    },
+    {
+      "id": "documentation",
+      "status": "passed",
+      "reason": "Released setup, architecture, limits, repeatable demo and current guidance audited.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "docs/documentation-audit.md",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "5b426b9fc8573296081c94d8483a6814d113248c6cef069eca6ae5cce29c2de2"
+        }
+      ]
+    },
+    {
+      "id": "release-identity",
+      "status": "passed",
+      "reason": "Immutable tag and OCI labels identify the exact verified release source.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-manifest.json",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "b9ebb40bf6de45fb97363d54c53e6e7b0fdba48d63c969df89fd7200bac91f66"
+        }
+      ]
+    },
+    {
+      "id": "publication",
+      "status": "passed",
+      "reason": "Public immutable prerelease contains all six verified assets; both service packages public.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-distribution.json",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "afbe8b1bcbab7a87bc923e53e3b48a9e4de0a1d962c713aef9a1438f4545f2b1"
+        }
+      ]
+    },
+    {
+      "id": "distribution",
+      "status": "passed",
+      "reason": "Six anonymous asset downloads match hashes; installed package and native image smokes passed.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-distribution.json",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "afbe8b1bcbab7a87bc923e53e3b48a9e4de0a1d962c713aef9a1438f4545f2b1"
+        }
+      ]
+    },
+    {
+      "id": "demo",
+      "status": "passed",
+      "reason": "Released images and public installed CLI demonstrated verified finding, invalid-input failure and recovery.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-demo.json",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "8bfee0277db3204ee69205e7d99104ce677f393557dab7ba73548b90278c2c82"
+        }
+      ]
+    },
+    {
+      "id": "closure",
+      "status": "passed",
+      "reason": "Completion status, precise scope, task acceptance and retrospective records updated; intended main pushed after validation.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-original-status.md",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "aec52e0015cc911459534089b67f5b7d12325eb1ad928c5eb7ff2b2619559374"
+        }
+      ]
+    },
+    {
+      "id": "live-dogfood",
+      "status": "passed",
+      "reason": "Repository-only App and trusted hosted review cover PR events with artifact-before-Check ordering and recovery.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "docs/dogfood/m1-release-demo.md",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "40c7c185a1a9d8ccbba70b7cc0a2cf0bf40ed17a3d5727b353724f62bcc4d80a"
+        }
+      ]
+    },
+    {
+      "id": "api-image",
+      "status": "passed",
+      "reason": "Published UBI API immutable digest anonymously pulled and verified natively on both supported platforms.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-distribution.json",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "afbe8b1bcbab7a87bc923e53e3b48a9e4de0a1d962c713aef9a1438f4545f2b1"
+        }
+      ]
+    },
+    {
+      "id": "worker-image",
+      "status": "passed",
+      "reason": "Published UBI worker immutable digest anonymously pulled and verified natively on both supported platforms.",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m1-distribution.json",
+          "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+          "sha256": "afbe8b1bcbab7a87bc923e53e3b48a9e4de0a1d962c713aef9a1438f4545f2b1"
+        }
+      ]
+    }
+  ]
+}

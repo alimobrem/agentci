@@ -112,14 +112,17 @@ npx agentci --version
 # Expected: 0.2.0-m1
 ```
 
-Validate a repository with an `agentci.yaml` manifest:
+For the published M1 package, validate a repository with an `agentci.yaml` manifest:
 
 ```sh
 npx agentci validate --root /path/to/repository --json
 ```
 
-For a complete sample, clone this repository and validate it. `agentci init` is not
-implemented. Validation checks explicit contracts and eval YAML syntax; it does
+The published `0.2.0-m1` package has no initializer. The new `0.2.1-m1`
+customer-onboarding candidate adds `agentci init`, configurable App setup and a
+Node evidence client; it is not yet released or customer-validated. See the
+[customer guide](docs/customer-onboarding.md). For a released sample, clone this
+repository and validate it. Validation checks explicit contracts and eval YAML syntax; it does
 not execute behavioral evals. The [released-build demo](docs/dogfood/m1-release-demo.md)
 includes copyable commands for a verified production-write finding and an invalid
 permission failure.
@@ -156,7 +159,8 @@ are release requirements.
 ## Roadmap and project status
 
 There are 11 milestones, M0–M10. M0 contracts and M1 semantic review are complete;
-M2 eval orchestration remains not-started pending the M1 retrospective discussion.
+The M1 customer-onboarding extension is in-progress with fresh-repository and
+agent/API acceptance gates. M2 eval orchestration remains not-started.
 
 - [Milestones and acceptance scenarios](docs/milestone-gates.md)
 - [Current status](STATUS.md) and [release notes](CHANGELOG.md)

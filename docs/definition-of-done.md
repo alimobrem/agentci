@@ -60,6 +60,22 @@ M0's CLI/contracts scope does not require an image; M1's deployable API/worker
 scope does. Container-image publication access must remain scoped to the intended
 project/registry workflow.
 
+## Customer and agent acceptance gates
+
+The user added these gates after the original M1 release. They apply to the
+customer-onboarding extension and future service milestones; historical release
+evidence must not be rewritten to imply they were already tested.
+
+- Customer onboarding: use the released package/images in a fresh repository,
+  configure a repository-only App, process a real GitHub PR and retrieve usable
+  evidence. Exercise an input failure and recovery. Record manual prerequisites
+  and steps; mocks/local Git repositories do not substitute for live acceptance.
+- Agent/API usage: run an executable client example against the deployed service,
+  checking authentication failure, exact PR/base/head identity and evidence digest.
+  Identify supported API operations and the limits of agent-driven orchestration.
+- Missing external access leaves these gates pending; it cannot be labeled passed
+  or inapplicable. Existing App access remains limited to alimobrem/agentci.
+
 ## Blocking rules
 
 - A failed or unrun applicable check blocks completion. Skipping is not passing.
