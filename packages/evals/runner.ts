@@ -21,6 +21,29 @@ function streamDocker(args:string[],input:string,signal:AbortSignal|undefined,li
   });
 }
 export interface RunnerPolicy { image:string; memoryMb?:number; cpus?:number; pids?:number; httpProviders?:HttpProviderPolicy[] }
+export interface EvalOwnership {unitId:string;leaseToken:string}
+function validateOwnership(owner:EvalOwnership):void {
+  if(!owner||Object.keys(owner).some(k=>!['unitId','leaseToken'].includes(k))||![owner.unitId,owner.leaseToken].every(value=>typeof value==='string'&&/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(value)))throw new Error('Invalid eval container ownership');
+}
+/** The caller must hold the current fenced database lease before reaping prior owners. */
+export async function reapPriorEvalContainers(owner:EvalOwnership):Promise<number> {
+  validateOwnership(owner);
+  const docker=async(args:string[])=>(await execute('docker',args,{encoding:'utf8',timeout:30000,maxBuffer:1024*1024})).stdout.trim();
+  const ids=(await docker(['ps','--all','--quiet','--no-trunc','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.eval.unit=${owner.unitId}`])).split('\n').filter(Boolean);
+  let removed=0;
+  for(const id of ids){
+    if(!/^[a-f0-9]{64}$/.test(id))throw new Error('Invalid orphan container identity');
+    let labels:Record<string,string>;
+    try{labels=JSON.parse(await docker(['inspect','--format','{{json .Config.Labels}}',id]));}
+    catch{if(!(await docker(['ps','--all','--quiet','--no-trunc','--filter',`id=${id}`])))continue;throw new Error('Cannot verify orphan container ownership');}
+    if(labels['agentci.purpose']!=='eval-runner'||labels['agentci.eval.unit']!==owner.unitId||!labels['agentci.eval.lease'])throw new Error('Invalid orphan container ownership');
+    if(labels['agentci.eval.lease']===owner.leaseToken)continue;
+    await docker(['rm','--force','--volumes',id]);
+    if(await docker(['ps','--all','--quiet','--no-trunc','--filter',`id=${id}`]))throw new Error('Orphan container cleanup failed');
+    removed++;
+  }
+  return removed;
+}
 export interface RunnerResult {
   sourceSha:string; image?:string; provider?:{id:string;revision:string}; status:'completed'|'timeout'|'cancelled'|'error';
   exitCode:number|null; signal?:string|null; stdoutDigest?:string; stderrDigest?:string;
@@ -32,7 +55,7 @@ export function validateRunnerPolicy(policy:RunnerPolicy):Required<Omit<RunnerPo
   if(!Number.isSafeInteger(limits.memoryMb)||limits.memoryMb<64||limits.memoryMb>4096||!Number.isFinite(limits.cpus)||limits.cpus<0.1||limits.cpus>4||!Number.isSafeInteger(limits.pids)||limits.pids<16||limits.pids>256)throw new Error('Invalid runner resource limits');
   return limits;
 }
-function protectedInput(path:string):boolean {
+export function protectedEvalInput(path:string):boolean {
   const parts=path.split('/'),name=parts.at(-1)!;
   return parts.some(p=>['.git','.ssh','.aws','node_modules'].includes(p))||path.startsWith('.agentci/local/')||/^\.env(?:\.|$)/.test(name)||['.npmrc','.pypirc','.netrc','id_rsa','id_ed25519'].includes(name)||/\.(?:pem|key)$/i.test(name);
 }
@@ -43,7 +66,7 @@ export function projectEvalInputs(snapshot:Snapshot):{snapshot:Snapshot;omitted:
   for(const [path,text] of entries){
     if(!safeEvalPath(path)||typeof text!=='string'||text.includes('\0'))throw new Error('Invalid snapshot path/content');
     const size=Buffer.byteLength(text);bytes+=size;if(size>2*1024*1024||bytes>32*1024*1024)throw new Error('Snapshot exceeds runner content limits');
-    if(protectedInput(path))omitted.push(path);else Object.defineProperty(files,path,{value:text,enumerable:true,writable:true,configurable:true});
+    if(protectedEvalInput(path))omitted.push(path);else Object.defineProperty(files,path,{value:text,enumerable:true,writable:true,configurable:true});
   }
   const projected={sha:snapshot.sha,files};snapshotInputs(projected);
   return {snapshot:projected,omitted:omitted.sort()};
@@ -54,15 +77,16 @@ export function snapshotInputs(snapshot:Snapshot):[string,string][] {
   let bytes=0;
   for(const [path,text] of entries){
     if(!safeEvalPath(path)||typeof text!=='string'||text.includes('\0'))throw new Error('Invalid snapshot path/content');
-    if(protectedInput(path))throw new Error('Credential or dependency directory is not an eval input');
+    if(protectedEvalInput(path))throw new Error('Credential or dependency directory is not an eval input');
     const size=Buffer.byteLength(text);bytes+=size;
     if(size>2*1024*1024||bytes>32*1024*1024)throw new Error('Snapshot exceeds runner content limits');
   }
   return entries;
 }
 /** Runs an immutable data snapshot in a disposable container; never executes PR code on the controller. */
-export async function runIsolated(snapshot:Snapshot,value:EvalSuite,policyValue:RunnerPolicy,options:{signal?:AbortSignal;model?:string}={}):Promise<RunnerResult> {
+export async function runIsolated(snapshot:Snapshot,value:EvalSuite,policyValue:RunnerPolicy,options:{signal?:AbortSignal;model?:string;ownership?:EvalOwnership}={}):Promise<RunnerResult> {
   const suite=validateEvalSuite(value),policy=validateRunnerPolicy(policyValue),inputs=snapshotInputs(snapshot);
+  if(options.ownership)validateOwnership(options.ownership);
   if(options.model!==undefined&&(!suite.spec.models?.includes(options.model)||!/^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$/.test(options.model)))throw new Error('Unconfigured model variant');
   const identity={sourceSha:snapshot.sha,image:policy.image},cancelled=():RunnerResult=>({...identity,status:'cancelled',exitCode:null,error:'cancelled'});
   if(options.signal?.aborted)return cancelled();
@@ -74,8 +98,9 @@ export async function runIsolated(snapshot:Snapshot,value:EvalSuite,policyValue:
   try{
     const config={argv:adapterCommand(suite),report:suite.spec.runner.report,timeoutMs:suite.spec.runner.timeoutMs,maxOutputBytes,model:options.model};
     createAttempted=true;
+    const ownerLabels=options.ownership?['--label',`agentci.eval.unit=${options.ownership.unitId}`,'--label',`agentci.eval.lease=${options.ownership.leaseToken}`]:[];
     // Finish creation before observing cancellation, so cleanup cannot race a still-pending daemon create.
-    await docker(['create','--interactive','--name',name,'--label','agentci.purpose=eval-runner','--label',`agentci.runner.image=${policy.image}`,'--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--user','1001:0','--pids-limit',String(policy.pids),'--memory',`${policy.memoryMb}m`,'--memory-swap',`${policy.memoryMb}m`,'--cpus',String(policy.cpus),'--workdir','/workspace','--tmpfs','/workspace:rw,nosuid,nodev,size=128m,mode=0700,uid=1001,gid=0','--tmpfs','/tmp:rw,nosuid,nodev,size=64m,mode=0700,uid=1001,gid=0','--entrypoint','node',policy.image,'--input-type=module','-e',RUNNER_BOOTSTRAP,'--',JSON.stringify(config)]);
+    await docker(['create','--interactive','--name',name,'--label','agentci.purpose=eval-runner','--label',`agentci.runner.image=${policy.image}`,...ownerLabels,'--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--user','1001:0','--pids-limit',String(policy.pids),'--memory',`${policy.memoryMb}m`,'--memory-swap',`${policy.memoryMb}m`,'--cpus',String(policy.cpus),'--workdir','/workspace','--tmpfs','/workspace:rw,nosuid,nodev,size=128m,mode=0700,uid=1001,gid=0','--tmpfs','/tmp:rw,nosuid,nodev,size=64m,mode=0700,uid=1001,gid=0','--entrypoint','node',policy.image,'--input-type=module','-e',RUNNER_BOOTSTRAP,'--',JSON.stringify(config)]);
     if(options.signal?.aborted)return cancelled();
     const raw=await streamDocker(['start','--attach','--interactive',name],payload,options.signal,maxOutputBytes*6+65536,suite.spec.runner.timeoutMs+30000);
     const result=JSON.parse(raw);

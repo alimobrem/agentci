@@ -476,14 +476,16 @@
         "SPEC-11.4-004",
         "SPEC-11.4-005"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T06:16:43.768Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T07:36:07.818Z",
       "acceptance": [
         {
           "text": "Optional Promptfoo, DeepEval and HTTP adapters normalize documented outputs, reject empty/malformed results and run integration examples without mandatory model credentials",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-engines-ci.json"
+          ]
         }
       ]
     },
@@ -514,8 +516,8 @@
       "requirementIds": [
         "SPEC-40-039"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "in-progress",
+      "startedAt": "2026-10-04T07:09:18.839Z",
       "completedAt": null,
       "acceptance": [
         {
@@ -608,14 +610,16 @@
         "SPEC-11.4-005",
         "SPEC-40-034"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T06:41:16.549Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T07:36:08.241Z",
       "acceptance": [
         {
           "text": "Real provider requests bind exact snapshot/suite/model and unique request IDs; pinned destination, separate credentials, no redirects, size/deadline/cancellation limits and malicious response handling pass. Transport is integrated into eval execution before adapter acceptance.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-engines-ci.json"
+          ]
         }
       ]
     },
@@ -626,16 +630,72 @@
         "SPEC-40-032",
         "SPEC-40-034"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T06:53:30.394Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T07:36:08.680Z",
       "acceptance": [
         {
           "text": "Native/default and optional engine groups run concurrently without counting one another as leaks; cleanup still asserts no new containers for each immutable image. Failed CI attempt is retained and full CI reruns.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-engines-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-DURABLE-UNITS",
+      "title": "Immutable eval jobs and fenced per-trial recovery checkpoints",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T07:09:19.059Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Real PostgreSQL stages projected exact inputs and immutable units; concurrent claims, lease renewal/takeover, stale writers, normalized per-trial replay, cancellation and result immutability are tested. Restart resumes completed observations rather than rerunning or hiding them.",
           "status": "pending",
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M2-EVAL-WORKER",
+      "title": "Credential-free Temporal evaluation worker and scoped database role",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "acceptance": [
+        {
+          "text": "Separate worker starts with no App/control secrets, only scoped eval database privileges and operator-pinned runner/provider configuration. Real Temporal activity retry, cancellation cleanup and replay are tested.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T07:41:19.354Z",
+      "completedAt": null
+    },
+    {
+      "id": "M2-ORPHAN-RECOVERY",
+      "title": "Recover containers left by process death using unit and lease ownership",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-039"
+      ],
+      "acceptance": [
+        {
+          "text": "A killed worker leaves a real labeled container; the next fenced owner removes only prior containers for the same unit before resuming. Other units/services are untouched, stale owners cannot write, and cleanup failures cannot produce success.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T07:41:19.579Z",
+      "completedAt": null
     }
   ]
 }

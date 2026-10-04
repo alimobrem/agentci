@@ -1,0 +1,61 @@
+{
+  "kind": "M2-engine-and-HTTP-CI-checkpoint",
+  "candidateCommit": "ebed4b7fe0908ff17eb07fb78768ec0f054f5e65",
+  "ciCommit": "a2e1a0065de6e7cfc856e98c17cde7ab2246a79e",
+  "verifiedTree": "1dfcca47ca640545d6eec0af25c33b8ef1aa9f19",
+  "run": {
+    "id": 37184676873,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37184676873",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11297105627,
+    "name": "m1-verification",
+    "sha256": "a8e5460bced9cab8150f48513e81f4954d8c15966a350ae77764293f92fe31cc",
+    "note": "Legacy name; contents are source-bound M2 verification"
+  },
+  "verification": {
+    "unitApiDomainTests": 97,
+    "integrationGroups": 5,
+    "skipped": 0,
+    "contractAndRiskEvals": 14,
+    "apiCompatibility": "passed against immutable released M1 0.2.1",
+    "packaging": "clean production CLI/client/setup install passed",
+    "serviceRuntime": "passed",
+    "scans": [
+      {
+        "path": "scan-results/api.json",
+        "findings": []
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "findings": [
+          {
+            "id": "CVE-2026-85393",
+            "package": "node-forge",
+            "severity": "HIGH",
+            "fixedVersion": null
+          }
+        ]
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "findings": []
+      },
+      {
+        "path": "scan-results/worker.json",
+        "findings": []
+      }
+    ]
+  },
+  "coverage": [
+    "tests/eval-adapters.test.ts",
+    "tests/eval-http.test.ts",
+    "tests/integration/eval-engines.test.ts",
+    "tests/integration/eval-runner.test.ts"
+  ],
+  "retainedFailedAttempt": 37183414694,
+  "releaseComplete": false,
+  "note": "Optional plugins/HTTP and concurrent cleanup checkpoint only. Unfixed optional-image vulnerability requires final release assessment; durable orchestration, customer API/PR evidence and all M2 release gates remain open."
+}

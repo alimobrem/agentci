@@ -32,3 +32,11 @@ test('trial budgets, explicit model variants, error and cancellation outcomes ca
   const errors=await executeSuite('owner/repo',base,suite,policy,{},async()=>({sourceSha:base.sha,image:policy.image,status:'error',exitCode:null,error:'infrastructure'}));assert.equal(errors.status,'error');assert.equal(errors.scenarios[0]!.errors,3);
   await assert.rejects(executeSuite('owner/repo',base,suite,policy,{},async()=>({sourceSha:head.sha,image:policy.image,status:'completed',exitCode:0})),/identity mismatch/);
 });
+test('durable comparison contexts cannot reuse a run ID, checkpoint callbacks or lease across base/head units',async()=>{
+  const suite=evalSuite();let called=false;
+  const execute:Parameters<typeof executeComparison>[6]=async()=>{called=true;throw new Error('Must reject before execution');};
+  for(const options of [{runId:'00000000-0000-4000-8000-000000000001'},{loadTrial:async()=>undefined},{saveTrial:async()=>{}},{ownership:{unitId:'00000000-0000-4000-8000-000000000001',leaseToken:'00000000-0000-4000-8000-000000000002'}}]){
+    await assert.rejects(executeComparison('owner/repo',base,head,suite,policy,options,execute),/separate context/);
+  }
+  assert.equal(called,false);
+});

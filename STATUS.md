@@ -67,11 +67,19 @@ suite-change planning passed that CI. Fixed baseline assertion provenance and
 repeated/model-matrix execution passed exact-source full CI (91 unit/API/domain
 tests, four real integration tests, zero skips), with verified artifact digest
 and matching candidate/CI trees. Their task acceptance is closed. Optional
-Promptfoo/DeepEval pass/fail/error examples pass locally in a pinned UBI image;
-the first mandatory full CI exposed interference between concurrent cleanup
-checks and is retained. Image-scoped cleanup assertions pass both groups together
-locally. The HTTP adapter passes real TLS/protocol/identity and repeated/model
-comparison tests; final full CI remains pending. Durable PR/API integration and
-all M2 release gates remain open. The CI database URL uses separate test-only
-PG variables and passed both full verification and hosted dogfood.
+Promptfoo/DeepEval and HTTP adapters passed full CI 37184676873: 97 unit/API/domain
+tests, five real integration groups, zero skips, compatibility against released
+M1 and clean packaging. The prior failed cleanup attempt remains recorded.
+Default service/runner scans report zero findings; the optional engine image has
+an unpatched node-forge HIGH finding requiring release assessment. No clean scan
+or M2 release claim is made.
+
+Durable eval storage and the unit execution driver now pass local real PostgreSQL
+and Docker recovery tests: retained trials resume after restart, stale leases
+cannot write or clean up, SIGKILL orphans are removed before a replacement run,
+other units are preserved, and cancellation removes containers without publishing
+success. This work is not yet verified in full CI. Credential-free worker startup,
+least-privilege SQL grants, real Temporal retry/cancellation/replay, durable PR/API
+integration and all M2 release gates remain open. The CI database URL uses separate
+test-only PG variables; its cleanup is in the open M2 PR, not GitHub main.
 [M2 acceptance plan](docs/phases/m2.md).
