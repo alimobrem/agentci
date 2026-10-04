@@ -148,14 +148,50 @@
               "minItems": 1,
               "maxItems": 1000,
               "uniqueItems": true
+            },
+            "provider": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
             }
           },
           "required": [
             "adapter",
-            "command",
             "timeoutMs"
           ],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "oneOf": [
+            {
+              "properties": {
+                "adapter": {
+                  "const": "http"
+                },
+                "provider": {},
+                "command": false,
+                "report": false
+              },
+              "required": [
+                "provider"
+              ]
+            },
+            {
+              "properties": {
+                "adapter": {
+                  "enum": [
+                    "command",
+                    "native",
+                    "pytest",
+                    "promptfoo",
+                    "deepeval"
+                  ]
+                },
+                "command": {},
+                "provider": false
+              },
+              "required": [
+                "command"
+              ]
+            }
+          ]
         },
         "scenarios": {
           "type": "array",

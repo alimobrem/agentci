@@ -347,9 +347,9 @@ Milestone assignments outside the build-plan list are planning estimates, not am
 | SECTION-11.4 | 11.4 / 685 | 11.4 Pluggable eval engines | M2 | not-started |  |
 | SPEC-11.4-001 | 11.4 / 687 | Adapters SHOULD support: | M2 | not-started |  |
 | SPEC-11.4-002 | 11.4 / 689 | - pytest/custom test commands | M2 | tested | releases/m2-runner-ci.json, tests/integration/eval-runner.test.ts |
-| SPEC-11.4-003 | 11.4 / 690 | - DeepEval | M2 | not-started |  |
-| SPEC-11.4-004 | 11.4 / 691 | - Promptfoo | M2 | not-started |  |
-| SPEC-11.4-005 | 11.4 / 692 | - custom HTTP eval providers | M2 | not-started |  |
+| SPEC-11.4-003 | 11.4 / 690 | - DeepEval | M2 | in-progress | tests/integration/eval-engines.test.ts, releases/m2-optional-engines-local.json |
+| SPEC-11.4-004 | 11.4 / 691 | - Promptfoo | M2 | in-progress | tests/integration/eval-engines.test.ts, releases/m2-optional-engines-local.json |
+| SPEC-11.4-005 | 11.4 / 692 | - custom HTTP eval providers | M2 | in-progress | tests/eval-http.test.ts, docs/http-eval-provider.md |
 | SPEC-11.4-006 | 11.4 / 693 | - native AgentCI structured evals | M2 | not-started |  |
 | SPEC-11.4-007 | 11.4 / 695 | AgentCI owns orchestration and evidence normalization, not all evaluation algorithms. | M2 | not-started |  |
 | SECTION-11.5 | 11.5 / 697 | 11.5 Eval result schema | M2 | not-started |  |
@@ -1086,7 +1086,7 @@ Milestone assignments outside the build-plan list are planning estimates, not am
 | SPEC-40-031 | 40 / 2089 | - eval manifest | M2 | tested | packages/evals/contracts.ts, tests/eval-contracts.test.ts, tests/project.test.ts |
 | SPEC-40-032 | 40 / 2090 | - native command runner | M2 | tested | releases/m2-runner-ci.json, tests/integration/eval-runner.test.ts |
 | SPEC-40-033 | 40 / 2091 | - pytest adapter | M2 | tested | releases/m2-runner-ci.json, tests/integration/eval-runner.test.ts |
-| SPEC-40-034 | 40 / 2092 | - Promptfoo/DeepEval adapter as optional plugins | M2 | not-started |  |
+| SPEC-40-034 | 40 / 2092 | - Promptfoo/DeepEval adapter as optional plugins | M2 | in-progress | docs/phases/m2.md, tests/integration/eval-engines.test.ts, tests/eval-http.test.ts |
 | SPEC-40-035 | 40 / 2093 | - result normalization | M2 | in-progress | packages/evals/contracts.ts, tests/eval-contracts.test.ts |
 | SPEC-40-036 | 40 / 2094 | - statistical trial handling | M2 | in-progress | packages/evals/statistics.ts, tests/eval-statistics.test.ts |
 | SPEC-40-037 | 40 / 2095 | - base/head comparison | M2 | in-progress | packages/evals/execution.ts, docs/phases/m2.md |

@@ -40,6 +40,12 @@ test('normalized results cannot hide infrastructure errors, skipped trials, coun
   assert.throws(()=>validateEvalRun(mutate({passed:19,failed:1,passRate:1})),/pass rate/);
   assert.throws(()=>validateEvalRun(mutate({passed:21})),/counts/);
   assert.throws(()=>validateEvalRun({...result,subject:{...result.subject,gitSha:'main'}}),/Invalid/);
+  const {runnerImage,...withoutImage}=result;
+  const provider={id:'example',revision:'sha256:'+'a'.repeat(64)};
+  assert.equal(validateEvalRun({...withoutImage,runnerProvider:provider}).runnerProvider!.id,'example');
+  assert.throws(()=>validateEvalRun(withoutImage),/Invalid/);
+  assert.throws(()=>validateEvalRun({...result,runnerProvider:provider}),/Invalid/);
+  assert.throws(()=>validateEvalRun({...withoutImage,runnerProvider:{...provider,revision:'latest'}}),/Invalid/);
 });
 test('model-impact selection reports missing representative suites and incomplete model matrices',()=>{
   const impact={changes:[{path:'models/route.json',categories:['model']}],requirementIds:[]};

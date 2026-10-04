@@ -223,6 +223,24 @@
     "runnerImage": {
       "type": "string",
       "pattern": "^(?:sha256:[a-f0-9]{64}|[a-z0-9][a-z0-9._/:~-]*@sha256:[a-f0-9]{64})$"
+    },
+    "runnerProvider": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$"
+        },
+        "revision": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "id",
+        "revision"
+      ],
+      "additionalProperties": false
     }
   },
   "required": [
@@ -235,10 +253,29 @@
     "trials",
     "status",
     "scenarios",
-    "artifacts",
-    "runnerImage"
+    "artifacts"
   ],
   "additionalProperties": false,
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://agentci.io/schemas/v1alpha1/eval-run.schema.json"
+  "$id": "https://agentci.io/schemas/v1alpha1/eval-run.schema.json",
+  "oneOf": [
+    {
+      "properties": {
+        "runnerImage": {},
+        "runnerProvider": false
+      },
+      "required": [
+        "runnerImage"
+      ]
+    },
+    {
+      "properties": {
+        "runnerProvider": {},
+        "runnerImage": false
+      },
+      "required": [
+        "runnerProvider"
+      ]
+    }
+  ]
 }

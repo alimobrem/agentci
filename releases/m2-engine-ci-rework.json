@@ -1,0 +1,31 @@
+{
+  "kind": "M2-engine-CI-rework",
+  "sourceCommit": "7bb30dc164fef1784881f1ae7489e369137dbf7c",
+  "run": {
+    "id": 37183414694,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37183414694",
+    "conclusion": "failure",
+    "attempt": 1
+  },
+  "observed": {
+    "platform": "linux/amd64",
+    "optionalEngineCases": "passed on actual built image",
+    "integrationGroups": 5,
+    "passed": 4,
+    "failed": 1,
+    "skipped": 0,
+    "failure": "Default runner cleanup checked all eval-purpose containers and counted the parallel optional-engine group"
+  },
+  "correction": "Label each container with the exact operator-pinned runner image and filter cleanup by that label (Docker ancestor filters include descendant images)",
+  "localReverification": {
+    "platform": "linux/arm64",
+    "groups": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "concurrency": "Both real Docker groups run in one node --test invocation",
+    "liveOwnershipLabels": "Both groups observe a live labeled container before cancellation, so a missing label cannot silently bypass cleanup assertions"
+  },
+  "fullCiAfterCorrection": "pending",
+  "milestoneComplete": false
+}

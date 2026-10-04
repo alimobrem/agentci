@@ -22,7 +22,7 @@ test('pytest XML maps stable scenarios, preserves skipped/error outcomes and rej
   for(const report of ['<!DOCTYPE x [<!ENTITY a SYSTEM "file:///etc/passwd">]>'+xml(''),'<testsuites/>',xml('<failure/><skipped/>'),xml('').replace('test_one','unknown'),xml('').replace('</testcase>','')])assert.equal(normalizeTrial(suite,result(report)).error,'invalid-report');
   for(const exit of [2,3,4,5,6])assert.equal(normalizeTrial(suite,result(xml(''),exit)).error,'pytest-execution-error');
   assert.ok(adapterCommand(suite).includes('--junitxml=/workspace/junit.xml'));
-  suite.spec.runner.command.push('--junitxml=other');assert.throws(()=>adapterCommand(suite),/managed/);
+  suite.spec.runner.command!.push('--junitxml=other');assert.throws(()=>adapterCommand(suite),/managed/);
 });
 test('selectors and command arguments cannot alias assertions or contain NUL bytes',()=>{
   assert.throws(()=>validateEvalSuite(evalSuite({runner:{adapter:'native',command:['node'],report:'r.json',timeoutMs:1000},scenarios:[{id:'one',selector:'same'},{id:'two',selector:'same'}]})),/Duplicate scenario selector/);
@@ -39,7 +39,7 @@ test('Promptfoo maps JSONL assertions, separates provider errors and rejects con
   assert.equal(normalizeTrial(suite,result(JSON.stringify(row),100)).error,'invalid-report');
   assert.equal(normalizeTrial(suite,result(JSON.stringify(row),1)).error,'promptfoo-execution-error');
   assert.ok(adapterCommand(suite).includes('--no-write'));
-  suite.spec.runner.command.push('--repeat=3');assert.throws(()=>adapterCommand(suite),/managed/);
+  suite.spec.runner.command!.push('--repeat=3');assert.throws(()=>adapterCommand(suite),/managed/);
 });
 test('DeepEval uses its real pytest plugin and enforces the same complete JUnit accounting',()=>{
   const suite=evalSuite({runner:{adapter:'deepeval',command:['python','-m','pytest'],report:'junit.xml',timeoutMs:30000},scenarios:[{id:'greeting',selector:'evals.test_example.test_greeting'}]});

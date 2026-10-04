@@ -11,7 +11,7 @@ test('runner rejects mutable images and credential/escaping snapshot inputs',()=
 });
 test('real isolated UBI runner: boundaries, pytest failures, timeouts, cancellation and output limits',{skip:!image,timeout:120000},async()=>{
   const policy={image:image!};
-  const containers=()=>execFileSync('docker',['ps','-aq','--filter','label=agentci.purpose=eval-runner'],{encoding:'utf8'}).trim();
+  const containers=()=>execFileSync('docker',['ps','-aq','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.runner.image=${image}`],{encoding:'utf8'}).trim();
   const before=containers();
   const run=(script:string,overrides:Parameters<typeof evalSuite>[0]={},signal?:AbortSignal)=>runIsolated({sha:'a'.repeat(40),files:{'check.mjs':script}},evalSuite({runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:5000},...overrides}),policy,{signal});
   const originalToken=process.env.AGENTCI_EVIDENCE_TOKEN;process.env.AGENTCI_EVIDENCE_TOKEN='synthetic-controller-token-for-boundary-test';
@@ -22,7 +22,9 @@ test('real isolated UBI runner: boundaries, pytest failures, timeouts, cancellat
   const absent=await run('',{runner:{adapter:'command',command:['agentci-no-such-command'],timeoutMs:5000}});assert.equal(absent.status,'error');assert.equal(absent.error,'spawn-error');
   const timeout=await run('setInterval(()=>{},1000)',{runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:100}});assert.equal(timeout.status,'timeout');
   const limit=await run(`while(true)process.stdout.write('x'.repeat(4096));`,{runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:5000,maxOutputBytes:1024}});assert.equal(limit.status,'error');assert.equal(limit.error,'output-limit');
-  const abort=new AbortController();const pending=run('setInterval(()=>{},1000)',{},abort.signal);setTimeout(()=>abort.abort(),500);assert.equal((await pending).status,'cancelled');
+  const abort=new AbortController();const pending=run('setInterval(()=>{},1000)',{runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:30000}},abort.signal);
+  let live=false;for(let i=0;i<200;i++){if(containers()!==before){live=true;break;}await new Promise(resolve=>setTimeout(resolve,50));}
+  abort.abort();assert.equal((await pending).status,'cancelled');assert.ok(live,'a live runner must carry the exact image ownership label so cleanup can detect it');
   const suite=evalSuite({runner:{adapter:'pytest',command:['python','-m','pytest','-q','test_example.py'],report:'junit.xml',timeoutMs:10000},scenarios:[{id:'one',selector:'test_example.test_one'}]});
   for(const [code,expected] of [['assert True','passed'],['assert False','failed'],['import pytest; pytest.skip("skip")','skipped']] as const){
     const raw=await runIsolated({sha:'b'.repeat(40),files:{'test_example.py':`def test_one():\n    ${code}\n`}},suite,policy);

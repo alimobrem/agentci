@@ -4,6 +4,7 @@ import type { RunnerResult } from './runner.ts';
 import type { TrialResult } from './statistics.ts';
 
 export function adapterCommand(suite:EvalSuite):string[] {
+  if(suite.spec.runner.adapter==='http')throw new Error('HTTP providers do not execute repository commands');
   const args=[...suite.spec.runner.command];
   if(['pytest','deepeval'].includes(suite.spec.runner.adapter)){
     if(args.some(arg=>/^--junit(?:xml|-xml)(?:=|$)/.test(arg)||arg.includes('junit_family')))throw new Error('Pytest report configuration is managed by the adapter');
@@ -29,7 +30,7 @@ export function normalizeTrial(suite:EvalSuite,run:RunnerResult):Normalized {
   if(Buffer.byteLength(run.report)>(suite.spec.runner.maxOutputBytes??1048576))return fail('report-limit');
   try{
     const results:Record<string,TrialResult>={};
-    if(suite.spec.runner.adapter==='native'){
+    if(['native','http'].includes(suite.spec.runner.adapter)){
       const report=JSON.parse(run.report);
       if(!report||report.schemaVersion!=='v1alpha1'||Object.keys(report).some(k=>!['schemaVersion','results'].includes(k))||!Array.isArray(report.results))throw Error('native schema');
       for(const row of report.results){

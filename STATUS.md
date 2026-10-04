@@ -68,7 +68,10 @@ repeated/model-matrix execution passed exact-source full CI (91 unit/API/domain
 tests, four real integration tests, zero skips), with verified artifact digest
 and matching candidate/CI trees. Their task acceptance is closed. Optional
 Promptfoo/DeepEval pass/fail/error examples pass locally in a pinned UBI image;
-mandatory full CI and the HTTP adapter remain pending. Durable PR/API integration and
+the first mandatory full CI exposed interference between concurrent cleanup
+checks and is retained. Image-scoped cleanup assertions pass both groups together
+locally. The HTTP adapter passes real TLS/protocol/identity and repeated/model
+comparison tests; final full CI remains pending. Durable PR/API integration and
 all M2 release gates remain open. The CI database URL uses separate test-only
 PG variables and passed both full verification and hosted dogfood.
 [M2 acceptance plan](docs/phases/m2.md).

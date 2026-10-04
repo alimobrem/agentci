@@ -7,12 +7,16 @@ import { canonical, digest } from '../review/engine.ts';
 export const evalClasses = ['unit','integration','contract','policy','golden','regression','adversarial','safety','tool-use','trajectory','latency','cost','model-comparison'] as const;
 export type EvalClass = typeof evalClasses[number];
 export type EvalStatus = 'passed' | 'failed' | 'error' | 'insufficient';
+type EvalRunner={timeoutMs:number;maxOutputBytes?:number;harness?:string[]} & (
+  {adapter:'command'|'native'|'pytest'|'promptfoo'|'deepeval';command:string[];report?:string;provider?:never} |
+  {adapter:'http';provider:string;command?:never;report?:never}
+);
 export interface EvalSuite {
   apiVersion: 'agentci.io/v1alpha1'; kind: 'EvalSuite'; metadata: { id: string; description?: string };
   spec: {
     class: EvalClass; requirements: string[];
     impact: { categories: string[]; include: string[] };
-    runner: { adapter: 'command'|'native'|'pytest'|'promptfoo'|'deepeval'|'http'; command: string[]; report?: string; harness?: string[]; timeoutMs: number; maxOutputBytes?: number };
+    runner: EvalRunner;
     scenarios: { id: string; critical?: boolean; selector?: string }[];
     trials: { count: number; passRate: number; maxCriticalFailures?: number; confidenceMethod: 'wilson'; confidenceLevel?: 0.9|0.95|0.99 };
     models?: string[]; representative?: boolean;
@@ -25,12 +29,15 @@ export interface ScenarioResult {
 }
 export interface EvalRun {
   apiVersion:'agentci.io/v1alpha1'; kind:'EvalRun'; id:string; suite:string; revision:string;
-  subject:{repository:string;gitSha:string;assertionGitSha:string;inputDigest:string;omittedInputs:string[]}; runnerImage:string; model?:string; trials:number; status:EvalStatus;
+  subject:{repository:string;gitSha:string;assertionGitSha:string;inputDigest:string;omittedInputs:string[]}; runnerImage?:string; runnerProvider?:{id:string;revision:string}; model?:string; trials:number; status:EvalStatus;
   scenarios:ScenarioResult[]; artifacts:{digest:string;mediaType:string;uri:string}[];
 }
 const ajv = new Ajv({strict:true,allErrors:true});
 (createRequire(import.meta.url)('ajv-formats') as FormatsPlugin)(ajv);
-const validators = Object.fromEntries(['eval-suite','eval-run'].map(name=>[name,ajv.compile(JSON.parse(readFileSync(new URL(`./json/${name}.schema.json`,import.meta.url),'utf8')))])) as Record<string,ValidateFunction>;
+const validators = Object.fromEntries(['eval-suite','eval-run','http-eval-request','http-eval-response'].map(name=>[name,ajv.compile(JSON.parse(readFileSync(new URL(`./json/${name}.schema.json`,import.meta.url),'utf8')))])) as Record<string,ValidateFunction>;
+export function validateHttpEnvelope(value:unknown,kind:'request'|'response'):void {
+  if(!validators[`http-eval-${kind}`]!(value))throw new Error('Invalid HTTP eval envelope');
+}
 export function safeEvalPath(value:string, glob=false):boolean {
   return !!value && !value.startsWith('/') && !value.startsWith('!') && !value.includes('\\') && !/[\x00-\x1f]/.test(value) && !value.split('/').some(part=>part==='..'||part==='.'||part==='') && !/^[A-Za-z]:/.test(value) && (glob || !/[*?{}[\]]/.test(value));
 }
@@ -40,11 +47,11 @@ export function validateEvalSuite(value:unknown):EvalSuite {
   if (new Set(spec.scenarios.map(s=>s.id)).size!==spec.scenarios.length) throw new Error('Duplicate scenario identity');
   const selectors=spec.scenarios.map(s=>s.selector??s.id);
   if(new Set(selectors).size!==selectors.length)throw new Error('Duplicate scenario selector');
-  if(spec.runner.command.some(arg=>arg.includes('\0'))||Buffer.byteLength(JSON.stringify(spec.runner.command))>65536)throw new Error('Invalid runner arguments');
+  if(spec.runner.adapter!=='http'&&(spec.runner.command.some(arg=>arg.includes('\0'))||Buffer.byteLength(JSON.stringify(spec.runner.command))>65536))throw new Error('Invalid runner arguments');
   if (spec.impact.include.some(p=>!safeEvalPath(p,true))) throw new Error('Unsafe impact selector');
   if(spec.runner.harness?.some(path=>!safeEvalPath(path)))throw new Error('Unsafe harness input path');
   if (spec.runner.report && !safeEvalPath(spec.runner.report)) throw new Error('Unsafe result report path');
-  if (['native','pytest','promptfoo','deepeval','http'].includes(spec.runner.adapter) && !spec.runner.report) throw new Error('Adapter requires a structured result report');
+  if (['native','pytest','promptfoo','deepeval'].includes(spec.runner.adapter) && !spec.runner.report) throw new Error('Adapter requires a structured result report');
   if (spec.runner.adapter==='command' && spec.scenarios.length!==1) throw new Error('Exit-code adapter requires exactly one scenario');
   if (spec.class==='safety' && (spec.trials.maxCriticalFailures??0)!==0) throw new Error('Safety suite cannot tolerate critical failures');
   if (spec.trials.maxCriticalFailures!==undefined && spec.trials.maxCriticalFailures>spec.trials.count) throw new Error('Critical threshold exceeds trials');

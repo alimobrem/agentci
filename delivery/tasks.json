@@ -600,6 +600,42 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M2-HTTP-TRANSPORT",
+      "title": "Bounded identity-bound transport for operator-configured HTTP eval providers",
+      "requirementIds": [
+        "SPEC-11.4-005",
+        "SPEC-40-034"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T06:41:16.549Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Real provider requests bind exact snapshot/suite/model and unique request IDs; pinned destination, separate credentials, no redirects, size/deadline/cancellation limits and malicious response handling pass. Transport is integrated into eval execution before adapter acceptance.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-TEST-OWNERSHIP",
+      "title": "Scope parallel container cleanup assertions to their runner image",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-034"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T06:53:30.394Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Native/default and optional engine groups run concurrently without counting one another as leaks; cleanup still asserts no new containers for each immutable image. Failed CI attempt is retained and full CI reruns.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

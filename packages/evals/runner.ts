@@ -5,6 +5,7 @@ import { adapterCommand } from './adapters.ts';
 import { RUNNER_BOOTSTRAP } from './bootstrap.ts';
 import { safeEvalPath, validateEvalSuite, type EvalSuite } from './contracts.ts';
 import type { Snapshot } from '../review/types.ts';
+import type {HttpProviderPolicy} from './http.ts';
 const execute=promisify(execFile);
 function streamDocker(args:string[],input:string,signal:AbortSignal|undefined,limit:number,timeout:number):Promise<string> {
   return new Promise((resolve,reject)=>{
@@ -19,13 +20,13 @@ function streamDocker(args:string[],input:string,signal:AbortSignal|undefined,li
     child.stdin.end(input);
   });
 }
-export interface RunnerPolicy { image:string; memoryMb?:number; cpus?:number; pids?:number }
+export interface RunnerPolicy { image:string; memoryMb?:number; cpus?:number; pids?:number; httpProviders?:HttpProviderPolicy[] }
 export interface RunnerResult {
-  sourceSha:string; image:string; status:'completed'|'timeout'|'cancelled'|'error';
+  sourceSha:string; image?:string; provider?:{id:string;revision:string}; status:'completed'|'timeout'|'cancelled'|'error';
   exitCode:number|null; signal?:string|null; stdoutDigest?:string; stderrDigest?:string;
   latencyMs?:number; report?:string; reportError?:string; error?:string;
 }
-export function validateRunnerPolicy(policy:RunnerPolicy):Required<RunnerPolicy> {
+export function validateRunnerPolicy(policy:RunnerPolicy):Required<Omit<RunnerPolicy,'httpProviders'>> {
   if(!/^(?:sha256:[a-f0-9]{64}|[a-z0-9][a-z0-9._/:~-]*@sha256:[a-f0-9]{64})$/.test(policy.image))throw new Error('Runner image must be an operator-pinned digest');
   const limits={image:policy.image,memoryMb:policy.memoryMb??512,cpus:policy.cpus??1,pids:policy.pids??128};
   if(!Number.isSafeInteger(limits.memoryMb)||limits.memoryMb<64||limits.memoryMb>4096||!Number.isFinite(limits.cpus)||limits.cpus<0.1||limits.cpus>4||!Number.isSafeInteger(limits.pids)||limits.pids<16||limits.pids>256)throw new Error('Invalid runner resource limits');
@@ -74,7 +75,7 @@ export async function runIsolated(snapshot:Snapshot,value:EvalSuite,policyValue:
     const config={argv:adapterCommand(suite),report:suite.spec.runner.report,timeoutMs:suite.spec.runner.timeoutMs,maxOutputBytes,model:options.model};
     createAttempted=true;
     // Finish creation before observing cancellation, so cleanup cannot race a still-pending daemon create.
-    await docker(['create','--interactive','--name',name,'--label','agentci.purpose=eval-runner','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--user','1001:0','--pids-limit',String(policy.pids),'--memory',`${policy.memoryMb}m`,'--memory-swap',`${policy.memoryMb}m`,'--cpus',String(policy.cpus),'--workdir','/workspace','--tmpfs','/workspace:rw,nosuid,nodev,size=128m,mode=0700,uid=1001,gid=0','--tmpfs','/tmp:rw,nosuid,nodev,size=64m,mode=0700,uid=1001,gid=0','--entrypoint','node',policy.image,'--input-type=module','-e',RUNNER_BOOTSTRAP,'--',JSON.stringify(config)]);
+    await docker(['create','--interactive','--name',name,'--label','agentci.purpose=eval-runner','--label',`agentci.runner.image=${policy.image}`,'--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--user','1001:0','--pids-limit',String(policy.pids),'--memory',`${policy.memoryMb}m`,'--memory-swap',`${policy.memoryMb}m`,'--cpus',String(policy.cpus),'--workdir','/workspace','--tmpfs','/workspace:rw,nosuid,nodev,size=128m,mode=0700,uid=1001,gid=0','--tmpfs','/tmp:rw,nosuid,nodev,size=64m,mode=0700,uid=1001,gid=0','--entrypoint','node',policy.image,'--input-type=module','-e',RUNNER_BOOTSTRAP,'--',JSON.stringify(config)]);
     if(options.signal?.aborted)return cancelled();
     const raw=await streamDocker(['start','--attach','--interactive',name],payload,options.signal,maxOutputBytes*6+65536,suite.spec.runner.timeoutMs+30000);
     const result=JSON.parse(raw);
