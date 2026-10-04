@@ -85,3 +85,15 @@ unmapped operations or API/domain schema drift. Full CI runs checksum-verified
 oasdiff against the documented M1 candidate baseline and a deliberate breaking
 endpoint-removal case. The baseline is not a prior release; after M1 publication,
 use the immutable released contract and review behavioral compatibility separately.
+
+## Agent evidence consumption — M1 extension
+
+The candidate Node client is an API consumer, not a new scheduling endpoint. It
+uses the existing readiness/evidence operations, verifies shared schemas and
+PR/base/head/repository identity, and checks the canonical digest. Its credential
+comes from private environment configuration and is never supplied on argv.
+HTTP redirects are refused, timeouts and a 4 MiB response bound are explicit, and
+provider errors are reduced to typed safe codes. Authentication, corruption,
+identity mismatch, redirects and unavailable services have client regression tests.
+The live customer gate requires executing this client against the fresh-repository
+deployment; mocked HTTP tests alone cannot close it.

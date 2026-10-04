@@ -11,7 +11,7 @@ Live requirement coverage is in
 
 Delivered: four versioned schemas, CLI validation, API skeleton, trace mapping,
 source-linked inventory, tests, contract evals, compiled package and release docs.
-The original M1 scope was completed: public immutable [v0.2.0-m1](https://github.com/alimobrem/agentci/releases/tag/v0.2.0-m1)
+M1 is complete: public immutable [v0.2.0-m1](https://github.com/alimobrem/agentci/releases/tag/v0.2.0-m1)
 at source `620230fd49d09e788d9a6a2783b57428882f5927`. All 16 completion gates have
 source-linked evidence. Release-source verification passed 60 tests, two real
 PostgreSQL/Temporal integration tests and 14 deterministic evals. All six public
@@ -47,12 +47,3 @@ measurement](docs/delivery-workflow.md). Run `npm run check:fast` for local feed
 and `npm run delivery -- report` for measured progress. Requirement inventory and
 phase completion gates remain authoritative; feedback timings are not a claim
 of total delivery acceleration.
-
-## Customer acceptance extension
-
-The user added fresh-repository onboarding and agent/API usage gates before M2.
-Current candidate `0.2.1-m1` is in-progress with 18 pending release gates; it is
-not released. Live candidate customer onboarding passed; released-build acceptance
-and distribution remain pending. The historical `0.2.0-m1` release remains
-immutable. M2 is not-started. A separate demo App is required for a live fresh-repo
-acceptance scenario; the existing App stays restricted to alimobrem/agentci.

@@ -18,7 +18,7 @@ services:
     image: temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e
     command: [server, start-dev, --ip, 0.0.0.0, --db-filename, /home/temporal/temporal.db]
     volumes: [temporal-dev-data:/home/temporal]
-    ports: ["127.0.0.1:8233:8233"]
+    ports: ["127.0.0.1:${AGENTCI_TEMPORAL_UI_PORT:-8233}:8233"]
     healthcheck:
       test: [CMD, temporal, operator, cluster, health, --address, "127.0.0.1:7233"]
       interval: 5s
@@ -27,18 +27,18 @@ services:
     restart: unless-stopped
   api:
     user: "${AGENTCI_UID:-1001}:${AGENTCI_GID:-0}"
-    image: ${AGENTCI_API_IMAGE:-agentci-api:0.2.0-m1}
+    image: ${AGENTCI_API_IMAGE:-agentci-api:0.2.1-m1}
     build: { context: .., target: api }
     env_file: ${AGENTCI_ENV_FILE:-../.env}
     environment:
       DATABASE_URL: postgresql://agentci:${POSTGRES_PASSWORD}@postgres:5432/agentci
       TEMPORAL_ADDRESS: temporal:7233
-    ports: ["127.0.0.1:3000:3000"]
+    ports: ["127.0.0.1:${AGENTCI_API_PORT:-3000}:3000"]
     depends_on: { postgres: { condition: service_healthy }, temporal: { condition: service_healthy } }
     restart: unless-stopped
   worker:
     user: "${AGENTCI_UID:-1001}:${AGENTCI_GID:-0}"
-    image: ${AGENTCI_WORKER_IMAGE:-agentci-worker:0.2.0-m1}
+    image: ${AGENTCI_WORKER_IMAGE:-agentci-worker:0.2.1-m1}
     build: { context: .., target: worker }
     env_file: ${AGENTCI_ENV_FILE:-../.env}
     environment:

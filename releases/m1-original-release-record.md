@@ -1,13 +1,12 @@
 # M1 release verification record
 
-State: original specification scope complete. The customer acceptance extension
-`0.2.1-m1` is in-progress and not released. Version: `0.2.0-m1`. Date: 2026-10-03.
+State: complete. Version: `0.2.0-m1`. Date: 2026-10-03.
 M2 remains not-started pending the user retrospective discussion.
 
 [Immutable public prerelease](https://github.com/alimobrem/agentci/releases/tag/v0.2.0-m1).
 Tag `v0.2.0-m1` identifies released source
 `620230fd49d09e788d9a6a2783b57428882f5927`.
-[Manifest](../../releases/m1-manifest.json), [original completion gates](../../releases/m1-0.2.0-gates.json),
+[Manifest](../../releases/m1-manifest.json), [completion gates](../../releases/m1-gates.json),
 [distribution verification](../../releases/m1-distribution.json).
 Post-publication completion records and the native-download verification workflow
 on main do not change this immutable released build.

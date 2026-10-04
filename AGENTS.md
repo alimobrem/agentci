@@ -1,7 +1,8 @@
 # AgentCI development workflow
 
-- Follow the primary spec in milestone order. M1 is complete with published release
-  evidence. M2 remains not-started until the user retrospective discussion. Finish
+- Follow the primary spec in milestone order. Original M1 scope has published release
+  evidence. Its customer-onboarding extension is in-progress; M2 remains
+  not-started until the expanded acceptance gates and retrospective pass. Finish
   each phase's tests, evals, packaging, docs, publication, download verification,
   release and user demo gates before the next. Use `docs/definition-of-done.md`.
 - Before new implementation, add or start a small task in `delivery/tasks.json`
@@ -21,7 +22,8 @@
   Report local feedback, full CI, cycle time, blockers and quality separately.
   Never equate a faster check with proven total delivery acceleration.
 - Never commit `.env`, App keys, local credential files or artifact logs containing
-  credentials. App access stays limited to `alimobrem/agentci`. The temporary
+  credentials. The original App stays limited to `alimobrem/agentci`. The user-approved separate
+  onboarding App is limited to `alimobrem/agentci-onboarding-demo`. The temporary
   tunnel is a development endpoint; reliable every-PR operation is a release gate.
 - Give the user meaningful progress updates about once a minute during active
   work, and a released-build success/failure demo at each phase completion.

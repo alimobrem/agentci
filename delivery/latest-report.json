@@ -6,7 +6,7 @@
   "firstPassFailures": 1,
   "preliminaryCiReductionPercent": -11.071428571428571,
   "baselineLocalMedianSeconds": 1.7555532919999999,
-  "latestFastCheckSeconds": 0.506339625,
+  "latestFastCheckSeconds": 0.48721725000000005,
   "tasks": [
     {
       "id": "M1-APP",
@@ -79,9 +79,46 @@
       "status": "done",
       "cycleSeconds": 3208.24,
       "blockedSeconds": 0
+    },
+    {
+      "id": "M1-CUSTOMER-SETUP",
+      "status": "done",
+      "cycleSeconds": 1451.635,
+      "blockedSeconds": 0
+    },
+    {
+      "id": "M1-AGENT-API",
+      "status": "in-progress",
+      "cycleSeconds": null,
+      "blockedSeconds": 0
+    },
+    {
+      "id": "M1-CUSTOMER-RELEASE",
+      "status": "blocked",
+      "cycleSeconds": null,
+      "blockedSeconds": 283.907
     }
   ],
-  "openReleaseGates": [],
+  "openReleaseGates": [
+    "scope",
+    "correctness",
+    "api",
+    "evals",
+    "reproducibility",
+    "runtime",
+    "safety",
+    "documentation",
+    "release-identity",
+    "publication",
+    "distribution",
+    "demo",
+    "closure",
+    "live-dogfood",
+    "api-image",
+    "worker-image",
+    "customer-onboarding",
+    "agent-api"
+  ],
   "interpretation": "Feedback-loop timings only; no historical task-delivery baseline. Caches, suite size and runner conditions affect results; small samples do not prove causality.",
   "ciByCache": {
     "cold": {

@@ -29,3 +29,13 @@ test('blocked time is separate from cycle time and unknown starts stay unknown',
   const events=[{task:'T1',action:'block',at:'2026-10-03T00:00:10Z'},{task:'T1',action:'start',at:'2026-10-03T00:00:30Z'}];
   assert.equal(blockedSeconds(task,events),20);assert.equal(blockedSeconds({...task,startedAt:null},events),null);
 });
+
+test('expanded customer acceptance cannot close with only historical M1 gates', () => {
+  const record = release(); record.customerAcceptance = true;
+  assert.throws(() => validateRelease(record, true), /incomplete/);
+  for (const id of ['customer-onboarding', 'agent-api']) record.gates.push({ id, status: 'pending', evidence: [] });
+  assert.deepEqual(validateRelease(record), ['customer-onboarding', 'agent-api']);
+  assert.throws(() => validateRelease(record, true), /Milestone incomplete/);
+  record.gates.find(g => g.id === 'customer-onboarding')!.status = 'inapplicable';
+  assert.throws(() => validateRelease(record), /scope exception/);
+});
