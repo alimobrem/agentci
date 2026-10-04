@@ -36,7 +36,7 @@ Do not change already-started tracking dates. New PR tasks are created just befo
 
 | Phase | Planned PRs | Summed focused effort range, excluding external waits |
 | --- | --- | --- |
-| M3 | 9 | 12.5–29 engineering days |
+| M3 | 12 | 15.5–38 engineering days |
 | M4 | 7 | 9–23 engineering days |
 | M5 | 7 | 11–25 engineering days |
 | M6 | 7 | 9–23 engineering days |
@@ -50,6 +50,8 @@ These are sums of uncertain PR effort bands, not elapsed release forecasts. Para
 Every row inherits API correctness/compatibility, security/privacy, meaningful positive and failure tests, docs and the final phase release gates. Dependency IDs refer to rows in the same phase unless closure is specified.
 
 ### M3 — Multi-model review
+
+UI sequencing refinement: start a minimal web control-plane dashboard in M3, alongside GitHub Checks/CLI/API. Extend trace navigation in M4, application/incident views in M8, and repair/approval views in M10. The early dashboard is a separately sized proposal for the M3 scope freeze; it does not expand M2 or implement later incident/repair features.
 
 Exit demo: A real PR is reviewed by a provider different from its coding provider; a reproduced defect is confirmed, while unsupported assertions remain unconfirmed.
 
@@ -65,7 +67,10 @@ Inventory: 54 requirement records plus 12 section/schema review records assigned
 | M3-05: Independent reviewer roles | M | 02,03,04 | Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests. |
 | M3-06: Finding lifecycle and reproduction | L | 05 | Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation. |
 | M3-07: Customer/API/check integration | M | 06 | Review CLI and API operations with compatibility coverage, exact-head Checks, independent-provider dogfood, unsupported claims and confirmed regression demo; decide optional router/later adapters explicitly. |
-| M3-08: Release and demo | L | 07 | Publish verified CLI/service artifacts; fresh customer review, provider failure recovery and released-build success/failure demo; close all gates and retro. |
+| M3-07-ui-foundation: Next.js UI foundation and packaging | M | 07 | App Router React/TS shell, Tailwind, reviewed shadcn/Radix components and Zod UI-input contracts; production standalone UBI image and build/license/security verification; no secrets in client bundles |
+| M3-07-ui-session: Browser session and authorized API access | M | 07-ui-foundation | Secure server-managed session/SSO decision, authorization on every server data route, scoped API access, expired/unauthorized/CSRF/cross-tenant tests and private caching; no browser operator/App/provider credentials |
+| M3-07-dashboard: Initial web control-plane dashboard | M | 07-ui-session | Read-only Next.js/React/TS PR dashboard: exact head, review/eval status, risk, confirmed/unconfirmed findings, disagreement and evidence links. Auth, tenant isolation, accessibility, empty/error states and live customer walkthrough; no App/operator credentials embedded in browser assets |
+| M3-08: Release and demo | L | 07,07-dashboard | Publish verified CLI/service artifacts; fresh customer review, provider failure recovery and released-build success/failure demo; close all gates and retro. |
 
 ### M4 — Instrumentation
 
@@ -183,6 +188,37 @@ Inventory: 62 requirement records plus 7 section/schema review records assigned 
 | M10-07: End-to-end customer dogfood | M | 06 | Seeded incident→replay→regression→candidate→verified repair PR; reject unsafe patch and forged evidence; measure elapsed cycle/cost/rework. |
 | M10-08: Release and demo | L | 07 | Publish/download all changed artifacts; live repair PR and blocked unsafe candidate demo; product-wide DoD audit, security/scale acceptance and retro. |
 
+## Chosen UI stack
+
+The user selected Next.js, Tailwind, shadcn/ui, Radix and Zod on 2026-10-04, replacing the earlier PatternFly/Vite/TanStack Router recommendation. This applies to M3 UI implementation; M2 scope and runtime dependencies stay unchanged.
+
+Official npm stable `latest` metadata verified on 2026-10-04: Next.js 16.3.8, React/react-dom 19.3.0, TypeScript 7.0.2, Tailwind CSS 4.3.3, shadcn CLI 4.21.1, Radix aggregate package 1.6.7 and Zod 4.6.5. Keep TanStack Query 5.104.1 for live client API state where useful, Vitest 5.0.3 for meaningful component/data tests and Playwright 1.63.0 for real customer/browser journeys. Next.js App Router owns navigation; no additional TanStack Router. These are verified recommendation snapshots, not installed UI dependencies or frozen future release pins. Recheck and lock compatible stable versions at M3 adoption.
+
+Use shadcn's Radix-based components, reviewed as application-owned source, with Tailwind design tokens. Radix provides interaction primitives beneath shadcn; it is not a second competing component system. Add primitives only as needed; pin the CLI/registry inputs and review generated source. Build an AgentCI visual identity with keyboard/screen-reader/browser checks and light/dark themes. Zod validates UI forms and route inputs; published JSON Schema/OpenAPI and existing domain validators remain authoritative for API contracts. Reuse the contract-checked agent client and shared fixtures instead of inventing a browser-only API.
+
+Keep AgentCI's API/controller/evaluator services responsible for domain workflows. Next.js provides server rendering and a bounded server-side browser API/session boundary. Use server-managed secure sessions, authorization for every data route and explicit repository/tenant scopes; App keys, provider keys and operator tokens stay server-side. Do not rely on layout/proxy redirects alone for authorization or share sensitive data through public caching. Session/SSO selection is a design gate before customer-facing data views. The Next.js server needs its own production UBI image, clean installed startup, security scan, registry/download verification, health/shutdown and upgrade/rollback docs in M3.
+
+Initial UI includes PR status, risk, behavioral deltas, confirmed/unconfirmed findings, disagreement and evidence navigation. Trace, incident and repair views extend this foundation in M4/M8/M10. Split foundation/packaging, session/API authorization and the dashboard into separate M3 PRs. Registry engine/peer ranges accept Node 26.10.0 and React 19.3.0; TypeScript/build/browser behavior still needs actual clean-install compatibility verification. Current stable choices reduce starting debt but do not eliminate ongoing upgrades.
+
+Sources: [Next.js installation](https://nextjs.org/docs/app/getting-started/installation), [Next.js authentication](https://nextjs.org/docs/app/guides/authentication), [shadcn Next.js integration](https://ui.shadcn.com/docs/installation/next), [Radix primitives](https://www.radix-ui.com/primitives/docs/overview/introduction), [Zod](https://zod.dev/). Exact versions/peer ranges were read from official npm registry metadata.
+
+## UI acceptance gaps to close in M3
+
+The chosen stack stays; correctness and customer usability need explicit acceptance, not additional frameworks by default.
+
+| Obligation | Primary PR owner | Observable acceptance |
+| --- | --- | --- |
+| Authentication architecture | M3-07-ui-session | Select maintained session/OIDC integration at scope freeze; validate server authorization on every data route, expiry/logout, CSRF and repository/tenant boundaries. Identity provider remains an open decision; do not hand-roll credential storage |
+| Exact evidence and honest states | M3-07-dashboard | Show source/base/head, attempt and digest; distinguish passed/failed/infrastructure error/insufficient/in-progress/cancelled/superseded. Late responses or force-push cannot turn the new head green; preserve confirmed versus unconfirmed findings |
+| Live updates and private caching | M3-07-dashboard | Begin with bounded polling/backoff/cancellation against existing APIs; pause unnecessary work and display disconnected/stale state. Key client caches by user/scope/repository/PR/head/attempt, clear on logout, and keep sensitive server fetches private. SSE requires a versioned backend event contract and reconnect/ordering acceptance before adoption |
+| Useful navigation and bounded data | M3-07-dashboard | Shareable exact-evidence URLs, filters and pagination; bounded evidence/log previews and safe downloads. Test large fixtures without loading the full evidence graph/export into browser memory; defer virtualization until measurements require it |
+| Accessibility and product consistency | M3-07-ui-foundation, M3-07-dashboard | Keyboard navigation/focus, accessible dialogs/tables, screen-reader checks, sufficient contrast, responsive layout and light/dark design tokens. Run automated accessibility checks plus actual keyboard/browser journeys; component-library choice alone is not proof |
+| Untrusted content and audit boundaries | M3-07-ui-session, M3-07-dashboard | Render PR text/logs/model output as data; sanitize any permitted markup, constrain links/downloads and verify malicious-content fixtures. Keep approval/action actor audits and backend policy enforcement authoritative when those later features arrive |
+| Next.js testing and production operation | M3-07-ui-foundation, M3-08 | Existing Node domain tests stay. Vitest covers supported synchronous/component/client behavior; Playwright exercises real production-built Next.js server/routes, async server views, login/expiry and all status/failure cases. UBI deployment has health, shutdown, scans, source-bound image/download verification and upgrade/rollback docs |
+| Performance/maintenance | M3-07-ui-foundation | Set bundle/render/API-load budgets after measuring a representative scaffold; inspect dependencies and license/security inputs. Review application-owned shadcn source changes, pin registry generation inputs and automate proposed small upgrade PRs once infrastructure is available |
+
+Use React Server Components for suitable initial server-rendered views and small client boundaries for interaction. TanStack Query owns live server-data state; local UI state stays local. Add a form library only when complex forms justify it; Zod does not replace API schema validation. No additional global state manager or competing router is needed for the initial read-only dashboard. Next.js's [Vitest guide](https://nextjs.org/docs/app/guides/testing/vitest) identifies async Server Components as a case for end-to-end testing; do not treat component tests as complete server/auth acceptance.
+
 ## Scope decisions and questions
 
 Recommended defaults below are proposals until recorded at the stated decision point. Missing access is a blocker, not an excuse to skip live acceptance. No new credentials, account grants or external changes are authorized by this plan.
@@ -198,7 +234,7 @@ Recommended defaults below are proposals until recorded at the stated decision p
 | Argo/progressive delivery scope | Record all decisions in M6; ship bounded tested hook integration, with full OpenShift GitOps path in M7; no deployment-engine replacement | M6-05; a scope decision must list which SHOULD/MAY integrations ship versus remain deferred |
 | OpenShift live test environment | Real current supported OpenShift cluster with Pipelines, Results, Chains, GitOps and OLM as appropriate; Go operator behind domain interfaces | Before M7-01; cluster access, supported-version matrix and operator catalog distribution are release dependencies; a local Kubernetes mock cannot satisfy this exit |
 | Future-task ordering in Tekton catalog | Define replay task contract in M7, implement/test executable replay task only after M9 replay exists; console dynamic plugin remains explicitly later | M7-03/07; document this spec dependency amendment instead of advertising nonfunctional catalog entries as complete |
-| Alerts, UI and hosting | React/TS customer views; live Kubernetes plus one chosen alert adapter first, shared conformance fixtures for remaining sources; keep local/hybrid useful | M8-01/03; user selects first production integration and reachable deployment; all supported-source claims need verified adapters, other sources need explicit disposition |
+| Alerts, UI and hosting | Extend the chosen Next.js/React/TS customer views; live Kubernetes plus one chosen alert adapter first, shared conformance fixtures for remaining sources; keep local/hybrid useful | M8-01/03; user selects first production integration and reachable deployment; all supported-source claims need verified adapters, other sources need explicit disposition |
 | Replay scope and fidelity | Recorded first, then real isolated ephemeral replay; label simulated/recorded limits, default no uncontrolled external writes | M9-01/03; choose environment provider and fixture retention; approved expected behavior required for inferred high-impact cases |
 | Repair coding provider and permissions | Reuse provider boundaries, generate bounded candidates; open PR only, human approval/merge and existing production policy | M10-01/05; separate scoped write App/credentials require explicit access decision; current read/check App is insufficient for branch/PR writes |
 | Beta/GA and support promises | Milestone releases remain prereleases unless product-wide security/privacy/compatibility/operational criteria are met | Each scope gate and M10 closure; 99.9% after-GA target is not a current measured SLA |
@@ -212,7 +248,7 @@ The existing inventory assigns some product-wide requirements to early milestone
 | Evidence entities/edges/query/confidence (16) | Each phase adds its own domain nodes/edges; M3 findings, M4 traces, M6 releases, M8 incidents, M9 regressions, M10 repairs. PostgreSQL references, immutable evidence and tenant isolation in every relevant PR |
 | CI adapter/trust boundaries (17–18) | M3 live exact-head reviews; M6 CI evidence; M7 platform adapters; preserve isolated untrusted execution, stale-head rejection and independent producer identity throughout |
 | Identity, secrets, privacy and integrity (29–30) | All phases; M4 capture/retention, M5 tool auth, M6 signing/storage, M8 telemetry, M9 replay, M10 repair credential separation |
-| API/CLI/event contracts and customer UI (31–33) | Each feature owns its resources/operations/shared scenarios, events and installed client examples; M3 PR review, M4 evidence/trace explorer, M8 application/incident UI, M10 repair timeline. No promise to implement every proposed endpoint uncritically |
+| API/CLI/event contracts and customer UI (31–33) | Each feature owns its resources/operations/shared scenarios, events and installed client examples; M3 web PR dashboard and review, M4 evidence/trace explorer, M8 application/incident UI, M10 repair timeline. No promise to implement every proposed endpoint uncritically |
 | Reliability, scale and failure taxonomy (35–37) | Each phase has cancellation/restart/idempotency/outage/tenant/resource-boundary tests; bounded load on new surfaces. M10 product-wide burst/backpressure audit; no invented uptime proof |
 | Independent versioning and migration (38) | Freeze API/schema baseline per release, document incompatible migration rather than resetting baselines. Version SDKs, providers, policy, traces and CRDs independently when their contracts change |
 | Dogfood and complete-product acceptance (39,44–49) | Upgrade every-PR dogfood as capabilities ship; M4 runtime traces, M8 seeded incidents, M9 replay, M10 repairs; required check enforcement reviewed before enabling. M10 audits initial-build DoD; M3 may meet MVP only after its own evidence passes |

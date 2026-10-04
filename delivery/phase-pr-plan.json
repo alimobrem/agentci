@@ -111,11 +111,42 @@
           "status": "planned"
         },
         {
+          "id": "M3-07-ui-foundation",
+          "title": "Next.js UI foundation and packaging",
+          "size": "M",
+          "dependsOn": [
+            "M3-07"
+          ],
+          "acceptance": "Next.js App Router React/TS shell with Tailwind and reviewed shadcn/Radix source, theme/accessibility tokens, Zod UI-input contracts; production standalone UBI image startup, build/license/security checks and no server secrets in client bundles. Data views stay unavailable until authenticated routes ship.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-07-ui-session",
+          "title": "Browser session and authorized API access",
+          "size": "M",
+          "dependsOn": [
+            "M3-07-ui-foundation"
+          ],
+          "acceptance": "Server-managed secure sessions/OIDC decision, authorization on every Next.js server data route, tenant/repository scoping and contract-checked API access; no operator bearer tokens or App/provider keys in browser assets. Unauthorized, expired, CSRF and cross-tenant cases fail; sensitive data is not shared by caching.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-07-dashboard",
+          "title": "Initial web control-plane dashboard",
+          "size": "M",
+          "dependsOn": [
+            "M3-07-ui-session"
+          ],
+          "acceptance": "Read-only Next.js/React/TypeScript with Tailwind/shadcn/Radix PR dashboard shows exact head, review/eval status, risk, confirmed/unconfirmed findings, model disagreement and evidence links. Authenticated backend access, tenant isolation, accessible empty/error states and live customer walkthrough; never embed operator/App credentials in browser assets.",
+          "status": "planned"
+        },
+        {
           "id": "M3-08",
           "title": "Release and demo",
           "size": "L",
           "dependsOn": [
-            "M3-07"
+            "M3-07",
+            "M3-07-dashboard"
           ],
           "acceptance": "Publish verified CLI/service artifacts; fresh customer review, provider failure recovery and released-build success/failure demo; close all gates and retro.",
           "status": "planned"
