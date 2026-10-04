@@ -2,6 +2,7 @@ import { glob, readFile, realpath, stat } from 'node:fs/promises';
 import { isAbsolute, relative, resolve, sep } from 'node:path';
 import { parseDocument } from 'yaml';
 import { validateDocument } from '../schemas/index.ts';
+import { validateEvalSuite } from '../evals/contracts.ts';
 
 export interface Diagnostic { file: string; message: string }
 export interface ProjectValidation { valid: boolean; files: number; requirements: number; errors: Diagnostic[] }
@@ -105,9 +106,19 @@ export async function validateProject(directory: string): Promise<ProjectValidat
       }
     } catch (error) { fail(file, error instanceof Error ? error.message : 'Cannot read specification'); }
   }
-  // M0 recognizes eval inputs but does not claim to validate the future M2 eval contract.
+  // Legacy contract/risk corpora remain data; explicit M2 EvalSuite documents are strict.
+  const suites = new Set<string>();
   for (const file of selected.evals ?? []) {
-    try { parseYaml(await readLocal(file)); }
+    if (!/\.ya?ml$/i.test(file)) continue;
+    try {
+      const value = parseYaml(await readLocal(file));
+      if (value && typeof value === 'object' && 'kind' in value && (value as {kind:unknown}).kind === 'EvalSuite') {
+        const suite = validateEvalSuite(value);
+        if (suites.has(suite.metadata.id)) throw new Error('Duplicate suite identity across files');
+        suites.add(suite.metadata.id);
+        if (suite.spec.requirements.some(id=>!ids.has(id))) throw new Error('EvalSuite maps an unknown requirement');
+      }
+    }
     catch (error) { fail(file, error instanceof Error ? error.message : 'Cannot parse eval configuration'); }
   }
   return result();

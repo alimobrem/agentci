@@ -1,0 +1,241 @@
+{
+  "type": "object",
+  "properties": {
+    "apiVersion": {
+      "const": "agentci.io/v1alpha1"
+    },
+    "kind": {
+      "const": "EvalSuite"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "properties": {
+        "class": {
+          "enum": [
+            "unit",
+            "integration",
+            "contract",
+            "policy",
+            "golden",
+            "regression",
+            "adversarial",
+            "safety",
+            "tool-use",
+            "trajectory",
+            "latency",
+            "cost",
+            "model-comparison"
+          ]
+        },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+          },
+          "minItems": 1,
+          "maxItems": 1000,
+          "uniqueItems": true
+        },
+        "impact": {
+          "type": "object",
+          "properties": {
+            "categories": {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "source",
+                  "specification",
+                  "requirement",
+                  "model",
+                  "tool",
+                  "permission",
+                  "policy",
+                  "prompt",
+                  "dependency",
+                  "api",
+                  "data-schema",
+                  "deployment",
+                  "eval"
+                ]
+              },
+              "minItems": 0,
+              "maxItems": 13,
+              "uniqueItems": true
+            },
+            "include": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              },
+              "minItems": 0,
+              "maxItems": 128,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "categories",
+            "include"
+          ],
+          "additionalProperties": false
+        },
+        "runner": {
+          "type": "object",
+          "properties": {
+            "adapter": {
+              "enum": [
+                "command",
+                "native",
+                "pytest",
+                "promptfoo",
+                "deepeval",
+                "http"
+              ]
+            },
+            "command": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 4096
+              },
+              "minItems": 1,
+              "maxItems": 128,
+              "uniqueItems": false
+            },
+            "report": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            "timeoutMs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3600000
+            },
+            "maxOutputBytes": {
+              "type": "integer",
+              "minimum": 1024,
+              "maximum": 4194304
+            }
+          },
+          "required": [
+            "adapter",
+            "command",
+            "timeoutMs"
+          ],
+          "additionalProperties": false
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+              },
+              "critical": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 1000,
+          "uniqueItems": true
+        },
+        "trials": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            },
+            "passRate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "maxCriticalFailures": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            },
+            "confidenceMethod": {
+              "const": "wilson"
+            },
+            "confidenceLevel": {
+              "enum": [
+                0.9,
+                0.95,
+                0.99
+              ]
+            }
+          },
+          "required": [
+            "count",
+            "passRate",
+            "confidenceMethod"
+          ],
+          "additionalProperties": false
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+          },
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true
+        },
+        "representative": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "class",
+        "requirements",
+        "impact",
+        "runner",
+        "scenarios",
+        "trials"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "apiVersion",
+    "kind",
+    "metadata",
+    "spec"
+  ],
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentci.io/schemas/v1alpha1/eval-suite.schema.json"
+}

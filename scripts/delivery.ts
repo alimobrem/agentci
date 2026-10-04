@@ -2,14 +2,18 @@ import { readFile, writeFile, mkdir, access } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { parse } from 'yaml';
-import { validateTasks, validateRelease, median, blockedSeconds, type Task, type Release } from './lib/delivery.ts';
-const [command = 'report', argument, ...args] = process.argv.slice(2);
-const tasks = JSON.parse(await readFile('delivery/tasks.json', 'utf8')) as { tasks: Task[] };
-const requirements = parse(await readFile('specs/requirements.yaml', 'utf8')).requirements as { id: string }[];
+import { validateTasks, validateRelease, validatePhaseCoverage, releaseLedgerPath, median, blockedSeconds, type Task, type Release } from './lib/delivery.ts';
+const invocation = process.argv.slice(2), milestoneIndex = invocation.indexOf('--milestone');
+let explicitMilestone: string | undefined;
+if (milestoneIndex !== -1) { explicitMilestone = invocation[milestoneIndex + 1]; if (!explicitMilestone) throw new Error('--milestone requires M0–M10'); invocation.splice(milestoneIndex, 2); }
+const [command = 'report', argument, ...args] = invocation;
+const tasks = JSON.parse(await readFile('delivery/tasks.json', 'utf8')) as { milestone: string; tasks: Task[] };
+const requirements = parse(await readFile('specs/requirements.yaml', 'utf8')).requirements as { id: string; text: string; source: { section: string }; implementation: { milestone: string } }[];
 validateTasks(tasks.tasks, new Set(requirements.map(r => r.id)));
-const requiredM1 = [...Array.from({length:7}, (_,i)=>`SPEC-40-${String(14+i).padStart(3,'0')}`), ...Array.from({length:6}, (_,i)=>`SPEC-40-${String(22+i).padStart(3,'0')}`), 'SPEC-40-029'];
-for (const id of requiredM1) if (!tasks.tasks.some(t=>t.requirementIds.includes(id))) throw new Error(`M1 build/exit requirement has no task: ${id}`);
-const record = JSON.parse(await readFile('releases/m1-gates.json', 'utf8')) as Release;
+const milestone = explicitMilestone ?? tasks.milestone;
+validatePhaseCoverage(milestone, tasks.tasks, requirements);
+const record = JSON.parse(await readFile(releaseLedgerPath(milestone), 'utf8')) as Release;
+if (record.milestone !== milestone) throw new Error('Release ledger belongs to another milestone');
 const remaining = validateRelease(record, args.includes('--require-complete') || argument === '--require-complete');
 if (command === 'check' || command === 'release') {
   for (const task of tasks.tasks) for (const acceptance of task.acceptance) for (const path of acceptance.evidence) await access(path);

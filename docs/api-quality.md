@@ -77,18 +77,20 @@ M1 must establish these gates for its API and webhook surface before it can be
 called complete. Future milestones extend the contracts and verification with
 their own shipped operations; they do not bypass the gates.
 
-## Current M1 automation
+## Current API automation
 
 `specs/api/operations.json` maps every control operation to requirements and HTTP
 scenarios. Shared fixtures are in `tests/fixtures/control.ts`. Fast checks reject
 unmapped operations or API/domain schema drift. Full CI runs checksum-verified
-oasdiff against the documented M1 candidate baseline and a deliberate breaking
-endpoint-removal case. The baseline is not a prior release; after M1 publication,
-use the immutable released contract and review behavioral compatibility separately.
+oasdiff against the immutable released M1 0.2.1-m1 contract and a deliberate
+breaking endpoint-removal case. The prior candidate baseline remains preserved.
+Baseline provenance/checksums are in `specs/api/baselines/m1-0.2.1-identity.json`;
+its paths/components match the prior candidate. Review behavioral compatibility
+separately; never advance the baseline to conceal a breaking change.
 
 ## Agent evidence consumption — M1 extension
 
-The candidate Node client is an API consumer, not a new scheduling endpoint. It
+The released Node client is an API consumer, not a new scheduling endpoint. It
 uses the existing readiness/evidence operations, verifies shared schemas and
 PR/base/head/repository identity, and checks the canonical digest. Its credential
 comes from private environment configuration and is never supplied on argv.

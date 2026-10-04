@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "milestone": "M1",
+  "milestone": "M2",
   "trackingStartedAt": "2026-10-03T22:37:12.749908Z",
   "note": "Existing work has unknown start time; do not invent historical cycle times. Log all future task transitions.",
   "tasks": [
@@ -385,6 +385,177 @@
           "status": "passed",
           "evidence": [
             "releases/m1-onboarding-images.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-PLAN",
+      "title": "Freeze phase scope, contracts and evidence plan",
+      "requirementIds": [
+        "SPEC-40-030",
+        "SPEC-40-038"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T05:05:41.392Z",
+      "completedAt": "2026-10-04T05:06:27.382Z",
+      "acceptance": [
+        {
+          "text": "Every M2 section 40 item and related section 11 behavior has an implementation task and observable acceptance scenario; prior M1 gates remain complete",
+          "status": "passed",
+          "evidence": [
+            "docs/phases/m2.md"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-GATES",
+      "title": "Generalize phase-specific delivery and release tracking",
+      "requirementIds": [
+        "SPEC-40-038"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T05:06:27.604Z",
+      "completedAt": "2026-10-04T05:08:32.452Z",
+      "acceptance": [
+        {
+          "text": "CLI validates the active phase independently, preserves prior phase gates and blocks unsupported/incomplete phase closure",
+          "status": "passed",
+          "evidence": [
+            "tests/delivery.test.ts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-CONTRACT",
+      "title": "Versioned eval suite/result contracts and selection",
+      "requirementIds": [
+        "SPEC-40-031",
+        "SPEC-40-035",
+        "SPEC-11.2-001"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T05:08:32.671Z",
+      "completedAt": "2026-10-04T05:14:16.610Z",
+      "acceptance": [
+        {
+          "text": "Strict manifests and normalized results reject malformed/ambiguous input, select impact-mapped suites and report missing requirement coverage",
+          "status": "passed",
+          "evidence": [
+            "tests/eval-contracts.test.ts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-RUNNER",
+      "title": "Bounded isolated native and pytest execution",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-033"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Real isolated commands and pytest produce passed/failed/error outcomes; timeout/cancellation/output limits and controller-secret isolation are verified",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-PLUGINS",
+      "title": "Optional existing-engine adapters",
+      "requirementIds": [
+        "SPEC-40-034",
+        "SPEC-11.4-003",
+        "SPEC-11.4-004",
+        "SPEC-11.4-005"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Optional Promptfoo, DeepEval and HTTP adapters normalize documented outputs, reject empty/malformed results and run integration examples without mandatory model credentials",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-STATS",
+      "title": "Repeated trials and immutable base/head comparison",
+      "requirementIds": [
+        "SPEC-40-036",
+        "SPEC-40-037",
+        "SPEC-11.3-002"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T05:14:49.070Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Configured count/rate/critical thresholds, Wilson confidence bounds and insufficient/error states are preserved; exact-source base/head deltas identify regressions",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-PR",
+      "title": "Durable eval orchestration, APIs and advisory PR evidence",
+      "requirementIds": [
+        "SPEC-40-039"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Real PR publishes behavioral deltas and regression scenarios with retained exact-identity evidence; retry/replay/restart/stale heads and authenticated agent API usage are tested",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-RELEASE",
+      "title": "Full phase distribution and released-build demo",
+      "requirementIds": [
+        "SPEC-40-038",
+        "SPEC-40-039"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Tests, eval corpus, compatible API, packaging, docs, scans, native UBI images, immutable GitHub release and anonymous downloads pass; released customer success/failure/recovery demo and retro delivered",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-API-BASELINE",
+      "title": "Adopt the immutable released M1 API contract without masking changes",
+      "requirementIds": [
+        "SPEC-40-039"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T05:15:08.293Z",
+      "completedAt": "2026-10-04T05:15:46.176Z",
+      "acceptance": [
+        {
+          "text": "Released baseline is extracted from anonymously verified 0.2.1-m1; prior baseline preserved, source/checksums recorded and removal regression still fails",
+          "status": "passed",
+          "evidence": [
+            "specs/api/baselines/m1-0.2.1-identity.json"
           ]
         }
       ]

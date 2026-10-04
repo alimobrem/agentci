@@ -24,4 +24,4 @@ for (const operation of coverage.operations) {
   for (const path of operation.tests) await access(new URL(`../${path}`, import.meta.url));
 }
 for (const [path, item] of Object.entries(contract.paths)) for (const method of Object.keys(item as object)) if (['get','post','put','patch','delete','head','options'].includes(method) && !covered.has(`${method} ${path}`)) throw new Error(`Unmapped API operation ${method} ${path}`);
-console.log('M1 OpenAPI contract valid');
+console.log('OpenAPI contract valid');

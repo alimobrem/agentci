@@ -25,7 +25,7 @@ an action-required failure and recovery. Local evidence authentication returned
 401/200 as expected. The local worker is stopped after the demo; hosted dogfood
 continues independently of the temporary tunnel.
 
-M2 is not-started. The M1 extension retrospective is complete and its development
+M2 is in-progress. The M1 extension retrospective is complete and its development
 actions are adopted under the user's instruction to build all phases.
 Broad inventory milestone assignments remain provisional; only explicit M1
 section 40 build/exit requirements are closed by this release.
@@ -60,4 +60,7 @@ The separate approved customer repository demonstrated real failure/recovery and
 exact-identity authenticated evidence. Success/failure demo screenshots and links
 were delivered to the user. [Release record](docs/releases/m1-onboarding.md).
 Original App access remains only agentci; customer App only agentci-onboarding-demo.
-M2 can begin after this closure record is synced; no M2 implementation has started.
+M1 closure is synced. M2 planning and phase-isolated gates are complete; strict
+eval contracts and impact selection passed local tests. Isolated runner, optional
+adapters, statistics, durable PR/API integration and all M2 release gates remain
+open. [M2 acceptance plan](docs/phases/m2.md).

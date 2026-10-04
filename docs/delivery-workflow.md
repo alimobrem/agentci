@@ -163,3 +163,11 @@ before publication. Later failed and successful attempts are preserved in
 The initial timing comparison above describes its then-current scope and does
 not measure total M1 delivery speed. See [the retrospective](retrospectives/m1.md)
 and `delivery/latest-report.json` for closure observations.
+
+## Phase selection
+
+The active phase is `delivery/tasks.json`'s milestone. Each phase has a separate
+`releases/mN-gates.json`; M1 evidence remains immutable historical proof. Run
+`npm run release:check -- --milestone M1 --require-complete` to audit M1 while M2
+is active. The CLI verifies every section 40 build/exit bullet has a task and
+rejects mismatched phase/version or missing customer acceptance.

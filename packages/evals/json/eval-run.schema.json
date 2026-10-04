@@ -1,0 +1,218 @@
+{
+  "type": "object",
+  "properties": {
+    "apiVersion": {
+      "const": "agentci.io/v1alpha1"
+    },
+    "kind": {
+      "const": "EvalRun"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "suite": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+    },
+    "revision": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "subject": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+        },
+        "gitSha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        }
+      },
+      "required": [
+        "repository",
+        "gitSha"
+      ],
+      "additionalProperties": false
+    },
+    "model": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+    },
+    "trials": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000
+    },
+    "status": {
+      "enum": [
+        "passed",
+        "failed",
+        "error",
+        "insufficient"
+      ]
+    },
+    "scenarios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:/-]{0,127}$"
+          },
+          "passed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "failed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "errors": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "skipped": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "criticalFailures": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1000000
+          },
+          "status": {
+            "enum": [
+              "passed",
+              "failed",
+              "error",
+              "insufficient"
+            ]
+          },
+          "passRate": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "confidenceInterval": {
+            "type": "object",
+            "properties": {
+              "lower": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "upper": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "level": {
+                "enum": [
+                  0.9,
+                  0.95,
+                  0.99
+                ]
+              },
+              "method": {
+                "const": "wilson"
+              }
+            },
+            "required": [
+              "lower",
+              "upper",
+              "level",
+              "method"
+            ],
+            "additionalProperties": false
+          },
+          "metrics": {
+            "type": "object",
+            "properties": {
+              "p95LatencyMs": {
+                "type": "number",
+                "minimum": 0
+              },
+              "avgCostUsd": {
+                "type": "number",
+                "minimum": 0
+              },
+              "totalTokens": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "passed",
+          "failed",
+          "errors",
+          "skipped",
+          "criticalFailures",
+          "status"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 1000,
+      "uniqueItems": true
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "mediaType": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          },
+          "uri": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048
+          }
+        },
+        "required": [
+          "digest",
+          "mediaType",
+          "uri"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 1000,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "apiVersion",
+    "kind",
+    "id",
+    "suite",
+    "revision",
+    "subject",
+    "trials",
+    "status",
+    "scenarios",
+    "artifacts"
+  ],
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentci.io/schemas/v1alpha1/eval-run.schema.json"
+}
