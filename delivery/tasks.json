@@ -1059,7 +1059,7 @@
       "completedAt": null,
       "acceptance": [
         {
-          "text": "Published default and optional-engine inventories include current official dependency/runtime verification, image-platform scans, Docker CLI and Temporal/native scanner coverage. Resolve fixable findings. For node-forge GHSA-86w9-cpqp-85rv, provide an upstream-supported fix or concrete call-path/exploitability evidence and explicit documented release treatment; no silent ignored finding, fabricated clean scan or removed M2 optional-engine scope. Re-run actual Promptfoo/DeepEval/native acceptance and verify pinned artifacts.",
+          "text": "Published default and optional-engine inventories include current official dependency/runtime verification, image-platform scans, Docker CLI and Temporal/native scanner coverage. Resolve fixable findings. For node-forge GHSA-86w9-cpqp-85rv, provide an upstream-supported fix, a pinned reviewed upstream backport with before/after crypto regressions and explicit downstream maintenance/scanner treatment, or concrete call-path/exploitability evidence and explicit documented release treatment; no silent ignored finding, fabricated clean scan or removed M2 optional-engine scope. Re-run actual Promptfoo/DeepEval/native acceptance and verify pinned artifacts.",
           "status": "pending",
           "evidence": []
         }

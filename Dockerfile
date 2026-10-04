@@ -48,12 +48,16 @@ RUN python3.14 -m pip install --require-hashes --only-binary=:all: --no-cache-di
     python3.14 -m pip uninstall --yes pip && rm -rf /opt/python/lib/python3.14/ensurepip /opt/python/bin/pip*
 WORKDIR /opt/promptfoo
 COPY deploy/engines/promptfoo/package.json deploy/engines/promptfoo/package-lock.json ./
-RUN npm ci --omit=dev --no-audit --no-fund
+COPY deploy/engines/patches /opt/agentci-patches
+RUN npm ci --omit=dev --no-audit --no-fund && \
+    node /opt/agentci-patches/apply-forge-backport.mjs /opt/promptfoo/node_modules/node-forge && \
+    node /opt/agentci-patches/verify-forge-backport.cjs /opt/promptfoo/node_modules/node-forge
 
 FROM eval-runner AS eval-engines
 USER 0
 COPY --from=eval-engines-build /opt/python /opt/python
 COPY --from=eval-engines-build /opt/promptfoo /opt/promptfoo
+COPY --from=eval-engines-build /opt/agentci-patches /opt/agentci-patches
 ENV PATH=/opt/promptfoo/node_modules/.bin:/opt/python/bin:/usr/local/bin:/usr/bin:/bin
 USER 1001
 CMD ["node", "--version"]

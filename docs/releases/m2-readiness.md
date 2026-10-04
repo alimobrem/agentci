@@ -37,7 +37,10 @@ is `docs/phases/m2.md`, specification section 40 M2 and section 11.
    The optional image has `node-forge` 1.4.0 / GHSA-86w9-cpqp-85rv. The official
    advisory checked 2026-10-04 lists no patched version. Provide an upstream fix
    or concrete applicability evidence and explicit release treatment; this document
-   does not waive the finding or claim a clean optional-engine scan.
+   does not waive the finding or claim a clean optional-engine scan. The local
+   downstream backport now matches pinned upstream source and passes the RSA
+   regression suite and all fourteen native groups. Exact-source CI and
+   digest-bound published-platform remediation records remain pending.
 4. Finish requirement/status, customer setup, migration/upgrade/rollback,
    observability, architecture and release documentation against final behavior.
    Review delivery metrics with comparable suite/cache/runner cohorts; faster local
