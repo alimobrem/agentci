@@ -12,8 +12,12 @@ socket, host mounts, database credentials or App credentials. Restrict database
 and Temporal connectivity to trusted infrastructure; do not expose either to the
 Internet. Configure private networking and transport protection for remote access.
 
-An administrator applies `002_m2.sql` and `002_m2_eval_role.sql` after M1 schema
-setup. Create a distinct login using an interactive administrator `psql` session:
+An administrator applies `002_m2.sql`, `002_m2_eval_role.sql` and
+`003_m2_review_recovery.sql` after M1 schema setup. The last migration belongs to
+the controller; it grants the evaluator no access to review tracking. Controller
+startup and API readiness require that schema. Back up an existing database and
+apply this additive migration before upgrading the services; prior migration
+checksums stay unchanged. See [recovery](eval-recovery.md). Create a distinct login using an interactive administrator `psql` session:
 
 ```sql
 CREATE ROLE agentci_evaluator LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE

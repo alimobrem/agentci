@@ -236,6 +236,12 @@ export class EvalStore {
       await client.query('COMMIT');return result;
     }catch(error){await client.query('ROLLBACK');throw error;}finally{client.release();}
   }
+  async recoveryPlan(attemptId:string):Promise<{id:string;reviewId:string;unitIds:string[];completedUnitIds:string[];subject:{repository:string;pullRequest:number;baseSha:string;headSha:string}}|undefined>{
+    const row=(await this.pool.query(`SELECT j.id,j.review_id,j.repository,j.pull_request,j.base_sha,j.head_sha FROM agentci_eval_jobs j WHERE j.attempt_key=$1 AND ${this.scope}`,[attemptId,this.repository,this.organizationId])).rows[0];
+    if(!row)return undefined;
+    const metadata=(await this.pool.query('SELECT id,status FROM agentci_eval_units WHERE job_id=$1 ORDER BY id LIMIT 10001',[row.id])).rows,ids=metadata.map(r=>r.id as string);if(ids.length>10000)throw new Error('Recovery unit limit exceeded');
+    return {id:row.id,reviewId:row.review_id,unitIds:ids,completedUnitIds:metadata.filter(r=>r.status==='completed').map(r=>r.id as string),subject:{repository:row.repository,pullRequest:row.pull_request,baseSha:row.base_sha,headSha:row.head_sha}};
+  }
   async cancel(jobId:string):Promise<void> {
     const client=await this.pool.connect();
     try{

@@ -50,7 +50,7 @@ test('SQL/HTTP Check publication: complete regressions, stale races, scoped retr
     await activities.cancelEvalReview(job,gapAttempt,gap.id);assert.equal(gapCheck.output.title,'AgentCI evals cancelled');await assert.rejects(activities.publishEvalReview(job,gapAttempt,review.id,gap.id));
     // GitHub defaults to latest-only reads. An older exact attempt must still reconcile after a newer run exists.
     assert.equal(await publish(),'published');assert.equal(state.creations,2,'older attempt retry after newer Check must not duplicate');assert.equal(check.conclusion,'neutral');assert.equal(gapCheck.output.title,'AgentCI evals cancelled');
-    state.stale=true;const beforeFailure=state.creations+state.updates;assert.equal(await activities.failEvalReview(job,gapAttempt),'superseded');assert.equal(state.creations+state.updates,beforeFailure);
+    state.stale=true;const beforeFailure=state.creations+state.updates,beforeCreations=state.creations;assert.equal(await activities.failEvalReview(job,gapAttempt),'published');assert.equal(state.creations+state.updates,beforeFailure+1,'existing stale attempt may be terminalized, never passed');assert.equal(gapCheck.conclusion,'action_required');assert.equal(await activities.failEvalReview(job,randomUUID()),'superseded');assert.equal(state.creations,beforeCreations,'stale terminal recovery cannot create a new Check');
     assert.deepEqual(state.runs.filter(r=>r.id<100).map(r=>r.output),[undefined,undefined,undefined],'other App, stale head and original M1 Check remain untouched');
   }finally{await new Promise<void>(resolve=>server.close(()=>resolve()));await pool.end();}
 });

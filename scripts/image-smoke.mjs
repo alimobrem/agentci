@@ -17,7 +17,7 @@ try {
   const db = `${prefix}-db`, temporal = `${prefix}-temporal`;
   create(db, '--network-alias', 'postgres', '-e', 'POSTGRES_PASSWORD=local-smoke-only', '-e', 'POSTGRES_DB=agentci', 'postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873'); docker('start', db);
   await wait(() => docker('exec', '-e', 'PGPASSWORD=local-smoke-only', db, 'psql', '-h', '127.0.0.1', '-U', 'postgres', '-d', 'agentci', '-tAc', 'SELECT 1') === '1');
-  for(const migration of ['001_m1.sql','002_m2.sql'])execFileSync('docker', ['exec', '-i', db, 'psql', '-v', 'ON_ERROR_STOP=1', '-U', 'postgres', '-d', 'agentci'], { input: await readFile(new URL('../deploy/migrations/'+migration, import.meta.url)), stdio: ['pipe', 'pipe', 'pipe'] });
+  for(const migration of ['001_m1.sql','002_m2.sql','003_m2_review_recovery.sql'])execFileSync('docker', ['exec', '-i', db, 'psql', '-v', 'ON_ERROR_STOP=1', '-U', 'postgres', '-d', 'agentci'], { input: await readFile(new URL('../deploy/migrations/'+migration, import.meta.url)), stdio: ['pipe', 'pipe', 'pipe'] });
   create(temporal, '--network-alias', 'temporal', '-v', `${temporalVolume}:/home/temporal`, 'temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e', 'server', 'start-dev', '--ip', '0.0.0.0', '--db-filename', '/home/temporal/temporal.db', '--headless'); docker('start', temporal);
   await wait(() => docker('exec', temporal, 'temporal', 'operator', 'cluster', 'health', '--address', '127.0.0.1:7233').includes('SERVING'));
   const keyPath = join(directory, 'fixture.pem');

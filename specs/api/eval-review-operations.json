@@ -225,7 +225,37 @@
         "attempt UUID equals immutable delivery UUID",
         "no M1 fallback when eval configuration is absent"
       ]
+    },
+    {
+      "operationId": "reconcileReviewAttempts",
+      "type": "controller background operation",
+      "input": "Scoped durable outbox attempt, pinned Temporal workflow/run ID and recorded evaluator task queue; leased SQL ownership",
+      "output": "Retained cancelled comparison, independently completed evaluator cleanup and exact terminal Check; fenced durable closure metadata",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "tests": [
+        "tests/integration/eval-pr-controller.test.ts",
+        "tests/integration/eval-migrations.test.ts",
+        "tests/integration/eval-check.test.ts"
+      ],
+      "scenarios": [
+        "start-before-ack tracking with immutable run identity",
+        "failed UUID cannot restart after dispatcher ack loss",
+        "actual parent termination with both runner containers live",
+        "actual restricted evaluator SIGKILL preserves daemon orphans",
+        "controller process SIGKILL after SQL cancellation before Check write",
+        "fresh process resumes after lease expiry; stolen lease cannot close",
+        "bounded RPC and heartbeat-maintained SQL recovery ownership",
+        "independent unit cleanup with no App credentials or snapshots",
+        "completed observations are preserved and active children settle before closure",
+        "existing stale attempt becomes unavailable without creating a stale Check or passing it",
+        "exact Check reconciliation and fresh operator attempt remain separate",
+        "checksum-bound additive migration and repeated concurrent application",
+        "controller startup/readiness require recovery schema; evaluator cannot access tracking table"
+      ]
     }
   ],
-  "releaseState": "M2 candidate compiled controller wiring implemented; final-source CI/container acceptance and live customer App/release gates remain open"
+  "releaseState": "M2 recovery candidate; final-source native/container CI and live customer acceptance remain pending"
 }

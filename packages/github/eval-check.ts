@@ -36,11 +36,11 @@ function origin(value:string):string{
   return url.origin;
 }
 /** Caller holds the SQL publication lock. Final remote recheck follows Check reconciliation reads. */
-async function reconcile(client:Octokit,appId:number,job:ReviewJob,attemptId:string,output:{title:string;summary:string},conclusion:'neutral'|'action_required'|undefined,detailsUrl?:string,status:'in_progress'|'completed'='completed'):Promise<'published'|'superseded'>{
+async function reconcile(client:Octokit,appId:number,job:ReviewJob,attemptId:string,output:{title:string;summary:string},conclusion:'neutral'|'action_required'|undefined,detailsUrl?:string,status:'in_progress'|'completed'='completed',allowExistingTerminalStale=false):Promise<'published'|'superseded'>{
   const [owner,repo]=job.repository.split('/'),externalId=`agentci:evals:${job.pullRequest}:${job.baseSha}:${job.headSha}:${attemptId}`;
   const listed=await client.paginate(client.checks.listForRef,{owner:owner!,repo:repo!,ref:job.headSha,check_name:'agentci/evals',filter:'all',per_page:100});
   const existing=listed.find(run=>run.external_id===externalId&&run.app?.id===appId&&run.head_sha===job.headSha&&run.name==='agentci/evals');
-  if(!await currentPullRequest(client,job))return 'superseded';
+  if(!await currentPullRequest(client,job)&&!(allowExistingTerminalStale&&existing&&status==='completed'&&conclusion==='action_required'))return 'superseded';
   const params={owner:owner!,repo:repo!,name:'agentci/evals',head_sha:job.headSha,external_id:externalId,status,...(conclusion?{conclusion}:{}),output,...(detailsUrl?{details_url:detailsUrl}:{})};
   if(existing)await client.checks.update({...params,check_run_id:existing.id});else await client.checks.create(params);
   return 'published';
@@ -60,5 +60,5 @@ export async function publishEvalCheck(client:Octokit,appId:number,job:ReviewJob
   return reconcile(client,appId,job,attemptId,{title:`AgentCI evals: ${s.outcome}`,summary},s.outcome==='error'||s.outcome==='insufficient'?'action_required':'neutral',url);
 }
 export async function publishEvalUnavailable(client:Octokit,appId:number,job:ReviewJob,attemptId:string,reason:'unavailable'|'cancelled'='unavailable'):Promise<'published'|'superseded'>{
-  return reconcile(client,appId,job,attemptId,{title:`AgentCI evals ${reason}`,summary:`${reason==='cancelled'?'Evaluation cancelled.':'Evaluation infrastructure/input failure after retries.'} No passing behavioral result is claimed. Base: ${job.baseSha}; head: ${job.headSha}; attempt: ${attemptId}. Retained observations may be partial; operator recovery and webhook redelivery are required.`},'action_required');
+  return reconcile(client,appId,job,attemptId,{title:`AgentCI evals ${reason}`,summary:`${reason==='cancelled'?'Evaluation cancelled.':'Evaluation infrastructure/input failure after retries.'} No passing behavioral result is claimed. Base: ${job.baseSha}; head: ${job.headSha}; attempt: ${attemptId}. Retained observations may be partial; operator recovery and webhook redelivery are required.`},'action_required',undefined,'completed',true);
 }

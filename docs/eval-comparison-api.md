@@ -75,11 +75,14 @@ The operation does not start reviews, cancel jobs or imply PR publication.
 Fresh M2 Compose databases apply the bundled migrations during initialization.
 For an existing deployment, back up its database and apply the additive,
 checksum-bound `deploy/migrations/002_m2.sql` before starting M2 services. For the
-bundled Compose deployment:
+bundled Compose deployment, also apply `003_m2_review_recovery.sql` before
+starting the candidate controller/API:
 
 ```sh
 docker compose --env-file .env -f deploy/compose.yaml exec -T postgres \
   psql -v ON_ERROR_STOP=1 -U agentci -d agentci < deploy/migrations/002_m2.sql
+docker compose --env-file .env -f deploy/compose.yaml exec -T postgres \
+  psql -v ON_ERROR_STOP=1 -U agentci -d agentci < deploy/migrations/003_m2_review_recovery.sql
 ```
 
 API startup/readiness checks require the M2 jobs, units and trial tables. A

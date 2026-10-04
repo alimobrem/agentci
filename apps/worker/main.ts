@@ -1,3 +1,5 @@
+import {ReviewAttempts} from '../../packages/storage/review-attempts.ts';
+import {reconcileReviewAttempts} from './recovery.ts';
 import { fileURLToPath } from 'node:url';
 import { Pool } from 'pg';
 import { Client, Connection } from '@temporalio/client';
@@ -16,22 +18,26 @@ const pool = new Pool({ connectionString: config.databaseUrl, max: 10, connectio
 const store = new Store(pool, config.organizationId, config.repository);
 await store.ready();
 const evals=new EvalStore(pool,config.organizationId,config.repository);await evals.ready();
+const attempts=new ReviewAttempts(pool,config.organizationId,config.repository);await attempts.ready();
 const connection = await Connection.connect({ address: config.temporalAddress });
 const native = await NativeConnection.connect({ address: config.temporalAddress });
 const client = new Client({ connection, namespace: config.namespace });
 const github = installationClient(config.appId, config.installationId, config.privateKey);
+const evalActivities=createEvalReviewActivities(github,store,evals,config,evalPolicy);
 const worker = await Worker.create({ connection: native, namespace: config.namespace, taskQueue: config.taskQueue,
-  workflowsPath: fileURLToPath(new URL('./workflows.js', import.meta.url)), activities: {...createActivities(github, store, config),...createEvalReviewActivities(github,store,evals,config,evalPolicy)} });
+  workflowsPath: fileURLToPath(new URL('./workflows.js', import.meta.url)), activities: {...createActivities(github, store, config),...evalActivities} });
 let stopped = false;
 let dispatching = false;
+let dispatchOperation:Promise<void>|undefined;
 async function dispatch() {
   if (dispatching || stopped) return;
   dispatching = true;
   try {
-    await dispatchPendingReviews(store,client,{taskQueue:config.taskQueue,timeoutMs});
-  } catch { console.error('Review dispatch failed; durable outbox will retry'); }
+    await dispatchPendingReviews(store,client,{taskQueue:config.taskQueue,timeoutMs,attempts});
+    await reconcileReviewAttempts(attempts,evals,client,evalActivities,{shouldStop:()=>stopped});
+  } catch { console.error('Review dispatch/recovery unavailable; retained work will retry'); }
   finally { dispatching = false; }
 }
-const timer = setInterval(() => void dispatch(), 1000);
+const timer = setInterval(() => {if(!dispatchOperation&&!stopped)dispatchOperation=dispatch().finally(()=>{dispatchOperation=undefined;});}, 1000);
 for (const signal of ['SIGINT', 'SIGTERM'] as const) process.on(signal, () => { stopped = true; clearInterval(timer); worker.shutdown(); });
-try { await worker.run(); } finally { stopped = true; clearInterval(timer); await native.close(); await connection.close(); await pool.end(); }
+try { await worker.run(); } finally { stopped = true; clearInterval(timer); await dispatchOperation; await native.close(); await connection.close(); await pool.end(); }

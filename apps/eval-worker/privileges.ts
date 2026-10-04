@@ -4,7 +4,7 @@ export async function requireEvalPrivileges(pool:Pool):Promise<void>{
   const role=(await pool.query('SELECT rolsuper,rolcreatedb,rolcreaterole,rolreplication,rolbypassrls FROM pg_roles WHERE rolname=current_user')).rows[0];
   if(!role||Object.values(role).some(Boolean))throw new Error('Eval worker requires a restricted database login');
   if((await pool.query("SELECT has_schema_privilege(current_user,'public','CREATE') OR has_database_privilege(current_user,current_database(),'CREATE') AS allowed")).rows[0].allowed)throw new Error('Eval worker cannot create database objects');
-  for(const table of ['agentci_reviews','agentci_deliveries','agentci_jobs']){
+  for(const table of ['agentci_reviews','agentci_deliveries','agentci_jobs','agentci_review_attempts']){
     const exists=(await pool.query('SELECT to_regclass($1) AS relation',[`public.${table}`])).rows[0].relation;
     if(!exists)continue;
     const row=(await pool.query("SELECT has_table_privilege(current_user,$1,'SELECT,INSERT,UPDATE,DELETE,TRUNCATE,REFERENCES,TRIGGER') AS allowed",[`public.${table}`])).rows[0];

@@ -1,3 +1,4 @@
+import {ReviewAttempts} from '../../packages/storage/review-attempts.ts';
 import { Pool } from 'pg';
 import { runtimeConfig } from '../../packages/runtime/config.ts';
 import { Store } from '../../packages/storage/postgres.ts';
@@ -6,6 +7,8 @@ import { createControlApi } from './server.ts';
 const config = await runtimeConfig(false);
 const pool = new Pool({ connectionString: config.databaseUrl, max: 10, connectionTimeoutMillis: 5000, query_timeout: 10_000 });
 const store = new Store(pool, config.organizationId, config.repository);
+const attempts=new ReviewAttempts(pool,config.organizationId,config.repository),scopeReady=store.ready.bind(store);
+store.ready=async()=>{await scopeReady();await attempts.ready();};
 await store.ready();
 const comparisons=new EvalStore(pool,config.organizationId,config.repository);
 await comparisons.ready();
