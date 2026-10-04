@@ -1,0 +1,66 @@
+{
+  "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+  "version": "0.2.0-m1",
+  "release": "https://github.com/alimobrem/agentci/releases/tag/v0.2.0-m1",
+  "immutable": true,
+  "anonymousDownloads": {
+    "allSixAssetsMatched": true,
+    "sha256": {
+      "m1-manifest.json": "b9ebb40bf6de45fb97363d54c53e6e7b0fdba48d63c969df89fd7200bac91f66",
+      "agentci-0.2.0-m1.tgz": "c60ae3d03ed4f226815b1cf9fc24392c61373d1beac7a03be29b02e66cacf49b",
+      "m1-security.md": "5dccd39918c32c62c5a3178028872181605cfbfe05ee7865216aee3098a24670",
+      "m1-demo.json": "8bfee0277db3204ee69205e7d99104ce677f393557dab7ba73548b90278c2c82",
+      "m1-verification.tar.gz": "044a76a48d275be790894e38e9918603f38ed21b91c09aeaf875d37913bdbc7c",
+      "SHA256SUMS": "184d73f18b566b0aaa3a452b620ccb19fd46b3b960832c7eac3a273bed0e2c84"
+    }
+  },
+  "cleanProductionInstall": {
+    "passed": true,
+    "cliVersion": "0.2.0-m1",
+    "positiveAndNegativeDemo": "releases/m1-cli-demo.json"
+  },
+  "images": {
+    "version": "0.2.0-m1",
+    "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+    "platforms": [
+      "linux/amd64",
+      "linux/arm64"
+    ],
+    "api": "ghcr.io/alimobrem/agentci-api@sha256:35ff1317c2b91aa39be4289e7a0ccc8427611aadd69ac5a24f416db3497b5063",
+    "worker": "ghcr.io/alimobrem/agentci-worker@sha256:c1dc99cd51b7490e1033362e30e14c7e967e09e659f73aaeaae1faa1a4186a88"
+  },
+  "nativeArm64": {
+    "result": "passed",
+    "version": "m1-published",
+    "platform": "arm64",
+    "checks": [
+      "non-root API/worker startup",
+      "readiness",
+      "signature rejection",
+      "evidence authentication",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  },
+  "nativeAmd64": {
+    "run": "https://github.com/alimobrem/agentci/actions/runs/37163050220",
+    "result": {
+      "result": "passed",
+      "version": "downloaded",
+      "platform": "x64",
+      "checks": [
+        "non-root API/worker startup",
+        "readiness",
+        "signature rejection",
+        "evidence authentication",
+        "signed closed delivery",
+        "non-root persistent Temporal database startup/restart",
+        "graceful shutdown"
+      ],
+      "github": "synthetic credentials; no live GitHub review claimed"
+    }
+  },
+  "amd64Constraint": "UBI 10 requires x86-64-v3. Mac amd64 emulation failed that CPU requirement; native supported amd64 verification passed. Emulation failure is not counted as a successful smoke."
+}

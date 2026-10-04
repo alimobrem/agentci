@@ -5,7 +5,7 @@ See [the dependency policy](dependency-policy.md) for version choices.
 Use the versions in `.node-version` and `package.json`; install npm with
 `npm install --global npm@12.2.0` before `npm ci`.
 
-## Local API
+## Local schema-validation API
 
 ```sh
 npm ci
@@ -33,11 +33,16 @@ curl -fsS http://127.0.0.1:3000/v1/validate \
 
 Document validation returns 200 for valid input, 422 for invalid contracts, 400
 for malformed requests, 415 for unsupported content types, and 413 above 1 MiB.
-Other product resources are not implemented.
+This schema API is separate from the released M1 control API; both default to
+port 3000 and must not run there simultaneously. For webhooks, readiness and
+authenticated persistent evidence, use [the M1 setup guide](m1-setup.md).
 
 ## Verification and packaging
 
-To reproduce M0, run these commands in a clean checkout of `v0.1.0-m0`.
+To reproduce M0, use a clean checkout of `v0.1.0-m0` and its recorded Node/npm
+requirements in [the historical release record](releases/m0.md). These archive
+commands illustrate M0 packaging; current M1 artifacts are in
+[the M1 release record](releases/m1.md).
 When packaging changed source or package contents, assign a new version first
 and use that version's archive name in the smoke command.
 

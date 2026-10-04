@@ -4,9 +4,11 @@ This is a single-repository development deployment. Consult
 [the M1 release record](releases/m1.md) for publication and completion evidence.
 Production SaaS deployment is outside M1.
 Local image names are `agentci-api:0.2.0-m1` and
-`agentci-worker:0.2.0-m1`; intended registry names are
+`agentci-worker:0.2.0-m1`; public registry names are
 `ghcr.io/alimobrem/agentci-api` and `ghcr.io/alimobrem/agentci-worker`.
 Both service images use Red Hat UBI 10 minimal with official Node.js 26.10.0, pinned by digest.
+Linux amd64 hosts must support x86-64-v3. Native arm64 and amd64 downloaded-image
+smoke passed; Mac amd64 emulation lacks the required CPU features on this host.
 PostgreSQL 18.6 and the local Temporal development server use their upstream images.
 PostgreSQL 18 mounts `/var/lib/postgresql`; its separate `postgres18-data` volume
 leaves earlier PostgreSQL 17 volumes intact. Existing data requires a reviewed
@@ -76,7 +78,7 @@ permissions. Download its private key outside tracked source, keep mode 0600, an
 record the App ID and installation ID. Do not paste secrets or private keys into
 chat, source, logs, or GitHub Actions output.
 
-This candidate handles opened, synchronize, reopened, ready_for_review, edited and
+The M1 webhook API handles opened, synchronize, reopened, ready_for_review, edited and
 closed PR events. Signed ping is ignored safely. Other scoped events are durably
 recorded as ignored; push-triggered rescan and Check requested actions are not
 implemented. A closed or changed-base/head PR is superseded before publication.
@@ -87,9 +89,9 @@ GitHub API call can leave a Check on the old commit, never on the new commit.
 
 Requires Docker Compose (`docker compose version`). The local verification
 scripts also work without Compose; this host initially lacked the Compose plugin.
-The Compose configuration was validated using a checksum-verified temporary
-official Compose binary and placeholder values; configured live App startup is
-still pending.
+The configured live stack and signed App delivery were verified using the
+published service images. A checksum-verified temporary official Compose binary
+was used on this host.
 
 ```sh
 cp .env.example .env
@@ -106,7 +108,9 @@ To let the non-root containers read your mode-0600 key, use your host UID/GID:
 ```sh
 export AGENTCI_UID=$(id -u)
 export AGENTCI_GID=$(id -g)
-docker compose --env-file .env -f deploy/compose.yaml up --build -d
+export AGENTCI_API_IMAGE=ghcr.io/alimobrem/agentci-api@sha256:35ff1317c2b91aa39be4289e7a0ccc8427611aadd69ac5a24f416db3497b5063
+export AGENTCI_WORKER_IMAGE=ghcr.io/alimobrem/agentci-worker@sha256:c1dc99cd51b7490e1033362e30e14c7e967e09e659f73aaeaae1faa1a4186a88
+docker compose --env-file .env -f deploy/compose.yaml up --no-build -d
 curl -fsS http://127.0.0.1:3000/readyz
 docker compose --env-file .env -f deploy/compose.yaml logs --tail=30 api worker
 ```
@@ -130,7 +134,7 @@ docker compose --env-file .env -f deploy/compose.yaml down
 ```
 
 Do not add `--volumes` unless intentionally discarding local data. Back up both
-database and Temporal state before upgrades. This candidate has no implemented
+database and Temporal state before upgrades. M1 has no implemented
 database retention/backup automation or production Temporal configuration.
 
 ## Observe a real PR review
@@ -211,7 +215,7 @@ permissions:
 ```
 
 Actions are read/write/delete/execute; environments are production/non-production.
-This candidate confirms added production mutations and explicit secret reads.
+M1 confirms added production mutations and explicit secret reads.
 Other configured policy/permission changes get a high-risk inferred finding;
 arbitrary policy languages and source-code permissions are not semantically proven.
 Models outside configured selectors are not inferred by a model reviewer.
@@ -233,7 +237,10 @@ visibility must be verified public separately from repository visibility.
 
 M1 completion requires live App/PR verification, successful CI on the release SHA,
 scan disposition, published/downloaded images, an immutable release and its user
-demo. M2 remains not-started until all M1 gates pass.
+demo. All 16 M1 gates have passed; see the release record. M2 remains not-started
+pending the user retrospective discussion. The local worker is stopped after
+the demo; hosted dogfood continues. Restart the worker explicitly only when
+using local webhook processing and its bearer-authenticated evidence URLs.
 
 Integration references: [GitHub App permissions](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/choosing-permissions-for-a-github-app),
 [GitHub CI Checks](https://docs.github.com/en/apps/creating-github-apps/writing-code-for-a-github-app/building-ci-checks-with-a-github-app),

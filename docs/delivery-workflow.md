@@ -129,7 +129,7 @@ retains earlier events. Quality counts cover recorded observations only; zero
 recorded escaped defects is not proof that none exist. First-pass failure counts
 use attempt 1 and retain failed runs separately from successful reruns.
 
-## Initial observations on 2026-10-03
+## Initial development observations on 2026-10-03
 
 | Measure | Before | After | Samples and interpretation |
 | --- | --- | --- | --- |
@@ -138,7 +138,7 @@ use attempt 1 and retain failed runs separately from successful reruns.
 | Full CI, cache reuse | 140 s | 105 / 126 s; median 115.5 s | Two warm runs; median 17.5% shorter, preliminary |
 | Separate fast CI job | No separate early result | 24 s cold / 19–17 s warm | Full verification remains required |
 
-Two dogfood defects were recorded: the persistent Temporal volume startup issue,
+At this earlier checkpoint, two dogfood defects were recorded: the persistent Temporal volume startup issue,
 and an evidence collector that initially listed historical manifests outside the
 uploaded bundle. The latter was found by downloading artifacts and checking their
 inventory; the collector now matches the upload paths. Do not count an artifact
@@ -152,3 +152,14 @@ was downloaded; all three listed artifact hashes match. It passed 58 tests,
 14 evals, real integration, packaging, compatibility and runtime verification.
 The tested merge SHA and candidate SHA are separate in `delivery/ci-evidence.json`.
 Workflow task closure does not close M1 release gates.
+
+## M1 closure update
+
+The release-source suite passed 60 tests, two real integration tests and 14 evals.
+A third recorded dogfood defect was an illegal workflow environment context;
+pinned actionlint and an intentionally invalid workflow regression now catch it
+before publication. Later failed and successful attempts are preserved in
+`delivery/runs/`; the expected-negative demo is a separate cohort.
+The initial timing comparison above describes its then-current scope and does
+not measure total M1 delivery speed. See [the retrospective](retrospectives/m1.md)
+and `delivery/latest-report.json` for closure observations.

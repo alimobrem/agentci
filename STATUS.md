@@ -11,20 +11,24 @@ Live requirement coverage is in
 
 Delivered: four versioned schemas, CLI validation, API skeleton, trace mapping,
 source-linked inventory, tests, contract evals, compiled package and release docs.
-M1 is in progress; M0's GitHub release gate has passed. Local M1 preview code
-includes semantic diff/risk, signed scoped webhook ingestion, PostgreSQL evidence,
-Temporal orchestration and GitHub Check adapters. Unit/API tests, deterministic
-risk cases, real local persistence/workflow tests and compiled containers have
-verification evidence. See [M1 setup/demo](docs/m1-setup.md).
+M1 is complete: public immutable [v0.2.0-m1](https://github.com/alimobrem/agentci/releases/tag/v0.2.0-m1)
+at source `620230fd49d09e788d9a6a2783b57428882f5927`. All 16 completion gates have
+source-linked evidence. Release-source verification passed 60 tests, two real
+PostgreSQL/Temporal integration tests and 14 deterministic evals. All six public
+assets were downloaded and checked; public UBI API/worker images passed native
+arm64 and amd64 downloaded-image smoke. See [the release record](docs/releases/m1.md).
 
-The private GitHub App is installed only on alimobrem/agentci; a real signed
-webhook has produced an advisory Check on PR #1 with immutable evidence. See
-[the first dogfood record](docs/dogfood/m1-first-check.md). The local instance uses
-a temporary HTTPS tunnel.
+The repository-only App runs advisory checks through trusted GitHub-hosted code,
+with retained evidence uploaded before publication. The released-build
+[demo](docs/dogfood/m1-release-demo.md) shows a verified production-write finding,
+an action-required failure and recovery. Local evidence authentication returned
+401/200 as expected. The local worker is stopped after the demo; hosted dogfood
+continues independently of the temporary tunnel.
 
-M1 is not complete. Reliable every-PR operation, CI on the release SHA, scan
-disposition, GHCR publication/download
-verification and the release/demo gates remain open. M2 is not-started.
+M2 is not-started. [M1 retrospective findings and proposed actions](docs/retrospectives/m1.md)
+are ready for discussion with the user before next-phase implementation.
+Broad inventory milestone assignments remain provisional; only explicit M1
+section 40 build/exit requirements are closed by this release.
 
 Run `npm run check` for TypeScript, tests, contract evals, repository validation and
 status freshness. API tests need loopback access. Run the packaged CLI smoke test

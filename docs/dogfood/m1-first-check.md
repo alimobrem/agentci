@@ -1,6 +1,8 @@
 # First live M1 review — development build
 
-Observed 2026-10-03. This is dogfood evidence, not M1 release completion.
+Observed 2026-10-03. Historical development-build evidence, preserved unchanged
+in scope. For current operation and completion, see the
+[released-build demo](m1-release-demo.md).
 
 The private App `AgentCI-alimobrem` (App ID 5179954, installation 167655696)
 is installed on **only** `alimobrem/agentci`. Permissions: Contents, Pull requests
@@ -29,6 +31,6 @@ persistent Compose deployment. Persistence/restart checks remain separate gates.
 The tunnel is temporary and its URL is not a durable evidence permalink. The
 Check's evidence link requires the evidence bearer token; never put that token in
 URLs, Check output or Git. Credentials live in ignored local files with private
-permissions; they are excluded from Docker build context. The App is installed
-but only receives reviews while this local deployment and tunnel are running.
-M1's every-PR criterion requires a reliable deployment before release completion.
+permissions; they are excluded from Docker build context. At this observation, reviews depended on the local deployment and tunnel.
+The released hosted workflow now provides ongoing every-PR dogfood coverage;
+this earlier observation alone did not satisfy that release gate.

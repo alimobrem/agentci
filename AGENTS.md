@@ -1,8 +1,9 @@
 # AgentCI development workflow
 
-- Follow the primary spec in milestone order. M1 remains in progress; do not start
-  M2 until M1's tests, evals, packaging, docs, publication, download verification,
-  release and user demo gates pass. Use `docs/definition-of-done.md`.
+- Follow the primary spec in milestone order. M1 is complete with published release
+  evidence. M2 remains not-started until the user retrospective discussion. Finish
+  each phase's tests, evals, packaging, docs, publication, download verification,
+  release and user demo gates before the next. Use `docs/definition-of-done.md`.
 - Before new implementation, add or start a small task in `delivery/tasks.json`
   with requirement IDs and observable acceptance criteria. Use the delivery CLI
   for transitions; preserve blocker, acceptance, completion and rework events.

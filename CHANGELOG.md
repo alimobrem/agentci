@@ -1,6 +1,6 @@
 # Releases
 
-## Unreleased — M1 development candidate
+## 0.2.0-m1 — 2026-10-03
 
 - Deterministic immutable-commit semantic diff and advisory risk CLI.
 - Signed scoped GitHub webhook API, transactional PostgreSQL outbox/evidence,
@@ -9,7 +9,9 @@
   integration tests; non-root UBI API/worker packaging and local demo/setup guide.
 - Repository-only GitHub App verified on live PRs; trusted GitHub-hosted review
   retains evidence before publishing Checks and reconciles open PRs.
-- M1 release and GHCR publication remain pending.
+- Immutable public GitHub prerelease and public multi-platform UBI service images;
+  anonymous download/install verification, native platform smoke and live
+  success/failure/recovery demo. [Release record](docs/releases/m1.md).
 
 ## 0.1.0-m0 — 2026-10-03
 

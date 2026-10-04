@@ -32,3 +32,8 @@ that key. Its installation stays limited to alimobrem/agentci.
 See the final release manifest and scan artifacts for observed findings and their
 disposition. This assessment establishes the coverage boundary; it is not a
 substitute for those results. No production SaaS hardening claim is made in M1.
+
+All four published-platform scans observed zero known findings on 2026-10-03.
+UBI 10 amd64 requires x86-64-v3; use native arm64 on Apple Silicon. Native
+amd64 and arm64 downloaded-image startup and persistence checks passed.
+See https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/10.0_release_notes/architectures .

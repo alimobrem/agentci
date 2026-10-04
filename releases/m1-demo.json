@@ -1,0 +1,51 @@
+{
+  "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+  "version": "0.2.0-m1",
+  "images": {
+    "version": "0.2.0-m1",
+    "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+    "platforms": [
+      "linux/amd64",
+      "linux/arm64"
+    ],
+    "api": "ghcr.io/alimobrem/agentci-api@sha256:35ff1317c2b91aa39be4289e7a0ccc8427611aadd69ac5a24f416db3497b5063",
+    "worker": "ghcr.io/alimobrem/agentci-worker@sha256:c1dc99cd51b7490e1033362e30e14c7e967e09e659f73aaeaae1faa1a4186a88"
+  },
+  "syntheticInputs": true,
+  "positive": {
+    "pullRequest": 2,
+    "headSha": "8cc818f469808df7235252cdd1a93475957ac0f1",
+    "check": "https://github.com/alimobrem/agentci/runs/111320361891",
+    "conclusion": "neutral",
+    "risk": "high",
+    "verifiedFinding": "production-mutation-added",
+    "evidenceId": "bd2e19db-0675-4417-b0b4-ba67c8e4fad9",
+    "digest": "sha256:f97c5697e81b5c226ad1e3a670162922ed0369cd9b831c1d100ba269eb134e5c",
+    "producer": {
+      "name": "agentci",
+      "version": "0.2.0-m1"
+    },
+    "signedWebhookWorkflow": "agentci:alimobrem/agentci:35e4aad0-bf85-11f1-862f-567677eda2f5",
+    "workflowResult": "published"
+  },
+  "negative": {
+    "headSha": "a74fb3651c96e84593acfd5835100524ec4f9fe9",
+    "invalidAction": "administrator",
+    "check": "https://github.com/alimobrem/agentci/runs/111318932679",
+    "conclusion": "action_required",
+    "workflow": "https://github.com/alimobrem/agentci/actions/runs/37162370181",
+    "expectedFailure": true
+  },
+  "evidenceApi": {
+    "location": "localhost",
+    "withoutToken": 401,
+    "authenticated": 200,
+    "digestVerified": true
+  },
+  "hostedPositive": "https://github.com/alimobrem/agentci/actions/runs/37162182152",
+  "limits": [
+    "Advisory deterministic analysis; no behavioral eval execution in M1",
+    "Demo permission data grants no actual access; PR is not merged",
+    "Hosted artifact retention is 90 days; local evidence uses bearer authentication"
+  ]
+}

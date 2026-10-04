@@ -1,0 +1,49 @@
+{
+  "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+  "version": "0.2.0-m1",
+  "packageSha256": "c60ae3d03ed4f226815b1cf9fc24392c61373d1beac7a03be29b02e66cacf49b",
+  "packageSource": "anonymous published GitHub release download",
+  "positive": {
+    "headSha": "8cc818f469808df7235252cdd1a93475957ac0f1",
+    "risk": "high",
+    "advisory": true,
+    "findings": [
+      {
+        "id": "add36f1001f0b792ad4f6d2f",
+        "rule": "policy-permission-change",
+        "severity": "high",
+        "claim": "Configured policy or permission input changed; access impact needs review.",
+        "paths": [
+          "agentci.yaml"
+        ],
+        "verification": "inferred"
+      },
+      {
+        "id": "05b284e9bde8804434f3a997",
+        "rule": "policy-permission-change",
+        "severity": "high",
+        "claim": "Configured policy or permission input changed; access impact needs review.",
+        "paths": [
+          "permissions/m1-demo.yaml"
+        ],
+        "verification": "inferred"
+      },
+      {
+        "id": "fd9b7347f89d296606b20543",
+        "rule": "production-mutation-added",
+        "severity": "high",
+        "claim": "Explicit production write permission added.",
+        "paths": [
+          "permissions/m1-demo.yaml"
+        ],
+        "verification": "verified"
+      }
+    ]
+  },
+  "negative": {
+    "headSha": "a74fb3651c96e84593acfd5835100524ec4f9fe9",
+    "exitCode": 2,
+    "output": "Review infrastructure/input failure: Invalid permission entry: permissions/m1-demo.yaml"
+  },
+  "syntheticData": true
+}

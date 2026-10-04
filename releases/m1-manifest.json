@@ -1,0 +1,46 @@
+{
+  "milestone": "M1",
+  "version": "0.2.0-m1",
+  "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+  "sourceTag": "v0.2.0-m1",
+  "date": "2026-10-03",
+  "release": "https://github.com/alimobrem/agentci/releases/tag/v0.2.0-m1",
+  "files": {
+    "agentci-0.2.0-m1.tgz": "c60ae3d03ed4f226815b1cf9fc24392c61373d1beac7a03be29b02e66cacf49b",
+    "m1-security.md": "5dccd39918c32c62c5a3178028872181605cfbfe05ee7865216aee3098a24670",
+    "m1-demo.json": "8bfee0277db3204ee69205e7d99104ce677f393557dab7ba73548b90278c2c82",
+    "m1-verification.tar.gz": "044a76a48d275be790894e38e9918603f38ed21b91c09aeaf875d37913bdbc7c"
+  },
+  "images": {
+    "version": "0.2.0-m1",
+    "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+    "platforms": [
+      "linux/amd64",
+      "linux/arm64"
+    ],
+    "api": "ghcr.io/alimobrem/agentci-api@sha256:35ff1317c2b91aa39be4289e7a0ccc8427611aadd69ac5a24f416db3497b5063",
+    "worker": "ghcr.io/alimobrem/agentci-worker@sha256:c1dc99cd51b7490e1033362e30e14c7e967e09e659f73aaeaae1faa1a4186a88"
+  },
+  "runtime": [
+    "Node 26.10.0",
+    "npm 12.2.0",
+    "UBI 10 minimal; amd64 requires x86-64-v3"
+  ],
+  "verification": {
+    "ci": "https://github.com/alimobrem/agentci/actions/runs/37162124129",
+    "publication": "https://github.com/alimobrem/agentci/actions/runs/37162134891",
+    "nativeAmd64Downloads": "https://github.com/alimobrem/agentci/actions/runs/37163050220",
+    "unitApiAdapterTests": 60,
+    "realPostgresTemporalTests": 2,
+    "contractRiskEvals": 14,
+    "knownFindingsInPublishedScans": 0,
+    "downloadedImageSmoke": "passed native arm64 and native amd64"
+  },
+  "limitations": [
+    "Advisory deterministic analysis; no behavioral eval execution in M1",
+    "Demo permission data grants no actual access; PR is not merged",
+    "Hosted artifact retention is 90 days; local evidence uses bearer authentication",
+    "Single-repository development API/Temporal deployment; no production SaaS claim",
+    "Static scan coverage of vendor native binaries has documented limits"
+  ]
+}

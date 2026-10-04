@@ -1,6 +1,14 @@
 # Architecture choices
 
-2026-10-03; M0 release and M1 local candidate implementation.
+2026-10-03; M0 and M1 released implementation.
+
+AgentCI is an agent-first CI/CD platform and engineering control plane. Agents
+are first-class API consumers and delivery participants; machine-readable intent,
+policy, workflow state and evidence support their decisions. Human authorization
+remains explicit at consequential boundaries. The target spans specification,
+change, evaluation, release and production feedback. M1 semantic PR review is the
+first delivered capability, not the complete product. Existing CI and deployment
+systems remain execution foundations.
 
 Implemented: TypeScript for CLI/API and shared validation, Node.js 26.10.0 (26.x),
 JSON Schema draft-07, Ajv with formats, and YAML parsing. Validators do not coerce,
@@ -14,7 +22,7 @@ installation/repository allowlisting, durable receipt/outbox and bearer-protecte
 evidence. PostgreSQL is bound to one organization/repository; shared multi-tenant
 hosting is not implemented. The API contract is `specs/api/openapi.json`.
 
-Adopted in the M1 local candidate: Temporal for durable PR-review orchestration.
+Adopted in M1: Temporal for durable PR-review orchestration.
 No deployment or SDK was part of the immutable M0 release. AgentCI needs retries,
 cancellation on new PR heads, parallel eval/reviewer steps, external CI completion,
 approval waits, and long-running incident/repair flows. Workflows carry immutable
@@ -22,9 +30,10 @@ commit/artifact references; activities perform external I/O and must be idempote
 because retries can repeat effects. Only results for the current head SHA may
 satisfy its gate. Test workflow versioning and recovery before required checks.
 
-Temporal coordinates; isolated native runners, GitHub Actions and Tekton execute
-jobs. PostgreSQL holds control metadata and evidence relationships; object storage
-holds large artifacts; external OTLP backends store traces. Workflow history is
+Target architecture: Temporal coordinates; isolated native runners, GitHub Actions
+and Tekton execute jobs. In M1, PostgreSQL stores review evidence and GitHub Actions
+artifacts retain hosted results. Tekton, general object storage and external OTLP
+trace export remain future milestones. Workflow history is
 not the evidence API. Keep raw sensitive payloads out of history using references
 and controlled artifact storage. Core domain contracts remain free of Temporal
 imports. Start with a local development service; Cloud versus production
@@ -35,12 +44,13 @@ dependencies. It fits a smaller independent-job MVP. AgentCI's full workflow sco
 favors Temporal to avoid building multi-step durable coordination ourselves. This
 is an architecture assessment, not a performance benchmark.
 
-The M1 candidate uses PostgreSQL evidence metadata and an SQL initialization
+The M1 release uses PostgreSQL evidence metadata and an SQL initialization
 migration, least-privilege GitHub App adapters and advisory Checks, deterministic
 structured rules and explicit manifests, and non-root Red Hat UBI 10 minimal with official Node.js 26.10.0 API/worker images pinned by digest, as requested by the user. Review
 activities fetch exact Git objects through the official Octokit SDK without
-executing PR code. GHCR is the selected registry; publication and live App
-installation remain pending. See `docs/m1-setup.md` for local configuration,
+executing PR code. Public GHCR images and the repository-only App are verified.
+Trusted GitHub-hosted review uploads evidence before publishing Checks and
+reconciles open PRs without requiring the laptop. See `docs/m1-setup.md` for local configuration,
 verification and current limits. OPA and object storage are not implemented.
 
 Sources: [Temporal workflows](https://docs.temporal.io/workflows),

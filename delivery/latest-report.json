@@ -1,12 +1,12 @@
 {
   "baselineCiSeconds": 140,
-  "optimizedCiMedianSeconds": 126,
-  "optimizedSamples": 3,
-  "firstPassAttempts": 2,
-  "firstPassFailures": 0,
-  "preliminaryCiReductionPercent": 10,
+  "optimizedCiMedianSeconds": 155.5,
+  "optimizedSamples": 4,
+  "firstPassAttempts": 4,
+  "firstPassFailures": 1,
+  "preliminaryCiReductionPercent": -11.071428571428571,
   "baselineLocalMedianSeconds": 1.7555532919999999,
-  "latestFastCheckSeconds": 0.437038584,
+  "latestFastCheckSeconds": 0.506339625,
   "tasks": [
     {
       "id": "M1-APP",
@@ -16,37 +16,37 @@
     },
     {
       "id": "M1-WEBHOOK",
-      "status": "in-progress",
+      "status": "done",
       "cycleSeconds": null,
       "blockedSeconds": null
     },
     {
       "id": "M1-RESOLVE",
-      "status": "in-progress",
+      "status": "done",
       "cycleSeconds": null,
       "blockedSeconds": null
     },
     {
       "id": "M1-DIFF",
-      "status": "in-progress",
+      "status": "done",
       "cycleSeconds": null,
       "blockedSeconds": null
     },
     {
       "id": "M1-RISK",
-      "status": "in-progress",
+      "status": "done",
       "cycleSeconds": null,
       "blockedSeconds": null
     },
     {
       "id": "M1-EVIDENCE",
-      "status": "in-progress",
+      "status": "done",
       "cycleSeconds": null,
       "blockedSeconds": null
     },
     {
       "id": "M1-CHECK",
-      "status": "in-progress",
+      "status": "done",
       "cycleSeconds": null,
       "blockedSeconds": null
     },
@@ -73,26 +73,15 @@
       "status": "done",
       "cycleSeconds": null,
       "blockedSeconds": null
+    },
+    {
+      "id": "M1-RELIABLE",
+      "status": "done",
+      "cycleSeconds": 3208.24,
+      "blockedSeconds": 0
     }
   ],
-  "openReleaseGates": [
-    "scope",
-    "correctness",
-    "api",
-    "evals",
-    "reproducibility",
-    "runtime",
-    "safety",
-    "documentation",
-    "release-identity",
-    "publication",
-    "distribution",
-    "demo",
-    "closure",
-    "live-dogfood",
-    "api-image",
-    "worker-image"
-  ],
+  "openReleaseGates": [],
   "interpretation": "Feedback-loop timings only; no historical task-delivery baseline. Caches, suite size and runner conditions affect results; small samples do not prove causality.",
   "ciByCache": {
     "cold": {
@@ -106,16 +95,16 @@
       "reductionPercent": 17.5
     },
     "unknown": {
-      "samples": 0,
-      "medianSeconds": null,
-      "reductionPercent": null
+      "samples": 1,
+      "medianSeconds": 185,
+      "reductionPercent": -32.142857142857146
     }
   },
   "quality": {
-    "firstPassFailures": 0,
+    "firstPassFailures": 1,
     "reopenedTasks": 0,
     "recordedEscapedDefects": 0,
-    "recordedDogfoodDefects": 2,
+    "recordedDogfoodDefects": 3,
     "note": "Recorded events since tracking began; zero does not establish absence of unreported defects."
   }
 }

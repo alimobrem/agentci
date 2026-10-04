@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+  "candidateCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+  "runUrl": "https://github.com/alimobrem/agentci/actions/runs/37162124129",
+  "generatedAt": "2026-10-03T23:35:47.941Z",
+  "node": "v26.10.0",
+  "platform": "linux",
+  "arch": "x64",
+  "fastChecks": {
+    "schemaVersion": 1,
+    "startedAt": "2026-10-03T23:33:25.981Z",
+    "finishedAt": "2026-10-03T23:33:30.076Z",
+    "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+    "dirty": false,
+    "node": "v26.10.0",
+    "platform": "linux",
+    "arch": "x64",
+    "seconds": 4.105680499,
+    "passed": true,
+    "checks": [
+      {
+        "name": "types",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "node_modules/typescript/bin/tsc",
+          "--noEmit"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 2.1519550990000003,
+        "output": ""
+      },
+      {
+        "name": "tests",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "--test",
+          "tests/api.test.ts",
+          "tests/control-api.test.ts",
+          "tests/delivery.test.ts",
+          "tests/dogfood.test.ts",
+          "tests/github.test.ts",
+          "tests/project.test.ts",
+          "tests/review.test.ts",
+          "tests/scan-gate.test.ts",
+          "tests/schemas.test.ts"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 4.086335095,
+        "output": "✔ API health and schema retrieval (267.002762ms)\n✔ API validates a contract and rejects invalid contracts (92.602407ms)\n✔ API rejects invalid JSON and unsupported schema names (28.771926ms)\n✔ API does not expose future product resources (31.80519ms)\n✔ API rejects oversized bodies with a usable 413 response (33.334817ms)\n✔ signed webhook returns contracted receipt, queues once, and detects conflicting replay (327.065646ms)\n✔ invalid signature, malformed JSON, wrong installation and invalid SHA cannot dispatch work (102.864614ms)\n✔ closed PRs are recorded as ignored; unsupported methods and oversized bodies fail (109.535254ms)\n✔ evidence API requires credentials before revealing IDs and matches documented errors (33.74982ms)\n✔ readiness covers healthy and unavailable dependencies; evidence success matches the shared contract (115.29759ms)\n✔ webhook media, delivery headers and persistence failures match the contract without dispatch (28.387319ms)\n✔ release completion rejects missing gates, pending checks and evidence from another SHA (7.345388ms)\n✔ missing proof, invalid scope exceptions and escaped evidence paths cannot close a gate (0.63263ms)\n✔ task completion requires known requirements, passed acceptance and explicit evidence (0.561412ms)\n✔ timing summaries do not invent empty samples and use median rather than best run (0.249074ms)\n✔ blocked time is separate from cycle time and unknown starts stay unknown (2.675357ms)\n✔ Hosted evidence links are restricted to GitHub artifacts in the configured repository (1.274233ms)\n✔ Hosted publication verifies PR, head, base, repository, installation and digest before publishing (3.00387ms)\n✔ GitHub adapter reads exact Git objects and rejects truncation and content identity mismatch (96.828943ms)\n✔ Checks reconcile retries only against this App and exact head; current-head check rejects force pushes (59.375002ms)\n✔ AgentCI validates its own repository (583.348167ms)\n✔ YAML parser rejects duplicate keys (2.26406ms)\n✔ missing project config fails validation (13.866869ms)\n✔ invalid requirement is reported with its file (16.749626ms)\n✔ duplicate requirement IDs fail across files (10.783279ms)\n✔ explicit Markdown front matter is validated (7.24072ms)\n✔ missing specification matches cannot pass (6.752508ms)\n✔ malformed eval YAML is not a success (20.82131ms)\n✔ include paths cannot escape the project (9.407374ms)\n✔ symlinked specification outside project is rejected (9.303939ms)\n✔ semantic categories cover each M1 surface including removals (17.152472ms)\n✔ structured diff distinguishes absent and null, escapes pointers, and never embeds content (5.578355ms)\n✔ production writes and secret reads produce verified findings without any model (11.198132ms)\n✔ narrowing existing explicit access does not assert a new production permission (21.035606ms)\n✔ active safety requirement removal is verified high risk; text edits remain inferred (9.726413ms)\n✔ changing selectors cannot hide removal of an active safety requirement (4.597863ms)\n✔ missing specifications are an input failure, not a clean advisory result (2.29794ms)\n✔ malformed data, duplicate IDs, path escapes and unsafe selectors fail rather than report clean (12.734729ms)\n✔ outputs are deterministic regardless of file insertion order (10.659133ms)\n✔ Git reader resolves exact commits and does not execute checked-in scripts or working-tree changes (116.40679ms)\n✔ scan policy blocks fixable high/critical and rejects missing inventory (277.17966ms)\n✔ agent-project: accepts representative valid contract (2.271199ms)\n✔ agent-project: rejects missing required fields (0.250677ms)\n✔ agent-project: rejects unknown fields to catch misspellings (0.150856ms)\n✔ requirement: accepts representative valid contract (0.805009ms)\n✔ requirement: rejects missing required fields (0.132208ms)\n✔ requirement: rejects unknown fields to catch misspellings (0.123796ms)\n✔ finding: accepts representative valid contract (0.850497ms)\n✔ finding: rejects missing required fields (0.094833ms)\n✔ finding: rejects unknown fields to catch misspellings (0.161953ms)\n✔ evidence: accepts representative valid contract (6.239377ms)\n✔ evidence: rejects missing required fields (0.121513ms)\n✔ evidence: rejects unknown fields to catch misspellings (0.702665ms)\n✔ project: privacy mode and provider names are portable (0.245008ms)\n✔ project: rejects credential fields and wrong schema version (0.245699ms)\n✔ validation never coerces values or mutates privacy defaults (1.11895ms)\n✔ requirement: lifecycle and verification enums reject mistakes (0.250235ms)\n✔ finding: reproduction labels stay explicit (0.236976ms)\n✔ evidence: requires exact commit, UUIDs, timestamps and digests (0.330116ms)\n✔ evidence: rejects confidence overflow and invalid edge types (0.200181ms)\nℹ tests 60\nℹ suites 0\nℹ pass 60\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 4039.126243\n"
+      },
+      {
+        "name": "api",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "scripts/check-api.ts"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 3.1903908760000004,
+        "output": "M1 OpenAPI contract valid\n"
+      },
+      {
+        "name": "contract-evals",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "scripts/eval-contracts.ts"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 1.262157433,
+        "output": "{\n  \"kind\": \"deterministic-contract\",\n  \"total\": 6,\n  \"passed\": 6,\n  \"failed\": 0,\n  \"results\": [\n    {\n      \"id\": \"M0-EVAL-01\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-02\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-03\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-04\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-05\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-06\",\n      \"passed\": true\n    }\n  ]\n}\n"
+      },
+      {
+        "name": "risk-evals",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "scripts/eval-review.ts"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 2.000502919,
+        "output": "M1 deterministic risk corpus m1-semantic-v1: 8 passed; threshold 100%; no behavioral/model verification claimed.\n"
+      },
+      {
+        "name": "project",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "cmd/agentci/main.ts",
+          "validate"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 3.118029372,
+        "output": "Valid project: 5 data files, 1346 explicit requirements. M0 validation only.\n"
+      },
+      {
+        "name": "status",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "scripts/status.ts",
+          "--check"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 3.011387276,
+        "output": "Status current: 1346 inventory entries.\n"
+      },
+      {
+        "name": "delivery",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "scripts/delivery.ts",
+          "check"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 2.6689646239999996,
+        "output": "12 tasks validated; M1 has 16 open release gates.\n"
+      }
+    ]
+  },
+  "apiCompatibility": {
+    "tool": "oasdiff",
+    "version": "1.33.0",
+    "sourceCommit": "620230fd49d09e788d9a6a2783b57428882f5927",
+    "baseline": "specs/api/baselines/m1-openapi.json",
+    "baselineSha256": "d3cd9175d2326f2de44cee59d2654a1f1b2cbbd95aefd6cd735b52ffb969da8f",
+    "currentSha256": "024d3f7a6cbc44d86736b3f9e64a0d0867dad44f3f6de2098f46057b726c2ad1",
+    "exitCode": 0,
+    "selfTest": "endpoint-removal rejected",
+    "changes": "[]\n"
+  },
+  "runtime": {
+    "result": "passed",
+    "version": "ci",
+    "platform": "x64",
+    "checks": [
+      "non-root API/worker startup",
+      "readiness",
+      "signature rejection",
+      "evidence authentication",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  },
+  "artifacts": [
+    {
+      "path": "releases/agentci-0.2.0-m1.tgz",
+      "sha256": "c60ae3d03ed4f226815b1cf9fc24392c61373d1beac7a03be29b02e66cacf49b"
+    },
+    {
+      "path": "scan-results/api.json",
+      "sha256": "8de43050348d39b746e55955f9f05f53c4fc25b726d8fd0130dca5688d1f1563"
+    },
+    {
+      "path": "scan-results/worker.json",
+      "sha256": "ffee22ce1da1d68138f203a5b5dd9d73df40fe2b91d12f4b078664c693f43769"
+    }
+  ],
+  "releaseComplete": false,
+  "note": "Verification bundle. Live dogfood, reviewed vulnerability coverage, registry/download verification, release, docs and demo still require gate evidence."
+}

@@ -29,9 +29,9 @@
       "requirementIds": [
         "SPEC-40-015"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": null,
-      "completedAt": null,
+      "completedAt": "2026-10-04T00:11:55.478Z",
       "acceptance": [
         {
           "text": "Signed events queue once; invalid signatures, wrong scopes and conflicting replays fail",
@@ -49,9 +49,9 @@
       "requirementIds": [
         "SPEC-40-016"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": null,
-      "completedAt": null,
+      "completedAt": "2026-10-04T00:11:55.690Z",
       "acceptance": [
         {
           "text": "Exact commits and blob identity verified; malformed/truncated inputs fail; no PR code executes",
@@ -76,9 +76,9 @@
         "SPEC-40-026",
         "SPEC-40-027"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": null,
-      "completedAt": null,
+      "completedAt": "2026-10-04T00:11:55.900Z",
       "acceptance": [
         {
           "text": "Spec, model, explicit tools, configured policy/permissions, prompts and dependencies have golden fixtures",
@@ -95,9 +95,9 @@
       "requirementIds": [
         "SPEC-40-018"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": null,
-      "completedAt": null,
+      "completedAt": "2026-10-04T00:11:56.113Z",
       "acceptance": [
         {
           "text": "Verified production permission changes and inferred requirement weakening are distinguished",
@@ -115,9 +115,9 @@
       "requirementIds": [
         "SPEC-40-020"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": null,
-      "completedAt": null,
+      "completedAt": "2026-10-04T00:11:56.324Z",
       "acceptance": [
         {
           "text": "Concurrent repeats reuse immutable evidence; different PRs stay distinct; unauthorized evidence GET fails",
@@ -136,9 +136,9 @@
         "SPEC-40-019",
         "SPEC-40-029"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": null,
-      "completedAt": null,
+      "completedAt": "2026-10-04T00:11:56.546Z",
       "acceptance": [
         {
           "text": "Real PR webhook publishes exact-head advisory Check with usable authenticated evidence",
@@ -149,8 +149,10 @@
         },
         {
           "text": "Reliable deployment covers every PR; retries and stale heads are verified",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "docs/dogfood/m1-release-demo.md"
+          ]
         }
       ]
     },
@@ -267,19 +269,23 @@
         "SPEC-40-020",
         "SPEC-40-029"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-03T23:18:28.516Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T00:11:56.756Z",
       "acceptance": [
         {
           "text": "Trusted main code reviews PRs on GitHub-hosted runners without executing PR code; artifact evidence is uploaded before Checks publish",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "tests/dogfood.test.ts"
+          ]
         },
         {
           "text": "Real repository-only App workflow succeeds and evidence can be downloaded independently of local tunnel",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "docs/dogfood/m1-release-demo.md"
+          ]
         }
       ]
     }

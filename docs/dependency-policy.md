@@ -6,7 +6,7 @@ unless a specific requirement needs them. Latest is a selection policy; committe
 lockfiles, image digests and action commit IDs make each selected build repeatable.
 Future fixes and security updates remain necessary even when starting current.
 
-On 2026-10-03 the candidate uses Node.js 26.10.0 (Current), npm 12.2.0,
+The 2026-10-03 M1 release uses Node.js 26.10.0 (Current), npm 12.2.0,
 TypeScript 7.0.2 and PostgreSQL 18.6. Direct npm dependencies were checked against
 the registry's `latest` distribution tags. Temporal and Octokit were already
 current. GitHub Actions were refreshed to their latest released tags and pinned
