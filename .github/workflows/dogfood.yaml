@@ -28,7 +28,10 @@ jobs:
       GITHUB_APP_ID: '5179954'
       GITHUB_INSTALLATION_ID: '167655696'
       GITHUB_PRIVATE_KEY_FILE: .agentci/local/hosted-app.pem
-      DATABASE_URL: postgresql://postgres:agentci-ci-only@127.0.0.1:5432/agentci
+      # Fixed test-only auth for this disposable service; never a deployment credential.
+      DATABASE_URL: postgresql://127.0.0.1:5432/agentci
+      PGUSER: postgres
+      PGPASSWORD: agentci-ci-only
       TEMPORAL_ADDRESS: 127.0.0.1:7233
     steps:
       # Never check out the PR head or execute files/dependencies from it with secrets.

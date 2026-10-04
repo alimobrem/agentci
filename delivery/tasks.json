@@ -436,16 +436,14 @@
         "SPEC-40-035",
         "SPEC-11.2-001"
       ],
-      "status": "done",
-      "startedAt": "2026-10-04T05:08:32.671Z",
-      "completedAt": "2026-10-04T05:14:16.610Z",
+      "status": "in-progress",
+      "startedAt": "2026-10-04T05:51:26.918Z",
+      "completedAt": null,
       "acceptance": [
         {
           "text": "Strict manifests and normalized results reject malformed/ambiguous input, select impact-mapped suites and report missing requirement coverage",
-          "status": "passed",
-          "evidence": [
-            "tests/eval-contracts.test.ts"
-          ]
+          "status": "pending",
+          "evidence": []
         }
       ]
     },
@@ -557,6 +555,23 @@
           "evidence": [
             "specs/api/baselines/m1-0.2.1-identity.json"
           ]
+        }
+      ]
+    },
+    {
+      "id": "M2-CI-CONNECTION",
+      "title": "Keep disposable CI database credentials out of connection URLs",
+      "requirementIds": [
+        "SPEC-29.3-001"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T05:55:23.131Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Verification and hosted dogfood use credential-free loopback database URLs with separate test-only PG environment; parameter resolution and full CI verify connectivity",
+          "status": "pending",
+          "evidence": []
         }
       ]
     }
