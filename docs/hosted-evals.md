@@ -92,3 +92,19 @@ failing revisions, artifact download verification and unavailable/retry/stale be
 must pass. Published-image/package verification, released customer replay and all M2
 release/demo/retrospective gates remain open. Local prepare evidence is not a claim
 that these release gates or M2-HOSTED-DOGFOOD are complete.
+
+## Cache access and infrastructure failure
+
+`pull_request_target` runs restore existing image caches but do not export caches
+in the default-branch read-only context. Trusted push/scheduled/manual runs may
+populate them. Cache export uses `ignore-error=true` where permitted: cache-service
+failure can degrade performance but cannot replace or bypass builds, scans,
+runtime tests, retained evidence validation or actual behavioral verification.
+This follows [Docker's cache write guidance](https://docs.docker.com/build/ci/github-actions/cache/#cache-write-restrictions).
+
+The first M2 hosted attempts `37220719418` and `37220861838` failed while reserving
+cache export, before evaluations started. Their failed records and source/log
+identities remain in `releases/m2-hosted-cache-failures.json`; no successful
+hosted/customer acceptance is claimed from those attempts. Cache hits and export
+availability are different observations; partial cache reuse is not proof of a
+fully populated or successful cache export.
