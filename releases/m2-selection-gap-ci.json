@@ -1,0 +1,65 @@
+{
+  "kind": "M2-impact-selection-gap-CI-checkpoint",
+  "candidateCommit": "73cc979f6e4b73276f155dfa980b4da3361b7651",
+  "ciCommit": "b8cde078dc3f925ac4b9d0e20f33bd2cc05ec476",
+  "verifiedTree": "66ece597fb57dbc5d356094d87a31476b3c3e694",
+  "run": {
+    "id": 37191102179,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37191102179",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11299356387,
+    "name": "m1-verification",
+    "sha256": "94b87c080928612224b15aae8e462518c52c6bc7c7af30cbdd7dd4b6ec2b4537"
+  },
+  "verification": {
+    "unitApiDomainTests": 103,
+    "integrationGroups": 10,
+    "skips": 0,
+    "apiCompatibility": 0,
+    "evalWorkerRuntime": "passed",
+    "artifacts": [
+      {
+        "path": ".agentci/artifacts/eval-worker-image-smoke.json",
+        "sha256": "5516e40c94f82deb4859c891bdbf08d19da7f12c9ea0ea45d40967c5d01b0244"
+      },
+      {
+        "path": "releases/agentci-0.3.0-m2.tgz",
+        "sha256": "d9e39a20c79670189c5539bcf6a30da34767e128be3dfdbce6faefef1e767001"
+      },
+      {
+        "path": "scan-results/api.json",
+        "sha256": "4df1f4dbedea1ac0f6ef49a396dbcc9b431fcb8eced1f4d7bdc5869b31c6eebd"
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "sha256": "3882e11d92aea4cf5d5382d12d34ae0b686dfe002f9a30c870862647fb5a97d4"
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "sha256": "a35981ffdef97b4a7a1107b12f437f57384a13f61f58609cdd9ceadd33188107"
+      },
+      {
+        "path": "scan-results/eval-worker.json",
+        "sha256": "b3d5d86989313c4dfd024cfcbcd871ef9e0c5960e735e69c4edf487358fee9de"
+      },
+      {
+        "path": "scan-results/worker.json",
+        "sha256": "a5dc5eff22a7ec0aa90e64518466ad52cd282a2cb897dfde54e1313d1dbae025"
+      }
+    ]
+  },
+  "scenarios": [
+    "missing tool contract remains explicit without requirement mappings",
+    "policy and adversarial gaps independently reported",
+    "head-only defenses cannot erase baseline gaps",
+    "unrelated changes do not invent class gaps"
+  ],
+  "limitations": [
+    "subsequent comparison-resource work not covered by this source",
+    "optional engine HIGH and scanner coverage assessment remain open",
+    "customer PR/API, publication, downloads and all M2 release gates remain open"
+  ]
+}

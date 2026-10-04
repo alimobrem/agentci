@@ -86,3 +86,5 @@ HTTP retry identity, cleanup-refusal recovery and corrected checksum-bound migra
 
 The new UBI eval-worker image passes local native arm64 restricted startup, real Temporal/isolated-child execution, failure reporting and shutdown/restart. Its detected inventories have zero known findings; Docker CLI module and Temporal vendor-binary coverage limits remain for release assessment. Exact-source native AMD64 CI 37190707698 now passes the new image probe, all 100 unit/API/domain tests, ten real integration groups, compatibility and packaging; artifact hashes and source tree are verified. Published downloads, durable PR/API integration and all M2 release gates remain open. The CI database URL cleanup remains in the open M2 PR, not GitHub main.
 [M2 acceptance plan](docs/phases/m2.md).
+
+Impact-required selection gaps passed full CI 37191102179: 103 unit/API/domain tests and ten real integration groups, zero skips, source-tree and artifact verification. The selection task is accepted. Durable comparison evidence now passes local strict-contract checks and real PostgreSQL/runner tests; final-source CI, authenticated API/client access and PR publication remain pending.

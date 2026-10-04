@@ -8,6 +8,7 @@ import {baselineHarness} from '../evals/harness.ts';
 import {validateTrialCheckpoint,type TrialCheckpoint} from '../evals/execution.ts';
 import {aggregateScenario,combinedStatus} from '../evals/statistics.ts';
 import type {SuiteChange} from '../evals/plan.ts';
+import {createEvalComparison,comparisonRecord,type ComparisonRecord,type ComparisonUnit} from '../evals/comparison.ts';
 
 type Side='base'|'head';
 export type RunnerIdentity={runnerImage:string;runnerProvider?:never}|{runnerProvider:{id:string;revision:string};runnerImage?:never};
@@ -84,6 +85,29 @@ export class EvalStore {
     const result=row.result?validateEvalRun(row.result):undefined;
     if(result&&digest(canonical(result))!==row.result_digest)throw new Error('Eval result integrity mismatch');
     return {id:row.id,jobId:row.job_id,definition:def,inputs:row.inputs,status:row.status,cancelRequested:row.cancel_requested,...(result?{result}:{})};
+  }
+  /** A consistent evidence snapshot; projected source, lease tokens and operator secrets never leave storage. */
+  async comparison(id:string):Promise<ComparisonRecord|undefined> {
+    if(!uuid(id))throw new Error('Invalid comparison UUID');
+    const client=await this.pool.connect();
+    try{
+      await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');
+      const job=(await client.query(`SELECT j.* FROM agentci_eval_jobs j WHERE j.id=$1 AND ${this.scope}`,[id,this.repository,this.organizationId])).rows[0];
+      if(!job){await client.query('COMMIT');return undefined;}
+      validateInputs(job.inputs);
+      if(digest(canonical({reviewId:job.review_id,attemptKey:job.attempt_key,repository:job.repository,pullRequest:job.pull_request,inputs:job.inputs,plan:job.plan}))!==job.digest)throw new Error('Eval job integrity mismatch');
+      const ids=(await client.query('SELECT id FROM agentci_eval_units WHERE job_id=$1 ORDER BY suite_id,model_key,side',[id])).rows.map(row=>row.id as string);
+      if(!Array.isArray(job.plan.units)||ids.length!==job.plan.units.length)throw new Error('Eval planned unit coverage mismatch');
+      const units:ComparisonUnit[]=[];
+      for(const unitId of ids){
+        const unit=await this.unit(unitId,client);if(!unit||unit.jobId!==id)throw new Error('Eval unit identity mismatch');
+        const def=unit.definition,assertions=unit.inputs[def.assertionSide].snapshot,subject=unit.inputs[def.side].snapshot;
+        const harness=baselineHarness(def.suite,assertions,subject);
+        units.push({id:unitId,suite:def.suite.metadata.id,revision:harness.revision,side:def.side,assertionSide:def.assertionSide,...(def.model===undefined?{}:{model:def.model}),trials:def.suite.spec.trials.count,passRate:def.suite.spec.trials.passRate,maxCriticalFailures:def.suite.spec.trials.maxCriticalFailures??0,scenarioIds:def.suite.spec.scenarios.map(s=>s.id),...def.runner,status:unit.status as ComparisonUnit['status'],...(unit.result?{result:unit.result}:{})});
+      }
+      const record=comparisonRecord(createEvalComparison({id,reviewId:job.review_id,attemptId:job.attempt_key,organizationId:this.organizationId,subject:{repository:this.repository,pullRequest:job.pull_request,baseSha:job.base_sha,headSha:job.head_sha},cancelRequested:job.cancel_requested,units,suiteChanges:job.plan.suiteChanges,coverageGaps:job.plan.coverageGaps,selectionGaps:job.plan.selectionGaps}));
+      await client.query('COMMIT');return record;
+    }catch(error){await client.query('ROLLBACK');throw error;}finally{client.release();}
   }
   async claim(id:string,seconds=30):Promise<string|undefined> {
     leaseSeconds(seconds);const token=randomUUID();

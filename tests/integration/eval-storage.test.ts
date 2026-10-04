@@ -15,6 +15,7 @@ import {analyze,canonical,digest} from '../../packages/review/engine.ts';
 import {Store} from '../../packages/storage/postgres.ts';
 import {EvalStore,EvalLeaseLost,ImmutableEvalConflict,type EvalUnitDefinition} from '../../packages/storage/evals.ts';
 import {executeSuite} from '../../packages/evals/execution.ts';
+import {validateComparisonRecord} from '../../packages/evals/comparison.ts';
 import {runIsolated} from '../../packages/evals/runner.ts';
 import {evalSuite} from '../fixtures/evals.ts';
 import {executeStoredUnit} from '../../apps/eval-worker/unit.ts';
@@ -39,11 +40,14 @@ test('PostgreSQL eval recovery: immutable exact inputs, fenced leases, retained 
     const jobs=await Promise.all(Array.from({length:5},()=>store.stage(review.id,attempt,base,head,definitions,plan)));
     assert.equal(new Set(jobs.map(j=>j.id)).size,1);assert.deepEqual(jobs[0]!.unitIds,jobs[1]!.unitIds);
     const job=jobs[0]!,baseId=job.unitIds[0]!,headId=job.unitIds[1]!;
+    const queued=validateComparisonRecord((await store.comparison(job.id))!);assert.equal(queued.comparison.summary.outcome,'pending');assert.equal(queued.comparison.units.length,2);
+    assert.ok(!JSON.stringify(queued).includes('synthetic-staged-secret'));assert.ok(!JSON.stringify(queued).includes(assertion));assert.equal(await store.comparison(randomUUID()),undefined);
     const unit=(await store.unit(baseId))!;assert.equal(unit.definition.side,'base');
     assert.ok(!JSON.stringify(unit.inputs).includes('synthetic-staged-secret'));assert.deepEqual(unit.inputs.base.omitted,['.env.example']);
     await assert.rejects(store.stage(review.id,attempt,base,{...head,files:{...head.files,'subject.txt':'other'}},definitions,plan),ImmutableEvalConflict);
     const claims=await Promise.all(Array.from({length:8},()=>store.claim(baseId)));
     assert.equal(claims.filter(Boolean).length,1);const first=claims.find(Boolean)!;
+    const running=(await store.comparison(job.id))!;assert.equal(running.comparison.summary.state,'running');assert.ok(!JSON.stringify(running).includes(first));
     await store.renew(baseId,first);
     let executions=0;
     const executor:Parameters<typeof executeSuite>[5]=async(...args)=>{executions++;return runIsolated(...args);};
@@ -62,11 +66,15 @@ test('PostgreSQL eval recovery: immutable exact inputs, fenced leases, retained 
     assert.equal(completed.artifacts.length,1);assert.deepEqual(await restarted.complete(baseId,second,resumed),completed);assert.equal(await store.claim(baseId),undefined);
     const retained=[];for(let index=0;index<3;index++)retained.push({index,...(await store.trial(baseId,index))!});
     assert.equal(completed.artifacts[0]!.digest,digest(canonical(retained)));
+    const partial=(await store.comparison(job.id))!;assert.equal(partial.comparison.summary.outcome,'pending');assert.equal(partial.comparison.summary.comparisons.length,0);
     await assert.rejects(restarted.complete(baseId,second,{...resumed,subject:{...resumed.subject,inputDigest:'sha256:'+'f'.repeat(64)}}),ImmutableEvalConflict);
     const headUnit=(await store.unit(headId))!,headToken=(await store.claim(headId))!;
     const regressed=await executeSuite(repository,headUnit.inputs.head.snapshot,suite,{image:image!},{runId:headId,assertionSnapshot:headUnit.inputs.base.snapshot,priorOmittedInputs:headUnit.inputs.head.omitted,
       loadTrial:index=>store.trial(headId,index),saveTrial:(index,checkpoint)=>store.recordTrial(headId,headToken,index,checkpoint)});
     assert.equal(regressed.status,'failed');assert.equal(regressed.scenarios[0]!.failed,3);assert.equal((await store.complete(headId,headToken,regressed)).status,'failed');
+    const comparison=validateComparisonRecord((await restarted.comparison(job.id))!);assert.equal(comparison.comparison.summary.state,'completed');assert.equal(comparison.comparison.summary.outcome,'failed');assert.deepEqual(comparison.comparison.summary.comparisons[0]!.regressions,['safe-response']);assert.equal(comparison.comparison.reviewId,review.id);assert.equal(comparison.comparison.attemptId,attempt);
+    assert.deepEqual(await store.comparison(job.id),comparison);
+    assert.equal(await new EvalStore(pool,randomUUID(),repository).comparison(job.id),undefined);assert.equal(await new EvalStore(pool,org,'other/repo').comparison(job.id),undefined);
     await assert.rejects(pool.query('UPDATE agentci_eval_jobs SET inputs=$2 WHERE id=$1',[job.id,{}]),/Immutable eval job/);
     await assert.rejects(pool.query('UPDATE agentci_eval_units SET result=$2 WHERE id=$1',[baseId,{}]),/Immutable eval unit/);
     await assert.rejects(pool.query('UPDATE agentci_eval_trials SET checkpoint=$2 WHERE unit_id=$1 AND trial=0',[baseId,{results:{}}]),/Immutable eval trial/);
@@ -77,6 +85,7 @@ test('PostgreSQL eval recovery: immutable exact inputs, fenced leases, retained 
     await assert.rejects(store.complete(cancelledId,cancelToken,incomplete),/missing eval trials/);
     await assert.rejects(store.recordTrial(cancelledId,cancelToken,1,{results:{'safe-response':{status:'passed',costUsd:-1}}}),/checkpoint metric/);
     await store.cancel(another.id);assert.equal((await store.unit(cancelledId))!.status,'cancelled');assert.equal(await store.claim(cancelledId),undefined);
+    assert.equal((await store.comparison(another.id))!.comparison.summary.outcome,'insufficient');
     await assert.rejects(store.recordTrial(cancelledId,cancelToken,1,{results:{'safe-response':{status:'passed'}}}),EvalLeaseLost);
     assert.ok(await store.trial(cancelledId,0),'cancellation preserves completed observations');
     await store.cancel(another.id);await assert.rejects(pool.query('UPDATE agentci_eval_jobs SET cancel_requested=false WHERE id=$1',[another.id]),/Immutable eval job/);
