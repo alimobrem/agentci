@@ -80,6 +80,24 @@ test('PostgreSQL eval recovery: immutable exact inputs, fenced leases, retained 
     try{
       const client=new AgentCIClient({url:`http://127.0.0.1:${(api.address() as {port:number}).port}`,token:'e'.repeat(32)});
       assert.deepEqual(await client.evalComparison(job.id,{...comparison.comparison.subject,organizationId:org,reviewId:review.id,attemptId:attempt}),comparison);
+      let streamedUnits=0,streamedComparisons=0,streamedOutcome='';
+      for await(const item of client.evalComparisonExport(job.id,{...comparison.comparison.subject,organizationId:org,reviewId:review.id,attemptId:attempt})){
+        if(item.type==='unit')streamedUnits++;if(item.type==='comparison'){streamedComparisons++;assert.deepEqual(item.data.regressions,['safe-response']);}if(item.type==='summary')streamedOutcome=item.data.outcome;
+      }
+      assert.equal(streamedUnits,2);assert.equal(streamedComparisons,1);assert.equal(streamedOutcome,'failed');
+      const protectedFiles=Object.fromEntries(Array.from({length:1100},(_,index)=>[`.env.${index}-`+'x'.repeat(4000),'synthetic omitted fixture']));
+      const largeBase={sha:sha(),files:{...base.files,...protectedFiles}},largeHead={sha:sha(),files:{...head.files,...protectedFiles}};
+      const largeReview=await reviewStore.save(analyze({repository,base:largeBase,head:largeHead}),2),largeAttempt=randomUUID();
+      const largeJob=await store.stage(largeReview.id,largeAttempt,largeBase,largeHead,definitions,plan);
+      for(const id of largeJob.unitIds)await executeStoredUnit(store,id,{image:image!});
+      const largeIdentity={repository,pullRequest:2,baseSha:largeBase.sha,headSha:largeHead.sha,organizationId:org,reviewId:largeReview.id,attemptId:largeAttempt};
+      await assert.rejects(client.evalComparison(largeJob.id,largeIdentity),/response-too-large/);
+      let largeUnits=0,largeComplete=false;
+      for await(const item of client.evalComparisonExport(largeJob.id,largeIdentity)){
+        if(item.type==='unit'){largeUnits++;assert.equal(item.data.result!.subject.omittedInputs.length,1101);}
+        if(item.type==='summary'){largeComplete=true;assert.equal(item.data.outcome,'failed');assert.equal(item.data.unitCount,2);}
+      }
+      assert.equal(largeUnits,2);assert.ok(largeComplete,'actual >4 MiB database evidence must remain completely consumable');
     }finally{await new Promise<void>(resolve=>api.close(()=>resolve()));}
     assert.equal(await new EvalStore(pool,randomUUID(),repository).comparison(job.id),undefined);assert.equal(await new EvalStore(pool,org,'other/repo').comparison(job.id),undefined);
     await assert.rejects(pool.query('UPDATE agentci_eval_jobs SET inputs=$2 WHERE id=$1',[job.id,{}]),/Immutable eval job/);
@@ -91,7 +109,13 @@ test('PostgreSQL eval recovery: immutable exact inputs, fenced leases, retained 
     const incomplete=await executeSuite(repository,base,suite,{image:image!},{runId:cancelledId},async(snapshot)=>({sourceSha:snapshot.sha,image,status:'completed',exitCode:0}));
     await assert.rejects(store.complete(cancelledId,cancelToken,incomplete),/missing eval trials/);
     await assert.rejects(store.recordTrial(cancelledId,cancelToken,1,{results:{'safe-response':{status:'passed',costUsd:-1}}}),/checkpoint metric/);
-    await store.cancel(another.id);assert.equal((await store.unit(cancelledId))!.status,'cancelled');assert.equal(await store.claim(cancelledId),undefined);
+    const snapshot=store.exportComparison(another.id);assert.equal((await snapshot.next()).value?.type,'header');
+    try{
+      await store.cancel(another.id);let snapshotOutcome='';for await(const item of snapshot)if(item.type==='summary')snapshotOutcome=item.data.outcome;
+      assert.equal(snapshotOutcome,'pending','concurrent cancellation cannot mix a new state into an existing snapshot');
+    }finally{await snapshot.return(undefined);}
+    assert.equal((await store.unit(cancelledId))!.status,'cancelled');assert.equal(await store.claim(cancelledId),undefined);
+    const abandoned=store.exportComparison(another.id);await abandoned.next();await abandoned.return(undefined);assert.equal((await pool.query('SELECT 1 AS value')).rows[0].value,1);
     assert.equal((await store.comparison(another.id))!.comparison.summary.outcome,'insufficient');
     await assert.rejects(store.recordTrial(cancelledId,cancelToken,1,{results:{'safe-response':{status:'passed'}}}),EvalLeaseLost);
     assert.ok(await store.trial(cancelledId,0),'cancellation preserves completed observations');

@@ -36,8 +36,8 @@ Use trusted webhook/review identities for the expected values, rather than copyi
 them from an unverified response. Redirects are rejected. The client has a bounded
 request deadline and 4 MiB response budget; it sanitizes transport/server errors.
 The server also refuses oversized comparison records with explicit 413 rather than
-truncating results. Large-result pagination/export remains an API capacity item to
-resolve before M2 release acceptance; this checkpoint does not certify it.
+truncating results. Larger records use the snapshot export described below. Final-source CI remains
+required before accepting the capacity task.
 
 | HTTP status | Error code | Meaning |
 | --- | --- | --- |
@@ -72,3 +72,48 @@ API startup/readiness checks require the M2 jobs, units and trial tables. A
 restricted evaluator uses its separate role setup; this read does not grant the
 API's credentials or privileges to eval child containers. PR staging/publication,
 customer deployment and released-build acceptance remain separate M2 gates.
+
+
+## Snapshot export
+
+`GET /v1/eval-comparisons/{id}/export` uses the same bearer and scope rules.
+It returns `application/x-ndjson`: LF-delimited JSON frames following
+[the frame schema](../packages/evals/json/eval-export-frame.schema.json) and
+[shared synthetic wire fixture](../specs/api/fixtures/eval-comparison-export.ndjson).
+The ordered stream contains a header, grouped planned units/results and derived
+comparisons, a summary, and a terminal end frame. Sequence numbers and a SHA256
+hash chain bind every frame. The header identifies the exact scoped storage
+snapshot; an export is not the inline record's canonical digest format.
+
+```ts
+for await (const item of client.evalComparisonExport(comparisonId, expectedIdentity)) {
+  if (item.type === 'unit') consumeNormalizedRun(item.data);
+  if (item.type === 'comparison') consumeBehavioralDelta(item.data);
+  if (item.type === 'summary') acceptCompletedTraversal(item.data);
+}
+```
+
+The client verifies each frame, exact expected identity, planned result thresholds,
+comparison deltas and summary/counts. It exposes the summary only after the terminal
+frame and EOF are verified. Earlier items are provisional: a failed traversal
+must not be accepted as complete evidence. Consumers should process items rather
+than retain every run in memory. The client/server retain one baseline/head group,
+bounded identity/gap metadata and one frame, rather than the entire response.
+Each frame is limited to 64 MiB; stored plan/input/result bounds limit individual
+frames while the overall export may exceed the inline 4 MiB response limit.
+
+One repeatable-read database transaction covers the stream. Concurrent execution
+or cancellation cannot mix new state into it. The captured snapshot may become
+older than the live job while remaining consistent. There is no resume cursor or
+partial retry: after transport-failure, incomplete-export, invalid-export or caller
+cancellation, discard provisional acceptance and restart the entire GET to obtain
+a fresh snapshot. A new snapshot can have a different header snapshot digest.
+Redirects, reordered/duplicate/truncated/forged frames and trailing data fail.
+
+The request deadline is at most 120 seconds; `evalComparisonExport` accepts an
+optional `{signal, timeoutMs}` third argument. Leaving iteration cancels the reader.
+Disconnect, timeout and abandonment roll back the database transaction and release
+its connection. At most two exports run concurrently per API process; overload
+returns sanitized 503 with Retry-After: 1. A slow client is bounded by write
+backpressure and a 30-second idle-transaction timeout. Errors after stream headers
+terminate the connection; HTTP 200 alone never certifies a complete export.

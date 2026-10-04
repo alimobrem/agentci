@@ -5,12 +5,16 @@ import { deepStrictEqual, strictEqual } from 'node:assert';
 import { VERSION } from '../packages/version.ts';
 import {evalOpenApiSchema} from '../packages/evals/openapi.ts';
 import {validateComparisonRecord} from '../packages/evals/comparison.ts';
+import {validateExportFrame} from '../packages/evals/export.ts';
 await SwaggerParser.validate(new URL('../specs/api/openapi.json', import.meta.url).pathname);
 const contract = JSON.parse(await readFile(new URL('../specs/api/openapi.json', import.meta.url), 'utf8'));
 const { $schema, ...analysis } = JSON.parse(await readFile(new URL('../packages/review/analysis.schema.json', import.meta.url), 'utf8'));
 deepStrictEqual(contract.components.schemas.Analysis, analysis, 'API and domain analysis schemas must not drift');
 deepStrictEqual(contract.components.schemas.EvalComparison,evalOpenApiSchema(JSON.parse(await readFile(new URL('../packages/evals/json/eval-comparison.schema.json',import.meta.url),'utf8'))),'API and domain comparison schemas must not drift');
 validateComparisonRecord(JSON.parse(await readFile(new URL('../specs/api/fixtures/eval-comparison.json',import.meta.url),'utf8')));
+deepStrictEqual(contract.components.schemas.EvalExportFrame,evalOpenApiSchema(JSON.parse(await readFile(new URL('../packages/evals/json/eval-export-frame.schema.json',import.meta.url),'utf8'))),'API and domain export-frame schemas must not drift');
+let previous='sha256:'+'0'.repeat(64),sequence=0;
+for(const line of (await readFile(new URL('../specs/api/fixtures/eval-comparison-export.ndjson',import.meta.url),'utf8')).trim().split('\n')){const frame=validateExportFrame(JSON.parse(line),sequence++,previous);previous=frame.digest;}
 const lock = JSON.parse(await readFile(new URL('../package-lock.json', import.meta.url), 'utf8'));
 const shrinkwrap = JSON.parse(await readFile(new URL('../npm-shrinkwrap.json', import.meta.url), 'utf8'));
 deepStrictEqual(shrinkwrap, lock, 'Distributed npm dependency lock must match the source lock');

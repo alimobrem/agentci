@@ -92,6 +92,29 @@
         "bounded API/client response and explicit oversized error",
         "real durable evidence consumed by agent client"
       ]
+    },
+    {
+      "operationId": "exportEvalComparison",
+      "method": "get",
+      "path": "/v1/eval-comparisons/{id}/export",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039"
+      ],
+      "tests": [
+        "tests/eval-comparison-api.test.ts",
+        "tests/eval-export.test.ts",
+        "tests/integration/eval-storage.test.ts"
+      ],
+      "scenarios": [
+        "complete large evidence beyond inline response limit",
+        "hash-chain sequence/digest/summary/identity validation",
+        "truncated/reordered/forged/trailing streams never certify summary",
+        "consistent snapshot during concurrent cancellation",
+        "abandoned stream rolls back transaction",
+        "authorization, scoped IDs and sanitized dependency failure",
+        "bounded frames and one-group client consumption"
+      ]
     }
   ]
 }

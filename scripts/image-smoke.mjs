@@ -72,6 +72,11 @@ try {
       const client=new AgentCIClient({url:'http://127.0.0.1:3000',token:process.env.AGENTCI_EVIDENCE_TOKEN});
       const record=await client.evalComparison(job.id,{repository,pullRequest:1,baseSha:base.sha,headSha:head.sha,organizationId,reviewId:review.id,attemptId});
       if(record.comparison.summary.outcome!=='pending'||record.comparison.units.length!==2)throw new Error('Compiled comparison read failed');
+      let streamed=0,complete=false;
+      for await(const item of client.evalComparisonExport(job.id,{repository,pullRequest:1,baseSha:base.sha,headSha:head.sha,organizationId,reviewId:review.id,attemptId})){
+        if(item.type==='unit')streamed++;if(item.type==='summary'){complete=true;if(item.data.outcome!=='pending')throw new Error('Compiled export outcome failed');}
+      }
+      if(streamed!==2||!complete)throw new Error('Compiled comparison export failed');
       console.log('comparison-read');
     }finally{await pool.end();}
   `)!=='comparison-read')throw new Error('Compiled comparison API/client probe failed');
@@ -81,7 +86,7 @@ try {
   docker('exec', temporal, 'test', '-s', '/home/temporal/temporal.db');
   docker('stop', '--time', '20', api, worker);
   for (const name of [api, worker]) if (docker('inspect', '--format', '{{.State.ExitCode}}', name) !== '0') throw new Error(`Unclean shutdown: ${name}`);
-  console.log(JSON.stringify({ result: 'passed', version: roles, platform: process.arch, checks: ['non-root API/worker startup', 'M2 schema readiness', 'signature rejection', 'evidence authentication', 'comparison authentication/UUID/scoped lookup', 'compiled comparison API/client reads actual queued database evidence', 'signed closed delivery', 'non-root persistent Temporal database startup/restart', 'graceful shutdown'], github: 'synthetic credentials; no live GitHub review claimed' }, null, 2));
+  console.log(JSON.stringify({ result: 'passed', version: roles, platform: process.arch, checks: ['non-root API/worker startup', 'M2 schema readiness', 'signature rejection', 'evidence authentication', 'comparison authentication/UUID/scoped lookup', 'compiled comparison API/client reads actual queued database evidence', 'compiled snapshot export/client completion', 'signed closed delivery', 'non-root persistent Temporal database startup/restart', 'graceful shutdown'], github: 'synthetic credentials; no live GitHub review claimed' }, null, 2));
 } catch (error) {
   for (const name of containers.filter(name => /-(api|worker)$/.test(name))) {
     try {

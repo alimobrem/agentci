@@ -9,6 +9,7 @@ import {validateTrialCheckpoint,type TrialCheckpoint} from '../evals/execution.t
 import {aggregateScenario,combinedStatus} from '../evals/statistics.ts';
 import type {SuiteChange} from '../evals/plan.ts';
 import {createEvalComparison,comparisonRecord,type ComparisonRecord,type ComparisonUnit} from '../evals/comparison.ts';
+import {ComparisonAccumulator,type ExportHeader,type ExportItem} from '../evals/export.ts';
 
 type Side='base'|'head';
 export type RunnerIdentity={runnerImage:string;runnerProvider?:never}|{runnerProvider:{id:string;revision:string};runnerImage?:never};
@@ -111,6 +112,45 @@ export class EvalStore {
       const record=comparisonRecord(createEvalComparison({id,reviewId:job.review_id,attemptId:job.attempt_key,organizationId:this.organizationId,subject:{repository:this.repository,pullRequest:job.pull_request,baseSha:job.base_sha,headSha:job.head_sha},cancelRequested:job.cancel_requested,units,suiteChanges:job.plan.suiteChanges,coverageGaps:job.plan.coverageGaps,selectionGaps:job.plan.selectionGaps}));
       await client.query('COMMIT');return record;
     }catch(error){await client.query('ROLLBACK');throw error;}finally{client.release();}
+  }
+  /** A single repeatable-read snapshot, streamed one unit/group at a time; cancellation closes its transaction. */
+  async *exportComparison(id:string,signal?:AbortSignal):AsyncGenerator<ExportItem>{
+    if(!uuid(id))throw new Error('Invalid comparison UUID');
+    const client=await this.pool.connect();let active=false;
+    try{
+      await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');
+      active=true;
+      await client.query("SET LOCAL statement_timeout='10s'");
+      await client.query("SET LOCAL idle_in_transaction_session_timeout='30s'");
+      const job=(await client.query(`SELECT j.* FROM agentci_eval_jobs j WHERE j.id=$1 AND ${this.scope}`,[id,this.repository,this.organizationId])).rows[0];
+      if(!job){await client.query('COMMIT');active=false;return;}
+      validateInputs(job.inputs);
+      if(digest(canonical({reviewId:job.review_id,attemptKey:job.attempt_key,repository:job.repository,pullRequest:job.pull_request,inputs:job.inputs,plan:job.plan}))!==job.digest)throw new Error('Eval job integrity mismatch');
+      const metadata=(await client.query('SELECT id,status,digest,result_digest FROM agentci_eval_units WHERE job_id=$1 ORDER BY suite_id,model_key,side',[id])).rows;
+      if(!Array.isArray(job.plan.units)||metadata.length!==job.plan.units.length||metadata.length>10000)throw new Error('Eval planned unit coverage mismatch');
+      const definitions=new Set(job.plan.units.map((u:EvalUnitDefinition)=>digest(canonical(definition(u)))));
+      if(definitions.size!==metadata.length)throw new Error('Duplicate planned eval definition');
+      const header:ExportHeader={id,reviewId:job.review_id,attemptId:job.attempt_key,organizationId:this.organizationId,subject:{repository:this.repository,pullRequest:job.pull_request,baseSha:job.base_sha,headSha:job.head_sha},cancelRequested:job.cancel_requested,unitCount:metadata.length,snapshotDigest:digest(canonical({job:job.digest,cancelRequested:job.cancel_requested,units:metadata})),suiteChanges:job.plan.suiteChanges,coverageGaps:job.plan.coverageGaps,selectionGaps:job.plan.selectionGaps};
+      const accumulator=new ComparisonAccumulator(header);yield {type:'header',data:header};
+      for(const meta of metadata){
+        if(signal?.aborted)throw new Error('Export cancelled');
+        const row=(await client.query('SELECT * FROM agentci_eval_units WHERE id=$1 AND job_id=$2',[meta.id,id])).rows[0];
+        if(!row||!definitions.has(row.digest)||digest(canonical(row.definition))!==row.digest)throw new Error('Eval definition integrity mismatch');
+        const def=definition(row.definition),harness=baselineHarness(def.suite,job.inputs[def.assertionSide].snapshot,job.inputs[def.side].snapshot);
+        const result=row.result?validateEvalRun(row.result):undefined;
+        if(result&&digest(canonical(result))!==row.result_digest)throw new Error('Eval result integrity mismatch');
+        const unit:ComparisonUnit={id:row.id,suite:def.suite.metadata.id,revision:harness.revision,side:def.side,assertionSide:def.assertionSide,...(def.model===undefined?{}:{model:def.model}),trials:def.suite.spec.trials.count,passRate:def.suite.spec.trials.passRate,maxCriticalFailures:def.suite.spec.trials.maxCriticalFailures??0,scenarioIds:def.suite.spec.scenarios.map(s=>s.id),...def.runner,status:row.status,...(result?{result}:{})};
+        const comparisons=accumulator.push(unit);yield {type:'unit',data:unit};
+        for(const comparison of comparisons)yield {type:'comparison',data:comparison};
+      }
+      const final=accumulator.finish();for(const comparison of final.comparisons)yield {type:'comparison',data:comparison};
+      yield {type:'summary',data:final.summary};
+      if(signal?.aborted)throw new Error('Export cancelled');
+      await client.query('COMMIT');active=false;yield {type:'end',data:{summaryDigest:digest(canonical(final.summary))}};
+    }finally{
+      let destroyed=false;if(active){try{await client.query('ROLLBACK');}catch{client.release(true);destroyed=true;}}
+      if(!destroyed)client.release();
+    }
   }
   async claim(id:string,seconds=30):Promise<string|undefined> {
     leaseSeconds(seconds);const token=randomUUID();

@@ -1,15 +1,18 @@
 import { createServer } from 'node:http';
 import { timingSafeEqual, createHash } from 'node:crypto';
+import {once} from 'node:events';
 import { parsePullRequest, verifySignature, WebhookError, type WebhookConfig } from '../../packages/github/webhook.ts';
 import { DeliveryConflict, type Store } from '../../packages/storage/postgres.ts';
 import { VERSION } from '../../packages/version.ts';
 import type {EvalStore} from '../../packages/storage/evals.ts';
 import {validateComparisonRecord} from '../../packages/evals/comparison.ts';
+import {frameExport,MAX_EXPORT_FRAME_BYTES,type ExportItem} from '../../packages/evals/export.ts';
 export interface ControlConfig extends WebhookConfig { evidenceToken: string }
 type Storage = Pick<Store, 'ready' | 'recordDelivery' | 'evidence'>;
 const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
-export function createControlApi(config: ControlConfig, store: Storage, comparisons?:Pick<EvalStore,'comparison'|'ready'|'organizationId'|'repository'>) {
+export function createControlApi(config: ControlConfig, store: Storage, comparisons?:Pick<EvalStore,'comparison'|'ready'|'organizationId'|'repository'>&Partial<Pick<EvalStore,'exportComparison'>>) {
   if (config.secret.length < 32 || config.evidenceToken.length < 32) throw new Error('Service secrets must have at least 32 characters');
+  let activeExports=0;
   return createServer(async (req, res) => {
     const reply = (status: number, value: unknown) => { res.writeHead(status, { 'content-type': 'application/json', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' }); res.end(JSON.stringify(value)); };
     const path = (req.url ?? '').split('?')[0];
@@ -30,6 +33,33 @@ export function createControlApi(config: ControlConfig, store: Storage, comparis
         const hash = createHash('sha256').update(event).update('\0').update(raw).digest('hex');
         const status = await store.recordDelivery(id, hash, job);
         reply(202, { deliveryId: id, status: status === 'duplicate' ? 'duplicate' : job ? 'queued' : 'ignored' }); return;
+      }
+      const exportMatch=/^\/v1\/eval-comparisons\/([^/]+)\/export$/.exec(path??'');
+      if(exportMatch){
+        if(req.method!=='GET'){res.setHeader('allow','GET');reply(405,{error:{code:'method-not-allowed'}});return;}
+        const actual=Buffer.from(req.headers.authorization??''),expected=Buffer.from(`Bearer ${config.evidenceToken}`);
+        if(actual.length!==expected.length||!timingSafeEqual(actual,expected)){reply(401,{error:{code:'unauthorized'}});return;}
+        if(!uuid.test(exportMatch[1]!)){reply(400,{error:{code:'invalid-comparison-id'}});return;}
+        if(!comparisons?.exportComparison||comparisons.repository!==config.repository)throw new Error('Comparison export unavailable');
+        if(activeExports>=2){res.setHeader('retry-after','1');reply(503,{error:{code:'service-unavailable'}});return;}activeExports++;
+        const abort=new AbortController(),deadline=setTimeout(()=>abort.abort(),120000);deadline.unref();
+        const closed=()=>abort.abort();res.once('close',closed);
+        const iterator=comparisons.exportComparison(exportMatch[1]!,abort.signal);
+        try{
+          const first=await iterator.next();
+          if(first.done){reply(404,{error:{code:'not-found'}});return;}
+          if(first.value.type!=='header'||first.value.data.id!==exportMatch[1]||first.value.data.subject.repository!==config.repository||first.value.data.organizationId!==comparisons.organizationId)throw new Error('Export scope mismatch');
+          async function* items():AsyncGenerator<ExportItem>{yield first.value!;yield* iterator;}
+          res.writeHead(200,{'content-type':'application/x-ndjson','cache-control':'no-store','x-content-type-options':'nosniff'});
+          for await(const frame of frameExport(items())){
+            if(abort.signal.aborted)throw new Error('Export cancelled');
+            const line=JSON.stringify(frame)+'\n';if(Buffer.byteLength(line)>MAX_EXPORT_FRAME_BYTES)throw new Error('Export frame exceeds contract');
+            if(!res.write(line))await once(res,'drain',{signal:abort.signal});
+          }
+          res.end();
+        }catch(error){if(res.headersSent)res.destroy();else throw error;}
+        finally{clearTimeout(deadline);res.removeListener('close',closed);activeExports--;await iterator.return(undefined);}
+        return;
       }
       const comparisonMatch=/^\/v1\/eval-comparisons\/([^/]+)$/.exec(path??'');
       if(comparisonMatch){
@@ -59,6 +89,7 @@ export function createControlApi(config: ControlConfig, store: Storage, comparis
       }
       reply(404, { error: { code: 'not-found' } });
     } catch (error) {
+      if(res.headersSent){res.destroy();return;}
       if (error instanceof WebhookError) reply(error.status, { error: { code: error.code } });
       else if (error instanceof DeliveryConflict) reply(409, { error: { code: 'delivery-conflict' } });
       else reply(503, { error: { code: 'service-unavailable' } });

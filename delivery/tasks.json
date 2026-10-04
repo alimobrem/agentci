@@ -813,14 +813,16 @@
         "SPEC-40-035",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T09:21:01.636Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T09:46:52.887Z",
       "acceptance": [
         {
           "text": "Additive OpenAPI/domain/shared fixtures match authenticated comparison GET, typed identity/digest errors and bounded responses; unauthorized callers cannot disclose IDs, scopes cannot cross, storage failures are sanitized, M1 compatibility passes, compiled API and installed client consume actual durable evidence. Full CI validates final source.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-comparison-api-ci.json"
+          ]
         }
       ]
     },
@@ -831,8 +833,8 @@
         "SPEC-40-035",
         "SPEC-40-039"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "in-progress",
+      "startedAt": "2026-10-04T09:37:02.720Z",
       "completedAt": null,
       "acceptance": [
         {

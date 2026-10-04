@@ -1,0 +1,56 @@
+{
+  "kind": "M2-comparison-export-local-checkpoint",
+  "recordedAt": "2026-10-04T09:53:52.918057+00:00",
+  "parentCommit": "d76cd269406c46547de8d4b807791cb182aeb6e9",
+  "releaseAcceptance": false,
+  "files": {
+    "packages/evals/export.ts": "97b64d9cecacac54a3f583b86f3e75a5051cccb51b501d13752b934b8dd671fa",
+    "packages/evals/json/eval-export-frame.schema.json": "5a9f2334a7917b2087f05cf7680e8c6b4d9e8fff9e85bbcd840888481cf419bb",
+    "packages/storage/evals.ts": "557801971278456dbfae2429f414cd285f979a96ae50fd7af677c61b17c994da",
+    "packages/client/index.ts": "964d9eb7d6f675e45e542d54f91656d6943abdf856be715294f8632936fd4144",
+    "apps/control/server.ts": "640f9a8547be29ab9e79fbe0d60c4a3d31be845467c274b5e916c6ef76529295",
+    "scripts/check-api.ts": "49255ed08cedc500ae897d73fa4a2fbaaa3a5a63958d9b581a53a73cc210fe65",
+    "scripts/image-smoke.mjs": "40e6f68794557203cfca30c43302110f13efe059397a4e439d849b7f669631af",
+    "scripts/package-smoke.mjs": "33c9b3a8a2c6b3c3593115ae198678b7afa4564209b8ee7852893561d1b0b1ca",
+    "specs/api/openapi.json": "eb8d910b2c574c485f50676afa278076d150e783f9e4733b732fe0ab8fa4c1a5",
+    "specs/api/operations.json": "2c944ac76ec908deea33c3cf02ffafd6dd428cd9bbdc60d3ad057cb66593b2f5",
+    "specs/api/fixtures/eval-comparison-export.ndjson": "176619488555c94bde3f9bb3a48f0fff97c80df1f942a0ae7b823557cf5561ef",
+    "tests/eval-export.test.ts": "7bec8e96fd2b61cd528d222efa733d8919c8a917fe2a6882fa997ad57041c80e",
+    "tests/eval-comparison-api.test.ts": "c9a10baf514b1160f744317670b626fa0bdad75c4b05a34736c8a0b017c901dd",
+    "tests/integration/eval-storage.test.ts": "88c2983907486a1d2642addffb27e8ff63546080c1898f264e42beced1858a79"
+  },
+  "verification": {
+    "fastChecks": 8,
+    "unitApiDomainTests": 114,
+    "apiCompatibility": "passed against immutable released M1 0.2.1",
+    "realIntegration": "tests/integration/eval-storage.test.ts passed: actual PostgreSQL, immutable isolated runner, completed regression >4 MiB over HTTP, consistent concurrent-cancellation snapshot, abandoned transaction cleanup; no skips",
+    "productionPackage": "clean production-only installed export/client/schema and existing CLI/init/setup/license smoke passed",
+    "memoryStrategy": "one baseline/head group and bounded identity/gap sets; one frame capped at 64 MiB; no full-response retention",
+    "concurrency": "at most two exports/API process; overload 503 Retry-After; cancelled HTTP streams release slots",
+    "scenarios": [
+      "exact identity and hash-chained frame validation",
+      "configured trial thresholds and derived comparisons/summary",
+      "complete large record despite inline 413",
+      "no final certified summary for truncated/reordered/forged/trailing stream",
+      "repeatable-read snapshot cannot mix concurrent cancellation state",
+      "abandoned/disconnected/expired stream rolls back and releases connection"
+    ]
+  },
+  "failedAttempts": [
+    {
+      "result": "failed",
+      "reason": "PostgreSQL statement_timeout rejected verbose unit syntax 10 seconds",
+      "correction": "use supported 10s and 30s GUC units; actual database acceptance passes"
+    },
+    {
+      "result": "failed",
+      "reason": "typed frame fixture array lacked annotation; trailing bytes reported incomplete rather than invalid",
+      "correction": "declare ExportFrame array and reject data after terminal frame"
+    }
+  ],
+  "limitations": [
+    "final-source native compiled export-container/package CI pending",
+    "latest docs/shared fixture packaging requires final-source CI",
+    "customer PR orchestration/publication and all M2 release gates remain open"
+  ]
+}
