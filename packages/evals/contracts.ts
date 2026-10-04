@@ -13,7 +13,7 @@ export interface EvalSuite {
     class: EvalClass; requirements: string[];
     impact: { categories: string[]; include: string[] };
     runner: { adapter: 'command'|'native'|'pytest'|'promptfoo'|'deepeval'|'http'; command: string[]; report?: string; timeoutMs: number; maxOutputBytes?: number };
-    scenarios: { id: string; critical?: boolean }[];
+    scenarios: { id: string; critical?: boolean; selector?: string }[];
     trials: { count: number; passRate: number; maxCriticalFailures?: number; confidenceMethod: 'wilson'; confidenceLevel?: 0.9|0.95|0.99 };
     models?: string[]; representative?: boolean;
   };
@@ -38,6 +38,9 @@ export function validateEvalSuite(value:unknown):EvalSuite {
   if (!validators['eval-suite']!(value)) throw new Error('Invalid EvalSuite contract');
   const suite=value as EvalSuite, spec=suite.spec;
   if (new Set(spec.scenarios.map(s=>s.id)).size!==spec.scenarios.length) throw new Error('Duplicate scenario identity');
+  const selectors=spec.scenarios.map(s=>s.selector??s.id);
+  if(new Set(selectors).size!==selectors.length)throw new Error('Duplicate scenario selector');
+  if(spec.runner.command.some(arg=>arg.includes('\0'))||Buffer.byteLength(JSON.stringify(spec.runner.command))>65536)throw new Error('Invalid runner arguments');
   if (spec.impact.include.some(p=>!safeEvalPath(p,true))) throw new Error('Unsafe impact selector');
   if (spec.runner.report && !safeEvalPath(spec.runner.report)) throw new Error('Unsafe result report path');
   if (['native','pytest','promptfoo','deepeval','http'].includes(spec.runner.adapter) && !spec.runner.report) throw new Error('Adapter requires a structured result report');

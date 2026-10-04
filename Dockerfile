@@ -11,6 +11,29 @@ RUN case "$TARGETARCH" in \
     echo "$sha  /tmp/node.tar.xz" | sha256sum --check - && \
     tar -xJf /tmp/node.tar.xz -C /usr/local --strip-components=1 && rm /tmp/node.tar.xz
 
+FROM node AS python-build
+USER 0
+RUN microdnf install -y gcc make openssl-devel bzip2-devel libffi-devel zlib-devel xz-devel sqlite-devel expat-devel libzstd-devel && microdnf clean all
+RUN curl --fail --location --silent --show-error https://www.python.org/ftp/python/3.14.8/Python-3.14.8.tar.xz -o /tmp/python.tar.xz && \
+    echo 'c2215904f02b175596dc49351585104f4bc20341e1c47378b26a2c274360ce73  /tmp/python.tar.xz' | sha256sum --check - && \
+    mkdir /tmp/python-src && tar -xJf /tmp/python.tar.xz -C /tmp/python-src --strip-components=1 && \
+    cd /tmp/python-src && ./configure --prefix=/opt/python --with-ensurepip=install --with-system-expat --disable-test-modules && \
+    make -j4 && make install && rm -rf /tmp/python-src /tmp/python.tar.xz
+COPY deploy/runner-requirements.txt /tmp/runner-requirements.txt
+RUN /opt/python/bin/python3.14 -m pip install --require-hashes --no-cache-dir --disable-pip-version-check -r /tmp/runner-requirements.txt && \
+    /opt/python/bin/python3.14 -c 'import ssl, sqlite3, bz2, lzma, pytest; assert pytest.__version__ == "9.1.1"'
+
+FROM node AS eval-runner
+USER 0
+RUN microdnf install -y openssl-libs bzip2-libs libffi zlib xz-libs sqlite-libs expat libzstd && microdnf clean all
+COPY --from=python-build /opt/python /opt/python
+COPY LICENSE /licenses/AgentCI-MIT.txt
+ENV PATH=/opt/python/bin:/usr/local/bin:/usr/bin:/bin PYTHONDONTWRITEBYTECODE=1 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1
+RUN ln -s /opt/python/bin/python3.14 /usr/local/bin/python && ln -s /opt/python/bin/python3.14 /usr/local/bin/python3
+USER 1001
+WORKDIR /workspace
+CMD ["node", "--version"]
+
 FROM node AS build
 USER 0
 WORKDIR /app

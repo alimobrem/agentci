@@ -157,6 +157,12 @@
               },
               "critical": {
                 "type": "boolean"
+              },
+              "selector": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512,
+                "pattern": "^[^\\u0000-\\u001f]+$"
               }
             },
             "required": [
