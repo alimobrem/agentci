@@ -1171,6 +1171,25 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M2-PHASE-PR-PLAN",
+      "title": "Plan reviewable PRs and predictable release gates for every remaining milestone",
+      "requirementIds": [
+        "SPEC-34.2-003"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T17:19:18.415Z",
+      "completedAt": "2026-10-04T17:26:34.871Z",
+      "acceptance": [
+        {
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "status": "passed",
+          "evidence": [
+            "docs/phase-pr-plan.md"
+          ]
+        }
+      ]
     }
   ]
 }
