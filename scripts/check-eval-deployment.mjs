@@ -24,7 +24,7 @@ try {
   const fallback=render(['deploy/eval-worker.compose.yaml'],{AGENTCI_CONTAINER_ENGINE:'docker',AGENTCI_DOCKER_SOCKET_PATH:'/var/run/docker.sock'}).services['eval-worker'];
   assert.equal(fallback.environment.AGENTCI_CONTAINER_ENGINE,'docker');assert.equal(fallback.volumes.find(v=>v.target==='/run/agentci/engine.sock').source,'/var/run/docker.sock');
   const rootless=render(['deploy/eval-worker.compose.yaml','deploy/podman-rootless.compose.yaml']).services['eval-worker'];
-  assert.equal(rootless.userns_mode,'keep-id:uid=1001,gid=0');assert.ok(rootless.security_opt.includes('label=disable'));
+  assert.equal(rootless.userns_mode,'keep-id:uid=1001,gid=0');assert.ok(rootless.security_opt.includes('label=disable'));assert.ok(rootless.security_opt.includes('no-new-privileges:true'));
   assert.equal(local.networks.controller.external,true);assert.equal(local.networks.controller.name,'agentci_fixture_default');
   console.log('Evaluator Compose boundary passed: explicit environment, restricted login, private provider mount, read-only service and separate/local network modes. No services started.');
 } finally {await rm(directory,{recursive:true,force:true});}
