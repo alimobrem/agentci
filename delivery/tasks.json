@@ -751,14 +751,16 @@
         "SPEC-40-039",
         "SPEC-11.4-007"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T08:38:26.824Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T09:06:16.826Z",
       "acceptance": [
         {
           "text": "UBI non-root eval-worker image includes current stable official pinned Docker CLI, no package installers/controller credentials, and passes real restricted PostgreSQL/Temporal execution, child isolation, shutdown/restart and vulnerability scans. Applicable CI builds and verifies it; published native/download gates remain separately required.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-eval-worker-ci.json"
+          ]
         }
       ]
     },

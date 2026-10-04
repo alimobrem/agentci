@@ -100,3 +100,8 @@ binary exposes no bundled Go-module inventory to this scanner; that coverage
 limit remains part of release assessment. It does not close the optional engine's
 separate unpatched HIGH finding. Component pins, license checksum and native
 metadata are recorded in [the dependency record](../releases/m2-eval-worker-dependencies.json).
+
+Native AMD64 CI run 37190707698 passed this packaged runtime probe and the
+full source verification. [Its evidence](../releases/m2-eval-worker-ci.json)
+records the exact candidate/CI tree, artifact ID and SHA256, worker image ID,
+runtime assertions and each image scan. Publication remains a separate gate.
