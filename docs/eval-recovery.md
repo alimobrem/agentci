@@ -1,6 +1,6 @@
 # Abrupt review recovery
 
-M2 candidate recovery is implemented and undergoing final acceptance. Ordinary
+M2 candidate recovery passed component acceptance. Ordinary
 workflow cancellation waits for live evaluator cleanup. Forceful Temporal
 termination bypasses parent cleanup; see [Temporal cancellation and termination](https://github.com/temporalio/documentation/blob/main/docs/encyclopedia/workflow/cancellation-and-termination.mdx).
 The controller now reconciles tracked terminal attempts independently.
@@ -50,6 +50,15 @@ verify stale-lease fencing, retained evidence, removal of the exact owners, one
 terminal Check and fresh-attempt recovery. Concurrent migration application,
 source checksums, restricted grants and history replay are also checked.
 
-Final-source CI, candidate container/package probes, actual customer operator
-acceptance and all milestone publication/download/demo gates remain required
-under `M2-TERMINATION-RECOVERY`. This is candidate behavior; M2 is not released.
+Exact-source CI 37206277572 passes 123 unit/API/domain tests and fourteen native
+integration groups with zero skips, released-M1 compatibility, production packaging
+and compiled UBI service/evaluator probes. Source trees and artifact hashes are
+verified in [the CI checkpoint](../releases/m2-controller-recovery-ci.json). The
+[installed customer test](../releases/m2-controller-recovery-customer-local.json)
+terminated a staged attempt, verified one unavailable Check and retained cancelled
+exports, then passed a fresh attempt without changing prior evidence. All four
+units have no leftover owned containers. The live test used queued units; running
+container termination and evaluator SIGKILL are covered by native acceptance.
+
+Milestone publication, downloads, reliable hosting and released-build demo gates
+remain required. This is candidate behavior; M2 is not released.

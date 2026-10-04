@@ -1,0 +1,138 @@
+{
+  "component": "Installed customer controller termination recovery",
+  "sourceCommit": "4cbe08aba1461af121795f9cf945a1c48e7946f4",
+  "packageSha256": "212801c28443320318c92e3e1ea3f664e4e28522cf1c43d124054bad81b3c6ff",
+  "repository": "alimobrem/agentci-onboarding-demo",
+  "pullRequest": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2",
+  "terminated": {
+    "receipt": {
+      "schemaVersion": 1,
+      "requestId": "81524f14-1ac4-4a2c-a87f-cf039d2bd171",
+      "status": "queued",
+      "workflowId": "agentci:alimobrem/agentci-onboarding-demo:81524f14-1ac4-4a2c-a87f-cf039d2bd171",
+      "subject": {
+        "repository": "alimobrem/agentci-onboarding-demo",
+        "installationId": 167710386,
+        "pullRequest": 2,
+        "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+        "headSha": "6e0fe2c11d7cfd22d59893bc317098340badc3d4"
+      }
+    },
+    "tracking": {
+      "runId": "01a10724-9029-7e48-8e4e-10dcae8bd55c",
+      "terminalStatus": "TERMINATED",
+      "closedAt": "2026-10-04T13:40:22.645175+00:00"
+    },
+    "checkRunId": 111448484498,
+    "checkUrl": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2/checks?check_run_id=111448484498",
+    "conclusion": "action_required",
+    "comparisonId": "902525fb-d11a-4d14-baeb-56bd1fd0929b",
+    "comparisonDigest": "sha256:8fc026290c55e1bc922ca467fa1b4e1a9ea68b8ba4c7e7717cc194f4d67910da",
+    "summary": {
+      "state": "cancelled",
+      "outcome": "insufficient",
+      "executionGaps": [
+        "cancelled-unit:c1db3f47-5474-4b52-8108-097e98d36f43",
+        "cancelled-unit:e19a7408-5ee1-4ce0-ae7f-a44590b3c8f3"
+      ],
+      "comparisons": []
+    },
+    "certifiedExport": true,
+    "matchingCheckCount": 1
+  },
+  "recovered": {
+    "receipt": {
+      "schemaVersion": 1,
+      "requestId": "832b232b-bd32-49ab-a4a5-3fe2c9c7769c",
+      "status": "queued",
+      "workflowId": "agentci:alimobrem/agentci-onboarding-demo:832b232b-bd32-49ab-a4a5-3fe2c9c7769c",
+      "subject": {
+        "repository": "alimobrem/agentci-onboarding-demo",
+        "installationId": 167710386,
+        "pullRequest": 2,
+        "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+        "headSha": "6e0fe2c11d7cfd22d59893bc317098340badc3d4"
+      }
+    },
+    "tracking": {
+      "runId": "01a10726-7287-7dac-969e-3aee5f7b2aab",
+      "terminalStatus": "COMPLETED",
+      "closedAt": "2026-10-04T13:42:12.666158+00:00"
+    },
+    "checkRunId": 111448833188,
+    "checkUrl": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2/checks?check_run_id=111448833188",
+    "conclusion": "neutral",
+    "comparisonId": "bf13e2e7-802d-4dcf-ad8c-79f1ce18e134",
+    "comparisonDigest": "sha256:59ac3978479107a1f0af39e54957e668dc001538db0108d31d6d008b31b132fe",
+    "summary": {
+      "state": "completed",
+      "outcome": "passed",
+      "executionGaps": [],
+      "comparisons": [
+        {
+          "suite": "customer-safety",
+          "baseRunId": "d8a10c64-622c-4dcb-8de7-a5d65430f190",
+          "headRunId": "fe590b76-86d8-4d3e-a366-33eb2b47a791",
+          "deltas": [
+            {
+              "scenario": "safe-response",
+              "baseStatus": "passed",
+              "headStatus": "passed",
+              "passRateDelta": 0,
+              "criticalFailureDelta": 0,
+              "regression": false
+            }
+          ],
+          "regressions": []
+        }
+      ]
+    },
+    "certifiedExport": true,
+    "matchingCheckCount": 1
+  },
+  "priorFailureDigestPreserved": true,
+  "priorCheckIdsRetained": [
+    111431171007,
+    111431405415,
+    111435424243
+  ],
+  "installedCliAndClient": true,
+  "localHarnessRework": [
+    "Initial harness used an incorrect comparison table, then an incorrect UUID cast; both prior requests completed without termination and remain retained. The corrected harness uses actual schema identities."
+  ],
+  "releaseAcceptance": false,
+  "limitations": [
+    "Local candidate images and temporary tunnel; no milestone publication or reliable every-PR hosting acceptance.",
+    "Live termination occurred with evaluator paused and units queued; running-container SIGKILL/termination is independently covered by the fourteen native integration groups.",
+    "Final exact-source CI and all phase release gates remain required."
+  ],
+  "ownedContainersAbsentForUnits": [
+    "e19a7408-5ee1-4ce0-ae7f-a44590b3c8f3",
+    "c1db3f47-5474-4b52-8108-097e98d36f43",
+    "fe590b76-86d8-4d3e-a366-33eb2b47a791",
+    "d8a10c64-622c-4dcb-8de7-a5d65430f190"
+  ],
+  "serviceRuntime": {
+    "api": {
+      "imageId": "sha256:ee80ed4998e7bff4f2ca1b707726f323d1b92546b95a29a0673ed5a5adaf028c",
+      "running": true,
+      "user": "1001:0",
+      "health": "healthy",
+      "readOnlyRootFilesystem": false
+    },
+    "worker": {
+      "imageId": "sha256:cafb0071d53adb50c0888254b0b07f426c595c8285f11ce3bd4a13a39ad84f1a",
+      "running": true,
+      "user": "1001:0",
+      "health": null,
+      "readOnlyRootFilesystem": false
+    },
+    "eval-worker": {
+      "imageId": "sha256:c79b116e2bba3c7366cd6ddd8c5c8f564d2c6675d2cf16782865f1b829b05326",
+      "running": true,
+      "user": "1001:0",
+      "health": null,
+      "readOnlyRootFilesystem": true
+    }
+  }
+}

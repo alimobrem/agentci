@@ -50,6 +50,16 @@ are retained in [the Check lookup record](../../releases/m2-check-filter-finding
 The reconciliation fix passed source- and artifact-verified CI 37201053254.
 The [operator command](../operator-review.md) now has native integration, installed
 package and actual customer evidence. Its source-verified full CI 37202131590 passed. The remaining M2 release gates
-are still required. The subsequent UUID case-consistency audit finding reopens
-comparison API acceptance and is recorded separately; this demo does not
-conceal it.
+are still required. The subsequent UUID case-consistency defect was corrected and passed exact-source
+CI 37202994401; its finding and rework remain recorded.
+
+Abrupt recovery is also verified on this customer deployment: a fresh installed-CLI
+review was staged while the evaluator was paused, its exact parent run terminated,
+and the evaluator resumed. Independent reconciliation finished one `action_required`
+Check, retained certified cancelled evidence and closed durable tracking. A fresh
+installed-CLI attempt then passed; the failed digest and historical Checks remain
+unchanged, and all four units have no owned containers. See the [customer
+proof](../../releases/m2-controller-recovery-customer-local.json) and [recovery
+guide](../eval-recovery.md). Native tests separately cover actual running-container
+termination and evaluator/reconciler process death. This remains a development
+candidate demo, not milestone release acceptance.

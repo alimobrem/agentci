@@ -994,12 +994,32 @@
         "SPEC-40-039",
         "SPEC-11.4-007"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T12:46:52.603Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T13:44:26.042Z",
       "acceptance": [
         {
           "text": "Tracked controller attempts reconcile actual Temporal terminal state after failure, timeout or termination without restarting an immutable failed UUID. Scoped SQL cancellation and unavailable/cancelled Checks retain prior evidence; concurrent/restarted reconcilers are fenced and transient SDK/publication failures retry without false closure. Native tests terminate a real parent with both containers running and after an evaluator SIGKILL, then recover with no owned containers, correct terminal evidence and exactly one Check. A fresh operator UUID recovers independently; legacy M1 replay, additive checksum-bound migration, private error handling, docs/operation mappings, package/container and exact-source full CI pass.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-controller-recovery-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-RECOVERY-GUIDANCE",
+      "title": "Make unavailable Checks expose retained evidence and correct fresh-attempt recovery guidance",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-32-002"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T13:44:43.294Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Cancelled/unavailable Checks instruct an operator to request a fresh immutable attempt rather than redeliver the failed UUID. When a scoped staged comparison exists, the exact Check exposes authenticated retained comparison evidence and its review/attempt identity without credentials; pre-stage failures remain honest. Native and installed customer verification prove correct links, immutable earlier evidence and unchanged exact-head reconciliation; docs, API/scenario mapping, packaging and exact-source CI pass.",
           "status": "pending",
           "evidence": []
         }
