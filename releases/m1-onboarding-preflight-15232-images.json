@@ -1,0 +1,71 @@
+{
+  "version": "0.2.1-m1",
+  "sourceCommit": "15232a92d22e7640298f78ba190f098312919a17",
+  "platforms": [
+    "linux/amd64",
+    "linux/arm64"
+  ],
+  "api": "ghcr.io/alimobrem/agentci-api@sha256:20e4511dafaff1a908600006cfaef0d5903f41f9d63e1529745cd815001889de",
+  "worker": "ghcr.io/alimobrem/agentci-worker@sha256:9c095978874fe3651dc2e145a728dde621c13acad42035bbe8348d1412310b17",
+  "publicationRun": "https://github.com/alimobrem/agentci/actions/runs/37176961168",
+  "nativeAmd64Run": "https://github.com/alimobrem/agentci/actions/runs/37177380397",
+  "anonymousPulls": true,
+  "nativeArm64": {
+    "result": "passed",
+    "version": "downloaded-onboarding",
+    "platform": "arm64",
+    "checks": [
+      "non-root API/worker startup",
+      "readiness",
+      "signature rejection",
+      "evidence authentication",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  },
+  "nativeAmd64": {
+    "result": "passed",
+    "version": "downloaded",
+    "platform": "x64",
+    "checks": [
+      "non-root API/worker startup",
+      "readiness",
+      "signature rejection",
+      "evidence authentication",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  },
+  "scans": [
+    {
+      "role": "api",
+      "arch": "amd64",
+      "knownFindings": 0,
+      "sha256": "8eae5537fa938a86e99cc3dae566123713e55a561fbdf43ab148e1f57f91e7ee"
+    },
+    {
+      "role": "api",
+      "arch": "arm64",
+      "knownFindings": 0,
+      "sha256": "62d6ec5f897b6907c16c45e925665a3be3596a9a125915f2bcc91981955b2e45"
+    },
+    {
+      "role": "worker",
+      "arch": "amd64",
+      "knownFindings": 0,
+      "sha256": "85a729ca42c0ce209a22e68a205a524a44548b216f4a830446b673ef63a8bcde"
+    },
+    {
+      "role": "worker",
+      "arch": "arm64",
+      "knownFindings": 0,
+      "sha256": "0677049f20bef923b54031549528334dc15615e109efa5d990d5f4759f63f10f"
+    }
+  ],
+  "amd64Constraint": "UBI 10 requires x86-64-v3; native amd64 verification passed. No emulated amd64 claim.",
+  "coverage": "OS/npm inventories and vendor Cargo lockfiles; static scan does not prove absence of defects in compiled vendor binaries."
+}

@@ -1,8 +1,9 @@
-# Customer onboarding — M1 extension candidate
+# Customer onboarding — M1
 
-State: in-progress, version `0.2.1-m1`. Not yet a published/customer-validated release.
-The immutable `0.2.0-m1` package does not contain the new init/setup/client commands.
-M2 remains not-started while the expanded customer acceptance gates are pending.
+Distribution version: `0.2.1-m1`. Install only after the artifacts appear on the
+[release page](https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1).
+The [gate ledger](https://github.com/alimobrem/agentci/blob/main/releases/m1-gates.json) records acceptance independently.
+The older immutable `0.2.0-m1` package lacks the init/setup/client commands.
 
 ## What a customer runs
 
@@ -12,23 +13,20 @@ GitHub Checks; agents consume the authenticated evidence API. The CLI bootstraps
 projects and can perform local immutable-commit diffs. There is no dashboard,
 public shared App, hosted signup or general review-job submission API yet.
 
-This candidate supports one repository per deployment. Customer-owned private
+This distribution supports one repository per deployment. Customer-owned private
 Apps and secrets stay separate from the AgentCI project's dogfood App. The
 existing App remains installed only on alimobrem/agentci.
 
 ## Install and bootstrap
 
 Requires Node 26.10.0 (26.x), npm 12.2.0, Git, Docker/Compose and a reachable HTTPS
-endpoint forwarding to the API. Current candidate installation from source:
+endpoint forwarding to the API. Install the published package and obtain the matching deployment configuration:
 
 ```sh
-git clone --branch codex/m1-customer-onboarding https://github.com/alimobrem/agentci.git agentci-service
+git clone --branch v0.2.1-m1 https://github.com/alimobrem/agentci.git agentci-service
 cd agentci-service
-npm ci
-npm run build
-npm pack --pack-destination /tmp
 mkdir -p /tmp/agentci-customer-tools
-npm install --prefix /tmp/agentci-customer-tools --omit=dev /tmp/agentci-0.2.1-m1.tgz
+npm install --prefix /tmp/agentci-customer-tools --omit=dev https://github.com/alimobrem/agentci/releases/download/v0.2.1-m1/agentci-0.2.1-m1.tgz
 /tmp/agentci-customer-tools/node_modules/.bin/agentci init --root /tmp/my-agent-project
 /tmp/agentci-customer-tools/node_modules/.bin/agentci validate --root /tmp/my-agent-project --json
 ```
@@ -72,16 +70,17 @@ public logs. App creation/installation is an explicit operator access grant.
 
 Use the service checkout's `deploy/compose.yaml` and point `AGENTCI_ENV_FILE` to
 your deployment `.env`; pass that file through Compose's `--env-file` as well.
-Before publication, build the candidate images from this checkout. After a new
-release is verified, use its published immutable digests; do not use the old M1
-images to claim verification of changed candidate behavior.
+Set `AGENTCI_API_IMAGE` and `AGENTCI_WORKER_IMAGE` to the immutable image references
+in the [release manifest](https://github.com/alimobrem/agentci/releases/download/v0.2.1-m1/m1-onboarding-manifest.json).
+Both references must belong to this release; avoid mixing versions.
 
 ```sh
 # In agentci-service; supply absolute paths to your generated deployment .env.
 export AGENTCI_ENV_FILE=/absolute/deployment/.env
 export AGENTCI_UID=$(id -u)
 export AGENTCI_GID=$(id -g)
-docker compose -p agentci-customer --env-file "$AGENTCI_ENV_FILE" -f deploy/compose.yaml up --build -d
+# Set AGENTCI_API_IMAGE and AGENTCI_WORKER_IMAGE from the manifest first.
+docker compose -p agentci-customer --env-file "$AGENTCI_ENV_FILE" -f deploy/compose.yaml up --no-build -d
 curl -fsS http://127.0.0.1:3000/readyz
 ```
 
@@ -97,7 +96,7 @@ macOS, a deployment under `/private/tmp` may not be shared; use a private direct
 under your shared home directory and confirm the mounted key is a file before
 starting the worker. A ready API alone does not confirm a running worker. UBI 10 amd64
 requires x86-64-v3. The included persistent Temporal development server supports
-the local onboarding preview, not production service operation. Production
+the local onboarding deployment, not production service operation. Production
 Temporal hosting, retention/backup automation and uptime are outside this claim.
 
 Open a PR adding an explicit production-write permission under the configured

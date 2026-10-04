@@ -55,8 +55,9 @@ deterministic semantic PR review.
 
 ## What works today?
 
-[M1 v0.2.0-m1](https://github.com/alimobrem/agentci/releases/tag/v0.2.0-m1) is a
-public immutable prerelease. AgentCI uses its own advisory review on pull requests.
+M1 distribution version: [0.2.1-m1](https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1).
+The release page supplies published artifacts; the [gate ledger](https://github.com/alimobrem/agentci/blob/main/releases/m1-gates.json)
+records completion separately. AgentCI uses its own advisory review on pull requests.
 
 | Available now | Planned in later milestones |
 | --- | --- |
@@ -107,33 +108,31 @@ releases; it is not published to the npm registry.
 mkdir agentci-demo
 cd agentci-demo
 npm init -y
-npm install --omit=dev https://github.com/alimobrem/agentci/releases/download/v0.2.0-m1/agentci-0.2.0-m1.tgz
+npm install --omit=dev https://github.com/alimobrem/agentci/releases/download/v0.2.1-m1/agentci-0.2.1-m1.tgz
 npx agentci --version
-# Expected: 0.2.0-m1
+# Expected: 0.2.1-m1
 ```
 
-For the published M1 package, validate a repository with an `agentci.yaml` manifest:
+Initialize a separate empty customer project and validate its contracts:
 
 ```sh
-npx agentci validate --root /path/to/repository --json
+npx agentci init --root ../my-agent-project
+npx agentci validate --root ../my-agent-project --json
 ```
 
-The published `0.2.0-m1` package has no initializer. The new `0.2.1-m1`
-customer-onboarding candidate adds `agentci init`, configurable App setup and a
-Node evidence client; it is not yet released or customer-validated. See the
-[customer guide](docs/customer-onboarding.md). For a released sample, clone this
-repository and validate it. Validation checks explicit contracts and eval YAML syntax; it does
-not execute behavioral evals. The [released-build demo](docs/dogfood/m1-release-demo.md)
-includes copyable commands for a verified production-write finding and an invalid
-permission failure.
+Follow the [customer guide](docs/customer-onboarding.md) to register a private App
+for one repository and deploy the API/worker. Customers see advisory GitHub Checks;
+agents use the authenticated evidence API through `agentci/client`. The CLI
+provides bootstrap, setup, validation and local review. Validation checks contracts
+and eval YAML syntax; behavioral eval execution starts in M2.
 
 ### Service images
 
 Public packages: [API](https://github.com/alimobrem/agentci/pkgs/container/agentci-api)
 and [worker](https://github.com/alimobrem/agentci/pkgs/container/agentci-worker).
-Use the immutable digests in the [release manifest](releases/m1-manifest.json).
+Use the immutable digests in the [release manifest](https://github.com/alimobrem/agentci/releases/download/v0.2.1-m1/m1-onboarding-manifest.json).
 Images support linux/arm64 and linux/amd64; UBI 10 amd64 requires x86-64-v3.
-Follow the [local deployment guide](docs/m1-setup.md) for PostgreSQL, Temporal,
+Follow the [customer deployment guide](docs/customer-onboarding.md) for PostgreSQL, Temporal,
 App permissions and secrets. The Temporal development server is for local use.
 
 ## Contributing

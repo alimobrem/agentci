@@ -1,10 +1,12 @@
 # Releases
 
-## Unreleased — 0.2.1-m1 customer onboarding candidate
+## 0.2.1-m1 — 2026-10-03
 
 - Empty-project initialization and configurable customer-owned GitHub App setup.
 - Agent evidence client with identity/digest verification and typed errors.
-- Fresh-customer and agent/API completion gates; live acceptance and publication pending.
+- Fresh-customer success, invalid-input failure and automatic recovery checks.
+- Native downloaded-image and installed-agent API verification. Publication and
+  final completion evidence are recorded in the release assets and gate ledger.
 
 
 ## 0.2.0-m1 — 2026-10-03

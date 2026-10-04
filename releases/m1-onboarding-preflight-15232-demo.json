@@ -1,0 +1,203 @@
+{
+  "version": "0.2.1-m1",
+  "sourceCommit": "15232a92d22e7640298f78ba190f098312919a17",
+  "observedAt": "2026-10-04T04:41:00.369Z",
+  "images": {
+    "version": "0.2.1-m1",
+    "sourceCommit": "15232a92d22e7640298f78ba190f098312919a17",
+    "platforms": [
+      "linux/amd64",
+      "linux/arm64"
+    ],
+    "api": "ghcr.io/alimobrem/agentci-api@sha256:20e4511dafaff1a908600006cfaef0d5903f41f9d63e1529745cd815001889de",
+    "worker": "ghcr.io/alimobrem/agentci-worker@sha256:9c095978874fe3651dc2e145a728dde621c13acad42035bbe8348d1412310b17"
+  },
+  "package": {
+    "version": "0.2.1-m1",
+    "sourceCommit": "15232a92d22e7640298f78ba190f098312919a17",
+    "productionOnlyInstall": true,
+    "initAndValidatePassed": true,
+    "overwriteExitCode": 2,
+    "bootstrapMatchesFreshGitHubProject": true,
+    "registeredSetupAndClientMatchReleaseModules": {
+      "packages/onboarding/init.js": "285b41f599b569a82b49383935e567cdff6628aab00fddfaa8ac3be416c1429f",
+      "packages/onboarding/config.js": "3638648e1d6fd186308a9c1913c54a568b166aee5fb328d4e30955e86d2a44b2",
+      "packages/onboarding/setup.js": "b9c089d71cafd38a6e2acc9a9b793b3e7bf723d76a99c36e4934204a11de267d",
+      "packages/client/index.js": "fb313fad4233bb40ab1aee786ff720778e45ade65386cbe2a2d65921ea563a54"
+    },
+    "privateCredentialsIncluded": false
+  },
+  "failure": {
+    "sourceCommit": "15232a92d22e7640298f78ba190f098312919a17",
+    "images": {
+      "version": "0.2.1-m1",
+      "sourceCommit": "15232a92d22e7640298f78ba190f098312919a17",
+      "platforms": [
+        "linux/amd64",
+        "linux/arm64"
+      ],
+      "api": "ghcr.io/alimobrem/agentci-api@sha256:20e4511dafaff1a908600006cfaef0d5903f41f9d63e1529745cd815001889de",
+      "worker": "ghcr.io/alimobrem/agentci-worker@sha256:9c095978874fe3651dc2e145a728dde621c13acad42035bbe8348d1412310b17"
+    },
+    "baseSha": "694456b234ac4974b03b0e898d983fd582ec7f31",
+    "headSha": "5b27e56fc162b9960d6d9f4eda826469bd50b520",
+    "checks": [
+      {
+        "id": 111363155330,
+        "headSha": "5b27e56fc162b9960d6d9f4eda826469bd50b520",
+        "status": "completed",
+        "conclusion": "action_required",
+        "url": "https://github.com/alimobrem/agentci-onboarding-demo/runs/111363155330",
+        "title": "AgentCI review unavailable",
+        "summary": "Verification infrastructure/input failure after retries. No clean or successful review is claimed. Operator recovery and webhook redelivery are required."
+      }
+    ],
+    "evidenceRecordCount": 0,
+    "observedAt": "2026-10-04T04:37:21.392Z"
+  },
+  "recovery": {
+    "check": {
+      "id": 111363389366,
+      "url": "https://github.com/alimobrem/agentci-onboarding-demo/runs/111363389366",
+      "conclusion": "neutral",
+      "title": "AgentCI advisory: high risk",
+      "summary": "Advisory deterministic review. Risk: **high**.\nBase: 694456b234ac4974b03b0e898d983fd582ec7f31; head: fb519c76386a360ccdd855a17544af9fb6277067.\nChanged files: 1. Behavioral evals: not applicable in M1.\n- permissions/production.yaml: permission, policy\n- high / inferred: Configured policy or permission input changed; access impact needs review.\n- high / verified: Explicit production write permission added.\n[Detailed evidence](https://mitchell-peer-filled-quick.trycloudflare.com/v1/evidence/83ec1e44-36be-4390-b62b-1113757c9a0e)"
+    },
+    "evidence": {
+      "id": "83ec1e44-36be-4390-b62b-1113757c9a0e",
+      "digest": "sha256:69fd2aed6e17cce5c1cd040627d00d1ceab66de3d29f4b16eac2f9139823656e",
+      "evidence": {
+        "id": "83ec1e44-36be-4390-b62b-1113757c9a0e",
+        "kind": "PullRequest",
+        "claim": {
+          "producer": {
+            "name": "agentci",
+            "version": "0.2.1-m1"
+          },
+          "confidence": 1,
+          "sourceType": "static-analysis",
+          "verificationStatus": "verified"
+        },
+        "edges": [],
+        "subject": {
+          "gitSha": "fb519c76386a360ccdd855a17544af9fb6277067",
+          "pullRequest": 1
+        },
+        "version": 1,
+        "artifacts": [
+          {
+            "uri": "urn:agentci:analysis:83ec1e44-36be-4390-b62b-1113757c9a0e",
+            "digest": "sha256:69fd2aed6e17cce5c1cd040627d00d1ceab66de3d29f4b16eac2f9139823656e",
+            "mediaType": "application/json"
+          }
+        ],
+        "createdAt": "2026-10-04T04:38:44.087Z",
+        "schemaVersion": "v1alpha1",
+        "organizationId": "e98f9136-8930-43b5-8f46-ac3aa7b65521"
+      },
+      "analysis": {
+        "risk": "high",
+        "evals": {
+          "reason": "Behavioral eval execution starts in M2; this analysis verifies deterministic repository changes only.",
+          "status": "not-applicable"
+        },
+        "baseSha": "694456b234ac4974b03b0e898d983fd582ec7f31",
+        "changes": [
+          {
+            "path": "permissions/production.yaml",
+            "fields": [
+              {
+                "pointer": "",
+                "operation": "added",
+                "afterDigest": "sha256:bf89ff2e281c15a11e26c21d2e24bae079cec5a607da41a0e8cac61f307acdb2"
+              }
+            ],
+            "operation": "added",
+            "categories": [
+              "permission",
+              "policy"
+            ],
+            "afterDigest": "sha256:672295664823fee9e68009db59c46b39cc80760ab2f9d728fe7e1e28c0d2bc64"
+          }
+        ],
+        "headSha": "fb519c76386a360ccdd855a17544af9fb6277067",
+        "advisory": true,
+        "findings": [
+          {
+            "id": "127e2ed65205ecade8ce17f4",
+            "rule": "policy-permission-change",
+            "claim": "Configured policy or permission input changed; access impact needs review.",
+            "paths": [
+              "permissions/production.yaml"
+            ],
+            "severity": "high",
+            "verification": "inferred"
+          },
+          {
+            "id": "7275a008c57a2726ac570196",
+            "rule": "production-mutation-added",
+            "claim": "Explicit production write permission added.",
+            "paths": [
+              "permissions/production.yaml"
+            ],
+            "severity": "high",
+            "verification": "verified"
+          }
+        ],
+        "repository": "alimobrem/agentci-onboarding-demo",
+        "schemaVersion": "v1alpha1"
+      }
+    }
+  },
+  "agent": {
+    "ready": true,
+    "canonicalDigestVerified": true,
+    "exactCommitsVerified": true,
+    "unauthorized401": true,
+    "wrongHeadRejected": true,
+    "clientFromExactCiPackage": true
+  },
+  "appScopes": [
+    {
+      "appId": 5182307,
+      "installationId": 167710386,
+      "repository": "alimobrem/agentci-onboarding-demo",
+      "selection": "selected",
+      "repositoryCount": 1,
+      "permissions": {
+        "checks": "write",
+        "contents": "read",
+        "metadata": "read",
+        "pull_requests": "read"
+      }
+    },
+    {
+      "appId": 5179954,
+      "installationId": 167655696,
+      "repository": "alimobrem/agentci",
+      "selection": "selected",
+      "repositoryCount": 1,
+      "permissions": {
+        "checks": "write",
+        "contents": "read",
+        "metadata": "read",
+        "pull_requests": "read"
+      }
+    }
+  ],
+  "selfReview": {
+    "pullRequest": "https://github.com/alimobrem/agentci/pull/4",
+    "run": "https://github.com/alimobrem/agentci/actions/runs/37177116903",
+    "check": "https://github.com/alimobrem/agentci/runs/111362191481",
+    "trustedSource": "15232a92d22e7640298f78ba190f098312919a17",
+    "head": "93faf2d2299634ed0959f49d127fba9e716d67f8",
+    "risk": "high",
+    "artifactId": 11293083472
+  },
+  "limitations": [
+    "Customer App registration used candidate package; release setup/client modules are byte-identical and freshly generated project matches the actual public GitHub baseline.",
+    "Customer service demo uses published immutable images and a temporary development tunnel.",
+    "Hosted AgentCI self-review runs without the laptop; App key remains an encrypted secret only in agentci.",
+    "No behavioral eval execution or production hosted control-plane claim in M1."
+  ]
+}

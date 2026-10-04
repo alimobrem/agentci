@@ -1,6 +1,8 @@
 # M1 customer acceptance extension
 
-Version: `0.2.1-m1` candidate. State: in-progress, not released.
+Distribution version: `0.2.1-m1`. This document records prepublication observations.
+For final release identity and acceptance, use the [release assets](https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1)
+and [active gate ledger](https://github.com/alimobrem/agentci/blob/main/releases/m1-gates.json).
 Historical `0.2.0-m1` artifacts remain immutable. M2 is not-started.
 
 ## Scope added by the user
@@ -26,7 +28,7 @@ the candidate. Live candidate onboarding has passed; published-build verificatio
   wrong owners/repos, additional repos, missing/elevated permissions and invalid origins.
 
 [Local observations](../../releases/m1-onboarding-local.json),
-[customer guide](../customer-onboarding.md), [active gates](../../releases/m1-gates.json).
+[customer guide](../customer-onboarding.md), [active gates](https://github.com/alimobrem/agentci/blob/main/releases/m1-gates.json).
 
 First candidate full CI: [37165339669](https://github.com/alimobrem/agentci/actions/runs/37165339669)
 passed on source `caf2004dbf38fb54b6594c21fddfd6894815e546`, including real

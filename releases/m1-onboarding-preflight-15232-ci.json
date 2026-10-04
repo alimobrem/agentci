@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "15232a92d22e7640298f78ba190f098312919a17",
+  "candidateCommit": "15232a92d22e7640298f78ba190f098312919a17",
+  "runUrl": "https://github.com/alimobrem/agentci/actions/runs/37176938813",
+  "generatedAt": "2026-10-04T04:28:07.445Z",
+  "node": "v26.10.0",
+  "platform": "linux",
+  "arch": "x64",
+  "fastChecks": {
+    "schemaVersion": 1,
+    "startedAt": "2026-10-04T04:25:40.607Z",
+    "finishedAt": "2026-10-04T04:25:46.316Z",
+    "sourceCommit": "15232a92d22e7640298f78ba190f098312919a17",
+    "dirty": false,
+    "node": "v26.10.0",
+    "platform": "linux",
+    "arch": "x64",
+    "seconds": 5.724265816,
+    "passed": true,
+    "checks": [
+      {
+        "name": "types",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "node_modules/typescript/bin/tsc",
+          "--noEmit"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 2.80838177,
+        "output": ""
+      },
+      {
+        "name": "tests",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "--test",
+          "tests/api.test.ts",
+          "tests/client.test.ts",
+          "tests/control-api.test.ts",
+          "tests/delivery.test.ts",
+          "tests/dogfood.test.ts",
+          "tests/github.test.ts",
+          "tests/onboarding.test.ts",
+          "tests/project.test.ts",
+          "tests/review.test.ts",
+          "tests/scan-gate.test.ts",
+          "tests/schemas.test.ts"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 5.70147822,
+        "output": "✔ API health and schema retrieval (228.048985ms)\n✔ API validates a contract and rejects invalid contracts (78.280209ms)\n✔ API rejects invalid JSON and unsupported schema names (54.303373ms)\n✔ API does not expose future product resources (19.549726ms)\n✔ API rejects oversized bodies with a usable 413 response (48.519379ms)\n✔ agent client verifies evidence identity/digest and keeps bearer tokens off readiness (430.399097ms)\n✔ agent client rejects authentication, redirects and invalid records without leaking provider errors (123.869926ms)\n✔ signed webhook returns contracted receipt, queues once, and detects conflicting replay (237.632735ms)\n✔ invalid signature, malformed JSON, wrong installation and invalid SHA cannot dispatch work (94.281777ms)\n✔ closed PRs are recorded as ignored; unsupported methods and oversized bodies fail (61.978395ms)\n✔ evidence API requires credentials before revealing IDs and matches documented errors (59.64914ms)\n✔ readiness covers healthy and unavailable dependencies; evidence success matches the shared contract (184.417641ms)\n✔ webhook media, delivery headers and persistence failures match the contract without dispatch (48.969074ms)\n✔ release completion rejects missing gates, pending checks and evidence from another SHA (11.075309ms)\n✔ missing proof, invalid scope exceptions and escaped evidence paths cannot close a gate (0.650778ms)\n✔ task completion requires known requirements, passed acceptance and explicit evidence (0.709243ms)\n✔ timing summaries do not invent empty samples and use median rather than best run (0.272951ms)\n✔ blocked time is separate from cycle time and unknown starts stay unknown (1.412259ms)\n✔ expanded customer acceptance cannot close with only historical M1 gates (8.330472ms)\n✔ Hosted evidence links are restricted to GitHub artifacts in the configured repository (1.704226ms)\n✔ Hosted publication verifies PR, head, base, repository, installation and digest before publishing (0.983418ms)\n✔ GitHub adapter reads exact Git objects and rejects truncation and content identity mismatch (120.372407ms)\n✔ Checks reconcile retries only against this App and exact head; current-head check rejects force pushes (100.680254ms)\n✔ customer initialization validates and refuses to overwrite populated repositories (82.157513ms)\n✔ App setup uses explicit repository/account configuration and rejects ambiguous origins (3.009956ms)\n✔ App installation must match one configured repository and all minimal permissions (0.509217ms)\n✔ AgentCI validates its own repository (707.487632ms)\n✔ YAML parser rejects duplicate keys (1.078479ms)\n✔ missing project config fails validation (8.108286ms)\n✔ invalid requirement is reported with its file (13.502892ms)\n✔ duplicate requirement IDs fail across files (13.88658ms)\n✔ explicit Markdown front matter is validated (12.430042ms)\n✔ missing specification matches cannot pass (9.873868ms)\n✔ malformed eval YAML is not a success (12.330988ms)\n✔ include paths cannot escape the project (9.370565ms)\n✔ symlinked specification outside project is rejected (9.290561ms)\n✔ semantic categories cover each M1 surface including removals (21.004431ms)\n✔ structured diff distinguishes absent and null, escapes pointers, and never embeds content (8.383449ms)\n✔ production writes and secret reads produce verified findings without any model (10.323471ms)\n✔ narrowing existing explicit access does not assert a new production permission (16.268926ms)\n✔ active safety requirement removal is verified high risk; text edits remain inferred (24.141099ms)\n✔ changing selectors cannot hide removal of an active safety requirement (7.253805ms)\n✔ missing specifications are an input failure, not a clean advisory result (1.852102ms)\n✔ malformed data, duplicate IDs, path escapes and unsafe selectors fail rather than report clean (15.144052ms)\n✔ outputs are deterministic regardless of file insertion order (6.011389ms)\n✔ Git reader resolves exact commits and does not execute checked-in scripts or working-tree changes (96.47869ms)\n✔ scan policy blocks fixable high/critical and rejects missing inventory (307.610151ms)\n✔ agent-project: accepts representative valid contract (2.806639ms)\n✔ agent-project: rejects missing required fields (0.298561ms)\n✔ agent-project: rejects unknown fields to catch misspellings (0.19611ms)\n✔ requirement: accepts representative valid contract (0.896118ms)\n✔ requirement: rejects missing required fields (0.138365ms)\n✔ requirement: rejects unknown fields to catch misspellings (0.14867ms)\n✔ finding: accepts representative valid contract (1.081856ms)\n✔ finding: rejects missing required fields (0.127841ms)\n✔ finding: rejects unknown fields to catch misspellings (0.158847ms)\n✔ evidence: accepts representative valid contract (7.287853ms)\n✔ evidence: rejects missing required fields (0.187986ms)\n✔ evidence: rejects unknown fields to catch misspellings (0.842864ms)\n✔ project: privacy mode and provider names are portable (0.306251ms)\n✔ project: rejects credential fields and wrong schema version (0.326502ms)\n✔ validation never coerces values or mutates privacy defaults (1.002711ms)\n✔ requirement: lifecycle and verification enums reject mistakes (0.251141ms)\n✔ finding: reproduction labels stay explicit (0.188146ms)\n✔ evidence: requires exact commit, UUIDs, timestamps and digests (0.325153ms)\n✔ evidence: rejects confidence overflow and invalid edge types (0.163293ms)\nℹ tests 66\nℹ suites 0\nℹ pass 66\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 5597.403291\n"
+      },
+      {
+        "name": "api",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "scripts/check-api.ts"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 4.152312593,
+        "output": "M1 OpenAPI contract valid\n"
+      },
+      {
+        "name": "contract-evals",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "scripts/eval-contracts.ts"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 2.013074773,
+        "output": "{\n  \"kind\": \"deterministic-contract\",\n  \"total\": 6,\n  \"passed\": 6,\n  \"failed\": 0,\n  \"results\": [\n    {\n      \"id\": \"M0-EVAL-01\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-02\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-03\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-04\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-05\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-06\",\n      \"passed\": true\n    }\n  ]\n}\n"
+      },
+      {
+        "name": "risk-evals",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "scripts/eval-review.ts"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 2.465093913,
+        "output": "M1 deterministic risk corpus m1-semantic-v1: 8 passed; threshold 100%; no behavioral/model verification claimed.\n"
+      },
+      {
+        "name": "project",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "cmd/agentci/main.ts",
+          "validate"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 3.431674991,
+        "output": "Valid project: 5 data files, 1346 explicit requirements. M0 validation only.\n"
+      },
+      {
+        "name": "status",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "scripts/status.ts",
+          "--check"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 4.296226314,
+        "output": "Status current: 1346 inventory entries.\n"
+      },
+      {
+        "name": "delivery",
+        "command": [
+          "/opt/hostedtoolcache/node/26.10.0/x64/bin/node",
+          "--import",
+          "tsx",
+          "scripts/delivery.ts",
+          "check"
+        ],
+        "exitCode": 0,
+        "signal": null,
+        "seconds": 3.224446394,
+        "output": "16 tasks validated; M1 has 18 open release gates.\n"
+      }
+    ]
+  },
+  "apiCompatibility": {
+    "tool": "oasdiff",
+    "version": "1.33.0",
+    "sourceCommit": "15232a92d22e7640298f78ba190f098312919a17",
+    "baseline": "specs/api/baselines/m1-openapi.json",
+    "baselineSha256": "d3cd9175d2326f2de44cee59d2654a1f1b2cbbd95aefd6cd735b52ffb969da8f",
+    "currentSha256": "28c56cc252b460ca0a496f8459b59792ceea16affb2d60c7b22a8f8a35f9174d",
+    "exitCode": 0,
+    "selfTest": "endpoint-removal rejected",
+    "changes": "[]\n"
+  },
+  "runtime": {
+    "result": "passed",
+    "version": "ci",
+    "platform": "x64",
+    "checks": [
+      "non-root API/worker startup",
+      "readiness",
+      "signature rejection",
+      "evidence authentication",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  },
+  "artifacts": [
+    {
+      "path": "releases/agentci-0.2.1-m1.tgz",
+      "sha256": "29f64e7dfd4a4217bdcf757aeb2dfd8947254136d2ec879184cfde4818c38e4a"
+    },
+    {
+      "path": "scan-results/api.json",
+      "sha256": "62c73bdda0b62dff20132ba05b1d597db2424e591a52ceb441eaf7b6139197d1"
+    },
+    {
+      "path": "scan-results/worker.json",
+      "sha256": "e599a8244fa739c2dd00e16d721d0127679ffca0a41078b373f33ce39c2cc7fe"
+    }
+  ],
+  "releaseComplete": false,
+  "note": "Verification bundle. Live dogfood, reviewed vulnerability coverage, registry/download verification, release, docs and demo still require gate evidence."
+}

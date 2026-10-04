@@ -1,0 +1,69 @@
+{
+  "runId": 37177380397,
+  "attempt": 1,
+  "conclusion": "success",
+  "cohort": "optimized",
+  "cache": "unknown",
+  "collectedAt": "2026-10-04T04:36:35.480Z",
+  "sourceCommit": "15232a92d22e7640298f78ba190f098312919a17",
+  "url": "https://github.com/alimobrem/agentci/actions/runs/37177380397",
+  "event": "workflow_dispatch",
+  "jobs": [
+    {
+      "name": "smoke",
+      "seconds": 34,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Validate immutable release inputs",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Anonymously pull the immutable release digests",
+          "seconds": 11,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native amd64 published runtime",
+          "seconds": 13,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}
