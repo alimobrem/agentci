@@ -630,14 +630,16 @@
         "SPEC-40-032",
         "SPEC-40-034"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T08:03:21.812Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T08:14:55.775Z",
       "acceptance": [
         {
           "text": "Native/default and optional engine groups run concurrently without counting one another as leaks; cleanup still asserts no new containers for each immutable image. Failed CI attempt is retained and full CI reruns.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-durable-ci.json"
+          ]
         }
       ]
     },
@@ -694,6 +696,23 @@
       "status": "in-progress",
       "startedAt": "2026-10-04T07:41:19.579Z",
       "completedAt": null
+    },
+    {
+      "id": "M2-MIGRATION-CONCURRENCY",
+      "title": "Serialize repeatable schema and evaluator-role initialization",
+      "requirementIds": [
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T08:12:09.645Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Concurrent migration callers initialize a fresh dedicated test database without catalog/role races, retain exact schemas and grants, and repeat safely. Applicable full CI includes this test.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

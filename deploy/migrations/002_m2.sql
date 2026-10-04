@@ -1,4 +1,5 @@
 BEGIN;
+SELECT pg_advisory_xact_lock(hashtextextended('agentci:schema-migrations',0));
 CREATE TABLE IF NOT EXISTS agentci_eval_jobs (
   id uuid PRIMARY KEY,
   review_id uuid NOT NULL REFERENCES agentci_reviews(id),

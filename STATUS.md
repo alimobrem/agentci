@@ -74,15 +74,17 @@ Default service/runner scans report zero findings; the optional engine image has
 an unpatched node-forge HIGH finding requiring release assessment. No clean scan
 or M2 release claim is made.
 
-Durable eval storage and the unit execution driver now pass local real PostgreSQL
-and Docker recovery tests: retained trials resume after restart, stale leases
-cannot write or clean up, SIGKILL orphans are removed before a replacement run,
-other units are preserved, and cancellation removes containers without publishing
-success. This work is not yet verified in full CI. Credential-isolated configuration and a separately authenticated restricted SQL login
-now pass local execution/permission tests. The first durable full CI attempt failed
-because same-image tests shared a cleanup filter; the failed attempt is retained,
-unit-scoped assertions pass all five groups concurrently, and corrected full CI
-remains pending. Real Temporal worker startup/retry/cancellation/replay, durable
-PR/API integration and all M2 release gates remain open. The CI database URL uses separate
-test-only PG variables; its cleanup is in the open M2 PR, not GitHub main.
+Durable storage, unit execution, orphan recovery and restricted configuration
+passed exact-source full CI 37187767466: 99 unit/API/domain tests, seven real
+integration groups, zero skips, released-M1 API compatibility, clean production
+packaging and verified artifact hashes. The first failed cleanup attempt is
+retained; exact unit ownership assertions passed the corrected run.
+
+The separate Temporal eval worker now passes all nine local integration groups,
+including separate restricted process startup, committed-trial retry, workflow
+cancellation cleanup, worker-shutdown retry, terminal unknown-unit failure and
+history replay. Concurrent callers initialize and repeat a fresh schema safely.
+These newer changes still need full CI. Durable PR/API integration, published
+eval-worker packaging, stable HTTP retry identity and all M2 release gates remain
+open. The CI database URL cleanup is in the open M2 PR, not GitHub main.
 [M2 acceptance plan](docs/phases/m2.md).

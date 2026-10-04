@@ -4,8 +4,8 @@ The eval worker executes staged unit IDs using immutable projected snapshots and
 operator-pinned runner identities. It has no GitHub App key, webhook secret,
 evidence bearer token or controller database login. Its configuration refuses
 known controller/GitHub credential variables. It uses a separate Temporal queue,
-`agentci-eval-v1`. The Temporal activity entry point and published worker image are
-still in progress; this document describes the implemented configuration/driver.
+`agentci-eval-v1`. The Temporal activity entry point is implemented and tested locally. The published
+worker image and final-source full CI remain pending.
 
 Apply `deploy/migrations/002_m2.sql` using the controller migration identity.
 An administrator can then apply `deploy/migrations/002_m2_eval_role.sql`, provision
@@ -38,6 +38,20 @@ worker configuration rejects the plaintext loopback test option.
 The unit driver renews its fenced lease, resumes stored trials, reaps prior-owner
 containers under a database lock and refuses completion after lease loss or
 cancellation. A real separate database login passes local execution while reads
-of all controller tables, DDL and input mutation fail. Native Temporal retry,
-cancellation/history replay, published service packaging and full final-source
-CI are required before this is a supported customer deployment.
+of all controller tables, DDL and input mutation fail. Native Temporal retry, workflow cancellation cleanup, worker-shutdown retry and
+history replay pass local integration tests. Published service packaging and full
+final-source CI remain required before this is a supported customer deployment.
+
+After a build, `npm run eval-worker` starts this separate service. Temporal history
+carries unit IDs and bounded progress counters; snapshot files and provider
+credentials remain outside it. Activities heartbeat, and workflow cancellation
+uses `WAIT_CANCELLATION_COMPLETED` so continuation waits for cleanup. A worker
+shutdown or timeout releases the SQL unit for retry; an explicit workflow cancel
+marks it cancelled. Unknown units and mismatched operator configuration fail
+without repeated attempts. See the [Temporal cancellation contract](https://docs.temporal.io/develop/typescript/workflows/cancellation).
+
+Schema initialization serializes concurrent callers with a transaction-scoped
+advisory lock. Executor-role provisioning tolerates concurrent creation in another
+database while verifying that the existing group has no elevated capabilities.
+[Internal operations](../specs/api/eval-worker-operations.json) map the workflow
+and activity to requirements and real test scenarios.

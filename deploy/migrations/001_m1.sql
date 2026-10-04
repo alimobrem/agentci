@@ -1,4 +1,5 @@
 BEGIN;
+SELECT pg_advisory_xact_lock(hashtextextended('agentci:schema-migrations',0));
 CREATE TABLE IF NOT EXISTS agentci_scope (
   id integer PRIMARY KEY CHECK(id=1), organization_id uuid NOT NULL, repository text NOT NULL
 );
