@@ -1,3 +1,4 @@
+import {equalUuid} from '../identity/uuid.ts';
 import {createEvalComparison,type ComparisonInput,type ComparisonUnit,type ComparisonSummary} from './comparison.ts';
 import {canonical,digest} from '../review/engine.ts';
 import {readFileSync} from 'node:fs';import {createRequire} from 'node:module';import {Ajv} from 'ajv';import type {FormatsPlugin} from 'ajv-formats';
@@ -72,7 +73,7 @@ export class EvalExportVerifier {
     if(frame.type==='header'){
       if(this.accumulator||this.sequence!==1)throw new Error('Unexpected export header');
       const h=frame.data,s=h.subject,e=this.expected;
-      if(h.id!==this.id||h.organizationId!==e.organizationId||h.reviewId!==e.reviewId||h.attemptId!==e.attemptId||s.repository!==e.repository||s.pullRequest!==e.pullRequest||s.baseSha!==e.baseSha||s.headSha!==e.headSha)throw new ExportIdentityMismatch('Export identity mismatch');
+      if(!equalUuid(h.id,this.id)||!equalUuid(h.organizationId,e.organizationId)||!equalUuid(h.reviewId,e.reviewId)||!equalUuid(h.attemptId,e.attemptId)||s.repository!==e.repository||s.pullRequest!==e.pullRequest||s.baseSha!==e.baseSha||s.headSha!==e.headSha)throw new ExportIdentityMismatch('Export identity mismatch');
       this.header=structuredClone(h);this.accumulator=new ComparisonAccumulator(this.header);
       if(!h.unitCount){const final=this.accumulator.finish();this.summary=final.summary;this.comparisons.push(...final.comparisons);}
     }else if(frame.type==='unit'){

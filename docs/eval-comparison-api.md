@@ -12,6 +12,15 @@ planned units/results. It contains no projected source, command argv, lease toke
 App keys or database credentials. See [OpenAPI](../specs/api/openapi.json) and the
 [shared synthetic fixture](../specs/api/fixtures/eval-comparison.json).
 
+UUID spellings are case-insensitive for comparison IDs and caller-supplied
+organization, review and attempt identities. Storage returns its canonical
+resource ID; the same completed snapshot has identical evidence/digests and
+export frames for uppercase and lowercase request spellings. The client validates
+the original payload and hashes before comparing expected identities; it does
+not rewrite signed data. Different UUIDs, repositories and commit identities
+still fail scope/identity validation. This correction does not change the M1
+wire contract or compatibility baseline.
+
 Each read uses a consistent database snapshot. The digest binds that exact
 snapshot, including its source identity and derived summary. Pending/running
 execution or cancellation can change the snapshot digest. Completed unit results
@@ -36,8 +45,11 @@ Use trusted webhook/review identities for the expected values, rather than copyi
 them from an unverified response. Redirects are rejected. The client has a bounded
 request deadline and 4 MiB response budget; it sanitizes transport/server errors.
 The server also refuses oversized comparison records with explicit 413 rather than
-truncating results. Larger records use the snapshot export described below. Final-source CI remains
-required before accepting the capacity task.
+truncating results. Larger records use the snapshot export described below. Capacity acceptance has
+prior CI evidence; the subsequent UUID finding reopens comparison API acceptance
+until this correction passes final-source CI. Native, installed-client and actual
+customer candidate checks are recorded in [the UUID proof](../releases/m2-uuid-case-local.json);
+they do not substitute for release/download acceptance.
 
 | HTTP status | Error code | Meaning |
 | --- | --- | --- |

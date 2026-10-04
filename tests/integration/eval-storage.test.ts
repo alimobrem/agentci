@@ -76,12 +76,16 @@ test('PostgreSQL eval recovery: immutable exact inputs, fenced leases, retained 
     assert.equal(regressed.status,'failed');assert.equal(regressed.scenarios[0]!.failed,3);assert.equal((await store.complete(headId,headToken,regressed)).status,'failed');
     const comparison=validateComparisonRecord((await restarted.comparison(job.id))!);assert.equal(comparison.comparison.summary.state,'completed');assert.equal(comparison.comparison.summary.outcome,'failed');assert.deepEqual(comparison.comparison.summary.comparisons[0]!.regressions,['safe-response']);assert.equal(comparison.comparison.reviewId,review.id);assert.equal(comparison.comparison.attemptId,attempt);
     assert.deepEqual(await store.comparison(job.id),comparison);
+    assert.deepEqual(await store.comparison(job.id.toUpperCase()),comparison);
+    const exports:unknown[][]=[];for(const id of [job.id,job.id.toUpperCase()]){const items=[];for await(const item of store.exportComparison(id))items.push(item);exports.push(items);}assert.deepEqual(exports[1],exports[0]);
     const api=createControlApi({repository,installationId:12,secret:'s'.repeat(32),evidenceToken:'e'.repeat(32)},reviewStore,store);api.listen(0,'127.0.0.1');await once(api,'listening');
     try{
       const client=new AgentCIClient({url:`http://127.0.0.1:${(api.address() as {port:number}).port}`,token:'e'.repeat(32)});
       assert.deepEqual(await client.evalComparison(job.id,{...comparison.comparison.subject,organizationId:org,reviewId:review.id,attemptId:attempt}),comparison);
+      const upperIdentity={...comparison.comparison.subject,organizationId:org.toUpperCase(),reviewId:review.id.toUpperCase(),attemptId:attempt.toUpperCase()};
+      assert.deepEqual(await client.evalComparison(job.id.toUpperCase(),upperIdentity),comparison);
       let streamedUnits=0,streamedComparisons=0,streamedOutcome='';
-      for await(const item of client.evalComparisonExport(job.id,{...comparison.comparison.subject,organizationId:org,reviewId:review.id,attemptId:attempt})){
+      for await(const item of client.evalComparisonExport(job.id.toUpperCase(),upperIdentity)){
         if(item.type==='unit')streamedUnits++;if(item.type==='comparison'){streamedComparisons++;assert.deepEqual(item.data.regressions,['safe-response']);}if(item.type==='summary')streamedOutcome=item.data.outcome;
       }
       assert.equal(streamedUnits,2);assert.equal(streamedComparisons,1);assert.equal(streamedOutcome,'failed');

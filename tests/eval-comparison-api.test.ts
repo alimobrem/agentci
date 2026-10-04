@@ -70,3 +70,13 @@ test('comparison client rejects provider redirects, malformed/forged evidence an
  state.value='x'.repeat(4*1024*1024);await assert.rejects(client.evalComparison(record.id,expected),/response-too-large/);
  state.value={error:{code:'private-provider-diagnostic'}};state.status=413;await assert.rejects(client.evalComparison(record.id,expected),error=>error instanceof AgentCIError&&error.code==='response-too-large'&&!error.message.includes('private-provider'));
 });
+
+test('comparison UUID spelling variants retain canonical evidence and complete export without weakening identity',async t=>{
+ const f=await fixture(t),upperId=f.record.id.toUpperCase(),upperExpected={...f.expected,organizationId:f.expected.organizationId.toUpperCase(),reviewId:f.expected.reviewId.toUpperCase(),attemptId:f.expected.attemptId.toUpperCase()};
+ assert.deepEqual(await matches(await fetch(f.url+'/v1/eval-comparisons/'+upperId,{headers:f.auth})),f.record);
+ assert.deepEqual(await f.client.evalComparison(upperId,upperExpected),f.record);
+ const rawLower=await fetch(f.url+'/v1/eval-comparisons/'+f.record.id+'/export',{headers:f.auth}),lower=await rawLower.text();
+ const rawUpper=await fetch(f.url+'/v1/eval-comparisons/'+upperId+'/export',{headers:f.auth});assert.equal(rawUpper.status,200);assert.equal(await rawUpper.text(),lower);
+ const frames=[];for await(const item of f.client.evalComparisonExport(upperId,upperExpected))frames.push(item);assert.equal(frames.at(-1)!.type,'summary');assert.equal(frames.filter(f=>f.type==='unit').length,2);
+ for(const field of ['organizationId','reviewId','attemptId'] as const){const wrong={...upperExpected,[field]:randomUUID().toUpperCase()};await assert.rejects(f.client.evalComparison(upperId,wrong),/identity-mismatch/);await assert.rejects(async()=>{for await(const item of f.client.evalComparisonExport(upperId,wrong))void item;},/identity-mismatch/);}
+});

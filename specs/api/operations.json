@@ -90,7 +90,8 @@
         "unknown/malformed IDs and method/media-independent read",
         "unavailable or integrity-failing storage sanitized",
         "bounded API/client response and explicit oversized error",
-        "real durable evidence consumed by agent client"
+        "real durable evidence consumed by agent client",
+        "upper/lowercase UUID lookups retain identical canonical evidence and hashes; expected UUID case variants are accepted while different scoped identities are rejected"
       ]
     },
     {
@@ -113,7 +114,8 @@
         "consistent snapshot during concurrent cancellation",
         "abandoned stream rolls back transaction",
         "authorization, scoped IDs and sanitized dependency failure",
-        "bounded frames and one-group client consumption"
+        "bounded frames and one-group client consumption",
+        "upper/lowercase UUID lookups retain identical canonical evidence and hashes; expected UUID case variants are accepted while different scoped identities are rejected"
       ]
     }
   ]

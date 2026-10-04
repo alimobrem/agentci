@@ -1,3 +1,4 @@
+import {equalUuid} from '../../packages/identity/uuid.ts';
 import { createServer } from 'node:http';
 import { timingSafeEqual, createHash } from 'node:crypto';
 import {once} from 'node:events';
@@ -44,11 +45,11 @@ export function createControlApi(config: ControlConfig, store: Storage, comparis
         if(activeExports>=2){res.setHeader('retry-after','1');reply(503,{error:{code:'service-unavailable'}});return;}activeExports++;
         const abort=new AbortController(),deadline=setTimeout(()=>abort.abort(),120000);deadline.unref();
         const closed=()=>abort.abort();res.once('close',closed);
-        const iterator=comparisons.exportComparison(exportMatch[1]!,abort.signal);
+        const iterator=comparisons.exportComparison(exportMatch[1]!.toLowerCase(),abort.signal);
         try{
           const first=await iterator.next();
           if(first.done){reply(404,{error:{code:'not-found'}});return;}
-          if(first.value.type!=='header'||first.value.data.id!==exportMatch[1]||first.value.data.subject.repository!==config.repository||first.value.data.organizationId!==comparisons.organizationId)throw new Error('Export scope mismatch');
+          if(first.value.type!=='header'||!equalUuid(first.value.data.id,exportMatch[1])||first.value.data.subject.repository!==config.repository||!equalUuid(first.value.data.organizationId,comparisons.organizationId))throw new Error('Export scope mismatch');
           async function* items():AsyncGenerator<ExportItem>{yield first.value!;yield* iterator;}
           res.writeHead(200,{'content-type':'application/x-ndjson','cache-control':'no-store','x-content-type-options':'nosniff'});
           for await(const frame of frameExport(items())){
@@ -68,10 +69,10 @@ export function createControlApi(config: ControlConfig, store: Storage, comparis
         if(actual.length!==expected.length||!timingSafeEqual(actual,expected)){reply(401,{error:{code:'unauthorized'}});return;}
         if(!uuid.test(comparisonMatch[1]!)){reply(400,{error:{code:'invalid-comparison-id'}});return;}
         if(!comparisons||comparisons.repository!==config.repository)throw new Error('Comparison storage unavailable');
-        const record=await comparisons.comparison(comparisonMatch[1]!);
+        const record=await comparisons.comparison(comparisonMatch[1]!.toLowerCase());
         if(!record){reply(404,{error:{code:'not-found'}});return;}
         const validated=validateComparisonRecord(record);
-        if(validated.id!==comparisonMatch[1]||validated.comparison.organizationId!==comparisons.organizationId||validated.comparison.subject.repository!==config.repository)throw new Error('Comparison scope mismatch');
+        if(!equalUuid(validated.id,comparisonMatch[1])||!equalUuid(validated.comparison.organizationId,comparisons.organizationId)||validated.comparison.subject.repository!==config.repository)throw new Error('Comparison scope mismatch');
         const body=JSON.stringify(validated);
         if(Buffer.byteLength(body)>4*1024*1024){reply(413,{error:{code:'comparison-too-large'}});return;}
         res.writeHead(200,{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff'});res.end(body);return;

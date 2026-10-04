@@ -1,3 +1,4 @@
+import {equalUuid} from '../identity/uuid.ts';
 import { readFileSync } from 'node:fs';
 import { Ajv } from 'ajv';
 import { validateDocument } from '../schemas/index.ts';
@@ -56,7 +57,7 @@ export class AgentCIClient {
     const value=await this.get(`/v1/eval-comparisons/${id}`,true);
     let record:ComparisonRecord;try{record=validateComparisonRecord(value);}catch{throw new AgentCIError('invalid-comparison');}
     const c=record.comparison,s=c.subject;
-    if(record.id!==id||c.organizationId!==expected.organizationId||c.reviewId!==expected.reviewId||c.attemptId!==expected.attemptId||s.repository!==expected.repository||s.baseSha!==expected.baseSha||s.headSha!==expected.headSha||s.pullRequest!==expected.pullRequest)throw new AgentCIError('identity-mismatch');
+    if(!equalUuid(record.id,id)||!equalUuid(c.organizationId,expected.organizationId)||!equalUuid(c.reviewId,expected.reviewId)||!equalUuid(c.attemptId,expected.attemptId)||s.repository!==expected.repository||s.baseSha!==expected.baseSha||s.headSha!==expected.headSha||s.pullRequest!==expected.pullRequest)throw new AgentCIError('identity-mismatch');
     return record;
   }
   /** Provisional header/units/deltas stream; only the final summary certifies complete traversal. */

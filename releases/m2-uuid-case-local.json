@@ -1,0 +1,47 @@
+{
+  "component": "M2 comparison UUID case correction on actual customer evidence",
+  "finding": "releases/m2-uuid-case-finding.json",
+  "sourceHashes": {
+    "packages/identity/uuid.ts": "sha256:8a79415ea4a4b4f5d5b17e6b023499be14e58b4435091d831b20ef89c6d1ad2e",
+    "apps/control/server.ts": "sha256:ce3e525d0ca4b0b18dbb6119ce0292da92a9d85ad9e3981afd61a11853f9c013",
+    "packages/client/index.ts": "sha256:9e2d76b91edd6e9abfd8a76912848c4966aba17ca4c1919522a4346cb6c18605",
+    "packages/evals/export.ts": "sha256:2c39e2b2f7485788c58a56da83f4677d95f88760b704d4498f7385e088b29350",
+    "packages/storage/evals.ts": "sha256:4f8c19749a398d8d4a2524f4f81ec53808951c5639b1ad486353d23c3e849bdd",
+    "tests/eval-comparison-api.test.ts": "sha256:9f881cb53ac10d2e23b1a6cbe4a6bbb5de0f6a349bdbae15496f05edeab55ad8",
+    "tests/integration/eval-storage.test.ts": "sha256:abee5834dd366bdad03f8c20be7874fd912cd5390523e1a15ac7d35d281a56b4",
+    "scripts/package-smoke.mjs": "sha256:1529172a885eacd20beb5ae4d83c20b63a5950410c5ea4bc61dc7598cf833f13"
+  },
+  "apiImage": "sha256:73a66116fc86d6e2f6620b2b03d1bf16ed1e21460ea4f4d8a144b9e108b3c033",
+  "packageSha256": "sha256:21dfe89f86311c447af895466021961d15e1bf23b7c52f9f559ca54325a09de2",
+  "comparisonId": "5dc7d64b-062c-4121-87ed-8a3efd44e5ff",
+  "unchangedComparisonDigest": "sha256:aa72a435455c2b165ca4d56211ad467a97eb7ea618901b00abce1abf69f95be8",
+  "pullRequest": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2",
+  "inline": {
+    "lowercaseStatus": 200,
+    "uppercaseStatus": 200,
+    "identicalRecord": true
+  },
+  "export": {
+    "lowercaseStatus": 200,
+    "uppercaseStatus": 200,
+    "identicalFrames": true,
+    "sha256": "sha256:034cf8b2bce532ff24c7bf3ed137b043516a363f9c0937b9faca939ac9aad722",
+    "certifiedSummary": true,
+    "units": 2
+  },
+  "installedClient": true,
+  "expectedUuidCaseVariants": true,
+  "wrongAttemptRejected": true,
+  "anonymousDenied": true,
+  "nativeIntegration": {
+    "groups": 14,
+    "passed": 14,
+    "skipped": 0
+  },
+  "localRework": "First strengthened native test exposed case-sensitive unit/job comparison; corrected to the canonical database job ID and all fourteen groups then passed.",
+  "releaseAcceptance": false,
+  "limitations": [
+    "API and package built from the tracked dirty UUID correction checkout; final-source full CI is still required.",
+    "Temporary development tunnel and local candidate images do not prove published distribution or reliable every-PR hosting."
+  ]
+}

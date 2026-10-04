@@ -104,12 +104,12 @@ export class EvalStore {
       if(!Array.isArray(job.plan.units)||ids.length!==job.plan.units.length)throw new Error('Eval planned unit coverage mismatch');
       const units:ComparisonUnit[]=[];
       for(const unitId of ids){
-        const unit=await this.unit(unitId,client);if(!unit||unit.jobId!==id)throw new Error('Eval unit identity mismatch');
+        const unit=await this.unit(unitId,client);if(!unit||unit.jobId!==job.id)throw new Error('Eval unit identity mismatch');
         const def=unit.definition,assertions=unit.inputs[def.assertionSide].snapshot,subject=unit.inputs[def.side].snapshot;
         const harness=baselineHarness(def.suite,assertions,subject);
         units.push({id:unitId,suite:def.suite.metadata.id,revision:harness.revision,side:def.side,assertionSide:def.assertionSide,...(def.model===undefined?{}:{model:def.model}),trials:def.suite.spec.trials.count,passRate:def.suite.spec.trials.passRate,maxCriticalFailures:def.suite.spec.trials.maxCriticalFailures??0,scenarioIds:def.suite.spec.scenarios.map(s=>s.id),...def.runner,status:unit.status as ComparisonUnit['status'],...(unit.result?{result:unit.result}:{})});
       }
-      const record=comparisonRecord(createEvalComparison({id,reviewId:job.review_id,attemptId:job.attempt_key,organizationId:this.organizationId,subject:{repository:this.repository,pullRequest:job.pull_request,baseSha:job.base_sha,headSha:job.head_sha},cancelRequested:job.cancel_requested,units,suiteChanges:job.plan.suiteChanges,coverageGaps:job.plan.coverageGaps,selectionGaps:job.plan.selectionGaps}));
+      const record=comparisonRecord(createEvalComparison({id:job.id,reviewId:job.review_id,attemptId:job.attempt_key,organizationId:this.organizationId,subject:{repository:this.repository,pullRequest:job.pull_request,baseSha:job.base_sha,headSha:job.head_sha},cancelRequested:job.cancel_requested,units,suiteChanges:job.plan.suiteChanges,coverageGaps:job.plan.coverageGaps,selectionGaps:job.plan.selectionGaps}));
       await client.query('COMMIT');return record;
     }catch(error){await client.query('ROLLBACK');throw error;}finally{client.release();}
   }
@@ -130,7 +130,7 @@ export class EvalStore {
       if(!Array.isArray(job.plan.units)||metadata.length!==job.plan.units.length||metadata.length>10000)throw new Error('Eval planned unit coverage mismatch');
       const definitions=new Set(job.plan.units.map((u:EvalUnitDefinition)=>digest(canonical(definition(u)))));
       if(definitions.size!==metadata.length)throw new Error('Duplicate planned eval definition');
-      const header:ExportHeader={id,reviewId:job.review_id,attemptId:job.attempt_key,organizationId:this.organizationId,subject:{repository:this.repository,pullRequest:job.pull_request,baseSha:job.base_sha,headSha:job.head_sha},cancelRequested:job.cancel_requested,unitCount:metadata.length,snapshotDigest:digest(canonical({job:job.digest,cancelRequested:job.cancel_requested,units:metadata})),suiteChanges:job.plan.suiteChanges,coverageGaps:job.plan.coverageGaps,selectionGaps:job.plan.selectionGaps};
+      const header:ExportHeader={id:job.id,reviewId:job.review_id,attemptId:job.attempt_key,organizationId:this.organizationId,subject:{repository:this.repository,pullRequest:job.pull_request,baseSha:job.base_sha,headSha:job.head_sha},cancelRequested:job.cancel_requested,unitCount:metadata.length,snapshotDigest:digest(canonical({job:job.digest,cancelRequested:job.cancel_requested,units:metadata})),suiteChanges:job.plan.suiteChanges,coverageGaps:job.plan.coverageGaps,selectionGaps:job.plan.selectionGaps};
       const accumulator=new ComparisonAccumulator(header);yield {type:'header',data:header};
       for(const meta of metadata){
         if(signal?.aborted)throw new Error('Export cancelled');

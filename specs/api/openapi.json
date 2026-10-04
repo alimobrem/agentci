@@ -548,7 +548,7 @@
     "/v1/eval-comparisons/{id}": {
       "get": {
         "operationId": "getEvalComparison",
-        "description": "Authenticated, scoped read of planned units and retained normalized results. Authorization precedes UUID lookup. No snapshots, scripts, leases or credentials are returned. At most 4 MiB; oversized evidence returns explicit 413 rather than truncation or a passing summary.",
+        "description": "Authenticated, scoped read of planned units and retained normalized results. Authorization precedes UUID lookup. No snapshots, scripts, leases or credentials are returned. At most 4 MiB; oversized evidence returns explicit 413 rather than truncation or a passing summary. UUID path spellings are case-insensitive; resource IDs are returned in canonical database spelling. Evidence payloads and digest validation are not rewritten to match the request spelling.",
         "security": [
           {
             "evidenceBearer": []
@@ -768,7 +768,7 @@
     "/v1/eval-comparisons/{id}/export": {
       "get": {
         "operationId": "exportEvalComparison",
-        "description": "Single repeatable-read snapshot as LF-delimited hash-chained frames. Ordered header, grouped units and derived comparisons, summary, terminal end. Each frame at most 64 MiB. One group retained in memory; no whole-response limit. No resume cursor: restart the entire GET after a failed/incomplete stream. HTTP 200 headers alone do not certify completion. Verify terminal chain/counts and EOF before accepting final summary.",
+        "description": "Single repeatable-read snapshot as LF-delimited hash-chained frames. Ordered header, grouped units and derived comparisons, summary, terminal end. Each frame at most 64 MiB. One group retained in memory; no whole-response limit. No resume cursor: restart the entire GET after a failed/incomplete stream. HTTP 200 headers alone do not certify completion. Verify terminal chain/counts and EOF before accepting final summary. UUID path spellings are case-insensitive; resource IDs are returned in canonical database spelling. Evidence payloads and digest validation are not rewritten to match the request spelling.",
         "security": [
           {
             "evidenceBearer": []
