@@ -35,7 +35,7 @@ export async function remoteSnapshot(client: Octokit, repository: string, sha: s
   }
   return { sha, files };
 }
-export async function publishCheck(client: Octokit, appId: number, job: ReviewJob, analysis: Analysis, evidenceUrl: string): Promise<void> {
+export async function publishCheck(client: Octokit, appId: number, job: ReviewJob, analysis: Analysis, evidenceUrl: string, behavioralCheck?: 'agentci/evals'): Promise<'published'|'superseded'> {
   // Reconcile by external_id on retry instead of creating another check after an ambiguous timeout.
   const externalId = `agentci:${job.pullRequest}:${job.baseSha}:${job.headSha}`;
   const listed = await client.paginate(client.checks.listForRef, { ...names(job.repository), ref: job.headSha, check_name: 'agentci/review', per_page: 100 });
@@ -44,7 +44,7 @@ export async function publishCheck(client: Octokit, appId: number, job: ReviewJo
   const lines = [
     `Advisory deterministic review. Risk: **${analysis.risk}**.`,
     `Base: ${analysis.baseSha}; head: ${analysis.headSha}.`,
-    `Changed files: ${analysis.changes.length}. Behavioral evals: not applicable in M1.`,
+    `Changed files: ${analysis.changes.length}. ${behavioralCheck ? 'Semantic analysis only; behavioral results are reported separately in agentci/evals.' : 'Behavioral evals: not applicable in M1.'}`,
     ...analysis.changes.map(change => `- ${markdown(change.path)}: ${change.categories.join(', ')}`),
     ...analysis.findings.map(finding => `- ${finding.severity} / ${finding.verification}: ${finding.claim}`),
   ].join('\n');
@@ -52,8 +52,10 @@ export async function publishCheck(client: Octokit, appId: number, job: ReviewJo
   const params = { ...names(job.repository), name: 'agentci/review', head_sha: job.headSha, external_id: externalId,
     status: 'completed' as const, conclusion: 'neutral' as const, details_url: evidenceUrl,
     output: { title: `AgentCI advisory: ${analysis.risk} risk`, summary } };
+  if (behavioralCheck && !await currentPullRequest(client, job)) return 'superseded';
   if (existing) await client.checks.update({ ...params, check_run_id: existing.id });
   else await client.checks.create(params);
+  return 'published';
 }
 export async function publishFailure(client: Octokit, appId: number, job: ReviewJob): Promise<void> {
   const externalId = `agentci:${job.pullRequest}:${job.baseSha}:${job.headSha}`;

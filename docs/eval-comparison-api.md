@@ -122,4 +122,10 @@ The agent client and controller Check publisher share `EvalExportVerifier` for
 frame hashes, identity, planned result semantics, derived deltas, final summary
 and terminal digest validation. Both require complete traversal through EOF.
 Refactoring this verifier does not change the export wire contract or the
-client's public methods/error codes.
+client’s public methods/error codes.
+
+The released M1 static `Analysis` representation remains immutable to preserve
+stored digests and client compatibility. Its `evals` field describes the static
+analysis operation. Retrieve behavioral execution state, outcomes and deltas from
+the separate `EvalComparison` resource linked by `agentci/evals`; the full M2
+workflow publishes both semantic and behavioral Checks.

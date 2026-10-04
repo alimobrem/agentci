@@ -15,7 +15,7 @@ test('PR eval parent: separate children, baseline/head regression, cancellation,
   const docker=async(args:string[])=>(await promisify(execFile)('docker',args,{encoding:'utf8',timeout:30000})).stdout.trim();
   try{
     for(const name of ['001_m1.sql','002_m2.sql'])await pool.query(await readFile(new URL(`../../deploy/migrations/${name}`,import.meta.url),'utf8'));
-    const store=new Store(pool,org,repository),evals=new EvalStore(pool,org,repository),policy=controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image});
+    const store=new Store(pool,org,repository),evals=new EvalStore(pool,org,repository),policy=controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image});await store.ready();
     const config=parse(await readFile(new URL('../../agentci.yaml',import.meta.url),'utf8'));config.spec.specifications.include=['specs/**'];config.spec.evals.include=['evals/**'];
     const sha=()=>createHash('sha1').update(randomUUID()).digest('hex'),suite=evalSuite({runner:{adapter:'command',command:['node','check.mjs'],harness:['check.mjs'],timeoutMs:120000},trials:{count:1,passRate:1,confidenceMethod:'wilson'}});
     const base={sha:sha(),files:{'agentci.yaml':stringify(config),'specs/overview.md':'Private parent fixture content.','specs/requirement.yaml':stringify({id:'REQ-001',title:'Subject behavior',type:'functional',status:'active',text:'Expected behavior.'}),'evals/main.yaml':stringify(suite),'check.mjs':"import{readFileSync}from'node:fs';process.exit(readFileSync('subject.txt','utf8')==='good'?0:1)",'subject.txt':'good'}};

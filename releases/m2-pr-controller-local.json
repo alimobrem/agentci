@@ -1,0 +1,76 @@
+{
+  "kind": "M2-PR-controller-local-checkpoint",
+  "recordedAt": "2026-10-04T11:20:07.970929+00:00",
+  "parentCommit": "9734dc62c8c68f5bf049e3ce51ad92260b645f9b",
+  "releaseAcceptance": false,
+  "files": {
+    "apps/worker/main.ts": "cc309910b748641b81a993ff9e3f74b07c322fc5b21ba2d7ed9ea9bbcfcea4ae",
+    "apps/worker/dispatch.ts": "eadcc50d3a5eadd739e3bb527c1bd04e35559a1f2dc71f7b6ec804d54328795b",
+    "apps/worker/eval-activities.ts": "9e071ee9aceb1088e58758c20070449866fd3ce6c29c3ba6422527a558fa1553",
+    "apps/worker/eval-workflows.ts": "6049f6509fa2b106aa54d4207b9bbf2e3f8902f1464be5602b929e74fccfb526",
+    "apps/worker/workflows.ts": "74429036e0e93b36b4332ba6fcc46836012207b5233db8f5d045b80c8df96364",
+    "packages/github/client.ts": "4114b4bdf99015901df63d92cb1c60d469f4e1df06093d686291b344b77c6579",
+    "packages/github/eval-check.ts": "566ca98564eb5f7f19f97f8e0be5e9ebe8e4d29b56dd4e5dd4f423d0466a5a8c",
+    "scripts/image-smoke.mjs": "12ceb38cbdb80550db7144caee47118a0d6a85236ade39df27360777449118b1",
+    "scripts/package-smoke.mjs": "b43722c9c98c50bad065214ee1dce6d426bcab098f31d88b7b5c0fb0d1c28001",
+    "package.json": "a4d9c610d927fdef659dfe78fad384df2f8ff992e39266c6393046430be3fc9f",
+    ".env.example": "4aa5d1b3343fb7a3ff82e15b6f50edf0576e97c9d9b4142c259a012116246c47",
+    "tests/integration/eval-pr-controller.test.ts": "5d745f3560ffef0da4e7567474bc07022aadcd2f3d8944b4ab4a280afd84dbc1",
+    "tests/integration/eval-check.test.ts": "f60b4dcbbee09239ab17c16e1b46986794e7e5ab26bc774cf08012d88f727dbd",
+    "tests/integration/eval-review-staging.test.ts": "cb23a2464a61dab029656dd0f8984913f6e8d0cc8efc4df27fc2de69bcc3319d",
+    "tests/integration/eval-pr-parent.test.ts": "04527380ee6b5f8c041795762b0d9401e28f49f00c375a9d0722de5acfe3736c",
+    "specs/api/eval-review-operations.json": "e4e09cf7e7f78b08606504795b80f2323c469c17e6385170545a6a28fc49d358"
+  },
+  "verification": {
+    "fastChecks": 8,
+    "unitApiDomainTests": 119,
+    "fullNativeIntegrationGroups": 14,
+    "skips": 0,
+    "fullNativeIntegrationMs": 33921.320958,
+    "apiCompatibility": "Passed immutable M1 0.2.1 baseline and breaking-removal negative gate.",
+    "compiledUbiImages": {
+      "api": "sha256:9e9e93f0179c6abe33a9f6ffa4d557cd8fc68f44d8c4d6089e25ff47af2c478b",
+      "worker": "sha256:5282f035482dbbff89576a9d7190f581f28353b546348dccd5e352c667ce9569"
+    },
+    "compiledUbiRuntime": "API/controller startup with required immutable runner pin and M2 schema, authentication/scoped comparison JSON/export, signed closed delivery, persistent isolated Temporal startup/restart and graceful shutdown passed on native arm64. Synthetic App credentials; no live GitHub claim.",
+    "installedPackage": "Production-only CLI/client/init/setup/license and JSON/export probe passed; public M2 environment template included, private deployment .env absent.",
+    "freshControllerScenarios": [
+      "actual signed webhook on newly created isolated database",
+      "real transactional outbox and production dispatcher",
+      "Git transient failure retries with sanitized history",
+      "dispatcher death before acknowledgement and deterministic duplicate-start fencing",
+      "semantic/in-progress/completed behavioral Checks via HTTP GitHub fixture",
+      "exact frozen baseline/head regression via separate Temporal child queue and real isolated Docker runs",
+      "current attempt evidence consumed by authenticated agent client",
+      "full workflow history replay without source/App token",
+      "durable evaluation-child deadline and cleanup",
+      "failed evaluator becomes unavailable and fresh attempt recovers retained behavior",
+      "cancellation after completed Check write but before response invalidates Check and cancels SQL",
+      "stale PR avoids staging/publication",
+      "all dispatched outbox entries acknowledged"
+    ]
+  },
+  "failedAttempts": [
+    {
+      "kind": "CI",
+      "runId": 37196037347,
+      "sourceCommit": "9734dc62c8c68f5bf049e3ce51ad92260b645f9b",
+      "failure": "New publication fixture did not initialize deployment scope before staging; guard rejected uninitialized scope. Affected fixtures now call Store.ready; failed attempt retained in delivery ledger."
+    },
+    {
+      "kind": "local",
+      "failure": "Full controller initially returned success when publication activity completed after cancellation request. Added explicit cancellation checks at activity boundaries; native cancellation/replay acceptance passes."
+    },
+    {
+      "kind": "local",
+      "failure": "Parallel full-suite fixture cleanup force-dropped a fresh DB while pool sockets were still closing. Cleanup now waits for zero pg_stat_activity sessions and uses ordinary DROP, then closes admin pool; all 14 groups pass."
+    }
+  ],
+  "limitations": [
+    "Final-source native AMD64 CI and exact-source artifacts/scans remain required.",
+    "Local UBI runtime probe preceded the subsequent public environment-template package-manifest addition; final-source CI rebuilds all images.",
+    "HTTP GitHub provider is a fixture. Live customer App, reliable every-PR operation and released-build demo remain open.",
+    "Abrupt termination and operator/customer retry UX still need release acceptance.",
+    "Optional engine HIGH/scanner assessment, publication, anonymous downloads, retrospective and all M2 phase gates remain open."
+  ]
+}

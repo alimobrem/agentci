@@ -1,12 +1,12 @@
 import type {Octokit} from '@octokit/rest';
 import {ApplicationFailure} from '@temporalio/activity';
-import {remoteSnapshot,currentPullRequest} from '../../packages/github/client.ts';
+import {remoteSnapshot,currentPullRequest,publishCheck} from '../../packages/github/client.ts';
 import type {ReviewJob} from '../../packages/github/webhook.ts';
 import {planComparison} from '../../packages/evals/plan.ts';
 import {compileEvalUnits,EvalPlanConfigurationError,type EvalPlanPolicy} from '../../packages/evals/orchestration.ts';
 import type {Store} from '../../packages/storage/postgres.ts';
 import {ImmutableEvalConflict,type EvalStore} from '../../packages/storage/evals.ts';
-import {evalCheckEvidence,evalPublicationKey,publishEvalCheck,publishEvalUnavailable} from '../../packages/github/eval-check.ts';
+import {evalCheckEvidence,evalPublicationKey,publishEvalCheck,publishEvalUnavailable,publishEvalProgress} from '../../packages/github/eval-check.ts';
 
 /** Fetch data only in the App controller; evaluator workflow history receives identifiers only. */
 export function createEvalReviewActivities(client:Octokit,store:Store,evals:EvalStore,config:{repository:string;installationId:number;appId?:number;publicUrl?:string},policy:EvalPlanPolicy){
@@ -14,6 +14,25 @@ export function createEvalReviewActivities(client:Octokit,store:Store,evals:Eval
   const validAttempt=(id:string)=>/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(id);
   const canPublish=()=>Number.isSafeInteger(config.appId)&&config.appId!>0&&!!config.publicUrl;
   return {
+    async startEvalReview(job:ReviewJob,attemptId:string,reviewId:string,comparisonId:string):Promise<'published'|'superseded'>{
+      if(!scoped(job)||!validAttempt(attemptId)||!validAttempt(reviewId)||!validAttempt(comparisonId)||!canPublish())throw ApplicationFailure.nonRetryable('Invalid eval publication identity or configuration','EvalReviewIdentity');
+      try{return await store.withPublicationLock(evalPublicationKey(job),async()=>{
+        const items=evals.exportComparison(comparisonId);let first;try{first=await items.next();}finally{await items.return(undefined);}
+        if(first.done||first.value.type!=='header'||first.value.data.reviewId!==reviewId||first.value.data.organizationId!==store.organizationId)throw new Error('Unknown scoped comparison header');
+        return publishEvalProgress(client,config.appId!,job,attemptId,first.value.data,config.publicUrl!);
+      });}catch{throw ApplicationFailure.retryable('Eval progress publication unavailable','EvalReviewUnavailable');}
+    },
+    async publishSemanticEvalReview(job:ReviewJob,reviewId:string):Promise<'published'|'superseded'>{
+      if(!scoped(job)||!validAttempt(reviewId)||!canPublish())throw ApplicationFailure.nonRetryable('Invalid semantic publication identity or configuration','EvalReviewIdentity');
+      try{
+        const record=await store.evidence(reviewId);
+        if(!record||record.evidence.subject.pullRequest!==job.pullRequest||record.analysis.baseSha!==job.baseSha||record.analysis.headSha!==job.headSha)throw new Error('Semantic review identity mismatch');
+        return await store.withPublicationLock(`${job.repository}:${job.pullRequest}:${job.baseSha}:${job.headSha}`,async()=>{
+          if(!await currentPullRequest(client,job))return 'superseded';
+          return publishCheck(client,config.appId!,job,record.analysis,`${config.publicUrl}/v1/evidence/${reviewId}`,'agentci/evals');
+        });
+      }catch{throw ApplicationFailure.retryable('Semantic review publication unavailable','EvalReviewUnavailable');}
+    },
     async publishEvalReview(job:ReviewJob,attemptId:string,reviewId:string,comparisonId:string):Promise<'published'|'superseded'>{
       if(!scoped(job)||!validAttempt(attemptId)||!validAttempt(reviewId)||!validAttempt(comparisonId)||!canPublish())throw ApplicationFailure.nonRetryable('Invalid eval publication identity or configuration','EvalReviewIdentity');
       try{

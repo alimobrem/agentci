@@ -905,6 +905,25 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M2-PR-CONTROLLER",
+      "title": "Wire durable controller outbox to full review/eval lifecycle and publication",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T10:42:29.656Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Compiled M2 controller requires pinned eval configuration and M2 schema, registers legacy and new activities/workflows without changing M1 command history, and durable outbox starts a deterministic exact-attempt full workflow. Real PostgreSQL/Temporal/HTTP Git+Checks/isolated evaluator tests verify semantic and behavioral publication, retry/outbox duplicate fencing, current-head outcomes, failure and cancellation recovery. Container readiness and installed-client acceptance pass; no silent M1 fallback, App credentials in evaluator payloads, or phase completion before live/release gates.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

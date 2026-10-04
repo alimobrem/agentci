@@ -145,10 +145,11 @@ acceptance. Exact-source lifecycle CI 37195091714 passed 117 unit/API/domain tes
 twelve real integration groups, no skips, compatibility, packaging and container
 probes. Its tree/artifact hashes are recorded in
 [the parent CI evidence](../releases/m2-pr-parent-ci.json).
-These eval activities are not yet registered by the production controller.
-Live App dispatch and customer PR acceptance remain open. Abrupt server-side
-workflow termination/deadline recovery also remains for production integration;
-cancellation tests exercise cooperative cancellation and failed-child cleanup.
+The compiled controller now registers legacy M1 activities and the M2 activities
+and starts `reviewPullRequestWithEvals` for new outbox entries. The lifecycle-only
+and M1 workflow command sequences are preserved. Final-source compiled-controller
+acceptance and live customer App acceptance remain open. Abrupt server-side
+termination/deadline recovery remains a separate production integration check.
 
 ## Behavioral Check publication candidate
 
@@ -178,4 +179,43 @@ invalidates any Check for that current attempt as cancelled; stale PRs receive n
 new writes. Local PostgreSQL/isolated-runner/HTTP GitHub-fixture tests cover these
 states, lock contention, exact-App/head/name matching, recovery and an accepted
 write followed by a failed response. This is fixture acceptance, not live GitHub
-acceptance. Final-source publication CI and production workflow wiring remain open.
+acceptance. Publication CI 37196037347 failed because a test staged before
+initializing deployment scope on its fresh CI database. The security guard rejected
+the missing scope. Affected fixtures now initialize through `Store.ready`; the
+failed attempt remains in the delivery ledger. Final-source CI remains required.
+
+## Full controller candidate
+
+The full workflow stages one immutable attempt, publishes a semantic Check and an
+explicit in-progress `agentci/evals` Check, runs separate evaluator children, then
+publishes the complete behavioral result. It uses the outbox delivery UUID as the
+attempt UUID and starts before acknowledging dispatch. Deterministic workflow IDs
+fence ambiguous starts and dispatcher restarts. Missing runner pins or M2 schema
+fail startup; the M2 controller has no silent M1 execution fallback. Legacy M1
+histories remain serviced by their original workflow and activities.
+
+`AGENTCI_EVAL_REVIEW_TIMEOUT_MS` defaults to 86400000 (24 hours), with an operator
+range of 1000–604800000 milliseconds. This bounds the evaluation-child phase using
+a durable Temporal cancellation scope. Expiry waits for child cleanup, cancels
+the SQL comparison and publishes unavailable. Staging and publication retain their
+separate bounded activity retries. A requested parent cancellation is checked
+after activity completion because a late completed activity can otherwise return
+success even after cancellation was requested. Current-attempt cancellation
+invalidates the Check; superseded PRs receive no new writes.
+
+Local acceptance creates a fresh temporary PostgreSQL database and exercises the
+actual signed webhook, transactional outbox, production dispatcher, Temporal
+activities/workflow, exact HTTP Git/Check fixture and real isolated runner. It
+checks dispatcher death before acknowledgement, transient Git retry, progress and
+completed regression Checks, installed-source agent evidence access, replay,
+durable deadline, child failure, fresh-attempt recovery, and cancellation after a
+Check write but before its response. Queue workers share a trusted test process;
+production separation remains covered by the dedicated eval-worker image probe.
+No live GitHub acceptance or final-source controller/container CI is claimed yet.
+
+M2 recovery starts a **fresh attempt UUID** for a terminal cancelled/failed
+comparison, preserving its old evidence and Check. A new GitHub delivery provides
+that identity. Same-ID webhook redelivery remains idempotent and does not rerun an
+already dispatched terminal attempt. Automatic activity retry and worker restart
+resume an unfinished attempt using retained trials. Operator/customer retry UX
+and abrupt termination recovery must be verified before the M2 phase closes.

@@ -141,7 +141,91 @@
         "stale PR cannot publish failure",
         "recovery republishes retained exact completed evidence"
       ]
+    },
+    {
+      "operationId": "publishSemanticEvalReview",
+      "type": "activity",
+      "input": "Scoped PR identity and immutable review UUID",
+      "output": "Published or superseded semantic Check; behavioral Check is separate",
+      "requirementIds": [
+        "SPEC-40-039"
+      ],
+      "tests": [
+        "tests/integration/eval-pr-controller.test.ts",
+        "tests/github.test.ts"
+      ],
+      "scenarios": [
+        "matching immutable semantic evidence",
+        "shared legacy semantic publication lock",
+        "M2 semantic summary links behavioral Check name",
+        "final PR recheck after reconciliation reads",
+        "original M1 Check text/command history preserved"
+      ]
+    },
+    {
+      "operationId": "startEvalReview",
+      "type": "activity",
+      "input": "Scoped PR identity, attempt/review/comparison UUIDs",
+      "output": "Published or superseded in-progress Check; no completed outcome",
+      "requirementIds": [
+        "SPEC-40-039"
+      ],
+      "tests": [
+        "tests/integration/eval-pr-controller.test.ts"
+      ],
+      "scenarios": [
+        "header-only scoped identity verification and transaction closure",
+        "shared cancellation/publication lock",
+        "in-progress Check has no conclusion",
+        "exact attempt reconciliation",
+        "stale PR makes no write"
+      ]
+    },
+    {
+      "operationId": "reviewPullRequestWithEvals",
+      "type": "workflow",
+      "input": "Scoped PR identity, exact attempt UUID and trusted evaluator queue/deadline options",
+      "output": "Published or superseded; retained comparison UUID is linked from Check",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "tests": [
+        "tests/integration/eval-pr-controller.test.ts",
+        "tests/integration/m1.test.ts",
+        "tests/integration/eval-pr-parent.test.ts"
+      ],
+      "scenarios": [
+        "semantic and behavioral progress/completed Checks",
+        "exact frozen comparison child results",
+        "durable evaluation deadline cancels SQL/children before unavailable Check",
+        "failed child cleanup and explicit fresh-attempt recovery",
+        "late completed publication does not override requested cancellation",
+        "stale PR avoids staging/publication",
+        "history replay without repository content/App credentials"
+      ]
+    },
+    {
+      "operationId": "dispatchPendingReviews",
+      "type": "durable outbox dispatcher",
+      "input": "Pending repository-scoped SQL outbox entry, controller/evaluator queues and validated operator deadline",
+      "output": "Deterministic workflow start followed by durable dispatch acknowledgement",
+      "requirementIds": [
+        "SPEC-40-039"
+      ],
+      "tests": [
+        "tests/integration/eval-pr-controller.test.ts"
+      ],
+      "scenarios": [
+        "signed webhook entry on fresh database",
+        "start-before-ack",
+        "dispatcher death before ack retains lease",
+        "duplicate-start fencing on retry",
+        "attempt UUID equals immutable delivery UUID",
+        "no M1 fallback when eval configuration is absent"
+      ]
     }
   ],
-  "releaseState": "M2 candidate lifecycle/publication activities implemented; production controller wiring and live customer App acceptance remain pending"
+  "releaseState": "M2 candidate compiled controller wiring implemented; final-source CI/container acceptance and live customer App/release gates remain open"
 }

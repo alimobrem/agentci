@@ -1,7 +1,7 @@
 import type {Octokit} from '@octokit/rest';
 import type {ReviewJob} from './webhook.ts';
 import {currentPullRequest} from './client.ts';
-import {EvalExportVerifier,frameExport,type ExportItem,type ExportIdentity,type ExportSummary} from '../evals/export.ts';
+import {EvalExportVerifier,frameExport,type ExportItem,type ExportIdentity,type ExportSummary,type ExportHeader} from '../evals/export.ts';
 export interface EvalCheckEvidence {comparisonId:string;reviewId:string;attemptId:string;identity:ExportIdentity;snapshotDigest:string;endDigest:string;summary:ExportSummary;text:string;abbreviated:boolean;coverageGaps:number;selectionGaps:number;suiteChanges:number;regressions:number}
 const escape=(value:string)=>value.replace(/[\x00-\x1f\x7f\u2028\u2029]/g,' ').replace(/[\\`*_{}\[\]()<>#!]/g,'\\$&');
 /** Display is bounded, but every frame is validated before a completed summary is returned. */
@@ -36,14 +36,20 @@ function origin(value:string):string{
   return url.origin;
 }
 /** Caller holds the SQL publication lock. Final remote recheck follows Check reconciliation reads. */
-async function reconcile(client:Octokit,appId:number,job:ReviewJob,attemptId:string,output:{title:string;summary:string},conclusion:'neutral'|'action_required',detailsUrl?:string):Promise<'published'|'superseded'>{
+async function reconcile(client:Octokit,appId:number,job:ReviewJob,attemptId:string,output:{title:string;summary:string},conclusion:'neutral'|'action_required'|undefined,detailsUrl?:string,status:'in_progress'|'completed'='completed'):Promise<'published'|'superseded'>{
   const [owner,repo]=job.repository.split('/'),externalId=`agentci:evals:${job.pullRequest}:${job.baseSha}:${job.headSha}:${attemptId}`;
   const listed=await client.paginate(client.checks.listForRef,{owner:owner!,repo:repo!,ref:job.headSha,check_name:'agentci/evals',per_page:100});
   const existing=listed.find(run=>run.external_id===externalId&&run.app?.id===appId&&run.head_sha===job.headSha&&run.name==='agentci/evals');
   if(!await currentPullRequest(client,job))return 'superseded';
-  const params={owner:owner!,repo:repo!,name:'agentci/evals',head_sha:job.headSha,external_id:externalId,status:'completed' as const,conclusion,output,...(detailsUrl?{details_url:detailsUrl}:{})};
+  const params={owner:owner!,repo:repo!,name:'agentci/evals',head_sha:job.headSha,external_id:externalId,status,...(conclusion?{conclusion}:{}),output,...(detailsUrl?{details_url:detailsUrl}:{})};
   if(existing)await client.checks.update({...params,check_run_id:existing.id});else await client.checks.create(params);
   return 'published';
+}
+export async function publishEvalProgress(client:Octokit,appId:number,job:ReviewJob,attemptId:string,header:ExportHeader,publicUrl:string):Promise<'published'|'superseded'>{
+  const s=header.subject;
+  if(header.cancelRequested||header.attemptId!==attemptId||s.repository!==job.repository||s.pullRequest!==job.pullRequest||s.baseSha!==job.baseSha||s.headSha!==job.headSha)throw new Error('Invalid in-progress comparison identity');
+  const url=`${origin(publicUrl)}/v1/eval-comparisons/${header.id}`;
+  return reconcile(client,appId,job,attemptId,{title:'AgentCI evals in progress',summary:`Evaluation in progress. No completed behavioral result is claimed. Base: ${job.baseSha}; head: ${job.headSha}; planned units: ${header.unitCount}; comparison: ${header.id}; attempt: ${attemptId}. [Authenticated evidence](${url})`},undefined,url,'in_progress');
 }
 export async function publishEvalCheck(client:Octokit,appId:number,job:ReviewJob,attemptId:string,evidence:EvalCheckEvidence,publicUrl:string):Promise<'published'|'superseded'>{
   const identity=evidence.identity;

@@ -25,7 +25,8 @@ test('SQL/HTTP Check publication: complete regressions, stale races, scoped retr
   });server.listen(0,'127.0.0.1');await once(server,'listening');
   try{
     for(const name of ['001_m1.sql','002_m2.sql'])await pool.query(await readFile(new URL(`../../deploy/migrations/${name}`,import.meta.url),'utf8'));
-    const store=new Store(pool,org,repository),evals=new EvalStore(pool,org,repository),plan=planComparison({repository,base,head}),review=await store.save(plan.analysis,job.pullRequest),policy=controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image});
+    const store=new Store(pool,org,repository),evals=new EvalStore(pool,org,repository);await store.ready();
+    const plan=planComparison({repository,base,head}),review=await store.save(plan.analysis,job.pullRequest),policy=controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image});
     const storedPlan={suiteChanges:plan.suiteChanges,coverageGaps:plan.coverageGaps,selectionGaps:plan.selectionGaps},units=compileEvalUnits(plan,base,head,policy),attempt=randomUUID(),staged=await evals.stage(review.id,attempt,base,head,units,storedPlan);
     const client=new Octokit({baseUrl:`http://127.0.0.1:${(server.address() as {port:number}).port}`,auth:'private-fixture-token',log:{debug(){},info(){},warn(){},error(){}}}),activities=createEvalReviewActivities(client,store,evals,{repository,installationId:12,appId:42,publicUrl:'https://example.invalid'},policy);
     const publish=()=>activities.publishEvalReview(job,attempt,review.id,staged.id);

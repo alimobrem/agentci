@@ -37,7 +37,7 @@ test('Git HTTP and PostgreSQL staging retain exact plans, retry identity, gaps a
   });server.listen(0,'127.0.0.1');await once(server,'listening');
   try{
     for(const name of ['001_m1.sql','002_m2.sql'])await pool.query(await readFile(new URL(`../../deploy/migrations/${name}`,import.meta.url),'utf8'));
-    const store=new Store(pool,org,repository),evals=new EvalStore(pool,org,repository);
+    const store=new Store(pool,org,repository),evals=new EvalStore(pool,org,repository);await store.ready();
     const client=new Octokit({baseUrl:`http://127.0.0.1:${(server.address() as {port:number}).port}`,auth:'private-fixture-token',log:{debug(){},info(){},warn(){},error(){}}});
     const policy=controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:'sha256:'+'a'.repeat(64)}),scope={repository,installationId:12};
     const activities=createEvalReviewActivities(client,store,evals,scope,policy),job={...scope,pullRequest:73,baseSha:base.sha,headSha:head.sha},attempt=randomUUID();

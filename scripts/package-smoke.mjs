@@ -17,6 +17,9 @@ try {
   const cli = join(root, 'node_modules/.bin/agentci');
   const version = execFileSync(cli, ['--version'], { encoding: 'utf8' }).trim();
   if (version !== expectedVersion) throw new Error('Unexpected packaged version');
+  const template=await readFile(join(root,'node_modules/agentci/.env.example'),'utf8');
+  if(!template.includes('AGENTCI_EVAL_RUNNER_IMAGE=REPLACE_WITH_IMMUTABLE_RUNNER_IMAGE_OR_DIGEST')||!template.includes('AGENTCI_EVAL_REVIEW_TIMEOUT_MS=86400000'))throw new Error('Packaged controller configuration template missing');
+  try{await readFile(join(root,'node_modules/agentci/.env'));throw new Error('Private deployment environment entered package');}catch(error){if(error.code!=='ENOENT')throw error;}
   const fresh = join(root, 'fresh-project');
   execFileSync(cli, ['init', '--root', fresh], { stdio: 'pipe' });
   const freshResult = JSON.parse(execFileSync(cli, ['validate', '--root', fresh, '--json'], { encoding: 'utf8' }));

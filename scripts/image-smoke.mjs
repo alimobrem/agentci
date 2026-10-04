@@ -28,6 +28,7 @@ try {
     AGENTCI_PUBLIC_URL: 'http://localhost:3000', GITHUB_APP_ID: '1', GITHUB_INSTALLATION_ID: '12',
     GITHUB_PRIVATE_KEY_FILE: '/tmp/fixture.pem', GITHUB_WEBHOOK_SECRET: 's'.repeat(32), AGENTCI_EVIDENCE_TOKEN: 'e'.repeat(32),
     DATABASE_URL: 'postgresql://postgres:local-smoke-only@postgres:5432/agentci', TEMPORAL_ADDRESS: 'temporal:7233',
+    AGENTCI_EVAL_RUNNER_IMAGE: process.env.AGENTCI_TEST_RUNNER_IMAGE??docker('image','inspect',`agentci-eval-runner:${roles}`,'--format','{{.Id}}'),
   };
   for (const role of ['api', 'worker']) {
     const name = `${prefix}-${role}`;
