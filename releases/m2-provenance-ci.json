@@ -1,0 +1,69 @@
+{
+  "kind": "M2-provenance-statistics-CI-checkpoint",
+  "candidateCommit": "a6968391d47a3ba84313f7573f9e3183482cc4da",
+  "ciCommit": "980e5045c6f282d833aade1543b09d932114422f",
+  "verifiedTree": "451ae0ce62af4d8410d883ac927c51b18ead0633",
+  "run": {
+    "id": 37182261030,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37182261030",
+    "conclusion": "success",
+    "attempt": 1
+  },
+  "artifact": {
+    "id": 11295612142,
+    "name": "m1-verification",
+    "sha256": "278c82ccd9629c45118545c4c90cf7dc6b4ebae57958b7d7fe193d3c920aa22d",
+    "note": "Legacy artifact name; source-bound contents are the M2 candidate"
+  },
+  "verification": {
+    "unitApiDomainTests": 91,
+    "integrationTests": 4,
+    "integrationSkipped": 0,
+    "contractAndRiskEvals": 14,
+    "apiCompatibility": "passed against actual released M1 contract",
+    "packaging": "clean production install smoke passed",
+    "serviceRuntime": "passed",
+    "scans": [
+      {
+        "path": "scan-results/api.json",
+        "findings": 0
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "findings": 0
+      },
+      {
+        "path": "scan-results/worker.json",
+        "findings": 0
+      }
+    ]
+  },
+  "coverage": [
+    "tests/eval-contracts.test.ts",
+    "tests/eval-statistics.test.ts",
+    "tests/eval-execution.test.ts",
+    "tests/eval-plan.test.ts",
+    "tests/eval-harness.test.ts",
+    "tests/integration/eval-runner.test.ts"
+  ],
+  "artifacts": [
+    {
+      "path": "releases/agentci-0.3.0-m2.tgz",
+      "sha256": "a1bb0e3de1cf58f74c2dab4d4e97f84bbc9d902c1aaad7c472ce8a12e64b7809"
+    },
+    {
+      "path": "scan-results/api.json",
+      "sha256": "d20b05f3efc25d8c0a1a22ffb06c316bc7e346bbd7e8b949f4eea4b579ddd38e"
+    },
+    {
+      "path": "scan-results/eval-runner.json",
+      "sha256": "e87a4d5aaa83ce952896d67373241865729e5616f8c5629b1b3df77e935b7450"
+    },
+    {
+      "path": "scan-results/worker.json",
+      "sha256": "8fd77f38f245e3d0a5bc5b7820f17d5f27c4f925f751cdf6cf9982e0bb9d97d6"
+    }
+  ],
+  "releaseComplete": false,
+  "note": "Verified local primitives and exact-source full CI. Optional engines, HTTP adapter, durable eval API/PR integration and all M2 release gates remain separate."
+}

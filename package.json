@@ -1,6 +1,6 @@
 {
   "name": "agentci",
-  "version": "0.2.1-m1",
+  "version": "0.3.0-m2",
   "private": true,
   "type": "module",
   "engines": {
@@ -18,7 +18,8 @@
     "CHANGELOG.md",
     "deploy",
     "npm-shrinkwrap.json",
-    "LICENSE"
+    "LICENSE",
+    ".env.example"
   ],
   "scripts": {
     "agentci": "node --import tsx cmd/agentci/main.ts",
@@ -41,16 +42,19 @@
     "delivery": "node --import tsx scripts/delivery.ts",
     "release:check": "node --import tsx scripts/delivery.ts release",
     "setup:github": "npm run build && node scripts/github-app-setup.mjs",
-    "check:workflows": "node scripts/check-workflows.mjs"
+    "check:workflows": "node scripts/check-workflows.mjs",
+    "eval-worker": "node dist/apps/eval-worker/main.js"
   },
   "dependencies": {
     "@octokit/auth-app": "^8.3.1",
     "@octokit/rest": "^22.0.1",
+    "@temporalio/activity": "^1.24.0",
     "@temporalio/client": "^1.24.0",
     "@temporalio/worker": "^1.24.0",
     "@temporalio/workflow": "^1.24.0",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",
+    "fast-xml-parser": "5.11.2",
     "minimatch": "^10.2.6",
     "pg": "^8.23.1",
     "yaml": "^2.9.1"

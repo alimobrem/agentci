@@ -1,0 +1,107 @@
+{
+  "component": "M2 real customer infrastructure failure and fresh-attempt recovery",
+  "pullRequest": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2",
+  "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+  "headSha": "6e0fe2c11d7cfd22d59893bc317098340badc3d4",
+  "fault": "Immutable operator runner identity mismatch; no mismatched image executed.",
+  "recovery": "Restore correct evaluator pin and reopen disposable PR for a fresh actual signed delivery on the same repaired commit.",
+  "results": [
+    {
+      "checkRunId": 111431171007,
+      "checkUrl": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2/checks?check_run_id=111431171007",
+      "checkTitle": "AgentCI evals unavailable",
+      "conclusion": "action_required",
+      "comparisonId": "c15faaa6-dc87-48e2-8b40-d880d81be386",
+      "comparisonDigest": "sha256:000b105efdde9a215337ee7aed30d936b1a550644c695eee137d7bfc7a67bd97",
+      "attemptId": "fb351ad0-bfea-11f1-87a8-02cf6c3bd285",
+      "summary": {
+        "state": "cancelled",
+        "outcome": "insufficient",
+        "executionGaps": [
+          "cancelled-unit:32661fde-cbcd-44fa-8dbd-18b883ff2941",
+          "cancelled-unit:9270a7a2-b478-432a-b08b-10bd2769c53d"
+        ],
+        "comparisons": []
+      },
+      "certifiedExport": true,
+      "units": [
+        {
+          "id": "32661fde-cbcd-44fa-8dbd-18b883ff2941",
+          "side": "base",
+          "status": "cancelled",
+          "assertionSide": "base",
+          "passRate": 1,
+          "resultStatus": null
+        },
+        {
+          "id": "9270a7a2-b478-432a-b08b-10bd2769c53d",
+          "side": "head",
+          "status": "cancelled",
+          "assertionSide": "base",
+          "passRate": 1,
+          "resultStatus": null
+        }
+      ]
+    },
+    {
+      "checkRunId": 111431405415,
+      "checkUrl": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2/checks?check_run_id=111431405415",
+      "checkTitle": "AgentCI evals: passed",
+      "conclusion": "neutral",
+      "comparisonId": "c7ad3451-7779-4b67-9805-3419729f007b",
+      "comparisonDigest": "sha256:85bfe6c7d751746186338e7060549635114a578c608ca40cc058cf77dd401476",
+      "attemptId": "2d4e6c10-bfeb-11f1-9d3d-ea79fc8e3575",
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "comparisons": [
+          {
+            "suite": "customer-safety",
+            "baseRunId": "49ab9064-9d06-4ce6-9661-5f92db4acde8",
+            "headRunId": "f3b4f1a2-527b-4b35-9e5d-da8a87851ad0",
+            "deltas": [
+              {
+                "scenario": "safe-response",
+                "baseStatus": "passed",
+                "headStatus": "passed",
+                "passRateDelta": 0,
+                "criticalFailureDelta": 0,
+                "regression": false
+              }
+            ],
+            "regressions": []
+          }
+        ]
+      },
+      "certifiedExport": true,
+      "units": [
+        {
+          "id": "49ab9064-9d06-4ce6-9661-5f92db4acde8",
+          "side": "base",
+          "status": "completed",
+          "assertionSide": "base",
+          "passRate": 1,
+          "resultStatus": "passed"
+        },
+        {
+          "id": "f3b4f1a2-527b-4b35-9e5d-da8a87851ad0",
+          "side": "head",
+          "status": "completed",
+          "assertionSide": "base",
+          "passRate": 1,
+          "resultStatus": "passed"
+        }
+      ]
+    }
+  ],
+  "failedAttemptPreserved": true,
+  "evaluatorConfigurationRestored": true,
+  "releaseAcceptance": false,
+  "limitations": [
+    "Local candidate images and temporary tunnel do not close published-build or reliable every-PR hosting gates.",
+    "Dedicated production host separation and supported operator retry UX remain open.",
+    "Candidate images were built with delivery-tracking-only local changes; this is not clean-release-checkout evidence."
+  ],
+  "implementationBaseCommit": "cbd0ec9db4e8727405f044aaa9f4676b0fa00d14"
+}

@@ -1,0 +1,224 @@
+# Evaluation worker boundary (M2 development)
+
+The eval worker executes staged unit IDs using immutable projected snapshots and
+operator-pinned runner identities. It has no GitHub App key, webhook secret,
+evidence bearer token or controller database login. Its configuration refuses
+known controller/GitHub credential variables. It uses a separate Temporal queue,
+`agentci-eval-v1`. The Temporal activity entry point is implemented and tested locally. The published
+worker image and final-source full CI remain pending.
+
+Apply `deploy/migrations/002_m2.sql` using the controller migration identity.
+An administrator can then apply `deploy/migrations/002_m2_eval_role.sql`, provision
+a separate database LOGIN through the deployment's secret manager and grant the
+`agentci_eval_executor` group to it. Do not reuse the migration/admin login or
+assume the group using an administrator connection. The worker checks effective
+permissions and rejects superuser, object-creation privileges, controller table
+access, input mutation and observation rewriting. It can read scoped eval inputs,
+claim/renew/complete units and insert immutable normalized trial checkpoints.
+Each database remains bound to one deployment scope.
+
+Worker environment:
+
+| Variable | Purpose |
+| --- | --- |
+| `AGENTCI_REPOSITORY` | Exact owner/repository scope |
+| `AGENTCI_ORGANIZATION_ID` | Deployment organization UUID |
+| `AGENTCI_EVAL_DATABASE_URL` | Separate restricted database login |
+| `AGENTCI_EVAL_RUNNER_IMAGE` | Immutable default runner digest |
+| `AGENTCI_EVAL_ENGINES_IMAGE` | Optional immutable Promptfoo/DeepEval runner digest |
+| `TEMPORAL_ADDRESS` | Temporal service address |
+| `TEMPORAL_NAMESPACE` | Namespace; defaults to `default` |
+| `AGENTCI_EVAL_PROVIDERS_FILE` | Optional private operator JSON file; max 1 MiB, no group/other permissions |
+
+Provider records follow [the HTTPS provider contract](http-eval-provider.md).
+Manifests select an opaque provider ID; the operator alone configures verified
+HTTPS, pinned network address and separately scoped authorization. Production
+worker configuration rejects the plaintext loopback test option.
+
+The unit driver renews its fenced lease, resumes stored trials, reaps prior-owner
+containers under a database lock and refuses completion after lease loss or
+cancellation. A real separate database login passes local execution while reads
+of all controller tables, DDL and input mutation fail. Native Temporal retry, workflow cancellation cleanup, worker-shutdown retry and
+history replay pass local integration tests. Published service packaging and full
+final-source CI remain required before this is a supported customer deployment.
+
+After a build, `npm run eval-worker` starts this separate service. Temporal history
+carries unit IDs and bounded progress counters; snapshot files and provider
+credentials remain outside it. Activities heartbeat, and workflow cancellation
+uses `WAIT_CANCELLATION_COMPLETED` so continuation waits for cleanup. A worker
+shutdown or timeout releases the SQL unit for retry; an explicit workflow cancel
+marks it cancelled. Unknown units and mismatched operator configuration fail
+without repeated attempts. See the [Temporal cancellation contract](https://docs.temporal.io/develop/typescript/workflows/cancellation).
+
+Schema initialization serializes concurrent callers with a transaction-scoped
+advisory lock and records a checksum-bound applied migration. Repeated setup
+validates the actual SQL body and recorded checksum without replacing live eval
+triggers; altered SQL or an applied-version mismatch requires an explicit new
+migration. The regression test holds writer locks while repeat setup succeeds. Executor-role provisioning tolerates concurrent creation in another
+database while verifying that the existing group has no elevated capabilities.
+[Internal operations](../specs/api/eval-worker-operations.json) map the workflow
+and activity to requirements and real test scenarios.
+
+Cleanup-refusal fault injection leaves a real owned container, rejects successful
+completion and retains no trial observation. A subsequent fenced owner removes
+the orphan and executes a new trial. HTTP units do not invoke the Docker cleanup
+backend; external retries use the [provider deduplication contract](http-eval-provider.md).
+
+See [the evaluator deployment guide](eval-deployment.md) for separate Compose
+configuration, restricted login provisioning and temporary local demo wiring.
+
+## UBI image checkpoint
+
+The `eval-worker` Dockerfile target runs on UBI 10 with Node 26.10.0 and the
+locked production dependencies. It copies Docker CLI 29.8.2 from the pinned
+official multi-platform image, together with its upstream license. No Alpine
+filesystem or Docker daemon is shipped. npm/npx and RPM installer tooling are
+removed through the package resolver. The service runs as UID 1001; the real image
+probe uses a read-only root filesystem and bounded `/tmp`.
+
+Local development build and acceptance:
+
+```sh
+docker build --target eval-worker -t agentci-eval-worker:m2-local .
+node scripts/eval-worker-image-smoke.mjs agentci-eval-worker:m2-local agentci-eval-runner:m2-local
+```
+
+Build the default runner first. The probe creates its own temporary network,
+PostgreSQL and Temporal services, provisions a separately authenticated restricted
+login, executes real isolated eval children, preserves assertion failure, checks
+shutdown/restart and removes only its own resources. Mandatory CI now builds,
+scans and probes this worker in addition to the controller services and runners.
+Published native image/download acceptance remains open.
+
+The worker is a trusted Docker-daemon client. Socket access grants daemon control;
+deploy it on dedicated evaluation infrastructure separated from controller/App
+services. The daemon socket group must be explicitly granted to the worker UID.
+Child eval containers receive no socket, database credentials, App credentials or
+host mounts, and have networking disabled. `DOCKER_CONFIG` points to a private
+empty image directory so operator/host registry configuration is not inherited.
+
+The local scan detects UBI packages, Node packages, the Temporal Cargo-lock
+inventory and Docker's Go runtime with zero known findings. The official CLI
+binary exposes no bundled Go-module inventory to this scanner; that coverage
+limit remains part of release assessment. It does not close the optional engine's
+separate unpatched HIGH finding. Component pins, license checksum and native
+metadata are recorded in [the dependency record](../releases/m2-eval-worker-dependencies.json).
+
+Native AMD64 CI run 37190707698 passed this packaged runtime probe and the
+full source verification. [Its evidence](../releases/m2-eval-worker-ci.json)
+records the exact candidate/CI tree, artifact ID and SHA256, worker image ID,
+runtime assertions and each image scan. Publication remains a separate gate.
+
+## Controller staging candidate
+
+The separate controller activity `stageEvalReview` fetches both exact Git commits,
+compiles the selected comparison plan, and stores projected snapshots before
+returning only review, comparison and unit UUIDs. Existing suites use baseline
+assertions, models and thresholds for both subjects; newly added suites execute
+on head only. Zero selected suites still produce retained comparison evidence,
+including uncovered requirements. An attempt UUID identifies one immutable plan;
+retrying with changed inputs or runner provenance fails explicitly.
+
+The operator supplies `AGENTCI_EVAL_RUNNER_IMAGE` and optional
+`AGENTCI_EVAL_ENGINES_IMAGE` as immutable pins. Public HTTP identities use
+`AGENTCI_EVAL_PROVIDER_IDENTITIES`, a JSON array of `{id,revision}` entries only.
+Provider endpoints and authentication remain private evaluator configuration.
+`AGENTCI_EVAL_MAX_UNITS` defaults to 128 (maximum 512), and
+`AGENTCI_EVAL_MAX_TOTAL_TRIALS` defaults to 2000 (maximum 100000), summed across
+every selected suite, model and subject. Exceeding a budget fails before staging.
+
+Staging passed exact-source CI 37194473084: 117 unit/API/domain tests, eleven
+real integration groups, zero skips, package/container probes and immutable-M1
+API compatibility. The source tree and artifact hashes are recorded in
+[the staging CI evidence](../releases/m2-pr-staging-ci.json).
+
+The candidate `evaluatePullRequest` parent runs alongside the original M1 workflow
+without changing its command sequence. It dispatches deterministic unit-ID child
+workflows on the evaluator queue, checks current PR identity before dispatch and
+after completion, and polls every 30 seconds while work runs. Supersession,
+workflow cancellation and child failure cancel the SQL comparison and wait for
+child cancellation/container cleanup. Cancellation during staging first retains
+the committed comparison identifiers so cleanup can address them. The parent
+returns ready UUIDs or superseded; it does not publish a GitHub Check.
+
+Local lifecycle acceptance uses real PostgreSQL, Temporal and isolated Docker
+children on separate task queues. The test process hosts both queue workers;
+production process/credential isolation is covered by the separate worker image
+acceptance. Exact-source lifecycle CI 37195091714 passed 117 unit/API/domain tests,
+twelve real integration groups, no skips, compatibility, packaging and container
+probes. Its tree/artifact hashes are recorded in
+[the parent CI evidence](../releases/m2-pr-parent-ci.json).
+The compiled controller now registers legacy M1 activities and the M2 activities
+and starts `reviewPullRequestWithEvals` for new outbox entries. The lifecycle-only
+and M1 workflow command sequences are preserved. Final-source compiled-controller
+acceptance and live customer App acceptance remain open. Abrupt server-side
+termination/deadline recovery remains a separate production integration check.
+
+## Behavioral Check publication candidate
+
+`publishEvalReview` consumes the complete scoped SQL export under a publication
+lock shared with cancellation. It validates the same frame/domain semantics as
+the installed agent client, then produces an `agentci/evals` Check bound to the
+exact base/head, App and attempt. Existing `agentci/review` behavior is preserved.
+The [GitHub Checks API](https://docs.github.com/en/rest/checks/runs) is used through
+the installed Octokit adapter. Reconciliation and a final remote identity check
+follow all evidence reads; ambiguous writes retry by updating the existing Check.
+GitHub provides no atomic PR-head-and-Check write transaction, so the Check also
+records its exact immutable subject rather than claiming to certify later commits.
+
+Checks remain advisory: completed passed/failed/no-evals outcomes use neutral,
+while infrastructure errors or insufficient coverage use action-required. Results
+show frozen assertions, runner/provider revision, trial counts, thresholds,
+observed confidence/metrics, deltas, critical failures, regressions, suite/scenario
+changes and gaps. Display details reserve separate budgets for regressions/failures, gaps, deltas
+and provenance, so many passing units cannot crowd out a late regression. Details
+are capped at 48000 UTF-8 bytes; the complete
+summary is capped at 60000 bytes. Abbreviation is explicit and never stops full
+evidence validation. The authenticated JSON/export links include no credentials.
+
+Pending, cancelled, mismatched or incomplete evidence cannot publish a completed
+result. Failure publication claims no passing result. Configured cancellation
+invalidates any Check for that current attempt as cancelled; stale PRs receive no
+new writes. Local PostgreSQL/isolated-runner/HTTP GitHub-fixture tests cover these
+states, lock contention, exact-App/head/name matching, recovery and an accepted
+write followed by a failed response. This is fixture acceptance, not live GitHub
+acceptance. Publication CI 37196037347 failed because a test staged before
+initializing deployment scope on its fresh CI database. The security guard rejected
+the missing scope. Affected fixtures now initialize through `Store.ready`; the
+failed attempt remains in the delivery ledger. Final-source CI remains required.
+
+## Full controller candidate
+
+The full workflow stages one immutable attempt, publishes a semantic Check and an
+explicit in-progress `agentci/evals` Check, runs separate evaluator children, then
+publishes the complete behavioral result. It uses the outbox delivery UUID as the
+attempt UUID and starts before acknowledging dispatch. Deterministic workflow IDs
+fence ambiguous starts and dispatcher restarts. Missing runner pins or M2 schema
+fail startup; the M2 controller has no silent M1 execution fallback. Legacy M1
+histories remain serviced by their original workflow and activities.
+
+`AGENTCI_EVAL_REVIEW_TIMEOUT_MS` defaults to 86400000 (24 hours), with an operator
+range of 1000–604800000 milliseconds. This bounds the evaluation-child phase using
+a durable Temporal cancellation scope. Expiry waits for child cleanup, cancels
+the SQL comparison and publishes unavailable. Staging and publication retain their
+separate bounded activity retries. A requested parent cancellation is checked
+after activity completion because a late completed activity can otherwise return
+success even after cancellation was requested. Current-attempt cancellation
+invalidates the Check; superseded PRs receive no new writes.
+
+Local acceptance creates a fresh temporary PostgreSQL database and exercises the
+actual signed webhook, transactional outbox, production dispatcher, Temporal
+activities/workflow, exact HTTP Git/Check fixture and real isolated runner. It
+checks dispatcher death before acknowledgement, transient Git retry, progress and
+completed regression Checks, installed-source agent evidence access, replay,
+durable deadline, child failure, fresh-attempt recovery, and cancellation after a
+Check write but before its response. Queue workers share a trusted test process;
+production separation remains covered by the dedicated eval-worker image probe.
+No live GitHub acceptance or final-source controller/container CI is claimed yet.
+
+M2 recovery starts a **fresh attempt UUID** for a terminal cancelled/failed
+comparison, preserving its old evidence and Check. A new GitHub delivery provides
+that identity. Same-ID webhook redelivery remains idempotent and does not rerun an
+already dispatched terminal attempt. Automatic activity retry and worker restart
+resume an unfinished attempt using retained trials. Operator/customer retry UX
+and abrupt termination recovery must be verified before the M2 phase closes.

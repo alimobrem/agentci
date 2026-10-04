@@ -1,0 +1,74 @@
+{
+  "component": "Installed operator review request and duplicate safety",
+  "candidateVersion": "0.3.0-m2",
+  "candidateSourceHashes": {
+    "packages/operator/review.ts": "sha256:acff10b36135fc3769facc01c9d38d3212a81dcb09962db9a27e8bdac27daead",
+    "cmd/agentci/main.ts": "sha256:86fe23d70e36267109f706f8fc74e52e642639fd55e2a4b1bb531eeb75abdf85",
+    "tests/operator-review.test.ts": "sha256:a10a110237d2a37c22a8cf2fced9172fbe84d73318fc34d2dcf59511227963ca",
+    "tests/integration/eval-pr-controller.test.ts": "sha256:dc94873a16d8abd38364b0c219f98154acb07805192e9354f8b8c2460049688a",
+    "scripts/package-smoke.mjs": "sha256:fa137ed3f58e610fe6c88ecfec16e202ace74dfebfe0e6ec2c1999808bfe38c7"
+  },
+  "packageSha256": "sha256:a96011fa9b992a9ba0ae297631d91a4263428decafc0e44ac07a33cd2e1e6775",
+  "receipt": {
+    "schemaVersion": 1,
+    "requestId": "80fb3814-ae0f-432b-a201-eef05c68aeb3",
+    "status": "queued",
+    "workflowId": "agentci:alimobrem/agentci-onboarding-demo:80fb3814-ae0f-432b-a201-eef05c68aeb3",
+    "subject": {
+      "repository": "alimobrem/agentci-onboarding-demo",
+      "installationId": 167710386,
+      "pullRequest": 2,
+      "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+      "headSha": "6e0fe2c11d7cfd22d59893bc317098340badc3d4"
+    }
+  },
+  "duplicateStatus": "duplicate",
+  "pullRequest": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2",
+  "checkRunId": 111435424243,
+  "checkUrl": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2/checks?check_run_id=111435424243",
+  "comparisonId": "5dc7d64b-062c-4121-87ed-8a3efd44e5ff",
+  "comparisonDigest": "sha256:aa72a435455c2b165ca4d56211ad467a97eb7ea618901b00abce1abf69f95be8",
+  "summary": {
+    "state": "completed",
+    "outcome": "passed",
+    "executionGaps": [],
+    "comparisons": [
+      {
+        "suite": "customer-safety",
+        "baseRunId": "0afbf6b5-84f0-4234-8a58-7ab927f8ba8c",
+        "headRunId": "72ce8403-5a18-441b-8e0b-66e1bbcdce53",
+        "deltas": [
+          {
+            "scenario": "safe-response",
+            "baseStatus": "passed",
+            "headStatus": "passed",
+            "passRateDelta": 0,
+            "criticalFailureDelta": 0,
+            "regression": false
+          }
+        ],
+        "regressions": []
+      }
+    ]
+  },
+  "certifiedExport": true,
+  "installedClient": true,
+  "matchingCheckCount": 1,
+  "priorCheckIdsRetained": [
+    111431171007,
+    111431405415
+  ],
+  "anonymousDenied": true,
+  "wrongIdentityDenied": true,
+  "nativeIntegration": {
+    "groups": 14,
+    "passed": 14,
+    "skipped": 0
+  },
+  "packagingSmoke": "production-only offline install passed",
+  "releaseAcceptance": false,
+  "limitations": [
+    "Candidate package is from the dirty operator implementation checkout; final-source full CI is still required.",
+    "Controller/evaluator use prior local candidate images and a temporary tunnel; this does not close release or reliable every-PR hosting gates."
+  ]
+}

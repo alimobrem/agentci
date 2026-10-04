@@ -15,12 +15,23 @@ diff --base REF --head REF --repository OWNER/REPO [--root DIRECTORY]
   Produce deterministic advisory analysis of tracked immutable Git snapshots.
 init --root EMPTY_DIRECTORY  Create a minimal agent project.
 setup  Register a repository-scoped App using AGENTCI_SETUP_* environment variables.
-Future milestones: eval, review, replay, repair.
+review --config PRIVATE_JSON --pr NUMBER [--request-id UUID]
+  Queue a fresh current-PR review using existing scoped operator credentials.
+  Reuse request-id only for ambiguous submission retries, not cancelled reviews.
+Future CLI commands: eval, replay, repair.
 `;
 
 export async function main(args: string[]): Promise<number> {
   if (!args.length || args[0] === '--help' || args[0] === 'help') { console.log(help); return 0; }
   if (args[0] === '--version') { console.log(VERSION); return 0; }
+  if (args[0] === 'review') {
+    const options: Record<string,string> = {};
+    for(let i=1;i<args.length;i+=2){const name=args[i],value=args[i+1];if(!name||!['--config','--pr','--request-id'].includes(name)||!value||value.startsWith('--')||options[name]){console.error(JSON.stringify({error:{code:'invalid-review-arguments'}}));return 2;}options[name]=value;}
+    if(!options['--config']||!options['--pr']||!/^[1-9][0-9]*$/.test(options['--pr'])){console.error(JSON.stringify({error:{code:'invalid-review-arguments'}}));return 2;}
+    const {loadReviewOperatorConfig,requestOperatorReview,OperatorReviewError}=await import('../../packages/operator/review.ts');
+    try{const config=await loadReviewOperatorConfig(options['--config']);console.log(JSON.stringify(await requestOperatorReview(config,Number(options['--pr']),{requestId:options['--request-id']})));return 0;}
+    catch(error){console.error(JSON.stringify({error:error instanceof OperatorReviewError?{code:error.code,...(error.requestId?{requestId:error.requestId}:{})}:{code:'operator-review-unavailable'}}));return 2;}
+  }
   if (args[0] === 'init') {
     if (args.length !== 3 || args[1] !== '--root' || !args[2] || args[2].startsWith('--')) { console.error('init requires --root EMPTY_DIRECTORY'); return 2; }
     try { const { initProject } = await import('../../packages/onboarding/init.ts'); await initProject(args[2]); console.log('Initialized agent project. Run agentci validate --root DIRECTORY.'); return 0; } catch (error) { console.error(error instanceof Error ? error.message : 'Initialization failed'); return 2; }

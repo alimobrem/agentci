@@ -1,0 +1,41 @@
+{
+  "component": "Unavailable Check recovery guidance and evidence discovery",
+  "task": "M2-RECOVERY-GUIDANCE",
+  "implementationBaseCommit": "edce08f7c62501a8e7082b180747017079fb285f",
+  "sourceHashes": {
+    "packages/github/eval-check.ts": "sha256:5c8f119c6445395ae5f1ce73b82cce07290fbfe44f6f631686a878f5b99de425",
+    "apps/worker/eval-activities.ts": "sha256:83d0664a78792c807c4d125be7ff6d5875714004742ea0035448be01395c2518",
+    "tests/integration/eval-check.test.ts": "sha256:d5b545edf3e1ccf5b9218ac7d2e52b4eecfa44dca72ddd73f444de07d20a242b"
+  },
+  "localFeedback": {
+    "checks": 8,
+    "passed": true,
+    "seconds": 1.05
+  },
+  "nativeIntegration": {
+    "groups": 14,
+    "passed": 14,
+    "skipped": 0,
+    "durationMs": 42737.549
+  },
+  "verifiedScenarios": [
+    "Unavailable staged attempt links to exact comparison and complete export with review/attempt identities",
+    "Cancelled staged attempt retains exact authenticated evidence links",
+    "Pre-stage failure explicitly has no comparison evidence link",
+    "Mismatched retained subject cannot cause Check writes",
+    "Fresh attempt guidance explains immutable failed UUID redelivery cannot rerun",
+    "Existing stale-attempt terminalization, ambiguous write reconciliation and unrelated Check protection remain valid",
+    "Native evaluator/controller recovery and legacy history replay remain passing"
+  ],
+  "releaseAcceptance": false,
+  "limitations": [
+    "Dirty candidate source; final-source CI and installed customer guidance verification remain pending.",
+    "No milestone release or reliable every-PR hosting acceptance."
+  ],
+  "apiCompatibility": "immutable released M1 0.2.1-m1 passed",
+  "packaging": {
+    "productionOnlySmoke": "passed",
+    "sha256": "2e7718a81ebb4b3015d022cd6239d5e8cc7f4cbd6c1eda4295f9fff6b5d96b21"
+  },
+  "workerImageBuild": "sha256:dbe3a6ef8111ae33bb2dd648721392138aa3d579190add28d937bd8ec9ae7362"
+}

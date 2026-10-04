@@ -1,0 +1,144 @@
+{
+  "kind": "M2-source-verified-CI-checkpoint",
+  "candidateCommit": "7dc87a04f66f64d6476275e3ec049fb69bf17f83",
+  "ciCommit": "f6bfbebac2b37433b30e9a5f00063f6bf015431c",
+  "verifiedTree": "9c93f7adecb6a07aac7e95c3887b99c846161945",
+  "run": {
+    "id": 37210326532,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37210326532",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11307080213,
+    "name": "m1-verification",
+    "sha256": "37cb2b873ea0ef7476489587140e743718e875dc4fdc9ed9a9cdf091ee2c11bc"
+  },
+  "verification": {
+    "unitApiDomainTests": 124,
+    "integrationGroups": 15,
+    "skips": 0,
+    "apiCompatibility": 0,
+    "runtime": {
+      "result": "passed",
+      "version": "ci",
+      "platform": "x64",
+      "checks": [
+        "non-root API/worker startup",
+        "M2 schema readiness",
+        "signature rejection",
+        "evidence authentication",
+        "comparison authentication/UUID/scoped lookup",
+        "compiled comparison API/client reads actual queued database evidence",
+        "compiled snapshot export/client completion",
+        "signed closed delivery",
+        "non-root persistent Temporal database startup/restart",
+        "graceful shutdown"
+      ],
+      "github": "synthetic credentials; no live GitHub review claimed"
+    },
+    "evalWorkerRuntime": {
+      "result": "passed",
+      "platform": "linux/amd64",
+      "workerImage": "sha256:e6188ca2fea695f8a0b65149e72222504010853efdc911820a5d9bc9f029c732",
+      "runnerImage": "sha256:0ed0c72f716615302556f02909e0b1030ad3519ceeed53e536bda91dc62a61da",
+      "uid": 1001,
+      "node": "v26.10.0",
+      "cli": "Docker version 29.8.2, build 7fc2dff",
+      "license": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+      "checks": [
+        "UBI non-root read-only runtime",
+        "no package installers/App keys",
+        "official pinned Docker CLI compatibility",
+        "separately authenticated restricted database login",
+        "real Temporal workflow and isolated child execution",
+        "child has no database/App/socket credentials",
+        "behavioral failure preserved",
+        "worker graceful shutdown/restart",
+        "all owned children removed"
+      ],
+      "github": "no live GitHub publication claimed"
+    },
+    "scans": [
+      {
+        "path": "scan-results/api.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-agentci.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "findings": 1,
+        "issues": [
+          {
+            "id": "CVE-2026-85393",
+            "severity": "HIGH",
+            "package": "node-forge",
+            "fixed": null
+          }
+        ]
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-worker.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/worker.json",
+        "findings": 0,
+        "issues": []
+      }
+    ],
+    "declaredArtifacts": [
+      {
+        "path": ".agentci/artifacts/eval-worker-image-smoke.json",
+        "sha256": "6e4f61d3dc0d5ef08678efd9018391b8a7c84c1ede991089bb4a7a07e298f438"
+      },
+      {
+        "path": "releases/agentci-0.3.0-m2.tgz",
+        "sha256": "c3a81e43809baf9647f6726a8478fafc5c44f79ac523be6348e807d655595d32"
+      },
+      {
+        "path": "scan-results/api.json",
+        "sha256": "814977d3013a61db09681dd6e3f91232330c2f9dea50178d5d2a02066cfb3203"
+      },
+      {
+        "path": "scan-results/eval-agentci.json",
+        "sha256": "0c7e302a0710521344bb283cb5fd7233c849b02e2abdfefa2a1346801c5e5a80"
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "sha256": "59cdd41e523ce8c154a0f649d4d88019e93d8ed8365ebcedf4e0f5f9e1a59834"
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "sha256": "a6d63ba37eeeaa9ffdd0f636f43e4f37ce07c8d430274b4193c139a461cc74ed"
+      },
+      {
+        "path": "scan-results/eval-worker.json",
+        "sha256": "793406f9171118815b68376af30f80fe9e827545376a099e12f8d42f14dda69b"
+      },
+      {
+        "path": "scan-results/worker.json",
+        "sha256": "005412f1b3f6fbc4b365cc232252a98143e83acd2ba35c946eac0eb93ffa391a"
+      }
+    ]
+  },
+  "limitations": [
+    "Exact-source foundation only; subsequent hosted controller/verifier/workflow integration not covered.",
+    "Optional-engine unchanged-version HIGH has separately verified pinned backport; scanner coverage and published platform remediation records remain open.",
+    "Hosted live acceptance, registry/download verification and all M2 phase gates remain open."
+  ],
+  "componentEvidence": [
+    "releases/m2-hosted-self-runner-local.json"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "component": "M2 parent cancellation cleanup",
+  "failedRun": "https://github.com/alimobrem/agentci/actions/runs/37198555724",
+  "cause": "Promise.all rejected on first cancelled child, so awaiting the aggregate did not guarantee every child cleanup had finished.",
+  "change": "Retain individual child result promises and await allSettled for every child before parent cancellation returns.",
+  "sourceFiles": {
+    "apps/worker/eval-workflows.ts": "0453c22a8a912ca326cefefca2b8425212bac172f8e95cd2549ada2864349cc9",
+    "tests/integration/eval-pr-parent.test.ts": "15120c8b9c8a226c20ef67003ce5422324142725bf05e161382e6a6f543504bf"
+  },
+  "localVerification": {
+    "integrationGroups": 14,
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 34017.041291,
+    "strengthenedParentRegression": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 33486.006875,
+      "acceptance": "Both real child containers are live before cancellation and stale detection; neither remains when parent completes; replay passes."
+    },
+    "fastChecks": 8,
+    "fastSeconds": 0.87,
+    "apiCompatibility": "Immutable released M1 0.2.1-m1 baseline passed"
+  },
+  "releaseAcceptance": false,
+  "limitations": [
+    "Final-source full CI remains required.",
+    "M2 live deployment, publication, downloads, release and demo gates remain open."
+  ]
+}

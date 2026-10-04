@@ -12,6 +12,7 @@ const tasks = [
   ['project', ['--import', 'tsx', 'cmd/agentci/main.ts', 'validate']],
   ['status', ['--import', 'tsx', 'scripts/status.ts', '--check']],
   ['delivery', ['--import', 'tsx', 'scripts/delivery.ts', 'check']],
+  ['native-inputs', ['scripts/verify-native-provenance.mjs', '--inputs']],
 ];
 // All checks are independent readers; run them concurrently without omitting any.
 const results = await Promise.all(tasks.map(([name, args]) => new Promise(resolve => {

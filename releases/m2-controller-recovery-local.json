@@ -1,0 +1,63 @@
+{
+  "component": "Durable controller termination recovery",
+  "task": "M2-TERMINATION-RECOVERY",
+  "implementationBaseCommit": "ae56e4591d72891144fba15cc177063580114d23",
+  "sourceHashes": {
+    "apps/control/main.ts": "sha256:0908fdf963dae55b5d808eb17bf1ec3b25644d4568c7c348c89934be2324204f",
+    "apps/worker/main.ts": "sha256:e55d5c51beb30e83628e7ffc3c7e52c198378103aba15f8ba8831cd1a09c1fbe",
+    "apps/worker/dispatch.ts": "sha256:c986f5af31e57000ec961c5e7aa9debceab22c72bdcbd405d68893847c769b16",
+    "apps/worker/recovery.ts": "sha256:ae951074a9d305bc33cfead49a3b506b1bb4f8efe303ddbbb9bc88d586c59925",
+    "packages/storage/review-attempts.ts": "sha256:4ee446f2f3070f4172006364551ccc3adae006f2f73245138fbca5072790162e",
+    "packages/storage/evals.ts": "sha256:b756069dc2bacf71c238065e00707a8ac4486fa385e58aac69a2b04b3ddcb2f6",
+    "packages/github/eval-check.ts": "sha256:d73fcdae0e5a2e870cfaf1ca2ba7b6fbc12fef3854ed35a0e86488300806798d",
+    "apps/eval-worker/privileges.ts": "sha256:70e57930be6a10e9967590ff80a5c427e5aab26870503f591218e8e0b2890475",
+    "deploy/migrations/003_m2_review_recovery.sql": "sha256:c268d010c7f67313774494dfc69a32be29f6927c5c7dc912d7af1d420a17a43a",
+    "tests/integration/eval-pr-controller.test.ts": "sha256:28d24e245d5cc07a9305757b4c126212d8a8d0f3832d96b96b52d6acce1591d8",
+    "tests/integration/eval-migrations.test.ts": "sha256:7529771e8e9803c5ad1fb0c617035f0c797af24274a7cf8d6d4348ddcb411d8a",
+    "tests/integration/eval-check.test.ts": "sha256:813e944b5537ec26ddba67ea2f9de9f1cc5960a6319d3a5a14be0b2e78e333b0"
+  },
+  "localFeedback": {
+    "checks": 8,
+    "passed": true,
+    "seconds": 1.48
+  },
+  "nativeIntegration": {
+    "groups": 14,
+    "passed": 14,
+    "skipped": 0,
+    "durationMs": 43296.471791
+  },
+  "apiCompatibility": "released M1 baseline passed",
+  "packaging": {
+    "productionOnlyInstall": "passed",
+    "sha256": "212801c28443320318c92e3e1ea3f664e4e28522cf1c43d124054bad81b3c6ff"
+  },
+  "serviceImageBuilds": {
+    "api": "sha256:ee80ed4998e7bff4f2ca1b707726f323d1b92546b95a29a0673ed5a5adaf028c",
+    "worker": "sha256:cafb0071d53adb50c0888254b0b07f426c595c8285f11ce3bd4a13a39ad84f1a",
+    "eval-worker": "sha256:c79b116e2bba3c7366cd6ddd8c5c8f564d2c6675d2cf16782865f1b829b05326"
+  },
+  "verifiedScenarios": [
+    "Real parent termination with both owned containers running",
+    "Evaluator SIGKILL leaves running containers; independent cleanup removes them",
+    "Reconciler SIGKILL after SQL cancellation and before Check update; fresh process resumes",
+    "Expired lease holder cannot close a reclaimed attempt",
+    "Transient Check publication failure preserves retryable durable state",
+    "Exactly one terminal unavailable Check; fresh UUID succeeds independently",
+    "Failed start acknowledgment does not restart an immutable failed UUID",
+    "Additive checksum-bound migration, concurrent/repeated application and evaluator privilege denial",
+    "Stale existing exact-attempt Checks terminalize without creating stale Checks",
+    "Legacy and cleanup workflow histories replay"
+  ],
+  "localRework": [
+    "Migration wrapper generation initially split an embedded marker; actual newline-delimited marker repaired and native migration verified.",
+    "Check fault injection initially targeted another attempt; exact external identity targeting repaired.",
+    "Node eval-only startup flag propagated into Temporal worker threads; fixture launches a private module file instead."
+  ],
+  "releaseAcceptance": false,
+  "limitations": [
+    "Dirty candidate source checkpoint; exact-source full CI and deployed customer recovery verification remain pending.",
+    "Service image builds passed; these builds alone do not prove deployed runtime acceptance.",
+    "No M2 phase release gate closes from these component results."
+  ]
+}

@@ -158,7 +158,10 @@ are release requirements.
 ## Roadmap and project status
 
 There are 11 milestones, M0–M10. M0 contracts and M1 semantic review, including customer
-onboarding and agent/API acceptance, are complete. M2 eval orchestration is next.
+onboarding and agent/API acceptance, are complete. M2 eval orchestration is in
+development; the latest released build remains M1. See the
+[M2 customer development demo](docs/demos/m2-development.md) for verified candidate
+behavior and remaining release gates.
 
 - [Milestones and acceptance scenarios](docs/milestone-gates.md)
 - [Current status](STATUS.md) and [release notes](CHANGELOG.md)

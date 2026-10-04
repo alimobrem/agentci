@@ -1,0 +1,76 @@
+{
+  "component": "Optional-engine checksum-bound upstream RSA backport",
+  "task": "M2-SECURITY-RELEASE",
+  "implementationBaseCommit": "59863550c06350e62700215d95bf343e6fc0b8ad",
+  "sourceHashes": {
+    "Dockerfile": "sha256:21a534f248df1c2fee59df826acfe835fd6fd31415c5df94967f9d5c95b62cf6",
+    "deploy/engines/patches/forge-backport.json": "sha256:cbaf74c84b70b1a6b63bd5770468a15f89d3d8d4f1724030a01a2318f271ae75",
+    "deploy/engines/patches/apply-forge-backport.mjs": "sha256:7572020ac161b14ae7dd3acc6138bffea52962799ca5a058d3931dd305cf9c71",
+    "deploy/engines/patches/verify-forge-backport.cjs": "sha256:6790c645ad48b9e09f0396882a5d03af69bc5044c09eea365c719434e0e37cdb",
+    "deploy/engines/patches/forge-nested-digest-fixture.json": "sha256:542603a55c4eef10700594ab6dfddc68ad4b4ea44cf61c027b23632961c5b5e0",
+    "tests/forge-backport.test.ts": "sha256:d5c628539c351954962576aae0db349ce52dd3cbe07257246e0ee90df3bb26ea",
+    "tests/integration/eval-engines.test.ts": "sha256:b808964cb91e8f04ba8b53ad8e734e94c5056a7419707bc8fb82e4494bf8965e"
+  },
+  "imageId": "sha256:8b2a37b2c5427a44b63289a1bc89a57dd134b38cc23cc177b7723844c4a2834f",
+  "platform": "linux/arm64",
+  "officialRegistryVersionChecked": "node-forge 1.4.0",
+  "upstreamCommit": "ceba34402e329f0365134f23fe19898756527d65",
+  "upstreamPullRequest": "https://github.com/digitalbazaar/forge/pull/1152",
+  "upstreamStatus": "open-unmerged",
+  "upstreamRsaSuite": {
+    "original": {
+      "tests": 105,
+      "passes": 100,
+      "pending": 4,
+      "failures": 1
+    },
+    "patched": {
+      "tests": 105,
+      "passes": 101,
+      "pending": 4,
+      "failures": 0
+    },
+    "originalFailure": [
+      "should check nested DigestAlgorithm element count"
+    ],
+    "mocha": "12.0.3"
+  },
+  "localFeedback": {
+    "checks": 8,
+    "passed": true,
+    "seconds": 1.03
+  },
+  "nativeIntegration": {
+    "groups": 14,
+    "passed": 14,
+    "skipped": 0,
+    "durationMs": 43441.072458
+  },
+  "scan": {
+    "sha256": "581201bb204d9b3ad334eb341c802af048617447e482fd5e27c5b88fb208d4a3",
+    "findings": [
+      {
+        "id": "CVE-2026-85393",
+        "package": "node-forge",
+        "version": "1.4.0",
+        "severity": "HIGH",
+        "fixedVersion": null
+      }
+    ]
+  },
+  "verifiedScenarios": [
+    "Whole installed RSA file byte-identical to pinned upstream fix",
+    "Image build and native engine tests reject public malformed nested DigestAlgorithm fixture",
+    "Native Node valid SHA-256/SHA-512 signatures accepted; wrong message rejected",
+    "Unexpected forge version/source refused without changing installed code",
+    "All Promptfoo optional dependencies remain installed; no engine/provider capability removal",
+    "Real Promptfoo/DeepEval pass, regression, infrastructure error and owned-container cleanup remain passing"
+  ],
+  "releaseAcceptance": false,
+  "limitations": [
+    "Dirty candidate source checkpoint; final-source full CI and other claimed image platforms remain required.",
+    "The upstream package version/advisory remain visible to scanners; this is a downstream backport, not an official 1.4.1 release or clean scan.",
+    "Four upstream RSA cases remain pending; this proof does not certify the whole forge test repository or all cloud provider integrations.",
+    "Published digest-bound remediation, Docker/Temporal scanner coverage and all M2 release gates remain open."
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "apiVersion": "agentci.io/v1alpha1",
+  "operationId": "runHttpEvalTrial",
+  "direction": "outbound",
+  "method": "post",
+  "destination": "Exact operator-configured endpoint and pinned IP; no repository-defined URL",
+  "requirementIds": [
+    "SPEC-11.4-005",
+    "SPEC-40-034",
+    "SPEC-40-035"
+  ],
+  "requestSchema": "packages/evals/json/http-eval-request.schema.json",
+  "responseSchema": "packages/evals/json/http-eval-response.schema.json",
+  "tests": [
+    "tests/eval-http.test.ts",
+    "tests/eval-request-id.test.ts",
+    "tests/integration/eval-http-recovery.test.ts"
+  ],
+  "scenarios": [
+    "operator-only endpoint, immutable provider revision and pin",
+    "strict source/input/suite/provider/request/model identity",
+    "real verified HTTPS success, certificate and hostname rejection",
+    "separate evaluation credentials and protected input projection",
+    "redirect/media/encoding/disconnect/private-error containment",
+    "request/response size limits, deadline and cancellation",
+    "repeated baseline/head regression with frozen assertions",
+    "model matrix and changed provider revision rejection",
+    "stable per-unit/trial UUID and RFC name-based SHA-256 vector",
+    "provider cached response after interruption before checkpoint",
+    "retained trial causes no dispatch after checkpoint interruption",
+    "conflicting request ID/payload rejected; invalid UUID dispatches nothing"
+  ],
+  "releaseState": "M2 candidate; original transport full CI passed, retry-identity final-source CI and milestone release gates pending"
+}

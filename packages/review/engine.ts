@@ -62,6 +62,12 @@ function requirementMap(files: Record<string, string>, patterns: string[]): Map<
   }
   return result;
 }
+export function requirementImpact(input:ReviewInput):{changed:string[];known:string[]} {
+  const before=requirementMap(input.base.files,selectors(project(input.base.files),'specifications'));
+  const after=requirementMap(input.head.files,selectors(project(input.head.files),'specifications'));
+  const known=[...new Set([...before.keys(),...after.keys()])].sort();
+  return {known,changed:known.filter(id=>canonical(before.get(id)?.value)!==canonical(after.get(id)?.value))};
+}
 
 /** Pure data analysis. No repository code, scripts, imports or evals are executed. */
 export function analyze(input: ReviewInput): Analysis {

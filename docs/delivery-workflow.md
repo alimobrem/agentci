@@ -163,3 +163,23 @@ before publication. Later failed and successful attempts are preserved in
 The initial timing comparison above describes its then-current scope and does
 not measure total M1 delivery speed. See [the retrospective](retrospectives/m1.md)
 and `delivery/latest-report.json` for closure observations.
+
+## Phase selection
+
+The active phase is `delivery/tasks.json`'s milestone. Each phase has a separate
+`releases/mN-gates.json`; M1 evidence remains immutable historical proof. Run
+`npm run release:check -- --milestone M1 --require-complete` to audit M1 while M2
+is active. The CLI verifies every section 40 build/exit bullet has a task and
+rejects mismatched phase/version or missing customer acceptance.
+
+## Agentic velocity plan refinement
+
+[The planning addendum](agentic-velocity-plan.md) separates actionable feedback
+from end-to-end accepted release time, includes failed/superseded compute and
+human interventions, and proposes evidence reuse, merge-candidate validation and
+burst-capacity experiments in their dependent milestones. Current tracking lacks
+a comparable end-to-end baseline and complete cost/human-effort telemetry; no
+acceleration claim is established. Measurement collection continues now, with
+product analytics still unimplemented. Connected changes use focused development
+checks and full integration/release checkpoints. Milestone order and release gates
+remain in effect; discussion of parallel phases has not started M3.

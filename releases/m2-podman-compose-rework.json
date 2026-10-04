@@ -1,0 +1,37 @@
+{
+  "kind": "M2-Podman-Compose-merge-rework",
+  "observedAt": "2026-10-04T16:37:27.537888+00:00",
+  "failedRun": 37217191563,
+  "sourceCommit": "cc8fcbddce918df6bab473018be3fac78c262d8e",
+  "failure": "Hosted Compose retained duplicate no-new-privileges sequence entry and rejected the merged manifest.",
+  "correction": "Rootless overlay adds only label=disable; no-new-privileges remains inherited from the base and is asserted on the merged service.",
+  "correctedSourceFiles": {
+    "deploy/podman-rootless.compose.yaml": "a42753262a399a36f62d1ec0e5fbcc864742f37e6c4c8536e9c0e120062b48a1",
+    "scripts/check-eval-deployment.mjs": "bdaa88ae841f71c77a3921ffa8f66d44d09ee585ae8790e9e1026790818b0cb3"
+  },
+  "deployment": {
+    "result": "passed",
+    "deployment": "rootless-Podman-Compose",
+    "engine": "podman",
+    "platform": "linux/arm64",
+    "workerImage": "sha256:fd60c1e86249ce9a6c3873a5a09dd54c5dc772ef0755ea5157475433d9444677",
+    "runnerImage": "sha256:6fac694b601cd2b7bd8fc8230028bd1640d486ab9bb29f3e87538445ea0e3d7b",
+    "uid": 1001,
+    "node": "v26.10.0",
+    "cli": "podman version 6.1.3",
+    "license": "62fb8a3a9621dc2388174caaabe9c2317b694bb9a1d46c98bcf5655b68f51be3",
+    "checks": [
+      "UBI non-root read-only runtime",
+      "no package installers/App keys",
+      "official pinned podman CLI execution",
+      "separately authenticated restricted database login",
+      "real Temporal workflow and isolated child execution",
+      "child has no database/App/socket credentials",
+      "behavioral failure preserved",
+      "worker graceful shutdown/restart",
+      "all owned children removed"
+    ],
+    "github": "no live GitHub publication claimed"
+  },
+  "remaining": "Hosted CI rerun and full M2 acceptance/release gates remain required."
+}

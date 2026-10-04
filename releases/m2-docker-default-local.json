@@ -1,0 +1,134 @@
+{
+  "kind": "M2-approved-Docker-default-local-checkpoint",
+  "observedAt": "2026-10-04T17:08:25.822552+00:00",
+  "baseCommit": "70bdfae4a1256e3bf8b178896d523836c5fa2883",
+  "approval": "Owner explicitly selected Use Docker for M2 (Recommended); docs/m2-container-engine.md records the release decision.",
+  "sourceFiles": {
+    ".env.example": "2037199ff284f6d2c8b367fa7b5edee2394d1f78681865df3cd28a28e489a085",
+    "AGENTS.md": "a480054041d0a7b9fd21ef095b5a1de67c43c66ac89095dff279c708642c8a8c",
+    "Dockerfile": "8f84b969ed36c45b06a8501ba8fdea6efb9f6db92eea8b914d45e28e2533a423",
+    "apps/eval-worker/config.ts": "171c7effb681f92bcd1ac8a3fe0286ccbebf7b081eed0bb51ba11f076cf49e13",
+    "apps/eval-worker/container-client.ts": "f2e140e841490f790d6e6359c2cce41ed23876c25c079e5496e91aac319eacdb",
+    "apps/eval-worker/main.ts": "6dc5e4396425418488bb70897c1c277b55aaff7dceb4d4c82ef646f44f571490",
+    "cmd/dogfood/main.ts": "97eb81a7a0a03734dc3086d41f5eeb0cfd91bd3b58496618c8dcf25a984f2c3c",
+    "deploy/eval-worker.compose.yaml": "5ed2a45455b48818b6ca1d7cb84e739666c4af744c051c5bb0985d5eeefc34af",
+    "deploy/podman-rootless.compose.yaml": "93a5d6635402b988829c3f6d282d4c1b6861d2f931f72d7a7410e80adfe59632",
+    "docs/architecture.md": "5a003a9f149258ff853d59313f6c614d181deb3a22eb72506ef2af6b9fc3e1c7",
+    "docs/m2-container-engine.md": "76017d35264da28b11f41e205562d7363a967535a8f7045b21cd527a8b3858f5",
+    "docs/podman-adoption.md": "6e43b233b58ccfcd715c74357e1cbff41d5209f471b0e4079f212df94ceb7d16",
+    "docs/releases/m2-native-security.md": "9b6ef50f237f6c7f9d55c03aa972c91985666143ff016ebf801683f7d97c998c",
+    "docs/releases/m2-readiness.md": "08bbb427e812e8e59014ea672bd9809370646ab103db2047f9b83c4fc659153b",
+    "packages/evals/runner.ts": "2519ff515b65c46dc9edad91ed22f9ea7049a2957c70b3e695a339d5d8aedc83",
+    "scripts/check-eval-deployment.mjs": "09bf3c06a82d2fa5087b3bceef4ed21c04a58133f7af272892a726edefd74d10",
+    "scripts/delivery.ts": "74c83eaef60279aae7d021c39065d8c59ff310482e0a991ca1248a9fa740d60b",
+    "scripts/eval-worker-image-smoke.mjs": "13833d35e0496f81817d6522b3663c94d4509bfbcd8b20847fd2157edb135b26",
+    "scripts/lib/delivery.ts": "61df53bb899b04e59da925527248742eead63f2f47754c80ad28f21c2e998542",
+    "scripts/verification-summary.mjs": "9db2dd5a974bb961ac258a7c603da59e93de9bde5d06106559b0f36d4f4ece6d",
+    "scripts/verify-native-provenance.mjs": "c121ba4a840c17960b23e640c6e1b3aefc528d729a2d0f6565f9ebac31353839",
+    "tests/container-engine.test.ts": "eb30e50f50370e7da3f635d3d34752021604df4c36fb7d7b1c025ffc46aebca7",
+    "tests/delivery.test.ts": "b6981f26811b2ecce2d507d89eb66b4a44d0ba48b5b6cc457b837ec29783aa5a",
+    "tests/eval-worker-config.test.ts": "32aa7b48e0858bac4604dcb1ead217c24251091deed328bf6c77fbba3376ca90"
+  },
+  "nativeIntegration": {
+    "tests": 15,
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "logSha256": "8f420510715289eb97e2feb84a152a1b8fb48724958dbcf08fdd5a87da8c0450",
+    "scope": "Execution/config/recovery source tested after Docker default change; administrative deferral tracking subsequently verified in the unit/CLI cohort."
+  },
+  "fastFeedback": {
+    "seconds": 1.065814667,
+    "checks": 9,
+    "tests": 128,
+    "passed": true,
+    "limitation": "Local feedback only, not proof of total delivery acceleration."
+  },
+  "packagedService": {
+    "result": "passed",
+    "deployment": "native-CLI",
+    "engine": "docker",
+    "platform": "linux/arm64",
+    "workerImage": "sha256:f90182ede47e04e9d14b4e966048a4b557d74b0d122bf43be50bfe561a050410",
+    "runnerImage": "sha256:37fa3c150ddd20aaf53f54f2cb89474842002f15ceba727611e5a078dd155aca",
+    "uid": 1001,
+    "node": "v26.10.0",
+    "cli": "Docker version 29.8.2, build 7fc2dff",
+    "license": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+    "checks": [
+      "UBI non-root read-only runtime",
+      "only selected engine client; no package installers/App keys",
+      "mismatched engine rejected before database/Temporal connection",
+      "official pinned docker CLI execution",
+      "separately authenticated restricted database login",
+      "real Temporal workflow and isolated child execution",
+      "child has no database/App/socket credentials",
+      "behavioral failure preserved",
+      "worker graceful shutdown/restart",
+      "all owned children removed"
+    ],
+    "github": "no live GitHub publication claimed"
+  },
+  "nativeProvenance": {
+    "image": "sha256:f90182ede47e04e9d14b4e966048a4b557d74b0d122bf43be50bfe561a050410",
+    "engine": "docker",
+    "platform": "linux/arm64",
+    "temporalNativeArtifacts": "matched official npm artifact",
+    "files": {
+      "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+      "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+      "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+      "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+    },
+    "dockerCli": {
+      "Version": "29.8.2",
+      "ApiVersion": "1.56",
+      "DefaultAPIVersion": "1.56",
+      "GitCommit": "7fc2dff",
+      "GoVersion": "go1.26.8",
+      "Os": "linux",
+      "Arch": "arm64",
+      "BuildTime": "Wed Sep 30 19:31:29 2026",
+      "Context": "default",
+      "sha256": "37a53fed3445028a49443fd6f9338ccedeeeda9776de5d7fd4d7e7c936b789cc",
+      "vendorManifestSha256": "0836699fe2ae28a136aabd51f932b825e0653c48ae200613b72f07a74f2a3868"
+    },
+    "coverage": "Podman compiled module metadata is bound to exact official binary hashes; its source manifest includes additional modules. Cargo and Docker vendor manifests are upstream source inventories, not proofs of exact compiled dependency graphs."
+  },
+  "scan": {
+    "sha256": "74145942684b5dd1ccc4d0decceaf8aa2f1d7a80634a2c7a2fb9102c2bdc5bca",
+    "findings": 0,
+    "inventories": [
+      {
+        "Target": "agentci-eval-worker:m2-docker-release-candidate (redhat 10.2)",
+        "Type": "redhat",
+        "Class": "os-pkgs"
+      },
+      {
+        "Target": "Node.js",
+        "Type": "node-pkg",
+        "Class": "lang-pkgs"
+      },
+      {
+        "Target": "app/node_modules/@temporalio/core-bridge/Cargo.lock",
+        "Type": "cargo",
+        "Class": "lang-pkgs"
+      },
+      {
+        "Target": "usr/local/bin/docker",
+        "Type": "gobinary",
+        "Class": "lang-pkgs"
+      }
+    ],
+    "limitation": "No detected findings in these inventories; Docker compiled Go dependency coverage is limited and upstream source inventory assessment remains required. No universal vulnerability-free claim."
+  },
+  "tracking": "Podman adoption and runner-stability tasks are deferred with approval evidence, original starts and pending acceptance retained. M2 Docker default task remains in progress pending hosted acceptance.",
+  "remaining": [
+    "Exact-source hosted CI verification",
+    "Real hosted and customer PR behavioral acceptance",
+    "Complete platform security/inventory assessment",
+    "Versioned image/package publication and independent anonymous download/deployment verification",
+    "Complete M2 GitHub release, final documentation, released-build demo and retrospective"
+  ],
+  "completion": "M2 has not been released; no phase gate is closed by this local checkpoint."
+}

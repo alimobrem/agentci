@@ -1,0 +1,37 @@
+apiVersion: agentci.io/v1alpha1
+kind: EvalSuite
+metadata:
+  id: agentci-self-contracts
+  description: Frozen assertions for AgentCI manifests, normalized adapters, statistics, identities and exported evidence.
+spec:
+  class: contract
+  requirements: [SPEC-40-031, SPEC-40-035, SPEC-40-036, SPEC-40-037, SPEC-40-039]
+  impact:
+    categories: [source, dependency, api, data-schema, specification, requirement, eval, deployment, tool]
+    include: [packages/**, apps/**, cmd/**, scripts/**, tests/**, specs/**, evals/**, Dockerfile, package.json, package-lock.json, npm-shrinkwrap.json]
+  runner:
+    adapter: native
+    command: [node, scripts/agentci-self-eval.mjs]
+    report: agentci-self-result.json
+    timeoutMs: 120000
+    maxOutputBytes: 1048576
+    harness:
+      - scripts/agentci-self-eval.mjs
+      - tests/eval-contracts.test.ts
+      - tests/eval-adapters.test.ts
+      - tests/eval-statistics.test.ts
+      - tests/eval-request-id.test.ts
+      - tests/eval-comparison.test.ts
+      - tests/eval-export.test.ts
+      - tests/fixtures/evals.ts
+      - tests/fixtures/comparison.ts
+      - tests/fixtures/export.ts
+      - specs/api/fixtures/eval-comparison.json
+  scenarios:
+    - {id: manifest}
+    - {id: adapters}
+    - {id: statistics}
+    - {id: request-identity}
+    - {id: comparison}
+    - {id: export-client}
+  trials: {count: 1, passRate: 1, maxCriticalFailures: 0, confidenceMethod: wilson}

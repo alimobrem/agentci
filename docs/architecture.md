@@ -56,3 +56,17 @@ verification and current limits. OPA and object storage are not implemented.
 Sources: [Temporal workflows](https://docs.temporal.io/workflows),
 [Temporal TypeScript SDK](https://docs.temporal.io/develop/typescript),
 [pg-boss](https://github.com/timgit/pg-boss).
+
+## Red Hat technology preference
+
+The owner requested Red Hat technologies as the default where suitable on
+2026-10-04. UBI remains the service-image base. Podman remains the preferred future OCI engine once its acceptance passes.
+The owner approved Docker as the M2 release default on 2026-10-04 after native
+Podman security findings and unfinished hosted/stability acceptance. Engine
+selection is operator-owned; the M2 release target packages only Docker, while
+Podman has a separate development image. This decision does not claim Podman
+support or waive its failed gates. See `docs/m2-container-engine.md`.
+Buildah/Skopeo are preferred image tooling where the integration and current stable
+versions fit; Tekton/OpenShift retain their planned M7 integration. This preference
+does not replace Temporal, protocol libraries or other appropriate components with
+an unsuitable alternative, and does not advance uncompleted milestones.

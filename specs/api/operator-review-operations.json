@@ -1,0 +1,34 @@
+{
+  "apiVersion": "agentci.io/v1alpha1",
+  "transport": "Operator CLI; existing HMAC-authenticated POST /v1/webhooks/github; no new public HTTP write endpoint",
+  "operations": [
+    {
+      "operationId": "requestOperatorReview",
+      "command": "agentci review --config PRIVATE_JSON --pr NUMBER [--request-id UUID]",
+      "input": "Private strict config with existing repository-scoped App/key and webhook secret file references; positive PR number; optional UUIDv4 for ambiguous submission retry",
+      "output": "Versioned JSON queued/duplicate receipt, immutable PR subject, request UUID and workflow identity; typed sanitized errors",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-32-002"
+      ],
+      "tests": [
+        "tests/operator-review.test.ts",
+        "tests/integration/eval-pr-controller.test.ts",
+        "scripts/package-smoke.mjs"
+      ],
+      "scenarios": [
+        "private bounded regular credential files and strict config keys",
+        "HTTPS or loopback origin with no URL credentials/query/hash/path",
+        "GitHub current open PR scope and exact commit identity",
+        "fresh UUID for a new cancelled/failed review attempt",
+        "same UUID and stable subject for ambiguous transport retry",
+        "HMAC authorization distinct from read-only evidence credentials",
+        "no redirect forwarding",
+        "bounded validated receipt",
+        "generic credential-free GitHub and transport failures",
+        "native durable outbox and behavioral workflow acceptance",
+        "compiled installed CLI argument/config failures"
+      ]
+    }
+  ]
+}

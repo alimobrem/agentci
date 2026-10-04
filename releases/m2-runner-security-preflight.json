@@ -1,0 +1,131 @@
+{
+  "failedCiRun": 37180708749,
+  "oldImageSourceCommit": "59a52d634588b1b0751068ac4171f048f7568222",
+  "oldFindings": [
+    {
+      "id": "CVE-2026-102276",
+      "package": "brace-expansion",
+      "version": "5.0.9",
+      "severity": "HIGH",
+      "fixedVersion": "5.0.10, 3.0.7, 2.1.5, 1.1.19"
+    },
+    {
+      "id": "CVE-2026-102278",
+      "package": "brace-expansion",
+      "version": "5.0.9",
+      "severity": "HIGH",
+      "fixedVersion": "5.0.11, 3.0.8, 2.1.6, 1.1.20"
+    },
+    {
+      "id": "CVE-2026-102277",
+      "package": "brace-expansion",
+      "version": "5.0.9",
+      "severity": "MEDIUM",
+      "fixedVersion": "5.0.12, 3.0.9, 2.1.7, 1.1.21"
+    },
+    {
+      "id": "CVE-2026-93748",
+      "package": "http-cache-semantics",
+      "version": "4.2.0",
+      "severity": "HIGH",
+      "fixedVersion": null
+    },
+    {
+      "id": "CVE-2026-101910",
+      "package": "ip-address",
+      "version": "10.5.0",
+      "severity": "MEDIUM",
+      "fixedVersion": "10.5.1"
+    },
+    {
+      "id": "CVE-2026-101911",
+      "package": "ip-address",
+      "version": "10.5.0",
+      "severity": "MEDIUM",
+      "fixedVersion": "10.7.1"
+    },
+    {
+      "id": "CVE-2026-101912",
+      "package": "ip-address",
+      "version": "10.5.0",
+      "severity": "MEDIUM",
+      "fixedVersion": "10.7.1"
+    },
+    {
+      "id": "CVE-2026-101913",
+      "package": "ip-address",
+      "version": "10.5.0",
+      "severity": "MEDIUM",
+      "fixedVersion": "10.5.1"
+    },
+    {
+      "id": "CVE-2026-19534",
+      "package": "undici",
+      "version": "6.28.0",
+      "severity": "HIGH",
+      "fixedVersion": "6.28.1, 7.29.1, 8.10.2"
+    },
+    {
+      "id": "CVE-2026-85024",
+      "package": "undici",
+      "version": "6.28.0",
+      "severity": "MEDIUM",
+      "fixedVersion": "6.28.1, 7.29.1, 8.10.2"
+    },
+    {
+      "id": "CVE-2026-18540",
+      "package": "undici",
+      "version": "6.28.0",
+      "severity": "LOW",
+      "fixedVersion": "6.28.1, 7.29.1, 8.10.2"
+    },
+    {
+      "id": "GHSA-6v7p-g79w-8964",
+      "package": "msgpack",
+      "version": "1.1.2",
+      "severity": "HIGH",
+      "fixedVersion": "1.2.1"
+    },
+    {
+      "id": "CVE-2025-47273",
+      "package": "setuptools",
+      "version": "70.3.0",
+      "severity": "HIGH",
+      "fixedVersion": "78.1.1"
+    },
+    {
+      "id": "CVE-2026-59890",
+      "package": "setuptools",
+      "version": "70.3.0",
+      "severity": "MEDIUM",
+      "fixedVersion": "83.0.0"
+    },
+    {
+      "id": "CVE-2026-97687",
+      "package": "urllib3",
+      "version": "2.7.0",
+      "severity": "HIGH",
+      "fixedVersion": "2.8.0"
+    },
+    {
+      "id": "CVE-2026-97689",
+      "package": "urllib3",
+      "version": "2.7.0",
+      "severity": "HIGH",
+      "fixedVersion": "2.8.0"
+    },
+    {
+      "id": "CVE-2026-97688",
+      "package": "urllib3",
+      "version": "2.7.0",
+      "severity": "MEDIUM",
+      "fixedVersion": "2.8.0"
+    }
+  ],
+  "remediation": "Remove unused npm, pip and ensurepip runtime installers after checksum-pinned build installation; retain Node/Python/pytest execution. No exceptions or ignored findings.",
+  "hardenedLocalImageId": "sha256:37fa3c150ddd20aaf53f54f2cb89474842002f15ceba727611e5a078dd155aca",
+  "localScanSha256": "3487cd6a2fbde931c5691e1bca170b61c5c6566da326bfb51ca911625cb40c19",
+  "localFindings": 0,
+  "releaseComplete": false,
+  "fullCiReverificationRequired": true
+}

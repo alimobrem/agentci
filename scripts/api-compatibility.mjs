@@ -18,7 +18,7 @@ try { await access(archive); } catch {
 }
 if(createHash('sha256').update(await readFile(archive)).digest('hex')!==entry[1])throw new Error('oasdiff archive checksum mismatch');
 execFileSync('tar',['-xzf',archive,'-C',directory,'oasdiff']);
-const base='specs/api/baselines/m1-openapi.json', current='specs/api/openapi.json';
+const base='specs/api/baselines/m1-0.2.1-openapi.json', current='specs/api/openapi.json';
 const compare = file => spawnSync(join(directory,'oasdiff'),['breaking',base,file,'--allow-external-refs=false','--format','json','--fail-on','WARN'],{encoding:'utf8',timeout:30_000});
 const result = compare(current);
 if(result.status!==0){console.error(result.stdout,result.stderr);process.exitCode=1;}
@@ -29,4 +29,4 @@ else if(process.argv.includes('--self-test')){
 }
 const report={tool:'oasdiff',version:'1.33.0',sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),baseline:base,baselineSha256:createHash('sha256').update(await readFile(base)).digest('hex'),currentSha256:createHash('sha256').update(await readFile(current)).digest('hex'),exitCode:result.status,selfTest:process.argv.includes('--self-test')?'endpoint-removal rejected':null,changes:result.stdout};
 await mkdir('.agentci/artifacts',{recursive:true});await writeFile('.agentci/artifacts/api-compatibility.json',JSON.stringify(report,null,2)+'\n');
-if(!process.exitCode)console.log('API compatibility passed; candidate baseline, not a prior M1 release.');
+if(!process.exitCode)console.log('API compatibility passed against immutable released M1 0.2.1-m1.');

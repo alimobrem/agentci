@@ -1,0 +1,12 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {join} from 'node:path';
+const metadata=JSON.parse(await readFile(new URL('./forge-backport.json',import.meta.url),'utf8'));
+const directory=process.argv[2];if(!directory)throw new Error('Expected installed forge directory');
+const manifest=JSON.parse(await readFile(join(directory,'package.json'),'utf8'));
+if(manifest.name!==metadata.package||manifest.version!==metadata.publishedVersion)throw new Error('Unexpected forge package; review/remove the backport before upgrading');
+const file=join(directory,'lib/rsa.js'),source=await readFile(file,'utf8'),hash=value=>createHash('sha256').update(value).digest('hex');
+if(hash(source)!==metadata.beforeSha256)throw new Error('Forge source checksum mismatch; backport refuses to apply');
+if(source.split(metadata.old).length!==2)throw new Error('Forge patch anchor mismatch');
+const fixed=source.replace(metadata.old,metadata.replacement);if(hash(fixed)!==metadata.afterSha256)throw new Error('Patched forge differs from pinned upstream source');
+await writeFile(file,fixed);console.log('Applied checksum-bound upstream forge RSA backport; published version remains 1.4.0.');

@@ -1,5 +1,5 @@
 {
-  "baseline": "M1 candidate contract captured before delivery-workflow changes; not a previous release",
+  "baseline": "Immutable released M1 0.2.1 contract; source and download identity are recorded in specs/api/baselines/m1-0.2.1-identity.json",
   "operations": [
     {
       "operationId": "healthz",
@@ -69,6 +69,53 @@
         "invalid/missing IDs",
         "unsupported method",
         "Agent client consumes the contracted operation; evidence checks exact identity and canonical digest"
+      ]
+    },
+    {
+      "operationId": "getEvalComparison",
+      "method": "get",
+      "path": "/v1/eval-comparisons/{id}",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039"
+      ],
+      "tests": [
+        "tests/eval-comparison-api.test.ts",
+        "tests/integration/eval-storage.test.ts"
+      ],
+      "scenarios": [
+        "authorization before ID lookup",
+        "exact scoped snapshot and canonical digest",
+        "identity, threshold, summary and digest tamper rejected",
+        "unknown/malformed IDs and method/media-independent read",
+        "unavailable or integrity-failing storage sanitized",
+        "bounded API/client response and explicit oversized error",
+        "real durable evidence consumed by agent client",
+        "upper/lowercase UUID lookups retain identical canonical evidence and hashes; expected UUID case variants are accepted while different scoped identities are rejected"
+      ]
+    },
+    {
+      "operationId": "exportEvalComparison",
+      "method": "get",
+      "path": "/v1/eval-comparisons/{id}/export",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039"
+      ],
+      "tests": [
+        "tests/eval-comparison-api.test.ts",
+        "tests/eval-export.test.ts",
+        "tests/integration/eval-storage.test.ts"
+      ],
+      "scenarios": [
+        "complete large evidence beyond inline response limit",
+        "hash-chain sequence/digest/summary/identity validation",
+        "truncated/reordered/forged/trailing streams never certify summary",
+        "consistent snapshot during concurrent cancellation",
+        "abandoned stream rolls back transaction",
+        "authorization, scoped IDs and sanitized dependency failure",
+        "bounded frames and one-group client consumption",
+        "upper/lowercase UUID lookups retain identical canonical evidence and hashes; expected UUID case variants are accepted while different scoped identities are rejected"
       ]
     }
   ]

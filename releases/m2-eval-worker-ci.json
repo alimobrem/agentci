@@ -1,0 +1,133 @@
+{
+  "kind": "M2-UBI-eval-worker-CI-checkpoint",
+  "run": {
+    "id": 37190707698,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37190707698",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11298622739,
+    "name": "m1-verification",
+    "sha256": "2a42d01dfa72eb01bab13401cc76aee4221bd92bcf0b5eed257d1a26079e3a11"
+  },
+  "candidateCommit": "29f6c4dbd496124146257dd3db1d571b97ff9c9d",
+  "ciCommit": "6104d8b869f975a335be847666511ddaff43cbf7",
+  "verifiedTree": "4f21c6a93b77c98485472e34397736f6e40a8914",
+  "verification": {
+    "unitApiDomainTests": 100,
+    "integrationGroups": 10,
+    "integrationSkipped": 0,
+    "nativePlatform": "linux/amd64",
+    "apiCompatibility": "actual released M1 baseline passed",
+    "packaging": "clean production package CLI/client/setup smoke passed",
+    "runtime": {
+      "result": "passed",
+      "version": "ci",
+      "platform": "x64",
+      "checks": [
+        "non-root API/worker startup",
+        "readiness",
+        "signature rejection",
+        "evidence authentication",
+        "signed closed delivery",
+        "non-root persistent Temporal database startup/restart",
+        "graceful shutdown"
+      ],
+      "github": "synthetic credentials; no live GitHub review claimed"
+    },
+    "evalWorkerRuntime": {
+      "result": "passed",
+      "platform": "linux/amd64",
+      "workerImage": "sha256:acce381619f46e80019b942ba5cfbd0877878d25c1ab4e4ab3562145e63d7567",
+      "runnerImage": "sha256:0ed0c72f716615302556f02909e0b1030ad3519ceeed53e536bda91dc62a61da",
+      "uid": 1001,
+      "node": "v26.10.0",
+      "cli": "Docker version 29.8.2, build 7fc2dff",
+      "license": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+      "checks": [
+        "UBI non-root read-only runtime",
+        "no package installers/App keys",
+        "official pinned Docker CLI compatibility",
+        "separately authenticated restricted database login",
+        "real Temporal workflow and isolated child execution",
+        "child has no database/App/socket credentials",
+        "behavioral failure preserved",
+        "worker graceful shutdown/restart",
+        "all owned children removed"
+      ],
+      "github": "no live GitHub publication claimed"
+    },
+    "scans": [
+      {
+        "path": "scan-results/api.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "findings": 1,
+        "issues": [
+          {
+            "id": "CVE-2026-85393",
+            "severity": "HIGH",
+            "package": "node-forge",
+            "fixed": null
+          }
+        ]
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-worker.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/worker.json",
+        "findings": 0,
+        "issues": []
+      }
+    ],
+    "declaredArtifacts": [
+      {
+        "path": ".agentci/artifacts/eval-worker-image-smoke.json",
+        "sha256": "4eb81dbc43ec40885523f74d3972432fe38f33859c9c9a92b285c0824aba834b"
+      },
+      {
+        "path": "releases/agentci-0.3.0-m2.tgz",
+        "sha256": "04ab337948c24004d7a93ce770378a12b95423c90f7a9f8af661f610a1d67c40"
+      },
+      {
+        "path": "scan-results/api.json",
+        "sha256": "3ad80a6598d85c14b548a887efb8646f2fce61e84c117d4f3499483475c1ca25"
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "sha256": "ffab944c7966fd9fef892caa7cdffd93f36a39f5acc753bca32b1d65dc8a4e70"
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "sha256": "28d5a569f88443f00cedc3791e4fdec2f249da56cde0f5eee7c6ca0c481aaf42"
+      },
+      {
+        "path": "scan-results/eval-worker.json",
+        "sha256": "1cd9b1a89266a0f85cde273a3b34022b96e89821551c8aee384905e64552ac3f"
+      },
+      {
+        "path": "scan-results/worker.json",
+        "sha256": "1e77ae9ee3203f68717eab95693c343e7f30e201dc868e3dfbc61bdd8d08e75d"
+      }
+    ]
+  },
+  "localArm64Evidence": "releases/m2-eval-worker-image-local.json",
+  "limitations": [
+    "subsequent selection-gap changes are not covered by this source",
+    "bundled Docker Go-module inventory unavailable; Temporal vendor-binary assessment remains open",
+    "optional engine unpatched HIGH remains for release assessment",
+    "native publication/anonymous downloads, customer PR/API integration and all M2 release gates remain open"
+  ]
+}

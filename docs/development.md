@@ -90,3 +90,14 @@ Keep existing trace IDs stable. Draft inventory entries conservatively include
 explanatory prose; they do not make all prose normative. Mark only the scope
 actually implemented/tested. Schema work does not complete a future feature that
 uses that schema. Keep source-line references consistent when the spec changes.
+
+
+## Disposable CI database credentials
+
+Verification and hosted dogfood create a PostgreSQL service that exists only for
+that GitHub Actions job. Its fixed test password is not a deployment, App, model,
+or corporate credential. Workflow database URLs contain only the loopback host
+and database; `PGUSER` and `PGPASSWORD` provide this test-only authentication via
+node-postgres/libpq environment variables. Never reuse these literals for a
+reachable or persistent deployment. Real deployment credentials belong in the
+operator's private environment/secrets manager and must not enter Git history.

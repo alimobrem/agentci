@@ -1,0 +1,205 @@
+{
+  "kind": "M2-local-Podman-recovery-checkpoint",
+  "observedAt": "2026-10-04T16:32:25.164104+00:00",
+  "baseCommit": "f39293e132ae7a49aabde20c334801f6abab309c",
+  "sourceIdentity": "uncommitted implementation files identified below; local acceptance, not a release",
+  "sourceFiles": {
+    "Dockerfile": "f662aeea0776f917bd471223743f5840152d160499d96b081c0cbae2f3ecdc73",
+    "apps/eval-worker/client-runtime.ts": "788b20536e30ef618b1aa32baa78b7239e420cb0e65ce7027ba291bbc8c0d907",
+    "apps/eval-worker/main.ts": "72caf6f7c49f9ccf78de2dba6fdabfe15170b498b92ff3f2c386d14f2808227a",
+    "cmd/dogfood/main.ts": "2278a9a83e31aff80143b0526312b208062d85f366198275cfb9ccbb2ad1d7e7",
+    "deploy/eval-worker.compose.yaml": "4ebdff68e318e7af4fb6ffa54cf253fd63c4d86a5369844d08d0ca1699acfd94",
+    "deploy/podman-rootless.compose.yaml": "73fb4db4f9f08c54443a369f1a4452d0a1499ae248628103dbf498686b2fb6ad",
+    "docs/podman-adoption.md": "630bcd12571b54e30ea9eda7c1e6a8b800bbf40808d803523ad1e441656be590",
+    "packages/evals/runner.ts": "e71e33b137a84420ffe22541b81dfed4dd77b7062de1a02923d44ef286fbcdca",
+    "scripts/check-eval-deployment.mjs": "92d2edf03ef66c09e165e54156bd9db2dd0c909999c32dc1bcbf6a556dc4e8bf",
+    "scripts/eval-worker-image-smoke.mjs": "3c6a2df521fc3d0430743666faa7e655f221c29f6c8cc11112701df032e3de36",
+    "tests/fixtures/container-env.ts": "37bff0d765a091804ab1d8ea6e9c42b66eaac5b42e38c5e2195cebdca4aeba50",
+    "tests/integration/eval-engines.test.ts": "6016bd0d325132c6534d37952d1c90a2338c007cac32712ba2ef2cbbfe01c3b6",
+    "tests/integration/eval-pr-controller.test.ts": "c18bd9dd5b599c6d42070b5275fc18b57fc6a33907a7161ad9ea05a9b5dcf34e",
+    "tests/integration/eval-pr-parent.test.ts": "656ddee275bedf1abc84a4333e6efd3c751653ea5878380837e0bcfe7733eea8",
+    "tests/integration/eval-runner.test.ts": "cf37e958482cb64ce416935561dc1c02e76e49e11bb21bb93303f7f3a24dca7f",
+    "tests/integration/eval-storage.test.ts": "fc9c6fa77a33c180cd310f64302bd9bad417603f5cb822a4ec967817e9cf78fa",
+    "tests/integration/eval-temporal.test.ts": "9995732229ae668fcb79532350cd8f957473cee0086bcb759f3ec628819d119f"
+  },
+  "runtime": {
+    "version": {
+      "Client": {
+        "APIVersion": "6.1.3",
+        "Version": "6.1.3",
+        "GoVersion": "go1.27.1",
+        "GitCommit": "85b994955e0b4e30fbce9c8351cab85676140ede",
+        "BuiltTime": "Tue Sep 29 08:28:28 2026",
+        "Built": 1790695708,
+        "BuildOrigin": "pkginstaller",
+        "OsArch": "darwin/arm64",
+        "Os": "darwin"
+      },
+      "Server": {
+        "APIVersion": "6.1.3",
+        "Version": "6.1.3",
+        "GoVersion": "go1.26.8-X:nodwarf5",
+        "GitCommit": "85b994955e0b4e30fbce9c8351cab85676140ede",
+        "BuiltTime": "Mon Sep 28 17:00:00 2026",
+        "Built": 1790640000,
+        "OsArch": "linux/arm64",
+        "Os": "linux"
+      }
+    },
+    "security": {
+      "apparmorEnabled": false,
+      "capabilities": "CAP_CHOWN,CAP_DAC_OVERRIDE,CAP_FOWNER,CAP_FSETID,CAP_KILL,CAP_NET_BIND_SERVICE,CAP_SETFCAP,CAP_SETGID,CAP_SETPCAP,CAP_SETUID,CAP_SYS_CHROOT",
+      "rootless": true,
+      "seccompEnabled": true,
+      "seccompProfilePath": "/usr/share/containers/seccomp.json",
+      "selinuxEnabled": true
+    },
+    "sharedDockerWorkloads": "preserved; separate rootless VM; no home mount"
+  },
+  "tests": {
+    "targetedCancellationRecovery": {
+      "localLog": "/tmp/agentci-podman-cancellation-recovery-fifth.log",
+      "sha256": "91994937f10de63b5c1224394b0171fb6e978897418dedd745576139d4418246",
+      "counts": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "duration_ms": 43684.138083
+      }
+    },
+    "fullPodmanFailed": {
+      "localLog": "/tmp/agentci-full-podman-native-sixth.log",
+      "sha256": "1a2b02d20740abb4f98be8f9d4c802b39959bb6038adf5a64a788eea752df2c4",
+      "counts": {
+        "tests": 15,
+        "pass": 14,
+        "fail": 1,
+        "skipped": 0,
+        "cancelled": 0,
+        "duration_ms": 45660.554833
+      }
+    },
+    "fullPodmanRetry": {
+      "localLog": "/tmp/agentci-full-podman-native-seventh.log",
+      "sha256": "3d1bd8b3170895ea275c2627182736f31a5db50fc351ac25a746fb9c2e5a10a3",
+      "counts": {
+        "tests": 15,
+        "pass": 15,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "duration_ms": 47943.472583
+      }
+    },
+    "focusedRunnerRetry": {
+      "localLog": "/tmp/agentci-podman-runner-eighth.log",
+      "sha256": "afcb6f50169dec5543bb0f534c4a49006bc4b8e61f9b55cf7bd6e33a1b20b2ac",
+      "counts": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "duration_ms": 9760.053542
+      }
+    },
+    "fullDockerCompatibility": {
+      "localLog": "/tmp/agentci-docker-recovery-native.log",
+      "sha256": "7215b00731e93bc3de459d011c79aba702798b53ef7141a14aec37d0dfd6dc3b",
+      "counts": {
+        "tests": 15,
+        "pass": 15,
+        "fail": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "duration_ms": 43105.185459
+      }
+    },
+    "sandboxFastFeedbackFailed": {
+      "localLog": "/tmp/agentci-podman-recovery-fast.log",
+      "sha256": "7415794940859125ac49aed77b615e0ac8e802df1e5b7321d23b0bbc94ba3ada",
+      "counts": {
+        "tests": 127,
+        "pass": 99,
+        "fail": 28,
+        "skipped": 0,
+        "cancelled": 0,
+        "duration_ms": 934.232791
+      }
+    },
+    "authorizedFastFeedback": {
+      "localLog": "/tmp/agentci-podman-recovery-fast-authorized.log",
+      "sha256": "e4941afa3800920984dc6ac35475eb83c2ffbf50eb23e657fd9e723ed4c7bd76",
+      "counts": {}
+    }
+  },
+  "packagedDeployment": {
+    "podmanCompose": {
+      "result": "passed",
+      "deployment": "rootless-Podman-Compose",
+      "engine": "podman",
+      "platform": "linux/arm64",
+      "workerImage": "sha256:fd60c1e86249ce9a6c3873a5a09dd54c5dc772ef0755ea5157475433d9444677",
+      "runnerImage": "sha256:6fac694b601cd2b7bd8fc8230028bd1640d486ab9bb29f3e87538445ea0e3d7b",
+      "uid": 1001,
+      "node": "v26.10.0",
+      "cli": "podman version 6.1.3",
+      "license": "62fb8a3a9621dc2388174caaabe9c2317b694bb9a1d46c98bcf5655b68f51be3",
+      "checks": [
+        "UBI non-root read-only runtime",
+        "no package installers/App keys",
+        "official pinned podman CLI execution",
+        "separately authenticated restricted database login",
+        "real Temporal workflow and isolated child execution",
+        "child has no database/App/socket credentials",
+        "behavioral failure preserved",
+        "worker graceful shutdown/restart",
+        "all owned children removed"
+      ],
+      "github": "no live GitHub publication claimed"
+    },
+    "dockerCompatibility": {
+      "result": "passed",
+      "deployment": "native-CLI",
+      "engine": "docker",
+      "platform": "linux/arm64",
+      "workerImage": "sha256:3ddb44c0e53832d5aacb617b0c2e6ab053365aee216c05625b03ea2dba35aec2",
+      "runnerImage": "sha256:37fa3c150ddd20aaf53f54f2cb89474842002f15ceba727611e5a078dd155aca",
+      "uid": 1001,
+      "node": "v26.10.0",
+      "cli": "Docker version 29.8.2, build 7fc2dff",
+      "license": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+      "checks": [
+        "UBI non-root read-only runtime",
+        "no package installers/App keys",
+        "official pinned docker CLI execution",
+        "separately authenticated restricted database login",
+        "real Temporal workflow and isolated child execution",
+        "child has no database/App/socket credentials",
+        "behavioral failure preserved",
+        "worker graceful shutdown/restart",
+        "all owned children removed"
+      ],
+      "github": "no live GitHub publication claimed"
+    }
+  },
+  "fixedDefects": [
+    "Attached Podman client SIGTERM proxy delayed cancellation; abort now kills the trusted client before exact-owner cleanup.",
+    "Podman forced removal retained its TERM grace; exact-owner untrusted cleanup now uses --time 0.",
+    "Restricted evaluator test processes lacked operator Podman connection settings; explicit connection-only allowlist now supports native recovery acceptance.",
+    "Deployment default fixture inherited ambient Docker selection; default and compatibility render cohorts are now explicit."
+  ],
+  "unresolved": [
+    "One full native attempt failed a pytest runner with runner infrastructure error; full and focused retries pass, but cause remains unproven.",
+    "Hosted native Podman acceptance, both published platforms, binary scan coverage and all M2 release/demo gates remain open."
+  ],
+  "failureEvidence": [
+    "Earlier failed CI attempt 37214898528 is retained in delivery/runs/37214898528-attempt-1.json.",
+    "Focused second raw log was accidentally overwritten by a rerun; its failure summary remains in session tool history. Subsequent attempts use unique paths.",
+    "Sandbox fast feedback was blocked by loopback EPERM; authorized retry passed eight checks in 1.07 seconds.",
+    "Local raw logs remain private and are not committed because logs may contain sensitive runtime material. Hashes identify retained evidence; they do not make it remotely downloadable."
+  ],
+  "completion": "M2-PODMAN-DEFAULT remains in-progress; no milestone acceptance, GitHub behavioral publication or release is claimed."
+}

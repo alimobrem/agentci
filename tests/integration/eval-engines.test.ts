@@ -1,0 +1,40 @@
+import {containerEngine} from '../../packages/evals/runner.ts';
+import {randomUUID} from 'node:crypto';
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+import {evalSuite} from '../fixtures/evals.ts';
+import {runIsolated as runContainer} from '../../packages/evals/runner.ts';
+import {normalizeTrial} from '../../packages/evals/adapters.ts';
+const image=process.env.AGENTCI_TEST_ENGINES_IMAGE;
+test('real optional UBI engines: Promptfoo and DeepEval passing assertions, regressions and infrastructure errors',{skip:!image,timeout:120000},async()=>{
+  const cryptoProbe=execFileSync(containerEngine(),['run','--rm','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--pids-limit','64','--memory','256m','--entrypoint','node',image!,'/opt/agentci-patches/verify-forge-backport.cjs','/opt/promptfoo/node_modules/node-forge'],{encoding:'utf8',timeout:15000});assert.match(cryptoProbe,/malformed nested DigestAlgorithm rejected/);
+  const ownership={unitId:randomUUID(),leaseToken:randomUUID()};
+  const runIsolated=(snapshot:Parameters<typeof runContainer>[0],suite:Parameters<typeof runContainer>[1],policy:Parameters<typeof runContainer>[2],options:NonNullable<Parameters<typeof runContainer>[3]>={})=>runContainer(snapshot,suite,policy,{...options,ownership});
+  const containers=()=>execFileSync(containerEngine(),['ps','-aq','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.eval.unit=${ownership.unitId}`],{encoding:'utf8'}).trim();
+  const before=containers();
+  const abort=new AbortController();const pending=runIsolated({sha:'a'.repeat(40),files:{'probe.mjs':'setInterval(()=>{},1000)'}},evalSuite({runner:{adapter:'command',command:['node','probe.mjs'],timeoutMs:30000}}),{image:image!},{signal:abort.signal});
+  let live=false;for(let i=0;i<200;i++){if(containers()!==before){live=true;break;}await new Promise(resolve=>setTimeout(resolve,50));}
+  abort.abort();assert.equal((await pending).status,'cancelled');assert.ok(live,'the exact optional unit label must expose live owned containers');
+  const promptfoo=evalSuite({runner:{adapter:'promptfoo',command:['promptfoo','eval','-c','evals/promptfoo.yaml'],report:'result.jsonl',timeoutMs:30000},scenarios:[{id:'greeting',selector:'0:0'}]});
+  const config="prompts: ['greet']\nproviders: ['exec:node provider.mjs']\ntests:\n  - assert:\n      - type: equals\n        value: hello\n";
+  // Exec providers run relative to the config directory, as documented by Promptfoo.
+  const provider="import{readFileSync}from'node:fs';console.log(readFileSync('../response.txt','utf8'));";
+  for(const [response,expected] of [['hello','passed'],['different','failed']] as const){
+    const raw=await runIsolated({sha:'a'.repeat(40),files:{'evals/promptfoo.yaml':config,'evals/provider.mjs':provider,'response.txt':response}},promptfoo,{image:image!});
+    assert.equal(raw.status,'completed');assert.equal(raw.exitCode,expected==='passed'?0:100);
+    assert.equal(normalizeTrial(promptfoo,raw).results.greeting!.status,expected);
+  }
+  const absent=await runIsolated({sha:'a'.repeat(40),files:{'evals/promptfoo.yaml':config}},promptfoo,{image:image!});
+  assert.equal(absent.exitCode,100);assert.equal(normalizeTrial(promptfoo,absent).results.greeting!.status,'error');
+  const deepeval=evalSuite({runner:{adapter:'deepeval',command:['python','-m','pytest','-q','evals/test_example.py'],report:'junit.xml',timeoutMs:30000},scenarios:[{id:'greeting',selector:'evals.test_example.test_greeting'}]});
+  for(const [response,expected] of [['hello','passed'],['different','failed']] as const){
+    const code=`from pathlib import Path\nfrom deepeval import assert_test\nfrom deepeval.test_case import LLMTestCase\nfrom deepeval.metrics import ExactMatchMetric\ndef test_greeting():\n    assert_test(LLMTestCase(input='greet',actual_output=Path('response.txt').read_text(),expected_output='hello'),[ExactMatchMetric()],run_async=False)\n`;
+    const raw=await runIsolated({sha:'b'.repeat(40),files:{'evals/test_example.py':code,'response.txt':response}},deepeval,{image:image!});
+    assert.equal(raw.status,'completed');assert.equal(raw.exitCode,expected==='passed'?0:1);
+    assert.equal(normalizeTrial(deepeval,raw).results.greeting!.status,expected);
+  }
+  const broken=await runIsolated({sha:'b'.repeat(40),files:{'evals/test_example.py':'import agentci_missing_test_dependency\n'}},deepeval,{image:image!});
+  assert.equal(broken.exitCode,2);assert.equal(normalizeTrial(deepeval,broken).error,'pytest-execution-error');
+  assert.equal(containers(),before,'engine containers must be removed after success, regression and infrastructure error');
+});

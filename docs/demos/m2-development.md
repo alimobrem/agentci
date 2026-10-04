@@ -1,0 +1,65 @@
+# M2 customer development demo
+
+This demonstrates a local M2 candidate, not a published milestone. M1 remains
+the latest released build. M2 publication, download verification, reliable
+every-PR hosting and released-build replay are still required.
+
+The approved customer App is installed only on `alimobrem/agentci-onboarding-demo`.
+A separate controller stack and evaluator consume real signed GitHub events.
+The evaluator authenticates through a restricted SQL login and has no App key or
+controller credential environment. This temporary development deployment shares
+a local daemon; production evaluator infrastructure must be separate.
+
+[PR 2](https://github.com/alimobrem/agentci-onboarding-demo/pull/2) demonstrates:
+
+1. A baseline assertion requires a SAFE response. Changing the head to UNSAFE
+   yields baseline 2/2 passing and head 0/2 passing with a safe-response regression.
+2. Replacing the head assertion with `process.exit(0)` and lowering its threshold
+   to zero still fails: both subjects retain the baseline assertion and threshold.
+3. A deliberate operator runner-identity mismatch produces an unavailable Check
+   with `action_required`. No mismatched runner image executes.
+4. After restoring the evaluator and reopening the disposable PR, a fresh signed
+   attempt on the same repaired commit passes 2/2 baseline and 2/2 head trials.
+   The prior failure remains cancelled in storage and retained as a separate Check.
+5. The production-only installed M2 candidate CLI requests another review on the
+   same open PR with `agentci review`, without closing/reopening or moving it.
+   Repeating its UUID returns a duplicate receipt and creates no extra Check.
+   The installed client verifies the new passed result and complete export; both
+   earlier attempts remain retained.
+
+Behavioral outcomes are advisory in M2. GitHub's neutral conclusion accompanies
+an explicit passed/failed behavioral title and summary; it does not enforce merge
+policy. `agentci/review` separately reports semantic analysis.
+
+The compiled client verified exact identities, normalized evidence digests and
+complete streaming exports for both regressions and recovery. Anonymous access,
+incorrect bearer authentication and mismatched expected commit identity were
+rejected. Evidence links require the deployment token; tokens never enter them.
+
+Recorded candidate evidence:
+
+- [Behavioral regression](../../releases/m2-customer-behavior-local.json)
+- [Infrastructure failure and recovery](../../releases/m2-customer-recovery-local.json)
+- [Installed operator request](../../releases/m2-operator-review-local.json)
+- [Deployment startup](../../releases/m2-customer-startup-local.json)
+- [Evaluator deployment guide](../eval-deployment.md)
+
+GitHub's default Check listing hides older attempts. The demo revealed that
+reconciliation must explicitly request all attempts; the finding and regression
+are retained in [the Check lookup record](../../releases/m2-check-filter-finding.json).
+The reconciliation fix passed source- and artifact-verified CI 37201053254.
+The [operator command](../operator-review.md) now has native integration, installed
+package and actual customer evidence. Its source-verified full CI 37202131590 passed. The remaining M2 release gates
+are still required. The subsequent UUID case-consistency defect was corrected and passed exact-source
+CI 37202994401; its finding and rework remain recorded.
+
+Abrupt recovery is also verified on this customer deployment: a fresh installed-CLI
+review was staged while the evaluator was paused, its exact parent run terminated,
+and the evaluator resumed. Independent reconciliation finished one `action_required`
+Check, retained certified cancelled evidence and closed durable tracking. A fresh
+installed-CLI attempt then passed; the failed digest and historical Checks remain
+unchanged, and all four units have no owned containers. See the [customer
+proof](../../releases/m2-controller-recovery-customer-local.json) and [recovery
+guide](../eval-recovery.md). Native tests separately cover actual running-container
+termination and evaluator/reconciler process death. This remains a development
+candidate demo, not milestone release acceptance.

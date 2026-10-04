@@ -1,0 +1,38 @@
+{
+  "kind": "M2-comparison-resource-local-checkpoint",
+  "recordedAt": "2026-10-04T09:17:15.762591+00:00",
+  "parentCommit": "73cc979f6e4b73276f155dfa980b4da3361b7651",
+  "releaseAcceptance": false,
+  "files": {
+    "packages/evals/comparison.ts": "dbce91c53de32095cb865a4bc08897fd290462b3017349531a9b5c15b5a45d26",
+    "packages/evals/json/eval-comparison.schema.json": "a29a3368f2b0c47b5b29e07ef51ad5781a89bc73bc8207eae8a4558191a8713d",
+    "packages/storage/evals.ts": "1eb3680e99a4f794bca47cf83b3824c1e1e1687cf3505f5014456ddc039ba813",
+    "tests/eval-comparison.test.ts": "fec2dbba66f037697acf6970040f29c6787e50d55909b87c54e4f6513622d9ce",
+    "tests/integration/eval-storage.test.ts": "10ecabd5825edd0becdd3afce38ee8870d3d9a164ab0e33641659401560270f5"
+  },
+  "verification": {
+    "fastChecks": 8,
+    "unitApiDomainTests": 106,
+    "productionBuild": "passed; comparison schema copied",
+    "realIntegration": "tests/integration/eval-storage.test.ts passed; PostgreSQL, immutable UBI runner, no skips",
+    "scenarios": [
+      "exact organization/repository/PR/review/attempt/base/head identity",
+      "derived regression deltas and configured thresholds",
+      "pending/running/partial/cancelled snapshots cannot pass",
+      "missing units and coverage remain explicit",
+      "unknown keys, forged summary/digest/result identity rejected",
+      "repeatable-read scoped durable evidence with no projected source or lease token"
+    ]
+  },
+  "failedAttempts": [
+    {
+      "reason": "strict AJV required-property branches lacked matching local properties declarations",
+      "correction": "declare required runner property in each mutually exclusive provenance branch; retain strict validation"
+    }
+  ],
+  "limitations": [
+    "final-source full CI pending",
+    "authenticated API/client and PR Check integration pending",
+    "all M2 release gates remain open"
+  ]
+}

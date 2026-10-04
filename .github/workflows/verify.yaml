@@ -25,6 +25,8 @@ jobs:
         if: always()
         with: { name: fast-feedback, path: .agentci/artifacts/delivery/fast-latest.json, include-hidden-files: true }
   contracts-and-runtime:
+    # Explicit compatibility cohort; native Podman acceptance is separately required before adoption.
+    env: { AGENTCI_CONTAINER_ENGINE: docker }
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -44,6 +46,8 @@ jobs:
       - run: npm run check:fast
       - run: npm run check:api:compat
       - run: npm run check:workflows
+      - name: Verify evaluator deployment boundary
+        run: node scripts/check-eval-deployment.mjs
       - run: npm run build
       - run: npm audit --audit-level=high
       - name: Start isolated Temporal
@@ -56,9 +60,49 @@ jobs:
           for(let i=0;i<30;i++) { try { const c=await Connection.connect({address:'127.0.0.1:7233',connectTimeout:'2 seconds'});await c.close();connected=true;break; } catch { await new Promise(r=>setTimeout(r,1000)); } }
           if(!connected)throw new Error('Temporal unavailable');
           JS
-      - run: npm run test:integration
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
+      - name: Build isolated eval runner
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
+        with:
+          context: .
+          target: eval-runner
+          load: true
+          tags: agentci-eval-runner:ci
+          cache-from: type=gha,scope=agentci-eval-runner
+          cache-to: type=gha,scope=agentci-eval-runner,mode=max
+      - name: Build trusted-dependency self-eval runner
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
+        with:
+          context: .
+          target: eval-agentci
+          load: true
+          tags: agentci-eval-agentci:ci
+          cache-from: type=gha,scope=agentci-eval-agentci
+          cache-to: type=gha,scope=agentci-eval-agentci,mode=max
+      - name: Build optional eval engines
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
+        with:
+          context: .
+          target: eval-engines
+          load: true
+          tags: agentci-eval-engines:ci
+          cache-from: type=gha,scope=agentci-eval-engines
+          cache-to: type=gha,scope=agentci-eval-engines,mode=max
+      - name: Integration tests with mandatory real eval isolation
+        run: |
+          AGENTCI_TEST_RUNNER_IMAGE=$(docker image inspect agentci-eval-runner:ci --format '{{.Id}}')
+          test -n "$AGENTCI_TEST_RUNNER_IMAGE"
+          AGENTCI_TEST_ENGINES_IMAGE=$(docker image inspect agentci-eval-engines:ci --format '{{.Id}}')
+          test -n "$AGENTCI_TEST_ENGINES_IMAGE"
+          AGENTCI_TEST_SELF_IMAGE=$(docker image inspect agentci-eval-agentci:ci --format '{{.Id}}')
+          test -n "$AGENTCI_TEST_SELF_IMAGE"
+          export AGENTCI_TEST_RUNNER_IMAGE AGENTCI_TEST_ENGINES_IMAGE AGENTCI_TEST_SELF_IMAGE
+          npm run test:integration
         env:
-          AGENTCI_TEST_DATABASE_URL: postgresql://postgres:agentci-ci-only@127.0.0.1:5432/agentci
+          # Fixed test-only auth for this disposable service; never a deployment credential.
+          AGENTCI_TEST_DATABASE_URL: postgresql://127.0.0.1:5432/agentci
+          PGUSER: postgres
+          PGPASSWORD: agentci-ci-only
           AGENTCI_TEST_TEMPORAL_ADDRESS: 127.0.0.1:7233
       - run: mkdir -p releases && npm pack --pack-destination releases && node scripts/package-smoke.mjs
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
@@ -80,16 +124,36 @@ jobs:
           tags: agentci-worker:ci
           cache-from: type=gha,scope=agentci-worker
           cache-to: type=gha,scope=agentci-worker,mode=max
+      - name: Build isolated eval worker image
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
+        with:
+          context: .
+          target: eval-worker
+          load: true
+          tags: agentci-eval-worker:ci
+          labels: |
+            org.opencontainers.image.source=https://github.com/alimobrem/agentci
+            org.opencontainers.image.revision=${{ github.sha }}
+          cache-from: type=gha,scope=agentci-eval-worker
+          cache-to: type=gha,scope=agentci-eval-worker,mode=max
       - name: Scan service images
         run: |
           mkdir -p scan-results
           docker volume create agentci-trivy-cache
-          for role in api worker; do
+          for role in api worker eval-worker eval-runner eval-engines eval-agentci; do
             docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v agentci-trivy-cache:/root/.cache/trivy aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa image --scanners vuln --format json agentci-$role:ci > scan-results/$role.json
             node scripts/check-scan.mjs scan-results/$role.json
           done
       - name: Verify compiled containers
         run: node scripts/image-smoke.mjs ci > .agentci/artifacts/image-smoke.json
+      - name: Verify native artifact provenance
+        run: |
+          for role in worker eval-worker; do
+            image=$(docker image inspect "agentci-$role:ci" --format '{{.Id}}')
+            node scripts/verify-native-provenance.mjs "$image" > ".agentci/artifacts/native-provenance-$role.json"
+          done
+      - name: Verify isolated eval worker runtime
+        run: node scripts/eval-worker-image-smoke.mjs agentci-eval-worker:ci agentci-eval-runner:ci > .agentci/artifacts/eval-worker-image-smoke.json
       - name: Collect verification evidence
         run: node scripts/verification-summary.mjs
         env:
@@ -107,3 +171,5 @@ jobs:
             .agentci/artifacts/delivery/fast-latest.json
             .agentci/artifacts/api-compatibility.json
             .agentci/artifacts/image-smoke.json
+            .agentci/artifacts/eval-worker-image-smoke.json
+            .agentci/artifacts/native-provenance-*.json

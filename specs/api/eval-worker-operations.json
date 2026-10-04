@@ -1,0 +1,79 @@
+{
+  "apiVersion": "agentci.io/v1alpha1",
+  "transport": "Temporal internal worker task queue; no public HTTP operation",
+  "taskQueue": "agentci-eval-v1",
+  "operations": [
+    {
+      "operationId": "evaluateUnit",
+      "type": "workflow",
+      "input": "One scoped immutable eval unit UUID string",
+      "output": "The completed eval unit UUID; evidence stays in SQL storage",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "tests": [
+        "tests/integration/eval-temporal.test.ts"
+      ],
+      "scenarios": [
+        "restricted process startup",
+        "durable trial retry",
+        "workflow cancellation waits for cleanup",
+        "worker shutdown/restart remains retryable",
+        "unknown-unit terminal failure",
+        "history replay without snapshots/credentials"
+      ]
+    },
+    {
+      "operationId": "runEvalUnit",
+      "type": "activity",
+      "input": "One scoped immutable eval unit UUID string",
+      "output": "The completed eval unit UUID",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-035",
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "tests": [
+        "tests/integration/eval-temporal.test.ts",
+        "tests/integration/eval-storage.test.ts",
+        "tests/integration/eval-orphan.test.ts"
+      ],
+      "scenarios": [
+        "operator-pinned immutable runner identity",
+        "leased execution and stale-owner fencing",
+        "retained normalized observations",
+        "SIGKILL orphan recovery preserves other units",
+        "heartbeat cancellation cleanup",
+        "restricted database login"
+      ]
+    },
+    {
+      "operationId": "cleanupCancelledEvalUnit",
+      "type": "workflow and activity",
+      "input": "One deployment-scoped immutable cancelled eval unit UUID; no snapshots or operator credentials",
+      "output": "The input unit UUID after exact-owner daemon container removal; unavailable cleanup retries",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "tests": [
+        "tests/integration/eval-storage.test.ts",
+        "tests/integration/eval-temporal.test.ts"
+      ],
+      "scenarios": [
+        "actual evaluator SIGKILL then irreversible SQL cancellation",
+        "active/completed units never reclaimed",
+        "cross-scope denial before daemon access",
+        "upper/lowercase input resolves canonical stored ownership",
+        "concurrent and repeated cleanup is bounded and idempotent",
+        "another active unit is preserved",
+        "independent Temporal execution retries ambiguous completion and replays history",
+        "restricted evaluator login; no App credential or controller daemon requirement"
+      ]
+    }
+  ],
+  "releaseState": "M2 candidate; evaluator cleanup groundwork is local-tested, controller terminal reconciliation and final-source CI remain pending"
+}

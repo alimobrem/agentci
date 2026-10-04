@@ -26,3 +26,11 @@
   tunnel is a development endpoint; reliable every-PR operation is a release gate.
 - Give the user meaningful progress updates about once a minute during active
   work, and a released-build success/failure demo at each phase completion.
+
+- Prefer Red Hat technologies where they meet the requirement: UBI service images,
+  Podman container execution, Buildah/Skopeo image tooling, and Tekton/OpenShift
+  in their planned integration phases. Keep justified interoperable fallbacks.
+  The owner approved Docker as the M2 release default; retain Podman adoption
+  tracking until security, stability and hosted acceptance pass. Podman default
+  adoption requires real execution/isolation/recovery acceptance;
+  a Docker-compatible CLI/API alone does not prove support. Preserve milestone order.

@@ -1,0 +1,97 @@
+{
+  "kind": "M2-durable-recovery-CI-checkpoint",
+  "candidateCommit": "f6c9bfcb1ceef546d2b930fd1b2e393322a61025",
+  "ciCommit": "4dc8849d9e04232013835283f46bddc0eaf794d4",
+  "verifiedTree": "3e10d9e54b1c6e85d46c5f576ff10f58fa49789d",
+  "run": {
+    "id": 37187767466,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37187767466",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11297892300,
+    "name": "m1-verification",
+    "sha256": "efd324ad451769490135aaee6700aa9cbcb43beea151619090291f3af7289ff4",
+    "note": "Legacy artifact name; source-bound contents are the M2 recovery candidate"
+  },
+  "verification": {
+    "unitApiDomainTests": 99,
+    "integrationGroups": 7,
+    "integrationSkipped": 0,
+    "apiCompatibility": "passed against actual released M1 baseline",
+    "packaging": "clean production package install and CLI/client/setup smoke passed",
+    "runtime": {
+      "result": "passed",
+      "version": "ci",
+      "platform": "x64",
+      "checks": [
+        "non-root API/worker startup",
+        "readiness",
+        "signature rejection",
+        "evidence authentication",
+        "signed closed delivery",
+        "non-root persistent Temporal database startup/restart",
+        "graceful shutdown"
+      ],
+      "github": "synthetic credentials; no live GitHub review claimed"
+    },
+    "scans": [
+      {
+        "path": "scan-results/api.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "findings": 1,
+        "issues": [
+          {
+            "id": "CVE-2026-85393",
+            "package": "node-forge",
+            "severity": "HIGH",
+            "installed": "1.4.0",
+            "fixed": null
+          }
+        ]
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/worker.json",
+        "findings": 0,
+        "issues": []
+      }
+    ],
+    "declaredArtifacts": [
+      {
+        "path": "releases/agentci-0.3.0-m2.tgz",
+        "sha256": "5a17adb6b1176584410b925b2e382c7abf2f8b092b7da1c7bdc5f6411e7e596e"
+      },
+      {
+        "path": "scan-results/api.json",
+        "sha256": "37716af72f007483d5b0b8089294e5f5850de6ccc76427fc0df732abb078aa49"
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "sha256": "6bd459b155120c301655fa63ae47df2e9f682fbf6330000734aa56f3cfb507da"
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "sha256": "69a4d4e265d25283f85c2c781fff855910e5fb373240bd089d91f636d3b0af7d"
+      },
+      {
+        "path": "scan-results/worker.json",
+        "sha256": "0fabb8c7cad52623160ffa3235a0a1a4f6f115f4f9e19e3189908e3219000b47"
+      }
+    ]
+  },
+  "limitations": [
+    "new separate Temporal eval worker and migration-concurrency changes are subsequent unverified-in-CI work",
+    "no M2 release or published image/download/customer acceptance claim",
+    "optional engine unpatched HIGH remains open for release assessment"
+  ]
+}

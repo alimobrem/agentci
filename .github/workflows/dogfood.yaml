@@ -24,11 +24,16 @@ jobs:
         ports: [5432:5432]
         options: --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 3s --health-retries 20
     env:
+      # Explicit transitional compatibility until hosted native Podman acceptance passes.
+      AGENTCI_CONTAINER_ENGINE: docker
       AGENTCI_REPOSITORY: alimobrem/agentci
       GITHUB_APP_ID: '5179954'
       GITHUB_INSTALLATION_ID: '167655696'
       GITHUB_PRIVATE_KEY_FILE: .agentci/local/hosted-app.pem
-      DATABASE_URL: postgresql://postgres:agentci-ci-only@127.0.0.1:5432/agentci
+      # Fixed test-only auth for this disposable service; never a deployment credential.
+      DATABASE_URL: postgresql://127.0.0.1:5432/agentci
+      PGUSER: postgres
+      PGPASSWORD: agentci-ci-only
       TEMPORAL_ADDRESS: 127.0.0.1:7233
     steps:
       # Never check out the PR head or execute files/dependencies from it with secrets.
@@ -38,6 +43,32 @@ jobs:
         with: { node-version: 26.10.0, cache: npm }
       - run: npm install --global npm@12.2.0
       - run: npm ci && npm run build
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
+      - name: Build trusted self-eval dependencies
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
+        with:
+          context: .
+          target: eval-agentci
+          load: true
+          tags: agentci-eval-agentci:hosted
+          cache-from: type=gha,scope=agentci-eval-agentci
+          cache-to: type=gha,scope=agentci-eval-agentci,mode=max
+      - name: Build separate trusted evaluator
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
+        with:
+          context: .
+          target: eval-worker
+          load: true
+          tags: agentci-eval-worker:hosted
+          cache-from: type=gha,scope=agentci-eval-worker
+          cache-to: type=gha,scope=agentci-eval-worker,mode=max
+      - name: Pin hosted execution images
+        run: |
+          runner=$(docker image inspect agentci-eval-agentci:hosted --format '{{.Id}}')
+          evaluator=$(docker image inspect agentci-eval-worker:hosted --format '{{.Id}}')
+          test -n "$runner" && test -n "$evaluator"
+          echo "AGENTCI_EVAL_RUNNER_IMAGE=$runner" >> "$GITHUB_ENV"
+          echo "AGENTCI_HOSTED_EVALUATOR_IMAGE=$evaluator" >> "$GITHUB_ENV"
       - name: Load repository-scoped App key
         env:
           APP_KEY: ${{ secrets.AGENTCI_APP_PRIVATE_KEY }}
@@ -73,7 +104,7 @@ jobs:
           if-no-files-found: error
           retention-days: 90
       - name: Publish advisory Checks with retained evidence
-        if: success()
+        if: always() && steps.evidence.outcome == 'success'
         env:
           AGENTCI_ARTIFACT_URL: ${{ steps.evidence.outputs.artifact-url }}
         run: node dist/cmd/dogfood/main.js publish

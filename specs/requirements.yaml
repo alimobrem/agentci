@@ -4207,9 +4207,11 @@ requirements:
       section: "11.2"
       line: 660
     implementation:
-      status: not-started
+      status: tested
       milestone: M2
-      evidence: []
+      evidence:
+        - packages/evals/contracts.ts
+        - tests/eval-contracts.test.ts
   - id: SPEC-11.2-002
     title: 11.2 Eval selection
     type: functional
@@ -4324,9 +4326,11 @@ requirements:
       section: "11.3"
       line: 673
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - packages/evals/statistics.ts
+        - tests/eval-statistics.test.ts
   - id: SPEC-11.3-002
     title: 11.3 Statistical execution
     type: functional
@@ -4338,9 +4342,11 @@ requirements:
       section: "11.3"
       line: 683
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - packages/evals/statistics.ts
+        - tests/eval-statistics.test.ts
   - id: SECTION-11.4
     title: 11.4 Pluggable eval engines
     type: functional
@@ -4377,9 +4383,11 @@ requirements:
       section: "11.4"
       line: 689
     implementation:
-      status: not-started
+      status: tested
       milestone: M2
-      evidence: []
+      evidence:
+        - releases/m2-runner-ci.json
+        - tests/integration/eval-runner.test.ts
   - id: SPEC-11.4-003
     title: 11.4 Pluggable eval engines
     type: functional
@@ -4390,9 +4398,12 @@ requirements:
       section: "11.4"
       line: 690
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - tests/integration/eval-engines.test.ts
+        - releases/m2-optional-engines-local.json
+
   - id: SPEC-11.4-004
     title: 11.4 Pluggable eval engines
     type: functional
@@ -4403,9 +4414,12 @@ requirements:
       section: "11.4"
       line: 691
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - tests/integration/eval-engines.test.ts
+        - releases/m2-optional-engines-local.json
+
   - id: SPEC-11.4-005
     title: 11.4 Pluggable eval engines
     type: functional
@@ -4416,9 +4430,12 @@ requirements:
       section: "11.4"
       line: 692
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - tests/eval-http.test.ts
+        - docs/http-eval-provider.md
+
   - id: SPEC-11.4-006
     title: 11.4 Pluggable eval engines
     type: functional
@@ -14045,9 +14062,10 @@ requirements:
       section: "40"
       line: 2087
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - docs/phases/m2.md
   - id: SPEC-40-031
     title: Milestone 2 - Eval orchestration
     type: functional
@@ -14058,9 +14076,12 @@ requirements:
       section: "40"
       line: 2089
     implementation:
-      status: not-started
+      status: tested
       milestone: M2
-      evidence: []
+      evidence:
+        - packages/evals/contracts.ts
+        - tests/eval-contracts.test.ts
+        - tests/project.test.ts
   - id: SPEC-40-032
     title: Milestone 2 - Eval orchestration
     type: functional
@@ -14071,9 +14092,11 @@ requirements:
       section: "40"
       line: 2090
     implementation:
-      status: not-started
+      status: tested
       milestone: M2
-      evidence: []
+      evidence:
+        - releases/m2-runner-ci.json
+        - tests/integration/eval-runner.test.ts
   - id: SPEC-40-033
     title: Milestone 2 - Eval orchestration
     type: functional
@@ -14084,9 +14107,11 @@ requirements:
       section: "40"
       line: 2091
     implementation:
-      status: not-started
+      status: tested
       milestone: M2
-      evidence: []
+      evidence:
+        - releases/m2-runner-ci.json
+        - tests/integration/eval-runner.test.ts
   - id: SPEC-40-034
     title: Milestone 2 - Eval orchestration
     type: functional
@@ -14097,9 +14122,13 @@ requirements:
       section: "40"
       line: 2092
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - docs/phases/m2.md
+        - tests/integration/eval-engines.test.ts
+        - tests/eval-http.test.ts
+
   - id: SPEC-40-035
     title: Milestone 2 - Eval orchestration
     type: functional
@@ -14110,9 +14139,11 @@ requirements:
       section: "40"
       line: 2093
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - packages/evals/contracts.ts
+        - tests/eval-contracts.test.ts
   - id: SPEC-40-036
     title: Milestone 2 - Eval orchestration
     type: functional
@@ -14123,9 +14154,11 @@ requirements:
       section: "40"
       line: 2094
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - packages/evals/statistics.ts
+        - tests/eval-statistics.test.ts
   - id: SPEC-40-037
     title: Milestone 2 - Eval orchestration
     type: functional
@@ -14136,9 +14169,11 @@ requirements:
       section: "40"
       line: 2095
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - packages/evals/execution.ts
+        - docs/phases/m2.md
   - id: SPEC-40-038
     title: Milestone 2 - Eval orchestration
     type: functional
@@ -14149,9 +14184,11 @@ requirements:
       section: "40"
       line: 2097
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - docs/phases/m2.md
+        - releases/m2-gates.json
   - id: SPEC-40-039
     title: Milestone 2 - Eval orchestration
     type: functional
@@ -14162,9 +14199,11 @@ requirements:
       section: "40"
       line: 2099
     implementation:
-      status: not-started
+      status: in-progress
       milestone: M2
-      evidence: []
+      evidence:
+        - packages/evals/execution.ts
+        - docs/phases/m2.md
   - id: SPEC-40-040
     title: Milestone 3 - Multi-model review
     type: functional

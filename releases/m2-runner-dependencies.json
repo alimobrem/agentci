@@ -1,0 +1,63 @@
+{
+  "checkedAt": "2026-10-04T05:24:24.557Z",
+  "python": {
+    "version": "3.14.8",
+    "officialSource": "https://www.python.org/downloads/release/python-3148/",
+    "sourceTarball": "https://www.python.org/ftp/python/3.14.8/Python-3.14.8.tar.xz",
+    "sha256": "c2215904f02b175596dc49351585104f4bc20341e1c47378b26a2c274360ce73",
+    "latestStable": true
+  },
+  "packages": [
+    {
+      "name": "pip",
+      "version": "26.2.1",
+      "officialSource": "https://pypi.org/pypi/pip/json",
+      "sha256": "71138adf1f4ca900cdb7d289c21b7494329f2332b6d85f0e1c42108c0384ed3e",
+      "wheel": "pip-26.2.1-py3-none-any.whl"
+    },
+    {
+      "name": "pytest",
+      "version": "9.1.1",
+      "officialSource": "https://pypi.org/pypi/pytest/json",
+      "sha256": "37a86b45efb9a47a61a36449063e8e18d0cab3161329fc099eb21783169c4f0c",
+      "wheel": "pytest-9.1.1-py3-none-any.whl"
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "officialSource": "https://pypi.org/pypi/packaging/json",
+      "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
+      "wheel": "packaging-26.3-py3-none-any.whl"
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0",
+      "officialSource": "https://pypi.org/pypi/pluggy/json",
+      "sha256": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746",
+      "wheel": "pluggy-1.6.0-py3-none-any.whl"
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.3.0",
+      "officialSource": "https://pypi.org/pypi/iniconfig/json",
+      "sha256": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12",
+      "wheel": "iniconfig-2.3.0-py3-none-any.whl"
+    },
+    {
+      "name": "pygments",
+      "version": "2.21.0",
+      "officialSource": "https://pypi.org/pypi/pygments/json",
+      "sha256": "2363c69b61c4a97c838da3b130dcd6468f4848992b21a82f2a63ec34377137d9",
+      "wheel": "pygments-2.21.0-py3-none-any.whl"
+    }
+  ],
+  "xmlParser": {
+    "name": "fast-xml-parser",
+    "version": "5.11.2",
+    "officialSource": "https://registry.npmjs.org/fast-xml-parser/latest",
+    "upstream": "https://github.com/NaturalIntelligence/fast-xml-parser",
+    "integrity": "sha512-R9iDuNrQYeQut46cn2r2wHKn4HYzVDvDm5J1wW+koZewykv0yuO2HChTYeZtrULyHIDM9cj9TUXloCsueCQUog==",
+    "usage": "Bounded pytest JUnit normalization; entity processing disabled and DTD/entity declarations rejected."
+  },
+  "runtimeInstallers": "npm, pip and ensurepip are build-only and removed from final eval runner; runtime engines remain installed"
+}

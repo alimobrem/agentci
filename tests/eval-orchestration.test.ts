@@ -1,0 +1,40 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {parse,stringify} from 'yaml';
+import {evalSuite} from './fixtures/evals.ts';
+import {planComparison} from '../packages/evals/plan.ts';
+import {controllerEvalPolicy,compileEvalUnits,EvalPlanConfigurationError} from '../packages/evals/orchestration.ts';
+const image='sha256:'+'a'.repeat(64),enginesImage='sha256:'+'b'.repeat(64);
+const config=parse(readFileSync(new URL('../agentci.yaml',import.meta.url),'utf8'));
+config.spec.evals.include=['evals/**'];config.spec.specifications.include=['specs/**'];
+const input=()=>{const files={'agentci.yaml':stringify(config),'specs/overview.md':'Fixture specification.','evals/suite.yaml':stringify(evalSuite({models:['model-a','model-b']})),'check.mjs':'process.exit(0)','prompts/main.md':'Baseline'};return {repository:'example/repo',base:{sha:'a'.repeat(40),files},head:{sha:'b'.repeat(40),files:{...files,'prompts/main.md':'Changed'}}};};
+test('controller expands frozen baseline models for both commits and added suites for head only',()=>{
+  const value=input();value.head.files['evals/suite.yaml']=stringify(evalSuite({models:['weakened'],trials:{count:1,passRate:0,confidenceMethod:'wilson'}}));
+  const head={...value.head,files:{...value.head.files,'evals/new.yaml':stringify(evalSuite({},'new-suite'))}};
+  const plan=planComparison({...value,head}),units=compileEvalUnits(plan,value.base,head,controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image}));
+  assert.equal(units.length,5);assert.deepEqual(units.filter(u=>u.suite.metadata.id==='behavior').map(u=>[u.side,u.assertionSide,u.model,u.suite.spec.trials.count]),[['base','base','model-a',20],['head','base','model-a',20],['base','base','model-b',20],['head','base','model-b',20]]);
+  assert.deepEqual(units.filter(u=>u.suite.metadata.id==='new-suite').map(u=>[u.side,u.assertionSide]),[['head','head']]);
+  assert.ok(units.every(u=>u.runner.runnerImage===image));
+  const forged={...plan,suites:[evalSuite({trials:{count:1,passRate:0,confidenceMethod:'wilson'}})]};assert.throws(()=>compileEvalUnits(forged,value.base,head,controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image})),EvalPlanConfigurationError);
+  assert.throws(()=>compileEvalUnits({...plan,baseSha:'c'.repeat(40)},value.base,head,controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image})),EvalPlanConfigurationError);
+});
+test('operator budgets cover every model and side; zero selected plans remain explicit',()=>{
+  const value=input(),plan=planComparison(value);
+  for(const env of [{AGENTCI_EVAL_MAX_UNITS:'3'},{AGENTCI_EVAL_MAX_TOTAL_TRIALS:'79'}])assert.throws(()=>compileEvalUnits(plan,value.base,value.head,controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image,...env})),EvalPlanConfigurationError);
+  assert.equal(compileEvalUnits(plan,value.base,value.head,controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image,AGENTCI_EVAL_MAX_UNITS:'4',AGENTCI_EVAL_MAX_TOTAL_TRIALS:'80'})).length,4);
+  const files={'agentci.yaml':stringify(config),'specs/overview.md':'Fixture specification.'},empty={repository:value.repository,base:{sha:value.base.sha,files},head:{sha:value.head.sha,files}};
+  assert.deepEqual(compileEvalUnits(planComparison(empty),empty.base,empty.head,controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image})),[]);
+});
+test('HTTP provenance is public operator identity only; optional engines require separate immutable pins',()=>{
+  const value=input(),provider={id:'trusted-provider',revision:'sha256:'+'c'.repeat(64)};
+  value.base.files['evals/suite.yaml']=stringify(evalSuite({runner:{adapter:'http',provider:provider.id,timeoutMs:1000}}));value.head.files['evals/suite.yaml']=value.base.files['evals/suite.yaml'];
+  const plan=planComparison(value),policy=controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image,AGENTCI_EVAL_PROVIDER_IDENTITIES:JSON.stringify([provider])});
+  assert.deepEqual(compileEvalUnits(plan,value.base,value.head,policy).map(u=>u.runner),[{runnerProvider:provider},{runnerProvider:provider}]);
+  assert.throws(()=>compileEvalUnits(plan,value.base,value.head,{...policy,providers:[]}),EvalPlanConfigurationError);
+  for(const providers of [[{...provider,token:'private-value'}],[provider,provider],[{...provider,revision:'latest'}]])assert.throws(()=>controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image,AGENTCI_EVAL_PROVIDER_IDENTITIES:JSON.stringify(providers)}),e=>e instanceof EvalPlanConfigurationError&&!e.message.includes('private-value'));
+  value.base.files['evals/suite.yaml']=stringify(evalSuite({runner:{adapter:'promptfoo',command:['promptfoo','eval','-c','evals/promptfoo.yaml'],report:'result.jsonl',timeoutMs:1000}}));value.head.files['evals/suite.yaml']=value.base.files['evals/suite.yaml'];
+  const enginePlan=planComparison(value);assert.throws(()=>compileEvalUnits(enginePlan,value.base,value.head,policy),EvalPlanConfigurationError);
+  assert.ok(compileEvalUnits(enginePlan,value.base,value.head,{...policy,enginesImage}).every(u=>u.runner.runnerImage===enginesImage));
+  for(const env of [{AGENTCI_EVAL_RUNNER_IMAGE:'latest'},{AGENTCI_EVAL_RUNNER_IMAGE:image,AGENTCI_EVAL_MAX_UNITS:'513'},{AGENTCI_EVAL_RUNNER_IMAGE:image,AGENTCI_EVAL_MAX_TOTAL_TRIALS:'0'}])assert.throws(()=>controllerEvalPolicy(env),EvalPlanConfigurationError);
+});

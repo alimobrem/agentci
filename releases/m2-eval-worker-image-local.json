@@ -1,0 +1,97 @@
+{
+  "kind": "M2-UBI-eval-worker-local-checkpoint",
+  "recordedAt": "2026-10-04T08:53:55.389Z",
+  "parentCommit": "c4f54f8bfe74be645e0b487b40903f3d29f5d34a",
+  "releaseAcceptance": false,
+  "files": {
+    "Dockerfile": "6f01c5494de57a6811525b77e35c498361925838669c36f72c2f623b7e50b9fd",
+    ".dockerignore": "8a1b5de42a8b1c709926cccb2d46c2ba245bcb421a5c2716be202ab7cfc1a551",
+    "scripts/eval-worker-image-smoke.mjs": "5990a59b617debe038b700e724b0a22d2bd2d6a4bedc399c279c2d02b867f3f2",
+    "scripts/verification-summary.mjs": "a62f6ef00ffab7093d95f4d1455f0184b85e10508448b2107ce2462298b452b8",
+    ".github/workflows/verify.yaml": "cf14d785fd8eb990a34ea55054a8d0c1113f37e4994158aa3cb2e6b52b255a4e",
+    "deploy/licenses/docker-cli-LICENSE": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0"
+  },
+  "runtime": {
+    "result": "passed",
+    "platform": "linux/arm64",
+    "workerImage": "sha256:8c2c1eb60f68d1f584dcb522d9a79f5bf362371cec53701ab6f232e88481cda6",
+    "runnerImage": "sha256:37fa3c150ddd20aaf53f54f2cb89474842002f15ceba727611e5a078dd155aca",
+    "uid": 1001,
+    "node": "v26.10.0",
+    "cli": "Docker version 29.8.2, build 7fc2dff",
+    "license": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+    "checks": [
+      "UBI non-root read-only runtime",
+      "no package installers/App keys",
+      "official pinned Docker CLI compatibility",
+      "separately authenticated restricted database login",
+      "real Temporal workflow and isolated child execution",
+      "child has no database/App/socket credentials",
+      "behavioral failure preserved",
+      "worker graceful shutdown/restart",
+      "all owned children removed"
+    ],
+    "github": "no live GitHub publication claimed"
+  },
+  "scan": {
+    "scanner": "aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa",
+    "sha256": "b7092a41962807a623b714a50b4462cc8dc8bbf016d24a48eb0cae97ae4653de",
+    "findings": 0,
+    "inventory": [
+      {
+        "target": "agentci-eval-worker:m2-local (redhat 10.2)",
+        "class": "os-pkgs",
+        "type": "redhat",
+        "packages": 92,
+        "findings": 0
+      },
+      {
+        "target": "Node.js",
+        "class": "lang-pkgs",
+        "type": "node-pkg",
+        "packages": 209,
+        "findings": 0
+      },
+      {
+        "target": "app/node_modules/@temporalio/core-bridge/Cargo.lock",
+        "class": "lang-pkgs",
+        "type": "cargo",
+        "packages": 376,
+        "findings": 0
+      },
+      {
+        "target": "usr/local/bin/docker",
+        "class": "lang-pkgs",
+        "type": "gobinary",
+        "packages": 1,
+        "findings": 0
+      }
+    ],
+    "limitations": [
+      "Docker CLI module-dependency metadata unavailable; Go runtime only",
+      "Temporal vendor-binary applicability limits remain part of release assessment"
+    ]
+  },
+  "buildAttempts": [
+    {
+      "attempt": 1,
+      "result": "failed",
+      "reason": "removing RPM installer alone conflicted with rpm-libs"
+    },
+    {
+      "attempt": 2,
+      "result": "failed",
+      "reason": "remaining libmodulemd/librepo dependents required RPM libraries"
+    },
+    {
+      "attempt": 3,
+      "result": "passed",
+      "correction": "remove complete coupled installer dependency set through microdnf resolver; no direct RPM vendor-file deletion"
+    }
+  ],
+  "limitations": [
+    "final-source native AMD64 full CI pending",
+    "published native arm64/amd64 downloads pending",
+    "durable customer PR/API integration and all M2 release gates remain open"
+  ]
+}

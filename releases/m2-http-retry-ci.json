@@ -1,0 +1,103 @@
+{
+  "kind": "M2-HTTP-retry-and-migration-recovery-CI-checkpoint",
+  "candidateCommit": "c4f54f8bfe74be645e0b487b40903f3d29f5d34a",
+  "ciCommit": "d25dfd998a106789520892da71f3e89cc7541569",
+  "verifiedTree": "95173a98480a50ca1dba87c4526245b2220e8f14",
+  "run": {
+    "id": 37189503876,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37189503876",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11298755408,
+    "name": "m1-verification",
+    "sha256": "3246afaa15263599f8e5fbe0738213b8c5544c43225fec40bafabfab9b5efd82",
+    "note": "Legacy name; verified source-bound M2 contents"
+  },
+  "verification": {
+    "unitApiDomainTests": 100,
+    "integrationGroups": 10,
+    "integrationSkipped": 0,
+    "nativePlatform": "linux/amd64",
+    "checks": [
+      "provider deduplication across uncommitted retry and retained checkpoint",
+      "actual cleanup refusal prevents results; replacement owner recovers",
+      "repeat migration succeeds with writer locks; source/applied checksum mismatches rejected",
+      "restricted worker startup, retry, cancel, shutdown and history replay"
+    ],
+    "apiCompatibility": "actual released M1 baseline passed",
+    "packaging": "clean production package CLI/client/setup smoke passed",
+    "runtime": {
+      "result": "passed",
+      "version": "ci",
+      "platform": "x64",
+      "checks": [
+        "non-root API/worker startup",
+        "readiness",
+        "signature rejection",
+        "evidence authentication",
+        "signed closed delivery",
+        "non-root persistent Temporal database startup/restart",
+        "graceful shutdown"
+      ],
+      "github": "synthetic credentials; no live GitHub review claimed"
+    },
+    "scans": [
+      {
+        "path": "scan-results/api.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "findings": 1,
+        "issues": [
+          {
+            "id": "CVE-2026-85393",
+            "severity": "HIGH",
+            "package": "node-forge",
+            "fixed": null
+          }
+        ]
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/worker.json",
+        "findings": 0,
+        "issues": []
+      }
+    ],
+    "declaredArtifacts": [
+      {
+        "path": "releases/agentci-0.3.0-m2.tgz",
+        "sha256": "a298aaeffca0bf2bb54973ee0f4c6e56f93d321986eff05398701d7580c6e3ce"
+      },
+      {
+        "path": "scan-results/api.json",
+        "sha256": "f83e8e465b11470df2d15b0b8e2b874ecbd60e1f4ad79dd84acd832011d03e7b"
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "sha256": "eee36059d819398e9b96745a1fb93765f93a3fcb58f6a17794113ea13c265ca7"
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "sha256": "7d728b6fde12ab276f6e1e1d651b570d9dd631c2f08f47697353970051e79e13"
+      },
+      {
+        "path": "scan-results/worker.json",
+        "sha256": "2c3679329c91984cfa5b8c589067a404fe4cbe26c4ec788c189ecb75958a7e94"
+      }
+    ]
+  },
+  "limitations": [
+    "subsequent eval-worker image packaging not covered by this CI source",
+    "optional engine unpatched HIGH remains for release assessment",
+    "all M2 phase/release gates remain open"
+  ]
+}

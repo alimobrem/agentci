@@ -1,0 +1,44 @@
+{
+  "kind": "M2-Temporal-eval-worker-local-checkpoint",
+  "recordedAt": "2026-10-04T08:17:11.232Z",
+  "parentCommit": "f6c9bfcb1ceef546d2b930fd1b2e393322a61025",
+  "releaseAcceptance": false,
+  "files": {
+    "apps/eval-worker/main.ts": "2dfe5c37f511ae51683b09b6ef90cded8c660e75721c1bbf5cc87013fd677fe4",
+    "apps/eval-worker/activities.ts": "0b6bf84c5f513c78de5dc790de5fc72c43980c850122f35db8fa50aac08636a5",
+    "apps/eval-worker/workflows.ts": "14be54980979f8f702196b108507e0908642211f95abf414fffc9992439e7709",
+    "apps/eval-worker/unit.ts": "660726705eabad31e3244a8a389dc1d3f8e60a357c265dda6311afc5c9304bc9",
+    "deploy/migrations/001_m1.sql": "2a2cae25973b77d7c0f6d4877728156bc0717271dc5c5e9c26e27804c524c1aa",
+    "deploy/migrations/002_m2.sql": "a00196e7fd090959f8bd62883bf16ddcf64d9bf5670c27464a4758f515cbb767",
+    "deploy/migrations/002_m2_eval_role.sql": "91088fbbef44424d02df41e7f42cd8cbcea64d202ca5510968ae99378fa569e9",
+    "tests/integration/eval-temporal.test.ts": "7f2070161e41b56371098d81c0ab9dd30804c75eed6492917a6e0c9346c6a19a",
+    "tests/integration/eval-migrations.test.ts": "c9a49ae8b17a6708eed163792124323bcb17d5eaa0b2aebcfb8a7090119a4010"
+  },
+  "verification": {
+    "fastChecks": 8,
+    "fastPassed": true,
+    "integrationGroups": 9,
+    "passed": 9,
+    "skipped": 0,
+    "durationMs": 8184.743958,
+    "platform": "linux/arm64",
+    "temporalSdk": "1.24.0",
+    "checks": [
+      "separate compiled worker startup with restricted login and no App/control credentials",
+      "retry after trial commit retains observation; attempts 1 and 2, exactly three writes for three trials",
+      "workflow cancellation waits for actual container cleanup and cancelled SQL state",
+      "worker shutdown aborts/cleans, queues for retry, new worker completes",
+      "unknown scoped unit non-retryable failure after one attempt",
+      "retry, success, cancellation, shutdown and failure histories replay",
+      "workflow history contains IDs without snapshot text or login password",
+      "three concurrent callers initialize a fresh database then repeat migrations safely"
+    ]
+  },
+  "officialCancellationReference": "https://docs.temporal.io/develop/typescript/workflows/cancellation",
+  "limitations": [
+    "native AMD64 separate eval-worker acceptance awaits full CI",
+    "published UBI eval-worker image and Docker CLI adoption pending",
+    "stable HTTP request IDs on retries pending",
+    "durable PR/API and all M2 phase/release gates open"
+  ]
+}

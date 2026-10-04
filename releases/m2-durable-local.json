@@ -1,0 +1,60 @@
+{
+  "kind": "M2-durable-eval-local-checkpoint",
+  "recordedAt": "2026-10-04T07:57:45.937Z",
+  "releaseAcceptance": false,
+  "parentCommit": "ebed4b7fe0908ff17eb07fb78768ec0f054f5e65",
+  "files": {
+    "deploy/migrations/002_m2.sql": "383ff8842cc7b2f48e881146343cc4d5c4098113ef6d8f9877b878ed401f98a5",
+    "packages/storage/evals.ts": "3d52e48f2829fb71ca006d72e2790cb9b36ec0971810e1402ff254928135ab54",
+    "packages/evals/runner.ts": "6c30a5943c998c0be39d30b189cc73f3b55c86bed434b4574d3a3fdc9d8e19ab",
+    "packages/evals/execution.ts": "7dc6d7fb15b8b9b449b7df3415eadc9037563362acfafde6fba717a93a69b2dc",
+    "apps/eval-worker/unit.ts": "c2b895883a7530f7983a55d2edf7888dc259bcdf244ec3c68108e5cb4e74d405",
+    "tests/integration/eval-storage.test.ts": "acf7fe6c4b343cd1ed75d8535e54a419a4b0d9e373d472d36cdcb2289546e140",
+    "tests/integration/eval-orphan.test.ts": "0622401d60552eaaeb68d33585f4f4562417e66e892fda5ed2e6c59247ae03a1",
+    "tests/eval-execution.test.ts": "3af1a41953ee92a32f77367cb08d5445630d5e3c667c1b6dfb25ed160439a016"
+  },
+  "verification": {
+    "fastChecks": 8,
+    "fastPassed": true,
+    "integrationCommand": "node --import tsx --test tests/integration/eval-storage.test.ts tests/integration/eval-orphan.test.ts",
+    "integrationGroups": 2,
+    "integrationPassed": 2,
+    "integrationSkipped": 0,
+    "integrationDurationMs": 4065.54425,
+    "runnerImage": "sha256:37fa3c150ddd20aaf53f54f2cb89474842002f15ceba727611e5a078dd155aca",
+    "platform": "linux/arm64",
+    "database": "dedicated local PostgreSQL test service",
+    "checks": [
+      "concurrent idempotent immutable staging",
+      "one winner among concurrent claims",
+      "retained trial replay after process-death simulation",
+      "actual SIGKILL leaves running container; new fenced executor cleans and resumes",
+      "other units/current lease preserved",
+      "stale lease writes and cleanup rejected",
+      "immutable inputs/trials/results and recomputed provenance",
+      "cross-scope reads and claims rejected",
+      "actual cancellation cleanup without successful result",
+      "durable contexts cannot be reused across base/head"
+    ]
+  },
+  "limitations": [
+    "local checkpoint; no full CI for these changed files yet",
+    "credential-free startup and least-privilege SQL role not yet implemented",
+    "real Temporal retry/cancellation/history replay pending",
+    "external execution may repeat before checkpoint commit; stable HTTP request IDs pending",
+    "cleanup-failure injection pending",
+    "all M2 phase/release gates remain open"
+  ],
+  "localFeedbackFailure": {
+    "reason": "initial un-escalated fast check could not bind loopback listeners (EPERM)",
+    "correctedRun": "same checks passed with authorized loopback access"
+  },
+  "dependencyAdoption": {
+    "package": "@temporalio/activity",
+    "version": "1.24.0",
+    "verifiedStableAt": "2026-10-04T07:58:21.845Z",
+    "officialRegistry": "https://registry.npmjs.org/@temporalio/activity",
+    "integrity": "sha512-eBBho/r9XHe2KczYGzmaSp6e9+6c9ta/GGOBldIBr00D/cV34kJ76iAY3Ue1pQTaP7YaX3phMuOz07uUg/IKyA==",
+    "note": "Direct SDK dependency for separate worker activities; same version as existing Temporal worker/client/workflow. Native real Temporal eval-worker compatibility remains pending."
+  }
+}

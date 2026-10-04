@@ -1,0 +1,41 @@
+{
+  "component": "M2 comparison UUID case consistency",
+  "requirementIds": [
+    "SPEC-40-035",
+    "SPEC-40-039"
+  ],
+  "observedAt": "2026-10-04",
+  "comparisonId": "5dc7d64b-062c-4121-87ed-8a3efd44e5ff",
+  "pullRequest": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2",
+  "authenticatedProbe": true,
+  "observations": [
+    {
+      "operation": "inline",
+      "uuidCase": "lowercase",
+      "httpStatus": 200
+    },
+    {
+      "operation": "inline",
+      "uuidCase": "uppercase",
+      "httpStatus": 503
+    },
+    {
+      "operation": "export",
+      "uuidCase": "lowercase",
+      "httpStatus": 200
+    },
+    {
+      "operation": "export",
+      "uuidCase": "uppercase",
+      "httpStatus": 200
+    }
+  ],
+  "expected": "Valid UUID spelling variants identify the same resource consistently across storage, HTTP and installed client without changing persisted evidence/digests or weakening scope checks.",
+  "nextAcceptance": "Native persistence and HTTP/client cases cover upper/lowercase resource and expected identity IDs, retained digest equality, invalid IDs, cross-scope denial and immutable released M1 compatibility.",
+  "implementationBaseCommit": "cbd0ec9db4e8727405f044aaa9f4676b0fa00d14",
+  "releaseAcceptance": false,
+  "limitations": [
+    "Read-only actual local customer deployment probe; no released-build proof.",
+    "No private token or response body is recorded."
+  ]
+}

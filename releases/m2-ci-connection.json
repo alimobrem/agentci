@@ -1,0 +1,26 @@
+{
+  "kind": "CI-database-connection-verification",
+  "candidateCommit": "952c55feca815fb6bfc53e350f86e9039b8f58e3",
+  "verifyRun": {
+    "id": 37181526012,
+    "conclusion": "success",
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37181526012"
+  },
+  "hostedDogfoodRun": {
+    "id": 37181857490,
+    "conclusion": "success",
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37181857490",
+    "codeSource": "Trusted main checkout; PR code never runs with the App key",
+    "trustedReviewSourceCommit": "4d3426bc5d06f176f1a45efd72156964b7a3a76b",
+    "reviewVersion": "0.2.1-m1"
+  },
+  "databaseUrl": "postgresql://127.0.0.1:5432/agentci",
+  "credentialConfiguration": "Separate PGUSER/PGPASSWORD environment for the disposable job-only PostgreSQL service",
+  "checks": [
+    "Both workflow URLs have no username/password",
+    "node-postgres resolves the separate test environment correctly",
+    "Real PostgreSQL integration passes",
+    "Hosted review prepares, retains evidence and publishes Checks successfully"
+  ],
+  "milestoneComplete": false
+}

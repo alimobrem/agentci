@@ -1,0 +1,40 @@
+{
+  "component": "Evaluator cancelled-orphan cleanup groundwork",
+  "task": "M2-TERMINATION-RECOVERY",
+  "implementationBaseCommit": "9e24711",
+  "sourceHashes": {
+    "packages/evals/runner.ts": "sha256:eb7e1ca97ccc5edd215d1cef64311f347fafbff5f4cfb7da76027b0b3aae485a",
+    "apps/eval-worker/unit.ts": "sha256:8cabb9cf1603080667ef6735ffa4c82c772bb599113bd2b8f405199931958238",
+    "apps/eval-worker/activities.ts": "sha256:5d9e5b75ecd06739d9002a25443254083cec20b60c5a35eb7da7de34c8c725f2",
+    "apps/eval-worker/workflows.ts": "sha256:3210dee7fec99fce19aa651bb644a7c42c5d7eca084aba207243a44d142ae475",
+    "tests/integration/eval-storage.test.ts": "sha256:d279638738ad8f6b7935dabfe10563ae741157baa4d3c81026f288d33e4434fc",
+    "tests/integration/eval-temporal.test.ts": "sha256:07a3a965c3ce0f0511b921107769228a772717c5ea8786cefd574916bf12feb9"
+  },
+  "localFeedback": {
+    "checks": 8,
+    "passed": true
+  },
+  "nativeIntegration": {
+    "groups": 14,
+    "passed": 14,
+    "skipped": 0
+  },
+  "verifiedScenarios": [
+    "Two actually running owned containers before evaluator SIGKILL",
+    "Immutable cancelled SQL unit has no new execution lease",
+    "Active/completed unit rejection and early cross-scope denial",
+    "Concurrent/repeated removal of exact cancelled owner preserves another active unit",
+    "Separate restricted evaluator workflow retries ambiguous completion without results mutation",
+    "Cleanup workflow history replay"
+  ],
+  "localRework": [
+    "Scope denial occurred at startup before unit lookup; the regression now requires the earlier stronger scope error.",
+    "Concurrent Docker deletion initially reported an in-progress removal as failure; bounded retry and final absence verification now pass."
+  ],
+  "releaseAcceptance": false,
+  "limitations": [
+    "Dirty candidate source checkpoint; final-source full CI, packaging and containers remain required.",
+    "Controller terminal-state tracking/reconciliation, parent termination/evaluator-loss recovery, reliable Check closure and fresh operator demonstration remain open.",
+    "No M2 milestone gate is closed by these local component results."
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "component": "Manifest, normalized result and impact-selection acceptance audit",
+  "task": "M2-CONTRACT",
+  "requirementIds": [
+    "SPEC-40-031",
+    "SPEC-40-035",
+    "SPEC-11.2-001"
+  ],
+  "verifiedSourceCommit": "e7e59818ba72939dd27cb10a41b97134acbc341c",
+  "fullCiEvidence": "releases/m2-recovery-guidance-ci.json",
+  "sourceHashes": {
+    "packages/evals/contracts.ts": "sha256:5a506730bd68fcbd8aeaf229649a9d8300ba8c1acf004b771007f93e443e999c",
+    "packages/evals/json/eval-suite.schema.json": "sha256:fea723ded25475851e36101a9cf26cdeba0afebdbcd7971d00983e34f6222787",
+    "packages/evals/json/eval-run.schema.json": "sha256:577ef3be92d9454f4ea912dd101021b098eaaed32d71f518ac084b01254c4cc4",
+    "packages/evals/plan.ts": "sha256:ffb37c9a709988ad7abcbbfe2484f2dfa45806f40c46dea4cf5dd888c518cb8c",
+    "packages/evals/adapters.ts": "sha256:32da924624aff8a0169b3a4ada22ee91afa8b32c8d6bf5843b52fe87548b3bc9",
+    "tests/eval-contracts.test.ts": "sha256:a5f2701621a44303a562443f0eebd759bf883917883d7cda03350a29a767f976",
+    "tests/eval-adapters.test.ts": "sha256:11f1eb97b98ba68967a5e9a2282369542bf45e8be28c3d3f3b85156bbc62b07f",
+    "tests/eval-plan.test.ts": "sha256:c9fc15399b90b849f7b14cb329fd4b9047f8adcbbe507815642e3f7d663c9247",
+    "tests/eval-execution.test.ts": "sha256:3af1a41953ee92a32f77367cb08d5445630d5e3c667c1b6dfb25ed160439a016",
+    "tests/eval-statistics.test.ts": "sha256:70b8ec37d53bc3aae2f69f93a879a7fc7e69b518a17c3c3f107acd29958c9205",
+    "tests/integration/eval-engines.test.ts": "sha256:7395aa848c7224873da08ea22e6d3d53767b76a597df2e230f44ddb2b8cf3f98",
+    "tests/integration/eval-review-staging.test.ts": "sha256:cb23a2464a61dab029656dd0f8984913f6e8d0cc8efc4df27fc2de69bcc3319d",
+    "tests/integration/eval-runner.test.ts": "sha256:e9ba7062b1ce0800a49dc7545c0cc4bf17c6a3b1333c8ce618b39a56df85b09e"
+  },
+  "acceptance": {
+    "strictVersionedManifest": [
+      "Unknown keys and invalid versions/classes rejected",
+      "Duplicate scenario identities/selectors and suite catalog identities rejected",
+      "Escaping impact/harness/report paths and NUL argv rejected",
+      "Structured adapters require reports; ambiguous multi-scenario exit-only adapter rejected",
+      "Frozen suite revisions and distinct model/runner provenance retained"
+    ],
+    "normalizedResult": [
+      "Exact immutable source/assertion identity and runner image/provider provenance required",
+      "Contradictory aggregate status/counts/pass rates and duplicate results rejected",
+      "Incomplete/skipped trials and infrastructure errors cannot pass",
+      "Actual native/pytest/Promptfoo/DeepEval outputs normalized in mandatory integration"
+    ],
+    "impactSelection": [
+      "Explicit categories/paths and requirement mapping select suites",
+      "Model changes require representative suites/model matrices",
+      "Tool changes require contract suites",
+      "Permission/policy changes require policy and adversarial suites",
+      "Missing requirement coverage and mandatory class gaps remain explicit"
+    ]
+  },
+  "tests": [
+    "tests/eval-contracts.test.ts",
+    "tests/eval-adapters.test.ts",
+    "tests/eval-plan.test.ts",
+    "tests/eval-execution.test.ts",
+    "tests/eval-statistics.test.ts",
+    "tests/integration/eval-engines.test.ts",
+    "tests/integration/eval-review-staging.test.ts",
+    "tests/integration/eval-runner.test.ts"
+  ],
+  "releaseAcceptance": false,
+  "limitations": [
+    "This acceptance closes only the tracked aggregate contract criterion; full M2 phase/distribution gates remain open."
+  ],
+  "verifiedCiTestNames": [
+    "eval contract is strict, immutable and preserves explicit argv including repeated args",
+    "eval manifests reject duplicate scenarios, escaping paths and ambiguous exit-code assertions",
+    "impact selection includes required tool, model, permission and implementation classes and reports gaps",
+    "normalized results cannot hide infrastructure errors, skipped trials, count or identity contradictions",
+    "model-impact selection reports missing representative suites and incomplete model matrices",
+    "missing tool contracts and permission defenses remain explicit without requirement mappings"
+  ]
+}

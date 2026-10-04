@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "milestone": "M1",
+  "milestone": "M2",
   "trackingStartedAt": "2026-10-03T22:37:12.749908Z",
   "note": "Existing work has unknown start time; do not invent historical cycle times. Log all future task transitions.",
   "tasks": [
@@ -385,6 +385,789 @@
           "status": "passed",
           "evidence": [
             "releases/m1-onboarding-images.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-PLAN",
+      "title": "Freeze phase scope, contracts and evidence plan",
+      "requirementIds": [
+        "SPEC-40-030",
+        "SPEC-40-038"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T05:05:41.392Z",
+      "completedAt": "2026-10-04T05:06:27.382Z",
+      "acceptance": [
+        {
+          "text": "Every M2 section 40 item and related section 11 behavior has an implementation task and observable acceptance scenario; prior M1 gates remain complete",
+          "status": "passed",
+          "evidence": [
+            "docs/phases/m2.md"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-GATES",
+      "title": "Generalize phase-specific delivery and release tracking",
+      "requirementIds": [
+        "SPEC-40-038"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T05:06:27.604Z",
+      "completedAt": "2026-10-04T05:08:32.452Z",
+      "acceptance": [
+        {
+          "text": "CLI validates the active phase independently, preserves prior phase gates and blocks unsupported/incomplete phase closure",
+          "status": "passed",
+          "evidence": [
+            "tests/delivery.test.ts"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-CONTRACT",
+      "title": "Versioned eval suite/result contracts and selection",
+      "requirementIds": [
+        "SPEC-40-031",
+        "SPEC-40-035",
+        "SPEC-11.2-001"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T05:51:26.918Z",
+      "completedAt": "2026-10-04T13:58:09.740Z",
+      "acceptance": [
+        {
+          "text": "Strict manifests and normalized results reject malformed/ambiguous input, select impact-mapped suites and report missing requirement coverage",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-contract-acceptance.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-RUNNER",
+      "title": "Bounded isolated native and pytest execution",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-033"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T05:19:26.667Z",
+      "completedAt": "2026-10-04T06:08:33.753Z",
+      "acceptance": [
+        {
+          "text": "Real isolated commands and pytest produce passed/failed/error outcomes; timeout/cancellation/output limits and controller-secret isolation are verified",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-runner-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-PLUGINS",
+      "title": "Optional existing-engine adapters",
+      "requirementIds": [
+        "SPEC-40-034",
+        "SPEC-11.4-003",
+        "SPEC-11.4-004",
+        "SPEC-11.4-005"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T06:16:43.768Z",
+      "completedAt": "2026-10-04T07:36:07.818Z",
+      "acceptance": [
+        {
+          "text": "Optional Promptfoo, DeepEval and HTTP adapters normalize documented outputs, reject empty/malformed results and run integration examples without mandatory model credentials",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-engines-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-STATS",
+      "title": "Repeated trials and immutable base/head comparison",
+      "requirementIds": [
+        "SPEC-40-036",
+        "SPEC-40-037",
+        "SPEC-11.3-002"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T05:14:49.070Z",
+      "completedAt": "2026-10-04T06:37:43.558Z",
+      "acceptance": [
+        {
+          "text": "Configured count/rate/critical thresholds, Wilson confidence bounds and insufficient/error states are preserved; exact-source base/head deltas identify regressions",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-provenance-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-PR",
+      "title": "Durable eval orchestration, APIs and advisory PR evidence",
+      "requirementIds": [
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T07:09:18.839Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Real PR publishes behavioral deltas and regression scenarios with retained exact-identity evidence; retry/replay/restart/stale heads and authenticated agent API usage are tested",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-RELEASE",
+      "title": "Full phase distribution and released-build demo",
+      "requirementIds": [
+        "SPEC-40-038",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T13:52:48.601Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Tests, eval corpus, compatible API, packaging, docs, scans, native UBI images, immutable GitHub release and anonymous downloads pass; released customer success/failure/recovery demo and retro delivered",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-API-BASELINE",
+      "title": "Adopt the immutable released M1 API contract without masking changes",
+      "requirementIds": [
+        "SPEC-40-039"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T05:15:08.293Z",
+      "completedAt": "2026-10-04T05:15:46.176Z",
+      "acceptance": [
+        {
+          "text": "Released baseline is extracted from anonymously verified 0.2.1-m1; prior baseline preserved, source/checksums recorded and removal regression still fails",
+          "status": "passed",
+          "evidence": [
+            "specs/api/baselines/m1-0.2.1-identity.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-CI-CONNECTION",
+      "title": "Keep disposable CI database credentials out of connection URLs",
+      "requirementIds": [
+        "SPEC-29.3-001"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T05:55:23.131Z",
+      "completedAt": "2026-10-04T06:12:36.965Z",
+      "acceptance": [
+        {
+          "text": "Verification and hosted dogfood use credential-free loopback database URLs with separate test-only PG environment; parameter resolution and full CI verify connectivity",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-ci-connection.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-BASELINE-HARNESS",
+      "title": "Bind comparison assertions to immutable baseline inputs",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-035"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T06:03:11.650Z",
+      "completedAt": "2026-10-04T06:37:43.131Z",
+      "acceptance": [
+        {
+          "text": "Base/head execute the same baseline eval source and manifest, with assertion commit and bundle digest in results; head assertion edits/deletion cannot suppress a regression and subject source remains the requested commit",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-provenance-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-HTTP-TRANSPORT",
+      "title": "Bounded identity-bound transport for operator-configured HTTP eval providers",
+      "requirementIds": [
+        "SPEC-11.4-005",
+        "SPEC-40-034"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T06:41:16.549Z",
+      "completedAt": "2026-10-04T07:36:08.241Z",
+      "acceptance": [
+        {
+          "text": "Real provider requests bind exact snapshot/suite/model and unique request IDs; pinned destination, separate credentials, no redirects, size/deadline/cancellation limits and malicious response handling pass. Transport is integrated into eval execution before adapter acceptance.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-engines-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-TEST-OWNERSHIP",
+      "title": "Scope parallel container cleanup assertions to their runner image",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-034"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T08:03:21.812Z",
+      "completedAt": "2026-10-04T08:14:55.775Z",
+      "acceptance": [
+        {
+          "text": "Native/default and optional engine groups run concurrently without counting one another as leaks; cleanup still asserts no new containers for each immutable image. Failed CI attempt is retained and full CI reruns.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-durable-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-DURABLE-UNITS",
+      "title": "Immutable eval jobs and fenced per-trial recovery checkpoints",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T07:09:19.059Z",
+      "completedAt": "2026-10-04T08:52:11.569Z",
+      "acceptance": [
+        {
+          "text": "Real PostgreSQL stages projected exact inputs and immutable units; concurrent claims, lease renewal/takeover, stale writers, normalized per-trial replay, cancellation and result immutability are tested. Restart resumes completed observations rather than rerunning or hiding them.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-http-retry-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-EVAL-WORKER",
+      "title": "Credential-free Temporal evaluation worker and scoped database role",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "acceptance": [
+        {
+          "text": "Separate worker starts with no App/control secrets, only scoped eval database privileges and operator-pinned runner/provider configuration. Real Temporal activity retry, cancellation cleanup and replay are tested.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-http-retry-ci.json"
+          ]
+        }
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T07:41:19.354Z",
+      "completedAt": "2026-10-04T08:52:11.992Z"
+    },
+    {
+      "id": "M2-ORPHAN-RECOVERY",
+      "title": "Recover containers left by process death using unit and lease ownership",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-039"
+      ],
+      "acceptance": [
+        {
+          "text": "A killed worker leaves a real labeled container; the next fenced owner removes only prior containers for the same unit before resuming. Other units/services are untouched, stale owners cannot write, and cleanup failures cannot produce success.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-http-retry-ci.json"
+          ]
+        }
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T07:41:19.579Z",
+      "completedAt": "2026-10-04T08:52:12.423Z"
+    },
+    {
+      "id": "M2-MIGRATION-CONCURRENCY",
+      "title": "Serialize repeatable schema and evaluator-role initialization",
+      "requirementIds": [
+        "SPEC-40-039"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T08:30:48.770Z",
+      "completedAt": "2026-10-04T08:51:29.732Z",
+      "acceptance": [
+        {
+          "text": "Concurrent migration callers initialize a fresh dedicated test database without catalog/role races, retain exact schemas and grants, and repeat safely. Applicable full CI includes this test.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-http-retry-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-HTTP-RETRY-IDENTITY",
+      "title": "Stable per-unit trial request IDs and provider deduplication contract",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039",
+        "SPEC-11.4-005"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T08:19:22.154Z",
+      "completedAt": "2026-10-04T08:51:29.312Z",
+      "acceptance": [
+        {
+          "text": "Real provider receives the same UUID for an interrupted uncommitted trial on retry, different IDs for distinct trials/units, and no request for retained observations. Provider deduplicates without double execution; mismatched payload reuse is rejected and invalid request IDs cannot dispatch. Scope and at-least-once limits are documented and full CI passes.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-http-retry-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-EVAL-WORKER-PACKAGING",
+      "title": "UBI eval worker runtime with pinned official Docker CLI and real image acceptance",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T08:38:26.824Z",
+      "completedAt": "2026-10-04T09:06:16.826Z",
+      "acceptance": [
+        {
+          "text": "UBI non-root eval-worker image includes current stable official pinned Docker CLI, no package installers/controller credentials, and passes real restricted PostgreSQL/Temporal execution, child isolation, shutdown/restart and vulnerability scans. Applicable CI builds and verifies it; published native/download gates remain separately required.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-eval-worker-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-SELECTION-GAPS",
+      "title": "Expose missing impact-required eval classes",
+      "requirementIds": [
+        "SPEC-11.2-001",
+        "SPEC-11.2-004",
+        "SPEC-11.2-006"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T09:00:42.413Z",
+      "completedAt": "2026-10-04T09:16:19.056Z",
+      "acceptance": [
+        {
+          "text": "Tool changes without contract suites and permission/policy changes without policy or adversarial suites report explicit selection gaps, including through frozen-base comparison plans; unrelated changes do not fabricate gaps. Regression checks and full CI pass.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-selection-gap-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-COMPARISON-RESOURCE",
+      "title": "Identity-bound durable comparison evidence contract",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-037",
+        "SPEC-40-039"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T09:08:45.810Z",
+      "completedAt": "2026-10-04T09:28:06.956Z",
+      "acceptance": [
+        {
+          "text": "Strict comparison evidence binds organization/repository/PR/base/head/review/attempt and planned unit provenance, recomputes deltas/outcome, cannot pass missing or cancelled execution/coverage, exposes no projected source or credentials, and rejects forged identities/digests/summary. Real durable storage snapshot read and full CI verify it before API/PR integration.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-comparison-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-COMPARISON-API",
+      "title": "Authenticated eval comparison API and installed agent client",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T12:28:18.799Z",
+      "completedAt": "2026-10-04T12:50:19.326Z",
+      "acceptance": [
+        {
+          "text": "Additive OpenAPI/domain/shared fixtures match authenticated comparison GET, typed identity/digest errors and bounded responses; unauthorized callers cannot disclose IDs, scopes cannot cross, storage failures are sanitized, M1 compatibility passes, compiled API and installed client consume actual durable evidence. Full CI validates final source. Upper/lowercase comparison resource and expected UUID identities yield identical canonical evidence and full export hashes across native persistence, HTTP and installed client; different identities still fail, and retained digests and released compatibility remain unchanged.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-uuid-case-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-COMPARISON-CAPACITY",
+      "title": "Bounded complete access to large comparison evidence",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T09:37:02.720Z",
+      "completedAt": "2026-10-04T10:04:40.760Z",
+      "acceptance": [
+        {
+          "text": "Valid large comparison evidence remains fully consumable using bounded snapshot-consistent traversal or export; stale snapshots have explicit retry semantics, no result loss/truncation or false passing summary, and real persistence/API/installed-client tests verify capacity before phase closure.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-comparison-export-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-PR-STAGING",
+      "title": "Stage exact PR comparison plans with operator provenance and budgets",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039",
+        "SPEC-11.2-001"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T09:59:22.196Z",
+      "completedAt": "2026-10-04T10:18:57.298Z",
+      "acceptance": [
+        {
+          "text": "Controller compiles exact Git base/head plans, freezes baseline suites for both subjects, keeps added suites head-only, expands every configured model variant, pins operator runner/provider identities and enforces total budgets. Scoped staging is idempotent by review/attempt, retains zero-selected/gapped plans, returns only identifiers to workflow history, and real provider/PostgreSQL acceptance verifies retry and identity conflicts before child dispatch.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-pr-staging-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-PR-PARENT",
+      "title": "Durable PR parent orchestration with child cleanup and replay",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T11:31:15.553Z",
+      "completedAt": "2026-10-04T11:45:14.524Z",
+      "acceptance": [
+        {
+          "text": "New PR evaluation parent stages exact identifiers, dispatches separate evaluator children with deterministic identity, waits for completion and cancellation cleanup, retains cancelled evidence on stale PR or failure, and preserves M1 replay. Real PostgreSQL/Temporal/isolated runner tests prove baseline/head results, no source/credentials in histories, stale/cancel cleanup and replay before Check publication is wired.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-pr-controller-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-PR-PUBLICATION",
+      "title": "Publish bounded behavioral evidence with exact PR identity and retry reconciliation",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T12:03:16.921Z",
+      "completedAt": "2026-10-04T12:16:11.818Z",
+      "acceptance": [
+        {
+          "text": "Completed SQL snapshot exports produce bounded Check summaries containing exact base/head, suite/model deltas, regressions, added/removed/changed scenarios, coverage/selection/execution gaps and immutable evidence references. Publication rechecks current PR identity under the shared lock, reconciles only this App and exact attempt, rejects pending/cancelled or mismatched evidence, sanitizes SDK failures and preserves M1 Check behavior. Actual HTTP provider/PostgreSQL tests prove stale identity, retries including ambiguous writes, lock contention and no false passing summaries before production workflow wiring.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-check-history-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-PR-CONTROLLER",
+      "title": "Wire durable controller outbox to full review/eval lifecycle and publication",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T10:42:29.656Z",
+      "completedAt": "2026-10-04T11:45:15.432Z",
+      "acceptance": [
+        {
+          "text": "Compiled M2 controller requires pinned eval configuration and M2 schema, registers legacy and new activities/workflows without changing M1 command history, and durable outbox starts a deterministic exact-attempt full workflow. Real PostgreSQL/Temporal/HTTP Git+Checks/isolated evaluator tests verify semantic and behavioral publication, retry/outbox duplicate fencing, current-head outcomes, failure and cancellation recovery. Container readiness and installed-client acceptance pass; no silent M1 fallback, App credentials in evaluator payloads, or phase completion before live/release gates.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-pr-controller-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-DEPLOYMENT",
+      "title": "Separate evaluator deployment bundle and customer operator setup",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T11:34:39.926Z",
+      "completedAt": "2026-10-04T12:07:15.101Z",
+      "acceptance": [
+        {
+          "text": "Packaged separate evaluator Compose configuration renders with only restricted evaluator environment, explicit dedicated daemon socket group, immutable image pins, read-only filesystem and private provider mount; customer instructions provision restricted SQL login and expose development endpoints without implying production hosting. Real rendered configuration and separate worker runtime validate the boundary before live demo.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-deployment-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-LIVE-CUSTOMER",
+      "title": "Real customer App M2 behavioral review and recovery demonstration",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T11:39:49.369Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Separate M2 controller and restricted evaluator deployment receives actual signed events from the approved demo App/repository, publishes immutable baseline/head behavioral Checks, exposes verified client evidence, demonstrates failure/recovery, and records exact source and limitations. Published-build replay is required for the milestone demo gate.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-OPERATOR-RETRY",
+      "title": "Scoped operator review CLI with fresh attempts and safe ambiguous submission retries",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-32-002"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T12:11:25.227Z",
+      "completedAt": "2026-10-04T12:34:04.711Z",
+      "acceptance": [
+        {
+          "text": "Installed agentci review reads only a private strict operator config and existing scoped App/webhook credentials, fetches current open PR identity from GitHub, submits an HMAC-signed request to the existing route with a fresh UUID, validates queued/duplicate response and emits only receipt metadata. Supplied UUID safely repeats ambiguous transport submission without rewriting cancelled evidence. Tests reject unsafe config/permissions/origin, closed/mismatched PRs, redirects, forged/oversized replies, secret leakage and read-only evidence-token scheduling; native controller and real customer acceptance prove a new review without close/reopen. Docs, operation/scenario mapping, packaging and exact-source full CI pass before completion.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-operator-review-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-TERMINATION-RECOVERY",
+      "title": "Reconcile abruptly closed review attempts and cancelled evaluator orphans",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T12:46:52.603Z",
+      "completedAt": "2026-10-04T13:44:26.042Z",
+      "acceptance": [
+        {
+          "text": "Tracked controller attempts reconcile actual Temporal terminal state after failure, timeout or termination without restarting an immutable failed UUID. Scoped SQL cancellation and unavailable/cancelled Checks retain prior evidence; concurrent/restarted reconcilers are fenced and transient SDK/publication failures retry without false closure. Native tests terminate a real parent with both containers running and after an evaluator SIGKILL, then recover with no owned containers, correct terminal evidence and exactly one Check. A fresh operator UUID recovers independently; legacy M1 replay, additive checksum-bound migration, private error handling, docs/operation mappings, package/container and exact-source full CI pass.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-controller-recovery-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-RECOVERY-GUIDANCE",
+      "title": "Make unavailable Checks expose retained evidence and correct fresh-attempt recovery guidance",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-32-002"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T13:44:43.294Z",
+      "completedAt": "2026-10-04T13:57:32.614Z",
+      "acceptance": [
+        {
+          "text": "Cancelled/unavailable Checks instruct an operator to request a fresh immutable attempt rather than redeliver the failed UUID. When a scoped staged comparison exists, the exact Check exposes authenticated retained comparison evidence and its review/attempt identity without credentials; pre-stage failures remain honest. Native and installed customer verification prove correct links, immutable earlier evidence and unchanged exact-head reconciliation; docs, API/scenario mapping, packaging and exact-source CI pass.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-recovery-guidance-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-HOSTED-DOGFOOD",
+      "title": "Run behavioral self-review on trusted hosted controller and isolated evaluators",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T14:15:26.599Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Every eligible AgentCI PR receives exact-attempt semantic and behavioral Checks using trusted main controller code and immutable isolated evaluator images, with no laptop dependency, secret exposure to PR code or mutable reviewed dependencies. Retain complete authenticated/source-bound evidence before publication, reconcile retries/stale heads and demonstrate actual hosted passing and failing PR revisions. Native/CI/package/docs validation passes before release acceptance.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-SECURITY-RELEASE",
+      "title": "Resolve or prove applicability of all M2 service and optional-engine scan findings",
+      "requirementIds": [
+        "SPEC-40-038",
+        "SPEC-11.4-007"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T13:58:09.949Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Published default and optional-engine inventories include current official dependency/runtime verification, image-platform scans, Docker CLI and Temporal/native scanner coverage. Resolve fixable findings. For node-forge GHSA-86w9-cpqp-85rv, provide an upstream-supported fix, a pinned reviewed upstream backport with before/after crypto regressions and explicit downstream maintenance/scanner treatment, or concrete call-path/exploitability evidence and explicit documented release treatment; no silent ignored finding, fabricated clean scan or removed M2 optional-engine scope. Re-run actual Promptfoo/DeepEval/native acceptance and verify pinned artifacts.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-VELOCITY-PLAN",
+      "title": "Review agentic delivery velocity gaps and record a measurable product-plan addendum",
+      "requirementIds": [
+        "SPEC-34.2-001",
+        "SPEC-34.2-003",
+        "SPEC-34.2-004",
+        "SPEC-39-001"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T15:00:50.777Z",
+      "completedAt": "2026-10-04T15:00:51.249Z",
+      "acceptance": [
+        {
+          "text": "Inspect the original metrics/build plan and current delivery instrumentation; document gaps, acceptance scenarios, milestone integration and prospective end-to-end measurement with quality/cost guardrails. Distinguish proposed capabilities from implemented features and preserve milestone order.",
+          "status": "passed",
+          "evidence": [
+            "docs/agentic-velocity-plan.md"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-PODMAN-DEFAULT",
+      "title": "Default isolated OCI execution to Podman with explicit Docker compatibility",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-038",
+        "SPEC-11.4-007"
+      ],
+      "status": "deferred",
+      "startedAt": "2026-10-04T15:27:23.707Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "An explicit operator engine setting defaults to Podman across runner execution, owned-container cleanup, evaluator deployment and hosted preparation. OCI/UBI packaging and current native Podman execution, isolation, cancellation, SIGKILL/restart recovery and exact-unit cleanup pass; Docker remains an explicit compatibility fallback with its existing acceptance intact. Verify current official stable runtime/client pins, licenses, inventories, API/config compatibility and docs. Do not call Podman supported based only on Docker CLI similarity or Podman compatibility API.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "deferral": {
+        "at": "2026-10-04T17:03:34.655Z",
+        "evidence": "docs/m2-container-engine.md",
+        "reason": "Owner-approved Docker default for M2; Podman security and hosted adoption acceptance remains unfinished"
+      }
+    },
+    {
+      "id": "M2-PODMAN-RUNNER-STABILITY",
+      "title": "Resolve intermittent native Podman pytest infrastructure failure under the full acceptance workload",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-038"
+      ],
+      "status": "deferred",
+      "startedAt": "2026-10-04T16:34:40.128Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Diagnose the retained failed native pytest attempt without weakening assertions or hiding failed attempts. Add the necessary regression coverage and verify the fix through concurrent native Podman execution, runner cancellation/recovery and complete integration acceptance. Record exact source/runtime/image evidence; passing retries alone do not establish a resolved cause.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "deferral": {
+        "at": "2026-10-04T17:03:34.884Z",
+        "evidence": "docs/m2-container-engine.md",
+        "reason": "Owner-approved Docker release default; retain unresolved Podman runner failure and diagnostic evidence for future adoption"
+      }
+    },
+    {
+      "id": "M2-DOCKER-RELEASE-DEFAULT",
+      "title": "Release M2 with Docker-default engine-specific UBI evaluator packaging",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-038",
+        "SPEC-11.4-007"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T16:53:25.509Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Operator defaults consistently select Docker for M2. The released Docker evaluator contains only its pinned Docker CLI and native inventories; Podman remains an explicit separate development image with tracked security/stability/hosted acceptance. Reject mismatched packaged engine configuration before database/Temporal connection. Verify full native Docker execution/recovery, packaged service, API/config compatibility, license/native provenance and vulnerability coverage, docs, and hosted CI. Preserve all Podman findings and failed attempts; do not claim Podman adoption complete or remove any product requirement.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-DELIVERY-DEFERRAL",
+      "title": "Record approved task deferrals without fabricating completion or blocker time",
+      "requirementIds": [
+        "SPEC-34.2-003"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T17:01:50.371Z",
+      "completedAt": "2026-10-04T17:04:53.089Z",
+      "acceptance": [
+        {
+          "text": "The delivery CLI records deferred status with an explicit reason, bounded repository evidence path and timestamp; keeps original starts and pending acceptance, emits a deferral event, and never counts deferral as completion. Resuming preserves deferral history and cannot invent historical dates. Validation rejects missing/escaped evidence, inconsistent timestamps and false completion; blocked-time accounting stops at deferral. Use the approved M2 Docker engine decision for Podman task deferrals.",
+          "status": "passed",
+          "evidence": [
+            "tests/delivery.test.ts"
           ]
         }
       ]

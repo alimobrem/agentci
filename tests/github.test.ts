@@ -18,7 +18,7 @@ async function provider(t: any) {
     else if (path?.includes('/git/commits/')) output = { sha: path.split('/').at(-1), tree: { sha: 'd'.repeat(40) } };
     else if (path?.includes('/git/trees/')) output = { sha: 'd'.repeat(40), truncated: state.truncated, tree: blobs.map(b => ({ path: b.path, sha: b.sha, size: b.bytes.length, type: 'blob', mode: '100644' })) };
     else if (path?.includes('/git/blobs/')) { const blob = blobs.find(b => path.endsWith(b.sha))!; output = { sha: blob.sha, encoding: 'base64', content: (state.corrupt ? Buffer.alloc(blob.bytes.length, 65) : blob.bytes).toString('base64') }; }
-    else if (req.method === 'GET' && path?.endsWith('/check-runs')) output = { total_count: state.runs.length, check_runs: state.runs };
+    else if (req.method === 'GET' && path?.endsWith('/check-runs')) { const runs=new URL(req.url!,'http://localhost').searchParams.get('filter')==='all'?state.runs:state.runs.slice(-1);output = { total_count: runs.length, check_runs: runs }; }
     else if ((req.method === 'POST' || req.method === 'PATCH') && path?.includes('/check-runs')) {
       let raw = ''; for await (const chunk of req) raw += chunk;
       const body = JSON.parse(raw);
@@ -44,6 +44,7 @@ test('Checks reconcile retries only against this App and exact head; current-hea
   const analysis = analyze({ repository: job.repository, base, head });
   state.runs.push({ id: 99, external_id: `agentci:1:${job.baseSha}:${job.headSha}`, app: { id: 999 } });
   await publishCheck(client, 42, job, analysis, 'https://example.invalid/v1/evidence/id');
+  state.runs.push({id:100,name:'agentci/review',head_sha:job.headSha,external_id:'different-pr-attempt',app:{id:42}});
   await publishCheck(client, 42, job, analysis, 'https://example.invalid/v1/evidence/id');
   assert.equal(state.creations, 1); assert.equal(state.updates, 1);
   const run = state.runs.find(r => r.app.id === 42); assert.equal(run.head_sha, job.headSha); assert.equal(run.conclusion, 'neutral');

@@ -1,0 +1,45 @@
+{
+  "kind": "M2-PR-parent-local-checkpoint",
+  "recordedAt": "2026-10-04T10:21:07.826808+00:00",
+  "parentCommit": "0186afab2da69155559345b848dd8b61a2d6422a",
+  "releaseAcceptance": false,
+  "files": {
+    "apps/worker/eval-activities.ts": "60c59f6e94658236233545ce9dbacc08e6abaa59275c4bac2b6c6f0360639641",
+    "apps/worker/eval-workflows.ts": "3c6e2c48f511b1fafe0356f3119e50372bbbecc56372d86f50028873bd9749e7",
+    "apps/worker/workflows.ts": "b1c1c015f8b329b1aa62c697e7e3f054a5ee1c6a42c57dbe39cca6f300fda89c",
+    "tests/integration/eval-pr-parent.test.ts": "b52277f7dd60972df96e66d3249a6c2435046b15d68c8f4bb49d358e7d335b88",
+    "tests/integration/eval-review-staging.test.ts": "b460145c5a9ef54a29c4af0811fa92425ccc276d9f137628b7af6db0fce39699",
+    "specs/api/eval-review-operations.json": "9683a9d7ac96c6822818a02f2d15209870a2d94191225dbe31b8dbce4cb1fa6d"
+  },
+  "verification": {
+    "fastChecks": 8,
+    "unitApiDomainTests": 117,
+    "realServices": "Existing isolated PostgreSQL and Temporal, native immutable UBI runner and real child containers; no skips.",
+    "scenarios": [
+      "baseline passing/head regressing with frozen harness",
+      "separate task queue children with deterministic comparison/unit workflow IDs",
+      "initial stale PR avoids staging",
+      "stale after staging cancels SQL without child dispatch",
+      "running stale PR detected by 30-second monitor cancels and awaits child cleanup",
+      "cancellation after SQL commit but before staging response retains IDs for cleanup",
+      "parent cancellation interrupts actual containers and waits for cleanup",
+      "failed child cancels retained comparison",
+      "new parent and child histories replay without source snapshots",
+      "original M1 retry/stale/duplicate-start/history replay tests passed alongside initial parent checkpoint",
+      "scoped cancellation activity verifies header identity, closes snapshot transaction, rejects wrong attempt and is idempotent"
+    ]
+  },
+  "failedLocalAttempts": [
+    {
+      "scope": "initial parent comparison fixture",
+      "result": "Unmapped REQ-001 correctly yielded insufficient instead of expected failed; fixture now includes the actual requirement."
+    }
+  ],
+  "limitations": [
+    "Final-source full CI remains required.",
+    "Production controller activity registration and locked Check publication are not implemented.",
+    "Local orchestration test hosts both queue workers in one trusted test process; separate production process/credential isolation is covered by existing eval worker image acceptance.",
+    "Abrupt workflow termination/deadline recovery remains a production integration check.",
+    "Live customer PR, release publication, downloads, demo and all M2 release gates remain open."
+  ]
+}
