@@ -22,7 +22,7 @@ Requires Node 26.10.0 (26.x), npm 12.2.0, Git, Docker/Compose and a reachable HT
 endpoint forwarding to the API. Current candidate installation from source:
 
 ```sh
-git clone https://github.com/alimobrem/agentci.git agentci-service
+git clone --branch codex/m1-customer-onboarding https://github.com/alimobrem/agentci.git agentci-service
 cd agentci-service
 npm ci
 npm run build
