@@ -4,7 +4,9 @@ const env={AGENTCI_REPOSITORY:'owner/repo',AGENTCI_ORGANIZATION_ID:'00000000-000
 test('eval worker refuses controller credentials and repository-defined mutable runner images',async()=>{
   for(const key of ['DATABASE_URL','GITHUB_APP_ID','GITHUB_INSTALLATION_ID','GITHUB_WEBHOOK_SECRET','GITHUB_PRIVATE_KEY_FILE','AGENTCI_APP_PRIVATE_KEY','AGENTCI_EVIDENCE_TOKEN','GITHUB_TOKEN','GH_TOKEN','GH_PAT'])await assert.rejects(evalWorkerConfig({...env,[key]:'synthetic'}),/must not receive/);
   await assert.rejects(evalWorkerConfig({...env,AGENTCI_EVAL_RUNNER_IMAGE:'runner:latest'}),/pinned digest/);
-  const config=await evalWorkerConfig(env);assert.equal(config.taskQueue,'agentci-eval-v1');assert.equal(config.policyFor('command').image,env.AGENTCI_EVAL_RUNNER_IMAGE);
+  const config=await evalWorkerConfig(env);assert.equal(config.taskQueue,'agentci-eval-v1');assert.equal(config.policyFor('command').image,env.AGENTCI_EVAL_RUNNER_IMAGE);assert.equal(config.policyFor('command').engine,'podman');
+  const fallback=await evalWorkerConfig({...env,AGENTCI_CONTAINER_ENGINE:'docker'});assert.equal(fallback.policyFor('command').engine,'docker');
+  for(const engine of ['','Docker','/tmp/podman','podman --remote','sh'])await assert.rejects(evalWorkerConfig({...env,AGENTCI_CONTAINER_ENGINE:engine}),/Invalid operator container engine/);
   assert.throws(()=>config.policyFor('promptfoo'),/not configured/);
   await assert.rejects(evalWorkerConfig({...env,AGENTCI_EVAL_DATABASE_URL:'invalid'}),/Invalid eval database URL/);
 });

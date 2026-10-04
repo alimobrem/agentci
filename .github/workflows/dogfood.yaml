@@ -24,6 +24,8 @@ jobs:
         ports: [5432:5432]
         options: --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 3s --health-retries 20
     env:
+      # Explicit transitional compatibility until hosted native Podman acceptance passes.
+      AGENTCI_CONTAINER_ENGINE: docker
       AGENTCI_REPOSITORY: alimobrem/agentci
       GITHUB_APP_ID: '5179954'
       GITHUB_INSTALLATION_ID: '167655696'

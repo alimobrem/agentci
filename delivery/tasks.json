@@ -1086,6 +1086,25 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M2-PODMAN-DEFAULT",
+      "title": "Default isolated OCI execution to Podman with explicit Docker compatibility",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-038",
+        "SPEC-11.4-007"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T15:27:23.707Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "An explicit operator engine setting defaults to Podman across runner execution, owned-container cleanup, evaluator deployment and hosted preparation. OCI/UBI packaging and current native Podman execution, isolation, cancellation, SIGKILL/restart recovery and exact-unit cleanup pass; Docker remains an explicit compatibility fallback with its existing acceptance intact. Verify current official stable runtime/client pins, licenses, inventories, API/config compatibility and docs. Do not call Podman supported based only on Docker CLI similarity or Podman compatibility API.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

@@ -1,7 +1,7 @@
 import {canonical} from '../../packages/review/engine.ts';
 import {EvalStore,EvalLeaseLost} from '../../packages/storage/evals.ts';
 import {executeSuite} from '../../packages/evals/execution.ts';
-import {reapPriorEvalContainers,reapCancelledEvalContainers,type RunnerPolicy} from '../../packages/evals/runner.ts';
+import {reapPriorEvalContainers,reapCancelledEvalContainers,containerEngine,type ContainerEngine,type RunnerPolicy} from '../../packages/evals/runner.ts';
 import {validateHttpProvider} from '../../packages/evals/http.ts';
 import type {EvalRun} from '../../packages/evals/contracts.ts';
 export class EvalUnitBusy extends Error {}
@@ -30,7 +30,7 @@ export async function executeStoredUnit(store:EvalStore,id:string,policy:RunnerP
   let failure:unknown,completedTrials=0,maintenance:Promise<void>|undefined;
   const maintain=async()=>{
     await store.renew(id,token,seconds);
-    if(!provider)await store.withLease(id,token,()=>reapPriorEvalContainers(ownership));
+    if(!provider)await store.withLease(id,token,()=>reapPriorEvalContainers(ownership,containerEngine(policy.engine)));
     options.heartbeat?.({unitId:id,completedTrials});
   };
   const timer=setInterval(()=>{
@@ -59,9 +59,9 @@ export async function executeStoredUnit(store:EvalStore,id:string,policy:RunnerP
 }
 
 /** The terminal SQL state is immutable: cancelled units cannot acquire another execution lease. */
-export async function cleanupCancelledUnit(store:EvalStore,id:string):Promise<void>{
+export async function cleanupCancelledUnit(store:EvalStore,id:string,engine:ContainerEngine=containerEngine()):Promise<void>{
   await store.ready();const unit=await store.unit(id);
   if(!unit)throw new Error('Unknown scoped cancelled eval unit');
   if(unit.status!=='cancelled')throw new EvalUnitBusy('Eval unit is not irreversibly cancelled');
-  await reapCancelledEvalContainers(unit.id);
+  await reapCancelledEvalContainers(unit.id,containerEngine(engine));
 }

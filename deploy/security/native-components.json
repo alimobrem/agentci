@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "dockerCli": {
+    "image": "docker:29.8.2-cli@sha256:b1805116a6a86cc591b5d5f60a910a0715cdcc9d18d866ad68b1457ead25c35c",
+    "version": "29.8.2",
+    "sourceCommit": "7fc2dff9bceb96b266a3b2c3117c0955a0d9e616",
+    "goVersion": "go1.26.8",
+    "binarySha256": {
+      "arm64": "37a53fed3445028a49443fd6f9338ccedeeeda9776de5d7fd4d7e7c936b789cc",
+      "amd64": "6f7a95d27f98fc8c5f6b220898988bf8f61dd9b040936797917cbdc72c6cabe6"
+    },
+    "vendorManifest": {
+      "upstreamUrl": "https://raw.githubusercontent.com/docker/cli/7fc2dff9bceb96b266a3b2c3117c0955a0d9e616/vendor.mod",
+      "sha256": "0836699fe2ae28a136aabd51f932b825e0653c48ae200613b72f07a74f2a3868",
+      "runtimePath": "/licenses/docker-cli/go.mod",
+      "coverage": "Upstream source inventory, including tooling; not an exact compiled dependency graph."
+    },
+    "vendorModulesSha256": "b244202796e49f7cbca23ebbaae6cc5d286cd1735bffbfb620b86b7a82a2750b"
+  },
+  "temporalBridge": {
+    "package": "@temporalio/core-bridge",
+    "version": "1.24.0",
+    "upstreamArtifact": "https://registry.npmjs.org/@temporalio/core-bridge/-/core-bridge-1.24.0.tgz",
+    "integrity": "sha512-6kzPB8RsHcPU6HDNUSDBFC0JG2UFrV3ThmPmJkeEafKh2DFrKARM8IzxgKeE5MzvdIXYmONFM0UmHg+TZ0/qrQ==",
+    "artifactSha256": "5f58de2e98bdc4711be3cbb06cc08bc39cb274cbbac41d02f0352bfe1630a8f7",
+    "installedMatchesUpstream": true,
+    "files": {
+      "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+      "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+      "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+      "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+    }
+  }
+}

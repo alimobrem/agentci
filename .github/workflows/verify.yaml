@@ -25,6 +25,8 @@ jobs:
         if: always()
         with: { name: fast-feedback, path: .agentci/artifacts/delivery/fast-latest.json, include-hidden-files: true }
   contracts-and-runtime:
+    # Explicit compatibility cohort; native Podman acceptance is separately required before adoption.
+    env: { AGENTCI_CONTAINER_ENGINE: docker }
     runs-on: ubuntu-latest
     services:
       postgres:

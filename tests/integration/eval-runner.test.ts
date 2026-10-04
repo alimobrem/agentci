@@ -1,3 +1,4 @@
+import {containerEngine} from '../../packages/evals/runner.ts';
 import {randomUUID} from 'node:crypto';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {evalSuite} from '../fixtures/evals.ts';
@@ -14,11 +15,11 @@ test('real isolated UBI runner: boundaries, pytest failures, timeouts, cancellat
   const ownership={unitId:randomUUID(),leaseToken:randomUUID()};
   const runIsolated=(snapshot:Parameters<typeof runContainer>[0],suite:Parameters<typeof runContainer>[1],policy:Parameters<typeof runContainer>[2],options:NonNullable<Parameters<typeof runContainer>[3]>={})=>runContainer(snapshot,suite,policy,{...options,ownership});
   const policy={image:image!};
-  const containers=()=>execFileSync('docker',['ps','-aq','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.eval.unit=${ownership.unitId}`],{encoding:'utf8'}).trim();
+  const containers=()=>execFileSync(containerEngine(),['ps','-aq','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.eval.unit=${ownership.unitId}`],{encoding:'utf8'}).trim();
   const before=containers();
   const run=(script:string,overrides:Parameters<typeof evalSuite>[0]={},signal?:AbortSignal)=>runIsolated({sha:'a'.repeat(40),files:{'check.mjs':script}},evalSuite({runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:5000},...overrides}),policy,{signal});
   const originalToken=process.env.AGENTCI_EVIDENCE_TOKEN;process.env.AGENTCI_EVIDENCE_TOKEN='synthetic-controller-token-for-boundary-test';
-  const boundary=await run(`import assert from 'node:assert/strict';import{existsSync,writeFileSync}from'node:fs';import{networkInterfaces}from'node:os';assert.equal(process.getuid(),1001);assert.equal(process.env.AGENTCI_EVIDENCE_TOKEN,undefined);assert.equal(process.env.GITHUB_TOKEN,undefined);assert.equal(existsSync('/var/run/docker.sock'),false);assert.equal(existsSync('/run/secrets/github-app.pem'),false);assert.ok(Object.keys(networkInterfaces()).every(n=>n==='lo'));assert.throws(()=>writeFileSync('/etc/agentci-test','x'));writeFileSync('writable','yes');`);
+  const boundary=await run(`import assert from 'node:assert/strict';import{existsSync,writeFileSync,readFileSync}from'node:fs';import{networkInterfaces}from'node:os';assert.equal(process.getuid(),1001);assert.equal(process.env.AGENTCI_EVIDENCE_TOKEN,undefined);assert.equal(process.env.GITHUB_TOKEN,undefined);assert.equal(existsSync('/var/run/docker.sock'),false);assert.equal(existsSync('/run/agentci/engine.sock'),false);for(const path of ['/workspace','/tmp']){const line=readFileSync('/proc/self/mountinfo','utf8').split('\\n').find(s=>s.includes(' '+path+' '));assert.ok(line);assert.ok(line.includes('nosuid'));assert.ok(line.includes('nodev'));}assert.equal(existsSync('/run/secrets/github-app.pem'),false);assert.ok(Object.keys(networkInterfaces()).every(n=>n==='lo'));assert.throws(()=>writeFileSync('/etc/agentci-test','x'));writeFileSync('writable','yes');`);
   if(originalToken===undefined)delete process.env.AGENTCI_EVIDENCE_TOKEN;else process.env.AGENTCI_EVIDENCE_TOKEN=originalToken;
   assert.equal(boundary.status,'completed');assert.equal(boundary.exitCode,0);
   assert.equal((await run('process.exit(1)')).exitCode,1);

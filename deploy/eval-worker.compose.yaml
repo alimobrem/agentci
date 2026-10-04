@@ -4,12 +4,15 @@ services:
   eval-worker:
     image: ${AGENTCI_EVAL_WORKER_IMAGE:?Set immutable evaluator service image}
     user: "1001:0"
-    group_add: ["${AGENTCI_DOCKER_SOCKET_GID:?Set evaluator daemon socket group}"]
+    group_add: ["${AGENTCI_CONTAINER_SOCKET_GID:-${AGENTCI_DOCKER_SOCKET_GID:?Set evaluator engine socket group}}"]
     read_only: true
-    tmpfs: ["/tmp:rw,nosuid,nodev,size=128m"]
+    tmpfs: ["/tmp:rw,nosuid,nodev,size=128m", "/opt/agentci/podman-runtime:rw,nosuid,nodev,size=16m,mode=0700,uid=1001,gid=0"]
     cap_drop: [ALL]
     security_opt: [no-new-privileges:true]
     environment:
+      AGENTCI_CONTAINER_ENGINE: ${AGENTCI_CONTAINER_ENGINE:-podman}
+      CONTAINER_HOST: unix:///run/agentci/engine.sock
+      DOCKER_HOST: unix:///run/agentci/engine.sock
       AGENTCI_REPOSITORY: ${AGENTCI_REPOSITORY:?Set repository scope}
       AGENTCI_ORGANIZATION_ID: ${AGENTCI_ORGANIZATION_ID:?Set organization UUID}
       AGENTCI_EVAL_DATABASE_URL: ${AGENTCI_EVAL_DATABASE_URL:?Set restricted evaluator database URL}
@@ -22,8 +25,8 @@ services:
       AGENTCI_EVAL_PROVIDERS_FILE: /run/secrets/eval-providers.json
     volumes:
       - type: bind
-        source: ${AGENTCI_DOCKER_SOCKET_PATH:-/var/run/docker.sock}
-        target: /var/run/docker.sock
+        source: ${AGENTCI_CONTAINER_SOCKET_PATH:-${AGENTCI_DOCKER_SOCKET_PATH:-/run/user/1001/podman/podman.sock}}
+        target: /run/agentci/engine.sock
         bind: { create_host_path: false }
       - type: bind
         source: ${AGENTCI_EVAL_PROVIDERS_FILE:?Set private provider JSON path}

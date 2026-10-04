@@ -1,3 +1,4 @@
+import {containerEngine} from '../../packages/evals/runner.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {spawn,execFile} from 'node:child_process';
@@ -10,7 +11,7 @@ import {evalSuite} from '../fixtures/evals.ts';
 const image=process.env.AGENTCI_TEST_RUNNER_IMAGE;
 if(!image)throw new Error('Orphan recovery requires a real immutable runner image; never silently skip');
 const execute=promisify(execFile);
-const docker=async(args:string[])=>(await execute('docker',args,{encoding:'utf8',timeout:30000,maxBuffer:65536})).stdout.trim();
+const docker=async(args:string[])=>(await execute(containerEngine(),args,{encoding:'utf8',timeout:30000,maxBuffer:65536})).stdout.trim();
 test('SIGKILL leaves a live eval container; recovery removes only prior owners of the exact unit',{timeout:60000},async()=>{
   const unitId=randomUUID(),oldToken=randomUUID(),newToken=randomUUID(),otherId=randomUUID();
   const suite=evalSuite({runner:{adapter:'command',command:['node','wait.mjs'],timeoutMs:30000},trials:{count:1,passRate:1,confidenceMethod:'wilson'}});

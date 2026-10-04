@@ -1,5 +1,5 @@
 import {readFile,stat} from 'node:fs/promises';
-import {validateRunnerPolicy,type RunnerPolicy} from '../../packages/evals/runner.ts';
+import {validateRunnerPolicy,containerEngine,type RunnerPolicy} from '../../packages/evals/runner.ts';
 import {validateHttpProvider,type HttpProviderPolicy} from '../../packages/evals/http.ts';
 /** Deliberately independent of the controller runtime configuration and its App credentials. */
 export async function evalWorkerConfig(env:NodeJS.ProcessEnv=process.env){
@@ -11,6 +11,7 @@ export async function evalWorkerConfig(env:NodeJS.ProcessEnv=process.env){
   const databaseUrl=required('AGENTCI_EVAL_DATABASE_URL');
   let url:URL;try{url=new URL(databaseUrl);}catch{throw new Error('Invalid eval database URL');}
   if(!['postgres:','postgresql:'].includes(url.protocol)||!url.hostname||url.hash)throw new Error('Invalid eval database URL');
+  const engine=containerEngine(env.AGENTCI_CONTAINER_ENGINE??'podman');
   const image=required('AGENTCI_EVAL_RUNNER_IMAGE'),enginesImage=env.AGENTCI_EVAL_ENGINES_IMAGE;
   validateRunnerPolicy({image});if(enginesImage)validateRunnerPolicy({image:enginesImage});
   let providers:HttpProviderPolicy[]=[];
@@ -24,7 +25,7 @@ export async function evalWorkerConfig(env:NodeJS.ProcessEnv=process.env){
   }
   const policyFor=(adapter:string):RunnerPolicy=>{
     if(['promptfoo','deepeval'].includes(adapter)&&!enginesImage)throw new Error('Optional engine runner is not configured');
-    return {image:['promptfoo','deepeval'].includes(adapter)?enginesImage!:image,httpProviders:providers};
+    return {engine,image:['promptfoo','deepeval'].includes(adapter)?enginesImage!:image,httpProviders:providers};
   };
   return {repository,organizationId,databaseUrl,temporalAddress:required('TEMPORAL_ADDRESS'),namespace:env.TEMPORAL_NAMESPACE??'default',taskQueue:'agentci-eval-v1',policyFor};
 }

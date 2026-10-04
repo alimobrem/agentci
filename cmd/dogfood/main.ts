@@ -1,3 +1,4 @@
+import {containerEngine} from '../../packages/evals/runner.ts';
 import {readFile,writeFile,mkdir,open,rm,stat} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';import {randomUUID,createHash} from 'node:crypto';import {execFileSync,spawnSync} from 'node:child_process';
 import {Pool} from 'pg';import {Client,Connection} from '@temporalio/client';import {NativeConnection,Worker} from '@temporalio/worker';
@@ -14,7 +15,8 @@ const producer:HostedProducer={version:VERSION,sourceCommit:execFileSync('git',[
 const output='.agentci/artifacts/dogfood',organizationId='00000000-0000-4000-8000-000000000001';
 const github=installationClient(appId,installationId,await readFile(process.env.GITHUB_PRIVATE_KEY_FILE!,'utf8'));
 const [owner,repo]=repository.split('/') as [string,string];
-const docker=(args:string[])=>{try{return execFileSync('docker',args,{encoding:'utf8',timeout:60000,stdio:['pipe','pipe','pipe']}).trim();}catch{throw new Error('Hosted evaluator Docker operation unavailable');}};
+const engine=containerEngine();
+const container=(args:string[])=>{try{return execFileSync(engine,args,{encoding:'utf8',timeout:60000,stdio:['pipe','pipe','pipe']}).trim();}catch{throw new Error('Hosted evaluator container operation unavailable');}};
 if(process.argv[2]==='publish'){
  const artifact=process.env.AGENTCI_ARTIFACT_URL??'';
  const reportPath=`${output}/reviews.json`;if((await stat(reportPath)).size>16*1024*1024)throw new Error('Hosted report exceeds retention budget');
@@ -42,14 +44,18 @@ if(process.argv[2]==='publish'){
   await pool.query(`CREATE ROLE ${login} LOGIN PASSWORD '${password}' NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS IN ROLE agentci_eval_executor`);
   const evaluatorUrl=new URL(process.env.DATABASE_URL!);evaluatorUrl.username=login;evaluatorUrl.password=password;
   const evaluatorImage=producer.evaluatorImage;controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:evaluatorImage});
-  const env={AGENTCI_REPOSITORY:repository,AGENTCI_ORGANIZATION_ID:organizationId,AGENTCI_EVAL_DATABASE_URL:evaluatorUrl.href,TEMPORAL_ADDRESS:process.env.TEMPORAL_ADDRESS!,AGENTCI_EVAL_RUNNER_IMAGE:policy.image,...(policy.enginesImage?{AGENTCI_EVAL_ENGINES_IMAGE:policy.enginesImage}:{})};
+  const env={AGENTCI_CONTAINER_ENGINE:engine,CONTAINER_HOST:'unix:///run/agentci/engine.sock',DOCKER_HOST:'unix:///run/agentci/engine.sock',AGENTCI_REPOSITORY:repository,AGENTCI_ORGANIZATION_ID:organizationId,AGENTCI_EVAL_DATABASE_URL:evaluatorUrl.href,TEMPORAL_ADDRESS:process.env.TEMPORAL_ADDRESS!,AGENTCI_EVAL_RUNNER_IMAGE:policy.image,...(policy.enginesImage?{AGENTCI_EVAL_ENGINES_IMAGE:policy.enginesImage}:{})};
   if(Object.values(env).some(v=>!v||/[\r\n\0]/.test(v)))throw new Error('Invalid hosted evaluator environment');
   await writeFile(evaluatorEnv,Object.entries(env).map(([k,v])=>`${k}=${v}`).join('\n')+'\n',{mode:0o600});
-  const socketGid=docker(['run','--rm','--network','none','--read-only','-v','/var/run/docker.sock:/var/run/docker.sock','--entrypoint','node',evaluatorImage,'-e',"const s=require('node:fs').statSync('/var/run/docker.sock');if(!s.isSocket())process.exit(1);console.log(s.gid)"]);
+  const socket=process.env.AGENTCI_CONTAINER_SOCKET_PATH??(engine==='docker'?'/var/run/docker.sock':`/run/user/${process.getuid!()}/podman/podman.sock`);
+  if(!/^\/[A-Za-z0-9_./-]+$/.test(socket))throw new Error('Invalid operator evaluator socket path');
+  const serviceNamespace=engine==='podman'?['--userns','keep-id:uid=1001,gid=0']:[];
+  const clientRuntime=engine==='podman'?['--mount','type=tmpfs,destination=/opt/agentci/podman-runtime,tmpfs-size=16m,tmpfs-mode=0700,U=true,tmpcopyup=false']:['--tmpfs','/opt/agentci/podman-runtime:rw,nosuid,nodev,size=16m,mode=0700,uid=1001,gid=0'];
+  const socketGid=container(['run','--rm','--network','none','--read-only',...serviceNamespace,...clientRuntime,'-v',`${socket}:/run/agentci/engine.sock`,'--entrypoint','node',evaluatorImage,'-e',"const s=require('node:fs').statSync('/run/agentci/engine.sock');if(!s.isSocket())process.exit(1);console.log(s.gid)"]);
   if(!/^\d+$/.test(socketGid))throw new Error('Invalid evaluator socket group');
   evaluator=`agentci-hosted-evaluator-${randomUUID()}`;
-  docker(['run','-d','--name',evaluator,'--network','host','--read-only','--tmpfs','/tmp:rw,nosuid,nodev,size=128m','--cap-drop','ALL','--security-opt','no-new-privileges','--group-add',socketGid,'--env-file',evaluatorEnv,'-v','/var/run/docker.sock:/var/run/docker.sock',evaluatorImage]);
-  let ready=false;for(let i=0;i<60;i++){const captured=spawnSync('docker',['logs',evaluator],{encoding:'utf8',timeout:10000,maxBuffer:1024*1024}),logs=captured.stdout+captured.stderr;if(captured.status===0&&logs.includes("state: 'RUNNING'")){ready=true;break;}if(docker(['inspect','--format','{{.State.Running}}',evaluator])!=='true')break;await new Promise(r=>setTimeout(r,1000));}
+  container(['run','-d','--name',evaluator,'--network','host','--read-only','--tmpfs','/tmp:rw,nosuid,nodev,size=128m','--cap-drop','ALL','--security-opt','no-new-privileges','--group-add',socketGid,'--env-file',evaluatorEnv,...serviceNamespace,...clientRuntime,'-v',`${socket}:/run/agentci/engine.sock`,evaluatorImage]);
+  let ready=false;for(let i=0;i<60;i++){const captured=spawnSync(engine,['logs',evaluator],{encoding:'utf8',timeout:10000,maxBuffer:1024*1024}),logs=captured.stdout+captured.stderr;if(captured.status===0&&logs.includes("state: 'RUNNING'")){ready=true;break;}if(container(['inspect','--format','{{.State.Running}}',evaluator])!=='true')break;await new Promise(r=>setTimeout(r,1000));}
   if(!ready)throw new Error('Separate hosted evaluator did not become ready');
   connection=await Connection.connect({address:process.env.TEMPORAL_ADDRESS});native=await NativeConnection.connect({address:process.env.TEMPORAL_ADDRESS});const client=new Client({connection}),queue=`agentci-hosted-${randomUUID()}`;
   worker=await Worker.create({connection:native,taskQueue:queue,workflowsPath:fileURLToPath(new URL('../../apps/worker/workflows.js',import.meta.url)),activities:createHostedReviewActivities(github,store,evals,{repository,installationId},policy)});running=worker.run();
@@ -76,7 +82,7 @@ if(process.argv[2]==='publish'){
   try{worker?.shutdown();await running;}
   catch{report.failed=true;process.exitCode=1;for(const review of report.reviews)if(review.status==='completed')review.status='unavailable';console.error('Hosted controller shutdown unavailable.');}
   finally{
-   try{if(evaluator){try{docker(['stop','--time','20',evaluator]);}finally{docker(['rm','--force','--volumes',evaluator]);}}}
+   try{if(evaluator){try{container(['stop','--time','20',evaluator]);}finally{container(['rm','--force','--volumes',evaluator]);}}}
    catch{report.failed=true;process.exitCode=1;for(const review of report.reviews)if(review.status==='completed')review.status='unavailable';console.error('Hosted evaluator cleanup unavailable.');}
    finally{await rm(evaluatorEnv,{force:true});await native?.close();await connection?.close();await pool.end();await mkdir(output,{recursive:true});const encoded=JSON.stringify(report,null,2)+'\n';if(Buffer.byteLength(encoded)>16*1024*1024)throw new Error('Hosted report exceeds retention budget');await writeFile(`${output}/reviews.json`,encoded);}
   }
