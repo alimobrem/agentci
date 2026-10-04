@@ -55,7 +55,7 @@ export class EvalStore {
   private scope='j.repository=$2 AND EXISTS(SELECT 1 FROM agentci_scope s WHERE s.id=1 AND s.repository=$2 AND s.organization_id=$3::uuid)';
   async stage(reviewId:string,attemptKey:string,base:Snapshot,head:Snapshot,units:EvalUnitDefinition[],plan:EvalPlan):Promise<{id:string;unitIds:string[]}> {
     await this.ready();
-    if(!uuid(reviewId)||!uuid(attemptKey)||base.sha===head.sha||!units.length||units.length>10000)throw new Error('Invalid eval job identity or unit count');
+    if(!uuid(reviewId)||!uuid(attemptKey)||base.sha===head.sha||units.length>10000)throw new Error('Invalid eval job identity or unit count');
     if(!plan||Object.keys(plan).some(k=>!['suiteChanges','coverageGaps','selectionGaps'].includes(k))||!['suiteChanges','coverageGaps','selectionGaps'].every(k=>Array.isArray(plan[k as keyof EvalPlan])))throw new Error('Invalid eval plan');
     const definitions=units.map(definition),keys=definitions.map(u=>`${u.suite.metadata.id}\0${u.model??''}\0${u.side}`);
     if(new Set(keys).size!==keys.length)throw new Error('Duplicate eval unit');

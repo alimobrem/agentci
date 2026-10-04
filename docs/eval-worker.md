@@ -105,3 +105,25 @@ Native AMD64 CI run 37190707698 passed this packaged runtime probe and the
 full source verification. [Its evidence](../releases/m2-eval-worker-ci.json)
 records the exact candidate/CI tree, artifact ID and SHA256, worker image ID,
 runtime assertions and each image scan. Publication remains a separate gate.
+
+## Controller staging candidate
+
+The separate controller activity `stageEvalReview` fetches both exact Git commits,
+compiles the selected comparison plan, and stores projected snapshots before
+returning only review, comparison and unit UUIDs. Existing suites use baseline
+assertions, models and thresholds for both subjects; newly added suites execute
+on head only. Zero selected suites still produce retained comparison evidence,
+including uncovered requirements. An attempt UUID identifies one immutable plan;
+retrying with changed inputs or runner provenance fails explicitly.
+
+The operator supplies `AGENTCI_EVAL_RUNNER_IMAGE` and optional
+`AGENTCI_EVAL_ENGINES_IMAGE` as immutable pins. Public HTTP identities use
+`AGENTCI_EVAL_PROVIDER_IDENTITIES`, a JSON array of `{id,revision}` entries only.
+Provider endpoints and authentication remain private evaluator configuration.
+`AGENTCI_EVAL_MAX_UNITS` defaults to 128 (maximum 512), and
+`AGENTCI_EVAL_MAX_TOTAL_TRIALS` defaults to 2000 (maximum 100000), summed across
+every selected suite, model and subject. Exceeding a budget fails before staging.
+
+This activity is not yet registered in the controller or connected to a parent
+workflow. Local acceptance uses a real HTTP Git fixture and PostgreSQL; live App
+dispatch, stale-PR publication protection and customer PR acceptance remain open.

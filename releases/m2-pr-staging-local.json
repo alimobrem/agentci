@@ -1,0 +1,38 @@
+{
+  "kind": "M2-PR-staging-local-checkpoint",
+  "recordedAt": "2026-10-04T10:09:32.028408+00:00",
+  "parentCommit": "e4bfadb9823bbd660641159d37b203ed9eb60050",
+  "releaseAcceptance": false,
+  "files": {
+    "packages/evals/orchestration.ts": "79d72250e629a420fc1fb7c4a55fa318e88ef77debfe5c52f0e47f4b4e93f7c4",
+    "apps/worker/eval-activities.ts": "156c096325551b0e6743dd7ed68c3b5fcc5ffe5b68176c4d24e054ef94d83296",
+    "packages/storage/evals.ts": "15a9583b54c6bc093d5f0cf7929891181ced91f332e6263c3338c5b8e3d8c9d4",
+    "tests/eval-orchestration.test.ts": "931de9f2ba2bbf498ae825ae657f8d2e017d0738209780a63b03e7793d269863",
+    "tests/integration/eval-review-staging.test.ts": "20e0be7ad4a9c495ff63f918f61d392a546a137b14658f96d8dfe80c85391f97",
+    "specs/api/eval-review-operations.json": "438d04f05ce6ece8069195770051139831356fecd8611fbc329028ede71b5446"
+  },
+  "verification": {
+    "fastChecks": 8,
+    "unitApiDomainTests": 117,
+    "realIntegration": "Actual HTTP Git fixture plus PostgreSQL staging group passed; exact immutable objects, model/side expansion, retry identity, attempt conflict, scope and sanitized failure assertions; no skips. No live GitHub claim.",
+    "historyPayload": "Only review/comparison/unit UUIDs returned; SDK error request/header/response/cause omitted."
+  },
+  "failedLocalAttempts": [
+    {
+      "scope": "initial compiler tests",
+      "result": "Missing specification fixture; corrected fixture, all 3 tests pass."
+    },
+    {
+      "scope": "optional engine compiler fixture",
+      "result": "Incorrect adapter fixture fields; corrected to the actual command/report contract."
+    },
+    {
+      "scope": "initial PostgreSQL staging fixture",
+      "result": "Expected insufficient for prompt-only no-evals input; added an actual uncovered requirement and verified retained gap."
+    }
+  ],
+  "limitations": [
+    "Parent workflow activity registration and child dispatch are not implemented.",
+    "Live App/customer PR publication, final-source CI, packaging, downloads and all M2 release gates remain open."
+  ]
+}

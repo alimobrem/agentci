@@ -833,12 +833,33 @@
         "SPEC-40-035",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T09:37:02.720Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T10:04:40.760Z",
       "acceptance": [
         {
           "text": "Valid large comparison evidence remains fully consumable using bounded snapshot-consistent traversal or export; stale snapshots have explicit retry semantics, no result loss/truncation or false passing summary, and real persistence/API/installed-client tests verify capacity before phase closure.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-comparison-export-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-PR-STAGING",
+      "title": "Stage exact PR comparison plans with operator provenance and budgets",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039",
+        "SPEC-11.2-001"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T09:59:22.196Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Controller compiles exact Git base/head plans, freezes baseline suites for both subjects, keeps added suites head-only, expands every configured model variant, pins operator runner/provider identities and enforces total budgets. Scoped staging is idempotent by review/attempt, retains zero-selected/gapped plans, returns only identifiers to workflow history, and real provider/PostgreSQL acceptance verifies retry and identity conflicts before child dispatch.",
           "status": "pending",
           "evidence": []
         }

@@ -1,0 +1,132 @@
+{
+  "kind": "M2-source-verified-CI-checkpoint",
+  "candidateCommit": "e4bfadb9823bbd660641159d37b203ed9eb60050",
+  "ciCommit": "f83c6289b0ef5d0d03a8fcf16f93cb14787f3265",
+  "verifiedTree": "dea02b2055e89231bc29de2ec257c17266572c66",
+  "run": {
+    "id": 37193637907,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37193637907",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11300420253,
+    "name": "m1-verification",
+    "sha256": "9b016e7e5587e57e7ab67b5fd9f8a99c18d0d48f0d13663d97f3a2e7b8eb5517"
+  },
+  "verification": {
+    "unitApiDomainTests": 114,
+    "integrationGroups": 10,
+    "skips": 0,
+    "apiCompatibility": 0,
+    "runtime": {
+      "result": "passed",
+      "version": "ci",
+      "platform": "x64",
+      "checks": [
+        "non-root API/worker startup",
+        "M2 schema readiness",
+        "signature rejection",
+        "evidence authentication",
+        "comparison authentication/UUID/scoped lookup",
+        "compiled comparison API/client reads actual queued database evidence",
+        "compiled snapshot export/client completion",
+        "signed closed delivery",
+        "non-root persistent Temporal database startup/restart",
+        "graceful shutdown"
+      ],
+      "github": "synthetic credentials; no live GitHub review claimed"
+    },
+    "evalWorkerRuntime": {
+      "result": "passed",
+      "platform": "linux/amd64",
+      "workerImage": "sha256:7185a08f70c91ea6d7d1754ba26eb050cba0251edbcf674d307ae20ea1b1b972",
+      "runnerImage": "sha256:0ed0c72f716615302556f02909e0b1030ad3519ceeed53e536bda91dc62a61da",
+      "uid": 1001,
+      "node": "v26.10.0",
+      "cli": "Docker version 29.8.2, build 7fc2dff",
+      "license": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+      "checks": [
+        "UBI non-root read-only runtime",
+        "no package installers/App keys",
+        "official pinned Docker CLI compatibility",
+        "separately authenticated restricted database login",
+        "real Temporal workflow and isolated child execution",
+        "child has no database/App/socket credentials",
+        "behavioral failure preserved",
+        "worker graceful shutdown/restart",
+        "all owned children removed"
+      ],
+      "github": "no live GitHub publication claimed"
+    },
+    "scans": [
+      {
+        "path": "scan-results/api.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "findings": 1,
+        "issues": [
+          {
+            "id": "CVE-2026-85393",
+            "severity": "HIGH",
+            "package": "node-forge",
+            "fixed": null
+          }
+        ]
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-worker.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/worker.json",
+        "findings": 0,
+        "issues": []
+      }
+    ],
+    "declaredArtifacts": [
+      {
+        "path": ".agentci/artifacts/eval-worker-image-smoke.json",
+        "sha256": "bb9630cc41e7167d3891510f6ba035301e473f576c610fb8cf176ca8e72c4303"
+      },
+      {
+        "path": "releases/agentci-0.3.0-m2.tgz",
+        "sha256": "b1ae7710f37daa2359fe7d4742f25dcf28222bc33fdda4040df1b07e5c7ffb17"
+      },
+      {
+        "path": "scan-results/api.json",
+        "sha256": "597281d8f261843ab1b7d886dfc6aac9285cdf7284053a9675fc91cb2a2d59c5"
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "sha256": "a43ed4bbc9f7a81b9d84cd5a20af1d9500502288e640f30a867808b247478632"
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "sha256": "2ec53991684923bec1d15e20ba89e0f2d656cdaab46e1be8c88798cdc7e1852a"
+      },
+      {
+        "path": "scan-results/eval-worker.json",
+        "sha256": "757ae1b11b109bb3c90a52606cd58fb632380639e1e1650f24eeed05f9dfad85"
+      },
+      {
+        "path": "scan-results/worker.json",
+        "sha256": "fb0c38cd820f0a766508c512ffd5d11d846565f6ba5635cd93f185d579677860"
+      }
+    ]
+  },
+  "limitations": [
+    "Subsequent PR orchestration work is not covered by this source; inline and streamed comparison APIs are covered.",
+    "optional engine HIGH and scanner coverage assessment remain open",
+    "customer PR integration, publication, downloads and all M2 release gates remain open"
+  ]
+}

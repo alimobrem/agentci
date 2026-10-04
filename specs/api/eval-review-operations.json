@@ -1,0 +1,17 @@
+{
+  "apiVersion": "agentci.io/v1alpha1",
+  "transport": "Temporal internal controller activity; no public HTTP operation",
+  "taskQueue": "agentci-review-v1",
+  "operations": [
+    {
+      "operationId": "stageEvalReview",
+      "type": "activity",
+      "input": "Repository/installation-scoped PR number and exact base/head SHAs, plus immutable review-attempt UUID",
+      "output": "Review UUID, comparison UUID and eval-unit UUIDs only",
+      "requirementIds": ["SPEC-40-037", "SPEC-40-039", "SPEC-11.2-001"],
+      "tests": ["tests/eval-orchestration.test.ts", "tests/integration/eval-review-staging.test.ts"],
+      "scenarios": ["exact Git object integrity", "frozen baseline suites/models/thresholds", "head-only added suites", "operator runner/provider provenance", "total trial and unit budgets", "idempotent attempt retry", "immutable attempt conflict", "zero selected suites with explicit coverage gaps", "scope rejection before remote IO", "credential-free SDK failures"]
+    }
+  ],
+  "releaseState": "M2 candidate activity implementation only; parent workflow registration/dispatch and all milestone release gates remain pending"
+}
