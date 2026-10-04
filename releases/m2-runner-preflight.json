@@ -1,0 +1,24 @@
+{
+  "kind": "local-preflight",
+  "sourceCommit": "13768de66a7ae893980bc8b9ca10bac4f1ba5b7e",
+  "verifiedAt": "2026-10-04T05:48:29.527934+00:00",
+  "platform": "linux/arm64 (Colima on macOS)",
+  "runnerImageId": "sha256:f381b6442580efc76e3789243feffdb9f99727afcfea2c0af9b4124f2b8ae820",
+  "unitApiAdapterTests": 83,
+  "realContainerIntegrationTests": 2,
+  "result": "passed",
+  "assertions": [
+    "non-root/read-only-root/no-network/no-host-mounts/no-controller-secrets",
+    "native pass and failure, unavailable command",
+    "pytest pass/fail/skip/no-tests/collection-error",
+    "timeout/cancellation/output-limit",
+    "escaping and oversized report rejection",
+    "all created containers removed",
+    "three baseline passes versus three head failures, same suite revision and exact commit comparison"
+  ],
+  "packageSmoke": "passed production-only candidate CLI/client/init/setup/validation",
+  "apiCompatibility": "passed against actual released M1 baseline",
+  "fullCiComplete": false,
+  "publishedRelease": false,
+  "note": "Local checkpoint only. Full CI/scans, durable orchestration, plugins, customer PR evidence and every M2 release gate remain required."
+}
