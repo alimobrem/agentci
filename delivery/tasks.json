@@ -1208,6 +1208,25 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M2-DOWNLOAD-ACCEPTANCE",
+      "title": "Verify anonymous downloads and native runtime acceptance for all M2 images",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-034",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T18:03:23.197Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Pull all six public role digests anonymously; bind source/version/native platform identities; execute actual API/worker/eval-worker and mandatory runner/optional-engine/self-eval integration on native amd64 and arm64. Retain per-platform download and failure/recovery evidence before completion.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
