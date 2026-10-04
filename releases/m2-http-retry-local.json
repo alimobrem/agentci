@@ -1,0 +1,70 @@
+{
+  "kind": "M2-HTTP-retry-and-migration-recovery-local-checkpoint",
+  "recordedAt": "2026-10-04T08:36:03.676Z",
+  "parentCommit": "ecc9c08c9f45d5e1360beba9f40c5afc6793a694",
+  "releaseAcceptance": false,
+  "files": {
+    "packages/evals/request-id.ts": "a28dd82f5e2404c2e01568a933c4d1b8165f5045801da576aae206ebe824513c",
+    "packages/evals/http.ts": "4d492cfa9024a503d8a6e1b691360a9d2cb881fe910d155a914f7024c7aa2fa4",
+    "packages/evals/execution.ts": "1ef46838fbf8973db239b0b625c60741b51066b6e5cd7e8612042c35bd6648cc",
+    "apps/eval-worker/unit.ts": "54ae5e77f5e423f76ed0a489ac30142d25b7e9b70bfe6feec63655608be0fdce",
+    "deploy/migrations/002_m2.sql": "164cfb3a398b225706766cde13d6ef98a0c7e35933b94e27a26b1dd17a1e2d3c",
+    "tests/eval-request-id.test.ts": "f8f8f97f96cdefafd52da6e9046a8b30a831612fcf5ee48b7c4d6e4f1cf45a1b",
+    "tests/integration/eval-http-recovery.test.ts": "69d5f116cba7fd1d6465c61a4785aee9b6b69c08326977d5c7c6f5acd2ec6bc5",
+    "tests/integration/eval-storage.test.ts": "ed5e1f627cbc23e96f2a44d3234ce3e3de8aa6df6380a3ea17cb4a896ddafaea",
+    "tests/integration/eval-temporal.test.ts": "e18175d92730f2aaf13b3aed56db856c0bc0baa11ea6415f80e549301e4f4591",
+    "tests/integration/eval-migrations.test.ts": "2469cd317057fd7ea641039b21b7d7380773f134446e5981bb41fe963f9c16ac"
+  },
+  "verification": {
+    "fastChecks": 8,
+    "fastPassed": true,
+    "integrationGroups": 10,
+    "passed": 10,
+    "skipped": 0,
+    "durationMs": 8105.809208,
+    "platform": "linux/arm64",
+    "note": "Full suite passed; final migration timeout typing correction also tested separately.",
+    "checks": [
+      "RFC SHA-256 name-based UUIDv8 vector",
+      "real HTTPS/PostgreSQL retry before checkpoint reuses provider cached result",
+      "interruption after checkpoint produces no redispatch for retained trial",
+      "distinct unit/trial IDs; conflicting payload rejected; invalid UUID not dispatched",
+      "HTTP units operate without Docker cleanup calls",
+      "unit-specific Docker cleanup refusal leaves actual container and prevents evidence; new owner recovers",
+      "checksummed one-time migration skips trigger replacement while writer locks held",
+      "altered SQL body and applied migration checksum rejected",
+      "all existing Temporal retry/cancel/shutdown/replay groups remain passing"
+    ]
+  },
+  "localRework": [
+    {
+      "attempt": 1,
+      "result": "failure",
+      "reported": "cleanup of nonexistent test role masked setup error"
+    },
+    {
+      "attempt": 2,
+      "result": "failure",
+      "code": "40P01",
+      "cause": "repeated trigger DDL conflicted with concurrent eval job/unit writes"
+    },
+    {
+      "attempt": 3,
+      "result": "passed",
+      "correction": "one-time checksummed migration, test cleanup guarded by actual role creation"
+    },
+    {
+      "check": "fast types",
+      "result": "failure",
+      "cause": "query_timeout not supported by QueryConfig types",
+      "correction": "server statement_timeout regression check",
+      "corrected": "passed"
+    }
+  ],
+  "limitations": [
+    "final-source full CI pending",
+    "provider downstream billing/execution deduplication is a provider obligation; no exactly-once guarantee",
+    "published UBI eval-worker image and Docker CLI adoption pending",
+    "durable PR/API integration and all M2 release gates remain open"
+  ]
+}

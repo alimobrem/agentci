@@ -30,7 +30,7 @@ export async function executeStoredUnit(store:EvalStore,id:string,policy:RunnerP
   let failure:unknown,completedTrials=0,maintenance:Promise<void>|undefined;
   const maintain=async()=>{
     await store.renew(id,token,seconds);
-    await store.withLease(id,token,()=>reapPriorEvalContainers(ownership));
+    if(!provider)await store.withLease(id,token,()=>reapPriorEvalContainers(ownership));
     options.heartbeat?.({unitId:id,completedTrials});
   };
   const timer=setInterval(()=>{

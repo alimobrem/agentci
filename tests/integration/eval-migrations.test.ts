@@ -12,9 +12,18 @@ test('three concurrent callers initialize and repeat migrations on a fresh datab
     const results=await Promise.allSettled(pools.map(apply));for(const result of results)if(result.status==='rejected')throw result.reason;
     await Promise.all(pools.map(apply));
     const tables=(await pools[0]!.query("SELECT tablename FROM pg_tables WHERE schemaname='public' AND tablename LIKE 'agentci_%' ORDER BY tablename")).rows.map(row=>row.tablename);
-    assert.deepEqual(tables,['agentci_deliveries','agentci_eval_jobs','agentci_eval_trials','agentci_eval_units','agentci_jobs','agentci_reviews','agentci_scope']);
+    assert.deepEqual(tables,['agentci_deliveries','agentci_eval_jobs','agentci_eval_trials','agentci_eval_units','agentci_jobs','agentci_reviews','agentci_schema_migrations','agentci_scope']);
     assert.equal((await pools[0]!.query("SELECT count(*)::int AS count FROM pg_trigger WHERE tgname IN('agentci_eval_job_immutable','agentci_eval_unit_immutable','agentci_eval_trial_immutable')")).rows[0].count,3);
     const privileges=(await pools[0]!.query("SELECT has_table_privilege('agentci_eval_executor','agentci_eval_trials','INSERT') AS checkpoint,has_table_privilege('agentci_eval_executor','agentci_reviews','SELECT') AS controller")).rows[0];
     assert.deepEqual(privileges,{checkpoint:true,controller:false});
+    await pools[1]!.query('BEGIN');await pools[1]!.query('LOCK TABLE agentci_eval_jobs,agentci_eval_units IN ROW EXCLUSIVE MODE');
+    await pools[0]!.query("SET statement_timeout='1s'");
+    try{await pools[0]!.query(migrations[1]!);}finally{await pools[1]!.query('ROLLBACK');await pools[0]!.query('ROLLBACK');await pools[0]!.query('SET statement_timeout=0');}
+    const altered=migrations[1]!.replace('-- BEGIN CHECKSUMMED MIGRATION BODY\n','-- BEGIN CHECKSUMMED MIGRATION BODY\n-- changed source\n');
+    await assert.rejects(pools[0]!.query(altered),/source checksum mismatch/);await pools[0]!.query('ROLLBACK');
+    const checksum=(await pools[0]!.query("SELECT checksum FROM agentci_schema_migrations WHERE version='002_m2'")).rows[0].checksum;
+    await pools[0]!.query("UPDATE agentci_schema_migrations SET checksum=repeat('0',64) WHERE version='002_m2'");
+    await assert.rejects(pools[0]!.query(migrations[1]!),/checksum mismatch/);await pools[0]!.query('ROLLBACK');
+    await pools[0]!.query("UPDATE agentci_schema_migrations SET checksum=$1 WHERE version='002_m2'",[checksum]);await apply(pools[0]!);
   }finally{await Promise.all(pools.map(pool=>pool.end()));if(created)await admin.query(`DROP DATABASE ${name}`);await admin.end();}
 });

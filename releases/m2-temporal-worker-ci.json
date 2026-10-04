@@ -1,0 +1,100 @@
+{
+  "kind": "M2-Temporal-worker-CI-checkpoint",
+  "candidateCommit": "ecc9c08c9f45d5e1360beba9f40c5afc6793a694",
+  "ciCommit": "4d49581c90fe5ddd2fda3d1fef8d4fae5ea34a60",
+  "verifiedTree": "a346508f6f855330f10a15750b939bbb413bc1f9",
+  "run": {
+    "id": 37188454333,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37188454333",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11297652657,
+    "name": "m1-verification",
+    "sha256": "7a1d397634957cd29f1619047ea39e4fe262059c3528dd051d39d50a9ae3ef77",
+    "note": "Legacy name; verified source-bound M2 worker contents"
+  },
+  "verification": {
+    "unitApiDomainTests": 99,
+    "integrationGroups": 9,
+    "integrationSkipped": 0,
+    "nativePlatform": "linux/amd64",
+    "temporal": "separate restricted startup; retained trial retry; cancellation cleanup; shutdown retry; terminal unknown-unit failure; all histories replay",
+    "migrations": "fresh schema concurrent initialization and repeat passed",
+    "apiCompatibility": "released immutable M1 baseline passed",
+    "packaging": "clean production install CLI/client/setup smoke passed",
+    "runtime": {
+      "result": "passed",
+      "version": "ci",
+      "platform": "x64",
+      "checks": [
+        "non-root API/worker startup",
+        "readiness",
+        "signature rejection",
+        "evidence authentication",
+        "signed closed delivery",
+        "non-root persistent Temporal database startup/restart",
+        "graceful shutdown"
+      ],
+      "github": "synthetic credentials; no live GitHub review claimed"
+    },
+    "scans": [
+      {
+        "path": "scan-results/api.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "findings": 1,
+        "issues": [
+          {
+            "id": "CVE-2026-85393",
+            "package": "node-forge",
+            "severity": "HIGH",
+            "fixed": null
+          }
+        ]
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/worker.json",
+        "findings": 0,
+        "issues": []
+      }
+    ],
+    "declaredArtifacts": [
+      {
+        "path": "releases/agentci-0.3.0-m2.tgz",
+        "sha256": "c716c298e5b4d0dc8bf8a5f0d88b45caec5cdeb5ef041217a844d1274f5a2ab9"
+      },
+      {
+        "path": "scan-results/api.json",
+        "sha256": "06bd13969acdd0829ac173ce1cd88268aa737427e745fd5e604d50fe2696cf6e"
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "sha256": "efc32dda1a3b48044c833fa2c6a237624f95147bd00dc6a0bf1430ff5160b3ac"
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "sha256": "f40e81a50aab1d050d2a616701797967ad4129060805944e30171e923265bb2e"
+      },
+      {
+        "path": "scan-results/worker.json",
+        "sha256": "cb5cbcb1534b5f1f82cb980d6c8a3678ee57c022766b0a5ecb857196bfea84de"
+      }
+    ]
+  },
+  "limitations": [
+    "new HTTP retry identity and cleanup-refusal test changes await final-source CI",
+    "UBI eval-worker image/native distribution acceptance pending",
+    "optional engine unpatched HIGH remains for release assessment",
+    "all M2 release gates open"
+  ]
+}

@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile} from 'node:fs/promises';
+import {readFile,mkdtemp,writeFile,chmod,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 import {randomUUID,createHash} from 'node:crypto';
 import {spawn,execFile} from 'node:child_process';
 import {promisify} from 'node:util';
@@ -105,6 +107,19 @@ test('PostgreSQL eval recovery: immutable exact inputs, fenced leases, retained 
     try{await assert.rejects(executeStoredUnit(store,abortId,{image:image!},{signal:abort.signal}),/cancelled/);}finally{clearTimeout(abortTimer);}
     assert.equal((await store.unit(abortId))!.status,'cancelled');assert.equal((await store.unit(abortId))!.result,undefined);
     assert.equal(await docker(['ps','--all','--quiet','--filter',`label=agentci.eval.unit=${abortId}`]),'');
+    const cleanupSuite=evalSuite({runner:{adapter:'command',command:['node','-e','process.exit(0)'],timeoutMs:5000},trials:{count:1,passRate:1,confidenceMethod:'wilson'}});
+    const cleanupJob=await store.stage(review.id,randomUUID(),base,head,[{suite:cleanupSuite,side:'base',assertionSide:'base',runner:{runnerImage:image!}}],plan),cleanupId=cleanupJob.unitIds[0]!;
+    const wrapperDirectory=await mkdtemp(join(tmpdir(),'agentci-cleanup-refusal-')),realDocker=(await promisify(execFile)('which',['docker'],{encoding:'utf8'})).stdout.trim();
+    try{
+      const wrapper=join(wrapperDirectory,'docker');
+      await writeFile(wrapper,`#!/usr/bin/env node\nconst{execFileSync,spawnSync}=require('node:child_process');const args=process.argv.slice(2),real=${JSON.stringify(realDocker)};if(args[0]==='rm'){const target=args.at(-1);let labels={};try{labels=JSON.parse(execFileSync(real,['inspect','--format','{{json .Config.Labels}}',target],{encoding:'utf8',stdio:['ignore','pipe','ignore']}));}catch{}if(labels['agentci.eval.unit']===${JSON.stringify(cleanupId)}){process.stderr.write('Injected unit-specific cleanup refusal');process.exit(7);}}const result=spawnSync(real,args,{stdio:'inherit'});process.exit(result.status??1);\n`);await chmod(wrapper,0o755);
+      const script=`import{Pool}from'pg';import{EvalStore}from'./packages/storage/evals.ts';import{executeStoredUnit}from'./apps/eval-worker/unit.ts';const pool=new Pool({connectionString:process.env.AGENTCI_TEST_DATABASE_URL});try{await executeStoredUnit(new EvalStore(pool,${JSON.stringify(org)},${JSON.stringify(repository)}),${JSON.stringify(cleanupId)},${JSON.stringify({image})});process.exitCode=2;}catch(error){if(!error.message.includes('Runner cleanup failed'))process.exitCode=3;}finally{await pool.end();}`;
+      await promisify(execFile)(process.execPath,['--import','tsx','--input-type=module','-e',script],{env:{...process.env,PATH:wrapperDirectory+':'+process.env.PATH},timeout:30000});
+      const refused=(await store.unit(cleanupId))!;assert.equal(refused.status,'queued');assert.equal(refused.result,undefined);assert.equal(await store.trial(cleanupId,0),undefined);
+      assert.ok(await docker(['ps','--all','--quiet','--filter',`label=agentci.eval.unit=${cleanupId}`]),'cleanup refusal must leave a real container, never a successful result');
+      assert.equal((await executeStoredUnit(store,cleanupId,{image:image!})).status,'passed','recovered owner cleans the refused container before completing a new trial');
+      assert.equal(await docker(['ps','--all','--quiet','--filter',`label=agentci.eval.unit=${cleanupId}`]),'');
+    }finally{const remaining=await docker(['ps','--all','--quiet','--filter',`label=agentci.eval.unit=${cleanupId}`]);if(remaining)await docker(['rm','--force','--volumes',...remaining.split('\n')]);await rm(wrapperDirectory,{recursive:true,force:true});}
     await pool.query(await readFile(new URL('../../deploy/migrations/002_m2_eval_role.sql',import.meta.url),'utf8'));
     await assert.rejects(requireEvalPrivileges(pool),/restricted database login/);
     const login='agentci_test_eval_'+randomUUID().replaceAll('-',''),password=randomUUID()+randomUUID();

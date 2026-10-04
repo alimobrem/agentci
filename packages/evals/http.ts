@@ -32,8 +32,9 @@ export function validateHttpProvider(policy:HttpProviderPolicy):URL {
   return url;
 }
 /** No repository code is executed here. Requests go only to the operator's exact pinned destination. */
-export async function runHttpTrial(snapshot:Snapshot,value:EvalSuite,policy:HttpProviderPolicy,options:{model?:string;signal?:AbortSignal}={}):Promise<HttpTrialResult> {
+export async function runHttpTrial(snapshot:Snapshot,value:EvalSuite,policy:HttpProviderPolicy,options:{model?:string;signal?:AbortSignal;requestId?:string}={}):Promise<HttpTrialResult> {
   const suite=validateEvalSuite(value),url=validateHttpProvider(policy);
+  if(options.requestId!==undefined&&!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(options.requestId))throw new Error('Invalid HTTP eval request UUID');
   if(suite.spec.runner.adapter!=='http')throw new Error('HTTP transport requires an HTTP suite');
   if(suite.spec.runner.provider!==policy.id)throw new Error('HTTP suite and operator provider identity mismatch');
   if(suite.spec.models?.length&&!options.model)throw new Error('Model matrix requires an explicit variant');
@@ -41,7 +42,7 @@ export async function runHttpTrial(snapshot:Snapshot,value:EvalSuite,policy:Http
   const projected=projectEvalInputs(snapshot).snapshot;
   const identity={sourceSha:snapshot.sha,inputDigest:digest(canonical(projected.files)),suiteRevision:suiteRevision(suite),provider:{id:policy.id,revision:policy.revision}};
   if(options.signal?.aborted)return {...identity,status:'cancelled',error:'cancelled'};
-  const requestId=randomUUID();
+  const requestId=options.requestId??randomUUID();
   const envelope={apiVersion:'agentci.io/v1alpha1',kind:'HttpEvalRequest',requestId,sourceSha:identity.sourceSha,inputDigest:identity.inputDigest,suiteRevision:identity.suiteRevision,providerRevision:policy.revision,suite,files:projected.files,...(options.model===undefined?{}:{model:options.model})};
   validateHttpEnvelope(envelope,'request');
   const payload=Buffer.from(JSON.stringify(envelope));

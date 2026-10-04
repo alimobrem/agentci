@@ -84,3 +84,7 @@
 {"at":"2026-10-04T08:12:09.645Z","task":"M2-MIGRATION-CONCURRENCY","action":"start","sourceCommit":"f6c9bfcb1ceef546d2b930fd1b2e393322a61025","details":null}
 {"at":"2026-10-04T08:14:55.564Z","task":"M2-TEST-OWNERSHIP","action":"accept","sourceCommit":"f6c9bfcb1ceef546d2b930fd1b2e393322a61025","details":null}
 {"at":"2026-10-04T08:14:55.775Z","task":"M2-TEST-OWNERSHIP","action":"done","sourceCommit":"f6c9bfcb1ceef546d2b930fd1b2e393322a61025","details":null}
+{"at":"2026-10-04T08:19:22.154Z","task":"M2-HTTP-RETRY-IDENTITY","action":"start","sourceCommit":"ecc9c08c9f45d5e1360beba9f40c5afc6793a694","details":null}
+{"at":"2026-10-04T08:28:22.986Z","task":"M2-MIGRATION-CONCURRENCY","action":"accept","sourceCommit":"ecc9c08c9f45d5e1360beba9f40c5afc6793a694","details":null}
+{"at":"2026-10-04T08:28:23.202Z","task":"M2-MIGRATION-CONCURRENCY","action":"done","sourceCommit":"ecc9c08c9f45d5e1360beba9f40c5afc6793a694","details":null}
+{"at":"2026-10-04T08:30:48.770Z","task":"M2-MIGRATION-CONCURRENCY","action":"reopen","sourceCommit":"ecc9c08c9f45d5e1360beba9f40c5afc6793a694","details":"Broader concurrent HTTP/Temporal integration reproduced 40P01: repeated trigger DDL conflicts with eval-job writes; failed setup cleanup masked the first cause"}

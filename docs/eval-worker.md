@@ -51,7 +51,15 @@ marks it cancelled. Unknown units and mismatched operator configuration fail
 without repeated attempts. See the [Temporal cancellation contract](https://docs.temporal.io/develop/typescript/workflows/cancellation).
 
 Schema initialization serializes concurrent callers with a transaction-scoped
-advisory lock. Executor-role provisioning tolerates concurrent creation in another
+advisory lock and records a checksum-bound applied migration. Repeated setup
+validates the actual SQL body and recorded checksum without replacing live eval
+triggers; altered SQL or an applied-version mismatch requires an explicit new
+migration. The regression test holds writer locks while repeat setup succeeds. Executor-role provisioning tolerates concurrent creation in another
 database while verifying that the existing group has no elevated capabilities.
 [Internal operations](../specs/api/eval-worker-operations.json) map the workflow
 and activity to requirements and real test scenarios.
+
+Cleanup-refusal fault injection leaves a real owned container, rejects successful
+completion and retains no trial observation. A subsequent fenced owner removes
+the orphan and executes a new trial. HTTP units do not invoke the Docker cleanup
+backend; external retries use the [provider deduplication contract](http-eval-provider.md).

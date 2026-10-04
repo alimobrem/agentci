@@ -7,6 +7,7 @@ import type {Snapshot} from '../review/types.ts';
 import {baselineHarness} from './harness.ts';
 import {canonical,digest} from '../review/engine.ts';
 import {runHttpTrial,validateHttpProvider} from './http.ts';
+import {trialRequestId} from './request-id.ts';
 
 export interface TrialCheckpoint {results:Record<string,TrialResult>;diagnostic?:string}
 const diagnostics=new Set(['timeout','cancelled','error','missing-exit-code','command-execution-error','missing-report','report-limit','promptfoo-execution-error','pytest-execution-error','adapter-not-implemented','invalid-report']);
@@ -29,7 +30,7 @@ export interface ExecutionOptions {
   loadTrial?:(index:number)=>Promise<TrialCheckpoint|undefined>;
   saveTrial?:(index:number,checkpoint:TrialCheckpoint)=>Promise<void>;
 }
-type TrialExecutor=(snapshot:Snapshot,suite:EvalSuite,policy:RunnerPolicy,options:ExecutionOptions)=>Promise<RunnerResult>;
+type TrialExecutor=(snapshot:Snapshot,suite:EvalSuite,policy:RunnerPolicy,options:ExecutionOptions&{httpRequestId?:string})=>Promise<RunnerResult>;
 function httpProvider(suite:EvalSuite,policy:RunnerPolicy){
   const providerId=suite.spec.runner.adapter==='http'?suite.spec.runner.provider:undefined;
   const matches=policy.httpProviders?.filter(p=>p.id===providerId)??[];
@@ -38,7 +39,7 @@ function httpProvider(suite:EvalSuite,policy:RunnerPolicy){
 }
 const executeTrial:TrialExecutor=async(snapshot,suite,policy,options)=>{
   if(suite.spec.runner.adapter!=='http')return runIsolated(snapshot,suite,policy,options);
-  const result=await runHttpTrial(snapshot,suite,httpProvider(suite,policy),options);
+  const result=await runHttpTrial(snapshot,suite,httpProvider(suite,policy),{model:options.model,signal:options.signal,requestId:options.httpRequestId});
   const failure=result.report===undefined?false:JSON.parse(result.report).results.some((row:{status?:string}|null)=>row?.status==='failed'||row?.status==='error');
   return {sourceSha:result.sourceSha,provider:result.provider,status:result.status,exitCode:result.status==='completed'?(failure?1:0):null,...(result.report===undefined?{}:{report:result.report}),...(result.error===undefined?{}:{error:result.error})};
 };
@@ -46,6 +47,7 @@ const executeTrial:TrialExecutor=async(snapshot,suite,policy,options)=>{
 export async function executeSuite(repository:string,snapshot:Snapshot,value:EvalSuite,policy:RunnerPolicy,options:ExecutionOptions={},executor:TrialExecutor=executeTrial):Promise<EvalRun> {
   const suite=validateEvalSuite(value),maxTrials=options.maxTrials??100;
   if(options.runId!==undefined&&!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(options.runId))throw new Error('Invalid stable eval run UUID');
+  const runId=options.runId??randomUUID();
   validateRunnerPolicy(policy);
   const provider=suite.spec.runner.adapter==='http'?httpProvider(suite,policy):undefined;
   if(!Number.isSafeInteger(maxTrials)||maxTrials<1||maxTrials>1000||suite.spec.trials.count>maxTrials)throw new Error('Suite exceeds operator trial budget');
@@ -63,7 +65,7 @@ export async function executeSuite(repository:string,snapshot:Snapshot,value:Eva
     if(options.signal?.aborted)break;
     let normalized=await options.loadTrial?.(trial),cancelled=false;
     if(!normalized){
-      const result=await executor(projected.snapshot,suite,policy,options);
+      const result=await executor(projected.snapshot,suite,policy,{...options,...(provider?{httpRequestId:trialRequestId(runId,trial)}:{})});
       if(result.sourceSha!==snapshot.sha||(provider?(result.image!==undefined||result.provider?.id!==provider.id||result.provider?.revision!==provider.revision):(result.image!==policy.image||result.provider!==undefined)))throw new Error('Runner result identity mismatch');
       const value=normalizeTrial(suite,result);normalized={results:value.results,...(value.error===undefined?{}:{diagnostic:value.error})};cancelled=result.status==='cancelled';
       normalized=validateTrialCheckpoint(suite,normalized);
@@ -75,7 +77,7 @@ export async function executeSuite(repository:string,snapshot:Snapshot,value:Eva
     if(cancelled)break;
   }
   const scenarios=suite.spec.scenarios.map(s=>aggregateScenario(suite,s.id,observations[s.id]!));
-  return validateEvalRun({apiVersion:'agentci.io/v1alpha1',kind:'EvalRun',id:options.runId??randomUUID(),suite:suite.metadata.id,revision:harness.revision,subject:{repository,gitSha:snapshot.sha,assertionGitSha:assertions.sha,inputDigest:digest(canonical(projected.snapshot.files)),omittedInputs},...(provider?{runnerProvider:{id:provider.id,revision:provider.revision}}:{runnerImage:policy.image}),...(options.model===undefined?{}:{model:options.model}),trials:suite.spec.trials.count,status:combinedStatus(scenarios),scenarios,artifacts:[]});
+  return validateEvalRun({apiVersion:'agentci.io/v1alpha1',kind:'EvalRun',id:runId,suite:suite.metadata.id,revision:harness.revision,subject:{repository,gitSha:snapshot.sha,assertionGitSha:assertions.sha,inputDigest:digest(canonical(projected.snapshot.files)),omittedInputs},...(provider?{runnerProvider:{id:provider.id,revision:provider.revision}}:{runnerImage:policy.image}),...(options.model===undefined?{}:{model:options.model}),trials:suite.spec.trials.count,status:combinedStatus(scenarios),scenarios,artifacts:[]});
 }
 export interface BehavioralDelta {scenario:string;baseStatus:string;headStatus:string;passRateDelta?:number;regression:boolean;criticalFailureDelta:number}
 export function compareRuns(baseValue:EvalRun,headValue:EvalRun):{base:EvalRun;head:EvalRun;deltas:BehavioralDelta[];regressions:string[]} {

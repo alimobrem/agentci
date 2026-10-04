@@ -12,10 +12,11 @@ const org='00000000-0000-4000-8000-000000000001',repository='example/repo',sha=(
 const docker=async(args:string[])=>(await promisify(execFile)('docker',args,{encoding:'utf8',timeout:30000})).stdout.trim();
 test('separate eval worker: restricted startup, committed-trial retry, cancellation cleanup and replay',{timeout:120000},async()=>{
   const admin=new Pool({connectionString:databaseUrl}),login='agentci_test_temporal_'+randomUUID().replaceAll('-',''),password=randomUUID()+randomUUID();
-  let restricted:Pool|undefined,connection:Connection|undefined,native:NativeConnection|undefined,worker:Worker|undefined,run:Promise<void>|undefined,child:ReturnType<typeof spawn>|undefined;
+  let restricted:Pool|undefined,connection:Connection|undefined,native:NativeConnection|undefined,worker:Worker|undefined,run:Promise<void>|undefined,child:ReturnType<typeof spawn>|undefined,roleCreated=false;
   try{
     for(const name of ['001_m1.sql','002_m2.sql','002_m2_eval_role.sql'])await admin.query(await readFile(new URL(`../../deploy/migrations/${name}`,import.meta.url),'utf8'));
     await admin.query(`CREATE ROLE ${login} LOGIN PASSWORD '${password}' NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS IN ROLE agentci_eval_executor`);
+    roleCreated=true;
     const url=new URL(databaseUrl!);url.username=login;url.password=password;restricted=new Pool({connectionString:url.toString(),max:4});
     const reviewStore=new Store(admin,org,repository);await reviewStore.ready();const control=new EvalStore(admin,org,repository),store=new EvalStore(restricted,org,repository);
     const config=parseYaml(await readFile(new URL('../../agentci.yaml',import.meta.url),'utf8')) as any;config.spec.specifications.include=['specs/**'];
@@ -66,6 +67,6 @@ test('separate eval worker: restricted startup, committed-trial retry, cancellat
   }finally{
     if(child){const exited=once(child,'exit');child.kill('SIGTERM');await exited;}
     if(worker){worker.shutdown();await run;}await native?.close();await connection?.close();await restricted?.end();
-    await admin.query(`DROP OWNED BY ${login}`);await admin.query(`DROP ROLE IF EXISTS ${login}`);await admin.end();
+    if(roleCreated){await admin.query(`DROP OWNED BY ${login}`);await admin.query(`DROP ROLE IF EXISTS ${login}`);}await admin.end();
   }
 });

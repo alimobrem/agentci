@@ -1,5 +1,24 @@
 BEGIN;
 SELECT pg_advisory_xact_lock(hashtextextended('agentci:schema-migrations',0));
+CREATE TABLE IF NOT EXISTS agentci_schema_migrations (
+  version text PRIMARY KEY, checksum text NOT NULL CHECK(checksum ~ '^[a-f0-9]{64}$'),
+  applied_at timestamptz NOT NULL DEFAULT clock_timestamp()
+);
+DO $migration$
+DECLARE applied text; source_body text;
+BEGIN
+  source_body := substring(current_query() from E'-- BEGIN CHECKSUMMED MIGRATION BODY\\n(.*?)-- END CHECKSUMMED MIGRATION BODY');
+  IF source_body IS NULL OR encode(sha256(convert_to(source_body,'UTF8')),'hex') <> 'ef4f89b3ccc277706bb04a4807c87a815d9d9b32d6e8bfd3a5638d96503ce379' THEN
+    RAISE EXCEPTION 'Migration source checksum mismatch; create an explicit new migration';
+  END IF;
+  SELECT checksum INTO applied FROM agentci_schema_migrations WHERE version='002_m2';
+  IF applied IS NOT NULL THEN
+    IF applied <> 'ef4f89b3ccc277706bb04a4807c87a815d9d9b32d6e8bfd3a5638d96503ce379' THEN
+      RAISE EXCEPTION 'Applied migration checksum mismatch; create an explicit new migration';
+    END IF;
+    RETURN;
+  END IF;
+-- BEGIN CHECKSUMMED MIGRATION BODY
 CREATE TABLE IF NOT EXISTS agentci_eval_jobs (
   id uuid PRIMARY KEY,
   review_id uuid NOT NULL REFERENCES agentci_reviews(id),
@@ -74,4 +93,7 @@ BEGIN
 END $$;
 DROP TRIGGER IF EXISTS agentci_eval_trial_immutable ON agentci_eval_trials;
 CREATE TRIGGER agentci_eval_trial_immutable BEFORE UPDATE ON agentci_eval_trials FOR EACH ROW EXECUTE FUNCTION agentci_eval_immutable_trial();
+-- END CHECKSUMMED MIGRATION BODY
+  INSERT INTO agentci_schema_migrations(version,checksum) VALUES('002_m2','ef4f89b3ccc277706bb04a4807c87a815d9d9b32d6e8bfd3a5638d96503ce379');
+END $migration$;
 COMMIT;

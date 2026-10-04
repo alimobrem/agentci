@@ -704,11 +704,30 @@
         "SPEC-40-039"
       ],
       "status": "in-progress",
-      "startedAt": "2026-10-04T08:12:09.645Z",
+      "startedAt": "2026-10-04T08:30:48.770Z",
       "completedAt": null,
       "acceptance": [
         {
           "text": "Concurrent migration callers initialize a fresh dedicated test database without catalog/role races, retain exact schemas and grants, and repeat safely. Applicable full CI includes this test.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-HTTP-RETRY-IDENTITY",
+      "title": "Stable per-unit trial request IDs and provider deduplication contract",
+      "requirementIds": [
+        "SPEC-40-035",
+        "SPEC-40-039",
+        "SPEC-11.4-005"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T08:19:22.154Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Real provider receives the same UUID for an interrupted uncommitted trial on retry, different IDs for distinct trials/units, and no request for retained observations. Provider deduplicates without double execution; mismatched payload reuse is rejected and invalid request IDs cannot dispatch. Scope and at-least-once limits are documented and full CI passes.",
           "status": "pending",
           "evidence": []
         }

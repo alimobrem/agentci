@@ -80,11 +80,7 @@ integration groups, zero skips, released-M1 API compatibility, clean production
 packaging and verified artifact hashes. The first failed cleanup attempt is
 retained; exact unit ownership assertions passed the corrected run.
 
-The separate Temporal eval worker now passes all nine local integration groups,
-including separate restricted process startup, committed-trial retry, workflow
-cancellation cleanup, worker-shutdown retry, terminal unknown-unit failure and
-history replay. Concurrent callers initialize and repeat a fresh schema safely.
-These newer changes still need full CI. Durable PR/API integration, published
-eval-worker packaging, stable HTTP retry identity and all M2 release gates remain
-open. The CI database URL cleanup is in the open M2 PR, not GitHub main.
+The separate Temporal worker passed exact-source full CI 37188454333: 99 unit/API/domain tests, nine real integration groups, zero skips, immutable-M1 API compatibility and verified artifact hashes. Native AMD64 confirms restricted startup, committed-trial retry, cancellation cleanup, shutdown recovery and history replay.
+
+New HTTP retry identity, actual cleanup-refusal recovery and one-time migration checks pass ten local integration groups. Broader concurrent execution exposed a repeat-trigger-DDL deadlock; both failed attempts are recorded and migration acceptance was reopened. Applied migration/body checksum verification now avoids changing live triggers and rejects altered SQL. Provider trials reuse stable IDs before checkpoint commit and issue no request for retained observations. These changes still need full CI. Published eval-worker packaging, durable PR/API integration and all M2 release gates remain open. The CI database URL cleanup remains in the open M2 PR, not GitHub main.
 [M2 acceptance plan](docs/phases/m2.md).
