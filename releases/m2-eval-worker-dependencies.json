@@ -1,0 +1,23 @@
+{
+  "kind": "M2-eval-worker-component-adoption",
+  "verifiedAt": "2026-10-04T08:53:55.359Z",
+  "base": "registry.access.redhat.com/ubi10/ubi-minimal:latest@sha256:204e1531cee54562b107fb31e0b327062fc3d5d67af7cc0d2e66b2c572b9044f",
+  "dockerCli": {
+    "version": "29.8.2",
+    "officialRelease": "https://docs.docker.com/engine/release-notes/29/#2982",
+    "officialImage": "docker:29.8.2-cli@sha256:b1805116a6a86cc591b5d5f60a910a0715cdcc9d18d866ad68b1457ead25c35c",
+    "manifests": {
+      "amd64": "sha256:b0dfb3beea69612ccf1f9cfd8f74179b9c497d6b0c9e1294664dffe9bc1c070a",
+      "arm64": "sha256:cf2cb65d40085fc4049e8c9c12791d2fb2862d73eca486f91240534011a8a14f"
+    },
+    "upstreamImageRevision": "d576eb69d7bad654b934176e95644995aa85d8f8",
+    "copiedArm64BinarySha256": "37a53fed3445028a49443fd6f9338ccedeeeda9776de5d7fd4d7e7c936b789cc",
+    "license": {
+      "path": "deploy/licenses/docker-cli-LICENSE",
+      "source": "https://raw.githubusercontent.com/docker/cli/v29.8.2/LICENSE",
+      "sha256": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0"
+    },
+    "scanCoverage": "Go stdlib v1.26.8 detected. Bundled module dependency metadata is unavailable in this upstream binary; no complete module-inventory claim.",
+    "runtimeComponent": "Only CLI binary and license copied; no upstream Alpine filesystem or Docker daemon shipped."
+  }
+}

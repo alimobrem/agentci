@@ -90,3 +90,15 @@ CMD ["node", "dist/apps/control/main.js"]
 
 FROM runtime AS worker
 CMD ["node", "dist/apps/worker/main.js"]
+
+# Copy only the CLI component into UBI; no Docker daemon or upstream Alpine filesystem ships.
+FROM docker:29.8.2-cli@sha256:b1805116a6a86cc591b5d5f60a910a0715cdcc9d18d866ad68b1457ead25c35c AS docker-cli
+FROM runtime AS eval-worker
+USER 0
+COPY --from=docker-cli /usr/local/bin/docker /usr/local/bin/docker
+COPY deploy/licenses/docker-cli-LICENSE /licenses/docker-cli-LICENSE
+RUN microdnf remove -y microdnf rpm rpm-libs libdnf libmodulemd librepo libsolv dnf-data rpm-sequoia && mkdir -p /opt/agentci/docker-config && chmod 0555 /opt/agentci/docker-config && \
+    docker --version | grep '29.8.2'
+ENV DOCKER_CONFIG=/opt/agentci/docker-config DOCKER_HOST=unix:///var/run/docker.sock
+USER 1001
+CMD ["node", "dist/apps/eval-worker/main.js"]

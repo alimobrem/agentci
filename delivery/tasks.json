@@ -650,14 +650,16 @@
         "SPEC-40-035",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T07:09:19.059Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T08:52:11.569Z",
       "acceptance": [
         {
           "text": "Real PostgreSQL stages projected exact inputs and immutable units; concurrent claims, lease renewal/takeover, stale writers, normalized per-trial replay, cancellation and result immutability are tested. Restart resumes completed observations rather than rerunning or hiding them.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-http-retry-ci.json"
+          ]
         }
       ]
     },
@@ -671,13 +673,15 @@
       "acceptance": [
         {
           "text": "Separate worker starts with no App/control secrets, only scoped eval database privileges and operator-pinned runner/provider configuration. Real Temporal activity retry, cancellation cleanup and replay are tested.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-http-retry-ci.json"
+          ]
         }
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T07:41:19.354Z",
-      "completedAt": null
+      "completedAt": "2026-10-04T08:52:11.992Z"
     },
     {
       "id": "M2-ORPHAN-RECOVERY",
@@ -689,13 +693,15 @@
       "acceptance": [
         {
           "text": "A killed worker leaves a real labeled container; the next fenced owner removes only prior containers for the same unit before resuming. Other units/services are untouched, stale owners cannot write, and cleanup failures cannot produce success.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-http-retry-ci.json"
+          ]
         }
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T07:41:19.579Z",
-      "completedAt": null
+      "completedAt": "2026-10-04T08:52:12.423Z"
     },
     {
       "id": "M2-MIGRATION-CONCURRENCY",
@@ -703,14 +709,16 @@
       "requirementIds": [
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T08:30:48.770Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T08:51:29.732Z",
       "acceptance": [
         {
           "text": "Concurrent migration callers initialize a fresh dedicated test database without catalog/role races, retain exact schemas and grants, and repeat safely. Applicable full CI includes this test.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-http-retry-ci.json"
+          ]
         }
       ]
     },
@@ -722,12 +730,33 @@
         "SPEC-40-039",
         "SPEC-11.4-005"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T08:19:22.154Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T08:51:29.312Z",
       "acceptance": [
         {
           "text": "Real provider receives the same UUID for an interrupted uncommitted trial on retry, different IDs for distinct trials/units, and no request for retained observations. Provider deduplicates without double execution; mismatched payload reuse is rejected and invalid request IDs cannot dispatch. Scope and at-least-once limits are documented and full CI passes.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-http-retry-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-EVAL-WORKER-PACKAGING",
+      "title": "UBI eval worker runtime with pinned official Docker CLI and real image acceptance",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T08:38:26.824Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "UBI non-root eval-worker image includes current stable official pinned Docker CLI, no package installers/controller credentials, and passes real restricted PostgreSQL/Temporal execution, child isolation, shutdown/restart and vulnerability scans. Applicable CI builds and verifies it; published native/download gates remain separately required.",
           "status": "pending",
           "evidence": []
         }

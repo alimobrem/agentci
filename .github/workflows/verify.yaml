@@ -109,16 +109,30 @@ jobs:
           tags: agentci-worker:ci
           cache-from: type=gha,scope=agentci-worker
           cache-to: type=gha,scope=agentci-worker,mode=max
+      - name: Build isolated eval worker image
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
+        with:
+          context: .
+          target: eval-worker
+          load: true
+          tags: agentci-eval-worker:ci
+          labels: |
+            org.opencontainers.image.source=https://github.com/alimobrem/agentci
+            org.opencontainers.image.revision=${{ github.sha }}
+          cache-from: type=gha,scope=agentci-eval-worker
+          cache-to: type=gha,scope=agentci-eval-worker,mode=max
       - name: Scan service images
         run: |
           mkdir -p scan-results
           docker volume create agentci-trivy-cache
-          for role in api worker eval-runner eval-engines; do
+          for role in api worker eval-worker eval-runner eval-engines; do
             docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v agentci-trivy-cache:/root/.cache/trivy aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa image --scanners vuln --format json agentci-$role:ci > scan-results/$role.json
             node scripts/check-scan.mjs scan-results/$role.json
           done
       - name: Verify compiled containers
         run: node scripts/image-smoke.mjs ci > .agentci/artifacts/image-smoke.json
+      - name: Verify isolated eval worker runtime
+        run: node scripts/eval-worker-image-smoke.mjs agentci-eval-worker:ci agentci-eval-runner:ci > .agentci/artifacts/eval-worker-image-smoke.json
       - name: Collect verification evidence
         run: node scripts/verification-summary.mjs
         env:
@@ -136,3 +150,4 @@ jobs:
             .agentci/artifacts/delivery/fast-latest.json
             .agentci/artifacts/api-compatibility.json
             .agentci/artifacts/image-smoke.json
+            .agentci/artifacts/eval-worker-image-smoke.json

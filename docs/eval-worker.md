@@ -63,3 +63,40 @@ Cleanup-refusal fault injection leaves a real owned container, rejects successfu
 completion and retains no trial observation. A subsequent fenced owner removes
 the orphan and executes a new trial. HTTP units do not invoke the Docker cleanup
 backend; external retries use the [provider deduplication contract](http-eval-provider.md).
+
+## UBI image checkpoint
+
+The `eval-worker` Dockerfile target runs on UBI 10 with Node 26.10.0 and the
+locked production dependencies. It copies Docker CLI 29.8.2 from the pinned
+official multi-platform image, together with its upstream license. No Alpine
+filesystem or Docker daemon is shipped. npm/npx and RPM installer tooling are
+removed through the package resolver. The service runs as UID 1001; the real image
+probe uses a read-only root filesystem and bounded `/tmp`.
+
+Local development build and acceptance:
+
+```sh
+docker build --target eval-worker -t agentci-eval-worker:m2-local .
+node scripts/eval-worker-image-smoke.mjs agentci-eval-worker:m2-local agentci-eval-runner:m2-local
+```
+
+Build the default runner first. The probe creates its own temporary network,
+PostgreSQL and Temporal services, provisions a separately authenticated restricted
+login, executes real isolated eval children, preserves assertion failure, checks
+shutdown/restart and removes only its own resources. Mandatory CI now builds,
+scans and probes this worker in addition to the controller services and runners.
+Published native image/download acceptance remains open.
+
+The worker is a trusted Docker-daemon client. Socket access grants daemon control;
+deploy it on dedicated evaluation infrastructure separated from controller/App
+services. The daemon socket group must be explicitly granted to the worker UID.
+Child eval containers receive no socket, database credentials, App credentials or
+host mounts, and have networking disabled. `DOCKER_CONFIG` points to a private
+empty image directory so operator/host registry configuration is not inherited.
+
+The local scan detects UBI packages, Node packages, the Temporal Cargo-lock
+inventory and Docker's Go runtime with zero known findings. The official CLI
+binary exposes no bundled Go-module inventory to this scanner; that coverage
+limit remains part of release assessment. It does not close the optional engine's
+separate unpatched HIGH finding. Component pins, license checksum and native
+metadata are recorded in [the dependency record](../releases/m2-eval-worker-dependencies.json).
