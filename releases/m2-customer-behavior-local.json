@@ -1,6 +1,5 @@
 {
   "component": "M2 real customer App behavioral regression candidate",
-  "sourceCommit": "cbd0ec9db4e8727405f044aaa9f4676b0fa00d14",
   "repository": "alimobrem/agentci-onboarding-demo",
   "appId": 5182307,
   "pullRequest": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2",
@@ -146,6 +145,8 @@
   "releaseAcceptance": false,
   "limitations": [
     "Candidate local images and temporary tunnel; this is not a published-build demo or reliable every-PR hosting acceptance.",
-    "Dedicated production infrastructure isolation and live failure/recovery remain open."
-  ]
+    "Dedicated production infrastructure isolation and live failure/recovery remain open.",
+    "Candidate images were built with delivery-tracking-only local changes; this is not clean-release-checkout evidence."
+  ],
+  "implementationBaseCommit": "cbd0ec9db4e8727405f044aaa9f4676b0fa00d14"
 }

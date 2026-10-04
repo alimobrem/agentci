@@ -1,0 +1,18 @@
+{
+  "component": "Live Check reconciliation finding",
+  "sourceCommit": "cbd0ec9db4e8727405f044aaa9f4676b0fa00d14",
+  "requirementIds": [
+    "SPEC-40-039"
+  ],
+  "observation": "GitHub default listForRef filter latest hides the earlier unavailable attempt after a newer passing attempt is created on the same head. Both remain visible with filter all.",
+  "risk": "Retrying publication or cleanup for an earlier attempt can create a duplicate because current lookup only sees newer runs.",
+  "evidence": {
+    "pullRequest": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2",
+    "headSha": "6e0fe2c11d7cfd22d59893bc317098340badc3d4",
+    "earlierRunId": 111431171007,
+    "laterRunId": 111431405415,
+    "officialContract": "https://docs.github.com/en/rest/checks/runs#list-check-runs-for-a-git-reference"
+  },
+  "resolution": "Explicit filter all and fixtures that emulate latest-only default; verify old-attempt reconciliation after newer publication.",
+  "releaseAcceptance": false
+}

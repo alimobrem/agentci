@@ -38,7 +38,7 @@ function origin(value:string):string{
 /** Caller holds the SQL publication lock. Final remote recheck follows Check reconciliation reads. */
 async function reconcile(client:Octokit,appId:number,job:ReviewJob,attemptId:string,output:{title:string;summary:string},conclusion:'neutral'|'action_required'|undefined,detailsUrl?:string,status:'in_progress'|'completed'='completed'):Promise<'published'|'superseded'>{
   const [owner,repo]=job.repository.split('/'),externalId=`agentci:evals:${job.pullRequest}:${job.baseSha}:${job.headSha}:${attemptId}`;
-  const listed=await client.paginate(client.checks.listForRef,{owner:owner!,repo:repo!,ref:job.headSha,check_name:'agentci/evals',per_page:100});
+  const listed=await client.paginate(client.checks.listForRef,{owner:owner!,repo:repo!,ref:job.headSha,check_name:'agentci/evals',filter:'all',per_page:100});
   const existing=listed.find(run=>run.external_id===externalId&&run.app?.id===appId&&run.head_sha===job.headSha&&run.name==='agentci/evals');
   if(!await currentPullRequest(client,job))return 'superseded';
   const params={owner:owner!,repo:repo!,name:'agentci/evals',head_sha:job.headSha,external_id:externalId,status,...(conclusion?{conclusion}:{}),output,...(detailsUrl?{details_url:detailsUrl}:{})};

@@ -38,7 +38,7 @@ export async function remoteSnapshot(client: Octokit, repository: string, sha: s
 export async function publishCheck(client: Octokit, appId: number, job: ReviewJob, analysis: Analysis, evidenceUrl: string, behavioralCheck?: 'agentci/evals'): Promise<'published'|'superseded'> {
   // Reconcile by external_id on retry instead of creating another check after an ambiguous timeout.
   const externalId = `agentci:${job.pullRequest}:${job.baseSha}:${job.headSha}`;
-  const listed = await client.paginate(client.checks.listForRef, { ...names(job.repository), ref: job.headSha, check_name: 'agentci/review', per_page: 100 });
+  const listed = await client.paginate(client.checks.listForRef, { ...names(job.repository), ref: job.headSha, check_name: 'agentci/review', filter: 'all', per_page: 100 });
   const existing = listed.find(run => run.external_id === externalId && run.app?.id === appId);
   const markdown = (value: string) => value.replace(/[\\`*_{}\[\]()<>#!]/g, '\\$&');
   const lines = [
@@ -59,7 +59,7 @@ export async function publishCheck(client: Octokit, appId: number, job: ReviewJo
 }
 export async function publishFailure(client: Octokit, appId: number, job: ReviewJob): Promise<void> {
   const externalId = `agentci:${job.pullRequest}:${job.baseSha}:${job.headSha}`;
-  const listed = await client.paginate(client.checks.listForRef, { ...names(job.repository), ref: job.headSha, check_name: 'agentci/review', per_page: 100 });
+  const listed = await client.paginate(client.checks.listForRef, { ...names(job.repository), ref: job.headSha, check_name: 'agentci/review', filter: 'all', per_page: 100 });
   const existing = listed.find(run => run.external_id === externalId && run.app?.id === appId);
   const params = { ...names(job.repository), name: 'agentci/review', head_sha: job.headSha, external_id: externalId,
     status: 'completed' as const, conclusion: 'action_required' as const,

@@ -13,9 +13,9 @@ test('SQL/HTTP Check publication: complete regressions, stale races, scoped retr
   const head={sha:sha(),files:{...base.files,'subject.txt':'bad','check.mjs':'process.exit(0)','evals/main.yaml':stringify(evalSuite({trials:{count:1,passRate:0,confidenceMethod:'wilson'}}))}},job={repository,installationId:12,pullRequest:75,baseSha:base.sha,headSha:head.sha};
   const state={stale:false,flipAfterList:false,ambiguous:false,creations:0,updates:0,runs:[] as any[],reads:0};
   const server=createServer(async(req,res)=>{
-    const path=new URL(req.url!,'http://localhost').pathname;let output:unknown;
+    const url=new URL(req.url!,'http://localhost'),path=url.pathname;let output:unknown;
     if(req.method==='GET'&&path.endsWith('/pulls/75')){state.reads++;output={state:'open',base:{sha:base.sha},head:{sha:state.stale?'c'.repeat(40):head.sha}};}
-    else if(req.method==='GET'&&path.endsWith('/check-runs')){output={total_count:state.runs.length,check_runs:state.runs};if(state.flipAfterList)state.stale=true;}
+    else if(req.method==='GET'&&path.endsWith('/check-runs')){const runs=url.searchParams.get('filter')==='all'?state.runs:state.runs.slice(-1);output={total_count:runs.length,check_runs:runs};if(state.flipAfterList)state.stale=true;}
     else if((req.method==='POST'||req.method==='PATCH')&&path.includes('/check-runs')){
       let raw='';for await(const chunk of req)raw+=chunk;const body=JSON.parse(raw);
       if(req.method==='POST'){state.creations++;const run={...body,id:100+state.creations,app:{id:42}};state.runs.push(run);output=run;if(state.ambiguous){state.ambiguous=false;res.writeHead(503,{'content-type':'application/json'});res.end(JSON.stringify({message:'private-fixture-response'}));return;}}
@@ -48,6 +48,8 @@ test('SQL/HTTP Check publication: complete regressions, stale races, scoped retr
     assert.equal(await publish(),'published');assert.equal(check.conclusion,'neutral');assert.match(check.output.summary,/\*\*failed\*\*/);
     const gapAttempt=randomUUID(),gap=await evals.stage(review.id,gapAttempt,base,head,[],{suiteChanges:[],coverageGaps:['REQ-NEW'],selectionGaps:[]});assert.equal(await activities.publishEvalReview(job,gapAttempt,review.id,gap.id),'published');const gapCheck=state.runs.find(r=>r.id===102)!;assert.equal(gapCheck.conclusion,'action_required');assert.match(gapCheck.output.summary,/\*\*insufficient\*\*/);assert.match(gapCheck.output.summary,/Uncovered requirement: REQ-NEW/);
     await activities.cancelEvalReview(job,gapAttempt,gap.id);assert.equal(gapCheck.output.title,'AgentCI evals cancelled');await assert.rejects(activities.publishEvalReview(job,gapAttempt,review.id,gap.id));
+    // GitHub defaults to latest-only reads. An older exact attempt must still reconcile after a newer run exists.
+    assert.equal(await publish(),'published');assert.equal(state.creations,2,'older attempt retry after newer Check must not duplicate');assert.equal(check.conclusion,'neutral');assert.equal(gapCheck.output.title,'AgentCI evals cancelled');
     state.stale=true;const beforeFailure=state.creations+state.updates;assert.equal(await activities.failEvalReview(job,gapAttempt),'superseded');assert.equal(state.creations+state.updates,beforeFailure);
     assert.deepEqual(state.runs.filter(r=>r.id<100).map(r=>r.output),[undefined,undefined,undefined],'other App, stale head and original M1 Check remain untouched');
   }finally{await new Promise<void>(resolve=>server.close(()=>resolve()));await pool.end();}

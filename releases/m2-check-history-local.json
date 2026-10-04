@@ -1,0 +1,26 @@
+{
+  "component": "All-attempt Check reconciliation candidate",
+  "sourceFiles": {
+    "packages/github/client.ts": "4c647fb2d08f9627b0fc7ca35636fc551c49a87ca8b82306fd246456c98d804d",
+    "packages/github/eval-check.ts": "2b08d65b75a205ee1a7f056a2d847d2a2a240ca0bcae2a7d2cd91f5b534d78da",
+    "tests/github.test.ts": "d2a649b952bfa8b24a3f7c88c7284f99ca186f7ef4c20380ce45c0a2d8935d44",
+    "tests/integration/eval-check.test.ts": "86a780c872131c988d04cd028ea8419b9224f0ae9664bbb0be813950ed0385be"
+  },
+  "localVerification": {
+    "fastChecks": 8,
+    "fastSeconds": 0.84,
+    "unitApiDomainTests": 119,
+    "integrationGroups": 14,
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 34182.152125,
+    "apiCompatibility": "Immutable released M1 0.2.1-m1 passed",
+    "regression": "HTTP fixture emulates GitHub latest-only default; older exact-attempt publication after a newer Check does not create a duplicate and does not overwrite the newer cancelled result."
+  },
+  "releaseAcceptance": false,
+  "limitations": [
+    "Final-source full CI required before reaccepting publication.",
+    "Live customer images predate this fix; released-build demo and all M2 release gates remain open."
+  ]
+}

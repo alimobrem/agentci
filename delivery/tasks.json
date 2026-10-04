@@ -895,16 +895,14 @@
         "SPEC-40-037",
         "SPEC-40-039"
       ],
-      "status": "done",
-      "startedAt": "2026-10-04T10:22:04.665Z",
-      "completedAt": "2026-10-04T11:45:14.971Z",
+      "status": "in-progress",
+      "startedAt": "2026-10-04T12:03:16.921Z",
+      "completedAt": null,
       "acceptance": [
         {
           "text": "Completed SQL snapshot exports produce bounded Check summaries containing exact base/head, suite/model deltas, regressions, added/removed/changed scenarios, coverage/selection/execution gaps and immutable evidence references. Publication rechecks current PR identity under the shared lock, reconciles only this App and exact attempt, rejects pending/cancelled or mismatched evidence, sanitizes SDK failures and preserves M1 Check behavior. Actual HTTP provider/PostgreSQL tests prove stale identity, retries including ambiguous writes, lock contention and no false passing summaries before production workflow wiring.",
-          "status": "passed",
-          "evidence": [
-            "releases/m2-pr-controller-ci.json"
-          ]
+          "status": "pending",
+          "evidence": []
         }
       ]
     },
@@ -936,14 +934,16 @@
         "SPEC-40-039",
         "SPEC-11.4-007"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T11:34:39.926Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T12:07:15.101Z",
       "acceptance": [
         {
           "text": "Packaged separate evaluator Compose configuration renders with only restricted evaluator environment, explicit dedicated daemon socket group, immutable image pins, read-only filesystem and private provider mount; customer instructions provision restricted SQL login and expose development endpoints without implying production hosting. Real rendered configuration and separate worker runtime validate the boundary before live demo.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-deployment-ci.json"
+          ]
         }
       ]
     },
