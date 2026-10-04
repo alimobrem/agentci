@@ -52,7 +52,11 @@ is `docs/phases/m2.md`, specification section 40 M2 and section 11.
    reservations are retained in `releases/m2-hosted-cache-failures.json`; no
    evaluations ran in those attempts. The cache fix passed CI `37222610468`,
    including artifact hash verification; the first post-merge hosted run is
-   `37223165980` and its outcome still needs independent evidence inspection.
+   `37223165980` passed. Independently downloaded evidence verifies four passing
+   PRs and the intentional PR #7 baseline-pass/head-fail (`statistics` and
+   `comparison`), with exact-head App Checks and chained export/file hashes.
+   PR #4 correctly remains insufficient. See `releases/m2-hosted-regression-ci.json`.
+   Corrected-head recovery and released customer replay remain pending.
 3. Complete `M2-SECURITY-RELEASE`. Include inventories and scanner coverage for all
    introduced service/runner/optional-engine platforms and current official pins.
    The optional image has `node-forge` 1.4.0 / GHSA-86w9-cpqp-85rv. The official

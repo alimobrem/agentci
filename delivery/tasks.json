@@ -1179,14 +1179,16 @@
         "SPEC-34.2-003",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T17:52:09.149Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T18:27:26.419Z",
       "acceptance": [
         {
           "text": "Retain the failed hosted cache reservation attempts; use supported cache policy so read-only cache contexts do not export and cache-service failures do not invalidate successful image outputs. Preserve strict build, runtime, scan, evidence and publication checks; validate workflow configuration and actual hosted execution before closure.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-hosted-regression-ci.json"
+          ]
         }
       ]
     },

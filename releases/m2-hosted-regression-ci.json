@@ -1,0 +1,175 @@
+{
+  "kind": "verified-hosted-evaluation-checkpoint",
+  "producer": {
+    "version": "0.3.0-m2",
+    "sourceCommit": "7e560b1d89ac538fc44dc675541e891de2e7dae9",
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "runId": "37223165980",
+    "runAttempt": "1",
+    "runnerImage": "sha256:452cecbef0682732b181efab0342d2f3d6a551a4e9e8b392eb2b5c36fcbfa5b9",
+    "evaluatorImage": "sha256:d6b35bd208f0f2a43b0c4448d118e03bebe05ba4dc6c0db729c1b727f9b48092"
+  },
+  "artifact": "https://github.com/alimobrem/agentci/actions/runs/37223165980/artifacts/11311426792",
+  "failed": false,
+  "reviews": [
+    {
+      "pullRequest": 11,
+      "baseSha": "fcf09ae699fed9ae972743516dbb78254ecdf150",
+      "headSha": "d26c9e84d2dad9506b16d2e3be4bc93f4f911c97",
+      "status": "completed",
+      "attemptId": "c0bae121-d88e-4c45-8c54-53ecad05f8cb",
+      "comparison": {
+        "id": "78025a64-8d6f-4c7a-9f4f-81635c79d75b",
+        "reviewId": "425990cb-55c3-4feb-a8ab-3d5bfee49b89",
+        "file": "comparison-78025a64-8d6f-4c7a-9f4f-81635c79d75b.ndjson",
+        "sha256": "sha256:11f2a58afbc26b43548c408e75d69a3430c5681b0579cba983a242766baa1e42",
+        "bytes": 8073
+      },
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 2,
+        "comparisonCount": 1
+      },
+      "regressions": 0,
+      "coverageGaps": 0,
+      "selectionGaps": 0
+    },
+    {
+      "pullRequest": 10,
+      "baseSha": "7e560b1d89ac538fc44dc675541e891de2e7dae9",
+      "headSha": "fcf09ae699fed9ae972743516dbb78254ecdf150",
+      "status": "completed",
+      "attemptId": "013ab1af-d4e8-4e6a-933c-04a2592ad7ad",
+      "comparison": {
+        "id": "6d19f3ac-3e1c-4c96-a2db-67561e82a5b0",
+        "reviewId": "2127794d-f4e4-48b4-acff-7e9a912ffda7",
+        "file": "comparison-6d19f3ac-3e1c-4c96-a2db-67561e82a5b0.ndjson",
+        "sha256": "sha256:fe2fae6a9a2afc41b40bcfd5115f4e9f66b6ea57643fbca15e2843387ad2db3c",
+        "bytes": 8073
+      },
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 2,
+        "comparisonCount": 1
+      },
+      "regressions": 0,
+      "coverageGaps": 0,
+      "selectionGaps": 0
+    },
+    {
+      "pullRequest": 8,
+      "baseSha": "4d807e22f9eb739b52418df953a65e816c266531",
+      "headSha": "76514cb6fc327b99774baee7b4c505dfb5e2098f",
+      "status": "completed",
+      "attemptId": "c37cc84e-1120-46b2-890c-6469a361c600",
+      "comparison": {
+        "id": "98d857d1-4fb6-439f-a384-832319e249cc",
+        "reviewId": "443cb118-60c5-47f3-a1c1-c1a8a877c674",
+        "file": "comparison-98d857d1-4fb6-439f-a384-832319e249cc.ndjson",
+        "sha256": "sha256:baa71c28e678bc78711e2f0c353e2f72f30a6cc74e8b01908fd5f6d590b94bf8",
+        "bytes": 8072
+      },
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 2,
+        "comparisonCount": 1
+      },
+      "regressions": 0,
+      "coverageGaps": 0,
+      "selectionGaps": 0
+    },
+    {
+      "pullRequest": 7,
+      "baseSha": "4d807e22f9eb739b52418df953a65e816c266531",
+      "headSha": "32231558eee701087cf39659bec674639238a7ce",
+      "status": "completed",
+      "attemptId": "6672349a-3f19-4761-9910-e46242889608",
+      "comparison": {
+        "id": "c5706a25-8cc0-461a-b444-b4d220812e3e",
+        "reviewId": "573448bf-03d8-4a0b-99f6-9ff40f0a9aca",
+        "file": "comparison-c5706a25-8cc0-461a-b444-b4d220812e3e.ndjson",
+        "sha256": "sha256:4982082bd2d132a1510f522c1936cf3035780cbfb21d090ac6664e68e5466b8f",
+        "bytes": 8095
+      },
+      "summary": {
+        "state": "completed",
+        "outcome": "failed",
+        "executionGaps": [],
+        "unitCount": 2,
+        "comparisonCount": 1
+      },
+      "regressions": 2,
+      "coverageGaps": 0,
+      "selectionGaps": 0
+    },
+    {
+      "pullRequest": 6,
+      "baseSha": "4d807e22f9eb739b52418df953a65e816c266531",
+      "headSha": "9d39aab42caffc37bd8d3d977a2f1782d586c1e0",
+      "status": "completed",
+      "attemptId": "27e91cec-f5ef-4ed0-b6fb-609a816a12c7",
+      "comparison": {
+        "id": "4f6f60ef-e37d-4032-a019-e674b8fe0c09",
+        "reviewId": "819a2487-84c4-40a5-98e8-1e06e3038623",
+        "file": "comparison-4f6f60ef-e37d-4032-a019-e674b8fe0c09.ndjson",
+        "sha256": "sha256:b44ff4f143ab346d09213b93d2d15b3b56cf320a8dd4a1683582f0f65a2212a0",
+        "bytes": 8072
+      },
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 2,
+        "comparisonCount": 1
+      },
+      "regressions": 0,
+      "coverageGaps": 0,
+      "selectionGaps": 0
+    },
+    {
+      "pullRequest": 4,
+      "baseSha": "15232a92d22e7640298f78ba190f098312919a17",
+      "headSha": "93faf2d2299634ed0959f49d127fba9e716d67f8",
+      "status": "completed",
+      "attemptId": "7a757d4b-d11e-4d2b-a559-e4497c80b5b6",
+      "comparison": {
+        "id": "f1402021-5558-4aee-9d94-db505c962cfe",
+        "reviewId": "5e7f9075-6e4e-4634-91b3-7955729cdda8",
+        "file": "comparison-f1402021-5558-4aee-9d94-db505c962cfe.ndjson",
+        "sha256": "sha256:de5a0a39da77c5c14ebaeda5edcb09275a684f10550ea5befd40c52311dfd98b",
+        "bytes": 1430
+      },
+      "summary": {
+        "state": "completed",
+        "outcome": "insufficient",
+        "executionGaps": [],
+        "unitCount": 0,
+        "comparisonCount": 0
+      },
+      "regressions": 0,
+      "coverageGaps": 0,
+      "selectionGaps": 2
+    }
+  ],
+  "archiveSha256": "7faf91f3967971bc8947bd9bb807042347a94607093568c965c780645a21ccfe",
+  "artifactId": 11311426792,
+  "verified": [
+    "producer/source/run/App scope identity",
+    "every comparison file byte count and SHA-256",
+    "every chained export frame and exact base/head/attempt/runner identity",
+    "baseline all-six-scenarios passed and head statistics/comparison regressions",
+    "exact-head App Check and retained artifact link on intentional negative revision"
+  ],
+  "limitations": [
+    "Recovery on corrected head 39472710541387165e58826a9f5a3266b7f36b55 is pending.",
+    "PR4 insufficient is not a successful behavioral result.",
+    "This development hosted run is not released customer/package/image acceptance; all milestone release gates remain open."
+  ]
+}
