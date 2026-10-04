@@ -302,13 +302,17 @@
       "acceptance": [
         {
           "text": "Fresh project bootstrap validates without AgentCI source checkout; no overwrite of existing customer files",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "tests/onboarding.test.ts"
+          ]
         },
         {
           "text": "Setup takes explicit customer repository and account type; installation must match exactly one configured repo and minimal permissions",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "tests/onboarding.test.ts"
+          ]
         }
       ]
     },
@@ -324,8 +328,10 @@
       "acceptance": [
         {
           "text": "Published client fetches evidence with bearer authentication, validates identity/digest and reports typed failures without credentials",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "tests/client.test.ts"
+          ]
         },
         {
           "text": "Executable fresh-project demo documents success, unauthorized access and invalid input without executing repository code",
@@ -341,8 +347,8 @@
         "SPEC-40-019",
         "SPEC-40-029"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "blocked",
+      "startedAt": "2026-10-04T00:41:40.241Z",
       "completedAt": null,
       "acceptance": [
         {
@@ -355,7 +361,8 @@
           "status": "pending",
           "evidence": []
         }
-      ]
+      ],
+      "blockedReason": "Explicit separate demo repository/App approval pending; existing App scope remains only alimobrem/agentci"
     }
   ]
 }

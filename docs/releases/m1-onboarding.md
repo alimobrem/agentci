@@ -16,6 +16,8 @@ the candidate; live onboarding has not yet passed.
   operations are unchanged, with a new version/description and public Node client.
 - A clean production-only installed candidate initializes and validates an empty
   customer project, rejects overwrite, imports the client entry point and includes MIT.
+- The installed setup command rendered the customer organization manifest page
+  and rejected an invalid state with 403 without creating an App.
 - The client consumed real localhost evidence from the existing published M1 API,
   verified canonical digest and exact PR/base/head identity, and observed 401 for
   an invalid token. This is backward-compatible client verification, not proof of
@@ -25,6 +27,11 @@ the candidate; live onboarding has not yet passed.
 
 [Local observations](../../releases/m1-onboarding-local.json),
 [customer guide](../customer-onboarding.md), [active gates](../../releases/m1-gates.json).
+
+First candidate full CI: [37165339669](https://github.com/alimobrem/agentci/actions/runs/37165339669)
+passed on source `caf2004dbf38fb54b6594c21fddfd6894815e546`, including real
+integration, package/image runtime and scans. Later candidate edits require their
+own CI; this prior result does not certify a final release source.
 
 ## Remaining acceptance
 

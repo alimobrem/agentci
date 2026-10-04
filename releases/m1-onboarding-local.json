@@ -6,7 +6,8 @@
     "bootstrap": "fresh empty project validates",
     "overwriteRejection": "passed",
     "clientEntryPoint": "agentci/client imported successfully",
-    "license": "MIT included"
+    "license": "MIT included",
+    "installedAppSetup": "customer organization manifest page renders; invalid setup state rejected with 403; no App created"
   },
   "agentApi": {
     "location": "localhost",
@@ -20,5 +21,14 @@
     "advisory": true
   },
   "liveFreshRepository": "pending separate App/repository access approval",
-  "publication": "pending"
+  "publication": "pending",
+  "freshLocalRepository": {
+    "path": "/tmp/agentci-onboarding-demo-source",
+    "baseBranch": "main",
+    "branch": "demo/production-permission",
+    "risk": "high",
+    "verifiedFinding": "production-mutation-added",
+    "synthetic": true,
+    "externalGitHubRepositoryCreated": false
+  }
 }
