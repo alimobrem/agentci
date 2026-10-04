@@ -23,9 +23,10 @@ historical, rather than being rewritten to claim later checks. Generic policy
 mentions of pending gates and release candidates are still valid. Source spec
 examples and future milestone designs are not shipped-feature claims.
 
-Outstanding project decision: choose a license. The repository is public but no
-open-source license has been granted yet. Final retrospective action agreement
-with the user is pending; M2 implementation remains not-started.
+Follow-up: the maintainer selected MIT. The repository now includes `LICENSE`,
+and README/package metadata declare MIT. Historical immutable M1 release assets
+remain unchanged. Final retrospective action agreement with the user is pending;
+M2 implementation remains not-started.
 
 Repeat this audit at release closure: compare current status/version/commands to
 the actual tag, manifest, platform support and demo; preserve historical context.

@@ -165,5 +165,4 @@ M2 eval orchestration remains not-started pending the M1 retrospective discussio
 
 ## License
 
-A license has not yet been selected. The repository is public; reusable
-open-source licensing is an outstanding project decision.
+AgentCI is open-source software licensed under the [MIT License](LICENSE).

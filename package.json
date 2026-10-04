@@ -17,7 +17,8 @@
     "README.md",
     "CHANGELOG.md",
     "deploy",
-    "npm-shrinkwrap.json"
+    "npm-shrinkwrap.json",
+    "LICENSE"
   ],
   "scripts": {
     "agentci": "node --import tsx cmd/agentci/main.ts",
@@ -60,5 +61,6 @@
     "@types/pg": "^8.23.1",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2"
-  }
+  },
+  "license": "MIT"
 }
