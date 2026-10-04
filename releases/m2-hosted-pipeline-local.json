@@ -1,0 +1,72 @@
+{
+  "kind": "M2-connected-hosted-review-local-candidate",
+  "basedOnCommit": "0c645e33c4ff88802fdf922119f7edb84a39919a",
+  "sourceFiles": {
+    "cmd/dogfood/main.ts": "185ed538a489b0b8a88e5f04f8c8706340b2b37f90f87c3642759d059b539fa7",
+    "apps/worker/hosted-activities.ts": "5ea1e66be54c09bced97d9809ea4063616d639d6d184b9dec420a1eb640aeaa7",
+    "packages/github/hosted-evidence.ts": "792552609d1d053b211e57b6e083ccb496d5ee14bb68841d32b338558e400540",
+    ".github/workflows/dogfood.yaml": "e681044202cf156c769a68201a459b406d6d1a1b8b2cee8dd95b37cb2b47ae06",
+    "tests/hosted-evidence.test.ts": "249c7a03fa89e30a389ba2c9c5ccfd029c1227d977747d40d7d88d432d359c4b",
+    "tests/integration/eval-pr-parent.test.ts": "4be23079b8491786fda482d11d985c25f1468e5df1dd91c19bb09fafe6fec3c6",
+    "docs/hosted-evals.md": "a329d5f77fddb8088af295dd89f7e5eb53af16632f1ccc55512ef08be7904d40"
+  },
+  "verification": {
+    "fastChecks": 8,
+    "unitApiDomainTests": 126,
+    "nativeIntegrationGroups": 15,
+    "nativeSkips": 0,
+    "nativeDurationMs": 43324.237417,
+    "releasedM1Compatibility": "passed",
+    "workflowContexts": "passed",
+    "productionBuild": "passed"
+  },
+  "localRealRepositoryPrepare": {
+    "result": "passed",
+    "remoteCheckWrites": 0,
+    "runnerImage": "sha256:483b038980355ef6c833af89ac0751a2afb33fb05f84a4ee8892f2e85bbbec32",
+    "evaluatorImage": "sha256:fd451cb7ea1a0d4912425ce79e1e0ae3c0a28515f3ac6a4284e02cbe4c640677",
+    "reviews": [
+      {
+        "pullRequest": 5,
+        "status": "completed",
+        "comparisonId": "b6309436-268e-4e26-8d12-efa47c5222b2",
+        "retainedFileSha256": "sha256:d62ed7c5b43ae011ef3bc42bfecd6ff640018cea6566e47d1f5929940d31aaff"
+      },
+      {
+        "pullRequest": 4,
+        "status": "completed",
+        "comparisonId": "821db021-6023-4717-88bf-d57ca82a2ba8",
+        "retainedFileSha256": "sha256:64894f2c2a26041881d39b66802aaa09e39ef49bf864cc3f081fc01550854884"
+      }
+    ],
+    "outcomes": {
+      "5": "insufficient: six self-eval scenarios passed, twelve coverage gaps, new head-only suite",
+      "4": "insufficient: missing adversarial/policy suites"
+    },
+    "disposableContainersRemaining": 0,
+    "finalVerifierReplay": "passes complete framing/file and runner provenance checks"
+  },
+  "logs": {
+    "agentci-hosted-slice-final-fast.log": "2b948f7a2e9de5b0d8aa127b1b246669132c94dc46a1990b17057df0c529d12d",
+    "agentci-hosted-connected-native.log": "6c25242e28fbcd2bcf27a055526c273936f6c3753247d62049cee8f9a72bbfbb",
+    "agentci-hosted-connected-final-build.log": "4038c5ccddaaea62466e9453c3de7970b67408fb5f8f0d374515b06e9e36f225",
+    "agentci-hosted-connected-workflows.log": "92fced675e3ad4ced28f76ac188af3d56051c5f24027bb88fbd8930dfa893185",
+    "agentci-hosted-connected-compat.log": "ee3d560183c865d74bb816ea5e3d8f1a58143ca741e147b4ca2f0fd27fc9f038"
+  },
+  "acceptance": [
+    "Actual Temporal hosted parent retains baseline/head regression, performs no Check writes during prepare and replays.",
+    "SDK failure messages are sanitized before activity history.",
+    "Retained producer source/version/run/image/subject checks reject tampering, duplicate attempts, missing evidence and hidden failure.",
+    "Complete export rejects wrong runner, identity, file/frame digests and truncation.",
+    "Existing deployed comparison publication and all other native groups remain passing."
+  ],
+  "rework": [
+    "Octokit fixture replacement initially omitted callable endpoint/defaults typing; retained fast failure corrected with preserved endpoint metadata."
+  ],
+  "limitations": [
+    "Real-repository prepare preceded activity extraction and final streaming/runner verifier refinements; final native activity tests and replay of the same retained exports cover those changes.",
+    "The all-native run preceded a fixture typing-only correction; final fast typecheck passes.",
+    "Final-source full CI and laptop-independent main hosted deployment/publication remain pending.",
+    "No remote Check publication, M2 release, registry distribution, anonymous download or released demo is claimed."
+  ]
+}

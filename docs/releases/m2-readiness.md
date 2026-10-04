@@ -35,8 +35,11 @@ is `docs/phases/m2.md`, specification section 40 M2 and section 11.
    The local self-runner foundation now passes six frozen contract scenarios,
    regression/test-weakening and incomplete-execution probes, all fifteen native
    groups without skips, and a zero-finding arm64 image scan. Evidence is
-   `releases/m2-hosted-self-runner-local.json`; final-source CI and the hosted
-   controller/evaluator/artifact publication pipeline remain pending.
+   `releases/m2-hosted-self-runner-local.json`; exact-source foundation CI
+   `37210326532` is verified in `releases/m2-hosted-self-runner-ci.json`. The
+   connected hosted controller/evaluator/artifact pipeline now has local native
+   and real-repository prepare acceptance. Its final-source CI, main adoption,
+   actual hosted publication and released acceptance remain pending.
 3. Complete `M2-SECURITY-RELEASE`. Include inventories and scanner coverage for all
    introduced service/runner/optional-engine platforms and current official pins.
    The optional image has `node-forge` 1.4.0 / GHSA-86w9-cpqp-85rv. The official

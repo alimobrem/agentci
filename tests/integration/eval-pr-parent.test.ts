@@ -4,6 +4,7 @@ import {execFile} from 'node:child_process';import {promisify} from 'node:util';
 import {Pool} from 'pg';import {parse,stringify} from 'yaml';
 import {Client,Connection} from '@temporalio/client';import {NativeConnection,Worker} from '@temporalio/worker';
 import {ApplicationFailure} from '@temporalio/activity';
+import {Octokit} from '@octokit/rest';import {createHostedReviewActivities} from '../../apps/worker/hosted-activities.ts';
 import {Store} from '../../packages/storage/postgres.ts';import {EvalStore} from '../../packages/storage/evals.ts';
 import {planComparison} from '../../packages/evals/plan.ts';import {compileEvalUnits,controllerEvalPolicy} from '../../packages/evals/orchestration.ts';
 import {createEvalActivities} from '../../apps/eval-worker/activities.ts';import {evalSuite} from '../fixtures/evals.ts';
@@ -35,7 +36,11 @@ test('PR eval parent: separate children, baseline/head regression, cancellation,
     };
     connection=await Connection.connect({address:temporalAddress});native=await NativeConnection.connect({address:temporalAddress});const client=new Client({connection});
     const parentQueue='agentci-pr-parent-'+randomUUID(),evalQueue='agentci-pr-eval-'+randomUUID(),workflowsPath=new URL('../../dist/apps/worker/workflows.js',import.meta.url).pathname;
-    controller=await Worker.create({connection:native,taskQueue:parentQueue,workflowsPath,activities});
+    const github=new Octokit();let remoteFailure=false;
+    github.pulls.get=Object.assign(async()=>{if(remoteFailure)throw new Error('private-hosted-fixture-token');return {data:{state:current?'open':'closed',base:{sha:job.baseSha},head:{sha:job.headSha}}} as any;},{defaults:github.pulls.get.defaults,endpoint:github.pulls.get.endpoint});
+    github.checks.create=Object.assign(async()=>{throw new Error('Hosted prepare must never publish before artifacts');},{defaults:github.checks.create.defaults,endpoint:github.checks.create.endpoint});github.checks.update=github.checks.create as any;
+    const hosted=createHostedReviewActivities(github,store,evals,{repository,installationId:12},policy);
+    controller=await Worker.create({connection:native,taskQueue:parentQueue,workflowsPath,activities:{...hosted,...activities}});
     const execution=createEvalActivities(evals,()=>({image:image!}),{maintenanceMs:100});
     let failChildren=false;
     evaluator=await Worker.create({connection:native,taskQueue:evalQueue,workflowsPath:new URL('../../dist/apps/eval-worker/workflows.js',import.meta.url).pathname,maxHeartbeatThrottleInterval:100,defaultHeartbeatThrottleInterval:100,activities:{runEvalUnit:async(id:string)=>{if(failChildren)throw ApplicationFailure.nonRetryable('Fixture infrastructure failure','FixtureFailure');return execution.runEvalUnit(id);}}});
@@ -47,6 +52,8 @@ test('PR eval parent: separate children, baseline/head regression, cancellation,
     await Worker.runReplayHistory({workflowsPath},await handle.fetchHistory(),handle.workflowId);
     const history=JSON.stringify(await handle.fetchHistory());assert.ok(!history.includes('Private parent fixture content.'));assert.ok(!history.includes('readFileSync'));assert.ok(!history.includes('subject.txt'));
     for(const id of stages.get(attempt)!.unitIds){const child=client.workflow.getHandle(`agentci:eval:${result.comparisonId}:${id}`);assert.equal(await child.result(),id);await Worker.runReplayHistory({workflowsPath:new URL('../../dist/apps/eval-worker/workflows.js',import.meta.url).pathname},await child.fetchHistory(),child.workflowId);}
+    const hostedAttempt=randomUUID(),hostedHandle=await client.workflow.start('reviewPullRequestWithEvals',{args:[job,hostedAttempt,{evalTaskQueue:evalQueue,timeoutMs:60000}],workflowId:randomUUID(),taskQueue:parentQueue});assert.equal(await hostedHandle.result(),'published');assert.equal((await evals.comparison(stages.get(hostedAttempt)!.comparisonId))!.comparison.summary.outcome,'failed','hosted preparation preserves behavioral regression without remote Check writes');await Worker.runReplayHistory({workflowsPath},await hostedHandle.fetchHistory(),hostedHandle.workflowId);
+    remoteFailure=true;await assert.rejects(hosted.publishSemanticEvalReview(job,result.reviewId),e=>e instanceof ApplicationFailure&&!JSON.stringify(e).includes('private-hosted-fixture-token')&&e.cause===undefined);remoteFailure=false;
     current=false;const never=randomUUID();assert.deepEqual(await (await start(never)).result(),{status:'superseded'});assert.ok(!stages.has(never));
     current=true;staleAfterStage=true;const staleAttempt=randomUUID(),stale=await start(staleAttempt);assert.deepEqual(await stale.result(),{status:'superseded'});assert.equal((await evals.comparison(stages.get(staleAttempt)!.comparisonId))!.comparison.summary.state,'cancelled');await Worker.runReplayHistory({workflowsPath},await stale.fetchHistory(),stale.workflowId);staleAfterStage=false;
     current=true;holdStage=true;const stageCancelAttempt=randomUUID(),stageCancel=await start(stageCancelAttempt);

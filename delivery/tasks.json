@@ -1064,6 +1064,28 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M2-VELOCITY-PLAN",
+      "title": "Review agentic delivery velocity gaps and record a measurable product-plan addendum",
+      "requirementIds": [
+        "SPEC-34.2-001",
+        "SPEC-34.2-003",
+        "SPEC-34.2-004",
+        "SPEC-39-001"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T15:00:50.777Z",
+      "completedAt": "2026-10-04T15:00:51.249Z",
+      "acceptance": [
+        {
+          "text": "Inspect the original metrics/build plan and current delivery instrumentation; document gaps, acceptance scenarios, milestone integration and prospective end-to-end measurement with quality/cost guardrails. Distinguish proposed capabilities from implemented features and preserve milestone order.",
+          "status": "passed",
+          "evidence": [
+            "docs/agentic-velocity-plan.md"
+          ]
+        }
+      ]
     }
   ]
 }
