@@ -49,3 +49,13 @@ export async function executeComparison(repository:string,base:Snapshot,head:Sna
   const headRun=await executeSuite(repository,head,baselineSuite,policy,options,executor);
   return compareRuns(baseRun,headRun);
 }
+export async function executeModelMatrix(repository:string,base:Snapshot,head:Snapshot,value:EvalSuite,policy:RunnerPolicy,options:Omit<ExecutionOptions,'model'>&{maxTotalTrials?:number}={},executor:TrialExecutor=runIsolated) {
+  const suite=validateEvalSuite(value),variants=suite.spec.models??[undefined],budget=options.maxTotalTrials??200;
+  if(!Number.isSafeInteger(budget)||budget<1||budget>64000||variants.length*suite.spec.trials.count*2>budget)throw new Error('Model matrix exceeds operator total trial budget');
+  const comparisons:Awaited<ReturnType<typeof executeComparison>>[]=[];
+  for(const model of variants){
+    if(options.signal?.aborted)break;
+    comparisons.push(await executeComparison(repository,base,head,suite,policy,{...options,...(model===undefined?{}:{model})},executor));
+  }
+  return {comparisons,expectedVariants:variants.length,completedVariants:comparisons.length,complete:comparisons.length===variants.length&&!options.signal?.aborted};
+}

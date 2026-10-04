@@ -66,7 +66,7 @@ export function validateEvalRun(value:unknown):EvalRun {
   return structuredClone(run);
 }
 export interface ChangeImpact { changes:{path:string;categories:string[]}[]; requirementIds:string[] }
-export function selectSuites(values:unknown[],impact:ChangeImpact):{suites:EvalSuite[];coverageGaps:string[]} {
+export function selectSuites(values:unknown[],impact:ChangeImpact):{suites:EvalSuite[];coverageGaps:string[];selectionGaps:string[]} {
   const suites=values.map(validateEvalSuite);
   if(new Set(suites.map(s=>s.metadata.id)).size!==suites.length) throw new Error('Duplicate suite identity');
   if(impact.changes.some(c=>!safeEvalPath(c.path))) throw new Error('Unsafe changed path');
@@ -79,5 +79,11 @@ export function selectSuites(values:unknown[],impact:ChangeImpact):{suites:EvalS
       ((categories.has('permission')||categories.has('policy'))&&['policy','adversarial','safety'].includes(spec.class)) ||
       (['source','dependency','api','data-schema','deployment'].some(c=>categories.has(c))&&(['unit','integration','regression'].includes(spec.class)||mapped));
   }).sort((a,b)=>a.metadata.id.localeCompare(b.metadata.id));
-  return {suites:selected,coverageGaps:[...reqs].filter(r=>!selected.some(s=>s.spec.requirements.includes(r))).sort()};
+  const selectionGaps:string[]=[];
+  if(categories.has('model')){
+    const representative=selected.filter(s=>s.spec.representative);
+    if(!representative.length)selectionGaps.push('missing-representative-suite');
+    for(const suite of representative)if(!suite.spec.models?.length)selectionGaps.push(`missing-model-matrix:${suite.metadata.id}`);
+  }
+  return {suites:selected,coverageGaps:[...reqs].filter(r=>!selected.some(s=>s.spec.requirements.includes(r))).sort(),selectionGaps:selectionGaps.sort()};
 }

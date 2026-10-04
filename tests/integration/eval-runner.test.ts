@@ -3,7 +3,7 @@ import {evalSuite} from '../fixtures/evals.ts';
 import {runIsolated,snapshotInputs,validateRunnerPolicy} from '../../packages/evals/runner.ts';
 import {normalizeTrial} from '../../packages/evals/adapters.ts';
 import {execFileSync} from 'node:child_process';
-import {executeComparison} from '../../packages/evals/execution.ts';
+import {executeComparison,executeModelMatrix} from '../../packages/evals/execution.ts';
 const image=process.env.AGENTCI_TEST_RUNNER_IMAGE;
 test('runner rejects mutable images and credential/escaping snapshot inputs',()=>{
   assert.throws(()=>validateRunnerPolicy({image:'runner:latest'}),/pinned/);
@@ -14,7 +14,9 @@ test('real isolated UBI runner: boundaries, pytest failures, timeouts, cancellat
   const containers=()=>execFileSync('docker',['ps','-aq','--filter','label=agentci.purpose=eval-runner'],{encoding:'utf8'}).trim();
   const before=containers();
   const run=(script:string,overrides:Parameters<typeof evalSuite>[0]={},signal?:AbortSignal)=>runIsolated({sha:'a'.repeat(40),files:{'check.mjs':script}},evalSuite({runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:5000},...overrides}),policy,{signal});
+  const originalToken=process.env.AGENTCI_EVIDENCE_TOKEN;process.env.AGENTCI_EVIDENCE_TOKEN='synthetic-controller-token-for-boundary-test';
   const boundary=await run(`import assert from 'node:assert/strict';import{existsSync,writeFileSync}from'node:fs';import{networkInterfaces}from'node:os';assert.equal(process.getuid(),1001);assert.equal(process.env.AGENTCI_EVIDENCE_TOKEN,undefined);assert.equal(process.env.GITHUB_TOKEN,undefined);assert.equal(existsSync('/var/run/docker.sock'),false);assert.equal(existsSync('/run/secrets/github-app.pem'),false);assert.ok(Object.keys(networkInterfaces()).every(n=>n==='lo'));assert.throws(()=>writeFileSync('/etc/agentci-test','x'));writeFileSync('writable','yes');`);
+  if(originalToken===undefined)delete process.env.AGENTCI_EVIDENCE_TOKEN;else process.env.AGENTCI_EVIDENCE_TOKEN=originalToken;
   assert.equal(boundary.status,'completed');assert.equal(boundary.exitCode,0);
   assert.equal((await run('process.exit(1)')).exitCode,1);
   const absent=await run('',{runner:{adapter:'command',command:['agentci-no-such-command'],timeoutMs:5000}});assert.equal(absent.status,'error');assert.equal(absent.error,'spawn-error');
@@ -40,5 +42,8 @@ test('real isolated UBI runner: boundaries, pytest failures, timeouts, cancellat
   const repeated=evalSuite({runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:5000},trials:{count:3,passRate:1,confidenceMethod:'wilson'}});
   const comparison=await executeComparison('owner/repo',{sha:'c'.repeat(40),files:{'check.mjs':'process.exit(0)'}},{sha:'d'.repeat(40),files:{'check.mjs':'process.exit(1)'}},repeated,policy);
   assert.equal(comparison.base.status,'passed');assert.equal(comparison.head.status,'failed');assert.deepEqual(comparison.regressions,['safe-response']);assert.equal(comparison.head.scenarios[0]!.failed,3);
+  const matrixSuite=evalSuite({runner:repeated.spec.runner,models:['model-a','model-b'],representative:true,trials:{count:1,passRate:1,confidenceMethod:'wilson'}});
+  const matrix=await executeModelMatrix('owner/repo',{sha:'e'.repeat(40),files:{'check.mjs':'process.exit(0)'}},{sha:'f'.repeat(40),files:{'check.mjs':`process.exit(process.env.AGENTCI_MODEL_VARIANT==='model-b'?1:0)`}},matrixSuite,policy);
+  assert.equal(matrix.complete,true);assert.equal(matrix.comparisons[0]!.head.status,'passed');assert.equal(matrix.comparisons[1]!.head.status,'failed');
   assert.equal(containers(),before);
 });

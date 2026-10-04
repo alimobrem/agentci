@@ -41,3 +41,9 @@ test('normalized results cannot hide infrastructure errors, skipped trials, coun
   assert.throws(()=>validateEvalRun(mutate({passed:21})),/counts/);
   assert.throws(()=>validateEvalRun({...result,subject:{...result.subject,gitSha:'main'}}),/Invalid/);
 });
+test('model-impact selection reports missing representative suites and incomplete model matrices',()=>{
+  const impact={changes:[{path:'models/route.json',categories:['model']}],requirementIds:[]};
+  assert.deepEqual(selectSuites([evalSuite()],impact).selectionGaps,['missing-representative-suite']);
+  assert.deepEqual(selectSuites([evalSuite({representative:true})],impact).selectionGaps,['missing-model-matrix:behavior']);
+  assert.deepEqual(selectSuites([evalSuite({representative:true,models:['a','b']})],impact).selectionGaps,[]);
+});
