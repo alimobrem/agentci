@@ -50,8 +50,11 @@ complete export links. Those links require the deployment bearer token and never
 include credentials. A failure before staging explicitly reports that no staged
 comparison evidence is available. The Check remains unavailable even if retained
 observations include passing units; the links do not certify a successful review.
-This guidance correction is awaiting final-source CI and installed customer
-verification under `M2-RECOVERY-GUIDANCE`.
+The guidance correction passed source/tree/artifact-verified CI 37206981627
+and [installed customer verification](../releases/m2-recovery-guidance-customer-local.json).
+The client discovers cancelled evidence from the Check, verifies the complete
+export and rejects anonymous access. A fresh attempt passes without changing
+prior failed evidence.
 
 Native tests observe both containers actually running before termination and
 before restricted-evaluator SIGKILL. They kill a separate reconciler after SQL

@@ -436,14 +436,16 @@
         "SPEC-40-035",
         "SPEC-11.2-001"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T05:51:26.918Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T13:58:09.740Z",
       "acceptance": [
         {
           "text": "Strict manifests and normalized results reject malformed/ambiguous input, select impact-mapped suites and report missing requirement coverage",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-contract-acceptance.json"
+          ]
         }
       ]
     },
@@ -534,8 +536,8 @@
         "SPEC-40-038",
         "SPEC-40-039"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "in-progress",
+      "startedAt": "2026-10-04T13:52:48.601Z",
       "completedAt": null,
       "acceptance": [
         {
@@ -1014,12 +1016,50 @@
         "SPEC-40-039",
         "SPEC-32-002"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T13:44:43.294Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T13:57:32.614Z",
       "acceptance": [
         {
           "text": "Cancelled/unavailable Checks instruct an operator to request a fresh immutable attempt rather than redeliver the failed UUID. When a scoped staged comparison exists, the exact Check exposes authenticated retained comparison evidence and its review/attempt identity without credentials; pre-stage failures remain honest. Native and installed customer verification prove correct links, immutable earlier evidence and unchanged exact-head reconciliation; docs, API/scenario mapping, packaging and exact-source CI pass.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-recovery-guidance-ci.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-HOSTED-DOGFOOD",
+      "title": "Run behavioral self-review on trusted hosted controller and isolated evaluators",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Every eligible AgentCI PR receives exact-attempt semantic and behavioral Checks using trusted main controller code and immutable isolated evaluator images, with no laptop dependency, secret exposure to PR code or mutable reviewed dependencies. Retain complete authenticated/source-bound evidence before publication, reconcile retries/stale heads and demonstrate actual hosted passing and failing PR revisions. Native/CI/package/docs validation passes before release acceptance.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-SECURITY-RELEASE",
+      "title": "Resolve or prove applicability of all M2 service and optional-engine scan findings",
+      "requirementIds": [
+        "SPEC-40-038",
+        "SPEC-11.4-007"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T13:58:09.949Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Published default and optional-engine inventories include current official dependency/runtime verification, image-platform scans, Docker CLI and Temporal/native scanner coverage. Resolve fixable findings. For node-forge GHSA-86w9-cpqp-85rv, provide an upstream-supported fix or concrete call-path/exploitability evidence and explicit documented release treatment; no silent ignored finding, fabricated clean scan or removed M2 optional-engine scope. Re-run actual Promptfoo/DeepEval/native acceptance and verify pinned artifacts.",
           "status": "pending",
           "evidence": []
         }

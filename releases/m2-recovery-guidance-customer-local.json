@@ -1,0 +1,117 @@
+{
+  "component": "Installed customer retained evidence links and recovery guidance",
+  "sourceCommit": "e7e59818ba72939dd27cb10a41b97134acbc341c",
+  "packageSha256": "2e7718a81ebb4b3015d022cd6239d5e8cc7f4cbd6c1eda4295f9fff6b5d96b21",
+  "repository": "alimobrem/agentci-onboarding-demo",
+  "pullRequest": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2",
+  "terminated": {
+    "receipt": {
+      "schemaVersion": 1,
+      "requestId": "5a44e75f-c353-4d9e-83c5-90b2328c7f4e",
+      "status": "queued",
+      "workflowId": "agentci:alimobrem/agentci-onboarding-demo:5a44e75f-c353-4d9e-83c5-90b2328c7f4e",
+      "subject": {
+        "repository": "alimobrem/agentci-onboarding-demo",
+        "installationId": 167710386,
+        "pullRequest": 2,
+        "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+        "headSha": "6e0fe2c11d7cfd22d59893bc317098340badc3d4"
+      }
+    },
+    "tracking": {
+      "runId": "01a1072d-5e42-7724-a94c-981927829229",
+      "terminalStatus": "TERMINATED",
+      "closedAt": "2026-10-04T13:50:00.331459+00:00"
+    },
+    "checkRunId": 111450197259,
+    "checkUrl": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2/checks?check_run_id=111450197259",
+    "conclusion": "action_required",
+    "comparisonId": "fce7660e-8f74-4acf-9a95-1ddb26f2438e",
+    "comparisonDigest": "sha256:d1544ad76339cb61d986920c9cd1a8d1e84359fcf9454e69ed730e7935f61d1d",
+    "summary": {
+      "state": "cancelled",
+      "outcome": "insufficient",
+      "executionGaps": [
+        "cancelled-unit:d2fc4ae3-4e0d-4350-b276-20092002aed9",
+        "cancelled-unit:d7f9c899-2b3f-4b6c-9fcf-89e1376b0756"
+      ],
+      "comparisons": []
+    },
+    "certifiedExport": true,
+    "matchingCheckCount": 1
+  },
+  "recovered": {
+    "receipt": {
+      "schemaVersion": 1,
+      "requestId": "f02137f2-1f6a-4f8d-866e-f406270bc2b3",
+      "status": "queued",
+      "workflowId": "agentci:alimobrem/agentci-onboarding-demo:f02137f2-1f6a-4f8d-866e-f406270bc2b3",
+      "subject": {
+        "repository": "alimobrem/agentci-onboarding-demo",
+        "installationId": 167710386,
+        "pullRequest": 2,
+        "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+        "headSha": "6e0fe2c11d7cfd22d59893bc317098340badc3d4"
+      }
+    },
+    "tracking": {
+      "runId": "01a1072e-127e-71cb-a330-1324f2539202",
+      "terminalStatus": "COMPLETED",
+      "closedAt": "2026-10-04T13:50:33.350984+00:00"
+    },
+    "checkRunId": 111450317296,
+    "checkUrl": "https://github.com/alimobrem/agentci-onboarding-demo/pull/2/checks?check_run_id=111450317296",
+    "conclusion": "neutral",
+    "comparisonId": "d2cb7469-2b1a-4384-8ca3-c3d8070178cd",
+    "comparisonDigest": "sha256:21aa6e2a97ed391f2cb915e90052081e6fe523f4aab2d8de8caf5fc8eba3b324",
+    "summary": {
+      "state": "completed",
+      "outcome": "passed",
+      "executionGaps": [],
+      "comparisons": [
+        {
+          "suite": "customer-safety",
+          "baseRunId": "c28359f4-ceb5-409f-85b9-7eba4b23e32c",
+          "headRunId": "8acb6946-406c-4338-9fc6-1bcf3c599fd1",
+          "deltas": [
+            {
+              "scenario": "safe-response",
+              "baseStatus": "passed",
+              "headStatus": "passed",
+              "passRateDelta": 0,
+              "criticalFailureDelta": 0,
+              "regression": false
+            }
+          ],
+          "regressions": []
+        }
+      ]
+    },
+    "certifiedExport": true,
+    "matchingCheckCount": 1
+  },
+  "priorFailureDigestPreserved": true,
+  "priorCheckIdsRetained": [
+    111431171007,
+    111431405415,
+    111435424243
+  ],
+  "installedCliAndClient": true,
+  "ownedContainersAbsentForUnits": [
+    "d2fc4ae3-4e0d-4350-b276-20092002aed9",
+    "d7f9c899-2b3f-4b6c-9fcf-89e1376b0756",
+    "c28359f4-ceb5-409f-85b9-7eba4b23e32c",
+    "8acb6946-406c-4338-9fc6-1bcf3c599fd1"
+  ],
+  "cancelledCheckLinksDiscoverable": true,
+  "anonymousLinkDenied": true,
+  "freshAttemptGuidance": true,
+  "credentialFreeLinks": true,
+  "releaseAcceptance": false,
+  "limitations": [
+    "Local candidate images and temporary tunnel; no milestone publication or reliable every-PR hosting acceptance.",
+    "Live termination occurred with evaluator paused and units queued; running-container SIGKILL/termination is independently covered by the fourteen native integration groups.",
+    "Final exact-source CI and all phase release gates remain required."
+  ],
+  "workerImageId": "sha256:dbe3a6ef8111ae33bb2dd648721392138aa3d579190add28d937bd8ec9ae7362"
+}
