@@ -1,0 +1,8 @@
+# Apply only on dedicated rootless Podman evaluator infrastructure.
+# Socket access confers authority over that executor; never share the controller/App daemon.
+services:
+  eval-worker:
+    userns_mode: "keep-id:uid=1001,gid=0"
+    # The trusted remote-client service must access the host socket under SELinux.
+    # Untrusted eval children are independently created with SELinux enabled and no socket.
+    security_opt: ["no-new-privileges:true", "label=disable"]

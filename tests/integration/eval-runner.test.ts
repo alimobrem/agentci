@@ -26,13 +26,13 @@ test('real isolated UBI runner: boundaries, pytest failures, timeouts, cancellat
   const absent=await run('',{runner:{adapter:'command',command:['agentci-no-such-command'],timeoutMs:5000}});assert.equal(absent.status,'error');assert.equal(absent.error,'spawn-error');
   const timeout=await run('setInterval(()=>{},1000)',{runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:100}});assert.equal(timeout.status,'timeout');
   const limit=await run(`while(true)process.stdout.write('x'.repeat(4096));`,{runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:5000,maxOutputBytes:1024}});assert.equal(limit.status,'error');assert.equal(limit.error,'output-limit');
-  const abort=new AbortController();const pending=run('setInterval(()=>{},1000)',{runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:30000}},abort.signal);
-  let live=false;for(let i=0;i<200;i++){if(containers()!==before){live=true;break;}await new Promise(resolve=>setTimeout(resolve,50));}
-  abort.abort();assert.equal((await pending).status,'cancelled');assert.ok(live,'a live runner must carry the exact unit ownership label so cleanup can detect it');
+  const abort=new AbortController();const pending=run("import{writeFileSync}from'node:fs';writeFileSync('cancel-ready','yes');process.on('SIGTERM',()=>{});setInterval(()=>{},1000)",{runner:{adapter:'command',command:['node','check.mjs'],timeoutMs:30000}},abort.signal);
+  let live=false;for(let i=0;i<200;i++){const running=execFileSync(containerEngine(),['ps','--quiet','--no-trunc','--filter',`label=agentci.eval.unit=${ownership.unitId}`],{encoding:'utf8'}).trim();if(running){try{execFileSync(containerEngine(),['exec',running,'node','-e',"if(!require('node:fs').existsSync('/workspace/cancel-ready'))process.exit(1)"],{stdio:'ignore'});live=true;break;}catch{}}await new Promise(resolve=>setTimeout(resolve,50));}
+  const cancelStarted=Date.now();abort.abort();assert.equal((await pending).status,'cancelled');assert.ok(Date.now()-cancelStarted<10000,'attached signal-ignoring evaluator cancellation must finish cleanup promptly');assert.ok(live,'a live runner must carry the exact unit ownership label so cleanup can detect it');
   const suite=evalSuite({runner:{adapter:'pytest',command:['python','-m','pytest','-q','test_example.py'],report:'junit.xml',timeoutMs:10000},scenarios:[{id:'one',selector:'test_example.test_one'}]});
   for(const [code,expected] of [['assert True','passed'],['assert False','failed'],['import pytest; pytest.skip("skip")','skipped']] as const){
     const raw=await runIsolated({sha:'b'.repeat(40),files:{'test_example.py':`def test_one():\n    ${code}\n`}},suite,policy);
-    assert.equal(raw.status,'completed');assert.equal(normalizeTrial(suite,raw).results.one!.status,expected);
+    assert.equal(raw.status,'completed',JSON.stringify(raw));assert.equal(normalizeTrial(suite,raw).results.one!.status,expected);
   }
   const empty=await runIsolated({sha:'b'.repeat(40),files:{'test_example.py':'# no tests\n'}},suite,policy);assert.equal(empty.exitCode,5);assert.equal(normalizeTrial(suite,empty).error,'pytest-execution-error');
   const broken=await runIsolated({sha:'b'.repeat(40),files:{'test_example.py':'this is invalid syntax !\n'}},suite,policy);assert.equal(broken.exitCode,2);assert.equal(normalizeTrial(suite,broken).error,'pytest-execution-error');

@@ -6,7 +6,7 @@ services:
     user: "1001:0"
     group_add: ["${AGENTCI_CONTAINER_SOCKET_GID:-${AGENTCI_DOCKER_SOCKET_GID:?Set evaluator engine socket group}}"]
     read_only: true
-    tmpfs: ["/tmp:rw,nosuid,nodev,size=128m", "/opt/agentci/podman-runtime:rw,nosuid,nodev,size=16m,mode=0700,uid=1001,gid=0"]
+    tmpfs: ["/tmp:rw,nosuid,nodev,size=128m", "/opt/agentci/podman-runtime:rw,nosuid,nodev,size=16m,mode=1777"]
     cap_drop: [ALL]
     security_opt: [no-new-privileges:true]
     environment:

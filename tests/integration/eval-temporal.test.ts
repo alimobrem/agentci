@@ -1,3 +1,5 @@
+import {containerOperatorEnvironment} from '../fixtures/container-env.ts';
+import {containerEngine} from '../../packages/evals/runner.ts';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';import {randomUUID,createHash} from 'node:crypto';
 import {spawn,execFile} from 'node:child_process';import {promisify} from 'node:util';import {once} from 'node:events';import {setTimeout as delay} from 'node:timers/promises';
@@ -9,7 +11,7 @@ import {createEvalActivities} from '../../apps/eval-worker/activities.ts';import
 const databaseUrl=process.env.AGENTCI_TEST_DATABASE_URL,temporalAddress=process.env.AGENTCI_TEST_TEMPORAL_ADDRESS,image=process.env.AGENTCI_TEST_RUNNER_IMAGE;
 if(!databaseUrl||!temporalAddress||!image)throw new Error('Temporal eval acceptance requires real PostgreSQL, Temporal and immutable runner image; never silently skip');
 const org='00000000-0000-4000-8000-000000000001',repository='example/repo',sha=()=>createHash('sha1').update(randomUUID()).digest('hex');
-const docker=async(args:string[])=>(await promisify(execFile)('docker',args,{encoding:'utf8',timeout:30000})).stdout.trim();
+const docker=async(args:string[])=>(await promisify(execFile)(containerEngine(),args,{encoding:'utf8',timeout:30000})).stdout.trim();
 test('separate eval worker: restricted startup, committed-trial retry, cancellation cleanup and replay',{timeout:120000},async()=>{
   const admin=new Pool({connectionString:databaseUrl}),login='agentci_test_temporal_'+randomUUID().replaceAll('-',''),password=randomUUID()+randomUUID();
   let restricted:Pool|undefined,connection:Connection|undefined,native:NativeConnection|undefined,worker:Worker|undefined,run:Promise<void>|undefined,child:ReturnType<typeof spawn>|undefined,roleCreated=false;
@@ -29,7 +31,7 @@ test('separate eval worker: restricted startup, committed-trial retry, cancellat
     connection=await Connection.connect({address:temporalAddress!});native=await NativeConnection.connect({address:temporalAddress!});const client=new Client({connection});
     const workflowsPath=new URL('../../dist/apps/eval-worker/workflows.js',import.meta.url).pathname;
     const initialId=await stage(1,'process.exit(process.env.GITHUB_TOKEN||process.env.AGENTCI_EVIDENCE_TOKEN?1:0)');
-    child=spawn(process.execPath,['dist/apps/eval-worker/main.js'],{stdio:'ignore',env:{PATH:process.env.PATH,
+    child=spawn(process.execPath,['dist/apps/eval-worker/main.js'],{stdio:'ignore',env:{...containerOperatorEnvironment(),
       AGENTCI_REPOSITORY:repository,AGENTCI_ORGANIZATION_ID:org,AGENTCI_EVAL_DATABASE_URL:url.toString(),AGENTCI_EVAL_RUNNER_IMAGE:image,TEMPORAL_ADDRESS:temporalAddress}});
     const initial=await client.workflow.start('evaluateUnit',{args:[initialId],taskQueue:'agentci-eval-v1',workflowId:randomUUID(),workflowExecutionTimeout:'40 seconds'});
     await Promise.race([initial.result(),once(child,'exit').then(()=>{throw new Error('Isolated worker exited before accepting a unit');})]);

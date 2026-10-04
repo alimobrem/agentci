@@ -18,12 +18,24 @@ recovery that preserves other units and current leases. Podman uses its document
 `--mount` tmpfs ownership option; actual mounts retain nosuid/nodev. The final Docker compatibility rerun also passed those mount assertions. Imported Docker archives produce a Podman image identity, which is
 pinned independently; an unchanged cross-engine image ID is not assumed.
 
+The dedicated rootless Compose deployment has also passed actual socket access
+from UID 1001, restricted database authentication, native Temporal execution,
+behavioral failure preservation, worker shutdown/restart and child cleanup.
+Five targeted native tests passed cancellation and recovery across the runner,
+separate evaluator and controller. Cancellation kills the attached client, then
+removes only the fenced owner's container. Podman removal uses `--time 0` because
+its default stop grace permits untrusted code to delay cleanup by ignoring TERM.
+
 This is an implementation checkpoint, not completed Podman support or an M2
-release. Remaining gates include the non-root evaluator's engine-socket access,
-restricted database/native Temporal restart/recovery, complete native suite,
-optional/self-review images, hosted workflow, both published platforms and native
-binary inventory/scan coverage. Hosted workflows currently select Docker
-explicitly; service adoption must pass before those defaults change.
+release. A complete native run passed 14 of 15 tests; a pytest runner case returned
+an infrastructure error. The retry passed all 15 tests, and a further focused
+runner pass succeeded. The earlier failure is retained as an unresolved
+intermittent issue. The freshly packaged evaluator passed rootless Podman Compose
+and explicit Docker service acceptance; the full Docker cohort passed all 15
+tests. Remaining gates include resolving the intermittent runner failure, hosted
+workflow, both published platforms and native binary inventory/scan coverage.
+Hosted workflows currently select Docker explicitly; hosted Podman acceptance
+must pass before those defaults change.
 
 Evaluator socket configuration is operator-owned:
 
@@ -36,8 +48,15 @@ Evaluator socket configuration is operator-owned:
   `AGENTCI_DOCKER_SOCKET_PATH/GID` aliases remain accepted by Compose.
 
 The official remote client requires runtime-directory writes even during version
-initialization. The service provides a private 16 MiB non-root tmpfs at
-`/opt/agentci/podman-runtime`; the UBI root filesystem remains read-only.
+initialization. The service provides a bounded 16 MiB tmpfs parent at
+`/opt/agentci/podman-runtime`; startup creates its private, UID-owned mode-0700
+`private` child for `XDG_RUNTIME_DIR`. The parent uses mode 1777 for portable OCI
+ownership initialization; the UBI root filesystem remains read-only.
 
-Rootless service UID mapping and SELinux socket access are still under acceptance;
-the Compose example is not yet a certified rootless deployment recipe.
+For a rootless Podman host, include `deploy/podman-rootless.compose.yaml` alongside
+the evaluator manifest. It maps the host engine user to service UID 1001 using
+`keep-id`. SELinux label separation is disabled only for the trusted engine client
+that needs the operator socket; untrusted eval containers retain their own
+SELinux isolation and receive no engine socket or controller credentials. This
+recipe has local acceptance evidence; hosted and published release acceptance
+remain open.

@@ -1,3 +1,4 @@
+import {containerEngine} from '../../packages/evals/runner.ts';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';import {randomUUID,createHash} from 'node:crypto';
 import {execFile} from 'node:child_process';import {promisify} from 'node:util';import {setTimeout as delay} from 'node:timers/promises';
@@ -13,7 +14,7 @@ if(!databaseUrl||!temporalAddress||!image)throw new Error('PR parent acceptance 
 test('PR eval parent: separate children, baseline/head regression, cancellation, stale identity and replay',{timeout:150000},async()=>{
   const pool=new Pool({connectionString:databaseUrl}),org='00000000-0000-4000-8000-000000000001',repository='example/repo';
   let connection:Connection|undefined,native:NativeConnection|undefined,controller:Worker|undefined,evaluator:Worker|undefined,controllerRun:Promise<void>|undefined,evaluatorRun:Promise<void>|undefined;
-  const docker=async(args:string[])=>(await promisify(execFile)('docker',args,{encoding:'utf8',timeout:30000})).stdout.trim();
+  const docker=async(args:string[])=>(await promisify(execFile)(containerEngine(),args,{encoding:'utf8',timeout:30000})).stdout.trim();
   try{
     for(const name of ['001_m1.sql','002_m2.sql'])await pool.query(await readFile(new URL(`../../deploy/migrations/${name}`,import.meta.url),'utf8'));
     const store=new Store(pool,org,repository),evals=new EvalStore(pool,org,repository),policy=controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image});await store.ready();

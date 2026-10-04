@@ -1,3 +1,4 @@
+import {containerEngine} from '../../packages/evals/runner.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile,mkdtemp,writeFile,chmod,rm} from 'node:fs/promises';
@@ -130,7 +131,7 @@ test('PostgreSQL eval recovery: immutable exact inputs, fenced leases, retained 
     const recoverJob=await store.stage(review.id,randomUUID(),base,head,[{suite:slow,side:'base',assertionSide:'base',runner:{runnerImage:image!}}],plan),recoverId=recoverJob.unitIds[0]!;
     const child=spawn(process.execPath,['--import','tsx','--input-type=module','-e',
       `import {Pool} from 'pg';import {EvalStore} from './packages/storage/evals.ts';import {executeStoredUnit} from './apps/eval-worker/unit.ts';const pool=new Pool({connectionString:process.env.AGENTCI_TEST_DATABASE_URL});try{await executeStoredUnit(new EvalStore(pool,${JSON.stringify(org)},${JSON.stringify(repository)}),${JSON.stringify(recoverId)},${JSON.stringify({image})});}finally{await pool.end();}`],{stdio:'ignore'});
-    const docker=async(args:string[])=>(await promisify(execFile)('docker',args,{encoding:'utf8',timeout:30000})).stdout.trim();
+    const docker=async(args:string[])=>(await promisify(execFile)(containerEngine(),args,{encoding:'utf8',timeout:30000})).stdout.trim();
     try{
       let container='';for(let i=0;i<100;i++){container=await docker(['ps','--quiet','--no-trunc','--filter',`label=agentci.eval.unit=${recoverId}`]);if(container)break;await delay(30);}
       assert.ok(container,'real leased worker must create a live owned container');
@@ -153,9 +154,9 @@ test('PostgreSQL eval recovery: immutable exact inputs, fenced leases, retained 
     assert.equal(await docker(['ps','--all','--quiet','--filter',`label=agentci.eval.unit=${abortId}`]),'');
     const cleanupSuite=evalSuite({runner:{adapter:'command',command:['node','-e','process.exit(0)'],timeoutMs:5000},trials:{count:1,passRate:1,confidenceMethod:'wilson'}});
     const cleanupJob=await store.stage(review.id,randomUUID(),base,head,[{suite:cleanupSuite,side:'base',assertionSide:'base',runner:{runnerImage:image!}}],plan),cleanupId=cleanupJob.unitIds[0]!;
-    const wrapperDirectory=await mkdtemp(join(tmpdir(),'agentci-cleanup-refusal-')),realDocker=(await promisify(execFile)('which',['docker'],{encoding:'utf8'})).stdout.trim();
+    const wrapperDirectory=await mkdtemp(join(tmpdir(),'agentci-cleanup-refusal-')),realDocker=(await promisify(execFile)('which',[containerEngine()],{encoding:'utf8'})).stdout.trim();
     try{
-      const wrapper=join(wrapperDirectory,'docker');
+      const wrapper=join(wrapperDirectory,containerEngine());
       await writeFile(wrapper,`#!/usr/bin/env node\nconst{execFileSync,spawnSync}=require('node:child_process');const args=process.argv.slice(2),real=${JSON.stringify(realDocker)};if(args[0]==='rm'){const target=args.at(-1);let labels={};try{labels=JSON.parse(execFileSync(real,['inspect','--format','{{json .Config.Labels}}',target],{encoding:'utf8',stdio:['ignore','pipe','ignore']}));}catch{}if(labels['agentci.eval.unit']===${JSON.stringify(cleanupId)}){process.stderr.write('Injected unit-specific cleanup refusal');process.exit(7);}}const result=spawnSync(real,args,{stdio:'inherit'});process.exit(result.status??1);\n`);await chmod(wrapper,0o755);
       const script=`import{Pool}from'pg';import{EvalStore}from'./packages/storage/evals.ts';import{executeStoredUnit}from'./apps/eval-worker/unit.ts';const pool=new Pool({connectionString:process.env.AGENTCI_TEST_DATABASE_URL});try{await executeStoredUnit(new EvalStore(pool,${JSON.stringify(org)},${JSON.stringify(repository)}),${JSON.stringify(cleanupId)},${JSON.stringify({image})});process.exitCode=2;}catch(error){if(!error.message.includes('Runner cleanup failed'))process.exitCode=3;}finally{await pool.end();}`;
       await promisify(execFile)(process.execPath,['--import','tsx','--input-type=module','-e',script],{env:{...process.env,PATH:wrapperDirectory+':'+process.env.PATH},timeout:30000});

@@ -135,6 +135,6 @@ COPY deploy/security/docker-cli-vendor.mod /licenses/docker-cli/go.mod
 COPY deploy/licenses/docker-cli-LICENSE /licenses/docker-cli-LICENSE
 RUN microdnf remove -y microdnf rpm rpm-libs libdnf libmodulemd librepo libsolv dnf-data rpm-sequoia && mkdir -p /opt/agentci/docker-config /opt/agentci/podman-config/containers /opt/agentci/podman-runtime/libpod && chmod 0555 /opt/agentci/docker-config && chown -R 1001:0 /opt/agentci/podman-config /opt/agentci/podman-runtime && chmod 0700 /opt/agentci/podman-config /opt/agentci/podman-config/containers /opt/agentci/podman-runtime && chmod 1700 /opt/agentci/podman-runtime/libpod && \
     docker --version | grep '29.8.2'
-ENV DOCKER_CONFIG=/opt/agentci/docker-config DOCKER_HOST=unix:///var/run/docker.sock XDG_CONFIG_HOME=/opt/agentci/podman-config XDG_RUNTIME_DIR=/opt/agentci/podman-runtime
+ENV DOCKER_CONFIG=/opt/agentci/docker-config DOCKER_HOST=unix:///var/run/docker.sock XDG_CONFIG_HOME=/opt/agentci/podman-config XDG_RUNTIME_DIR=/opt/agentci/podman-runtime/private
 USER 1001
 CMD ["node", "dist/apps/eval-worker/main.js"]

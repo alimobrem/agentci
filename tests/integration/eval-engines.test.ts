@@ -1,3 +1,4 @@
+import {containerEngine} from '../../packages/evals/runner.ts';
 import {randomUUID} from 'node:crypto';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -7,10 +8,10 @@ import {runIsolated as runContainer} from '../../packages/evals/runner.ts';
 import {normalizeTrial} from '../../packages/evals/adapters.ts';
 const image=process.env.AGENTCI_TEST_ENGINES_IMAGE;
 test('real optional UBI engines: Promptfoo and DeepEval passing assertions, regressions and infrastructure errors',{skip:!image,timeout:120000},async()=>{
-  const cryptoProbe=execFileSync('docker',['run','--rm','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--pids-limit','64','--memory','256m','--entrypoint','node',image!,'/opt/agentci-patches/verify-forge-backport.cjs','/opt/promptfoo/node_modules/node-forge'],{encoding:'utf8',timeout:15000});assert.match(cryptoProbe,/malformed nested DigestAlgorithm rejected/);
+  const cryptoProbe=execFileSync(containerEngine(),['run','--rm','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--pids-limit','64','--memory','256m','--entrypoint','node',image!,'/opt/agentci-patches/verify-forge-backport.cjs','/opt/promptfoo/node_modules/node-forge'],{encoding:'utf8',timeout:15000});assert.match(cryptoProbe,/malformed nested DigestAlgorithm rejected/);
   const ownership={unitId:randomUUID(),leaseToken:randomUUID()};
   const runIsolated=(snapshot:Parameters<typeof runContainer>[0],suite:Parameters<typeof runContainer>[1],policy:Parameters<typeof runContainer>[2],options:NonNullable<Parameters<typeof runContainer>[3]>={})=>runContainer(snapshot,suite,policy,{...options,ownership});
-  const containers=()=>execFileSync('docker',['ps','-aq','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.eval.unit=${ownership.unitId}`],{encoding:'utf8'}).trim();
+  const containers=()=>execFileSync(containerEngine(),['ps','-aq','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.eval.unit=${ownership.unitId}`],{encoding:'utf8'}).trim();
   const before=containers();
   const abort=new AbortController();const pending=runIsolated({sha:'a'.repeat(40),files:{'probe.mjs':'setInterval(()=>{},1000)'}},evalSuite({runner:{adapter:'command',command:['node','probe.mjs'],timeoutMs:30000}}),{image:image!},{signal:abort.signal});
   let live=false;for(let i=0;i<200;i++){if(containers()!==before){live=true;break;}await new Promise(resolve=>setTimeout(resolve,50));}

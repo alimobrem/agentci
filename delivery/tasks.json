@@ -1105,6 +1105,24 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M2-PODMAN-RUNNER-STABILITY",
+      "title": "Resolve intermittent native Podman pytest infrastructure failure under the full acceptance workload",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-038"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Diagnose the retained failed native pytest attempt without weakening assertions or hiding failed attempts. Add the necessary regression coverage and verify the fix through concurrent native Podman execution, runner cancellation/recovery and complete integration acceptance. Record exact source/runtime/image evidence; passing retries alone do not establish a resolved cause.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

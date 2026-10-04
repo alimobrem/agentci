@@ -8,9 +8,13 @@ import { safeEvalPath, validateEvalSuite, type EvalSuite } from './contracts.ts'
 import type { Snapshot } from '../review/types.ts';
 import type {HttpProviderPolicy} from './http.ts';
 const execute=promisify(execFile);
+// Untrusted code cannot extend cancellation by ignoring TERM during Podman's default stop grace.
+const removeContainerArgs=(engine:ContainerEngine,id:string)=>['rm','--force',...(engine==='podman'?['--time','0']:[]),'--volumes',id];
 function streamContainer(engine:ContainerEngine,args:string[],input:string,signal:AbortSignal|undefined,limit:number,timeout:number):Promise<string> {
   return new Promise((resolve,reject)=>{
-    const child=spawn(engine,args,{signal,stdio:['pipe','pipe','pipe']});
+    // Podman proxies SIGTERM into the container instead of promptly exiting its attached client.
+    // Kill only the client on abort; fenced owner cleanup below removes the untrusted container.
+    const child=spawn(engine,args,{signal,killSignal:'SIGKILL',stdio:['pipe','pipe','pipe']});
     let bytes=0,stdout='',failure:Error|undefined;
     const timer=setTimeout(()=>{failure=new Error('Container client timeout');child.kill('SIGKILL');},timeout);
     child.stdout.on('data',chunk=>{bytes+=chunk.length;if(bytes>limit){failure=new Error('Runner envelope exceeds limit');child.kill('SIGKILL');}else stdout+=chunk;});
@@ -55,7 +59,7 @@ async function reapOwnedEvalContainers(unitId:string,engine:ContainerEngine,keep
     if(keepLease&&labels['agentci.eval.lease']===keepLease)continue;
     // Another recovery caller or the original runner may already be removing this exact owner.
     for(let attempt=0;attempt<5;attempt++){
-      try{await container(['rm','--force','--volumes',id]);break;}
+      try{await container(removeContainerArgs(engine,id));break;}
       catch{if(!(await container(['ps','--all','--quiet','--no-trunc','--filter',`id=${id}`])))break;if(attempt===4)throw new Error('Orphan container cleanup failed');await delay(100);}
     }
     if(await container(['ps','--all','--quiet','--no-trunc','--filter',`id=${id}`]))throw new Error('Orphan container cleanup failed');
@@ -141,7 +145,7 @@ export async function runIsolated(snapshot:Snapshot,value:EvalSuite,policyValue:
   }finally{
     // A cancelled container client must not leave its untrusted container running.
     let cleanupFailed=false;
-    if(createAttempted)try{await container(['rm','--force','--volumes',name]);}catch(error){cleanupFailed=!String(error).includes('No such container');}
+    if(createAttempted)try{await container(removeContainerArgs(engine,name));}catch(error){cleanupFailed=!String(error).includes('No such container');}
     if(cleanupFailed)throw new Error('Runner cleanup failed; operator intervention required');
   }
 }

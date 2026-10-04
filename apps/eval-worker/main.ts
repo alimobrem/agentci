@@ -1,3 +1,4 @@
+import {prepareContainerClientRuntime} from './client-runtime.ts';
 import {fileURLToPath} from 'node:url';
 import {Pool} from 'pg';
 import {NativeConnection,Worker} from '@temporalio/worker';
@@ -6,6 +7,7 @@ import {evalWorkerConfig} from './config.ts';
 import {requireEvalPrivileges} from './privileges.ts';
 import {createEvalActivities} from './activities.ts';
 const config=await evalWorkerConfig();
+if(config.policyFor('command').engine==='podman')await prepareContainerClientRuntime();
 const pool=new Pool({connectionString:config.databaseUrl,max:10,connectionTimeoutMillis:5000,query_timeout:10_000});
 let native:NativeConnection|undefined;
 try{
