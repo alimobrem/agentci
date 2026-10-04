@@ -8,7 +8,7 @@ import { createAppAuth } from '@octokit/auth-app';
 import { appPermissions, setupConfig, verifyInstallation } from './config.ts';
 export async function startAppSetup(env: NodeJS.ProcessEnv = process.env) {
 const config = setupConfig(env);
-const { origin, repository, owner, appName, registrationUrl, port } = config;
+const { origin, repository, owner, appName, registrationUrl, port, temporalUiPort } = config;
 try { await access('.env'); throw new Error('Existing .env: refusing to overwrite credentials'); } catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
 const state = randomBytes(32).toString('hex'), setupToken = randomBytes(32).toString('hex');
 await mkdir('.agentci/local', { recursive: true, mode: 0o700 });
@@ -60,7 +60,7 @@ const server = createServer(async (req, res) => {
       const client = new Octokit({ authStrategy: createAppAuth, auth: { appId: app.id, privateKey: app.pem, installationId: id } });
       const { data: repos } = await client.rest.apps.listReposAccessibleToInstallation({ per_page: 100 });
       try { verifyInstallation(config, { account: installation.account && 'login' in installation.account ? { login: installation.account.login } : null, repository_selection: installation.repository_selection, permissions: installation.permissions }, repos); } catch { reply(403, `Install only on ${repository} with the declared permissions, then retry setup.`); return; }
-      const values = { AGENTCI_REPOSITORY: repository, AGENTCI_ORGANIZATION_ID: randomUUID(), AGENTCI_PUBLIC_URL: origin.origin, GITHUB_APP_ID: app.id, GITHUB_INSTALLATION_ID: id, GITHUB_PRIVATE_KEY_FILE: join(credentialDirectory, 'github-app.pem'), GITHUB_WEBHOOK_SECRET: app.secret, AGENTCI_EVIDENCE_TOKEN: randomBytes(32).toString('hex'), POSTGRES_PASSWORD: randomBytes(32).toString('hex'), TEMPORAL_NAMESPACE: 'default' };
+      const values = { AGENTCI_API_PORT: String(port), AGENTCI_TEMPORAL_UI_PORT: String(temporalUiPort), AGENTCI_REPOSITORY: repository, AGENTCI_ORGANIZATION_ID: randomUUID(), AGENTCI_PUBLIC_URL: origin.origin, GITHUB_APP_ID: app.id, GITHUB_INSTALLATION_ID: id, GITHUB_PRIVATE_KEY_FILE: join(credentialDirectory, 'github-app.pem'), GITHUB_WEBHOOK_SECRET: app.secret, AGENTCI_EVIDENCE_TOKEN: randomBytes(32).toString('hex'), POSTGRES_PASSWORD: randomBytes(32).toString('hex'), TEMPORAL_NAMESPACE: 'default' };
       await writeFile('.env', Object.entries(values).map(([k, v]) => `${k}=${v}`).join('\n') + '\n', { mode: 0o600, flag: 'wx' });
       await mkdir('.agentci/artifacts', { recursive: true });
       await writeFile('.agentci/artifacts/github-app.json', JSON.stringify({ appId: app.id, slug: app.slug, installationId: id, repository, permissions: installation.permissions, publicUrl: origin.origin, registeredAt: new Date().toISOString(), envPath: resolve('.env') }, null, 2) + '\n');

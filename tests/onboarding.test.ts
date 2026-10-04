@@ -18,6 +18,8 @@ test('customer initialization validates and refuses to overwrite populated repos
 });
 test('App setup uses explicit repository/account configuration and rejects ambiguous origins', () => {
   const personal = setupConfig(env); assert.equal(personal.repository, 'customer/new-project'); assert.equal(personal.registrationUrl, 'https://github.com/settings/apps/new');
+  const separate = setupConfig({ ...env, AGENTCI_SETUP_PORT: '3002', AGENTCI_SETUP_TEMPORAL_UI_PORT: '8234' }); assert.equal(separate.port, 3002); assert.equal(separate.temporalUiPort, 8234);
+  assert.throws(() => setupConfig({ ...env, AGENTCI_SETUP_PORT: '8233' }), /conflicting/);
   const org = setupConfig({ ...env, AGENTCI_SETUP_ACCOUNT_TYPE: 'organization' }); assert.equal(org.registrationUrl, 'https://github.com/organizations/customer/settings/apps/new');
   for (const override of [{ AGENTCI_SETUP_REPOSITORY: '' }, { AGENTCI_SETUP_REPOSITORY: 'customer/repo\nINJECT=x' }, { AGENTCI_SETUP_URL: 'https://review.example.com?token=secret' }, { AGENTCI_SETUP_URL: 'https://review.example.com#fragment' }, { AGENTCI_SETUP_ACCOUNT_TYPE: 'enterprise' }, { AGENTCI_SETUP_PORT: '0' }]) assert.throws(() => setupConfig({ ...env, ...override }));
 });

@@ -50,6 +50,7 @@ export AGENTCI_SETUP_URL=https://YOUR_REACHABLE_ORIGIN
 export AGENTCI_SETUP_APP_NAME=YOUR_UNIQUE_AGENTCI_APP_NAME
 export AGENTCI_SETUP_ACCOUNT_TYPE=user # organization for an organization-owned App
 export AGENTCI_SETUP_PORT=3000
+export AGENTCI_SETUP_TEMPORAL_UI_PORT=8233 # choose unused ports for a second deployment
 /tmp/agentci-customer-tools/node_modules/.bin/agentci setup
 ```
 
@@ -80,9 +81,13 @@ images to claim verification of changed candidate behavior.
 export AGENTCI_ENV_FILE=/absolute/deployment/.env
 export AGENTCI_UID=$(id -u)
 export AGENTCI_GID=$(id -g)
-docker compose --env-file "$AGENTCI_ENV_FILE" -f deploy/compose.yaml up --build -d
+docker compose -p agentci-customer --env-file "$AGENTCI_ENV_FILE" -f deploy/compose.yaml up --build -d
 curl -fsS http://127.0.0.1:3000/readyz
 ```
+
+Use a unique Compose project name for each deployment so volumes cannot collide.
+For a second stack on the same host, choose unused API/Temporal UI ports at setup;
+use that API port in readiness/client URLs. The generated `.env` retains both ports.
 
 The `.env` binds App/installation/repository, organization UUID, webhook secret,
 evidence bearer token and a database password. Compose supplies database and

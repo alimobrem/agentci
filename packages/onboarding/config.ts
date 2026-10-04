@@ -13,8 +13,10 @@ export function setupConfig(env: NodeJS.ProcessEnv) {
   if (!/^[A-Za-z0-9-]{3,34}$/.test(appName)) throw new Error('Set a unique App name with 3–34 letters, digits or hyphens');
   const port = Number(env.AGENTCI_SETUP_PORT ?? 3000);
   if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('Invalid setup port');
+  const temporalUiPort = Number(env.AGENTCI_SETUP_TEMPORAL_UI_PORT ?? 8233);
+  if (!Number.isInteger(temporalUiPort) || temporalUiPort < 1 || temporalUiPort > 65535 || temporalUiPort === port) throw new Error('Invalid or conflicting Temporal UI port');
   const registrationUrl = accountType === 'organization' ? `https://github.com/organizations/${owner}/settings/apps/new` : 'https://github.com/settings/apps/new';
-  return { repository, owner, origin, appName, port, registrationUrl };
+  return { repository, owner, origin, appName, port, temporalUiPort, registrationUrl };
 }
 export type SetupConfig = ReturnType<typeof setupConfig>;
 export function verifyInstallation(config: SetupConfig, installation: { account?: { login?: string } | null; repository_selection?: string; permissions?: Record<string, string> }, repos: { total_count: number; repositories: { full_name: string }[] }) {
