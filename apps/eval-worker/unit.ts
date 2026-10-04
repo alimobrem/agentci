@@ -1,7 +1,7 @@
 import {canonical} from '../../packages/review/engine.ts';
 import {EvalStore,EvalLeaseLost} from '../../packages/storage/evals.ts';
 import {executeSuite} from '../../packages/evals/execution.ts';
-import {reapPriorEvalContainers,type RunnerPolicy} from '../../packages/evals/runner.ts';
+import {reapPriorEvalContainers,reapCancelledEvalContainers,type RunnerPolicy} from '../../packages/evals/runner.ts';
 import {validateHttpProvider} from '../../packages/evals/http.ts';
 import type {EvalRun} from '../../packages/evals/contracts.ts';
 export class EvalUnitBusy extends Error {}
@@ -56,4 +56,12 @@ export async function executeStoredUnit(store:EvalStore,id:string,policy:RunnerP
     try{await store.release(id,token,!!options.signal?.aborted&&(options.cancelPermanently?.()??true));}catch(releaseError){if(!(releaseError instanceof EvalLeaseLost))throw releaseError;}
     throw failure??error;
   }finally{clearInterval(timer);}
+}
+
+/** The terminal SQL state is immutable: cancelled units cannot acquire another execution lease. */
+export async function cleanupCancelledUnit(store:EvalStore,id:string):Promise<void>{
+  await store.ready();const unit=await store.unit(id);
+  if(!unit)throw new Error('Unknown scoped cancelled eval unit');
+  if(unit.status!=='cancelled')throw new EvalUnitBusy('Eval unit is not irreversibly cancelled');
+  await reapCancelledEvalContainers(unit.id);
 }

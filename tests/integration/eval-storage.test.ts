@@ -20,7 +20,7 @@ import {createControlApi} from '../../apps/control/server.ts';
 import {AgentCIClient} from '../../packages/client/index.ts';
 import {runIsolated} from '../../packages/evals/runner.ts';
 import {evalSuite} from '../fixtures/evals.ts';
-import {executeStoredUnit} from '../../apps/eval-worker/unit.ts';
+import {executeStoredUnit,cleanupCancelledUnit,EvalUnitBusy} from '../../apps/eval-worker/unit.ts';
 import {requireEvalPrivileges} from '../../apps/eval-worker/privileges.ts';
 const databaseUrl=process.env.AGENTCI_TEST_DATABASE_URL,image=process.env.AGENTCI_TEST_RUNNER_IMAGE;
 if(!databaseUrl||!image)throw new Error('M2 durable eval tests require real PostgreSQL and an immutable runner image; never silently skip');
@@ -164,6 +164,24 @@ test('PostgreSQL eval recovery: immutable exact inputs, fenced leases, retained 
       assert.equal((await executeStoredUnit(store,cleanupId,{image:image!})).status,'passed','recovered owner cleans the refused container before completing a new trial');
       assert.equal(await docker(['ps','--all','--quiet','--filter',`label=agentci.eval.unit=${cleanupId}`]),'');
     }finally{const remaining=await docker(['ps','--all','--quiet','--filter',`label=agentci.eval.unit=${cleanupId}`]);if(remaining)await docker(['rm','--force','--volumes',...remaining.split('\n')]);await rm(wrapperDirectory,{recursive:true,force:true});}
+    const hangingSuite=evalSuite({runner:{adapter:'command',command:['node','-e','setInterval(()=>{},1000)'],timeoutMs:120000},trials:{count:1,passRate:1,confidenceMethod:'wilson'}});
+    const crashJob=await store.stage(review.id,randomUUID(),base,head,[{suite:hangingSuite,side:'base',assertionSide:'base',runner:{runnerImage:image!}}],plan),neighborJob=await store.stage(review.id,randomUUID(),base,head,[{suite:hangingSuite,side:'base',assertionSide:'base',runner:{runnerImage:image!}}],plan);
+    const crashId=crashJob.unitIds[0]!,neighborId=neighborJob.unitIds[0]!;
+    const spawnEval=(id:string)=>spawn(process.execPath,['--import','tsx','--input-type=module','-e',`import{Pool}from'pg';import{EvalStore}from'./packages/storage/evals.ts';import{executeStoredUnit}from'./apps/eval-worker/unit.ts';const pool=new Pool({connectionString:process.env.AGENTCI_TEST_DATABASE_URL});try{await executeStoredUnit(new EvalStore(pool,${JSON.stringify(org)},${JSON.stringify(repository)}),${JSON.stringify(id)},${JSON.stringify({image})},{maintenanceMs:100});}catch{process.exitCode=1;}finally{await pool.end();}`],{stdio:'ignore'});
+    const crashed=spawnEval(crashId),neighbor=spawnEval(neighborId),owned=(id:string)=>docker(['ps','--all','--quiet','--no-trunc','--filter',`label=agentci.eval.unit=${id}`]);
+    try{
+      let both=false;for(let i=0;i<100;i++){if((await Promise.all([crashId,neighborId].map(id=>docker(['ps','--quiet','--no-trunc','--filter',`label=agentci.eval.unit=${id}`])))).every(Boolean)){both=true;break;}await delay(30);}assert.ok(both,'cancelled orphan test must observe both actual containers');
+      await assert.rejects(cleanupCancelledUnit(store,crashId),EvalUnitBusy);assert.ok(await owned(crashId),'active units must not be reaped');
+      const exited=once(crashed,'exit');crashed.kill('SIGKILL');assert.equal((await exited)[1],'SIGKILL');assert.ok(await owned(crashId),'worker death must leave a real orphan');
+      await store.cancel(crashJob.id);assert.equal((await store.unit(crashId))!.status,'cancelled');assert.equal(await store.claim(crashId),undefined);
+      await assert.rejects(cleanupCancelledUnit(wrong,crashId),/another deployment scope/);assert.ok(await owned(crashId),'cross-scope cleanup cannot reach the daemon');
+      await Promise.all([cleanupCancelledUnit(store,crashId),cleanupCancelledUnit(store,crashId.toUpperCase())]);await cleanupCancelledUnit(store,crashId);
+      assert.equal(await owned(crashId),'');assert.ok(await owned(neighborId),'cancelled cleanup preserves another active unit');
+      assert.equal((await store.comparison(crashJob.id))!.comparison.summary.state,'cancelled');
+    }finally{
+      const exit=neighbor.exitCode===null&&neighbor.signalCode===null?once(neighbor,'exit'):Promise.resolve();crashed.kill('SIGKILL');neighbor.kill('SIGKILL');await exit;await store.cancel(neighborJob.id);
+      for(const id of [crashId,neighborId]){const remaining=await owned(id);if(remaining)await docker(['rm','--force','--volumes',...remaining.split('\n')]);}
+    }
     await pool.query(await readFile(new URL('../../deploy/migrations/002_m2_eval_role.sql',import.meta.url),'utf8'));
     await assert.rejects(requireEvalPrivileges(pool),/restricted database login/);
     const login='agentci_test_eval_'+randomUUID().replaceAll('-',''),password=randomUUID()+randomUUID();

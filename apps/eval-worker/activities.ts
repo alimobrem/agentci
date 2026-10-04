@@ -1,9 +1,14 @@
 import {Context,CancelledFailure,ApplicationFailure} from '@temporalio/activity';
 import type {EvalStore} from '../../packages/storage/evals.ts';
 import type {RunnerPolicy} from '../../packages/evals/runner.ts';
-import {executeStoredUnit,EvalUnitCancelled,EvalUnitConfigurationError,type UnitWorkerOptions} from './unit.ts';
+import {executeStoredUnit,cleanupCancelledUnit,EvalUnitBusy,EvalUnitCancelled,EvalUnitConfigurationError,type UnitWorkerOptions} from './unit.ts';
 export function createEvalActivities(store:EvalStore,policyFor:(adapter:string)=>RunnerPolicy,options:Pick<UnitWorkerOptions,'maintenanceMs'|'leaseSeconds'|'maxTrials'>={}){
   return {
+    async cleanupCancelledEvalUnit(id:string):Promise<string>{
+      if(!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(id))throw ApplicationFailure.nonRetryable('Invalid cancelled eval unit ID','InvalidEvalUnit');
+      try{await cleanupCancelledUnit(store,id);return id;}
+      catch(error){if(error instanceof EvalUnitBusy)throw ApplicationFailure.nonRetryable('Eval unit is not cancelled','InvalidCancelledEvalUnit');throw ApplicationFailure.retryable('Cancelled eval cleanup unavailable','EvalCleanupUnavailable');}
+    },
     async runEvalUnit(id:string):Promise<string>{
       if(!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(id))throw ApplicationFailure.nonRetryable('Invalid eval unit ID','InvalidEvalUnit');
       const context=Context.current(),unit=await store.unit(id);

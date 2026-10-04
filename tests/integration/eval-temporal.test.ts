@@ -39,9 +39,9 @@ test('separate eval worker: restricted startup, committed-trial retry, cancellat
     const queue='agentci-eval-test-'+randomUUID(),retryId=await stage(3,'process.exit(0)');
     const record=store.recordTrial.bind(store);let writes=0,failOnce=true;
     store.recordTrial=async(...args)=>{await record(...args);writes++;if(args[0]===retryId&&failOnce){failOnce=false;throw new Error('Simulated interruption after durable trial commit');}};
-    const activities=createEvalActivities(store,()=>({image:image!}),{maintenanceMs:100}),attempts:number[]=[],missingId=randomUUID(),missingAttempts:number[]=[];
+    const activities=createEvalActivities(store,()=>({image:image!}),{maintenanceMs:100}),attempts:number[]=[],missingId=randomUUID(),missingAttempts:number[]=[],cleanupAttempts:number[]=[];
     const makeWorker=()=>Worker.create({connection:native!,taskQueue:queue,workflowsPath,maxHeartbeatThrottleInterval:100,defaultHeartbeatThrottleInterval:100,
-      shutdownGraceTime:500,activities:{runEvalUnit:async(id:string)=>{if(id===retryId)attempts.push(Context.current().info.attempt);if(id===missingId)missingAttempts.push(Context.current().info.attempt);return activities.runEvalUnit(id);}}});
+      shutdownGraceTime:500,activities:{...activities,cleanupCancelledEvalUnit:async(id:string)=>{cleanupAttempts.push(Context.current().info.attempt);const result=await activities.cleanupCancelledEvalUnit(id);if(cleanupAttempts.length===1)throw new Error('Fixture interruption after completed cleanup');return result;},runEvalUnit:async(id:string)=>{if(id===retryId)attempts.push(Context.current().info.attempt);if(id===missingId)missingAttempts.push(Context.current().info.attempt);return activities.runEvalUnit(id);}}});
     worker=await makeWorker();run=worker.run();
     const retry=await client.workflow.start('evaluateUnit',{args:[retryId],workflowId:randomUUID(),taskQueue:queue,workflowExecutionTimeout:'40 seconds'});
     assert.equal(await retry.result(),retryId);assert.deepEqual(attempts,[1,2]);assert.equal(writes,3,'committed first trial is replayed without writing another observation');
@@ -55,6 +55,9 @@ test('separate eval worker: restricted startup, committed-trial retry, cancellat
     assert.equal(await docker(['ps','--all','--quiet','--filter',`label=agentci.eval.unit=${cancelId}`]),'','workflow cancellation must wait for actual container cleanup');
     assert.equal((await store.unit(cancelId))!.status,'cancelled');assert.equal((await store.unit(cancelId))!.result,undefined);
     await Worker.runReplayHistory({workflowsPath},await cancel.fetchHistory(),cancel.workflowId);
+    const cleanup=await client.workflow.start('cleanupCancelledEvalUnit',{args:[cancelId],workflowId:randomUUID(),taskQueue:queue,workflowExecutionTimeout:'40 seconds'});
+    assert.equal(await cleanup.result(),cancelId);assert.deepEqual(cleanupAttempts,[1,2],'ambiguous cleanup completion retries idempotently');await Worker.runReplayHistory({workflowsPath},await cleanup.fetchHistory(),cleanup.workflowId);
+    const rejectCleanup=await client.workflow.start('cleanupCancelledEvalUnit',{args:[retryId],workflowId:randomUUID(),taskQueue:queue,workflowExecutionTimeout:'40 seconds'});await assert.rejects(rejectCleanup.result());assert.equal((await store.unit(retryId))!.result!.status,'passed','cleanup cannot mutate completed units');
     const interruptedId=await stage(1,'setTimeout(()=>process.exit(0),2000)'),interrupted=await client.workflow.start('evaluateUnit',{args:[interruptedId],workflowId:randomUUID(),taskQueue:queue,workflowExecutionTimeout:'40 seconds'});
     let running='';for(let i=0;i<200;i++){running=await docker(['ps','--quiet','--filter',`label=agentci.eval.unit=${interruptedId}`]);if(running)break;await delay(25);}assert.ok(running,'shutdown must interrupt an actually running container');
     worker.shutdown();await run;worker=undefined;

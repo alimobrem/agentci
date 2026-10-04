@@ -1,3 +1,4 @@
+import {setTimeout as delay} from 'node:timers/promises';
 import { execFile, spawn } from 'node:child_process';
 import { promisify } from 'node:util';
 import { randomUUID } from 'node:crypto';
@@ -28,17 +29,29 @@ function validateOwnership(owner:EvalOwnership):void {
 /** The caller must hold the current fenced database lease before reaping prior owners. */
 export async function reapPriorEvalContainers(owner:EvalOwnership):Promise<number> {
   validateOwnership(owner);
+  return reapOwnedEvalContainers(owner.unitId,owner.leaseToken);
+}
+/** Caller must first verify immutable cancelled state in its scoped SQL store. No active lease is reclaimed. */
+export async function reapCancelledEvalContainers(unitId:string):Promise<number>{
+  if(!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(unitId))throw new Error('Invalid cancelled container ownership');
+  return reapOwnedEvalContainers(unitId);
+}
+async function reapOwnedEvalContainers(unitId:string,keepLease?:string):Promise<number>{
   const docker=async(args:string[])=>(await execute('docker',args,{encoding:'utf8',timeout:30000,maxBuffer:1024*1024})).stdout.trim();
-  const ids=(await docker(['ps','--all','--quiet','--no-trunc','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.eval.unit=${owner.unitId}`])).split('\n').filter(Boolean);
+  const ids=(await docker(['ps','--all','--quiet','--no-trunc','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.eval.unit=${unitId}`])).split('\n').filter(Boolean);
   let removed=0;
   for(const id of ids){
     if(!/^[a-f0-9]{64}$/.test(id))throw new Error('Invalid orphan container identity');
     let labels:Record<string,string>;
     try{labels=JSON.parse(await docker(['inspect','--format','{{json .Config.Labels}}',id]));}
     catch{if(!(await docker(['ps','--all','--quiet','--no-trunc','--filter',`id=${id}`])))continue;throw new Error('Cannot verify orphan container ownership');}
-    if(labels['agentci.purpose']!=='eval-runner'||labels['agentci.eval.unit']!==owner.unitId||!labels['agentci.eval.lease'])throw new Error('Invalid orphan container ownership');
-    if(labels['agentci.eval.lease']===owner.leaseToken)continue;
-    await docker(['rm','--force','--volumes',id]);
+    if(labels['agentci.purpose']!=='eval-runner'||labels['agentci.eval.unit']!==unitId||!labels['agentci.eval.lease'])throw new Error('Invalid orphan container ownership');
+    if(keepLease&&labels['agentci.eval.lease']===keepLease)continue;
+    // Another recovery caller or the original runner may already be removing this exact owner.
+    for(let attempt=0;attempt<5;attempt++){
+      try{await docker(['rm','--force','--volumes',id]);break;}
+      catch{if(!(await docker(['ps','--all','--quiet','--no-trunc','--filter',`id=${id}`])))break;if(attempt===4)throw new Error('Orphan container cleanup failed');await delay(100);}
+    }
     if(await docker(['ps','--all','--quiet','--no-trunc','--filter',`id=${id}`]))throw new Error('Orphan container cleanup failed');
     removed++;
   }
