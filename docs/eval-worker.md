@@ -141,8 +141,41 @@ returns ready UUIDs or superseded; it does not publish a GitHub Check.
 Local lifecycle acceptance uses real PostgreSQL, Temporal and isolated Docker
 children on separate task queues. The test process hosts both queue workers;
 production process/credential isolation is covered by the separate worker image
-acceptance. Final-source lifecycle CI remains required. These eval activities
-are not yet registered by the production controller. Locked Check publication,
-live App dispatch and customer PR acceptance remain open. Abrupt server-side
+acceptance. Exact-source lifecycle CI 37195091714 passed 117 unit/API/domain tests,
+twelve real integration groups, no skips, compatibility, packaging and container
+probes. Its tree/artifact hashes are recorded in
+[the parent CI evidence](../releases/m2-pr-parent-ci.json).
+These eval activities are not yet registered by the production controller.
+Live App dispatch and customer PR acceptance remain open. Abrupt server-side
 workflow termination/deadline recovery also remains for production integration;
 cancellation tests exercise cooperative cancellation and failed-child cleanup.
+
+## Behavioral Check publication candidate
+
+`publishEvalReview` consumes the complete scoped SQL export under a publication
+lock shared with cancellation. It validates the same frame/domain semantics as
+the installed agent client, then produces an `agentci/evals` Check bound to the
+exact base/head, App and attempt. Existing `agentci/review` behavior is preserved.
+The [GitHub Checks API](https://docs.github.com/en/rest/checks/runs) is used through
+the installed Octokit adapter. Reconciliation and a final remote identity check
+follow all evidence reads; ambiguous writes retry by updating the existing Check.
+GitHub provides no atomic PR-head-and-Check write transaction, so the Check also
+records its exact immutable subject rather than claiming to certify later commits.
+
+Checks remain advisory: completed passed/failed/no-evals outcomes use neutral,
+while infrastructure errors or insufficient coverage use action-required. Results
+show frozen assertions, runner/provider revision, trial counts, thresholds,
+observed confidence/metrics, deltas, critical failures, regressions, suite/scenario
+changes and gaps. Display details reserve separate budgets for regressions/failures, gaps, deltas
+and provenance, so many passing units cannot crowd out a late regression. Details
+are capped at 48000 UTF-8 bytes; the complete
+summary is capped at 60000 bytes. Abbreviation is explicit and never stops full
+evidence validation. The authenticated JSON/export links include no credentials.
+
+Pending, cancelled, mismatched or incomplete evidence cannot publish a completed
+result. Failure publication claims no passing result. Configured cancellation
+invalidates any Check for that current attempt as cancelled; stale PRs receive no
+new writes. Local PostgreSQL/isolated-runner/HTTP GitHub-fixture tests cover these
+states, lock contention, exact-App/head/name matching, recovery and an accepted
+write followed by a failed response. This is fixture acceptance, not live GitHub
+acceptance. Final-source publication CI and production workflow wiring remain open.

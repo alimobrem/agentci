@@ -1,0 +1,37 @@
+{
+  "kind": "M2-PR-publication-local-checkpoint",
+  "recordedAt": "2026-10-04T10:38:42.278555+00:00",
+  "parentCommit": "b2937f37d05ee7d8e1441edd1b0936385bc8d13f",
+  "releaseAcceptance": false,
+  "files": {
+    "packages/github/eval-check.ts": "1bef1bd0a731f5202ee5624cf23ebd8d9b2427175fc2ec21f230268a5b6935f6",
+    "packages/evals/export.ts": "a38bb6907fce8ab61a55ad40a92d67a6bfde0588651ac4e135016389b4c91dc6",
+    "packages/client/index.ts": "1fcc81d863f020eb6eb2e7d007e6fa4d1344db384ffcb3a14ef1590e8d220703",
+    "apps/worker/eval-activities.ts": "107ee5b82adf1c81c9eb11e146ee58b492a51132b785b9eeca5421d3147e2a65",
+    "tests/eval-check.test.ts": "9278a66319145ef4a264f54fc58869a26b0f57e4e15d159ec3d9eb6c07302ca5",
+    "tests/integration/eval-check.test.ts": "c00de549c908c691a3c5d396cff0c7d137506a71b51dd9f60ebd1bda244ccc3b",
+    "specs/api/eval-review-operations.json": "2110a49f355f97a2d7c9f0db911e4918a7e46f50475367f2c2ea4de9145fece9"
+  },
+  "verification": {
+    "fastChecks": 8,
+    "unitApiDomainTests": 119,
+    "apiCompatibility": "Passed against immutable released M1 0.2.1 with endpoint-removal negative gate. Wire contract and public client signatures/error codes unchanged.",
+    "realAcceptance": "HTTP GitHub fixture plus actual PostgreSQL and immutable Docker runner; completed baseline/head regression, queued/cancelled denial, exact App/head/name/attempt reconciliation, ambiguous committed write retry, lock contention, stale identity before and after remote reconciliation, failure/recovery, gap action-required, cancellation invalidates current Check; no skips.",
+    "sharedExportRegression": "Real PostgreSQL/runner large export/client and scoped staging/cancellation tests passed after extracting common semantic/hash validation.",
+    "installedPackage": "Production-only packed CLI/client/init/setup/license and actual HTTP JSON/export synthetic fixture probe passed.",
+    "boundedDisplay": "Separate 12000-byte regression/failure, 8000-byte gap, 16000-byte delta and 12000-byte context budgets. 200-unit/100-comparison fixture retains its sole final regression, exact counts and failed outcome without retaining full display. Entire export remains validated.",
+    "publicationMode": "Advisory neutral for completed passed/failed/no-evals; action_required for error/insufficient/cancelled/unavailable; exact subject and credential-free authenticated evidence links."
+  },
+  "failedLocalAttempts": [
+    {
+      "scope": "large display fixture",
+      "result": "Model schema correctly rejected Unicode and HTML/control names; fixture corrected to allowed model identifiers and Markdown underscore escaping."
+    }
+  ],
+  "limitations": [
+    "Final-source full CI, including installed package/container probes, remains required.",
+    "Production controller/workflow wiring and real customer GitHub App acceptance are not implemented.",
+    "GitHub has no atomic PR-head/Check-write transaction; final identity recheck follows all reads and Check is bound to immutable exact head.",
+    "Optional engine HIGH/scanner assessment, deadline/termination recovery, release publication/downloads/demo and all M2 release gates remain open."
+  ]
+}

@@ -8,6 +8,8 @@ export interface ExportHeader extends Omit<ComparisonInput,'units'> {unitCount:n
 export interface ExportSummary extends Omit<ComparisonSummary,'comparisons'> {unitCount:number;comparisonCount:number}
 export type ExportItem={type:'header';data:ExportHeader}|{type:'unit';data:ComparisonUnit}|{type:'comparison';data:ComparisonSummary['comparisons'][number]}|{type:'summary';data:ExportSummary}|{type:'end';data:{summaryDigest:string}};
 export type ExportFrame=ExportItem&{sequence:number;previousDigest:string;digest:string};
+export interface ExportIdentity {organizationId:string;reviewId:string;attemptId:string;repository:string;pullRequest:number;baseSha:string;headSha:string}
+export class ExportIdentityMismatch extends Error {}
 const key=(u:ComparisonUnit)=>JSON.stringify([u.suite,u.model??null]);
 /** One baseline/head group in memory; bounded identity/gap sets retain no trial results. */
 export class ComparisonAccumulator {
@@ -57,6 +59,39 @@ export function validateExportFrame(value:unknown,sequence:number,previousDigest
   if(!frameShape(frame)||frame.sequence!==sequence||frame.previousDigest!==previousDigest)throw new Error('Invalid export frame identity');
   const {digest:hash,...content}=frame;if(hash!==digest(canonical(content)))throw new Error('Export frame digest mismatch');
   return frame;
+}
+/** Shared semantic/hash verifier for agent clients and controller Check publication. */
+export class EvalExportVerifier {
+  private sequence=0;private previous='sha256:'+'0'.repeat(64);private accumulator?:ComparisonAccumulator;
+  private observed=0;private summary?:ExportSummary;private receivedSummary=false;private comparisons:unknown[]=[];
+  private header?:ExportHeader;ended=false;
+  constructor(private id:string,private expected:ExportIdentity){this.expected={...expected};}
+  push(value:unknown):ExportFrame{
+    if(this.ended)throw new Error('Unexpected data after export end');
+    const frame=validateExportFrame(value,this.sequence++,this.previous);this.previous=frame.digest;
+    if(frame.type==='header'){
+      if(this.accumulator||this.sequence!==1)throw new Error('Unexpected export header');
+      const h=frame.data,s=h.subject,e=this.expected;
+      if(h.id!==this.id||h.organizationId!==e.organizationId||h.reviewId!==e.reviewId||h.attemptId!==e.attemptId||s.repository!==e.repository||s.pullRequest!==e.pullRequest||s.baseSha!==e.baseSha||s.headSha!==e.headSha)throw new ExportIdentityMismatch('Export identity mismatch');
+      this.header=structuredClone(h);this.accumulator=new ComparisonAccumulator(this.header);
+      if(!h.unitCount){const final=this.accumulator.finish();this.summary=final.summary;this.comparisons.push(...final.comparisons);}
+    }else if(frame.type==='unit'){
+      if(!this.accumulator||this.summary||this.comparisons.length)throw new Error('Unexpected export unit');
+      this.comparisons.push(...this.accumulator.push(frame.data));
+      if(++this.observed===this.accumulator.header.unitCount){const final=this.accumulator.finish();this.summary=final.summary;this.comparisons.push(...final.comparisons);}
+    }else if(frame.type==='comparison'){
+      if(!this.comparisons.length||canonical(frame.data)!==canonical(this.comparisons.shift()))throw new Error('Export comparison mismatch');
+    }else if(frame.type==='summary'){
+      if(!this.summary||this.receivedSummary||this.comparisons.length||canonical(frame.data)!==canonical(this.summary))throw new Error('Export summary mismatch');this.receivedSummary=true;
+    }else{
+      if(!this.summary||!this.receivedSummary||frame.data.summaryDigest!==digest(canonical(this.summary)))throw new Error('Export terminal digest mismatch');this.ended=true;
+    }
+    return frame;
+  }
+  finish():{header:ExportHeader;summary:ExportSummary;endDigest:string}{
+    if(!this.ended||!this.header||!this.summary||!this.receivedSummary)throw new Error('Incomplete export');
+    return {header:this.header,summary:this.summary,endDigest:this.previous};
+  }
 }
 /** The first trusted header anchors the chain to its exact scoped storage snapshot. */
 export async function* frameExport(items:AsyncIterable<ExportItem>):AsyncGenerator<ExportFrame>{

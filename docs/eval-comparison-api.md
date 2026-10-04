@@ -117,3 +117,9 @@ its connection. At most two exports run concurrently per API process; overload
 returns sanitized 503 with Retry-After: 1. A slow client is bounded by write
 backpressure and a 30-second idle-transaction timeout. Errors after stream headers
 terminate the connection; HTTP 200 alone never certifies a complete export.
+
+The agent client and controller Check publisher share `EvalExportVerifier` for
+frame hashes, identity, planned result semantics, derived deltas, final summary
+and terminal digest validation. Both require complete traversal through EOF.
+Refactoring this verifier does not change the export wire contract or the
+client's public methods/error codes.

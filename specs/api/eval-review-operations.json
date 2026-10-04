@@ -58,13 +58,17 @@
       ],
       "tests": [
         "tests/integration/eval-review-staging.test.ts",
-        "tests/integration/eval-pr-parent.test.ts"
+        "tests/integration/eval-pr-parent.test.ts",
+        "tests/integration/eval-check.test.ts"
       ],
       "scenarios": [
         "header-only identity verification and closed read transaction",
         "wrong attempt rejection",
         "idempotent cancellation",
-        "queued/running unit cancellation retains completed evidence"
+        "queued/running unit cancellation retains completed evidence",
+        "shared publication lock",
+        "configured current PR Check invalidated as cancelled",
+        "stale PR cancellation makes no Check write"
       ]
     },
     {
@@ -91,7 +95,53 @@
         "M1 and new parent/child history replay",
         "no source snapshots in parent history"
       ]
+    },
+    {
+      "operationId": "publishEvalReview",
+      "type": "activity",
+      "input": "Scoped PR identity, immutable attempt/review/comparison UUIDs",
+      "output": "Published or superseded; evidence remains in SQL/export API",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039"
+      ],
+      "tests": [
+        "tests/eval-check.test.ts",
+        "tests/integration/eval-check.test.ts",
+        "tests/eval-export.test.ts"
+      ],
+      "scenarios": [
+        "shared client/Check hash and domain export validation",
+        "complete EOF certification",
+        "bounded UTF-8 display with full evidence links",
+        "frozen baseline/head deltas and critical failures",
+        "coverage/selection/execution gaps remain explicit",
+        "shared SQL publication/cancellation lock",
+        "App/exact-head/name/attempt reconciliation",
+        "ambiguous committed write retry does not duplicate",
+        "final current-PR recheck after reconciliation IO",
+        "pending/cancelled/mismatched evidence cannot publish",
+        "sanitized SDK failure history"
+      ]
+    },
+    {
+      "operationId": "failEvalReview",
+      "type": "activity",
+      "input": "Scoped PR identity and immutable attempt UUID",
+      "output": "Published or superseded failure Check; no passing result claimed",
+      "requirementIds": [
+        "SPEC-40-039"
+      ],
+      "tests": [
+        "tests/integration/eval-check.test.ts"
+      ],
+      "scenarios": [
+        "same App and exact attempt reconciliation",
+        "infrastructure failure action-required Check",
+        "stale PR cannot publish failure",
+        "recovery republishes retained exact completed evidence"
+      ]
     }
   ],
-  "releaseState": "M2 candidate lifecycle only; production controller registration and locked Check publication remain pending"
+  "releaseState": "M2 candidate lifecycle/publication activities implemented; production controller wiring and live customer App acceptance remain pending"
 }
