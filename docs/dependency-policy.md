@@ -39,3 +39,15 @@ Sources: [Node releases](https://nodejs.org/dist/index.json),
 [UBI images](https://catalog.redhat.com/en/software/containers/search),
 [PostgreSQL container layout](https://github.com/docker-library/postgres),
 [npm CLI releases](https://github.com/npm/cli/releases).
+
+M2's optional engine image adopts Promptfoo 0.123.1 and DeepEval 4.2.8 from the
+official npm/PyPI registries. Promptfoo's compatible `basic-ftp` override pins
+6.2.1 to fix the upstream advisory; its real execution tests verify compatibility.
+DeepEval's stable OpenTelemetry SDK requires the upstream `0.66b0` semantic
+conventions package. This transitive prerelease-numbered package is an explicit
+upstream compatibility exception, not a prerelease engine selection.
+The image retains an unpatched high-severity node-forge finding; it requires a
+release applicability decision and must not be represented as zero findings.
+Local adoption evidence is in `releases/m2-optional-engine-dependencies.json`
+and `releases/m2-optional-engines-local.json`; native amd64 and final release
+verification remain required.

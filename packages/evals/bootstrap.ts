@@ -16,7 +16,7 @@ for(const [name,text] of Object.entries(files)){
 }
 const start=performance.now(), hashes={stdout:createHash('sha256'),stderr:createHash('sha256')};
 let bytes=0,reason=null;
-const child=spawn(options.argv[0],options.argv.slice(1),{cwd:'/workspace',env:{PATH:process.env.PATH,HOME:'/tmp',TMPDIR:'/tmp',PYTHONDONTWRITEBYTECODE:'1',PYTEST_DISABLE_PLUGIN_AUTOLOAD:'1',AGENTCI_MODEL_VARIANT:options.model??''},stdio:['ignore','pipe','pipe'],detached:true});
+const child=spawn(options.argv[0],options.argv.slice(1),{cwd:'/workspace',env:{PATH:process.env.PATH,HOME:'/tmp',TMPDIR:'/tmp',PYTHONDONTWRITEBYTECODE:'1',PYTEST_DISABLE_PLUGIN_AUTOLOAD:'1',PROMPTFOO_DISABLE_TELEMETRY:'1',PROMPTFOO_CONFIG_DIR:'/tmp/.promptfoo',DEEPEVAL_TELEMETRY_OPT_OUT:'1',DEEPEVAL_DISABLE_DOTENV:'1',AGENTCI_MODEL_VARIANT:options.model??''},stdio:['ignore','pipe','pipe'],detached:true});
 const terminate=()=>{try{process.kill(-child.pid,'SIGKILL');}catch{child.kill('SIGKILL');}};
 const timer=setTimeout(()=>{reason='timeout';terminate();},options.timeoutMs);
 for(const name of ['stdout','stderr'])child[name].on('data',chunk=>{bytes+=chunk.length;hashes[name].update(chunk);if(bytes>options.maxOutputBytes){reason='output-limit';terminate();}});

@@ -63,8 +63,12 @@ Original App access remains only agentci; customer App only agentci-onboarding-d
 M1 closure is synced. M2 planning and phase-isolated gates are complete. The UBI
 native/pytest runner passed full CI, real integration, clean packaging and all
 three zero-finding image scans; runner acceptance is closed. Model matrix and
-suite-change planning passed that CI. Fixed baseline assertion provenance passes
-locally and needs new full CI. Optional engines, durable PR/API integration and
+suite-change planning passed that CI. Fixed baseline assertion provenance and
+repeated/model-matrix execution passed exact-source full CI (91 unit/API/domain
+tests, four real integration tests, zero skips), with verified artifact digest
+and matching candidate/CI trees. Their task acceptance is closed. Optional
+Promptfoo/DeepEval pass/fail/error examples pass locally in a pinned UBI image;
+mandatory full CI and the HTTP adapter remain pending. Durable PR/API integration and
 all M2 release gates remain open. The CI database URL uses separate test-only
 PG variables and passed both full verification and hosted dogfood.
 [M2 acceptance plan](docs/phases/m2.md).

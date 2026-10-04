@@ -476,8 +476,8 @@
         "SPEC-11.4-004",
         "SPEC-11.4-005"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "in-progress",
+      "startedAt": "2026-10-04T06:16:43.768Z",
       "completedAt": null,
       "acceptance": [
         {
@@ -495,14 +495,16 @@
         "SPEC-40-037",
         "SPEC-11.3-002"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T05:14:49.070Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T06:37:43.558Z",
       "acceptance": [
         {
           "text": "Configured count/rate/critical thresholds, Wilson confidence bounds and insufficient/error states are preserved; exact-source base/head deltas identify regressions",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-provenance-ci.json"
+          ]
         }
       ]
     },
@@ -586,14 +588,16 @@
         "SPEC-40-037",
         "SPEC-40-035"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T06:03:11.650Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T06:37:43.131Z",
       "acceptance": [
         {
           "text": "Base/head execute the same baseline eval source and manifest, with assertion commit and bundle digest in results; head assertion edits/deletion cannot suppress a regression and subject source remains the requested commit",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-provenance-ci.json"
+          ]
         }
       ]
     }

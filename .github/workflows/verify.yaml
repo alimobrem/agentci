@@ -66,11 +66,22 @@ jobs:
           tags: agentci-eval-runner:ci
           cache-from: type=gha,scope=agentci-eval-runner
           cache-to: type=gha,scope=agentci-eval-runner,mode=max
+      - name: Build optional eval engines
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
+        with:
+          context: .
+          target: eval-engines
+          load: true
+          tags: agentci-eval-engines:ci
+          cache-from: type=gha,scope=agentci-eval-engines
+          cache-to: type=gha,scope=agentci-eval-engines,mode=max
       - name: Integration tests with mandatory real eval isolation
         run: |
           AGENTCI_TEST_RUNNER_IMAGE=$(docker image inspect agentci-eval-runner:ci --format '{{.Id}}')
           test -n "$AGENTCI_TEST_RUNNER_IMAGE"
-          export AGENTCI_TEST_RUNNER_IMAGE
+          AGENTCI_TEST_ENGINES_IMAGE=$(docker image inspect agentci-eval-engines:ci --format '{{.Id}}')
+          test -n "$AGENTCI_TEST_ENGINES_IMAGE"
+          export AGENTCI_TEST_RUNNER_IMAGE AGENTCI_TEST_ENGINES_IMAGE
           npm run test:integration
         env:
           # Fixed test-only auth for this disposable service; never a deployment credential.
@@ -102,7 +113,7 @@ jobs:
         run: |
           mkdir -p scan-results
           docker volume create agentci-trivy-cache
-          for role in api worker eval-runner; do
+          for role in api worker eval-runner eval-engines; do
             docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v agentci-trivy-cache:/root/.cache/trivy aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa image --scanners vuln --format json agentci-$role:ci > scan-results/$role.json
             node scripts/check-scan.mjs scan-results/$role.json
           done

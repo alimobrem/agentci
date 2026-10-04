@@ -1,0 +1,37 @@
+{
+  "kind": "optional-engine-local-checkpoint",
+  "image": "sha256:bbc60b72169d164579c278841687f8fda02938149fd429bc154c3a426c940945",
+  "platform": "linux/arm64",
+  "engines": {
+    "promptfoo": "0.123.1",
+    "deepeval": "4.2.8"
+  },
+  "integration": {
+    "test": "tests/integration/eval-engines.test.ts",
+    "result": "passed",
+    "cases": [
+      "Promptfoo exact match passes",
+      "Promptfoo assertion mismatch fails (exit 100)",
+      "Promptfoo missing provider is infrastructure error",
+      "DeepEval built-in ExactMatchMetric passes",
+      "DeepEval built-in ExactMatchMetric assertion fails (exit 1)",
+      "DeepEval missing dependency is infrastructure error (exit 2)",
+      "All disposable containers removed"
+    ]
+  },
+  "scan": {
+    "scanner": "Trivy 0.75.0",
+    "findings": [
+      {
+        "id": "CVE-2026-85393",
+        "package": "node-forge",
+        "version": "1.4.0",
+        "severity": "HIGH",
+        "fixedVersion": null
+      }
+    ],
+    "fixableHighCritical": 0
+  },
+  "releaseComplete": false,
+  "note": "Local arm64 engine checkpoint. Full CI, native amd64, release vulnerability assessment, published digests and anonymous downloads remain required."
+}

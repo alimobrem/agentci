@@ -5,9 +5,15 @@ import type { TrialResult } from './statistics.ts';
 
 export function adapterCommand(suite:EvalSuite):string[] {
   const args=[...suite.spec.runner.command];
-  if(suite.spec.runner.adapter==='pytest'){
+  if(['pytest','deepeval'].includes(suite.spec.runner.adapter)){
     if(args.some(arg=>/^--junit(?:xml|-xml)(?:=|$)/.test(arg)||arg.includes('junit_family')))throw new Error('Pytest report configuration is managed by the adapter');
     args.push(`--junitxml=/workspace/${suite.spec.runner.report}`,'-o','junit_family=xunit2');
+    if(suite.spec.runner.adapter==='deepeval')args.push('-p','deepeval.plugins.plugin');
+  }
+  if(suite.spec.runner.adapter==='promptfoo'){
+    if(!suite.spec.runner.report?.endsWith('.jsonl'))throw new Error('Promptfoo adapter requires a JSONL report');
+    if(args.some(arg=>/^(?:-o|--output|--repeat|--resume|--watch|--write|--cache)(?:=|$)/.test(arg)))throw new Error('Promptfoo output and trial configuration is managed by the adapter');
+    args.push('--output',`/workspace/${suite.spec.runner.report}`,'--repeat','1','--no-cache','--no-write','--no-progress-bar','--max-concurrency','1');
   }
   return args;
 }
@@ -32,7 +38,29 @@ export function normalizeTrial(suite:EvalSuite,run:RunnerResult):Normalized {
         for(const key of ['latencyMs','costUsd','totalTokens'])if(row[key]!==undefined&&(typeof row[key]!=='number'||!Number.isFinite(row[key])||row[key]<0||(key==='totalTokens'&&!Number.isSafeInteger(row[key]))))throw Error('metric');
         const {scenario,...trial}=row;results[scenario]=trial;
       }
-    }else if(suite.spec.runner.adapter==='pytest'){
+    }else if(suite.spec.runner.adapter==='promptfoo'){
+      if(![0,100].includes(run.exitCode))return fail('promptfoo-execution-error');
+      for(const line of run.report.split(/\r?\n/).filter(line=>line.trim())){
+        const row=JSON.parse(line);
+        if(!row||!Number.isSafeInteger(row.testIdx)||row.testIdx<0||!Number.isSafeInteger(row.promptIdx)||row.promptIdx<0||typeof row.success!=='boolean')throw Error('promptfoo row');
+        if(row.failureReason!==undefined&&![0,1,2].includes(row.failureReason))throw Error('promptfoo failure reason');
+        const scenario=suite.spec.scenarios.find(s=>(s.selector??s.id)===`${row.testIdx}:${row.promptIdx}`);
+        if(!scenario||Object.hasOwn(results,scenario.id))throw Error('unmapped result');
+        const grade=row.gradingResult;
+        let status:TrialResult['status'];
+        // Promptfoo also sets `error` to the assertion explanation on a failed grade.
+        // A missing grade or explicit execution failure is an infrastructure error.
+        if(!grade||row.failureReason===2)status='error';
+        else {if(typeof grade.pass!=='boolean'||grade.pass!==row.success||(row.failureReason!==undefined&&row.failureReason!==(grade.pass?0:1)))throw Error('contradictory grading');status=grade.pass?'passed':'failed';}
+        const trial:TrialResult={status};
+        for(const [key,value] of Object.entries({latencyMs:row.latencyMs,costUsd:row.cost??row.response?.cost,totalTokens:row.tokenUsage?.total??row.response?.tokenUsage?.total})){
+          if(value===undefined)continue;
+          if(typeof value!=='number'||!Number.isFinite(value)||value<0||(key==='totalTokens'&&!Number.isSafeInteger(value)))throw Error('metric');
+          (trial as unknown as Record<string,unknown>)[key]=value;
+        }
+        results[scenario.id]=trial;
+      }
+    }else if(['pytest','deepeval'].includes(suite.spec.runner.adapter)){
       if(![0,1].includes(run.exitCode))return fail('pytest-execution-error');
       if(/<!\s*(?:DOCTYPE|ENTITY)/i.test(run.report)||XMLValidator.validate(run.report)!==true)throw Error('unsafe xml');
       const xml=new XMLParser({ignoreAttributes:false,processEntities:false,parseAttributeValue:false,parseTagValue:false}).parse(run.report);
@@ -57,7 +85,8 @@ export function normalizeTrial(suite:EvalSuite,run:RunnerResult):Normalized {
     }else return fail('adapter-not-implemented');
     if(Object.keys(results).length!==suite.spec.scenarios.length)throw Error('missing scenario');
     const failure=Object.values(results).some(r=>r.status==='failed'||r.status==='error');
-    if(![0,1].includes(run.exitCode)||(run.exitCode===0&&failure)||(run.exitCode===1&&!failure))throw Error('exit/report mismatch');
+    const failureExit=suite.spec.runner.adapter==='promptfoo'?100:1;
+    if(![0,failureExit].includes(run.exitCode)||(run.exitCode===0&&failure)||(run.exitCode===failureExit&&!failure))throw Error('exit/report mismatch');
     return {results};
   }catch{return fail('invalid-report');}
 }

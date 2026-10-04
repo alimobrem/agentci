@@ -28,3 +28,23 @@ test('selectors and command arguments cannot alias assertions or contain NUL byt
   assert.throws(()=>validateEvalSuite(evalSuite({runner:{adapter:'native',command:['node'],report:'r.json',timeoutMs:1000},scenarios:[{id:'one',selector:'same'},{id:'two',selector:'same'}]})),/Duplicate scenario selector/);
   assert.throws(()=>validateEvalSuite(evalSuite({runner:{adapter:'command',command:['node','bad\0arg'],timeoutMs:1000}})),/Invalid runner arguments/);
 });
+test('Promptfoo maps JSONL assertions, separates provider errors and rejects contradictory or incomplete results',()=>{
+  const suite=evalSuite({runner:{adapter:'promptfoo',command:['promptfoo','eval','-c','evals/promptfoo.yaml'],report:'result.jsonl',timeoutMs:30000},scenarios:[{id:'greeting',selector:'0:0'}]});
+  const row={testIdx:0,promptIdx:0,success:true,gradingResult:{pass:true},latencyMs:12,response:{cost:0.01,tokenUsage:{total:5}}};
+  assert.deepEqual(normalizeTrial(suite,result(JSON.stringify(row))).results.greeting,{status:'passed',latencyMs:12,costUsd:0.01,totalTokens:5});
+  assert.equal(normalizeTrial(suite,result(JSON.stringify({...row,success:false,gradingResult:{pass:false},error:'assertion explanation',failureReason:1}),100)).results.greeting!.status,'failed');
+  const providerError=normalizeTrial(suite,result(JSON.stringify({...row,success:false,gradingResult:null,error:'synthetic private provider detail'}),100));
+  assert.equal(providerError.results.greeting!.status,'error');assert.ok(!JSON.stringify(providerError).includes('private provider'));
+  for(const text of ['',JSON.stringify({...row,promptIdx:1}),JSON.stringify(row)+'\n'+JSON.stringify(row),JSON.stringify({...row,gradingResult:{pass:false}}),JSON.stringify({...row,tokenUsage:{total:1.5}})])assert.equal(normalizeTrial(suite,result(text)).error,'invalid-report');
+  assert.equal(normalizeTrial(suite,result(JSON.stringify(row),100)).error,'invalid-report');
+  assert.equal(normalizeTrial(suite,result(JSON.stringify(row),1)).error,'promptfoo-execution-error');
+  assert.ok(adapterCommand(suite).includes('--no-write'));
+  suite.spec.runner.command.push('--repeat=3');assert.throws(()=>adapterCommand(suite),/managed/);
+});
+test('DeepEval uses its real pytest plugin and enforces the same complete JUnit accounting',()=>{
+  const suite=evalSuite({runner:{adapter:'deepeval',command:['python','-m','pytest'],report:'junit.xml',timeoutMs:30000},scenarios:[{id:'greeting',selector:'evals.test_example.test_greeting'}]});
+  assert.ok(adapterCommand(suite).includes('deepeval.plugins.plugin'));
+  const xml='<testsuites><testsuite><testcase classname="evals.test_example" name="test_greeting"><failure/></testcase></testsuite></testsuites>';
+  assert.equal(normalizeTrial(suite,result(xml,1)).results.greeting!.status,'failed');
+  assert.equal(normalizeTrial(suite,result(xml,2)).error,'pytest-execution-error');
+});

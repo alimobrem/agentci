@@ -38,6 +38,26 @@ USER 1001
 WORKDIR /workspace
 CMD ["node", "--version"]
 
+FROM python-build AS eval-engines-build
+USER 0
+ENV PATH=/opt/python/bin:/usr/local/bin:/usr/bin:/bin
+RUN microdnf install -y gcc-c++ && microdnf clean all && npm install --global npm@12.2.0 --no-audit --no-fund
+COPY deploy/engines/deepeval/requirements.txt /tmp/deepeval-requirements.txt
+RUN python3.14 -m pip install --require-hashes --only-binary=:all: --no-cache-dir --disable-pip-version-check -r /tmp/deepeval-requirements.txt && \
+    DEEPEVAL_TELEMETRY_OPT_OUT=1 DEEPEVAL_DISABLE_DOTENV=1 python3.14 -c 'import deepeval; assert deepeval.__version__ == "4.2.8"' && \
+    python3.14 -m pip uninstall --yes pip && rm -rf /opt/python/lib/python3.14/ensurepip /opt/python/bin/pip*
+WORKDIR /opt/promptfoo
+COPY deploy/engines/promptfoo/package.json deploy/engines/promptfoo/package-lock.json ./
+RUN npm ci --omit=dev --no-audit --no-fund
+
+FROM eval-runner AS eval-engines
+USER 0
+COPY --from=eval-engines-build /opt/python /opt/python
+COPY --from=eval-engines-build /opt/promptfoo /opt/promptfoo
+ENV PATH=/opt/promptfoo/node_modules/.bin:/opt/python/bin:/usr/local/bin:/usr/bin:/bin
+USER 1001
+CMD ["node", "--version"]
+
 FROM node AS build
 USER 0
 WORKDIR /app
