@@ -46,8 +46,10 @@ them from an unverified response. Redirects are rejected. The client has a bound
 request deadline and 4 MiB response budget; it sanitizes transport/server errors.
 The server also refuses oversized comparison records with explicit 413 rather than
 truncating results. Larger records use the snapshot export described below. Capacity acceptance has
-prior CI evidence; the subsequent UUID finding reopens comparison API acceptance
-until this correction passes final-source CI. Native, installed-client and actual
+prior CI evidence; the subsequent UUID correction passed source- and artifact-verified CI
+37202994401: 123 unit/API/domain tests and fourteen native groups, zero skips.
+Comparison API acceptance is restored; the Check and [CI proof](../releases/m2-uuid-case-ci.json)
+cover the exact corrected source. Native, installed-client and actual
 customer candidate checks are recorded in [the UUID proof](../releases/m2-uuid-case-local.json);
 they do not substitute for release/download acceptance.
 

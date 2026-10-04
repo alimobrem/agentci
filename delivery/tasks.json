@@ -813,14 +813,16 @@
         "SPEC-40-035",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T12:28:18.799Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T12:50:19.326Z",
       "acceptance": [
         {
           "text": "Additive OpenAPI/domain/shared fixtures match authenticated comparison GET, typed identity/digest errors and bounded responses; unauthorized callers cannot disclose IDs, scopes cannot cross, storage failures are sanitized, M1 compatibility passes, compiled API and installed client consume actual durable evidence. Full CI validates final source. Upper/lowercase comparison resource and expected UUID identities yield identical canonical evidence and full export hashes across native persistence, HTTP and installed client; different identities still fail, and retained digests and released compatibility remain unchanged.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-uuid-case-ci.json"
+          ]
         }
       ]
     },
@@ -982,6 +984,24 @@
           "evidence": [
             "releases/m2-operator-review-ci.json"
           ]
+        }
+      ]
+    },
+    {
+      "id": "M2-TERMINATION-RECOVERY",
+      "title": "Reconcile abruptly closed review attempts and cancelled evaluator orphans",
+      "requirementIds": [
+        "SPEC-40-039",
+        "SPEC-11.4-007"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T12:46:52.603Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Tracked controller attempts reconcile actual Temporal terminal state after failure, timeout or termination without restarting an immutable failed UUID. Scoped SQL cancellation and unavailable/cancelled Checks retain prior evidence; concurrent/restarted reconcilers are fenced and transient SDK/publication failures retry without false closure. Native tests terminate a real parent with both containers running and after an evaluator SIGKILL, then recover with no owned containers, correct terminal evidence and exactly one Check. A fresh operator UUID recovers independently; legacy M1 replay, additive checksum-bound migration, private error handling, docs/operation mappings, package/container and exact-source full CI pass.",
+          "status": "pending",
+          "evidence": []
         }
       ]
     }
