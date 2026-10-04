@@ -1,0 +1,44 @@
+{
+  "component": "M2 customer deployment startup candidate",
+  "sourceCommit": "cbd0ec9db4e8727405f044aaa9f4676b0fa00d14",
+  "health": {
+    "status": "ok",
+    "version": "0.3.0-m2"
+  },
+  "services": [
+    {
+      "name": "agentci-m2-demo-api-1",
+      "imageId": "sha256:23268aa5c7b402aff962b318a5718f46577aa23c8965fe43c3bd260898471a1f",
+      "running": true,
+      "restartCount": 0,
+      "temporalPolling": false
+    },
+    {
+      "name": "agentci-m2-demo-worker-1",
+      "imageId": "sha256:617499cae3f82c31447d3493469b8d461285f376a94d898d277feecdb5b12953",
+      "running": true,
+      "restartCount": 0,
+      "temporalPolling": true
+    },
+    {
+      "name": "agentci-m2-evaluator-eval-worker-1",
+      "imageId": "sha256:271025213f8df4b315c0cc64a50a8b81ab0c7337150dd109d42f630fc8c1fecb",
+      "running": true,
+      "restartCount": 0,
+      "temporalPolling": true
+    }
+  ],
+  "evaluatorAcceptance": [
+    "restricted SQL startup checks passed before polling",
+    "App credential environment absent",
+    "App key mount absent",
+    "separate process and queue",
+    "private provider file readable with mode 0600"
+  ],
+  "releaseAcceptance": false,
+  "limitations": [
+    "Development services share a local daemon; dedicated production host isolation is not proven.",
+    "Real customer PR, behavioral results, recovery and published-build demo remain pending.",
+    "Latest bind-path guard is verified by rendering, not yet deployed."
+  ]
+}

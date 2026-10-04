@@ -875,14 +875,16 @@
         "SPEC-40-039",
         "SPEC-11.4-007"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T11:31:15.553Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T11:45:14.524Z",
       "acceptance": [
         {
           "text": "New PR evaluation parent stages exact identifiers, dispatches separate evaluator children with deterministic identity, waits for completion and cancellation cleanup, retains cancelled evidence on stale PR or failure, and preserves M1 replay. Real PostgreSQL/Temporal/isolated runner tests prove baseline/head results, no source/credentials in histories, stale/cancel cleanup and replay before Check publication is wired.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-pr-controller-ci.json"
+          ]
         }
       ]
     },
@@ -893,14 +895,16 @@
         "SPEC-40-037",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T10:22:04.665Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T11:45:14.971Z",
       "acceptance": [
         {
           "text": "Completed SQL snapshot exports produce bounded Check summaries containing exact base/head, suite/model deltas, regressions, added/removed/changed scenarios, coverage/selection/execution gaps and immutable evidence references. Publication rechecks current PR identity under the shared lock, reconciles only this App and exact attempt, rejects pending/cancelled or mismatched evidence, sanitizes SDK failures and preserves M1 Check behavior. Actual HTTP provider/PostgreSQL tests prove stale identity, retries including ambiguous writes, lock contention and no false passing summaries before production workflow wiring.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-pr-controller-ci.json"
+          ]
         }
       ]
     },
@@ -912,14 +916,16 @@
         "SPEC-40-039",
         "SPEC-11.4-007"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T10:42:29.656Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T11:45:15.432Z",
       "acceptance": [
         {
           "text": "Compiled M2 controller requires pinned eval configuration and M2 schema, registers legacy and new activities/workflows without changing M1 command history, and durable outbox starts a deterministic exact-attempt full workflow. Real PostgreSQL/Temporal/HTTP Git+Checks/isolated evaluator tests verify semantic and behavioral publication, retry/outbox duplicate fencing, current-head outcomes, failure and cancellation recovery. Container readiness and installed-client acceptance pass; no silent M1 fallback, App credentials in evaluator payloads, or phase completion before live/release gates.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-pr-controller-ci.json"
+          ]
         }
       ]
     },
@@ -936,6 +942,24 @@
       "acceptance": [
         {
           "text": "Packaged separate evaluator Compose configuration renders with only restricted evaluator environment, explicit dedicated daemon socket group, immutable image pins, read-only filesystem and private provider mount; customer instructions provision restricted SQL login and expose development endpoints without implying production hosting. Real rendered configuration and separate worker runtime validate the boundary before live demo.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-LIVE-CUSTOMER",
+      "title": "Real customer App M2 behavioral review and recovery demonstration",
+      "requirementIds": [
+        "SPEC-40-037",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T11:39:49.369Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Separate M2 controller and restricted evaluator deployment receives actual signed events from the approved demo App/repository, publishes immutable baseline/head behavioral Checks, exposes verified client evidence, demonstrates failure/recovery, and records exact source and limitations. Published-build replay is required for the milestone demo gate.",
           "status": "pending",
           "evidence": []
         }

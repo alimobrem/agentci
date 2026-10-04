@@ -35,6 +35,9 @@ the controller. Public HTTP provider IDs/revisions go in the controller;
 endpoints and authentication go only in the evaluator's private provider JSON.
 Create a regular mode-0600 JSON file containing `[]` when HTTP is unused. Make
 that file readable by service UID 1001 without granting other users access.
+Bind paths must exist on the Docker daemon host. For a local Docker VM, use a
+directory shared with that VM; the host's `/tmp` may be a different directory.
+Missing bind paths fail rather than creating an empty directory at the mount.
 
 Set the group ID of the dedicated daemon socket explicitly. Preload/pull the
 exact runner images on that daemon. Development images can use their immutable

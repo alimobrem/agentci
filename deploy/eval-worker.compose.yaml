@@ -21,6 +21,13 @@ services:
       AGENTCI_EVAL_ENGINES_IMAGE: ${AGENTCI_EVAL_ENGINES_IMAGE:-}
       AGENTCI_EVAL_PROVIDERS_FILE: /run/secrets/eval-providers.json
     volumes:
-      - "${AGENTCI_DOCKER_SOCKET_PATH:-/var/run/docker.sock}:/var/run/docker.sock"
-      - "${AGENTCI_EVAL_PROVIDERS_FILE:?Set private provider JSON path}:/run/secrets/eval-providers.json:ro"
+      - type: bind
+        source: ${AGENTCI_DOCKER_SOCKET_PATH:-/var/run/docker.sock}
+        target: /var/run/docker.sock
+        bind: { create_host_path: false }
+      - type: bind
+        source: ${AGENTCI_EVAL_PROVIDERS_FILE:?Set private provider JSON path}
+        target: /run/secrets/eval-providers.json
+        read_only: true
+        bind: { create_host_path: false }
     restart: unless-stopped
