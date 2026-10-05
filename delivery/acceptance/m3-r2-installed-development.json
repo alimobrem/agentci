@@ -1,0 +1,48 @@
+{
+  "task": "M3-R2",
+  "status": "local-installed-acceptance-hosted-review-pending",
+  "packageSha256": "682b3089533c33ef608ad839066db6998b8f38dd100b75b70d8fc3c28976da80",
+  "sourceFiles": {
+    "packages/onboarding/preflight.ts": "0f86c58f919a89d33f32e355f0fb83d180db6a9ba53a97600265e68aa18b2038",
+    "packages/onboarding/mount-preflight.ts": "186109e999f1e2b76e51ca559f191cf2d118ff3efa87191125f93298717a5975",
+    "packages/onboarding/preflight-command.ts": "67d940c2c149b25226ccdfa5106a398d04e99748370b369afdb2db705999b3dc",
+    "cmd/agentci/main.ts": "f610a4347a306a30d33425461f0499ba2d7ef0e5153affec0c34e349cffe4c33"
+  },
+  "cases": [
+    {
+      "name": "installed shared mount and ready service",
+      "exitCode": 0,
+      "result": "passed"
+    },
+    {
+      "name": "installed shared mount and unavailable service",
+      "exitCode": 1,
+      "result": "service-not-ready"
+    },
+    {
+      "name": "installed recovery using unchanged service configuration",
+      "exitCode": 0,
+      "result": {
+        "passed": true,
+        "checks": [
+          {
+            "id": "deployment:mount",
+            "passed": true,
+            "code": "daemon-mount-bytes-match"
+          },
+          {
+            "id": "deployment:readiness",
+            "passed": true,
+            "code": "service-ready"
+          }
+        ],
+        "paidRequestsMade": false,
+        "requestedScope": {
+          "deployment": true,
+          "providers": []
+        }
+      }
+    }
+  ],
+  "scope": "Local installed development package; no provider credentials/authentication/model calls tested; hosted verification and M3 completion not claimed"
+}

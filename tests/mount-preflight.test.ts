@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp,writeFile,rm} from 'node:fs/promises';
+import {mkdtemp,writeFile,rm,symlink} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
@@ -19,6 +19,11 @@ test('mount preflight verifies daemon-visible bytes with restricted execution an
    const failed=await preflightMount(config,async(_engine,args)=>{if(args[0]==='run'){if(mode==='unshared')throw new Error('private-path');return {stdout:JSON.stringify({'001.sql':mode==='wrong-bytes'?'bad':createHash('sha256').update('SELECT 1;').digest('hex')})};}return {stdout:args[0]==='ps'&&mode==='cleanup'?'remaining-container':''};});
    assert.equal(failed.passed,false);assert.ok(!JSON.stringify(failed).includes(directory));
   }
+  let reads=0;const noProbe=async()=>{reads++;return {stdout:''};};
+  await writeFile(join(directory,'large.sql'),Buffer.alloc(1048577));
+  assert.equal((await preflightMount({...config,files:['large.sql']},noProbe)).code,'mount-source-unavailable');
+  await symlink(join(directory,'001.sql'),join(directory,'linked.sql'));
+  assert.equal((await preflightMount({...config,files:['linked.sql']},noProbe)).code,'mount-source-unavailable');assert.equal(reads,0);
   let executed=false;const invalid=await preflightMount({...config,files:['../secret']},async()=>{executed=true;return {stdout:''};});assert.equal(invalid.passed,false);assert.equal(executed,false);
  }finally{await rm(directory,{recursive:true,force:true});}
 });
