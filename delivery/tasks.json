@@ -1479,14 +1479,16 @@
         "SPEC-40-050",
         "SPEC-40-051"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T04:59:39.716Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T05:25:11.339Z",
       "acceptance": [
         {
           "text": "Record evidence by product source, artifact digest, platform and verifier revision; require invalidation reasons for repeated acceptance. Separate CI/publication/download/cycle/blocker/intervention/rework cohorts, preserve failed attempts, and make one consolidated closure record the default. Reject wrong-source/digest/coverage reuse.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-r3.json"
+          ]
         }
       ],
       "dependsOn": [
