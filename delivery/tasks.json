@@ -1832,6 +1832,23 @@
       "dependsOn": [
         "M3-01"
       ]
+    },
+    {
+      "id": "M3-R4",
+      "title": "Diagnose hosted GitHub access failures without sensitive logs",
+      "requirementIds": [
+        "SECTION-13.4"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T17:18:35.578Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Allowlisted HTTP and rate-limit diagnostics distinguish observed failure metadata without exposing credentials or raw responses; preserve request failure behavior; verify hosted evidence when available.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
