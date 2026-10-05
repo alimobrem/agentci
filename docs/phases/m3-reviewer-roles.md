@@ -212,3 +212,15 @@ five units, two paired comparisons and no coverage, selection or execution gaps.
 The reviewer suite was still new at that source. M3-05 therefore remains open
 pending its first two-sided comparison using assertions frozen on merged main.
 The next-task breakdown is in `m3-finding-pr-plan.md`; it does not advance M3-06.
+
+### Internal task acceptance complete
+
+M3-05 passed its final internal acceptance using comparison
+`f16b3cb8-9ac8-4aa0-8083-0d0e22cd53cc` from run `37350324559`, artifact
+`11362103357`. Both reviewer units passed all six scenarios with base assertions
+from `36e6944007406142e9684d9d3c838e0a7894fd41`. The complete comparison has six
+units, three paired comparisons, no regressions and no gaps. The retained proof
+is `delivery/acceptance/m3-05-frozen-reviewers.json`. Product code and lockfiles
+were byte-identical to the full-CI-tested implementation source; PR35 contains
+only planning and acceptance records. Its workflow does not replace phase release
+gates. M3-06a is now the next active implementation task; M3 is not released.

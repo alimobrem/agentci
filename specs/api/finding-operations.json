@@ -1,0 +1,94 @@
+{
+  "apiVersion": "agentci.io/v1alpha1",
+  "transport": "Internal TypeScript contract; customer endpoints remain M3-07",
+  "operations": [
+    {
+      "operationId": "validateModelFinding",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/findings.test.ts"
+      ],
+      "scenarios": [
+        "strict shape and exact subject",
+        "stable identity and legal state evidence"
+      ]
+    },
+    {
+      "operationId": "findingsFromReviewer",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/findings.test.ts"
+      ],
+      "scenarios": [
+        "exact selected evidence and bounded ranges",
+        "model lifecycle fields rejected"
+      ]
+    },
+    {
+      "operationId": "deduplicateFindings",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/findings.test.ts"
+      ],
+      "scenarios": [
+        "order independent exact duplicate identity",
+        "distinct evidence remains separate",
+        "consensus cannot confirm"
+      ]
+    },
+    {
+      "operationId": "createFindingTransitions",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/findings.test.ts"
+      ],
+      "scenarios": [
+        "all lifecycle paths",
+        "stale versions and wrong receipts rejected",
+        "redacted receipt outage"
+      ]
+    },
+    {
+      "operationId": "findingBlockingDecision",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/findings.test.ts"
+      ],
+      "scenarios": [
+        "default unconfirmed is nonblocking",
+        "explicit customer override preserves verification state",
+        "synthetic evidence never blocks"
+      ]
+    }
+  ]
+}
