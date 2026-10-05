@@ -1,0 +1,20 @@
+{
+  "image": "ghcr.io/alimobrem/agentci-api@sha256:ccd2d24db9411d88956136d9840e6c36c23d3b44f8aaba89d9da7e2dbd0af612",
+  "shared": {
+    "id": "deployment:mount",
+    "passed": true,
+    "code": "daemon-mount-bytes-match"
+  },
+  "temporaryWorktree": {
+    "id": "deployment:mount",
+    "passed": false,
+    "code": "daemon-mount-unavailable"
+  },
+  "task": "M3-R2",
+  "status": "partial-development-evidence-not-task-completion",
+  "sourceFiles": {
+    "packages/onboarding/mount-preflight.ts": "d628073603037236833eb68bffd7dcb6de20103146e53c787cea35c10b4bf718",
+    "tests/mount-preflight.test.ts": "856a00e958bea07021b99e13b1f77a437bde562fe4dd3cc0e945ccabdc4d7096"
+  },
+  "coverage": "Local Docker daemon: preinstalled immutable image; shared migration bytes match; temporary worktree mount rejected; owned probe containers absent after both probes. CLI, readiness and packaged acceptance remain pending."
+}
