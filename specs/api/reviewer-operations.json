@@ -121,14 +121,18 @@
         "SECTION-13.4"
       ],
       "tests": [
-        "tests/integration/reviewer-results.test.ts"
+        "tests/integration/reviewer-results.test.ts",
+        "tests/reviewer-storage-failure.test.ts"
       ],
       "scenarios": [
         "concurrent immutable save and reconstructed store retrieval",
         "tenant and commit isolation",
         "exact budget request and settled cost binding",
         "unknown cost reservation retained",
-        "SQL update rejected"
+        "SQL update rejected",
+        "connection and transaction failures are redacted unavailable errors",
+        "rollback failure discards connection",
+        "corrupt evidence remains a distinct conflict"
       ]
     },
     {

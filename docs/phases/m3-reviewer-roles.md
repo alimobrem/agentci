@@ -143,3 +143,41 @@ reader request, which retains the GitHub client's 30-second timeout. Reader fail
 are redacted. Unit and frozen-corpus assertions cover exact read identity, mutation,
 missing/oversized files, invalid selection and cancellation. Customer workflow
 wiring and authenticated provenance receipt handling remain in M3-07.
+
+## Storage failure acceptance
+
+`tests/reviewer-storage-failure.test.ts` injects connection, query and rollback
+failures at the pool boundary. Unavailable storage cannot leak raw database errors;
+rollback failure discards the connection. Corrupt evidence is a distinct immutable
+conflict, and invalid request IDs never connect. These tests supplement the real
+PostgreSQL integration tests; they do not substitute for database execution.
+
+## M3-05 acceptance audit
+
+This audit separates the internal task from the M3 customer release. All mapped
+requirements remain in-progress until the outstanding hosted acceptance is retained.
+
+| Requirement | Implemented behavior | Direct evidence | Remaining |
+| --- | --- | --- | --- |
+| SPEC-12.1-001 | Controller chooses role, provider, model, parameters and response schema; execution binds configuration/prompt/context digests | reviewer-context and reviewer-execute tests; versioned result fixture | Hosted corpus acceptance |
+| SPEC-12.1-002 | Specification compliance role | reviewer-policy role inventory and all-role execution test | Hosted corpus acceptance |
+| SPEC-12.1-003 | Code correctness role | Same all-role execution test | Hosted corpus acceptance |
+| SPEC-12.1-004 | Architecture role | Same all-role execution test | Hosted corpus acceptance |
+| SPEC-12.1-005 | Security role | Same all-role execution test | Hosted corpus acceptance |
+| SPEC-12.1-006 | Adversarial role | Same all-role execution test plus malicious output rejection | Hosted corpus acceptance |
+| SPEC-12.1-007 | Test/eval completeness role | Same all-role execution test | Hosted corpus acceptance |
+| SPEC-12.1-008 | Operational reliability role | Same all-role execution test | Hosted corpus acceptance |
+| SPEC-12.2-001 | Different-upstream policy, no alias bypass, required exact-head coding provenance | reviewer-policy and reviewer-execute rejection tests before reservation | Authenticated customer wiring in M3-07; hosted corpus acceptance for internal boundary |
+
+Full verification run 37346712236 passed for persistence source
+`947eb7ba9633c41bdf3571ec0c32a579a9b0fe93`; its retained metrics record is
+`delivery/runs/37346712236-attempt-1.json`. That run predates snapshot-context loading
+and does not prove later changes. Snapshot loading has local fast, mutation and
+installed-package acceptance; its exact-source hosted verification is separate.
+Advisory runs 37343583080 and 37346708609 failed on GitHub HTTP 403, and their
+failures are retained rather than counted as successful coverage.
+
+M3-06 owns deduplication, lifecycle and reproduction. M3-07 owns customer/API/check
+wiring and authenticated provenance handling. Their existence in the plan does not
+prove them implemented. Original live-provider acceptance remains deferred under
+`m3-live-validation-deferral.md`; fixture results do not satisfy that acceptance.
