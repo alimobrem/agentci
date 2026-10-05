@@ -1,7 +1,7 @@
 # M3-06c isolated finding reproduction
 
-Development is in progress. Local integration, mutation, released API compatibility and installed-package
-checks pass. Hosted acceptance and the slice demo remain required. Customer API/CLI
+Development slice acceptance passed; see `delivery/acceptance/m3-06c.json`.
+Local and hosted checks, package acceptance and the development demo are recorded. Customer API/CLI
 integration follows in M3-07; this document describes the internal contract.
 
 A model proposes a finding. The controller approves an exact reproduction plan
@@ -69,4 +69,6 @@ identity guards independently and requires each corresponding scenario to fail.
 The isolated frozen-corpus test also replaces the candidate harness, assertion
 test and fixture with no-op code while removing the execution identity guard.
 Pinned baseline assertions still detect the regression. Hosted execution of this
-new acceptance test remains pending on the updated PR revision.
+new acceptance test passed in full CI run 37379383135. The separate hosted
+review correctly retains the older baseline assertions; its report explicitly
+records the added reproduction scenario as a suite change.

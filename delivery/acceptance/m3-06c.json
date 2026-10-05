@@ -1,0 +1,70 @@
+{
+  "task": "M3-06c",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/40",
+  "sourceCommit": "cd0a8b92d24a332528d0f9e55041c9af8158bc28",
+  "mergeCommit": "cb7ace58ed7164881160b0ceb31f53490887c642",
+  "fullCiRun": 37379383135,
+  "fullCiMergePreview": "f88d846a60c9bbaea0f3799ae394ae6a1354a9ef",
+  "verifiedSourceTree": "876cb15cafbfdcc775f7d1804117d2d32d4619bb",
+  "integrationCounts": {
+    "tests": 33,
+    "failed": 0,
+    "skipped": 0
+  },
+  "hostedRun": 37379380448,
+  "artifactId": 11373645870,
+  "producer": {
+    "version": "0.4.0-m3-dev.1",
+    "sourceCommit": "d86c94a5f326f03e3f80147f04dd56ec447d731b",
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "runId": "37379380448",
+    "runAttempt": "1",
+    "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+    "evaluatorImage": "sha256:ae04fc368aef609ab027ae3e5d0f02e5e382cc1d1e12d5d99304251f6a272f37"
+  },
+  "job": {
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "pullRequest": 40,
+    "baseSha": "d86c94a5f326f03e3f80147f04dd56ec447d731b",
+    "headSha": "cd0a8b92d24a332528d0f9e55041c9af8158bc28"
+  },
+  "comparison": {
+    "id": "ea6d6195-6e60-461c-9346-3dea176197d4",
+    "reviewId": "b77037f6-25c6-44eb-9200-31f3809931dc",
+    "file": "comparison-ea6d6195-6e60-461c-9346-3dea176197d4.ndjson",
+    "sha256": "sha256:83d954247fe6a249112d9db0f02c7b1ff4368c02fc0b6eaf554c75f68769fb19",
+    "bytes": 25394
+  },
+  "hostedSummary": {
+    "unitCount": 8,
+    "comparisonCount": 4,
+    "regressions": 0,
+    "coverageGaps": 0,
+    "selectionGaps": 0,
+    "executionGaps": 0
+  },
+  "verification": "Independent report identity and exact PR subject, artifact comparison digest and chained records verified. CI merge preview tree equals PR head tree. Images matched workflow logs.",
+  "reproductionAcceptance": [
+    "positive and fixed defect",
+    "crash and report symlink escape",
+    "queued and live cancellation with cleanup",
+    "pre-staging and concurrent-staging cancellation",
+    "late cancellation preserves completed receipts",
+    "approved engine and resource enforcement",
+    "attempt cap survives requeue",
+    "immutable scoped records and restart recovery",
+    "real Temporal controller to isolated evaluator and replay",
+    "ambiguous staging/finalization retries",
+    "isolated frozen assertions defeat weakened candidate tests and fixtures"
+  ],
+  "evalScope": "Hosted comparison uses pre-existing base finding-lifecycle assertions. New finding-reproduction corpus passed mutation checks and real isolated frozen-harness integration in full CI; later hosted baseline adoption remains separately observable.",
+  "package": "Compiled production-only offline install passed locally; full CI installed-package and service image/runtime checks passed.",
+  "demo": "docs/phases/m3-reproduction-demo.md",
+  "limitations": [
+    "Internal reproduction hooks; production registration and authenticated customer API/CLI dispatch are M3-07.",
+    "Synthetic reviewer/approval fixtures do not replace deferred live-provider acceptance.",
+    "This is a development slice acceptance, not an M3 release."
+  ]
+}
