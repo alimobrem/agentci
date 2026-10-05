@@ -20,7 +20,8 @@ export interface ModelFinding extends FindingProposal {
 }
 const fail=():never=>{throw new Error('invalid-model-finding');};
 const normalizedClaim=(value:string)=>value.normalize('NFC').replace(/\s+/gu,' ').trim();
-const sortedReferences=(refs:FindingReference[])=>[...refs].sort((a,b)=>canonical(a)<canonical(b)?-1:canonical(a)>canonical(b)?1:0);
+const compare=(a:string,b:string)=>a<b?-1:a>b?1:0;
+const sortedReferences=(refs:FindingReference[])=>[...refs].sort((a,b)=>compare(canonical(a),canonical(b)));
 function identity(value:Pick<ModelFinding,'subject'|'mode'|'category'|'claim'|'evidence'>){return digest(canonical({subject:value.subject,mode:value.mode,category:value.category,claim:value.claim,evidence:value.evidence}));}
 function bounded(value:unknown){
  let nodes=0;const visit=(v:unknown,depth:number)=>{if(++nodes>50000||depth>32)fail();if(v===null||typeof v==='boolean'||typeof v==='string'||typeof v==='number'&&Number.isFinite(v))return;if(!v||typeof v!=='object')return fail();if(Array.isArray(v)){if(Object.keys(v).length!==v.length)fail();}else if(![Object.prototype,null].includes(Object.getPrototypeOf(v)))fail();for(const x of Object.values(v))visit(x,depth+1);};visit(value,0);if(Buffer.byteLength(JSON.stringify(value))>2097152)fail();
@@ -34,7 +35,7 @@ export function validateModelFinding(value:unknown,expected:ReviewSubject):Model
   if(canonical(f.evidence)!==canonical(sortedReferences(f.evidence))||new Set(f.evidence.map(e=>canonical(e))).size!==f.evidence.length)fail();
   for(const r of f.evidence)if(r.startLine>r.endLine||/[\\:\x00-\x1f\x7f]/.test(r.path)||r.path.split('/').some(p=>!p||p==='.'||p==='..'))fail();
   if(new Set(f.sources.map(s=>canonical([s.requestId,s.attemptId,s.originalClaim]))).size!==f.sources.length)fail();
-  for(const source of f.sources)if(f.sources.some(s=>s.requestId===source.requestId&&s.attemptId===source.attemptId&&(s.reviewerResultDigest!==source.reviewerResultDigest||s.provider!==source.provider||s.model!==source.model)))fail();
+  for(const source of f.sources)if(normalizedClaim(source.originalClaim)!==f.claim||f.sources.some(s=>s.requestId===source.requestId&&s.attemptId===source.attemptId&&(s.reviewerResultDigest!==source.reviewerResultDigest||s.provider!==source.provider||s.model!==source.model)))fail();
   if(f.state==='proposed'&&(f.version!==0||f.disposition!==null)||f.state!=='proposed'&&f.version<1)fail();
   if(['deduplicated','reproduction-pending'].includes(f.state)&&f.disposition!==null)fail();
   if(f.state==='confirmed'&&(f.disposition?.kind!=='reproduction'||f.disposition.outcome!=='reproduced'))fail();
@@ -71,5 +72,5 @@ export function deduplicateFindings(values:readonly ModelFinding[],subject:Revie
   for(const source of f.sources){const contributors=prior.sources.filter(s=>s.requestId===source.requestId&&s.attemptId===source.attemptId);if(contributors.some(s=>s.reviewerResultDigest!==source.reviewerResultDigest||s.provider!==source.provider||s.model!==source.model))fail();const existing=contributors.find(s=>s.originalClaim===source.originalClaim);if(!existing)prior.sources.push(source);}
   if(rank.indexOf(f.severity)>rank.indexOf(prior.severity))prior.severity=f.severity;
  }
- return [...groups.values()].sort((a,b)=>a.id.localeCompare(b.id)).map(f=>{f.sources.sort((a,b)=>canonical([a.requestId,a.attemptId,a.originalClaim]).localeCompare(canonical([b.requestId,b.attemptId,b.originalClaim])));return validateModelFinding(f,subject);});
+ return [...groups.values()].sort((a,b)=>compare(a.id,b.id)).map(f=>{f.sources.sort((a,b)=>compare(canonical([a.requestId,a.attemptId,a.originalClaim]),canonical([b.requestId,b.attemptId,b.originalClaim])));return validateModelFinding(f,subject);});
 }

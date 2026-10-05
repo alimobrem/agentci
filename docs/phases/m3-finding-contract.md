@@ -13,7 +13,10 @@ Diff text cannot substitute for source lines. Missing context is a failure, not 
 empty successful review. A refused or incomplete reviewer produces no finding.
 
 Claim normalization uses NFC and whitespace folding, retaining the original claim
-on its source. Duplicate identity hashes exact organization/repository/PR/base/head,
+on its source. Every original claim must normalize to the retained claim. Source
+ordering uses explicit code-unit comparison, independent of host locale; canonically
+equivalent Unicode spellings retain stable ordering even when input order reverses.
+Duplicate identity hashes exact organization/repository/PR/base/head,
 mode, category, normalized claim and sorted evidence. Different source evidence
 or different commits remain separate. Severity is the maximum among exact duplicate
 claims; all distinct reviewer sources remain retained. No fuzzy merging is claimed.

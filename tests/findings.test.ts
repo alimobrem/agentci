@@ -20,6 +20,7 @@ test('finding proposals bind exact selected evidence and reject model-supplied l
  }
  assert.throws(()=>findingsFromReviewer(r,r.subject,[{...docs[0],content:'changed',digest:digest('changed')}]));
  assert.throws(()=>validateModelFinding({...f,id:digest('forged')},f.subject));
+ assert.throws(()=>validateModelFinding({...f,sources:[{...f.sources[0]!,originalClaim:'A different allegation'}]},f.subject));
 });
 
 test('exact duplicate aggregation is deterministic and agreement does not confirm or block',()=>{
@@ -28,6 +29,9 @@ test('exact duplicate aggregation is deterministic and agreement does not confir
  assert.equal(findingBlockingDecision(x[0]!,{id:'default',minimumSeverity:'high',allowUnconfirmed:false,reason:''}).blocking,false);
  r.response.structuredOutput.findings[0].evidence[0].endLine=1;r.proposal.output=structuredClone(r.response.structuredOutput);r.responseDigest=digest(canonical(r.response));const distinct=findingsFromReviewer(r,r.subject,docs)[0]!;assert.notEqual(a.id,distinct.id);
  assert.equal(deduplicateFindings([a,distinct],a.subject).length,2);
+ const unicode=fixture();const proposal=unicode.r.response.structuredOutput.findings[0];proposal.claim='Caf\u00e9';unicode.r.response.structuredOutput.findings.push({...structuredClone(proposal),claim:'Cafe\u0301'});unicode.r.proposal.output=structuredClone(unicode.r.response.structuredOutput);unicode.r.responseDigest=digest(canonical(unicode.r.response));
+ const variants=findingsFromReviewer(unicode.r,unicode.r.subject,unicode.docs);assert.deepEqual(deduplicateFindings(variants,unicode.r.subject),deduplicateFindings([...variants].reverse(),unicode.r.subject));
+
  assert.throws(()=>deduplicateFindings([a,{...b,subject:{...a.subject,repository:'other/repo'}}],a.subject));
  const repeated=fixture();repeated.r.response.structuredOutput.findings.push({...structuredClone(repeated.r.response.structuredOutput.findings[0]),claim:'Missing authorization'});repeated.r.proposal.output=structuredClone(repeated.r.response.structuredOutput);repeated.r.responseDigest=digest(canonical(repeated.r.response));const sameReview=deduplicateFindings(findingsFromReviewer(repeated.r,repeated.r.subject,repeated.docs),repeated.r.subject);assert.equal(sameReview.length,1);assert.equal(sameReview[0]!.sources.length,2);
 });
