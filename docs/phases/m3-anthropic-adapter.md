@@ -12,9 +12,15 @@ controller-side and is not converted into an upstream user identifier.
 
 A distinct developer instruction role is rejected explicitly. No implicit role
 merging or endpoint override occurs. This is a partial implementation: provider
-schema preflight, response/stream translation, fixed-origin transport, error
+schema preflight, stream translation, fixed-origin transport, error
 mapping, registered model profiles, shared conformance and authorized live
 acceptance remain required. No live Anthropic request has been made.
 
 Sources: [official SDK](https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript),
 [Messages reference](https://platform.claude.com/docs/en/api/typescript/messages/create).
+
+Response normalization now separates refusal, truncation and pause from completed
+output, validates tool proposals, and retains observed model identity. Input-token
+totals include reported cache creation/read counters; missing counters leave total
+input usage unknown. Dollar cost is never inferred as a reported charge. Unknown
+output kinds and unapproved model identities fail with redacted errors.
