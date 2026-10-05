@@ -99,7 +99,29 @@ SQL updates are rejected. A reconstructed store can retrieve retained results.
 Real PostgreSQL acceptance covers concurrent writes, scope/commit rejection,
 pre-accounting rejection, cost mismatch, unknown reservations, repeated migrations
 and update rejection. The store is internal, with no customer read endpoint yet.
-Controller orchestration must still connect execution, save and recovery; this
-store alone does not claim crash-safe end-to-end reviewer scheduling. Pool setup
+The persistence wrapper below connects execution, save and recovery; Temporal
+scheduling and customer/API integration are still pending. Pool setup
 must bound connection time; transactions bound locks and statements and return
 redacted storage errors. The migration and result schema ship in the package.
+
+## Idempotent persistence wrapper
+
+`createPersistentReviewer` authorizes and snapshots one execution plan before
+awaiting storage. A committed result with the exact request digest is reused;
+changed input under the same request ID conflicts. Missing results execute through
+the ledger and must save before success is returned. Concurrent attempts may see
+an explicit ambiguous-attempt error; retrying the exact input can retrieve the
+winner's committed result without another provider call.
+
+If a process dies after accounting but before saving, output cannot be reconstructed
+from usage alone. The durable ledger fences redispatch and the wrapper returns an
+ambiguous attempt, rather than silently billing again or claiming recovered output.
+A new execution requires an explicit new request ID within the same authorized
+budget. Each reviewer role needs its own stable request ID. The controller must
+retain exact configuration/deadline inputs for receipt recovery.
+
+PostgreSQL tests exercise duplicate dispatch races, reconstructed-controller replay,
+changed-input conflicts, failed save after settlement and input mutation during
+storage lookup. Storage unavailability has a separate redacted error from an
+immutable evidence conflict. These checks do not replace Temporal crash/recovery
+acceptance or a released customer demo.

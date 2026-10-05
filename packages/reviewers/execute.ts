@@ -31,7 +31,7 @@ export function createReviewerExecutor(
     capabilities: provider.capabilities.bind(provider), invoke: provider.invoke.bind(provider),
     stream: provider.stream.bind(provider), estimateCost: provider.estimateCost?.bind(provider),
   })]));
-  return async (input: ReviewerExecutionInput, signal?: AbortSignal) => {
+  const prepare = (input: ReviewerExecutionInput) => {
     const prepared = prepareReviewerRequest(input.requestId, input.config, input.subject, input.documents);
     if (prepared.context.subject.organizationId !== tenant.organizationId || prepared.context.subject.repository !== tenant.repository) throw new ReviewPolicyFailure('wrong-subject');
     const decision = independence({headSha: prepared.context.subject.headSha,
@@ -40,25 +40,29 @@ export function createReviewerExecutor(
     const provider = providers.get(prepared.request.provider);
     if (!provider) throw new ReviewPolicyFailure('unknown-provider');
     // Bind the policy decision into the same request identity used by budget replay protection.
-    const coding = input.coding ? {...input.coding} : null;
+    const coding = input.coding ? Object.freeze({...input.coding}) : null;
     const authorizationDigest = digest(canonical({decision, coding}));
     prepared.request.metadata.authorizationDigest = authorizationDigest;
     const requestDigest = digest(canonical(prepared.request));
-    const response = await invokeModel(provider, prepared.request, ledger, signal);
-    // Hidden continuation material is excluded from reviewer evidence and proposals.
-    const publicResponse = {status: response.status, text: response.text,
-      structuredOutput: response.structuredOutput, usage: response.usage,
-      observedModel: response.observedModel ?? null, providerRequestId: response.providerRequestId};
-    return {
-      schemaVersion: 'v1alpha1' as const, mode: decision.mode, subject: prepared.context.subject,
-      role: prepared.request.metadata.role!, requestId: prepared.request.requestId,
-      attemptId: response.attemptId, provider: response.provider, model: response.model,
-      status: response.status, independence: decision, coding, authorizationDigest,
-      configDigest: prepared.configDigest, promptDigest: prepared.promptDigest,
-      contextDigest: prepared.context.digest, requestDigest,
-      responseDigest: digest(canonical(publicResponse)), response: publicResponse,
-      proposal: response.status === 'completed'
-        ? {verification: 'proposed' as const, output: structuredClone(response.structuredOutput)} : null,
+    const execute = async (signal?: AbortSignal) => {
+      const response = await invokeModel(provider, prepared.request, ledger, signal);
+      // Hidden continuation material is excluded from reviewer evidence and proposals.
+      const publicResponse = {status: response.status, text: response.text,
+        structuredOutput: response.structuredOutput, usage: response.usage,
+        observedModel: response.observedModel ?? null, providerRequestId: response.providerRequestId};
+      return {
+        schemaVersion: 'v1alpha1' as const, mode: decision.mode, subject: prepared.context.subject,
+        role: prepared.request.metadata.role!, requestId: prepared.request.requestId,
+        attemptId: response.attemptId, provider: response.provider, model: response.model,
+        status: response.status, independence: decision, coding, authorizationDigest,
+        configDigest: prepared.configDigest, promptDigest: prepared.promptDigest,
+        contextDigest: prepared.context.digest, requestDigest,
+        responseDigest: digest(canonical(publicResponse)), response: publicResponse,
+        proposal: response.status === 'completed'
+          ? {verification: 'proposed' as const, output: structuredClone(response.structuredOutput)} : null,
+      };
     };
+    return Object.freeze({requestId: prepared.request.requestId, requestDigest, subject: prepared.context.subject, execute});
   };
+  return Object.assign(async (input: ReviewerExecutionInput, signal?: AbortSignal) => prepare(input).execute(signal), {prepare});
 }

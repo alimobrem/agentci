@@ -6,13 +6,16 @@ import type {ReviewSubject} from '../reviewers/context.ts';
 export class ReviewerResultConflict extends Error {
   constructor() { super('reviewer-result-conflict'); }
 }
+export class ReviewerResultUnavailable extends Error {
+  constructor() { super('reviewer-result-unavailable'); }
+}
+const uuid = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i;
 /** Controller-only immutable evidence. The bound budget must match the ledger
  * used for execution; model/repository data cannot select a different scope.
  */
 export class ReviewerResultStore {
   private readonly scope: {organizationId: string; repository: string; budgetId: string};
   constructor(private readonly pool: Pool, scope: {organizationId: string; repository: string; budgetId: string}) {
-    const uuid = /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i;
     if (!uuid.test(scope.organizationId) || !uuid.test(scope.budgetId) || !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(scope.repository) || scope.repository.length > 256) throw new ReviewerResultConflict();
     this.scope = {...scope};
   }
@@ -21,26 +24,29 @@ export class ReviewerResultStore {
   }
   private async transaction<T>(operation: (client: PoolClient) => Promise<T>): Promise<T> {
     let client: PoolClient;
-    try { client = await this.pool.connect(); } catch { throw new ReviewerResultConflict(); }
+    try { client = await this.pool.connect(); } catch { throw new ReviewerResultUnavailable(); }
     let broken = false;
     try {
       await client.query('BEGIN');
       await client.query("SET LOCAL lock_timeout='5s'");
       await client.query("SET LOCAL statement_timeout='10s'");
       const result = await operation(client); await client.query('COMMIT'); return result;
-    } catch {
+    } catch (error) {
       try { await client.query('ROLLBACK'); } catch { broken = true; }
-      throw new ReviewerResultConflict();
+      if (error instanceof ReviewerResultConflict) throw error;
+      throw new ReviewerResultUnavailable();
     } finally { client.release(broken); }
   }
   private decode(row: any, expected: ReviewSubject) {
-    const result = validateReviewerResult(row.result, expected);
+    let result: ReviewerResult;
+    try { result = validateReviewerResult(row.result, expected); } catch { throw new ReviewerResultConflict(); }
     if (row.digest !== digest(canonical(result)) || row.request_id !== result.requestId || row.attempt_id !== result.attemptId || row.budget_id !== this.scope.budgetId) throw new ReviewerResultConflict();
     return {digest: row.digest as string, result};
   }
   async save(value: unknown, expected: ReviewSubject) {
     this.assertSubject(expected);
     const result = validateReviewerResult(value, expected), hash = digest(canonical(result));
+    if (!uuid.test(result.attemptId)) throw new ReviewerResultConflict();
     return this.transaction(async client => {
       const values = [this.scope.organizationId, this.scope.repository, result.requestId, this.scope.budgetId, result.attemptId, hash, result,
         result.requestDigest.slice(7), result.response.usage.costKind, result.response.usage.costUsdMicros];
@@ -60,6 +66,7 @@ export class ReviewerResultStore {
   }
   async get(requestId: string, expected: ReviewSubject): Promise<{digest: string; result: ReviewerResult} | undefined> {
     this.assertSubject(expected);
+    if (!uuid.test(requestId)) throw new ReviewerResultConflict();
     return this.transaction(async client => {
       const row = (await client.query(`SELECT request_id,attempt_id,budget_id,digest,result FROM agentci_reviewer_results
         WHERE organization_id=$1 AND repository=$2 AND request_id=$3 AND budget_id=$4`,

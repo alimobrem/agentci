@@ -6,6 +6,9 @@ import {Pool} from 'pg';
 import {PostgresBudgetLedger} from '../../packages/providers/budget.ts';
 import {ReviewerResultStore} from '../../packages/storage/reviewer-results.ts';
 import {canonical, digest} from '../../packages/review/engine.ts';
+import {createReviewerExecutor, type ReviewerExecutionInput} from '../../packages/reviewers/execute.ts';
+import {createPersistentReviewer} from '../../packages/reviewers/persistent.ts';
+import type {ModelProvider} from '../../packages/providers/types.ts';
 
 const url = process.env.AGENTCI_TEST_DATABASE_URL;
 if (!url) throw Error('Reviewer result integration requires AGENTCI_TEST_DATABASE_URL; never silently skip');
@@ -57,5 +60,50 @@ test('PostgreSQL reviewer evidence is immutable, budget-bound, idempotent and re
     await pool.query('DELETE FROM agentci_model_attempts WHERE budget_id=$1', [scope.id]);
     await pool.query('DELETE FROM agentci_model_budgets WHERE id=$1', [scope.id]);
     await pool.end();
+  }
+});
+
+test('persistent reviewer reuses committed evidence and fences concurrent or unsaved execution', async () => {
+  const pool = new Pool({connectionString: url, connectionTimeoutMillis: 5000});
+  const scope = {id: randomUUID(), organizationId: randomUUID(), repository: 'fixture/persistent-reviewer', limitUsdMicros: 100};
+  let calls = 0;
+  const provider: ModelProvider = {
+    id: 'fixture', upstreamIdentity: 'fixture', capabilities: () => ({stream: false, tools: false, structuredOutput: true, developerInstructions: false, extensions: false}),
+    estimateCost: () => ({upperBoundUsdMicros: 10, pricingRevision: 'fixture', maxInputTokens: 20000, maxOutputTokens: 512}),
+    async invoke(request, context) { calls++; return {schemaVersion: 'v1alpha1', requestId: request.requestId, attemptId: context.attemptId, provider: request.provider, model: request.model,
+      status: 'completed', text: 'fixture', structuredOutput: {claim: 'proposed'}, toolCalls: [], usage: {inputTokens: 1, outputTokens: 1, costUsdMicros: 1, costKind: 'reported', pricingRevision: null}, providerRequestId: null}; },
+    async *stream() { throw new Error('unused'); },
+  };
+  const input = (): ReviewerExecutionInput => ({requestId: randomUUID(), mode: 'synthetic', coding: null, differentProvider: false,
+    subject: {organizationId: scope.organizationId, repository: scope.repository, pullRequest: 1, baseSha: 'a'.repeat(40), headSha: 'b'.repeat(40)},
+    documents: [{kind: 'source', side: 'head', path: 'source.ts', content: 'fixture', digest: digest('fixture')}],
+    config: {role: 'code-correctness', policyVersion: 'v1', provider: 'fixture', model: 'fixture-model', parameters: {maxOutputTokens: 512}, policy: {deadlineAt: Date.now() + 60000, maxAttempts: 1, baseDelayMs: 0, maxDelayMs: 0}, providerExtensions: {}, responseSchema: {type: 'object', properties: {claim: {type: 'string'}}, required: ['claim'], additionalProperties: false}}});
+  const store = () => new ReviewerResultStore(pool, {organizationId: scope.organizationId, repository: scope.repository, budgetId: scope.id});
+  const executor = () => createReviewerExecutor([{provider, execution: 'fixture'}], scope, new PostgresBudgetLedger(pool, scope));
+  try {
+    for (const file of ['004_m3_model_budget.sql', '005_m3_reviewer_results.sql']) await pool.query(await readFile(new URL(`../../deploy/migrations/${file}`, import.meta.url), 'utf8'));
+    const value = input(), run = createPersistentReviewer(executor(), store());
+    const concurrent = await Promise.allSettled([run(value), run(value)]);
+    assert.ok(concurrent.some(r => r.status === 'fulfilled'));
+    for (const result of concurrent) if (result.status === 'rejected') assert.equal(result.reason.code, 'ambiguous-attempt');
+    assert.equal(calls, 1);
+    const recovered = await createPersistentReviewer(executor(), store())(value);
+    assert.equal(recovered.reused, true); assert.equal(calls, 1);
+    await assert.rejects(run({...value, config: {...value.config, role: 'security'}}), /reviewer-result-conflict/);
+    assert.equal(calls, 1);
+
+    const lost = input(), failedStore = store(), unavailable = createPersistentReviewer(executor(), {get: failedStore.get.bind(failedStore), async save() { throw new Error('simulated-save-failure'); }});
+    await assert.rejects(unavailable(lost), /simulated-save-failure/); assert.equal(calls, 2);
+    await assert.rejects(createPersistentReviewer(executor(), store())(lost), /ambiguous-attempt/); assert.equal(calls, 2);
+    assert.equal((await pool.query('SELECT state FROM agentci_model_attempts WHERE budget_id=$1 AND request_id=$2', [scope.id, lost.requestId])).rows[0].state, 'settled');
+
+    const mutable = input(), boundStore = store();
+    const mutatingRead = {save: boundStore.save.bind(boundStore), async get(id: string, subject: any) { mutable.config.model = 'changed-after-authorization'; return boundStore.get(id, subject); }};
+    const detached = await createPersistentReviewer(executor(), mutatingRead)(mutable);
+    assert.equal(detached.result.model, 'fixture-model'); assert.equal(calls, 3);
+  } finally {
+    await pool.query('DELETE FROM agentci_reviewer_results WHERE budget_id=$1', [scope.id]);
+    await pool.query('DELETE FROM agentci_model_attempts WHERE budget_id=$1', [scope.id]);
+    await pool.query('DELETE FROM agentci_model_budgets WHERE id=$1', [scope.id]); await pool.end();
   }
 });

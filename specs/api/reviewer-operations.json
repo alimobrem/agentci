@@ -130,6 +130,25 @@
         "unknown cost reservation retained",
         "SQL update rejected"
       ]
+    },
+    {
+      "operationId": "createPersistentReviewer",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SPEC-12.2-001",
+        "SECTION-13.4"
+      ],
+      "tests": [
+        "tests/integration/reviewer-results.test.ts"
+      ],
+      "scenarios": [
+        "same request recovers stored result without dispatch",
+        "concurrent replay dispatches at most once",
+        "different request bytes conflict",
+        "save failure after accounting cannot redispatch",
+        "authorized input detached before storage await"
+      ]
     }
   ]
 }
