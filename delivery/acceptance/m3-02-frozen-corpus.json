@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "runId": "37326326634",
+  "artifactId": "11352841870",
+  "identity": {
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "pullRequest": 28,
+    "baseSha": "54db2608e08649678a3747b34a47b2717a354226",
+    "headSha": "6c0083095bab9496a1bf774d7fce28c536961da5"
+  },
+  "comparison": {
+    "id": "d677d8a9-77b0-46fe-af36-8be7845ca467",
+    "reviewId": "c079fc8b-5783-4fa3-8255-bcf44c6a66d2",
+    "file": "comparison-d677d8a9-77b0-46fe-af36-8be7845ca467.ndjson",
+    "sha256": "sha256:a1d5be1e88184870d02c114316d9ef26eb5e8eb241b9cbe1782ba9eee9d03bf8",
+    "bytes": 14345
+  },
+  "verification": "verifyHostedComparison passed file digest, chained frame, subject and runner identity checks.",
+  "units": [
+    {
+      "suite": "agentci-provider-contracts",
+      "side": "base",
+      "assertionSide": "base",
+      "revision": "sha256:28362f507a69a9d95244208f5a02bd2cfe4fb8886a6c41578db25e195f428a6b",
+      "status": "passed",
+      "scenarioIds": [
+        "request-contract",
+        "response-contract",
+        "stream-contract",
+        "bounded-execution",
+        "stream-execution"
+      ]
+    },
+    {
+      "suite": "agentci-provider-contracts",
+      "side": "head",
+      "assertionSide": "base",
+      "revision": "sha256:28362f507a69a9d95244208f5a02bd2cfe4fb8886a6c41578db25e195f428a6b",
+      "status": "passed",
+      "scenarioIds": [
+        "request-contract",
+        "response-contract",
+        "stream-contract",
+        "bounded-execution",
+        "stream-execution"
+      ]
+    },
+    {
+      "suite": "agentci-self-contracts",
+      "side": "base",
+      "assertionSide": "base",
+      "revision": "sha256:6559932cd72010aa1c4c6aceb8c850943149f37e59e180e42add47c0f861e2ea",
+      "status": "passed",
+      "scenarioIds": [
+        "manifest",
+        "adapters",
+        "statistics",
+        "request-identity",
+        "comparison",
+        "export-client"
+      ]
+    },
+    {
+      "suite": "agentci-self-contracts",
+      "side": "head",
+      "assertionSide": "base",
+      "revision": "sha256:6559932cd72010aa1c4c6aceb8c850943149f37e59e180e42add47c0f861e2ea",
+      "status": "passed",
+      "scenarioIds": [
+        "manifest",
+        "adapters",
+        "statistics",
+        "request-identity",
+        "comparison",
+        "export-client"
+      ]
+    }
+  ],
+  "summary": {
+    "state": "completed",
+    "outcome": "passed",
+    "executionGaps": [],
+    "unitCount": 4,
+    "comparisonCount": 2
+  },
+  "limitations": [
+    "Provider-core assertions only; no live OpenAI compatibility, adapter completion or release claim."
+  ]
+}

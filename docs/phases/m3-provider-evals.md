@@ -41,3 +41,9 @@ accepted baseline harness, and earlier attempts remain retained.
 This change also carries the original provider-core acceptance record from the
 adapter branch into main. All recorded core source hashes were revalidated before
 starting this dependent task. It does not mark any live adapter or M3 release complete.
+
+Hosted follow-up 37326326634 also verified PR28 at head `6c008309` against
+merged baseline `54db2608`: both sides passed the same frozen provider assertions
+with no execution gaps. `delivery/acceptance/m3-02-frozen-corpus.json` retains
+the verified comparison identity and digest. This closes the earlier PR28 corpus
+gap without changing its separate pending live-provider acceptance.
