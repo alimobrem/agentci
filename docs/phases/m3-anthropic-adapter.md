@@ -44,3 +44,10 @@ uses full context at configured upper prices. Synthetic SDK tests pass the share
 structured/streamed/tool-proposal suite with accounting before each result.
 Production capability/pricing profiles and provider-specific schema preflight are
 still pending; fixture profiles are not production settings.
+
+Schema preflight now enforces documented combined strict-tool, optional-field and
+union limits. Unsupported scalar/array constraints, recursive/external references
+and references inside `allOf` are rejected without rewriting caller schemas.
+Execution tests verify rejection before reservation or fetch. Unpublished provider
+compiler limits still require server-side handling; passing local preflight is not
+proof of live acceptance. [Provider schema limits](https://platform.claude.com/docs/en/build-with-claude/structured-outputs#json-schema-limitations).

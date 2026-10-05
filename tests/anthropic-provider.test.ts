@@ -19,3 +19,9 @@ test('Anthropic profiles cannot advertise unsupported developer or extension sem
  for(const key of ['developerInstructions','extensions'] as const){const p=profile();p.capabilities[key]=true;assert.throws(()=>createAnthropicProvider('synthetic-fixture',[p]),/unsupported-capability/);}
  const p=profile(),provider=createAnthropicProvider('synthetic-fixture',[p]);p.capabilities.stream=false;assert.equal(provider.capabilities().stream,true);
 });
+test('unsupported Anthropic schema fails before reservation and network access',async()=>{
+ const actions:string[]=[];const ledger:BudgetLedger={async reserve(){actions.push('reserve');return 'attempt';},async settle(){},async unknown(){},async releaseNotSent(){}};
+ const provider=createAnthropicProvider('synthetic-fixture',[profile()],async()=>{actions.push('fetch');throw Error();});
+ const estimate=provider.estimateCost!;provider.estimateCost=req=>estimate({...req,responseSchema:{type:'object',properties:{value:{type:'number',minimum:1}},required:['value'],additionalProperties:false}});
+ await assert.rejects(runProviderSmoke(provider,'fixture-model',ledger),/invalid-request|unsupported-capability/);assert.deepEqual(actions,[]);
+});

@@ -1,10 +1,13 @@
 import type {MessageCreateParamsNonStreaming,MessageParam,ContentBlockParam} from '@anthropic-ai/sdk/resources/messages/messages';
+import {validateAnthropicSchemas} from './anthropic-schema.ts';
 import {validateModelRequest} from './request.ts';
 import {ProviderFailure,type ModelRequest} from './types.ts';
 /** Portable metadata stays controller-side; it is not reinterpreted as Anthropic user identity. */
 export function anthropicRequest(input:ModelRequest):MessageCreateParamsNonStreaming{
  const request=validateModelRequest(input);
  if(request.provider!=='anthropic'||request.developer||Object.keys(request.providerExtensions.anthropic??{}).length)throw new ProviderFailure('unsupported-capability');
+ if(request.parameters.temperature!==undefined&&request.parameters.temperature>1)throw new ProviderFailure('unsupported-capability');
+ validateAnthropicSchemas(request.tools.map(tool=>tool.inputSchema),request.responseSchema);
  const messages:MessageParam[]=[];
  const append=(role:'user'|'assistant',content:ContentBlockParam[])=>{
   const last=messages.at(-1);
