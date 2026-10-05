@@ -217,6 +217,39 @@
         "outbox failure rolls back admission",
         "immutable request update and deletion rejection"
       ]
+    },
+    {
+      "operationId": "validateReviewerProfile",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SECTION-12.2"
+      ],
+      "tests": [
+        "tests/reviewer-profile.test.ts"
+      ],
+      "scenarios": [
+        "strict operator configuration and bounded selection",
+        "duplicate roles and absolute deadlines rejected",
+        "normalized revision binds budget timeout provider and evidence selection"
+      ]
+    },
+    {
+      "operationId": "bindReviewerProfile",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SECTION-12.2"
+      ],
+      "tests": [
+        "tests/reviewer-profile.test.ts"
+      ],
+      "scenarios": [
+        "exact admitted profile revision and mode required",
+        "stable per-role request identity across retries",
+        "persisted admission time fixes deadlines",
+        "fresh reviews retain shared operator budget"
+      ]
     }
   ]
 }

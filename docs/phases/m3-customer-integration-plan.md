@@ -78,3 +78,12 @@ admission/execution metadata, then reuse it across role retries. Recomputing
 `now + timeout` on every retry would change the request digest and extend the
 allowed execution indefinitely. Keep credential values outside profile/evidence
 serialization; provider factories resolve operator-owned secret references.
+
+The initial profile binding implementation validates one configuration per selected
+reviewer role, normalizes selection ordering and budget UUIDs, and hashes all
+normalized configuration into the required profile revision. It derives role
+request IDs from the admitted request ID and revision. Deadlines use the persisted
+admission timestamp plus the profile duration. Unit acceptance covers conflicting
+revisions/modes, duplicate roles, invalid paths, detached configuration and shared
+budget identity across reviews. This does not yet register providers, authorize
+spending, persist profiles, dispatch workflows or prove controller recovery.
