@@ -2,7 +2,9 @@
 
 Development integration; not an M3 release. The worker now registers admitted
 review workflows when an operator sets `AGENTCI_REVIEWER_CONFIG_FILE`. Customer
-REST/client/CLI submission is M3-07c and is not enabled by this configuration alone.
+REST discovery, admission, status and cancellation now exist in development
+source through [the customer API setup](m3-customer-model-review-api.md); they
+are not an M3 release. Client/CLI acceptance remains a separate slice.
 The existing signed GitHub webhook/eval path remains independently scheduled.
 
 ## Operator configuration
@@ -15,7 +17,11 @@ proposal; it does not reproduce or confirm a defect. Choose a deployment-owned
 budget UUID and selected files appropriate to the repository.
 
 For a locally built development worker, retain the existing GitHub App and
-PostgreSQL/Temporal setup, then from the repository root run:
+PostgreSQL/Temporal setup. The overlay now also configures the customer API, so
+its private `.env` must include a distinct `AGENTCI_OPERATOR_TOKEN` even when
+starting only the worker: Compose validates the entire overlay. See the linked
+customer API setup for token permissions and starting both services. Then run
+from the repository root:
 
 ```sh
 export AGENTCI_REVIEWER_CONFIG_FILE="$PWD/deploy/reviewers.synthetic.example.json"

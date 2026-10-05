@@ -67,7 +67,11 @@ export function createReviewerRuntime(value:unknown,env:NodeJS.ProcessEnv=proces
   return {definition,policyDigest:digest(canonical(definition)),registrations};
  }catch{return fail();}
 }
-export async function loadReviewerRuntime(env:NodeJS.ProcessEnv=process.env){
+/** Pure configuration loading: no provider construction or credential lookup. */
+export async function loadReviewerDefinition(env:NodeJS.ProcessEnv=process.env){
  const path=env.AGENTCI_REVIEWER_CONFIG_FILE;if(path===undefined)return null;
- try{if(!path||!isAbsolute(path))fail();const text=await readFile(path,'utf8');if(Buffer.byteLength(text)>1048576)fail();return createReviewerRuntime(JSON.parse(text),env);}catch{return fail();}
+ try{if(!path||!isAbsolute(path))fail();const text=await readFile(path,'utf8');if(Buffer.byteLength(text)>1048576)fail();return validateReviewerRuntime(JSON.parse(text));}catch{return fail();}
+}
+export async function loadReviewerRuntime(env:NodeJS.ProcessEnv=process.env){
+ const definition=await loadReviewerDefinition(env);return definition?createReviewerRuntime(definition,env):null;
 }
