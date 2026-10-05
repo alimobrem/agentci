@@ -1,10 +1,13 @@
 import { Octokit } from '@octokit/rest';
 import { createAppAuth } from '@octokit/auth-app';
+import {observeGitHubFailures} from './failure-diagnostics.ts';
 import { createHash } from 'node:crypto';
 import type { Analysis, Snapshot } from '../review/types.ts';
 import type { ReviewJob } from './webhook.ts';
 export function installationClient(appId: number, installationId: number, privateKey: string): Octokit {
-  return new Octokit({ authStrategy: createAppAuth, auth: { appId, installationId, privateKey }, request: { timeout: 30_000 } });
+  const client = new Octokit({ authStrategy: createAppAuth, auth: { appId, installationId, privateKey }, request: { timeout: 30_000 } });
+  observeGitHubFailures(client, diagnostic => console.warn(JSON.stringify(diagnostic)));
+  return client;
 }
 const names = (repository: string) => { const [owner, repo] = repository.split('/'); if (!owner || !repo) throw new Error('Invalid repository'); return { owner, repo }; };
 export async function currentPullRequest(client: Octokit, job: ReviewJob): Promise<boolean> {
