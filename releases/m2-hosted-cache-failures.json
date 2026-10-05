@@ -1,0 +1,26 @@
+{
+  "kind": "retained-hosted-infrastructure-failures",
+  "attempts": [
+    {
+      "runId": 37220719418,
+      "sourceCommit": "cf02c4ccdc693c6836a3855b41a323de200ff965",
+      "conclusion": "failure",
+      "cachedLayers": 0,
+      "logSha256": "8cf2dc986908e51ef75cf36bfe19ec865151b244cb1d94ab43c273ec3ce00006",
+      "observedFailure": "BuildKit cache export reservation denied before eval preparation",
+      "cacheReservationFailureObserved": true,
+      "behavioralVerificationPerformed": false
+    },
+    {
+      "runId": 37220861838,
+      "sourceCommit": "32231558eee701087cf39659bec674639238a7ce",
+      "conclusion": "failure",
+      "cachedLayers": 25,
+      "logSha256": "8e440e319fe2a97ea00c03539687907d0a7ffd351a221ce5ad3959f4eab29992",
+      "observedFailure": "BuildKit cache export reservation denied before eval preparation",
+      "cacheReservationFailureObserved": true,
+      "behavioralVerificationPerformed": false
+    }
+  ],
+  "scope": "No passing behavioral result is claimed. Optional cache export failure occurred after successful image output; recovery still requires actual hosted acceptance."
+}

@@ -1,6 +1,6 @@
 import type {Octokit} from '@octokit/rest';
 import {ApplicationFailure} from '@temporalio/activity';
-import {remoteSnapshot,currentPullRequest,publishCheck} from '../../packages/github/client.ts';
+import {createRemoteSnapshotReader,currentPullRequest,publishCheck} from '../../packages/github/client.ts';
 import type {ReviewJob} from '../../packages/github/webhook.ts';
 import {planComparison} from '../../packages/evals/plan.ts';
 import {compileEvalUnits,EvalPlanConfigurationError,type EvalPlanPolicy} from '../../packages/evals/orchestration.ts';
@@ -11,6 +11,7 @@ import {evalCheckEvidence,evalPublicationKey,publishEvalCheck,publishEvalUnavail
 /** Fetch data only in the App controller; evaluator workflow history receives identifiers only. */
 export function createEvalReviewActivities(client:Octokit,store:Store,evals:EvalStore,config:{repository:string;installationId:number;appId?:number;publicUrl?:string},policy:EvalPlanPolicy){
   const scoped=(job:ReviewJob)=>job.repository===config.repository&&job.installationId===config.installationId&&evals.repository===config.repository&&store.repository===config.repository&&store.organizationId===evals.organizationId&&Number.isSafeInteger(job.pullRequest)&&job.pullRequest>0&&/^[a-f0-9]{40}$/.test(job.baseSha)&&/^[a-f0-9]{40}$/.test(job.headSha)&&job.baseSha!==job.headSha;
+  const readSnapshot=createRemoteSnapshotReader(client);
   const validAttempt=(id:string)=>/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(id);
   const canPublish=()=>Number.isSafeInteger(config.appId)&&config.appId!>0&&!!config.publicUrl;
   return {
@@ -79,7 +80,7 @@ export function createEvalReviewActivities(client:Octokit,store:Store,evals:Eval
     async stageEvalReview(job:ReviewJob,attemptId:string):Promise<{reviewId:string;comparisonId:string;unitIds:string[]}>{
       if(!scoped(job)||!validAttempt(attemptId))throw ApplicationFailure.nonRetryable('Invalid scoped eval review identity','EvalReviewIdentity');
       try{
-        const base=await remoteSnapshot(client,job.repository,job.baseSha),head=await remoteSnapshot(client,job.repository,job.headSha);
+        const base=await readSnapshot(job.repository,job.baseSha),head=await readSnapshot(job.repository,job.headSha);
         const plan=planComparison({repository:job.repository,base,head}),units=compileEvalUnits(plan,base,head,policy);
         const review=await store.save(plan.analysis,job.pullRequest);
         const comparison=await evals.stage(review.id,attemptId,base,head,units,{suiteChanges:plan.suiteChanges,coverageGaps:plan.coverageGaps,selectionGaps:plan.selectionGaps});
