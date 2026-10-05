@@ -1,0 +1,8 @@
+# Opt-in development overlay; the base released M2 deployment stays unchanged.
+services:
+  worker:
+    image: ${AGENTCI_REVIEWER_WORKER_IMAGE:-agentci-worker:0.4.0-m3-dev.1}
+    environment:
+      AGENTCI_REVIEWER_CONFIG_FILE: /run/agentci/reviewers.json
+    volumes:
+      - ${AGENTCI_REVIEWER_CONFIG_FILE:?Set absolute operator reviewer configuration path}:/run/agentci/reviewers.json:ro

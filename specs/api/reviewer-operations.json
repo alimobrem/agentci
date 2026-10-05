@@ -403,6 +403,66 @@
         "exclusive recovery leases and stale worker rejection",
         "running reviews use bounded polling delay"
       ]
+    },
+    {
+      "operationId": "validateReviewerRuntime",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.2",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/reviewer-runtime.test.ts"
+      ],
+      "scenarios": [
+        "strict operator-owned profiles and provider identities"
+      ]
+    },
+    {
+      "operationId": "createReviewerRuntime",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.2",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/reviewer-runtime.test.ts"
+      ],
+      "scenarios": [
+        "seven no-network fixture roles",
+        "fixed environment credential references and no secret policy serialization"
+      ]
+    },
+    {
+      "operationId": "loadReviewerRuntime",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.2",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/reviewer-runtime.test.ts"
+      ],
+      "scenarios": [
+        "explicit absolute config path or disabled runtime"
+      ]
+    },
+    {
+      "operationId": "initializeReviewerController",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.2",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/integration/reviewer-runtime.test.ts"
+      ],
+      "scenarios": [
+        "production workflow exports execute seven roles",
+        "exact GitHub subject and blob identities",
+        "stale subject and revoked profile denial",
+        "restart retains evidence"
+      ]
     }
   ]
 }

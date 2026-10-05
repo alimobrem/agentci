@@ -43,130 +43,27 @@ routes to the shipped OpenAPI/client. Do not activate partial customer routes
 that can enqueue work with no configured consumer. Router and additional provider
 adapters retain the original explicit later-integration/optional decisions.
 
-## Controller implementation notes for M3-07b
+## M3-07b checkpoint
 
-The existing persistent reviewer already reuses stored results and fences
-ambiguous charged attempts. Build on it and the PostgreSQL budget ledger; do not
-create a second provider retry/accounting implementation. Derive stable per-role
-request IDs from the admitted review ID and immutable role configuration. A retry
-must not invent a new request identity to bypass an ambiguous charged attempt.
+Controller implementation is in progress; acceptance remains pending. The branch
+contains immutable operator profiles, durable admission dispatch and summaries,
+budget-bound reviewer execution, additive finding evidence, Temporal activities,
+and independent termination recovery. Production startup is opt-in through
+`AGENTCI_REVIEWER_CONFIG_FILE`; see [runtime setup](m3-reviewer-runtime.md).
 
-Profiles bind selected role configurations, explicit evidence selection,
-synthetic/external provider registrations, independence policy and a shared
-operator budget scope. A fresh review request must not reset that shared budget.
-Changing its immutable limit requires an explicit new operator budget identity,
-with the old ledger retained. Profile revisions must remain resolvable after
-restart; replacing a file must not silently reinterpret already-admitted work.
+Local acceptance covers real PostgreSQL and Temporal, lost acknowledgements,
+post-commit response loss, concurrent/stale leases, cancellation before/during
+execution, workflow termination, seven configured fixture roles, replay and
+history privacy. These checks do not replace hosted full CI or customer acceptance.
 
-Extend the admission outbox with dispatch leases, deterministic workflow identity
-and terminal status. Start before acknowledging dispatch; an ambiguous start
-must resolve the existing workflow and verify its identity. Handle completion
-racing with dispatch acknowledgement without overwriting terminal evidence.
-Persist cancellation before contacting Temporal, including cancellation before
-any workflow exists. Terminated-workflow reconciliation must be independent of
-the failed parent's lifetime and preserve cleanup/failure evidence.
+Before accepting this slice:
 
-Synthetic providers must be explicit fixture implementations with no network
-path, not a production adapter with dummy credentials. Synthetic findings remain
-labelled and nonblocking. Context selection must disclose its bounds; a selected
-set of files must not be presented as complete repository coverage. Runtime
-configuration and profile readers remain controller-owned.
+- Complete exact-head hosted integration, API compatibility, packaging and image/runtime checks.
+- Verify worker interruption/restart behavior independently of workflow termination.
+- Verify the new startup/deployment configuration and inspect final review findings.
+- Collect CI attempts and publish acceptance evidence before starting M3-07c.
 
-Profile retry policy should express a duration, not a permanently embedded
-absolute deadline. Materialize the execution deadline once from persisted
-admission/execution metadata, then reuse it across role retries. Recomputing
-`now + timeout` on every retry would change the request digest and extend the
-allowed execution indefinitely. Keep credential values outside profile/evidence
-serialization; provider factories resolve operator-owned secret references.
-
-The initial profile binding implementation validates one configuration per selected
-reviewer role, normalizes selection ordering and budget UUIDs, and hashes all
-normalized configuration into the required profile revision. It derives role
-request IDs from the admitted request ID and revision. Deadlines use the persisted
-admission timestamp plus the profile duration. Unit acceptance covers conflicting
-revisions/modes, duplicate roles, invalid paths, detached configuration and shared
-budget identity across reviews. This does not yet register providers, authorize
-spending, persist profiles, dispatch workflows or prove controller recovery.
-
-Migration 009 and `ReviewDispatchStore` add scoped dispatch leases, immutable
-run identity, persistent cancellation requests, and terminal digest/status records.
-Real PostgreSQL acceptance covers concurrent claims, expired lease takeover,
-completion before start acknowledgement, late cancellation, tenant isolation and
-restart. Database triggers preserve admitted identity, cancellation and terminal
-evidence. These storage tests do not prove workflow termination cleanup; Temporal
-dispatch, independent reconciliation and production registration remain required.
-
-The Temporal dispatch boundary now has real PostgreSQL/Temporal acceptance for
-start-before-ack recovery, deterministic workflow reuse, single fixture activity
-execution, conflicting task-queue rejection, terminal-write retry and history
-replay. `reviewAdmittedRequest` carries only IDs and result digests. Activities in
-this integration test are fixtures: production profile persistence, provider and
-finding activities, cancellation/termination reconciliation and worker registration
-are still outstanding. These results do not prove actual provider execution.
-
-Migration 010 and `ReviewerProfileStore` retain operator profiles by exact
-normalized revision. Updating configuration adds a revision; it cannot reinterpret
-an old admission. Revoked revisions remain readable for evidence but `resolve`
-rejects them for execution, including after restart or config reload. Revocation
-is one-way for a revision; changing policy requires a new revision. Profile budget
-limits must be positive, matching `PostgresBudgetLedger`. Shared fixture and real
-PostgreSQL acceptance cover these boundaries. Activity integration must check
-revocation before dispatch; this store alone does not interrupt an in-flight call.
-
-`createAdmittedReviewExecution` now composes admitted profile resolution, exact
-snapshot selection, the shared PostgreSQL budget, persistent reviewer results,
-and authenticated finding creation. Real database acceptance runs two fixture
-reviewer roles, injects a finding-write failure after both results are saved, then
-recovers without another provider call or charge. Duplicate role findings retain
-both evidence sources and remain synthetic/unconfirmed. Cancellation, denied
-authorization, profile revocation and external registration in synthetic mode
-prevent dispatch. Coverage explicitly reports the selected files and completed
-roles rather than claiming whole-repository coverage.
-
-Outstanding before controller acceptance: Temporal activity adaptation/registration,
-production authorization/provider configuration, and independent termination
-reconciliation remain required. This runner is not yet enabled in production.
-
-Repeated admissions now use authenticated `FindingHistoryStore.ingest`. An
-`evidence` event adds retained reviewer sources for the same exact finding identity
-while preserving lifecycle disposition and the previous immutable event. The
-operation ID binds incoming evidence, so retries return their original event even
-after subsequent history changes. Pending reproduction rejects evidence ingestion
-for retry because its approved plan pins the current finding version. Existing
-64-source, 10,000-version and history-byte limits remain explicit failures; sources
-are never silently dropped. Real database acceptance covers two admissions with
-four reviewer sources, unchanged first history, and no extra charges/events on
-retry. Pure acceptance covers preserved reproduction/operator dispositions.
-
-Migration 011 retains immutable execution summaries with admission/profile/context
-digests and reviewer/finding references. The store binds all configured role IDs
-to retained reviewer results, reconstructs findings using their exact context,
-and checks their immutable history events before accepting the first summary.
-First-write acceptance rejects missing roles/findings, unrelated event digests and
-changed context. An injected summary-write failure recovers without additional
-provider calls; scoped reads work after reconnecting without executing reviewers.
-The summary reports partial/refused role coverage explicitly and stores no source
-content or credentials. Production finalization must consume this retained summary.
-
-`createAdmittedReviewActivities` now binds the actual Temporal run before spending,
-heartbeats only an ID, propagates durable cancellation to provider execution, and
-finalizes against retained summaries. A summary committed before a lost response
-is reused on activity retry; a late cancellation cannot erase completed evidence.
-Real Temporal/PostgreSQL acceptance covers pre-dispatch and in-flight cancellation,
-preserved possibly-sent budget exposure, lost summary responses, history replay
-and exclusion of source/provider/private-error sentinels from workflow history.
-The test caught and fixed database cancellation arriving before Temporal's own
-signal: an explicit nonretryable `ReviewCancelled` activity outcome now maps to
-workflow cancellation. Production worker registration and out-of-workflow
-termination/recovery acceptance remain outstanding.
-
-Migration 012 and independent `reconcileAdmittedReviews` use exclusive recovery
-leases and a persisted polling delay. Recovery verifies workflow ID, run, type,
-queue and admission digest; missing/unknown Temporal state is retained for retry.
-Real termination during a provider call sets durable cancellation and retains the
-uncertain budget exposure; activity polling/heartbeat stops local execution. This
-does not claim the remote provider has rolled back a dispatched request. A summary
-committed before termination remains completed review evidence even though the
-Temporal workflow itself was terminated. Real acceptance covers both termination
-windows, idempotent recovery, concurrent claims and stale lease rejection.
-Production startup/registration and operator configuration remain outstanding.
+The scope is frozen to these acceptance gaps. Ten local commits accumulated before
+this checkpoint; local check speed is not evidence of improved delivery velocity.
+Use full CI and merged task cycle time for the retrospective. The original M3
+release gates and deferred live-provider acceptance remain intact.
