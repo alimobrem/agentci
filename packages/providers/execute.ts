@@ -45,7 +45,10 @@ async function executeModel(provider:ModelProvider,input:unknown,ledger:BudgetLe
     try{if(failure.dispatch==='not-sent')await ledger.releaseNotSent(attemptId);else await ledger.unknown(attemptId);}
     catch{throw new ProviderFailure('ambiguous-attempt',false,'possibly-sent');}
     if(!failure.retryable||!['rate-limit','transport'].includes(failure.code)||attempt===request.policy.maxAttempts||controller.signal.aborted)throw failure;
-    const waitMs=Math.min(request.policy.maxDelayMs,request.policy.baseDelayMs*2**(attempt-1));
+    const serverDelay=failure.retryAfterMs;
+    if(serverDelay!==null&&(!Number.isSafeInteger(serverDelay)||serverDelay<0||serverDelay>request.policy.maxDelayMs||Date.now()+serverDelay>=request.policy.deadlineAt))throw failure;
+    const backoff=Math.min(request.policy.maxDelayMs,request.policy.baseDelayMs*2**(attempt-1));
+    const waitMs=Math.max(serverDelay??0,Math.floor(Math.random()*(backoff+1)));
     try{await delay(waitMs,undefined,{signal:controller.signal});}catch{throw abortFailure(controller.signal,'not-sent');}
     continue;
    }

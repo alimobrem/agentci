@@ -16,13 +16,15 @@ export interface ModelUsage {inputTokens:number|null;outputTokens:number|null;co
 export interface CostEstimate {upperBoundUsdMicros:number;pricingRevision:string;maxInputTokens:number;maxOutputTokens:number}
 export interface ModelResponse {
  schemaVersion:'v1alpha1';requestId:string;attemptId:string;provider:string;model:string;
+ /** Observed upstream model when reported; absence means unknown, never inferred. */
+ observedModel?:string;
  status:'completed'|'refused'|'incomplete';text:string;structuredOutput:JsonValue;
  toolCalls:ToolCall[];
  usage:ModelUsage;providerRequestId:string|null;
 }
 export type ProviderFailureCode='invalid-request'|'unsupported-capability'|'authentication'|'rate-limit'|'deadline'|'cancelled'|'budget-exhausted'|'transport'|'invalid-output'|'ambiguous-attempt';
 export class ProviderFailure extends Error {
- constructor(public readonly code:ProviderFailureCode,public readonly retryable=false,public readonly dispatch:'not-sent'|'possibly-sent'='not-sent'){
+ constructor(public readonly code:ProviderFailureCode,public readonly retryable=false,public readonly dispatch:'not-sent'|'possibly-sent'='not-sent',public readonly retryAfterMs:number|null=null){
   // Do not include raw provider bodies, credentials, URLs or request text in errors.
   super(code);this.name='ProviderFailure';
  }

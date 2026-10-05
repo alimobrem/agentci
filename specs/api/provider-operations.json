@@ -44,16 +44,19 @@
       "operationId": "validateModelResponse",
       "requirementIds": [
         "SECTION-13.1",
-        "SPEC-13.2-005"
+        "SPEC-13.2-005",
+        "SPEC-13.3-002"
       ],
       "tests": [
         "tests/model-response.test.ts",
-        "scripts/package-smoke.mjs"
+        "scripts/package-smoke.mjs",
+        "tests/openai-provider.test.ts"
       ],
       "scenarios": [
         "exact request and attempt binding",
         "tool and structured output schema",
-        "unknown cost is not zero"
+        "unknown cost is not zero",
+        "requested and observed model identity with explicit alias snapshot allowlist"
       ]
     },
     {
@@ -64,13 +67,15 @@
       ],
       "tests": [
         "tests/model-execute.test.ts",
-        "tests/integration/model-budget.test.ts"
+        "tests/integration/model-budget.test.ts",
+        "tests/provider-conformance.test.ts"
       ],
       "scenarios": [
         "durable reservation before dispatch",
         "bounded retries and deadlines",
         "cancellation and ambiguous outcomes",
-        "replay cannot redispatch"
+        "replay cannot redispatch",
+        "bounded smoke acceptance with sanitized observed-model records"
       ]
     },
     {
@@ -82,14 +87,16 @@
       "tests": [
         "tests/model-stream.test.ts",
         "tests/model-stream-execute.test.ts",
-        "tests/integration/model-budget.test.ts"
+        "tests/integration/model-budget.test.ts",
+        "tests/provider-conformance.test.ts"
       ],
       "scenarios": [
         "ordered bounded events",
         "final response agrees with stream",
         "backpressure and stalled consumers",
         "no automatic replay after provisional output",
-        "accounting before completion"
+        "accounting before completion",
+        "bounded smoke acceptance with sanitized observed-model records"
       ]
     },
     {

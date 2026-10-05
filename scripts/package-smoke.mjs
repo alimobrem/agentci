@@ -25,6 +25,21 @@ try {
   const request=validateModelRequest(JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-request.json'),'utf8')));
   validateModelResponse({schemaVersion:'v1alpha1',requestId:request.requestId,attemptId:'installed-fixture',provider:request.provider,model:request.model,status:'completed',text:'installed',structuredOutput:{claim:'installed schema acceptance'},toolCalls:[],usage:{inputTokens:null,outputTokens:null,costUsdMicros:null,costKind:'unknown',pricingRevision:null},providerRequestId:null},request,'installed-fixture');
   if(!(await readFile(join(installedRoot,'deploy/migrations/004_m3_model_budget.sql'),'utf8')).includes('agentci_model_attempts'))throw new Error('Installed provider budget migration missing');
+  const {createOpenAIProvider}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/openai.js')).href);
+  let installedProviderCalls=0;
+  const installedProvider=createOpenAIProvider('synthetic-package-fixture',[{
+    model:'installed-fixture',contextTokens:1000,maxOutputTokens:512,
+    capabilities:{stream:true,tools:true,structuredOutput:true,developerInstructions:true,extensions:true},
+    temperature:false,topP:false,inputUsdMicrosPerMillion:1000000,outputUsdMicrosPerMillion:2000000,pricingRevision:'synthetic-package-prices'
+  }],async(url,init)=>{
+    if(String(url)!=='https://api.openai.com/v1/responses'||init.redirect!=='error')throw new Error('Installed provider transport boundary changed');
+    installedProviderCalls++;
+    return new Response(JSON.stringify({id:'installed-response',model:'installed-fixture',status:'completed',output:[{type:'message',role:'assistant',status:'completed',content:[{type:'output_text',text:'{"claim":"installed SDK acceptance"}'}]}],usage:{input_tokens:1,output_tokens:1,total_tokens:2}}),{headers:{'content-type':'application/json'}});
+  });
+  const installedRequest={...request,provider:'openai',model:'installed-fixture',policy:{...request.policy,deadlineAt:Date.now()+5000}};
+  const installedResponse=await installedProvider.invoke(installedRequest,{attemptId:'installed-attempt',signal:new AbortController().signal});
+  if(installedProviderCalls!==1||installedResponse.structuredOutput?.claim!=='installed SDK acceptance')throw new Error('Installed OpenAI SDK invocation failed');
+
 
   if(!execFileSync(cli,['--help'],{encoding:'utf8'}).includes('review --config PRIVATE_JSON'))throw new Error('Installed operator review command missing');
   if(!execFileSync(cli,['--help'],{encoding:'utf8'}).includes('preflight --config PRIVATE_JSON'))throw new Error('Installed preflight command missing');
@@ -103,5 +118,5 @@ text: Packaged CLI validates a fresh project.
     execFileSync(cli, ['validate', '--root', join(root, 'project')], { stdio: 'pipe' });
     throw new Error('Invalid project unexpectedly passed');
   } catch (error) { if (error.status !== 1) throw error; }
-  console.log('Packaged CLI/client passed: production-only install, version, fresh init, overwrite rejection, client entry point, installed provider schemas/migration, MIT license, installed App setup/state rejection, validation and invalid input.');
+  console.log('Packaged CLI/client passed: production-only install, version, fresh init, overwrite rejection, client entry point, installed provider schemas/migration and OpenAI SDK invocation, MIT license, installed App setup/state rejection, validation and invalid input.');
 } finally { await rm(root, { recursive: true, force: true }); }

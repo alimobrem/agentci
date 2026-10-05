@@ -42,3 +42,6 @@ test('deadline reached during settlement records accounting before returning dea
  t.mock.timers.enable({apis:['Date','setTimeout'],now:Date.now()});
  const s=setup(),req=request();req.policy.deadlineAt=Date.now()+50;s.ledger.settle=async(id,cost)=>{s.events.push(['settle',id,cost]);t.mock.timers.tick(70);};await assert.rejects(invokeModel(s.provider,req,s.ledger),/deadline/);assert.deepEqual(s.events,[['reserve',1],['settle','attempt-1',10]]);
 });
+test('server retry delays beyond policy are not shortened into early retries',async()=>{
+ const s=setup();let tries=0;s.provider.invoke=async()=>{tries++;throw new ProviderFailure('rate-limit',true,'not-sent',10000);};await assert.rejects(invokeModel(s.provider,request(),s.ledger),/rate-limit/);assert.equal(tries,1);assert.deepEqual(s.events,[['reserve',1],['release','attempt-1']]);
+});
