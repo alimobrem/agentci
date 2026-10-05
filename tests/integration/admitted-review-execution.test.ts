@@ -29,6 +29,10 @@ test('admitted execution recovers retained reviewer evidence without spending tw
   const cancelled=await admit();await new ReviewDispatchStore(pool,scope).requestCancellation(cancelled);await assert.rejects(run(cancelled),/cancelled/);assert.equal(calls,2);
   const denied=await admit();authorized=false;await assert.rejects(run(denied),/^Error: review-execution-unavailable$/);assert.equal(calls,2);authorized=true;
   const external=createAdmittedReviewExecution({...options,registrations:[{provider,execution:'external'}]});await assert.rejects(external(denied),/^Error: review-execution-unavailable$/);assert.equal(calls,2,'synthetic admission cannot dispatch external registration');
-  await profiles.revoke(profile.profile.id,profile.revision);await assert.rejects(run(denied),/^Error: review-execution-unavailable$/);assert.equal(calls,2);
+  const repeated=await run(denied);assert.equal(calls,4);assert.equal(repeated.summary.findings[0]!.id,result.summary.findings[0]!.id);
+  const history=(await pool.query('SELECT event FROM agentci_finding_events ORDER BY version')).rows;
+  assert.equal(history.length,2);assert.equal(history[1].event.action.type,'evidence');assert.equal(history[1].event.finding.sources.length,4);assert.equal(history[1].event.finding.state,'deduplicated');assert.equal(history[0].event.finding.sources.length,2);
+  assert.deepEqual(await run(denied),repeated);assert.equal(calls,4);assert.equal((await pool.query('SELECT count(*) FROM agentci_finding_events')).rows[0].count,'2');
+  await profiles.revoke(profile.profile.id,profile.revision);await assert.rejects(run(denied),/^Error: review-execution-unavailable$/);assert.equal(calls,4);
  }finally{await pool.end();await admin.query(`DROP SCHEMA ${schema} CASCADE`);await admin.end();}
 });

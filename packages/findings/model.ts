@@ -74,3 +74,15 @@ export function deduplicateFindings(values:readonly ModelFinding[],subject:Revie
  }
  return [...groups.values()].sort((a,b)=>compare(a.id,b.id)).map(f=>{f.sources.sort((a,b)=>compare(canonical([a.requestId,a.attemptId,a.originalClaim]),canonical([b.requestId,b.attemptId,b.originalClaim])));return validateModelFinding(f,subject);});
 }
+
+/** Additional reviewer evidence cannot establish or erase a reproduction result.
+ * Pending reproduction pins a finding version; retry ingestion after it settles.
+ */
+export function mergeFindingEvidence(value:ModelFinding,incomingValue:ModelFinding):ModelFinding{
+ const before=validateModelFinding(value,value.subject),incoming=validateModelFinding(incomingValue,before.subject);
+ if(before.id!==incoming.id||before.state==='proposed'||before.state==='reproduction-pending'||incoming.state!=='deduplicated'||incoming.version!==1||before.version>=10000)fail();
+ const proposed=(f:ModelFinding):ModelFinding=>({...f,state:'proposed',version:0,disposition:null});
+ const merged=deduplicateFindings([proposed(before),proposed(incoming)],before.subject)[0];
+ if(!merged||merged.id!==before.id)fail();
+ return validateModelFinding({...merged!,state:before.state,disposition:before.disposition,version:before.version+1},before.subject);
+}

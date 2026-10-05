@@ -100,14 +100,17 @@
         "SPEC-12.5-001"
       ],
       "tests": [
-        "tests/integration/finding-history.test.ts"
+        "tests/integration/finding-history.test.ts",
+        "tests/integration/admitted-review-execution.test.ts"
       ],
       "scenarios": [
         "authenticated initial evidence reconstruction",
         "concurrent version fencing and operation idempotency",
         "tenant-scoped restart reconstruction",
         "immutable event update and deletion rejection",
-        "receipt failure rollback"
+        "receipt failure rollback",
+        "authenticated ingest of new evidence for existing finding",
+        "incoming evidence idempotency across later history versions"
       ]
     },
     {
@@ -221,6 +224,22 @@
         "ambiguous stage and finalize retry",
         "cancellation during staging waits for cleanup",
         "Temporal history replay"
+      ]
+    },
+    {
+      "operationId": "mergeFindingEvidence",
+      "requirementIds": [
+        "SECTION-12.3"
+      ],
+      "tests": [
+        "tests/finding-evidence.test.ts",
+        "tests/integration/admitted-review-execution.test.ts"
+      ],
+      "scenarios": [
+        "same-subject reviewer evidence extends immutable history",
+        "prior disposition and exact identity retained",
+        "pending reproduction version cannot be changed",
+        "bounded source and version limits fail explicitly"
       ]
     }
   ]

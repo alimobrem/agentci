@@ -51,7 +51,7 @@ export function createAdmittedReviewExecution(options:{
    const history=new FindingHistoryStore(pool,scope,{reviewer:async(requestId,subject)=>{if(!roles.some(r=>r.requestId===requestId))throw Error('review-evidence-unavailable');const retained=await results.get(requestId,subject);if(!retained)throw Error('review-evidence-unavailable');return {result:retained.result,documents:context.documents};},receipt:async()=>{throw Error('finding-receipt-unavailable');}});
    const findings:{id:string;digest:string}[]=[];
    for(const finding of deduplicateFindings(proposals,request.subject)){
-    await check();const saved=await history.create(finding,request.subject,nameUuid(request.id,`agentci:review-finding:v1:${finding.id}`));findings.push({id:finding.id,digest:saved.digest});
+    await check();const saved=await history.ingest(finding,request.subject,nameUuid(request.id,`agentci:review-finding:v1:${finding.id}`));findings.push({id:finding.id,digest:saved.digest});
    }
    const summary={schemaVersion:'v1alpha1' as const,admissionId:request.id,admissionDigest:admission.digest,profileRevision:bound.revision,contextDigest:context.digest,mode:request.mode,coverage:{selectedFiles:context.documents.length,configuredRoles:roles.length,completedRoles:roles.filter(r=>r.status==='completed').length,wholeRepository:false},roles,findings};
    return {summary,digest:digest(canonical(summary))};

@@ -123,8 +123,18 @@ authorization, profile revocation and external registration in synthetic mode
 prevent dispatch. Coverage explicitly reports the selected files and completed
 roles rather than claiming whole-repository coverage.
 
-Outstanding before controller acceptance: separate admissions reviewing the same
-subject must merge additional finding evidence without conflicting with existing
-history; durable execution summaries, Temporal activity adaptation/registration,
+Outstanding before controller acceptance: durable execution summaries, Temporal
+activity adaptation/registration,
 production authorization/provider configuration, and independent termination
 reconciliation remain required. This runner is not yet enabled in production.
+
+Repeated admissions now use authenticated `FindingHistoryStore.ingest`. An
+`evidence` event adds retained reviewer sources for the same exact finding identity
+while preserving lifecycle disposition and the previous immutable event. The
+operation ID binds incoming evidence, so retries return their original event even
+after subsequent history changes. Pending reproduction rejects evidence ingestion
+for retry because its approved plan pins the current finding version. Existing
+64-source, 10,000-version and history-byte limits remain explicit failures; sources
+are never silently dropped. Real database acceptance covers two admissions with
+four reviewer sources, unchanged first history, and no extra charges/events on
+retry. Pure acceptance covers preserved reproduction/operator dispositions.
