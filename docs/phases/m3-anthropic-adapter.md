@@ -12,7 +12,7 @@ controller-side and is not converted into an upstream user identifier.
 
 A distinct developer instruction role is rejected explicitly. No implicit role
 merging or endpoint override occurs. This is a partial implementation: provider
-schema preflight, stream translation, registered model profiles, shared conformance and authorized live
+schema preflight, registered model profiles, shared conformance and authorized live
 acceptance remain required. No live Anthropic request has been made.
 
 Sources: [official SDK](https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript),
@@ -30,3 +30,9 @@ Explicit API-key authentication disables ambient bearer-token configuration.
 Synthetic fetch tests exercise the official SDK for JSON, SSE and error responses;
 authentication/invalid input are terminal, while throttling and overload remain
 explicitly retryable under the controller policy. Raw errors are never surfaced.
+
+The stream translator checks sequential block indices, complete block lifecycles,
+cumulative usage and an explicit final message stop. Tool JSON is assembled and
+validated only as a proposal; truncated arguments are discarded. Unknown events,
+model switches, decreasing counts and missing terminal events fail acceptance.
+Reasoning blocks are non-actionable and not exposed as review text.
