@@ -52,6 +52,9 @@ async function executeModel(provider:ModelProvider,input:unknown,ledger:BudgetLe
    // Estimated/unknown costs cannot safely release the conservative reservation.
    try{if(response.usage.costKind==='reported'&&response.usage.costUsdMicros!==null)await ledger.settle(attemptId,response.usage.costUsdMicros);else await ledger.unknown(attemptId);}
    catch{throw new ProviderFailure('ambiguous-attempt',false,'possibly-sent');}
+   // Persist known usage even if cancellation arrives during accounting, but never report late success.
+   if(Date.now()>=request.policy.deadlineAt)controller.abort('deadline');
+   if(controller.signal.aborted)throw abortFailure(controller.signal,'possibly-sent');
    return response;
   }
   throw new ProviderFailure('transport');

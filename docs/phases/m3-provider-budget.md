@@ -63,3 +63,9 @@ promises provide backpressure without an unbounded event queue. A stalled observ
 or iterator cannot defeat the deadline. Once an observer sees any event, failures
 cannot automatically retry and replay output. Iterator cleanup is requested but
 cannot delay cancellation indefinitely; adapters must honor their abort signal.
+
+Pre-merge review found and corrected a cancellation race during cost settlement:
+known accounting is persisted, then cancellation/deadline is checked again before
+returning success. Regression tests cover both cancellation and elapsed deadline
+inside settlement. This was found before release and does not invalidate earlier
+published M2 artifacts, which do not include the M3 provider executor.

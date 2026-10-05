@@ -34,3 +34,9 @@ test('retry count is bounded and missing or invalid estimates prevent reservatio
  const s=setup();let tries=0;s.provider.invoke=async()=>{tries++;throw new ProviderFailure('rate-limit',true,'not-sent');};await assert.rejects(invokeModel(s.provider,request(),s.ledger),/rate-limit/);assert.equal(tries,3);assert.equal(s.events.filter(event=>event[0]==='reserve').length,3);
  for(const estimateCost of [undefined,()=>{throw Error('private fixture');},()=>({upperBoundUsdMicros:0,pricingRevision:'fixture',maxInputTokens:10,maxOutputTokens:256})]){const fixture=setup();fixture.provider.estimateCost=estimateCost;await assert.rejects(invokeModel(fixture.provider,request(),fixture.ledger),/invalid-request/);assert.deepEqual(fixture.events,[]);}
 });
+test('cancellation during settlement preserves known cost but cannot report success',async()=>{
+ const s=setup(),controller=new AbortController();s.ledger.settle=async(id,cost)=>{s.events.push(['settle',id,cost]);controller.abort();};await assert.rejects(invokeModel(s.provider,request(),s.ledger,controller.signal),error=>error instanceof ProviderFailure&&error.code==='cancelled'&&error.dispatch==='possibly-sent');assert.deepEqual(s.events,[['reserve',1],['settle','attempt-1',10]]);assert.equal(s.calls(),1);
+});
+test('deadline reached during settlement records accounting before returning deadline',async()=>{
+ const s=setup(),req=request();req.policy.deadlineAt=Date.now()+50;s.ledger.settle=async(id,cost)=>{s.events.push(['settle',id,cost]);await new Promise(resolve=>setTimeout(resolve,70));};await assert.rejects(invokeModel(s.provider,req,s.ledger),/deadline/);assert.deepEqual(s.events,[['reserve',1],['settle','attempt-1',10]]);
+});
