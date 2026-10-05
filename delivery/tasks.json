@@ -1193,24 +1193,6 @@
       ]
     },
     {
-      "id": "M2-READINESS-EVIDENCE",
-      "title": "Refresh M2 readiness against merged source and verified CI evidence",
-      "requirementIds": [
-        "SPEC-34.2-003",
-        "SPEC-40-039"
-      ],
-      "status": "in-progress",
-      "startedAt": "2026-10-04T18:12:33.335Z",
-      "completedAt": null,
-      "acceptance": [
-        {
-          "text": "Retain independently verified Docker/default and cache-fix source/tree/artifact CI checkpoints and CI timing attempts; update current M2 guidance to distinguish merged hosted capability, real hosted acceptance, historical fourteen versus current fifteen integration groups, distribution follow-ups and still-pending release gates. Validate links, task ledger and phase status without claiming completion.",
-          "status": "pending",
-          "evidence": []
-        }
-      ]
-    },
-    {
       "id": "M2-IMAGE-PUBLICATION",
       "title": "Publish all M2 UBI image roles with immutable version guards and platform evidence",
       "requirementIds": [
@@ -1261,6 +1243,45 @@
       "acceptance": [
         {
           "text": "Repeated base/head snapshots reuse only content-hash-verified UTF-8 blobs in a byte/entry-bounded client-and-repository-scoped cache, while freshly verifying commit/tree permissions and identities each read. Tests prove reduced blob requests, tampered cached-size rejection, separate-client/repository isolation, eviction and failed-response retry; preserve exact snapshot and full hosted acceptance. Record request-count improvement separately from unproven total delivery acceleration.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-ADAPTER-GUIDE",
+      "title": "Document supported configuration and custom eval adapter authoring",
+      "requirementIds": [
+        "SPEC-11.4-005",
+        "SPEC-11.4-006",
+        "SPEC-11.4-007"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T17:44:20.371Z",
+      "completedAt": "2026-10-04T17:46:07.094Z",
+      "acceptance": [
+        {
+          "text": "Provide a discoverable adapter-authoring guide with a validated native manifest/result example, HTTP registration/protocol/retry obligations, trust boundaries, conformance cases, contribution paths and compatibility limits; clearly distinguish released M1, unreleased M2 and future provider/CI/telemetry extensions. Verify examples against current contracts and execution behavior; do not advertise a dynamic plugin SDK that does not exist.",
+          "status": "passed",
+          "evidence": [
+            "docs/adapter-authoring.md"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-READINESS-EVIDENCE",
+      "title": "Refresh M2 readiness against merged source and verified CI evidence",
+      "requirementIds": [
+        "SPEC-34.2-003",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T18:12:33.335Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Retain independently verified Docker/default and cache-fix source/tree/artifact CI checkpoints and CI timing attempts; update current M2 guidance to distinguish merged hosted capability, real hosted acceptance, historical fourteen versus current fifteen integration groups, distribution follow-ups and still-pending release gates. Validate links, task ledger and phase status without claiming completion.",
           "status": "pending",
           "evidence": []
         }

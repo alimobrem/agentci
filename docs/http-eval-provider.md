@@ -6,6 +6,9 @@ algorithm; AgentCI validates identity, normalizes scenario results, repeats tria
 and compares the baseline and head. It does not execute provider or PR code on
 the control service.
 
+For extension choices, native wrappers, registration and conformance, see the
+[adapter-authoring guide](adapter-authoring.md).
+
 ## Suite and operator configuration
 
 An HTTP suite declares an opaque provider ID, not an endpoint or credential:
