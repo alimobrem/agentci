@@ -217,6 +217,252 @@
         "outbox failure rolls back admission",
         "immutable request update and deletion rejection"
       ]
+    },
+    {
+      "operationId": "validateReviewerProfile",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SECTION-12.2"
+      ],
+      "tests": [
+        "tests/reviewer-profile.test.ts"
+      ],
+      "scenarios": [
+        "strict operator configuration and bounded selection",
+        "duplicate roles and absolute deadlines rejected",
+        "normalized revision binds budget timeout provider and evidence selection"
+      ]
+    },
+    {
+      "operationId": "bindReviewerProfile",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SECTION-12.2"
+      ],
+      "tests": [
+        "tests/reviewer-profile.test.ts"
+      ],
+      "scenarios": [
+        "exact admitted profile revision and mode required",
+        "stable per-role request identity across retries",
+        "persisted admission time fixes deadlines",
+        "fresh reviews retain shared operator budget"
+      ]
+    },
+    {
+      "operationId": "ReviewDispatchStore",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/integration/review-dispatch.test.ts"
+      ],
+      "scenarios": [
+        "concurrent dispatch claims and expired lease takeover",
+        "terminal completion before dispatch acknowledgement",
+        "durable cancellation before workflow creation and after completion",
+        "immutable execution identity and terminal evidence",
+        "tenant isolation restart and bounded outage errors"
+      ]
+    },
+    {
+      "operationId": "dispatchAdmittedReviews",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/integration/reviewer-dispatch-temporal.test.ts"
+      ],
+      "scenarios": [
+        "real Temporal start with lost acknowledgement",
+        "deterministic identity reuse and single execution",
+        "wrong queue cannot acknowledge existing workflow"
+      ]
+    },
+    {
+      "operationId": "reviewAdmittedRequest",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/integration/reviewer-dispatch-temporal.test.ts"
+      ],
+      "scenarios": [
+        "ID and digest only workflow orchestration",
+        "finalization retry after committed terminal evidence",
+        "real workflow history replay"
+      ]
+    },
+    {
+      "operationId": "ReviewerProfileStore",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SECTION-12.2"
+      ],
+      "tests": [
+        "tests/integration/reviewer-profiles.test.ts"
+      ],
+      "scenarios": [
+        "concurrent registration retains one immutable revision",
+        "changed configuration preserves old revisions",
+        "revocation denies execution and cannot be undone by config reload",
+        "tenant isolation restart and redacted outage errors"
+      ]
+    },
+    {
+      "operationId": "createAdmittedReviewExecution",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SECTION-12.2",
+        "SECTION-12.3"
+      ],
+      "tests": [
+        "tests/integration/admitted-review-execution.test.ts"
+      ],
+      "scenarios": [
+        "exact admitted profile and selected snapshot execution",
+        "two role results retained across finding write failure",
+        "retry reuses results without additional model charge",
+        "synthetic findings retain contributing reviewer evidence",
+        "cancellation authorization revocation and execution-mode dispatch fences"
+      ]
+    },
+    {
+      "operationId": "validateReviewExecutionSummary",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.3",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/integration/admitted-review-execution.test.ts"
+      ],
+      "scenarios": [
+        "strict bounded identity-only summary",
+        "coverage counts agree with retained role statuses"
+      ]
+    },
+    {
+      "operationId": "ReviewSummaryStore",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.3",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/integration/admitted-review-execution.test.ts"
+      ],
+      "scenarios": [
+        "first write rejects omitted roles findings and wrong context",
+        "exact profile role and finding evidence reconstruction",
+        "summary-write failure recovery without redispatch",
+        "immutable tenant-scoped restart reads and redacted outages"
+      ]
+    },
+    {
+      "operationId": "createAdmittedReviewActivities",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.3",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/integration/admitted-review-activities.test.ts",
+        "tests/integration/review-dispatch.test.ts"
+      ],
+      "scenarios": [
+        "actual Temporal identity binds before provider execution",
+        "lost summary response retries retained evidence without provider charge",
+        "durable cancellation before dispatch and during provider invocation",
+        "possibly-sent cancellation preserves budget exposure",
+        "private source output and diagnostic sentinels absent from workflow history",
+        "success and cancellation workflow replay"
+      ]
+    },
+    {
+      "operationId": "reconcileAdmittedReviews",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/integration/admitted-review-activities.test.ts",
+        "tests/integration/review-dispatch.test.ts"
+      ],
+      "scenarios": [
+        "independent reconciliation after real workflow termination",
+        "possibly-sent charges retained after provider termination",
+        "summary committed before termination remains completed evidence",
+        "exclusive recovery leases and stale worker rejection",
+        "running reviews use bounded polling delay"
+      ]
+    },
+    {
+      "operationId": "validateReviewerRuntime",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.2",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/reviewer-runtime.test.ts"
+      ],
+      "scenarios": [
+        "strict operator-owned profiles and provider identities"
+      ]
+    },
+    {
+      "operationId": "createReviewerRuntime",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.2",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/reviewer-runtime.test.ts"
+      ],
+      "scenarios": [
+        "seven no-network fixture roles",
+        "fixed environment credential references and no secret policy serialization"
+      ]
+    },
+    {
+      "operationId": "loadReviewerRuntime",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.2",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/reviewer-runtime.test.ts"
+      ],
+      "scenarios": [
+        "explicit absolute config path or disabled runtime"
+      ]
+    },
+    {
+      "operationId": "initializeReviewerController",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.2",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/integration/reviewer-runtime.test.ts"
+      ],
+      "scenarios": [
+        "production workflow exports execute seven roles",
+        "exact GitHub subject and blob identities",
+        "stale subject and revoked profile denial",
+        "restart retains evidence"
+      ]
     }
   ]
 }

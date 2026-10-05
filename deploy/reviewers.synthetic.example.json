@@ -1,0 +1,810 @@
+{
+  "schemaVersion": "v1alpha1",
+  "profiles": [
+    {
+      "schemaVersion": "v1alpha1",
+      "id": "synthetic-dogfood",
+      "mode": "synthetic",
+      "budget": {
+        "id": "abcdefab-1111-4111-8111-111111111111",
+        "limitUsdMicros": 10000
+      },
+      "timeoutMs": 300000,
+      "differentProvider": false,
+      "selection": [
+        {
+          "kind": "source",
+          "side": "head",
+          "path": "README.md"
+        }
+      ],
+      "reviewers": [
+        {
+          "role": "specification-compliance",
+          "policyVersion": "v1",
+          "provider": "fixture",
+          "model": "fixture-model",
+          "parameters": {
+            "maxOutputTokens": 256
+          },
+          "responseSchema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$id": "https://agentci.dev/schemas/finding-proposals-v1alpha1.json",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "findings": {
+                "type": "array",
+                "maxItems": 64,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "category": {
+                      "enum": [
+                        "specification",
+                        "correctness",
+                        "architecture",
+                        "security",
+                        "adversarial",
+                        "test-coverage",
+                        "reliability"
+                      ]
+                    },
+                    "severity": {
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high",
+                        "critical"
+                      ]
+                    },
+                    "claim": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8192
+                    },
+                    "evidence": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 64,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "side": {
+                            "enum": [
+                              "base",
+                              "head"
+                            ]
+                          },
+                          "path": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1024
+                          },
+                          "digest": {
+                            "type": "string",
+                            "pattern": "^sha256:[a-f0-9]{64}$"
+                          },
+                          "startLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          },
+                          "endLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          }
+                        },
+                        "required": [
+                          "side",
+                          "path",
+                          "digest",
+                          "startLine",
+                          "endLine"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "category",
+                    "severity",
+                    "claim",
+                    "evidence"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "findings"
+            ]
+          },
+          "providerExtensions": {
+            "fixture": {}
+          },
+          "policy": {
+            "maxAttempts": 2,
+            "baseDelayMs": 100,
+            "maxDelayMs": 1000
+          }
+        },
+        {
+          "role": "code-correctness",
+          "policyVersion": "v1",
+          "provider": "fixture",
+          "model": "fixture-model",
+          "parameters": {
+            "maxOutputTokens": 256
+          },
+          "responseSchema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$id": "https://agentci.dev/schemas/finding-proposals-v1alpha1.json",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "findings": {
+                "type": "array",
+                "maxItems": 64,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "category": {
+                      "enum": [
+                        "specification",
+                        "correctness",
+                        "architecture",
+                        "security",
+                        "adversarial",
+                        "test-coverage",
+                        "reliability"
+                      ]
+                    },
+                    "severity": {
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high",
+                        "critical"
+                      ]
+                    },
+                    "claim": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8192
+                    },
+                    "evidence": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 64,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "side": {
+                            "enum": [
+                              "base",
+                              "head"
+                            ]
+                          },
+                          "path": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1024
+                          },
+                          "digest": {
+                            "type": "string",
+                            "pattern": "^sha256:[a-f0-9]{64}$"
+                          },
+                          "startLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          },
+                          "endLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          }
+                        },
+                        "required": [
+                          "side",
+                          "path",
+                          "digest",
+                          "startLine",
+                          "endLine"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "category",
+                    "severity",
+                    "claim",
+                    "evidence"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "findings"
+            ]
+          },
+          "providerExtensions": {
+            "fixture": {}
+          },
+          "policy": {
+            "maxAttempts": 2,
+            "baseDelayMs": 100,
+            "maxDelayMs": 1000
+          }
+        },
+        {
+          "role": "architecture",
+          "policyVersion": "v1",
+          "provider": "fixture",
+          "model": "fixture-model",
+          "parameters": {
+            "maxOutputTokens": 256
+          },
+          "responseSchema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$id": "https://agentci.dev/schemas/finding-proposals-v1alpha1.json",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "findings": {
+                "type": "array",
+                "maxItems": 64,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "category": {
+                      "enum": [
+                        "specification",
+                        "correctness",
+                        "architecture",
+                        "security",
+                        "adversarial",
+                        "test-coverage",
+                        "reliability"
+                      ]
+                    },
+                    "severity": {
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high",
+                        "critical"
+                      ]
+                    },
+                    "claim": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8192
+                    },
+                    "evidence": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 64,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "side": {
+                            "enum": [
+                              "base",
+                              "head"
+                            ]
+                          },
+                          "path": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1024
+                          },
+                          "digest": {
+                            "type": "string",
+                            "pattern": "^sha256:[a-f0-9]{64}$"
+                          },
+                          "startLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          },
+                          "endLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          }
+                        },
+                        "required": [
+                          "side",
+                          "path",
+                          "digest",
+                          "startLine",
+                          "endLine"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "category",
+                    "severity",
+                    "claim",
+                    "evidence"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "findings"
+            ]
+          },
+          "providerExtensions": {
+            "fixture": {}
+          },
+          "policy": {
+            "maxAttempts": 2,
+            "baseDelayMs": 100,
+            "maxDelayMs": 1000
+          }
+        },
+        {
+          "role": "security",
+          "policyVersion": "v1",
+          "provider": "fixture",
+          "model": "fixture-model",
+          "parameters": {
+            "maxOutputTokens": 256
+          },
+          "responseSchema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$id": "https://agentci.dev/schemas/finding-proposals-v1alpha1.json",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "findings": {
+                "type": "array",
+                "maxItems": 64,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "category": {
+                      "enum": [
+                        "specification",
+                        "correctness",
+                        "architecture",
+                        "security",
+                        "adversarial",
+                        "test-coverage",
+                        "reliability"
+                      ]
+                    },
+                    "severity": {
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high",
+                        "critical"
+                      ]
+                    },
+                    "claim": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8192
+                    },
+                    "evidence": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 64,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "side": {
+                            "enum": [
+                              "base",
+                              "head"
+                            ]
+                          },
+                          "path": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1024
+                          },
+                          "digest": {
+                            "type": "string",
+                            "pattern": "^sha256:[a-f0-9]{64}$"
+                          },
+                          "startLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          },
+                          "endLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          }
+                        },
+                        "required": [
+                          "side",
+                          "path",
+                          "digest",
+                          "startLine",
+                          "endLine"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "category",
+                    "severity",
+                    "claim",
+                    "evidence"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "findings"
+            ]
+          },
+          "providerExtensions": {
+            "fixture": {}
+          },
+          "policy": {
+            "maxAttempts": 2,
+            "baseDelayMs": 100,
+            "maxDelayMs": 1000
+          }
+        },
+        {
+          "role": "adversarial",
+          "policyVersion": "v1",
+          "provider": "fixture",
+          "model": "fixture-model",
+          "parameters": {
+            "maxOutputTokens": 256
+          },
+          "responseSchema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$id": "https://agentci.dev/schemas/finding-proposals-v1alpha1.json",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "findings": {
+                "type": "array",
+                "maxItems": 64,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "category": {
+                      "enum": [
+                        "specification",
+                        "correctness",
+                        "architecture",
+                        "security",
+                        "adversarial",
+                        "test-coverage",
+                        "reliability"
+                      ]
+                    },
+                    "severity": {
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high",
+                        "critical"
+                      ]
+                    },
+                    "claim": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8192
+                    },
+                    "evidence": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 64,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "side": {
+                            "enum": [
+                              "base",
+                              "head"
+                            ]
+                          },
+                          "path": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1024
+                          },
+                          "digest": {
+                            "type": "string",
+                            "pattern": "^sha256:[a-f0-9]{64}$"
+                          },
+                          "startLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          },
+                          "endLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          }
+                        },
+                        "required": [
+                          "side",
+                          "path",
+                          "digest",
+                          "startLine",
+                          "endLine"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "category",
+                    "severity",
+                    "claim",
+                    "evidence"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "findings"
+            ]
+          },
+          "providerExtensions": {
+            "fixture": {}
+          },
+          "policy": {
+            "maxAttempts": 2,
+            "baseDelayMs": 100,
+            "maxDelayMs": 1000
+          }
+        },
+        {
+          "role": "test-eval-completeness",
+          "policyVersion": "v1",
+          "provider": "fixture",
+          "model": "fixture-model",
+          "parameters": {
+            "maxOutputTokens": 256
+          },
+          "responseSchema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$id": "https://agentci.dev/schemas/finding-proposals-v1alpha1.json",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "findings": {
+                "type": "array",
+                "maxItems": 64,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "category": {
+                      "enum": [
+                        "specification",
+                        "correctness",
+                        "architecture",
+                        "security",
+                        "adversarial",
+                        "test-coverage",
+                        "reliability"
+                      ]
+                    },
+                    "severity": {
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high",
+                        "critical"
+                      ]
+                    },
+                    "claim": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8192
+                    },
+                    "evidence": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 64,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "side": {
+                            "enum": [
+                              "base",
+                              "head"
+                            ]
+                          },
+                          "path": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1024
+                          },
+                          "digest": {
+                            "type": "string",
+                            "pattern": "^sha256:[a-f0-9]{64}$"
+                          },
+                          "startLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          },
+                          "endLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          }
+                        },
+                        "required": [
+                          "side",
+                          "path",
+                          "digest",
+                          "startLine",
+                          "endLine"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "category",
+                    "severity",
+                    "claim",
+                    "evidence"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "findings"
+            ]
+          },
+          "providerExtensions": {
+            "fixture": {}
+          },
+          "policy": {
+            "maxAttempts": 2,
+            "baseDelayMs": 100,
+            "maxDelayMs": 1000
+          }
+        },
+        {
+          "role": "operational-reliability",
+          "policyVersion": "v1",
+          "provider": "fixture",
+          "model": "fixture-model",
+          "parameters": {
+            "maxOutputTokens": 256
+          },
+          "responseSchema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "$id": "https://agentci.dev/schemas/finding-proposals-v1alpha1.json",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "findings": {
+                "type": "array",
+                "maxItems": 64,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "category": {
+                      "enum": [
+                        "specification",
+                        "correctness",
+                        "architecture",
+                        "security",
+                        "adversarial",
+                        "test-coverage",
+                        "reliability"
+                      ]
+                    },
+                    "severity": {
+                      "enum": [
+                        "low",
+                        "medium",
+                        "high",
+                        "critical"
+                      ]
+                    },
+                    "claim": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 8192
+                    },
+                    "evidence": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 64,
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "side": {
+                            "enum": [
+                              "base",
+                              "head"
+                            ]
+                          },
+                          "path": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1024
+                          },
+                          "digest": {
+                            "type": "string",
+                            "pattern": "^sha256:[a-f0-9]{64}$"
+                          },
+                          "startLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          },
+                          "endLine": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          }
+                        },
+                        "required": [
+                          "side",
+                          "path",
+                          "digest",
+                          "startLine",
+                          "endLine"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "category",
+                    "severity",
+                    "claim",
+                    "evidence"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "findings"
+            ]
+          },
+          "providerExtensions": {
+            "fixture": {}
+          },
+          "policy": {
+            "maxAttempts": 2,
+            "baseDelayMs": 100,
+            "maxDelayMs": 1000
+          }
+        }
+      ]
+    }
+  ],
+  "providers": [
+    {
+      "kind": "fixture",
+      "model": "fixture-model",
+      "scenario": "clean"
+    }
+  ],
+  "codingProvenance": []
+}

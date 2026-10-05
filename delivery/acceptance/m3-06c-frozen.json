@@ -1,0 +1,53 @@
+{
+  "scope": "Frozen hosted finding lifecycle and reproduction assertions adopted after PR 40",
+  "hostedRun": 37381483447,
+  "artifactId": 11376160058,
+  "producer": {
+    "version": "0.4.0-m3-dev.1",
+    "sourceCommit": "cb7ace58ed7164881160b0ceb31f53490887c642",
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "runId": "37381483447",
+    "runAttempt": "1",
+    "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+    "evaluatorImage": "sha256:dfcd57bb7fb5ba5db92e8e9e17075d1408c77b97bd8c91db37f4b427e7107796"
+  },
+  "job": {
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "pullRequest": 41,
+    "baseSha": "cb7ace58ed7164881160b0ceb31f53490887c642",
+    "headSha": "e77e1bb3990ea6492b0035a01d131a9617237a9b"
+  },
+  "comparison": {
+    "id": "a0706e4e-53c5-4ec9-8ec6-32af9267ab72",
+    "reviewId": "54a9c2c4-a0a9-46f0-b6f6-745d80e0d85f",
+    "file": "comparison-a0706e4e-53c5-4ec9-8ec6-32af9267ab72.ndjson",
+    "sha256": "sha256:6174d5757b48d93738862c62367c915653d5d95d3df76b80f7a94d551ec21cc4",
+    "bytes": 25722
+  },
+  "units": [
+    {
+      "side": "base",
+      "assertionSide": "base",
+      "revision": "sha256:ec1335dd0b82eb2cab1dcf803512a30f783841e1ca49c06ab41ae968494c7962",
+      "scenarioIds": [
+        "finding-lifecycle",
+        "finding-reproduction"
+      ],
+      "status": "completed"
+    },
+    {
+      "side": "head",
+      "assertionSide": "base",
+      "revision": "sha256:ec1335dd0b82eb2cab1dcf803512a30f783841e1ca49c06ab41ae968494c7962",
+      "scenarioIds": [
+        "finding-lifecycle",
+        "finding-reproduction"
+      ],
+      "status": "completed"
+    }
+  ],
+  "verification": "Exact PR/base/head/producer identities and chained file digest independently verified; image identities matched workflow logs. Both finding scenarios passed on base and head using the same base assertion revision.",
+  "limitations": "Contract corpus evidence; database, container and Temporal execution acceptance remains in m3-06c.json. Admission acceptance is recorded separately in m3-07a.json."
+}

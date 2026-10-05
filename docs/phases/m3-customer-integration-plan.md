@@ -42,3 +42,28 @@ semantics must be tested against real transport before adding available customer
 routes to the shipped OpenAPI/client. Do not activate partial customer routes
 that can enqueue work with no configured consumer. Router and additional provider
 adapters retain the original explicit later-integration/optional decisions.
+
+## M3-07b checkpoint
+
+Controller implementation is in progress; acceptance remains pending. The branch
+contains immutable operator profiles, durable admission dispatch and summaries,
+budget-bound reviewer execution, additive finding evidence, Temporal activities,
+and independent termination recovery. Production startup is opt-in through
+`AGENTCI_REVIEWER_CONFIG_FILE`; see [runtime setup](m3-reviewer-runtime.md).
+
+Local acceptance covers real PostgreSQL and Temporal, lost acknowledgements,
+post-commit response loss, concurrent/stale leases, cancellation before/during
+execution, workflow termination, seven configured fixture roles, replay and
+history privacy. These checks do not replace hosted full CI or customer acceptance.
+
+Before accepting this slice:
+
+- Complete exact-head hosted integration, API compatibility, packaging and image/runtime checks.
+- Verify worker interruption/restart behavior independently of workflow termination.
+- Verify the new startup/deployment configuration and inspect final review findings.
+- Collect CI attempts and publish acceptance evidence before starting M3-07c.
+
+The scope is frozen to these acceptance gaps. Ten local commits accumulated before
+this checkpoint; local check speed is not evidence of improved delivery velocity.
+Use full CI and merged task cycle time for the retrospective. The original M3
+release gates and deferred live-provider acceptance remain intact.

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "v1alpha1",
+  "id": "security-review",
+  "mode": "synthetic",
+  "budget": {
+    "id": "abcdefab-1111-4111-8111-111111111111",
+    "limitUsdMicros": 10000
+  },
+  "timeoutMs": 300000,
+  "differentProvider": false,
+  "selection": [
+    {
+      "kind": "source",
+      "side": "head",
+      "path": "src/main.ts"
+    }
+  ],
+  "reviewers": [
+    {
+      "role": "security",
+      "policyVersion": "v1",
+      "provider": "fixture",
+      "model": "fixture-model",
+      "parameters": {
+        "maxOutputTokens": 256
+      },
+      "responseSchema": {
+        "type": "object",
+        "properties": {
+          "claim": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "claim"
+        ],
+        "additionalProperties": false
+      },
+      "providerExtensions": {
+        "fixture": {}
+      },
+      "policy": {
+        "maxAttempts": 2,
+        "baseDelayMs": 100,
+        "maxDelayMs": 1000
+      }
+    }
+  ]
+}

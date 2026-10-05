@@ -1,6 +1,6 @@
 import type {Pool,PoolClient} from 'pg';
 import {canonical,digest} from '../review/engine.ts';
-import {validateModelFinding,findingsFromReviewer,deduplicateFindings,type ModelFinding} from '../findings/model.ts';
+import {validateModelFinding,findingsFromReviewer,deduplicateFindings,mergeFindingEvidence,type ModelFinding} from '../findings/model.ts';
 import {createFindingTransitions,type FindingAction,type FindingReceipt} from '../findings/lifecycle.ts';
 import type {ReviewSubject} from '../reviewers/context.ts';
 
@@ -17,7 +17,7 @@ export interface FindingHistoryReaders {
 }
 export interface FindingHistoryEvent {
  schemaVersion:'v1alpha1';operationId:string;inputDigest:string;previousDigest:string|null;
- action:{type:'create'}|FindingAction;receipt:FindingReceipt|null;finding:ModelFinding;
+ action:{type:'create'}|{type:'evidence';finding:ModelFinding}|FindingAction;receipt:FindingReceipt|null;finding:ModelFinding;
 }
 export interface FindingHistoryRecord {digest:string;event:FindingHistoryEvent}
 /** Internal, deployment-scoped persistence. Every change is an immutable event;
@@ -64,11 +64,16 @@ export class FindingHistoryStore {
     if(event.previousDigest!==null||canonical(event.action)!==canonical({type:'create'})||event.receipt!==null||finding!.state!=='deduplicated'||finding!.version!==1)conflict();
    }else{
     if(event.previousDigest!==prior.digest||event.action.type==='create')conflict();
-    const action=event.action as FindingAction;
-    if(action.type==='queue'&&event.receipt!==null||action.type!=='queue'&&event.receipt===null)conflict();
     try{
-     const next=await createFindingTransitions(async()=>event.receipt!)(prior.event.finding,action,prior.event.finding.version);
-     if(canonical(next.finding)!==canonical(finding!))conflict();
+     if(event.action.type==='evidence'){
+      if(Object.keys(event.action).sort().join(',')!=='finding,type'||event.receipt!==null)conflict();
+      if(canonical(mergeFindingEvidence(prior.event.finding,event.action.finding))!==canonical(finding!))conflict();
+     }else{
+      const action=event.action as FindingAction;
+      if(action.type==='queue'&&event.receipt!==null||action.type!=='queue'&&event.receipt===null)conflict();
+      const next=await createFindingTransitions(async()=>event.receipt!)(prior.event.finding,action,prior.event.finding.version);
+      if(canonical(next.finding)!==canonical(finding!))conflict();
+     }
     }catch{conflict();}
    }
    records.push({digest:row.digest,event:structuredClone(event)});
@@ -89,6 +94,38 @@ export class FindingHistoryStore {
    VALUES($1,$2,$3,$4,$5,$6,$7)`,[this.scope.organizationId,this.scope.repository,event.finding.id,event.finding.version,event.operationId,hash,event]);
   return {digest:hash,event:structuredClone(event)};
  }
+ private async authenticateFinding(finding:ModelFinding,subject:ReviewSubject){
+   // Reconstruct from authenticated retained reviewer results, not caller claims.
+   const proposals:ModelFinding[]=[];
+   for(const requestId of new Set(finding.sources.map(source=>source.requestId))){
+    const retained=await this.readers.reviewer(requestId,structuredClone(subject));
+    let normalized:ModelFinding[];try{normalized=findingsFromReviewer(retained.result,subject,retained.documents);}catch{conflict();}
+    if(normalized!.some(f=>f.sources.some(s=>s.requestId!==requestId)))conflict();
+    proposals.push(...normalized!.filter(f=>f.id===finding.id));
+   }
+   let reconstructed:ModelFinding|undefined;try{reconstructed=deduplicateFindings(proposals,subject)[0];}catch{conflict();}
+   if(!reconstructed||canonical(reconstructed)!==canonical(finding))conflict();
+ }
+ /** Append authenticated reviewer evidence without changing reproduction disposition.
+  * Idempotency binds the incoming evidence, not the latest finding version.
+  */
+ async ingest(value:unknown,subject:ReviewSubject,operationId:string):Promise<FindingHistoryRecord>{
+  subject=structuredClone(subject);let incoming:ModelFinding;
+  try{incoming=validateModelFinding(value,subject);}catch{return conflict();}
+  this.subject(subject,incoming.id);if(!uuid.test(operationId)||incoming.state!=='deduplicated'||incoming.version!==1)conflict();
+  return this.transaction(async client=>{
+   const row=(await client.query('SELECT finding_id FROM agentci_finding_events WHERE organization_id=$1 AND repository=$2 AND operation_id=$3',[this.scope.organizationId,this.scope.repository,operationId])).rows[0];
+   if(row&&row.finding_id!==incoming.id)conflict();
+   const records=await this.history(client,incoming.id,subject),existing=records.find(r=>r.event.operationId===operationId);
+   if(existing){const original=existing.event.action.type==='create'?existing.event.finding:existing.event.action.type==='evidence'?existing.event.action.finding:null;if(canonical(original)!==canonical(incoming))conflict();return existing;}
+   await this.authenticateFinding(incoming,subject);
+   const prior=records.at(-1);
+   if(!prior)return this.append(client,{schemaVersion:'v1alpha1',operationId,inputDigest:digest(canonical({type:'create',finding:incoming})),previousDigest:null,action:{type:'create'},receipt:null,finding:incoming});
+   let finding:ModelFinding;try{finding=mergeFindingEvidence(prior.event.finding,incoming);}catch{return conflict();}
+   const action={type:'evidence' as const,finding:incoming};
+   return this.append(client,{schemaVersion:'v1alpha1',operationId,inputDigest:digest(canonical({id:incoming.id,subject,action,expectedVersion:prior.event.finding.version})),previousDigest:prior.digest,action,receipt:null,finding});
+  });
+ }
  async create(value:unknown,subject:ReviewSubject,operationId:string):Promise<FindingHistoryRecord>{
   subject=structuredClone(subject);
   let finding:ModelFinding;try{finding=validateModelFinding(value,subject);}catch{conflict();}
@@ -97,16 +134,7 @@ export class FindingHistoryStore {
   return this.transaction(async client=>{
    const existing=await this.existing(client,operationId,inputDigest,finding!.id,subject);if(existing)return existing;
    if((await this.history(client,finding!.id,subject)).length)conflict();
-   // Reconstruct from authenticated retained reviewer results, not caller claims.
-   const proposals:ModelFinding[]=[];
-   for(const requestId of new Set(finding!.sources.map(source=>source.requestId))){
-    const retained=await this.readers.reviewer(requestId,structuredClone(subject));
-    let normalized:ModelFinding[];try{normalized=findingsFromReviewer(retained.result,subject,retained.documents);}catch{conflict();}
-    if(normalized!.some(f=>f.sources.some(s=>s.requestId!==requestId)))conflict();
-    proposals.push(...normalized!.filter(f=>f.id===finding!.id));
-   }
-   let reconstructed:ModelFinding|undefined;try{reconstructed=deduplicateFindings(proposals,subject)[0];}catch{conflict();}
-   if(!reconstructed||canonical(reconstructed)!==canonical(finding!))conflict();
+   await this.authenticateFinding(finding!,subject);
    return this.append(client,{schemaVersion:'v1alpha1',operationId,inputDigest,previousDigest:null,action:{type:'create'},receipt:null,finding:finding!});
   });
  }

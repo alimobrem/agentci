@@ -1979,14 +1979,16 @@
         "SECTION-31.1",
         "SPEC-31.2-001"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T22:10:47.348Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T22:27:54.311Z",
       "acceptance": [
         {
           "text": "Strict exact-subject/profile contracts; durable scoped admission; duplicate/conflict and bounded-error acceptance; restart recovery; no inactive public route advertised.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-07a.json"
+          ]
         }
       ],
       "dependsOn": [
@@ -2019,8 +2021,8 @@
         "SPEC-13.5-012",
         "SPEC-13.5-013"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "in-progress",
+      "startedAt": "2026-10-05T22:27:54.538Z",
       "completedAt": null,
       "acceptance": [
         {

@@ -1,3 +1,4 @@
+export {reviewAdmittedRequest} from './reviewer-workflows.ts';
 import { proxyActivities } from '@temporalio/workflow';
 import type { ReviewJob } from '../../packages/github/webhook.ts';
 import type { Activities } from './activities.ts';

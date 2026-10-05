@@ -1,0 +1,28 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {randomUUID,createHash} from 'node:crypto';import {readFile} from 'node:fs/promises';import {Pool} from 'pg';import type {Octokit} from '@octokit/rest';
+import {Client,Connection} from '@temporalio/client';import {NativeConnection,Worker} from '@temporalio/worker';
+import {createReviewerRuntime} from '../../packages/runtime/reviewers.ts';
+import {validateReviewerProfile} from '../../packages/reviewers/profile.ts';
+import {initializeReviewerController} from '../../apps/worker/reviewer-runtime.ts';
+import {dispatchAdmittedReviews} from '../../apps/worker/reviewer-dispatch.ts';
+const url=process.env.AGENTCI_TEST_DATABASE_URL,address=process.env.AGENTCI_TEST_TEMPORAL_ADDRESS;if(!url||!address)throw Error('Reviewer runtime acceptance requires real PostgreSQL and Temporal; never silently skip');
+test('configured controller runs all seven roles through production workflow exports and exact GitHub subject reads',{timeout:60000},async()=>{
+ const schema=`runtime_${randomUUID().replaceAll('-','')}`,admin=new Pool({connectionString:url});await admin.query(`CREATE SCHEMA ${schema}`);const pool=new Pool({connectionString:url,options:`-c search_path=${schema}`});
+ const connection=await Connection.connect({address}),native=await NativeConnection.connect({address}),client=new Client({connection});let worker:Worker|undefined,running:Promise<void>|undefined;
+ try{
+  for(const name of ['004_m3_model_budget','005_m3_reviewer_results','006_m3_finding_history','008_m3_review_admissions','009_m3_review_dispatch','010_m3_reviewer_profiles','011_m3_review_summaries','012_m3_review_recovery'])await pool.query(await readFile(new URL(`../../deploy/migrations/${name}.sql`,import.meta.url),'utf8'));
+  const definition=JSON.parse(await readFile(new URL('../../deploy/reviewers.synthetic.example.json',import.meta.url),'utf8'));definition.profiles[0].budget.id=randomUUID();const runtime=createReviewerRuntime(definition,{}),selected=validateReviewerProfile(runtime.definition.profiles[0]);
+  const config={organizationId:randomUUID(),repository:'owner/repo',installationId:123},baseSha='a'.repeat(40),headSha='b'.repeat(40),treeSha='c'.repeat(40),content='Synthetic repository fixture\n',blobSha=createHash('sha1').update(`blob ${Buffer.byteLength(content)}\0${content}`).digest('hex');let current=headSha,blobReads=0;
+  const assertScope=(params:any)=>{assert.equal(params.owner,'owner');assert.equal(params.repo,'repo');};
+  const github={pulls:{get:async(params:any)=>{assertScope(params);assert.equal(params.pull_number,1);return {data:{state:'open',base:{sha:baseSha},head:{sha:current}}};}},git:{getCommit:async(params:any)=>{assertScope(params);assert.equal(params.commit_sha,headSha);return {data:{sha:headSha,tree:{sha:treeSha}}};},getTree:async(params:any)=>{assertScope(params);assert.equal(params.tree_sha,treeSha);return {data:{sha:treeSha,truncated:false,tree:[{type:'blob',mode:'100644',path:'README.md',sha:blobSha,size:Buffer.byteLength(content)}]}};},getBlob:async(params:any)=>{assertScope(params);assert.equal(params.file_sha,blobSha);blobReads++;return {data:{sha:blobSha,encoding:'base64',content:Buffer.from(content).toString('base64')}};}}} as unknown as Octokit;
+  const controller=await initializeReviewerController(pool,github,config,runtime),id=randomUUID(),request={schemaVersion:'v1alpha1',id,subject:{organizationId:config.organizationId,repository:config.repository,pullRequest:1,baseSha,headSha},profile:{id:selected.profile.id,revision:selected.revision},mode:'synthetic'};
+  await controller.admissions.admit(request);await assert.rejects(controller.admissions.admit({...request,id:randomUUID(),subject:{...request.subject,organizationId:randomUUID()}}),/review-admission-conflict/);
+  current='d'.repeat(40);await assert.rejects(controller.admissions.admit({...request,id:randomUUID()}),/review-admission-denied/);current=headSha;
+  const taskQueue=`configured-review-${randomUUID()}`,workflowsPath=new URL('../../dist/apps/worker/workflows.js',import.meta.url).pathname;
+  worker=await Worker.create({connection:native,taskQueue,workflowsPath,activities:controller.activities});running=worker.run();await dispatchAdmittedReviews(controller.dispatch,client,{taskQueue,timeoutMs:45000});
+  const state=(await controller.dispatch.get(id))!,handle=client.workflow.getHandle(state.workflowId,state.runId!);assert.equal(await handle.result(),id);
+  const summary=(await controller.summaries.get(id))!;assert.equal(summary.summary.coverage.configuredRoles,7);assert.equal(summary.summary.coverage.completedRoles,7);assert.equal(summary.summary.mode,'synthetic');assert.equal(summary.summary.findings.length,0);assert.equal(blobReads,1);assert.equal((await pool.query('SELECT count(*) FROM agentci_model_attempts')).rows[0].count,'7');assert.equal((await pool.query('SELECT sum(actual_usd_micros)::text AS spent FROM agentci_model_attempts')).rows[0].spent,'0');
+  await Worker.runReplayHistory({workflowsPath},await handle.fetchHistory(),handle.workflowId);
+  const restarted=await initializeReviewerController(pool,github,config,createReviewerRuntime(definition,{}));assert.deepEqual(await restarted.summaries.get(id),summary);
+  await restarted.profiles.revoke(selected.profile.id,selected.revision);await initializeReviewerController(pool,github,config,runtime);await assert.rejects(restarted.admissions.admit({...request,id:randomUUID()}),/review-admission-denied/);
+ }finally{worker?.shutdown();await running;await native.close();await connection.close();await pool.end();await admin.query(`DROP SCHEMA ${schema} CASCADE`);await admin.end();}
+});
