@@ -39,6 +39,46 @@ The key file contains only the API key; the database file contains only the
 PostgreSQL connection URL. Both must be private regular files, at most 64 KiB,
 without symlinks. Do not put secrets in shell arguments or repository files.
 
+## Prepare private files without making requests
+
+Use a new private directory outside the checkout. This creates disabled configs
+and empty credential files only; it does not contact a provider or a database.
+The $5 / $35 / $10 ceilings below are proposed acceptance limits, not authorization.
+Keep the generated budget IDs for this acceptance campaign rather than running
+this again to obtain fresh spend scopes.
+
+```sh
+node --input-type=module - /absolute/private/agentci-smoke <<'JS'
+import {mkdir,writeFile} from 'node:fs/promises';
+import {isAbsolute,join} from 'node:path';
+import {randomUUID} from 'node:crypto';
+const directory=process.argv[2];
+if(!directory||!isAbsolute(directory))throw Error('Use an absolute private directory');
+// Refuse an existing directory, preserving any earlier budget IDs and credentials.
+await mkdir(directory,{mode:0o700});
+const organizationId=randomUUID(); // Dedicated acceptance scope, shared by these configs.
+await writeFile(join(directory,'database-url'),'',{mode:0o600,flag:'wx'});
+for(const [provider,limitUsdMicros] of [['openai',5000000],['anthropic',35000000],['xai',10000000]]){
+  const credentialFile=join(directory,`${provider}-key`);
+  await writeFile(credentialFile,'',{mode:0o600,flag:'wx'});
+  const config={authorized:false,provider,credentialFile,databaseUrlFile:join(directory,'database-url'),
+    budget:{id:randomUUID(),organizationId,repository:'alimobrem/agentci',limitUsdMicros}};
+  await writeFile(join(directory,`${provider}.json`),JSON.stringify(config,null,2)+'\n',{mode:0o600,flag:'wx'});
+}
+JS
+```
+
+Fill each key file using a local editor, and put the acceptance database connection
+URL in `database-url`. Use provider accounts with access to the selected models.
+The database must already have the budget migration above. Keep files mode 0600;
+never paste their contents into chat. After approving the provider-specific spending
+ceilings, change `authorized` to true in the corresponding configs and share only
+their absolute paths. Approval of one provider does not authorize the others.
+
+Run the earlier smoke command once per approved config. If a run fails, retain its
+budget ID and database records; diagnose the failure before retrying. A new config
+or database is not a way to reset an exhausted authorization.
+
 The required `provider` selects `openai` (reviewed Luna profile) or `anthropic`
 (reviewed Opus profile), or `xai` (reviewed Grok profile). Earlier development configs without this field must add
 it; the command does not infer a destination from a credential. Each uses its fixed
