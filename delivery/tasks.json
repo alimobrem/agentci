@@ -2021,14 +2021,16 @@
         "SPEC-13.5-012",
         "SPEC-13.5-013"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T22:27:54.538Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T23:35:54.061Z",
       "acceptance": [
         {
           "text": "Real Temporal reviewer dispatch, persistent budget/result/finding evidence, interruption and termination recovery, configured profiles and synthetic no-network enforcement; scoped secrets stay outside history.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-07b.json"
+          ]
         }
       ],
       "dependsOn": [
@@ -2055,7 +2057,11 @@
         }
       ],
       "dependsOn": [
-        "M3-07b"
+        "M3-07b",
+        "M3-07c-1",
+        "M3-07c-2",
+        "M3-07c-3",
+        "M3-07c-4"
       ]
     },
     {
@@ -2095,7 +2101,189 @@
         }
       ],
       "dependsOn": [
-        "M3-07c"
+        "M3-07c",
+        "M3-07d-1",
+        "M3-07d-2"
+      ]
+    },
+    {
+      "id": "M3-07c-0",
+      "title": "Freeze customer review transport decisions and fixtures",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T23:35:54.299Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Record resource naming, auth matrix, exact identity/idempotency/status/errors, finding versions, reproduction approval, pagination/export integrity and CLI compatibility; synchronize internal draft transport fixtures and scenario mapping without advertising unimplemented public endpoints. One contract owner approves shared fixtures before parallel client/Checks development.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07b"
+      ]
+    },
+    {
+      "id": "M3-07c-1",
+      "title": "Authenticated model review admission status and cancellation",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Real HTTP/PostgreSQL/Temporal verifies durable admission, exact authenticated retries, conflicting identities, stale heads/profiles, disabled consumer rejection, cancellation/restart and bounded redacted failures. Publish only working OpenAPI operations and preserve both released compatibility baselines.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-0"
+      ]
+    },
+    {
+      "id": "M3-07c-2",
+      "title": "Scoped findings history and complete evidence export",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Exact-subject finding/history reads, bounded stable pagination and integrity-verifiable complete export work over real HTTP. Wrong scope, invalid cursors and interrupted/truncated exports fail explicitly; M3-C11 export capability is retained.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-1"
+      ]
+    },
+    {
+      "id": "M3-07c-3",
+      "title": "Approved finding reproduction and lifecycle mutations",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3",
+        "SECTION-12.4",
+        "SECTION-12.5"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Operator-authorized mutations enforce expected versions, operation IDs and immutable approved plans with configured consumers. Reject request-supplied commands/images/budgets; verify cancellation before/during staging, termination cleanup and retained receipts; never-staged cancellation stays unverified.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-2"
+      ]
+    },
+    {
+      "id": "M3-07c-4",
+      "title": "Executable model review finding and reproduction clients",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Typed client and executable CLI consume shared fixtures and pass real-server review/finding/reproduction/export round trips after routes are implemented. Verify identity/digests, bounded reads, auth/cancellation/errors/exit codes, no credential logging and preservation of released agentci review behavior. Parallel development does not replace final real transport acceptance.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-0"
+      ]
+    },
+    {
+      "id": "M3-07d-1",
+      "title": "Evidence-bound model review GitHub Checks",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Renderer and actual publication keep synthetic/unconfirmed claims advisory, bind exact subject/version/evidence, escape bounded output, reject stale heads and prevent retries overwriting newer results. Develop against frozen contracts; accept only when integrated status and evidence URLs work.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-0"
+      ]
+    },
+    {
+      "id": "M3-07d-2",
+      "title": "Packaged customer model review success failure and recovery",
+      "requirementIds": [
+        "SECTION-13.3",
+        "SPEC-13.3-001",
+        "SPEC-13.3-005",
+        "SPEC-13.3-006",
+        "SPEC-13.3-007",
+        "SPEC-13.3-008",
+        "SPEC-13.3-009",
+        "SECTION-13.5",
+        "SPEC-13.5-001",
+        "SPEC-13.5-002",
+        "SPEC-13.5-003",
+        "SPEC-13.5-004",
+        "SPEC-13.5-005",
+        "SPEC-13.5-006",
+        "SPEC-13.5-007",
+        "SPEC-13.5-008",
+        "SPEC-13.5-009",
+        "SPEC-13.5-010",
+        "SPEC-13.5-011",
+        "SPEC-13.5-012",
+        "SPEC-13.5-013"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Installed CLI and deployed services perform HTTP admission through worker findings/reproduction to exact-head Checks. Demonstrate seeded defect, unsupported assertion, fixed result and failure/restart; verify packaged setup/docs and downloaded artifact identity. Preserve separate M3 release, UI and deferred live-provider gates.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c",
+        "M3-07d-1"
       ]
     }
   ]

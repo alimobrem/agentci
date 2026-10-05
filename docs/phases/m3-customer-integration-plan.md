@@ -43,27 +43,63 @@ routes to the shipped OpenAPI/client. Do not activate partial customer routes
 that can enqueue work with no configured consumer. Router and additional provider
 adapters retain the original explicit later-integration/optional decisions.
 
-## M3-07b checkpoint
+## M3-07b acceptance
 
-Controller implementation is in progress; acceptance remains pending. The branch
-contains immutable operator profiles, durable admission dispatch and summaries,
-budget-bound reviewer execution, additive finding evidence, Temporal activities,
-and independent termination recovery. Production startup is opt-in through
-`AGENTCI_REVIEWER_CONFIG_FILE`; see [runtime setup](m3-reviewer-runtime.md).
+Controller integration is accepted on merged source
+`66a5998a4befdb48fafa283cba966f399bf032ce`; see
+[the acceptance record](../../delivery/acceptance/m3-07b.json). PRs #42, #43 and
+#44 passed their applicable hosted checks and advisory verification. The final
+merged tree matches the combined local build, fourteen reviewer integration
+checks and production-only package smoke. Opt-in UBI Compose startup and graceful
+shutdown also passed. The release remains pending.
 
-Local acceptance covers real PostgreSQL and Temporal, lost acknowledgements,
-post-commit response loss, concurrent/stale leases, cancellation before/during
-execution, workflow termination, seven configured fixture roles, replay and
-history privacy. These checks do not replace hosted full CI or customer acceptance.
+Acceptance covers immutable operator profiles, durable dispatch and complete
+summaries, budget-bound reviewer execution, additive finding evidence, retries,
+cancellation, independent termination recovery, seven synthetic roles and
+workflow replay/privacy. Actual process loss after summary retention recovers
+the same workflow without another provider call or changed charge accounting.
+It does not promise safe repetition of an uncertain in-flight provider request.
 
-Before accepting this slice:
+Independent review reproduced and fixed a summary/terminal commitment race and
+startup with missing migrations. Real PostgreSQL regression checks cover both
+race orderings and missing migrations 011/012. Production startup remains opt-in
+through `AGENTCI_REVIEWER_CONFIG_FILE`; see [runtime setup](m3-reviewer-runtime.md).
+Customer HTTP/client/CLI integration is the next slice.
 
-- Complete exact-head hosted integration, API compatibility, packaging and image/runtime checks.
-- Verify worker interruption/restart behavior independently of workflow termination.
-- Verify the new startup/deployment configuration and inspect final review findings.
-- Collect CI attempts and publish acceptance evidence before starting M3-07c.
+Ten local implementation commits accumulated before the first full-CI checkpoint.
+The follow-up test PRs ran in parallel, but advisory queue replacement and base
+changes added waiting. Their cycle time and preserved cancelled attempts are
+measurement inputs, not evidence that overall delivery became faster. The
+original M3 release gates and deferred live-provider acceptance remain intact.
 
-The scope is frozen to these acceptance gaps. Ten local commits accumulated before
-this checkpoint; local check speed is not evidence of improved delivery velocity.
-Use full CI and merged task cycle time for the retrospective. The original M3
-release gates and deferred live-provider acceptance remain intact.
+## Parallel customer API work after M3-07b acceptance
+
+The owner approved parallel subagents and PRs. Keep shared transport contracts
+under one owner; development can overlap after the contract decisions below are
+recorded. Real transport acceptance and merges still follow dependencies. These
+are planned slices, not implemented or accepted customer operations.
+
+| PR slice | Size | Owner and boundary | Acceptance and dependency |
+| --- | --- | --- | --- |
+| 07c-0: shared transport decisions/fixtures | S | Contract owner; internal draft contracts and scenario map | Record the shared decisions below after 07b acceptance. Freeze fixtures before parallel client/Checks development; do not publish unimplemented HTTP endpoints. |
+| 07c-1: review admission/status/cancellation | M | Server owner; control routes, OpenAPI, operation map and shared fixtures | Real HTTP/PostgreSQL/Temporal; durable admission, authenticated exact retry, conflicting identity, stale head/profile, disabled consumer, cancellation and bounded errors. Starts after 07b acceptance. |
+| 07c-2: findings/history/export reads | M | Server owner; scoped reads and bounded pagination | Exact-subject evidence, stable pagination, immutable history and integrity-verifiable complete export; reject truncated exports. Export remains required by M3-C11. Depends on 07c-1. |
+| 07c-3: approved reproduction/lifecycle mutations | M | Server owner; reproduction routes and configured consumer | Expected-version and operation-ID checks, immutable approved plan, cancellation before/during staging, termination cleanup and retained receipt. No caller-supplied commands, images or budgets. Never-staged cancellation remains unverified. Depends on read/status contracts. |
+| 07c-4: typed client and executable CLI | M | Client owner; consume frozen transport fixtures without redefining them | Real server round trips, exact identity/digest checks, bounded responses/exports, stable errors and no credential logging. Preserve released `agentci review` behavior. Develop alongside server; accept against implemented routes. Split review and reproduction commands if needed to retain reviewable scope. |
+| 07d-1: model-review GitHub Checks | M | Checks owner; renderer, publication and stale-head protection | Unconfirmed and synthetic claims stay advisory; exact evidence identity, bounded escaped output and publication retries that cannot overwrite newer results. Renderer can develop against frozen summaries; integration depends on real evidence URLs/status. |
+| 07d-2: packaged customer acceptance | M | Integrator; installed CLI/service/container scenario and demo | HTTP to CLI to worker to finding/reproduction to exact-head Check; seeded defect, unsupported claim, fixed result and failure/restart. Requires all preceding slices and preserves the additional M3 release gates. |
+
+Before parallel implementation, record the shared decisions for resource naming
+(model reviews must be distinct from released deterministic reviews), status and
+coverage fields, read versus mutation authentication, UUID/idempotency and error
+semantics, finding versions and permitted dispositions, reproduction approval,
+pagination/export integrity, safe profile discovery and CLI command names.
+An accepted request means durable admission, not a completed review. Completed
+execution, refused roles, verification disposition, synthetic/live mode and Check
+conclusion must remain distinguishable. The evidence token remains read-only;
+both released API compatibility baselines remain unchanged.
+
+Measure parallel delivery by accepted merge cycle time, CI queue/execution time,
+failures and rework separately. Record superseded queued advisory runs; the
+repository-wide advisory queue needs an all-open-PR sweep when pending targeted
+events are replaced. Do not count additional PRs or fast checks as acceleration.

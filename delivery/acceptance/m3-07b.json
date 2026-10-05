@@ -1,0 +1,90 @@
+{
+  "task": "M3-07b",
+  "status": "accepted",
+  "controller": {
+    "pullRequest": 42,
+    "sourceCommit": "1219b19d3d1834a71d676ea4e2c2c615c3d6fe77",
+    "mergeCommit": "827b428082db59886a6796f807a8134bf615c9a9",
+    "fullCiRun": 37386804883,
+    "fullCiMergePreview": "d20151d7d4f0d91ed842e70f0085d67cc35f431a",
+    "verifiedSourceTree": "61fd8dece1284586a3b2b5b716973552a6058eca",
+    "verificationArtifactId": 11379402131,
+    "integrationCounts": {
+      "tests": 42,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "startupPackage": {
+    "pullRequest": 43,
+    "sourceCommit": "c6278b77d749ecd7427c1dc8507bcca34254f00e",
+    "fullCiRun": 37386877679,
+    "fullCiMergePreview": "48f48c08dba18e5753c806e0f435f86f7be2b435",
+    "verifiedSourceTree": "dab43387c58b0bec6f33e998a76d95852c2ef4a9",
+    "verificationArtifactId": 11380222425,
+    "integrationCounts": {
+      "tests": 44,
+      "failed": 0,
+      "skipped": 0
+    },
+    "mergeCommit": "66a5998a4befdb48fafa283cba966f399bf032ce"
+  },
+  "workerRestart": {
+    "pullRequest": 44,
+    "sourceCommit": "095aaea50b0bbe229856deeda892f824171c2e38",
+    "fullCiRun": 37386908665,
+    "fullCiMergePreview": "8c3faa96898516665774abb45c291951123640f6",
+    "verifiedSourceTree": "6b0736f9adfceac871bfd565b7388d1e7c2f7003",
+    "verificationArtifactId": 11379263046,
+    "integrationCounts": {
+      "tests": 43,
+      "failed": 0,
+      "skipped": 0
+    },
+    "crashAcceptanceSeconds": 37.226,
+    "mergeCommit": "ac179d5e70e76907af4c3fa04fd9c23b8e1064dc"
+  },
+  "evidence": [
+    "delivery/acceptance/m3-07b-container.json",
+    "delivery/acceptance/m3-07b-controller-advisory.json",
+    "delivery/acceptance/m3-07b-restart-advisory.json",
+    "delivery/acceptance/m3-07b-startup-advisory.json"
+  ],
+  "acceptance": [
+    "Immutable operator profiles bind exact revision, admission time, role request IDs and shared budget identity",
+    "Real PostgreSQL and Temporal verify lost dispatch acknowledgements, role/result retention and replay",
+    "Source, credentials and provider output remain outside workflow history",
+    "Queued and in-flight cancellation and independent termination recovery retain uncertain charges",
+    "Two reproduced summary/terminal races now serialize through the same outbox row lock",
+    "Seven configured fixture roles execute without external provider network dispatch",
+    "Incomplete migrations 011/012 reject startup before profile registration",
+    "Real SIGKILL and replacement worker recover the original run after summary commit with one provider call and unchanged accounting",
+    "Production-only installed package and isolated non-root UBI Compose startup/shutdown pass"
+  ],
+  "pending": [],
+  "limitations": [
+    "M3 remains unreleased; customer REST/client/CLI and Checks integration are later M3 slices",
+    "No deferred live-provider acceptance is claimed",
+    "Crash acceptance covers retained summary; uncertain in-flight requests remain conservatively charged, not blindly retried",
+    "Optional eval-engines image retains the documented node-forge advisory with checksum-bound downstream backport; other five image scans have zero HIGH/CRITICAL findings",
+    "Parallel PRs and local check times do not establish improved delivery velocity"
+  ],
+  "combinedLocal": {
+    "commit": "d96c0caa08d3337d7cfbc284415a9593531b45d7",
+    "tree": "86d6a86c0b7388ec03d13be1c71fd6fd5e6dd9f2",
+    "build": "passed",
+    "fastChecks": 10,
+    "reviewerIntegrationCounts": {
+      "tests": 14,
+      "failed": 0,
+      "skipped": 0
+    },
+    "reviewerIntegrationSeconds": 33.54,
+    "packageSmoke": "passed",
+    "packageSha256": "28d2403ffc98d9b2c24487e15c5e931e9052a012b783e457056bce452a42fdb9",
+    "scope": "Local combination of both follow-up PRs, not hosted combined CI"
+  },
+  "sourceCommit": "66a5998a4befdb48fafa283cba966f399bf032ce",
+  "verifiedSourceTree": "86d6a86c0b7388ec03d13be1c71fd6fd5e6dd9f2",
+  "verification": "Every implementation/test PR passed exact-head hosted full CI; source/merge-preview trees and retained artifact hashes were independently checked. Both follow-up PRs passed current GitHub base/head advisory verification. Final merged tree exactly equals the combined local tree that passed build, ten fast checks, fourteen reviewer integrations and installed-package smoke. This accepts the controller slice, not the M3 milestone or release."
+}
