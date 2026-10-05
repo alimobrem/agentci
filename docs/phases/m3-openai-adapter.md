@@ -23,7 +23,10 @@ through the SDK with synthetic fetch; this verifies packaging, not live acceptan
 Error mapping strips raw messages and bodies. Quota failures do not retry. Retryable
 throttling/transport errors carry bounded retry-delay metadata; the controller does
 not shorten a server delay that exceeds its allowed delay/deadline. Connections
-with uncertain outcomes retain budget reservations. Backoff uses jitter.
+with uncertain outcomes retain budget reservations. Backoff uses jitter. Synthetic
+HTTP outage tests exercise the real SDK through throttling, server failure and
+recovery, verifying reservation/release/unknown-charge order on every attempt.
+Quota failures and excessive server delays each make one outbound request.
 
 Registered model profiles are copied at construction and define capabilities,
 context/output limits and upper input/output prices with a pricing revision.

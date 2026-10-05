@@ -42,3 +42,25 @@ test('model aliases accept only operator-approved snapshots and preserve observe
  }
  for(const responseModels of [[],[''],['same','same']])assert.throws(()=>createOpenAIProvider('synthetic-fixture',[{...profile(),responseModels}]),/invalid-request/);
 });
+test('SDK outage recovery reserves every attempt and retains ambiguous charges',async()=>{
+ const records:string[]=[];let calls=0;
+ const ledger:BudgetLedger={async reserve(input){records.push(`reserve:${input.attempt}`);return `attempt-${input.attempt}`;},async settle(){throw Error('No billed cost');},async unknown(id){records.push(`unknown:${id}`);},async releaseNotSent(id){records.push(`release:${id}`);}};
+ const provider=createOpenAIProvider('synthetic-fixture',[profile()],async()=>{
+  calls++;records.push(`fetch:${calls}`);
+  if(calls<3)return new Response(JSON.stringify({error:{code:calls===1?'rate_limit_exceeded':'server_error',message:'private upstream details'}}),{status:calls===1?429:503,headers:{'content-type':'application/json','retry-after-ms':'0'}});
+  return new Response(JSON.stringify(response()),{headers:{'content-type':'application/json'}});
+ });
+ const req=request();req.policy.maxAttempts=3;
+ const result=await invokeModel(provider,req,ledger);
+ assert.equal(result.status,'completed');assert.equal(result.attemptId,'attempt-3');
+ assert.deepEqual(records,['reserve:1','fetch:1','release:attempt-1','reserve:2','fetch:2','unknown:attempt-2','reserve:3','fetch:3','unknown:attempt-3']);
+});
+test('SDK quota and excessive retry delay never trigger a hidden retry',async()=>{
+ for(const mode of ['quota','delay']){
+  let calls=0;const records:string[]=[];
+  const ledger:BudgetLedger={async reserve(){records.push('reserve');return 'attempt-1';},async settle(){throw Error();},async unknown(){records.push('unknown');},async releaseNotSent(){records.push('release');}};
+  const provider=createOpenAIProvider('synthetic-fixture',[profile()],async()=>{calls++;return new Response(JSON.stringify({error:{code:mode==='quota'?'insufficient_quota':'rate_limit_exceeded',message:'private upstream details'}}),{status:429,headers:{'content-type':'application/json','retry-after':mode==='delay'?'9'.repeat(100):'0'}});});
+  const req=request();req.policy.maxAttempts=3;
+  await assert.rejects(invokeModel(provider,req,ledger),error=>error instanceof Error&&error.message==='rate-limit');assert.equal(calls,1);assert.deepEqual(records,['reserve','release']);
+ }
+});
