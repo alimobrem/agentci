@@ -2,6 +2,7 @@ import test from 'node:test';import assert from 'node:assert/strict';
 import {runProviderSmoke} from '../packages/providers/conformance.ts';
 import type {BudgetLedger} from '../packages/providers/budget.ts';
 import type {ModelProvider,ModelRequest,ProviderContext,ModelResponse} from '../packages/providers/types.ts';
+import {randomUUID} from 'node:crypto';
 function setup(){
  const records:string[]=[];const ids=new Set<string>();
  const ledger:BudgetLedger={async reserve(r){assert.equal(r.attempt,1);assert.equal(ids.has(r.requestId),false);ids.add(r.requestId);records.push('reserve');return r.requestId;},async settle(){throw Error();},async unknown(){records.push('unknown');},async releaseNotSent(){records.push('release');}};
@@ -26,5 +27,19 @@ test('conformance rejects missing usage and missing tool proposals even after ac
   await assert.rejects(runProviderSmoke(s.provider,'fixture-model',s.ledger),/invalid-output/);
   assert.equal(s.records.filter(x=>x==='reserve').length,mode==='usage'?1:3);
   assert.equal(s.records.at(-1),'unknown');
+ }
+});
+
+test('tool-result acceptance rejects malformed answers, new proposals and missing usage after accounting',async()=>{
+ for(const mode of ['valid','malformed','proposal','usage']){
+  const s=setup(),invoke=s.provider.invoke;
+  s.provider.invoke=async(req,ctx)=>{
+   const result=await invoke(req,ctx);if(req.messages.at(-1)?.role!=='tool')return result;
+   result.toolCalls=mode==='proposal'?result.toolCalls:[];result.text=mode==='malformed'?'not-json':'{"ok":true}';
+   if(mode==='usage')result.usage.outputTokens=null;return result;
+  };
+  const run=runProviderSmoke(s.provider,'fixture-model',s.ledger,undefined,{appendToolResults:(request,response,results)=>({...request,requestId:randomUUID(),messages:[...request.messages,{role:'assistant',content:response.text,toolCalls:response.toolCalls},{role:'tool',toolCallId:results[0]!.id,content:results[0]!.content}]})});
+  if(mode==='valid')assert.equal((await run).at(-1)!.scenario,'tool-result');else await assert.rejects(run,/invalid-output/);
+  assert.equal(s.records.filter(x=>x==='reserve').length,4);assert.equal(s.records.at(-1),'unknown');
  }
 });

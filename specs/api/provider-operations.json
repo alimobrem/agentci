@@ -13,16 +13,19 @@
         "SPEC-13.2-005",
         "SPEC-13.2-006",
         "SPEC-13.2-007",
-        "SPEC-13.2-008"
+        "SPEC-13.2-008",
+        "SPEC-13.3-003"
       ],
       "tests": [
         "tests/model-request.test.ts",
-        "scripts/package-smoke.mjs"
+        "scripts/package-smoke.mjs",
+        "tests/anthropic-continuation.test.ts"
       ],
       "scenarios": [
         "strict detached normalized request",
         "tool history integrity",
-        "bounded JSON and schema validation"
+        "bounded JSON and schema validation",
+        "Anthropic continuation prefix binding and append-only tool results"
       ]
     },
     {
@@ -45,18 +48,21 @@
       "requirementIds": [
         "SECTION-13.1",
         "SPEC-13.2-005",
-        "SPEC-13.3-002"
+        "SPEC-13.3-002",
+        "SPEC-13.3-003"
       ],
       "tests": [
         "tests/model-response.test.ts",
         "scripts/package-smoke.mjs",
-        "tests/openai-provider.test.ts"
+        "tests/openai-provider.test.ts",
+        "tests/anthropic-continuation.test.ts"
       ],
       "scenarios": [
         "exact request and attempt binding",
         "tool and structured output schema",
         "unknown cost is not zero",
-        "requested and observed model identity with explicit alias snapshot allowlist"
+        "requested and observed model identity with explicit alias snapshot allowlist",
+        "Anthropic continuation prefix binding and append-only tool results"
       ]
     },
     {
