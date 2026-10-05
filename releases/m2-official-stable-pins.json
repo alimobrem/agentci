@@ -1,0 +1,165 @@
+{
+  "kind": "official-stable-pin-review",
+  "checkedAt": "2026-10-05T01:19:12.740Z",
+  "releaseVersion": "0.3.0-m2",
+  "node": {
+    "installed": "26.10.0",
+    "stable": "v26.10.0",
+    "date": "2026-09-21",
+    "source": "https://nodejs.org/dist/index.json"
+  },
+  "packages": [
+    {
+      "name": "@octokit/auth-app",
+      "installed": "8.3.1",
+      "stable": "8.3.1",
+      "source": "https://registry.npmjs.org/%40octokit%2Fauth-app/latest"
+    },
+    {
+      "name": "@octokit/rest",
+      "installed": "22.0.1",
+      "stable": "22.0.1",
+      "source": "https://registry.npmjs.org/%40octokit%2Frest/latest"
+    },
+    {
+      "name": "@temporalio/activity",
+      "installed": "1.24.0",
+      "stable": "1.24.0",
+      "source": "https://registry.npmjs.org/%40temporalio%2Factivity/latest"
+    },
+    {
+      "name": "@temporalio/client",
+      "installed": "1.24.0",
+      "stable": "1.24.0",
+      "source": "https://registry.npmjs.org/%40temporalio%2Fclient/latest"
+    },
+    {
+      "name": "@temporalio/worker",
+      "installed": "1.24.0",
+      "stable": "1.24.0",
+      "source": "https://registry.npmjs.org/%40temporalio%2Fworker/latest"
+    },
+    {
+      "name": "@temporalio/workflow",
+      "installed": "1.24.0",
+      "stable": "1.24.0",
+      "source": "https://registry.npmjs.org/%40temporalio%2Fworkflow/latest"
+    },
+    {
+      "name": "ajv",
+      "installed": "8.20.0",
+      "stable": "8.20.0",
+      "source": "https://registry.npmjs.org/ajv/latest"
+    },
+    {
+      "name": "ajv-formats",
+      "installed": "3.0.1",
+      "stable": "3.0.1",
+      "source": "https://registry.npmjs.org/ajv-formats/latest"
+    },
+    {
+      "name": "fast-xml-parser",
+      "installed": "5.11.2",
+      "stable": "5.11.2",
+      "source": "https://registry.npmjs.org/fast-xml-parser/latest"
+    },
+    {
+      "name": "minimatch",
+      "installed": "10.2.6",
+      "stable": "10.2.6",
+      "source": "https://registry.npmjs.org/minimatch/latest"
+    },
+    {
+      "name": "pg",
+      "installed": "8.23.1",
+      "stable": "8.23.1",
+      "source": "https://registry.npmjs.org/pg/latest"
+    },
+    {
+      "name": "yaml",
+      "installed": "2.9.1",
+      "stable": "2.9.1",
+      "source": "https://registry.npmjs.org/yaml/latest"
+    },
+    {
+      "name": "@apidevtools/swagger-parser",
+      "installed": "13.1.0",
+      "stable": "13.1.0",
+      "source": "https://registry.npmjs.org/%40apidevtools%2Fswagger-parser/latest"
+    },
+    {
+      "name": "@types/node",
+      "installed": "26.6.4",
+      "stable": "26.6.4",
+      "source": "https://registry.npmjs.org/%40types%2Fnode/latest"
+    },
+    {
+      "name": "@types/pg",
+      "installed": "8.23.1",
+      "stable": "8.23.1",
+      "source": "https://registry.npmjs.org/%40types%2Fpg/latest"
+    },
+    {
+      "name": "tsx",
+      "installed": "4.23.15",
+      "stable": "4.23.15",
+      "source": "https://registry.npmjs.org/tsx/latest"
+    },
+    {
+      "name": "typescript",
+      "installed": "7.0.2",
+      "stable": "7.0.2",
+      "source": "https://registry.npmjs.org/typescript/latest"
+    }
+  ],
+  "pythonPackages": [
+    {
+      "name": "pytest",
+      "stable": "9.1.1",
+      "source": "https://pypi.org/pypi/pytest/json"
+    },
+    {
+      "name": "deepeval",
+      "stable": "4.2.8",
+      "source": "https://pypi.org/pypi/deepeval/json"
+    }
+  ],
+  "promptfoo": {
+    "installed": "0.123.1",
+    "stable": "0.123.1",
+    "source": "https://registry.npmjs.org/promptfoo/latest"
+  },
+  "limitations": [
+    "Current stable metadata is not compatibility proof; native CI and published-platform acceptance are separate gates.",
+    "Python source/UBI/image/action/native binary identities and security disposition require their existing checksum records and actual release scans."
+  ],
+  "python": {
+    "installed": "3.14.8",
+    "stable": "3.14.8",
+    "source": "https://www.python.org/downloads/release/python-3148/"
+  },
+  "dockerCli": {
+    "installed": "29.8.2",
+    "stable": "29.8.2",
+    "source": "https://github.com/moby/moby/releases/tag/docker-v29.8.2",
+    "cliTag": "https://github.com/docker/cli/tree/v29.8.2",
+    "sourceCommit": "7fc2dff9bceb96b266a3b2c3117c0955a0d9e616",
+    "excludedPrerelease": "29.9.0-rc.1"
+  },
+  "trivy": {
+    "installed": "0.75.0",
+    "stable": "0.75.0",
+    "source": "https://github.com/aquasecurity/trivy/releases/tag/v0.75.0"
+  },
+  "ubi": {
+    "image": "registry.access.redhat.com/ubi10/ubi-minimal:latest",
+    "observedLatestDigest": "sha256:204e1531cee54562b107fb31e0b327062fc3d5d67af7cc0d2e66b2c572b9044f",
+    "matchesDockerfile": true
+  },
+  "optionalEngineSecurity": {
+    "advisory": "https://github.com/advisories/GHSA-86w9-cpqp-85rv",
+    "upstreamPatchedVersion": null,
+    "downstreamBackport": "https://github.com/digitalbazaar/forge/pull/1152",
+    "disposition": "Existing pinned backport and regression records remain explicit; published per-platform scan/inventory/runtime acceptance is pending."
+  }
+}

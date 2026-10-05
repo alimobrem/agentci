@@ -1309,6 +1309,24 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M2-RELEASE-DOCS",
+      "title": "Prepare source-accurate M2 release documentation and customer/API acceptance map",
+      "requirementIds": [
+        "SPEC-40-030",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T01:15:50.048Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Document the actual M2 controller/evaluator/runner architecture, customer setup, immutable release references, adapter and agent/API interfaces, migration/upgrade/rollback and known security boundaries. Map every M2 scope requirement to concrete source/tests/evidence and keep publication, downloaded-runtime and released-customer gates pending until observed. Verify commands/examples/links against final source and audit current official dependency pins before release.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
