@@ -1,6 +1,6 @@
 # M3 customer model-review transport: draft 1
 
-Status: internal design for M3-07c-0, awaiting parent review. No routes or client
+Status: parent-reviewed draft for M3-07c-0 implementation; not shipped. No routes or client
 methods in this document are available yet. The shipped OpenAPI, operation map,
 M1/M2 baselines and released `agentci review` command remain unchanged. The
 [operation map](../../specs/api/drafts/model-review-transport.json) and
