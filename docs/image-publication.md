@@ -1,7 +1,9 @@
 # M2 image publication
 
-The image publisher is release infrastructure under development. Its presence does
-not mean M2 is released or any new image has passed customer acceptance.
+M2 `0.3.1-m2` has published all six roles with independently verified native
+AMD64/ARM64 downloads and customer acceptance. See [the release record](releases/m2.md).
+Future publications must satisfy these same gates; a workflow definition alone is
+not proof of acceptance.
 
 After Verify passes, `.github/workflows/images.yaml` publishes six roles from one
 selected source revision: `api`, `worker`, `eval-worker`, `eval-runner`,

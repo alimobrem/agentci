@@ -1,5 +1,17 @@
 # AgentCI status
 
+Current distribution: [M2 0.3.1-m2](https://github.com/alimobrem/agentci/releases/tag/v0.3.1-m2),
+source `9bcff7d57c40536c9ddec126e998aa97bd045f03`. Public package installation, all
+six native image roles, security disposition and real customer CLI/API acceptance
+passed. Final phase closure is governed by [the M2 ledger](releases/m2-gates.json),
+[release/demo record](docs/releases/m2.md) and [retrospective](docs/retrospectives/m2.md).
+M3 remains not-started until closure. The original M0–M10 product scope is intact.
+
+## Historical checkpoints
+
+The entries below preserve the status at each earlier checkpoint; they are not
+the current release state.
+
 2026-10-03: M0 is complete, including GitHub publication and asset verification.
 Public source: https://github.com/alimobrem/agentci.
 Release: https://github.com/alimobrem/agentci/releases/tag/v0.1.0-m0.

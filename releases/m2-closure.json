@@ -1,0 +1,42 @@
+{
+  "kind": "M2 release closure record",
+  "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+  "version": "0.3.1-m2",
+  "recordedAt": "2026-10-05T03:47:45.540203+00:00",
+  "effectiveWhen": "Final closure change has passed required checks and merged to main; until then this is the proposed closure record.",
+  "releaseUrl": "https://github.com/alimobrem/agentci/releases/tag/v0.3.1-m2",
+  "requirements": "releases/m2-final-acceptance-audit.json",
+  "publicDistribution": "releases/m2-public-package-download.json",
+  "nativeImages": "releases/m2-native-published-downloads.json",
+  "customerAndAgentApi": "releases/m2-released-customer-acceptance.json",
+  "demo": {
+    "deliveredInCurrentThread": true,
+    "releaseRecord": "docs/releases/m2.md",
+    "passingCheck": "https://github.com/alimobrem/agentci-onboarding-demo/pull/3/checks?check_run_id=111605200155",
+    "regressionCheck": "https://github.com/alimobrem/agentci-onboarding-demo/pull/3/checks?check_run_id=111599001903",
+    "observed": [
+      "Frozen baseline passes while weakened head assertions cannot hide one regression/two critical failures",
+      "Infrastructure cancellation stays explicit",
+      "Fresh same-head review using public installed CLI passes; failed evidence digest remains unchanged",
+      "Public client verifies complete export and rejects invalid auth/wrong identity"
+    ]
+  },
+  "retrospective": "docs/retrospectives/m2.md",
+  "metrics": "releases/m2-retrospective-metrics.json",
+  "priorMilestone": {
+    "milestone": "M1",
+    "version": "0.2.1-m1",
+    "ledger": "releases/m1-gates.json",
+    "passedGates": 18,
+    "retrospective": "docs/retrospectives/m1.md"
+  },
+  "nextMilestone": "M3",
+  "nextMilestoneStatus": "not-started",
+  "originalGoal": "M0 through M10 remains intact; M2 completion is not product completion",
+  "limitations": [
+    "Local customer deployment uses temporary tunnel/shared daemon; no managed production hosting claim",
+    "Docker default; Podman adoption remains deferred with retained findings",
+    "node-forge downstream patch and scanner coverage limits remain explicit",
+    "UI begins in M3; current customer interfaces are GitHub Checks, CLI and API/client"
+  ]
+}

@@ -1,7 +1,8 @@
 # AgentCI development workflow
 
 - Follow the primary spec in milestone order. M0 and expanded M1 have published release
-  evidence. M1 customer acceptance and retrospective passed; M2 is next. Finish
+  evidence. M2 has published acceptance and a final closure record; start M3 only
+  after that closure change is merged and all M2 gates pass. Finish
   each phase's tests, evals, packaging, docs, publication, download verification,
   release and user demo gates before the next. Use `docs/definition-of-done.md`.
 - Before new implementation, add or start a small task in `delivery/tasks.json`

@@ -1,115 +1,349 @@
 {
   "milestone": "M2",
   "version": "0.3.1-m2",
-  "sourceCommit": null,
+  "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
   "gates": [
     {
       "id": "scope",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-final-acceptance-audit.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "ad4fb59d2aab1b12374f4e53ee557e6e977f10a3f3cc575aae6261c80db0c1e8"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "correctness",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-corrected-final-source-ci.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "235df24e817daecc9cf6758d58647cc0cc3732e1248d1dadb471afbafc90aa84"
+        },
+        {
+          "kind": "file",
+          "value": "releases/m2-native-published-downloads.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "api",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-corrected-final-source-ci.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "235df24e817daecc9cf6758d58647cc0cc3732e1248d1dadb471afbafc90aa84"
+        },
+        {
+          "kind": "file",
+          "value": "releases/m2-released-customer-acceptance.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "evals",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-native-published-downloads.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+        },
+        {
+          "kind": "file",
+          "value": "releases/m2-released-customer-acceptance.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "reproducibility",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-corrected-final-source-ci.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "235df24e817daecc9cf6758d58647cc0cc3732e1248d1dadb471afbafc90aa84"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "runtime",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-native-published-downloads.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+        },
+        {
+          "kind": "file",
+          "value": "releases/m2-public-package-download.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "safety",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-published-security-disposition.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "99ceee2df02265fc84dc2ad4f7f26104cd1404e1994a46133843de9596c829aa"
+        },
+        {
+          "kind": "file",
+          "value": "docs/releases/m2-native-security.md",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "c75f72eb592be002d817a592c3693ab827834771650740f8e17035c9fe565595"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "documentation",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "docs/releases/m2.md",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "1da0d850613e1f0431fd8bc61f514d3e6f9f6c997f7c4978c3564ed55bc073ef"
+        },
+        {
+          "kind": "file",
+          "value": "docs/m2-guide.md",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "4e7ffd178073c29febabb7bc4cbcba0d27368a7c9834c1515fef03b04db0efb1"
+        },
+        {
+          "kind": "file",
+          "value": "docs/eval-recovery.md",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "df801c96c042f6243508dea2770a8233b7d05af980d36a4ef0154e8d7bcb240c"
+        },
+        {
+          "kind": "file",
+          "value": "docs/retrospectives/m2.md",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "f0b399097ef93b345aea584593d8de8c99f399d33d9e98447651c1e6c2c2984c"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "release-identity",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-public-package-download.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+        },
+        {
+          "kind": "file",
+          "value": "releases/m2-six-role-publication.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "41a53db39c65a2edb55a6d38805d7cf562533ad4cfa1b691c51734ba77fb6839"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "publication",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-public-package-download.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+        },
+        {
+          "kind": "file",
+          "value": "releases/m2-six-role-publication.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "41a53db39c65a2edb55a6d38805d7cf562533ad4cfa1b691c51734ba77fb6839"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "distribution",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-public-package-download.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+        },
+        {
+          "kind": "file",
+          "value": "releases/m2-native-published-downloads.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "demo",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-released-customer-acceptance.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+        },
+        {
+          "kind": "file",
+          "value": "releases/m2-closure.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "85415b52b154248f9bf85a7305bd5f3426d8ab38b334f0b83a24d49140f5e86c"
+        },
+        {
+          "kind": "file",
+          "value": "docs/releases/m2.md",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "1da0d850613e1f0431fd8bc61f514d3e6f9f6c997f7c4978c3564ed55bc073ef"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "closure",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-closure.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "85415b52b154248f9bf85a7305bd5f3426d8ab38b334f0b83a24d49140f5e86c"
+        },
+        {
+          "kind": "file",
+          "value": "docs/retrospectives/m2.md",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "f0b399097ef93b345aea584593d8de8c99f399d33d9e98447651c1e6c2c2984c"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "live-dogfood",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-hosted-release-evidence-reuse.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "dfe86436973d18c58bb5fd7267768dbea6b9b19a6f63dd9e2dcc545a3d582929"
+        },
+        {
+          "kind": "file",
+          "value": "releases/m2-released-customer-acceptance.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "api-image",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-six-role-publication.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "41a53db39c65a2edb55a6d38805d7cf562533ad4cfa1b691c51734ba77fb6839"
+        },
+        {
+          "kind": "file",
+          "value": "releases/m2-native-published-downloads.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "worker-image",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-six-role-publication.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "41a53db39c65a2edb55a6d38805d7cf562533ad4cfa1b691c51734ba77fb6839"
+        },
+        {
+          "kind": "file",
+          "value": "releases/m2-native-published-downloads.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "customer-onboarding",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-released-customer-acceptance.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+        },
+        {
+          "kind": "file",
+          "value": "releases/m2-public-package-download.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     },
     {
       "id": "agent-api",
-      "status": "pending",
-      "evidence": [],
-      "reason": "M2 implementation and matching-source release verification pending."
+      "status": "passed",
+      "evidence": [
+        {
+          "kind": "file",
+          "value": "releases/m2-released-customer-acceptance.json",
+          "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+          "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+        }
+      ],
+      "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
     }
   ],
   "customerAcceptance": true

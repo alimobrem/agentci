@@ -1,0 +1,444 @@
+{
+  "kind": "M2 hosted evidence applicability to frozen release",
+  "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+  "version": "0.3.1-m2",
+  "priorProducerCommit": "8b0901bd6a9fe8ac4c2edffc5a97cd7b4452ca43",
+  "priorEvidence": [
+    "releases/m2-hosted-regression-ci.json",
+    "releases/m2-hosted-recovery-ci.json"
+  ],
+  "unchangedFiles": [
+    {
+      "path": ".github/workflows/dogfood.yaml",
+      "sha256": "23e36a910677cd3e54517602a12d07a4f633ae3cae05d168afac2b79f748a341"
+    },
+    {
+      "path": "Dockerfile",
+      "sha256": "8f84b969ed36c45b06a8501ba8fdea6efb9f6db92eea8b914d45e28e2533a423"
+    },
+    {
+      "path": "apps/api/main.ts",
+      "sha256": "c788ac2757e36c983b4cbbf73815dd753d5c3ba91e13128df65ae009c792f6d6"
+    },
+    {
+      "path": "apps/api/server.ts",
+      "sha256": "33dbc548946b841675b07ab4c4ebaff4d005afff6ca9f176f317856cdef6a592"
+    },
+    {
+      "path": "apps/control/main.ts",
+      "sha256": "0908fdf963dae55b5d808eb17bf1ec3b25644d4568c7c348c89934be2324204f"
+    },
+    {
+      "path": "apps/control/server.ts",
+      "sha256": "ce3e525d0ca4b0b18dbb6119ce0292da92a9d85ad9e3981afd61a11853f9c013"
+    },
+    {
+      "path": "apps/eval-worker/activities.ts",
+      "sha256": "df266bc594f199e61b2b0f015f436eb6cebc2fc6e537d64f6e6541a9800b344e"
+    },
+    {
+      "path": "apps/eval-worker/client-runtime.ts",
+      "sha256": "788b20536e30ef618b1aa32baa78b7239e420cb0e65ce7027ba291bbc8c0d907"
+    },
+    {
+      "path": "apps/eval-worker/config.ts",
+      "sha256": "171c7effb681f92bcd1ac8a3fe0286ccbebf7b081eed0bb51ba11f076cf49e13"
+    },
+    {
+      "path": "apps/eval-worker/container-client.ts",
+      "sha256": "f2e140e841490f790d6e6359c2cce41ed23876c25c079e5496e91aac319eacdb"
+    },
+    {
+      "path": "apps/eval-worker/main.ts",
+      "sha256": "6dc5e4396425418488bb70897c1c277b55aaff7dceb4d4c82ef646f44f571490"
+    },
+    {
+      "path": "apps/eval-worker/privileges.ts",
+      "sha256": "70e57930be6a10e9967590ff80a5c427e5aab26870503f591218e8e0b2890475"
+    },
+    {
+      "path": "apps/eval-worker/unit.ts",
+      "sha256": "3a64b593e92fb023a9456c3bc5b2cfed35351978b1a6f92fa3f50bfb773925ab"
+    },
+    {
+      "path": "apps/eval-worker/workflows.ts",
+      "sha256": "3210dee7fec99fce19aa651bb644a7c42c5d7eca084aba207243a44d142ae475"
+    },
+    {
+      "path": "apps/worker/activities.ts",
+      "sha256": "26dfc120b1ff9a0a137a61f081bee0a5230076f96163ee8b30be5ef71aca66ae"
+    },
+    {
+      "path": "apps/worker/dispatch.ts",
+      "sha256": "c986f5af31e57000ec961c5e7aa9debceab22c72bdcbd405d68893847c769b16"
+    },
+    {
+      "path": "apps/worker/eval-activities.ts",
+      "sha256": "d0b475bccbecab4c84f2bb660ed77d013c90e4d38247548a2dbd79c071c3e332"
+    },
+    {
+      "path": "apps/worker/eval-workflows.ts",
+      "sha256": "0453c22a8a912ca326cefefca2b8425212bac172f8e95cd2549ada2864349cc9"
+    },
+    {
+      "path": "apps/worker/hosted-activities.ts",
+      "sha256": "5ea1e66be54c09bced97d9809ea4063616d639d6d184b9dec420a1eb640aeaa7"
+    },
+    {
+      "path": "apps/worker/main.ts",
+      "sha256": "e55d5c51beb30e83628e7ffc3c7e52c198378103aba15f8ba8831cd1a09c1fbe"
+    },
+    {
+      "path": "apps/worker/recovery.ts",
+      "sha256": "ae951074a9d305bc33cfead49a3b506b1bb4f8efe303ddbbb9bc88d586c59925"
+    },
+    {
+      "path": "apps/worker/workflows.ts",
+      "sha256": "74429036e0e93b36b4332ba6fcc46836012207b5233db8f5d045b80c8df96364"
+    },
+    {
+      "path": "deploy/engines/patches/README.md",
+      "sha256": "2d961d0bea18051859d2616695d414fa5f09fc8dd28cdc8fbd5b79f45cfbdffa"
+    },
+    {
+      "path": "deploy/engines/patches/apply-forge-backport.mjs",
+      "sha256": "7572020ac161b14ae7dd3acc6138bffea52962799ca5a058d3931dd305cf9c71"
+    },
+    {
+      "path": "deploy/engines/patches/forge-backport.json",
+      "sha256": "cbaf74c84b70b1a6b63bd5770468a15f89d3d8d4f1724030a01a2318f271ae75"
+    },
+    {
+      "path": "deploy/engines/patches/forge-nested-digest-fixture.json",
+      "sha256": "542603a55c4eef10700594ab6dfddc68ad4b4ea44cf61c027b23632961c5b5e0"
+    },
+    {
+      "path": "deploy/engines/patches/verify-forge-backport.cjs",
+      "sha256": "6790c645ad48b9e09f0396882a5d03af69bc5044c09eea365c719434e0e37cdb"
+    },
+    {
+      "path": "deploy/security/docker-cli-vendor.mod",
+      "sha256": "0836699fe2ae28a136aabd51f932b825e0653c48ae200613b72f07a74f2a3868"
+    },
+    {
+      "path": "deploy/security/native-components.json",
+      "sha256": "308f9a1613be3c1b30865a756b552ab8e9dc46f80095287c8084fa626d629aab"
+    },
+    {
+      "path": "deploy/security/podman-client-amd64.json",
+      "sha256": "2f462e2819fccb6bc426401ee98d4c426ce1425b64ae5c712b0b2225e2b242ac"
+    },
+    {
+      "path": "deploy/security/podman-client-arm64.json",
+      "sha256": "7df955b820a0b2d139047a9806659644fbb0b833cb64a5de476ed9d43b76bd17"
+    },
+    {
+      "path": "deploy/security/podman-client-go.mod",
+      "sha256": "8abab2ab49421804b6416c14f5bdc1783a07d2c7d96a7daa71210e6d12a66fa5"
+    },
+    {
+      "path": "evals/.gitkeep",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evals/agentci-self.yaml",
+      "sha256": "61b3ee1dd91c110e18d06b7c898746b5c651c80fba5964fb1f8c2f0eb1a5d1d1"
+    },
+    {
+      "path": "evals/contracts.yaml",
+      "sha256": "31c399ba8be6726b42d328b1699f32b5327cb4a2c68159b62cfd062ba5a57e13"
+    },
+    {
+      "path": "evals/m1-semantic.yaml",
+      "sha256": "fa6c2ea4d921f04eabf41a699144ec978a82f4bf4b00e002960bf51c89b3ee9a"
+    },
+    {
+      "path": "packages/client/index.ts",
+      "sha256": "9e2d76b91edd6e9abfd8a76912848c4966aba17ca4c1919522a4346cb6c18605"
+    },
+    {
+      "path": "packages/evals/adapters.ts",
+      "sha256": "32da924624aff8a0169b3a4ada22ee91afa8b32c8d6bf5843b52fe87548b3bc9"
+    },
+    {
+      "path": "packages/evals/bootstrap.ts",
+      "sha256": "fce43c685a7f0e7a78132e0fbb5f5753c5693ea09e72b66d02842191ccbf52ec"
+    },
+    {
+      "path": "packages/evals/comparison.ts",
+      "sha256": "dbce91c53de32095cb865a4bc08897fd290462b3017349531a9b5c15b5a45d26"
+    },
+    {
+      "path": "packages/evals/contracts.ts",
+      "sha256": "5a506730bd68fcbd8aeaf229649a9d8300ba8c1acf004b771007f93e443e999c"
+    },
+    {
+      "path": "packages/evals/execution.ts",
+      "sha256": "1ef46838fbf8973db239b0b625c60741b51066b6e5cd7e8612042c35bd6648cc"
+    },
+    {
+      "path": "packages/evals/export.ts",
+      "sha256": "2c39e2b2f7485788c58a56da83f4677d95f88760b704d4498f7385e088b29350"
+    },
+    {
+      "path": "packages/evals/harness.ts",
+      "sha256": "232318b50677726be3f6747b77f6ba95929cef094cef5a8fc4d3a7e350af3eb2"
+    },
+    {
+      "path": "packages/evals/http.ts",
+      "sha256": "4d492cfa9024a503d8a6e1b691360a9d2cb881fe910d155a914f7024c7aa2fa4"
+    },
+    {
+      "path": "packages/evals/json/eval-comparison.schema.json",
+      "sha256": "a29a3368f2b0c47b5b29e07ef51ad5781a89bc73bc8207eae8a4558191a8713d"
+    },
+    {
+      "path": "packages/evals/json/eval-export-frame.schema.json",
+      "sha256": "5a9f2334a7917b2087f05cf7680e8c6b4d9e8fff9e85bbcd840888481cf419bb"
+    },
+    {
+      "path": "packages/evals/json/eval-run.schema.json",
+      "sha256": "577ef3be92d9454f4ea912dd101021b098eaaed32d71f518ac084b01254c4cc4"
+    },
+    {
+      "path": "packages/evals/json/eval-suite.schema.json",
+      "sha256": "fea723ded25475851e36101a9cf26cdeba0afebdbcd7971d00983e34f6222787"
+    },
+    {
+      "path": "packages/evals/json/http-eval-request.schema.json",
+      "sha256": "fd1dc36ccbd5cfaf29fc5cb20b81b50bb6d34be5d4680b43f58414719f7719ac"
+    },
+    {
+      "path": "packages/evals/json/http-eval-response.schema.json",
+      "sha256": "165bbed7caf7abe16a21574e8fefbeb4cce947c1fe4df37280a01946f7241d49"
+    },
+    {
+      "path": "packages/evals/openapi.ts",
+      "sha256": "9f623b77a11d3a38c930e9651805ad146ca2e7d834a057671293ff9854fe578c"
+    },
+    {
+      "path": "packages/evals/orchestration.ts",
+      "sha256": "79d72250e629a420fc1fb7c4a55fa318e88ef77debfe5c52f0e47f4b4e93f7c4"
+    },
+    {
+      "path": "packages/evals/plan.ts",
+      "sha256": "ffb37c9a709988ad7abcbbfe2484f2dfa45806f40c46dea4cf5dd888c518cb8c"
+    },
+    {
+      "path": "packages/evals/request-id.ts",
+      "sha256": "a28dd82f5e2404c2e01568a933c4d1b8165f5045801da576aae206ebe824513c"
+    },
+    {
+      "path": "packages/evals/runner.ts",
+      "sha256": "2519ff515b65c46dc9edad91ed22f9ea7049a2957c70b3e695a339d5d8aedc83"
+    },
+    {
+      "path": "packages/evals/statistics.ts",
+      "sha256": "b4253376cf5687f8a5925f7c73a4d862ef7d026305858f1b16098b60e050b7ae"
+    },
+    {
+      "path": "packages/github/client.ts",
+      "sha256": "7aec6803af30dc6f40179b80a9ffcc2f7703b99b2904ea4322fdcc1ce223785a"
+    },
+    {
+      "path": "packages/github/dogfood.ts",
+      "sha256": "174496a7e5bd494d19c2fdc1107ebf09a5966b0a91bdf841423b9cdd059611a1"
+    },
+    {
+      "path": "packages/github/eval-check.ts",
+      "sha256": "88150c6772aa9335dbe3f33f0b1297ca9b37cd2c0035487e9bcfa27b97be86d5"
+    },
+    {
+      "path": "packages/github/hosted-evidence.ts",
+      "sha256": "792552609d1d053b211e57b6e083ccb496d5ee14bb68841d32b338558e400540"
+    },
+    {
+      "path": "packages/github/webhook.ts",
+      "sha256": "91ee878b2b5149c5ff74fe01b1ba9e7d65e99d3776b1945ff50bb2f2b9ec1481"
+    },
+    {
+      "path": "packages/identity/uuid.ts",
+      "sha256": "8a79415ea4a4b4f5d5b17e6b023499be14e58b4435091d831b20ef89c6d1ad2e"
+    },
+    {
+      "path": "packages/onboarding/config.ts",
+      "sha256": "e0d79e0c4df1ebf122a3e6cf01fc9838310ead583090533f41a815ce125bbe89"
+    },
+    {
+      "path": "packages/onboarding/init.ts",
+      "sha256": "514de7ac43973526d9fba6da8d8ea45903a6937a4dce9a7ba4ead4fd60f0ec68"
+    },
+    {
+      "path": "packages/onboarding/setup.ts",
+      "sha256": "aa597f32b0a0617393172d4e7efd3d6c243beaab453d90b3da8051afdf20a02b"
+    },
+    {
+      "path": "packages/operator/review.ts",
+      "sha256": "acff10b36135fc3769facc01c9d38d3212a81dcb09962db9a27e8bdac27daead"
+    },
+    {
+      "path": "packages/project/index.ts",
+      "sha256": "d156e8bdf71c6f646431c1dbdbbad12adceb13b107968fa9e14c5d08aa4e0c70"
+    },
+    {
+      "path": "packages/review/analysis.schema.json",
+      "sha256": "464535fcf09f918b5603f2fc21b7146b8be7e1740030a6c95dda77ff1b0d9651"
+    },
+    {
+      "path": "packages/review/engine.ts",
+      "sha256": "d21ab22a152dd6ca8b61ae33789c8774a26c8b3c278e7681e275be06e9a148fc"
+    },
+    {
+      "path": "packages/review/git.ts",
+      "sha256": "d2720c9fb9791bd06ed7ed63b43b562ef7f07d6f01d9998a203a403c9eebd556"
+    },
+    {
+      "path": "packages/review/types.ts",
+      "sha256": "8493786098e190a3db928afb1eaa45073a185808699eafbd85a642b9a00d4de5"
+    },
+    {
+      "path": "packages/runtime/config.ts",
+      "sha256": "7a96a4bf4f9caddda7879f9aeb0c5acfce6b56b2a5b5104400b51222d849c3f9"
+    },
+    {
+      "path": "packages/schemas/index.ts",
+      "sha256": "989f82d3bf8d2294cc7ca19235243975743cf146f15cc0ce150fb122e66bb4ca"
+    },
+    {
+      "path": "packages/schemas/json/agent-project.schema.json",
+      "sha256": "8322727e6918e625dad664787581d35b09f8f9e919a2b387e707928d62f5a7d5"
+    },
+    {
+      "path": "packages/schemas/json/evidence.schema.json",
+      "sha256": "9733ce350ca09a4357b3839672072416eef3b8f621d39d9dcab6d891b84bc4eb"
+    },
+    {
+      "path": "packages/schemas/json/finding.schema.json",
+      "sha256": "9c39eca2ab45bfba61081aae852b8f54c43a759e4b4cb39d202ea030937fbed3"
+    },
+    {
+      "path": "packages/schemas/json/requirement.schema.json",
+      "sha256": "c52c1a827b798aae6041144568c90111a62d98ef21a11915313650e5a0310e92"
+    },
+    {
+      "path": "packages/storage/evals.ts",
+      "sha256": "b756069dc2bacf71c238065e00707a8ac4486fa385e58aac69a2b04b3ddcb2f6"
+    },
+    {
+      "path": "packages/storage/postgres.ts",
+      "sha256": "4fdb27d83748153de8e1a63ff14dd399a025d0ebcefbc0b9b508ed2851bdc797"
+    },
+    {
+      "path": "packages/storage/review-attempts.ts",
+      "sha256": "4ee446f2f3070f4172006364551ccc3adae006f2f73245138fbca5072790162e"
+    },
+    {
+      "path": "scripts/agent-api-demo.mjs",
+      "sha256": "a1579f2a1c02d794fb92426e9106f2d49a963a9aba795d46a4e42562b9d6e746"
+    },
+    {
+      "path": "scripts/agentci-self-eval.mjs",
+      "sha256": "ea16f64576556006d17c1d993bea1cd66695f70156d499a4767e770ae93d125f"
+    },
+    {
+      "path": "scripts/api-compatibility.mjs",
+      "sha256": "742a3cf4f786f7bc2a97f0a37368fd005694f73d847fa33e411a053a1063341a"
+    },
+    {
+      "path": "scripts/benchmark-feedback.mjs",
+      "sha256": "76fef4784b7906485d05af83b874c84d9ffad53a44963769cd8240a91cdc644b"
+    },
+    {
+      "path": "scripts/build-assets.mjs",
+      "sha256": "60f37cd2dc27fd6e1195cea0ca0f10d0047169a597e1b1877867044c29566fce"
+    },
+    {
+      "path": "scripts/check-api.ts",
+      "sha256": "49255ed08cedc500ae897d73fa4a2fbaaa3a5a63958d9b581a53a73cc210fe65"
+    },
+    {
+      "path": "scripts/check-eval-deployment.mjs",
+      "sha256": "09bf3c06a82d2fa5087b3bceef4ed21c04a58133f7af272892a726edefd74d10"
+    },
+    {
+      "path": "scripts/check-fast.mjs",
+      "sha256": "a1778f51ec220dd2813707c748d56c4325e1029b8733f540e1e3e6217313710a"
+    },
+    {
+      "path": "scripts/check-scan.mjs",
+      "sha256": "095140472af113e1439e40e634c062455adbc875caf238bcb69f6b1b33c151d1"
+    },
+    {
+      "path": "scripts/check-workflows.mjs",
+      "sha256": "e97d6ada35c1099ed12e8a4c4234e8f3fa904c4a261e26338b36362d6bfbb050"
+    },
+    {
+      "path": "scripts/delivery.ts",
+      "sha256": "74c83eaef60279aae7d021c39065d8c59ff310482e0a991ca1248a9fa740d60b"
+    },
+    {
+      "path": "scripts/demo-m1.mjs",
+      "sha256": "93ec9d943b322ac8c78bdd7da490f873b5544772c2cc825ee2993456db26a055"
+    },
+    {
+      "path": "scripts/eval-contracts.ts",
+      "sha256": "d86fbb4e465e4a4d9573f81a4b0a8d24759929cec2a5cb5326c4a4597d3cd5b3"
+    },
+    {
+      "path": "scripts/eval-review.ts",
+      "sha256": "e3b3df85587e49571d7264776d18ea2ab267202cef77d24de718f5623ac2b974"
+    },
+    {
+      "path": "scripts/eval-worker-image-smoke.mjs",
+      "sha256": "13833d35e0496f81817d6522b3663c94d4509bfbcd8b20847fd2157edb135b26"
+    },
+    {
+      "path": "scripts/github-app-setup.mjs",
+      "sha256": "abe110e887c1e631e5a7fd6679826045fbe820ba1812269b85a0992af1e5a5e4"
+    },
+    {
+      "path": "scripts/image-smoke.mjs",
+      "sha256": "6598a5a548e15f0fa0cd58c97568e743c08ccb448268081b5699b0fb8fd0407e"
+    },
+    {
+      "path": "scripts/lib/delivery.ts",
+      "sha256": "61df53bb899b04e59da925527248742eead63f2f47754c80ad28f21c2e998542"
+    },
+    {
+      "path": "scripts/package-smoke.mjs",
+      "sha256": "1529172a885eacd20beb5ae4d83c20b63a5950410c5ea4bc61dc7598cf833f13"
+    },
+    {
+      "path": "scripts/published-downloads.mjs",
+      "sha256": "9c0d7289646dbfacd31849186578d1ac2a4c26353c00e36588c576978c9e63bc"
+    },
+    {
+      "path": "scripts/status.ts",
+      "sha256": "c76db194915660fbb575c0113a16b00eb43af97101ce47d9561c98e29852dd48"
+    },
+    {
+      "path": "scripts/verification-summary.mjs",
+      "sha256": "9db2dd5a974bb961ac258a7c603da59e93de9bde5d06106559b0f36d4f4ece6d"
+    },
+    {
+      "path": "scripts/verify-native-provenance.mjs",
+      "sha256": "c121ba4a840c17960b23e640c6e1b3aefc528d729a2d0f6565f9ebac31353839"
+    }
+  ],
+  "dependencyGraphsUnchanged": true,
+  "changes": [
+    "Product and optional-engine root version changed from 0.3.0-m2 to 0.3.1-m2; dependency graphs unchanged.",
+    "Image publication manifest resolution changed and passed independent publication/native acceptance.",
+    "Compose default tags changed; real customer acceptance uses immutable published references.",
+    "Planning validator and documentation changes do not alter hosted evaluation behavior."
+  ],
+  "currentSourceAcceptance": [
+    "releases/m2-corrected-final-source-ci.json",
+    "releases/m2-native-published-downloads.json",
+    "releases/m2-released-customer-acceptance.json"
+  ],
+  "limitations": [
+    "Previous hosted producer version and source identities remain unchanged in historical records; they are not relabeled as new executions.",
+    "Runtime/eval/workflow byte equality establishes scope for reuse; final product-source and native published-image acceptance are separately retained."
+  ]
+}

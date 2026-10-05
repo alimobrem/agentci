@@ -1,10 +1,10 @@
 # M2 customer and release guide
 
-Target version: `0.3.1-m2`. This candidate is not yet published or phase-complete.
-The latest downloadable release remains M1 `0.2.1-m1`. Follow the
-[readiness record](releases/m2-readiness.md) and [release gates](../releases/m2-gates.json)
-before relying on a distribution claim. Infrastructure CI and local examples do
-not replace anonymous downloaded-runtime or released customer acceptance.
+Published version: [0.3.1-m2](https://github.com/alimobrem/agentci/releases/tag/v0.3.1-m2).
+All six UBI roles have verified anonymous native downloads on AMD64 and ARM64.
+The public package passed clean installation and real customer CLI/client
+acceptance. See [the release record](releases/m2.md) and
+[gate ledger](../releases/m2-gates.json) for phase completion and limitations.
 
 ## What a customer uses
 
@@ -83,12 +83,12 @@ not VM isolation against host-kernel vulnerabilities.
 | --- | --- |
 | SPEC-40-031: eval manifest | `packages/evals/json/eval-suite.schema.json`, manifest/selection tests; [contract acceptance](../releases/m2-contract-acceptance.json) |
 | SPEC-40-032/033: command and pytest | `tests/integration/eval-runner.test.ts`: actual pass/fail/no-tests/error, cancellation, deadline/output limits, frozen assertions and isolation |
-| SPEC-40-034: optional engines | `tests/integration/eval-engines.test.ts` and HTTP recovery tests; installed engine formats, real execution and explicit provider identity. Published-platform security/distribution remains pending |
+| SPEC-40-034: optional engines | `tests/integration/eval-engines.test.ts` and HTTP recovery tests; installed engine formats, real execution and explicit provider identity. Published native platforms and documented downstream security acceptance passed |
 | SPEC-40-035: normalization | `tests/eval-adapters.test.ts`, contract acceptance and actual installed-engine integration; missing data and observations remain distinct |
 | SPEC-40-036/037: statistics and comparison | `tests/eval-statistics.test.ts`, comparison/PR lifecycle tests and frozen self-evals; base/head scenario regressions and explicit thresholds |
-| SPEC-40-039: PR behavioral deltas | [hosted regression](../releases/m2-hosted-regression-ci.json) and [actual passing recovery](../releases/m2-hosted-recovery-ci.json), retained exact-head App Checks; released customer replay still pending |
+| SPEC-40-039: PR behavioral deltas | [hosted regression](../releases/m2-hosted-regression-ci.json) and [actual passing recovery](../releases/m2-hosted-recovery-ci.json), retained exact-head App Checks; released customer acceptance is retained in `releases/m2-released-customer-acceptance.json` |
 | Section 11 classes, selection, trials, adapters and normalized results | [phase requirement map](phases/m2.md), shared schema/API fixtures and source-verified native CI checkpoints |
-| Packaging, security, publication, downloads and demo | [definition of done](definition-of-done.md), [M2 readiness](releases/m2-readiness.md), [native security](releases/m2-native-security.md) and the still-open M2 gate ledger |
+| Packaging, security, publication, downloads and demo | [definition of done](definition-of-done.md), [M2 readiness](releases/m2-readiness.md), [native security](releases/m2-native-security.md) and the M2 gate ledger |
 
 Every release must retain final source/version, package hashes, six image digests,
 per-platform scans/inventories and native runtime results, anonymous downloads,
