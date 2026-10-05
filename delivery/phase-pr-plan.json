@@ -1,0 +1,3813 @@
+{
+  "schemaVersion": 1,
+  "state": "proposed-plan-not-implementation",
+  "scope": "M3–M10 milestone inventory primary ownership; cross-cutting requirements require M3-00 audit and each phase scope gate",
+  "sizes": {
+    "S": {
+      "focusedEffortDays": [
+        0.5,
+        1
+      ]
+    },
+    "M": {
+      "focusedEffortDays": [
+        1,
+        3
+      ]
+    },
+    "L": {
+      "focusedEffortDays": [
+        3,
+        5
+      ]
+    }
+  },
+  "phases": [
+    {
+      "id": "M3",
+      "name": "Multi-model review",
+      "exit": "A real PR is reviewed by a provider different from its coding provider; a reproduced defect is confirmed, while unsupported assertions remain unconfirmed.",
+      "prs": [
+        {
+          "id": "M3-00",
+          "title": "Scope and API design",
+          "size": "S",
+          "dependsOn": [
+            "M2 closure"
+          ],
+          "acceptance": "Audit cross-cutting requirements and schema examples; freeze provider/review/finding contracts, versioning, budget policy and acceptance corpus before implementation.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-01",
+          "title": "Provider core and bounded execution",
+          "size": "M",
+          "dependsOn": [
+            "M3-00"
+          ],
+          "acceptance": "Normalized invoke/stream/capabilities/extensions and usage; cancellation, bounded retries, unsupported-feature errors and budget exhaustion tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-02",
+          "title": "OpenAI adapter",
+          "size": "M",
+          "dependsOn": [
+            "M3-01"
+          ],
+          "acceptance": "Official provider integration behind core; request/stream/schema conformance, redacted errors, live opt-in smoke and outage tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-03",
+          "title": "Anthropic adapter",
+          "size": "M",
+          "dependsOn": [
+            "M3-01"
+          ],
+          "acceptance": "Same conformance corpus; explicit feature translation/unsupported capabilities; live smoke without secret leakage.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-04",
+          "title": "xAI adapter",
+          "size": "M",
+          "dependsOn": [
+            "M3-01"
+          ],
+          "acceptance": "Same conformance corpus plus live smoke; do not assume endpoint similarity proves compatibility.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-05",
+          "title": "Independent reviewer roles",
+          "size": "M",
+          "dependsOn": [
+            "M3-02",
+            "M3-03",
+            "M3-04"
+          ],
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-06",
+          "title": "Finding lifecycle and reproduction",
+          "size": "L",
+          "dependsOn": [
+            "M3-05"
+          ],
+          "acceptance": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-07",
+          "title": "Customer/API/check integration",
+          "size": "M",
+          "dependsOn": [
+            "M3-06"
+          ],
+          "acceptance": "Review CLI and API operations with compatibility coverage, exact-head Checks, independent-provider dogfood, unsupported claims and confirmed regression demo; decide optional router/later adapters explicitly.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-07-ui-foundation",
+          "title": "Next.js UI foundation and packaging",
+          "size": "M",
+          "dependsOn": [
+            "M3-07"
+          ],
+          "acceptance": "Next.js App Router React/TS shell with Tailwind and reviewed shadcn/Radix source, theme/accessibility tokens, Zod UI-input contracts; production standalone UBI image startup, build/license/security checks and no server secrets in client bundles. Data views stay unavailable until authenticated routes ship.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-07-ui-session",
+          "title": "Browser session and authorized API access",
+          "size": "M",
+          "dependsOn": [
+            "M3-07-ui-foundation"
+          ],
+          "acceptance": "Server-managed secure sessions/OIDC decision, authorization on every Next.js server data route, tenant/repository scoping and contract-checked API access; no operator bearer tokens or App/provider keys in browser assets. Unauthorized, expired, CSRF and cross-tenant cases fail; sensitive data is not shared by caching.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-07-dashboard",
+          "title": "Initial web control-plane dashboard",
+          "size": "M",
+          "dependsOn": [
+            "M3-07-ui-session"
+          ],
+          "acceptance": "Read-only Next.js/React/TypeScript with Tailwind/shadcn/Radix PR dashboard shows exact head, review/eval status, risk, confirmed/unconfirmed findings, model disagreement and evidence links. Authenticated backend access, tenant isolation, accessible empty/error states and live customer walkthrough; never embed operator/App credentials in browser assets.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-08",
+          "title": "Release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M3-07",
+            "M3-07-dashboard"
+          ],
+          "acceptance": "Publish verified CLI/service artifacts; fresh customer review, provider failure recovery and released-build success/failure demo; close all gates and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M4",
+      "name": "Instrumentation",
+      "exit": "Released Python and TypeScript SDKs export correlated OTLP traces; the AgentCI control plane traces its own model/tool operations.",
+      "prs": [
+        {
+          "id": "M4-01",
+          "title": "Telemetry contracts and privacy",
+          "size": "M",
+          "dependsOn": [
+            "M3 closure"
+          ],
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures.",
+          "status": "planned"
+        },
+        {
+          "id": "M4-02",
+          "title": "TypeScript SDK",
+          "size": "M",
+          "dependsOn": [
+            "M4-01"
+          ],
+          "acceptance": "Instrument existing clients and manual spans; context propagation, errors/cancellation, opt-out and no hidden reasoning capture.",
+          "status": "planned"
+        },
+        {
+          "id": "M4-03",
+          "title": "Python SDK",
+          "size": "M",
+          "dependsOn": [
+            "M4-01"
+          ],
+          "acceptance": "Equivalent behavior and shared fixtures; supported Python matrix, async/manual spans and installed wheel smoke.",
+          "status": "planned"
+        },
+        {
+          "id": "M4-04",
+          "title": "OTLP and backend integration",
+          "size": "M",
+          "dependsOn": [
+            "M4-02",
+            "M4-03"
+          ],
+          "acceptance": "Reuse OTel collector/exporters; W3C propagation, bounded buffers, backend outage/backpressure and metadata/content boundary tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M4-05",
+          "title": "Trace API and explorer linkage",
+          "size": "M",
+          "dependsOn": [
+            "M4-04"
+          ],
+          "acceptance": "Authorized trace references, PR→eval→trace navigation and CLI inspection; tenant isolation, retention and safe Kubernetes correlation IDs.",
+          "status": "planned"
+        },
+        {
+          "id": "M4-06",
+          "title": "Control-plane dogfood and velocity",
+          "size": "M",
+          "dependsOn": [
+            "M4-05"
+          ],
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown.",
+          "status": "planned"
+        },
+        {
+          "id": "M4-07",
+          "title": "SDK/service release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M4-06"
+          ],
+          "acceptance": "Publish npm/Python artifacts and changed UBI images, clean installed SDK examples, trace-backend outage demo, download verification and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M5",
+      "name": "MCP Gateway",
+      "exit": "Real tool discovery and invocation pass through the released gateway, with visible traces and enforced allow/deny/approval policies.",
+      "prs": [
+        {
+          "id": "M5-01",
+          "title": "Gateway contracts and transport",
+          "size": "M",
+          "dependsOn": [
+            "M4 closure"
+          ],
+          "acceptance": "Pin current MCP capabilities/transports against official spec; client/server boundary, session lifecycle, version negotiation and cancellation fixtures.",
+          "status": "planned"
+        },
+        {
+          "id": "M5-02",
+          "title": "Discovery and schema snapshots",
+          "size": "M",
+          "dependsOn": [
+            "M5-01"
+          ],
+          "acceptance": "Forward discovery, namespace collisions and immutable tool revisions; server annotations cannot define trusted policy.",
+          "status": "planned"
+        },
+        {
+          "id": "M5-03",
+          "title": "Authentication and identity",
+          "size": "M",
+          "dependsOn": [
+            "M5-02"
+          ],
+          "acceptance": "Auth integration/passthrough with scoped identity; denied tenant, token audience and credential forwarding/leak tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M5-04",
+          "title": "Policy and human approval",
+          "size": "L",
+          "dependsOn": [
+            "M5-03"
+          ],
+          "acceptance": "Structured allow/deny/approval, side-effect classification and rate budgets; approval identity/expiry, replay resistance and no unauthorized side effects.",
+          "status": "planned"
+        },
+        {
+          "id": "M5-05",
+          "title": "Tracing and redaction",
+          "size": "M",
+          "dependsOn": [
+            "M5-04"
+          ],
+          "acceptance": "Correlate invocation/result/policy evidence; redact before export/storage and preserve useful metadata during upstream failures.",
+          "status": "planned"
+        },
+        {
+          "id": "M5-06",
+          "title": "Gateway deploy and adversarial acceptance",
+          "size": "M",
+          "dependsOn": [
+            "M5-05"
+          ],
+          "acceptance": "UBI service, health/shutdown/upgrade docs and burst/outage/injection tests against real safe MCP servers; SDK/API/client example.",
+          "status": "planned"
+        },
+        {
+          "id": "M5-07",
+          "title": "Release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M5-06"
+          ],
+          "acceptance": "Publish/download gateway artifacts; demonstrate allowed, denied and approval-required tools with evidence; customer setup and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M6",
+      "name": "Release evidence",
+      "exit": "A verified release can be reconstructed to exact source, spec, evals, artifacts and model/tool/policy inputs; tampering is rejected.",
+      "prs": [
+        {
+          "id": "M6-01",
+          "title": "AgentRelease contracts and immutability",
+          "size": "M",
+          "dependsOn": [
+            "M5 closure"
+          ],
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten.",
+          "status": "planned"
+        },
+        {
+          "id": "M6-02",
+          "title": "Bundle construction and storage",
+          "size": "M",
+          "dependsOn": [
+            "M6-01"
+          ],
+          "acceptance": "Content-addressed manifests, bounded evidence references, tenant authorization, retention and independent reconstruction verification.",
+          "status": "planned"
+        },
+        {
+          "id": "M6-03",
+          "title": "Signing and verification",
+          "size": "M",
+          "dependsOn": [
+            "M6-02"
+          ],
+          "acceptance": "Use existing signing/attestation standards; identity/trust policy and offline verification; altered digest, wrong signer and missing artifact rejection.",
+          "status": "planned"
+        },
+        {
+          "id": "M6-04",
+          "title": "GitHub CI integration",
+          "size": "M",
+          "dependsOn": [
+            "M6-03"
+          ],
+          "acceptance": "Build/verify/publish evidence from trusted source; idempotency and stale/cancelled CI rejection; agent-readable release API and CLI.",
+          "status": "planned"
+        },
+        {
+          "id": "M6-05",
+          "title": "Promotion decision records",
+          "size": "M",
+          "dependsOn": [
+            "M6-04"
+          ],
+          "acceptance": "Configured stage gates and actor/policy/window/evidence records; explicit fail behavior and Argo integration boundary, never replace GitOps.",
+          "status": "planned"
+        },
+        {
+          "id": "M6-06",
+          "title": "Reconstruction and velocity experiments",
+          "size": "M",
+          "dependsOn": [
+            "M6-05"
+          ],
+          "acceptance": "Fresh reconstruction plus missing/tampered evidence failures; measure safe affected-check reuse/merge-queue experiments with immutable inputs and full release checks.",
+          "status": "planned"
+        },
+        {
+          "id": "M6-07",
+          "title": "Release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M6-06"
+          ],
+          "acceptance": "Publish/download signed evidence and service/CLI artifacts; demo exact reconstruction and rejection; migration/rollback guide and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M7",
+      "name": "Tekton/OpenShift distribution",
+      "exit": "A real OpenShift sample PR executes through Tekton and produces signed AgentRelease evidence with verified operator status.",
+      "prs": [
+        {
+          "id": "M7-01",
+          "title": "Platform ADR and CRDs",
+          "size": "M",
+          "dependsOn": [
+            "M6 closure"
+          ],
+          "acceptance": "Choose supported OpenShift/OLM/operator toolchain; platform-neutral domain linkage and AgentProject/AgentRelease/AgentPolicy schemas with upgrade tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-02",
+          "title": "Tekton analysis/eval task catalog",
+          "size": "M",
+          "dependsOn": [
+            "M7-01"
+          ],
+          "acceptance": "Semantic diff, risk, eval and model-review tasks use released core; pin inputs and isolate untrusted workspace; real TaskRun fixtures.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-03",
+          "title": "Evidence/attestation tasks",
+          "size": "M",
+          "dependsOn": [
+            "M7-02"
+          ],
+          "acceptance": "Evidence publish/release attest tasks reuse M6 verifier; replay task compatibility contract explicitly awaits M9, not fake replay success.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-04",
+          "title": "Pipelines as Code and Results",
+          "size": "M",
+          "dependsOn": [
+            "M7-03"
+          ],
+          "acceptance": "Real PR pipeline, scoped App integration, durable Results links, retries/cancellation and stale-head rejection.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-05",
+          "title": "Tekton Chains verification",
+          "size": "M",
+          "dependsOn": [
+            "M7-04"
+          ],
+          "acceptance": "Signed provenance linkage binds all release digests; tampering and untrusted signer fail; avoid duplicating Chains.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-06",
+          "title": "Operator reconciliation",
+          "size": "L",
+          "dependsOn": [
+            "M7-01",
+            "M7-05"
+          ],
+          "acceptance": "Go/controller-runtime operator for CRDs, conditions and evidence reconciliation; RBAC, restart/idempotency and failed verification tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-07",
+          "title": "OpenShift packaging/integrations",
+          "size": "L",
+          "dependsOn": [
+            "M7-06"
+          ],
+          "acceptance": "OLM bundle/install/upgrade, OAuth/RBAC, OTel and GitOps configuration; restricted SCC and UBI images; dynamic console plugin decision explicit.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-08",
+          "title": "Real cluster customer acceptance",
+          "size": "M",
+          "dependsOn": [
+            "M7-07"
+          ],
+          "acceptance": "Fresh install and sample live PR→Tekton→signed Verified release; failed signature, outage/restart and upgrade/rollback demo rehearsal.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-09",
+          "title": "Distribution release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M7-08"
+          ],
+          "acceptance": "Publish operator/bundle/tasks/service artifacts; verify registry downloads and clean cluster installation; live released-build demo and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M8",
+      "name": "Production feedback",
+      "exit": "A seeded production-like failure produces a correctly linked incident with confidence and evidence, visible through API and UI.",
+      "prs": [
+        {
+          "id": "M8-01",
+          "title": "Outcome/incident contracts",
+          "size": "M",
+          "dependsOn": [
+            "M7 closure"
+          ],
+          "acceptance": "Outcome taxonomy, idempotent ingestion, versioned events, tenant/retention/privacy rules and schema migrations.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-02",
+          "title": "SDK/OTLP/gateway ingestion",
+          "size": "M",
+          "dependsOn": [
+            "M8-01"
+          ],
+          "acceptance": "Normalize existing trace/gateway signals with release identity; redaction, duplicates, out-of-order data and backpressure tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-03",
+          "title": "External alert adapters",
+          "size": "M",
+          "dependsOn": [
+            "M8-02"
+          ],
+          "acceptance": "Versioned adapters for logs/metrics, Kubernetes/audit, Sentry-like and PagerDuty-like sources plus feedback/invariant signals; choose first live integrations explicitly.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-04",
+          "title": "Candidate incident engine",
+          "size": "M",
+          "dependsOn": [
+            "M8-03"
+          ],
+          "acceptance": "Deterministic triggers for error/policy/alert/anomaly/feedback/invariant/deployment; dedupe, threshold and infrastructure failure distinctions.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-05",
+          "title": "Correlation evidence",
+          "size": "M",
+          "dependsOn": [
+            "M8-04"
+          ],
+          "acceptance": "Trace/release/SHA/resource/causal references and confidence; time proximity alone never proves causality; ambiguous fixtures remain ambiguous.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-06",
+          "title": "Incident and application UI/API",
+          "size": "M",
+          "dependsOn": [
+            "M8-05"
+          ],
+          "acceptance": "Authorized timeline/evidence/application health and outcome client; accessible views, pagination, empty/error states and tenant tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-07",
+          "title": "Operational/velocity analytics",
+          "size": "M",
+          "dependsOn": [
+            "M8-06"
+          ],
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-08",
+          "title": "Release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M8-07"
+          ],
+          "acceptance": "Publish/download changed services/UI/SDKs; customer seeded failure and ambiguous-correlation demo, retention/recovery docs and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M9",
+      "name": "Replay and regression",
+      "exit": "A seeded incident meets a configured reproduction threshold and becomes a stable regression that fails before the fix and passes after it.",
+      "prs": [
+        {
+          "id": "M9-01",
+          "title": "Replay package contracts/privacy",
+          "size": "M",
+          "dependsOn": [
+            "M8 closure"
+          ],
+          "acceptance": "Immutable incident/release/policy/fixture identity, local-only storage and capture consent; required fixtures/expected outcomes validated.",
+          "status": "planned"
+        },
+        {
+          "id": "M9-02",
+          "title": "Recorded replay",
+          "size": "M",
+          "dependsOn": [
+            "M9-01"
+          ],
+          "acceptance": "Deterministic orchestration replay with model/tool fixtures; no uncontrolled external side effects; missing fixtures are infrastructure/inconclusive results.",
+          "status": "planned"
+        },
+        {
+          "id": "M9-03",
+          "title": "Simulated and ephemeral replay",
+          "size": "L",
+          "dependsOn": [
+            "M9-02"
+          ],
+          "acceptance": "Curated state and isolated real-tool environments, cleanup/resource limits; label replay fidelity and wire M7 replay task once implemented.",
+          "status": "planned"
+        },
+        {
+          "id": "M9-04",
+          "title": "Reproduction orchestration",
+          "size": "M",
+          "dependsOn": [
+            "M9-03"
+          ],
+          "acceptance": "Temporal cancellation/retry/restart and configured repeated-trial thresholds; never mark one convenient retry as confirmation.",
+          "status": "planned"
+        },
+        {
+          "id": "M9-05",
+          "title": "Regression generation and approval",
+          "size": "M",
+          "dependsOn": [
+            "M9-04"
+          ],
+          "acceptance": "Stable case IDs and minimized context; explicit expected behavior provenance; human approval for inferred high-impact expectations.",
+          "status": "planned"
+        },
+        {
+          "id": "M9-06",
+          "title": "Customer/API/CLI acceptance",
+          "size": "M",
+          "dependsOn": [
+            "M9-05"
+          ],
+          "acceptance": "Replay client and evidence navigation; seeded case reproduces and committed/stored regression runs in future PR checks; privacy and failure demos.",
+          "status": "planned"
+        },
+        {
+          "id": "M9-07",
+          "title": "Release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M9-06"
+          ],
+          "acceptance": "Publish/download replay tools/services/task updates; fresh install, before/after regression demonstration and replay limits, recovery docs and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M10",
+      "name": "Repair orchestration",
+      "exit": "A seeded incident produces a verified repair PR without human code authoring, preserving human merge/production authority.",
+      "prs": [
+        {
+          "id": "M10-01",
+          "title": "Repair contracts and autonomy",
+          "size": "M",
+          "dependsOn": [
+            "M9 closure"
+          ],
+          "acceptance": "Repair/approval APIs, versioned policies and separate permissions for every action; human merge/approval/production defaults, actor audit and threat model.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-02",
+          "title": "Evidence-based root-cause workflow",
+          "size": "M",
+          "dependsOn": [
+            "M10-01"
+          ],
+          "acceptance": "Eleven cause classes and validated hypotheses; confidence/provenance, ambiguity and provider outage; no unsupported root-cause certainty.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-03",
+          "title": "Isolated candidate patches",
+          "size": "L",
+          "dependsOn": [
+            "M10-02"
+          ],
+          "acceptance": "Bounded N candidates from coding adapters; workspace/credential separation, cancellation and artifact retention; cannot alter authoritative judging evidence.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-04",
+          "title": "Verification and candidate selection",
+          "size": "L",
+          "dependsOn": [
+            "M10-03"
+          ],
+          "acceptance": "New regression, affected/full suites by risk, security/policy/cost checks; choose by recorded evidence, reject empty tests/LLM preference-only selection.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-05",
+          "title": "Branch/PR automation",
+          "size": "M",
+          "dependsOn": [
+            "M10-04"
+          ],
+          "acceptance": "Repository-scoped write permissions with explicit installation decision; exact verified candidate SHA, idempotency and no unsolicited merge/deploy.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-06",
+          "title": "Repair UI/API and recovery",
+          "size": "M",
+          "dependsOn": [
+            "M10-05"
+          ],
+          "acceptance": "Human approval and incident→repair→release linkage; force-push/stale evidence, crash recovery and partial PR creation tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-07",
+          "title": "End-to-end customer dogfood",
+          "size": "M",
+          "dependsOn": [
+            "M10-06"
+          ],
+          "acceptance": "Seeded incident→replay→regression→candidate→verified repair PR; reject unsafe patch and forged evidence; measure elapsed cycle/cost/rework.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-08",
+          "title": "Release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M10-07"
+          ],
+          "acceptance": "Publish/download all changed artifacts; live repair PR and blocked unsafe candidate demo; product-wide DoD audit, security/scale acceptance and retro.",
+          "status": "planned"
+        }
+      ]
+    }
+  ],
+  "requirementOwners": [
+    {
+      "requirementId": "SECTION-12",
+      "milestone": "M3",
+      "primaryPr": "M3-00",
+      "kind": "section-review",
+      "sourceSection": "12"
+    },
+    {
+      "requirementId": "SECTION-12.1",
+      "milestone": "M3",
+      "primaryPr": "M3-05",
+      "kind": "section-review",
+      "sourceSection": "12.1"
+    },
+    {
+      "requirementId": "SPEC-12.1-001",
+      "milestone": "M3",
+      "primaryPr": "M3-05",
+      "kind": "requirement",
+      "sourceSection": "12.1"
+    },
+    {
+      "requirementId": "SPEC-12.1-002",
+      "milestone": "M3",
+      "primaryPr": "M3-05",
+      "kind": "requirement",
+      "sourceSection": "12.1"
+    },
+    {
+      "requirementId": "SPEC-12.1-003",
+      "milestone": "M3",
+      "primaryPr": "M3-05",
+      "kind": "requirement",
+      "sourceSection": "12.1"
+    },
+    {
+      "requirementId": "SPEC-12.1-004",
+      "milestone": "M3",
+      "primaryPr": "M3-05",
+      "kind": "requirement",
+      "sourceSection": "12.1"
+    },
+    {
+      "requirementId": "SPEC-12.1-005",
+      "milestone": "M3",
+      "primaryPr": "M3-05",
+      "kind": "requirement",
+      "sourceSection": "12.1"
+    },
+    {
+      "requirementId": "SPEC-12.1-006",
+      "milestone": "M3",
+      "primaryPr": "M3-05",
+      "kind": "requirement",
+      "sourceSection": "12.1"
+    },
+    {
+      "requirementId": "SPEC-12.1-007",
+      "milestone": "M3",
+      "primaryPr": "M3-05",
+      "kind": "requirement",
+      "sourceSection": "12.1"
+    },
+    {
+      "requirementId": "SPEC-12.1-008",
+      "milestone": "M3",
+      "primaryPr": "M3-05",
+      "kind": "requirement",
+      "sourceSection": "12.1"
+    },
+    {
+      "requirementId": "SECTION-12.2",
+      "milestone": "M3",
+      "primaryPr": "M3-05",
+      "kind": "section-review",
+      "sourceSection": "12.2"
+    },
+    {
+      "requirementId": "SPEC-12.2-001",
+      "milestone": "M3",
+      "primaryPr": "M3-05",
+      "kind": "requirement",
+      "sourceSection": "12.2"
+    },
+    {
+      "requirementId": "SECTION-12.3",
+      "milestone": "M3",
+      "primaryPr": "M3-06",
+      "kind": "section-review",
+      "sourceSection": "12.3"
+    },
+    {
+      "requirementId": "SPEC-12.3-001",
+      "milestone": "M3",
+      "primaryPr": "M3-06",
+      "kind": "requirement",
+      "sourceSection": "12.3"
+    },
+    {
+      "requirementId": "SECTION-12.4",
+      "milestone": "M3",
+      "primaryPr": "M3-06",
+      "kind": "section-review",
+      "sourceSection": "12.4"
+    },
+    {
+      "requirementId": "SECTION-12.5",
+      "milestone": "M3",
+      "primaryPr": "M3-06",
+      "kind": "section-review",
+      "sourceSection": "12.5"
+    },
+    {
+      "requirementId": "SPEC-12.5-001",
+      "milestone": "M3",
+      "primaryPr": "M3-06",
+      "kind": "requirement",
+      "sourceSection": "12.5"
+    },
+    {
+      "requirementId": "SECTION-13",
+      "milestone": "M3",
+      "primaryPr": "M3-00",
+      "kind": "section-review",
+      "sourceSection": "13"
+    },
+    {
+      "requirementId": "SECTION-13.1",
+      "milestone": "M3",
+      "primaryPr": "M3-01",
+      "kind": "section-review",
+      "sourceSection": "13.1"
+    },
+    {
+      "requirementId": "SECTION-13.2",
+      "milestone": "M3",
+      "primaryPr": "M3-01",
+      "kind": "section-review",
+      "sourceSection": "13.2"
+    },
+    {
+      "requirementId": "SPEC-13.2-001",
+      "milestone": "M3",
+      "primaryPr": "M3-01",
+      "kind": "requirement",
+      "sourceSection": "13.2"
+    },
+    {
+      "requirementId": "SPEC-13.2-002",
+      "milestone": "M3",
+      "primaryPr": "M3-01",
+      "kind": "requirement",
+      "sourceSection": "13.2"
+    },
+    {
+      "requirementId": "SPEC-13.2-003",
+      "milestone": "M3",
+      "primaryPr": "M3-01",
+      "kind": "requirement",
+      "sourceSection": "13.2"
+    },
+    {
+      "requirementId": "SPEC-13.2-004",
+      "milestone": "M3",
+      "primaryPr": "M3-01",
+      "kind": "requirement",
+      "sourceSection": "13.2"
+    },
+    {
+      "requirementId": "SPEC-13.2-005",
+      "milestone": "M3",
+      "primaryPr": "M3-01",
+      "kind": "requirement",
+      "sourceSection": "13.2"
+    },
+    {
+      "requirementId": "SPEC-13.2-006",
+      "milestone": "M3",
+      "primaryPr": "M3-01",
+      "kind": "requirement",
+      "sourceSection": "13.2"
+    },
+    {
+      "requirementId": "SPEC-13.2-007",
+      "milestone": "M3",
+      "primaryPr": "M3-01",
+      "kind": "requirement",
+      "sourceSection": "13.2"
+    },
+    {
+      "requirementId": "SPEC-13.2-008",
+      "milestone": "M3",
+      "primaryPr": "M3-01",
+      "kind": "requirement",
+      "sourceSection": "13.2"
+    },
+    {
+      "requirementId": "SECTION-13.3",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "section-review",
+      "sourceSection": "13.3"
+    },
+    {
+      "requirementId": "SPEC-13.3-001",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.3"
+    },
+    {
+      "requirementId": "SPEC-13.3-002",
+      "milestone": "M3",
+      "primaryPr": "M3-02",
+      "kind": "requirement",
+      "sourceSection": "13.3"
+    },
+    {
+      "requirementId": "SPEC-13.3-003",
+      "milestone": "M3",
+      "primaryPr": "M3-03",
+      "kind": "requirement",
+      "sourceSection": "13.3"
+    },
+    {
+      "requirementId": "SPEC-13.3-004",
+      "milestone": "M3",
+      "primaryPr": "M3-04",
+      "kind": "requirement",
+      "sourceSection": "13.3"
+    },
+    {
+      "requirementId": "SPEC-13.3-005",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.3"
+    },
+    {
+      "requirementId": "SPEC-13.3-006",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.3"
+    },
+    {
+      "requirementId": "SPEC-13.3-007",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.3"
+    },
+    {
+      "requirementId": "SPEC-13.3-008",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.3"
+    },
+    {
+      "requirementId": "SPEC-13.3-009",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.3"
+    },
+    {
+      "requirementId": "SECTION-13.4",
+      "milestone": "M3",
+      "primaryPr": "M3-01",
+      "kind": "section-review",
+      "sourceSection": "13.4"
+    },
+    {
+      "requirementId": "SPEC-13.4-001",
+      "milestone": "M3",
+      "primaryPr": "M3-01",
+      "kind": "requirement",
+      "sourceSection": "13.4"
+    },
+    {
+      "requirementId": "SECTION-13.5",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "section-review",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-001",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-002",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-003",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-004",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-005",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-006",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-007",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-008",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-009",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-010",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-011",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-012",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SPEC-13.5-013",
+      "milestone": "M3",
+      "primaryPr": "M3-07",
+      "kind": "requirement",
+      "sourceSection": "13.5"
+    },
+    {
+      "requirementId": "SECTION-14",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "section-review",
+      "sourceSection": "14"
+    },
+    {
+      "requirementId": "SECTION-14.1",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "section-review",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-001",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-002",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-003",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-004",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-005",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-006",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-007",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-008",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-009",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-010",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-011",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-012",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-013",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SPEC-14.1-014",
+      "milestone": "M4",
+      "primaryPr": "M4-06",
+      "kind": "requirement",
+      "sourceSection": "14.1"
+    },
+    {
+      "requirementId": "SECTION-14.2",
+      "milestone": "M4",
+      "primaryPr": "M4-04",
+      "kind": "section-review",
+      "sourceSection": "14.2"
+    },
+    {
+      "requirementId": "SPEC-14.2-001",
+      "milestone": "M4",
+      "primaryPr": "M4-04",
+      "kind": "requirement",
+      "sourceSection": "14.2"
+    },
+    {
+      "requirementId": "SPEC-14.2-002",
+      "milestone": "M4",
+      "primaryPr": "M4-04",
+      "kind": "requirement",
+      "sourceSection": "14.2"
+    },
+    {
+      "requirementId": "SECTION-14.3",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "section-review",
+      "sourceSection": "14.3"
+    },
+    {
+      "requirementId": "SPEC-14.3-001",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.3"
+    },
+    {
+      "requirementId": "SECTION-14.4",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "section-review",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SPEC-14.4-001",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SPEC-14.4-002",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SPEC-14.4-003",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SPEC-14.4-004",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SPEC-14.4-005",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SPEC-14.4-006",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SPEC-14.4-007",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SPEC-14.4-008",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SPEC-14.4-009",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SPEC-14.4-010",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SPEC-14.4-011",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SPEC-14.4-012",
+      "milestone": "M4",
+      "primaryPr": "M4-01",
+      "kind": "requirement",
+      "sourceSection": "14.4"
+    },
+    {
+      "requirementId": "SECTION-14.5",
+      "milestone": "M4",
+      "primaryPr": "M4-02",
+      "kind": "section-review",
+      "sourceSection": "14.5"
+    },
+    {
+      "requirementId": "SPEC-14.5-001",
+      "milestone": "M4",
+      "primaryPr": "M4-02",
+      "kind": "requirement",
+      "sourceSection": "14.5"
+    },
+    {
+      "requirementId": "SPEC-14.5-002",
+      "milestone": "M4",
+      "primaryPr": "M4-03",
+      "kind": "requirement",
+      "sourceSection": "14.5"
+    },
+    {
+      "requirementId": "SPEC-14.5-003",
+      "milestone": "M4",
+      "primaryPr": "M4-02",
+      "kind": "requirement",
+      "sourceSection": "14.5"
+    },
+    {
+      "requirementId": "SPEC-14.5-004",
+      "milestone": "M4",
+      "primaryPr": "M4-02",
+      "kind": "requirement",
+      "sourceSection": "14.5"
+    },
+    {
+      "requirementId": "SPEC-14.5-005",
+      "milestone": "M4",
+      "primaryPr": "M4-02",
+      "kind": "requirement",
+      "sourceSection": "14.5"
+    },
+    {
+      "requirementId": "SECTION-14.6",
+      "milestone": "M4",
+      "primaryPr": "M4-04",
+      "kind": "section-review",
+      "sourceSection": "14.6"
+    },
+    {
+      "requirementId": "SPEC-14.6-001",
+      "milestone": "M4",
+      "primaryPr": "M4-04",
+      "kind": "requirement",
+      "sourceSection": "14.6"
+    },
+    {
+      "requirementId": "SPEC-14.6-002",
+      "milestone": "M4",
+      "primaryPr": "M4-04",
+      "kind": "requirement",
+      "sourceSection": "14.6"
+    },
+    {
+      "requirementId": "SPEC-14.6-003",
+      "milestone": "M4",
+      "primaryPr": "M4-04",
+      "kind": "requirement",
+      "sourceSection": "14.6"
+    },
+    {
+      "requirementId": "SECTION-15",
+      "milestone": "M5",
+      "primaryPr": "M5-01",
+      "kind": "section-review",
+      "sourceSection": "15"
+    },
+    {
+      "requirementId": "SECTION-15.1",
+      "milestone": "M5",
+      "primaryPr": "M5-01",
+      "kind": "section-review",
+      "sourceSection": "15.1"
+    },
+    {
+      "requirementId": "SPEC-15.1-001",
+      "milestone": "M5",
+      "primaryPr": "M5-01",
+      "kind": "requirement",
+      "sourceSection": "15.1"
+    },
+    {
+      "requirementId": "SECTION-15.2",
+      "milestone": "M5",
+      "primaryPr": "M5-04",
+      "kind": "section-review",
+      "sourceSection": "15.2"
+    },
+    {
+      "requirementId": "SPEC-15.2-001",
+      "milestone": "M5",
+      "primaryPr": "M5-04",
+      "kind": "requirement",
+      "sourceSection": "15.2"
+    },
+    {
+      "requirementId": "SPEC-15.2-002",
+      "milestone": "M5",
+      "primaryPr": "M5-04",
+      "kind": "requirement",
+      "sourceSection": "15.2"
+    },
+    {
+      "requirementId": "SPEC-15.2-003",
+      "milestone": "M5",
+      "primaryPr": "M5-04",
+      "kind": "requirement",
+      "sourceSection": "15.2"
+    },
+    {
+      "requirementId": "SPEC-15.2-004",
+      "milestone": "M5",
+      "primaryPr": "M5-04",
+      "kind": "requirement",
+      "sourceSection": "15.2"
+    },
+    {
+      "requirementId": "SPEC-15.2-005",
+      "milestone": "M5",
+      "primaryPr": "M5-04",
+      "kind": "requirement",
+      "sourceSection": "15.2"
+    },
+    {
+      "requirementId": "SPEC-15.2-006",
+      "milestone": "M5",
+      "primaryPr": "M5-04",
+      "kind": "requirement",
+      "sourceSection": "15.2"
+    },
+    {
+      "requirementId": "SPEC-15.2-007",
+      "milestone": "M5",
+      "primaryPr": "M5-04",
+      "kind": "requirement",
+      "sourceSection": "15.2"
+    },
+    {
+      "requirementId": "SPEC-15.2-008",
+      "milestone": "M5",
+      "primaryPr": "M5-04",
+      "kind": "requirement",
+      "sourceSection": "15.2"
+    },
+    {
+      "requirementId": "SPEC-15.2-009",
+      "milestone": "M5",
+      "primaryPr": "M5-04",
+      "kind": "requirement",
+      "sourceSection": "15.2"
+    },
+    {
+      "requirementId": "SPEC-15.2-010",
+      "milestone": "M5",
+      "primaryPr": "M5-04",
+      "kind": "requirement",
+      "sourceSection": "15.2"
+    },
+    {
+      "requirementId": "SPEC-15.2-011",
+      "milestone": "M5",
+      "primaryPr": "M5-04",
+      "kind": "requirement",
+      "sourceSection": "15.2"
+    },
+    {
+      "requirementId": "SECTION-15.3",
+      "milestone": "M5",
+      "primaryPr": "M5-02",
+      "kind": "section-review",
+      "sourceSection": "15.3"
+    },
+    {
+      "requirementId": "SPEC-15.3-001",
+      "milestone": "M5",
+      "primaryPr": "M5-02",
+      "kind": "requirement",
+      "sourceSection": "15.3"
+    },
+    {
+      "requirementId": "SPEC-15.3-002",
+      "milestone": "M5",
+      "primaryPr": "M5-02",
+      "kind": "requirement",
+      "sourceSection": "15.3"
+    },
+    {
+      "requirementId": "SECTION-15.4",
+      "milestone": "M5",
+      "primaryPr": "M5-02",
+      "kind": "section-review",
+      "sourceSection": "15.4"
+    },
+    {
+      "requirementId": "SPEC-15.4-001",
+      "milestone": "M5",
+      "primaryPr": "M5-02",
+      "kind": "requirement",
+      "sourceSection": "15.4"
+    },
+    {
+      "requirementId": "SECTION-19",
+      "milestone": "M7",
+      "primaryPr": "M7-01",
+      "kind": "section-review",
+      "sourceSection": "19"
+    },
+    {
+      "requirementId": "SECTION-19.1",
+      "milestone": "M7",
+      "primaryPr": "M7-01",
+      "kind": "section-review",
+      "sourceSection": "19.1"
+    },
+    {
+      "requirementId": "SPEC-19.1-001",
+      "milestone": "M7",
+      "primaryPr": "M7-01",
+      "kind": "requirement",
+      "sourceSection": "19.1"
+    },
+    {
+      "requirementId": "SECTION-19.2",
+      "milestone": "M7",
+      "primaryPr": "M7-02",
+      "kind": "section-review",
+      "sourceSection": "19.2"
+    },
+    {
+      "requirementId": "SPEC-19.2-001",
+      "milestone": "M7",
+      "primaryPr": "M7-02",
+      "kind": "requirement",
+      "sourceSection": "19.2"
+    },
+    {
+      "requirementId": "SPEC-19.2-002",
+      "milestone": "M7",
+      "primaryPr": "M7-02",
+      "kind": "requirement",
+      "sourceSection": "19.2"
+    },
+    {
+      "requirementId": "SPEC-19.2-003",
+      "milestone": "M7",
+      "primaryPr": "M7-02",
+      "kind": "requirement",
+      "sourceSection": "19.2"
+    },
+    {
+      "requirementId": "SPEC-19.2-004",
+      "milestone": "M7",
+      "primaryPr": "M7-02",
+      "kind": "requirement",
+      "sourceSection": "19.2"
+    },
+    {
+      "requirementId": "SPEC-19.2-005",
+      "milestone": "M7",
+      "primaryPr": "M7-02",
+      "kind": "requirement",
+      "sourceSection": "19.2"
+    },
+    {
+      "requirementId": "SPEC-19.2-006",
+      "milestone": "M7",
+      "primaryPr": "M7-02",
+      "kind": "requirement",
+      "sourceSection": "19.2"
+    },
+    {
+      "requirementId": "SPEC-19.2-007",
+      "milestone": "M7",
+      "primaryPr": "M7-02",
+      "kind": "requirement",
+      "sourceSection": "19.2"
+    },
+    {
+      "requirementId": "SPEC-19.2-008",
+      "milestone": "M7",
+      "primaryPr": "M7-02",
+      "kind": "requirement",
+      "sourceSection": "19.2"
+    },
+    {
+      "requirementId": "SECTION-19.3",
+      "milestone": "M7",
+      "primaryPr": "M7-04",
+      "kind": "section-review",
+      "sourceSection": "19.3"
+    },
+    {
+      "requirementId": "SPEC-19.3-001",
+      "milestone": "M7",
+      "primaryPr": "M7-04",
+      "kind": "requirement",
+      "sourceSection": "19.3"
+    },
+    {
+      "requirementId": "SPEC-19.3-002",
+      "milestone": "M7",
+      "primaryPr": "M7-04",
+      "kind": "requirement",
+      "sourceSection": "19.3"
+    },
+    {
+      "requirementId": "SECTION-19.4",
+      "milestone": "M7",
+      "primaryPr": "M7-04",
+      "kind": "section-review",
+      "sourceSection": "19.4"
+    },
+    {
+      "requirementId": "SPEC-19.4-001",
+      "milestone": "M7",
+      "primaryPr": "M7-04",
+      "kind": "requirement",
+      "sourceSection": "19.4"
+    },
+    {
+      "requirementId": "SECTION-19.5",
+      "milestone": "M7",
+      "primaryPr": "M7-05",
+      "kind": "section-review",
+      "sourceSection": "19.5"
+    },
+    {
+      "requirementId": "SPEC-19.5-001",
+      "milestone": "M7",
+      "primaryPr": "M7-05",
+      "kind": "requirement",
+      "sourceSection": "19.5"
+    },
+    {
+      "requirementId": "SPEC-19.5-002",
+      "milestone": "M7",
+      "primaryPr": "M7-05",
+      "kind": "requirement",
+      "sourceSection": "19.5"
+    },
+    {
+      "requirementId": "SPEC-19.5-003",
+      "milestone": "M7",
+      "primaryPr": "M7-05",
+      "kind": "requirement",
+      "sourceSection": "19.5"
+    },
+    {
+      "requirementId": "SPEC-19.5-004",
+      "milestone": "M7",
+      "primaryPr": "M7-05",
+      "kind": "requirement",
+      "sourceSection": "19.5"
+    },
+    {
+      "requirementId": "SPEC-19.5-005",
+      "milestone": "M7",
+      "primaryPr": "M7-05",
+      "kind": "requirement",
+      "sourceSection": "19.5"
+    },
+    {
+      "requirementId": "SPEC-19.5-006",
+      "milestone": "M7",
+      "primaryPr": "M7-05",
+      "kind": "requirement",
+      "sourceSection": "19.5"
+    },
+    {
+      "requirementId": "SPEC-19.5-007",
+      "milestone": "M7",
+      "primaryPr": "M7-05",
+      "kind": "requirement",
+      "sourceSection": "19.5"
+    },
+    {
+      "requirementId": "SPEC-19.5-008",
+      "milestone": "M7",
+      "primaryPr": "M7-05",
+      "kind": "requirement",
+      "sourceSection": "19.5"
+    },
+    {
+      "requirementId": "SPEC-19.5-009",
+      "milestone": "M7",
+      "primaryPr": "M7-05",
+      "kind": "requirement",
+      "sourceSection": "19.5"
+    },
+    {
+      "requirementId": "SPEC-19.5-010",
+      "milestone": "M7",
+      "primaryPr": "M7-05",
+      "kind": "requirement",
+      "sourceSection": "19.5"
+    },
+    {
+      "requirementId": "SECTION-20",
+      "milestone": "M7",
+      "primaryPr": "M7-01",
+      "kind": "section-review",
+      "sourceSection": "20"
+    },
+    {
+      "requirementId": "SECTION-20.1",
+      "milestone": "M7",
+      "primaryPr": "M7-07",
+      "kind": "section-review",
+      "sourceSection": "20.1"
+    },
+    {
+      "requirementId": "SPEC-20.1-001",
+      "milestone": "M7",
+      "primaryPr": "M7-07",
+      "kind": "requirement",
+      "sourceSection": "20.1"
+    },
+    {
+      "requirementId": "SPEC-20.1-002",
+      "milestone": "M7",
+      "primaryPr": "M7-07",
+      "kind": "requirement",
+      "sourceSection": "20.1"
+    },
+    {
+      "requirementId": "SPEC-20.1-003",
+      "milestone": "M7",
+      "primaryPr": "M7-07",
+      "kind": "requirement",
+      "sourceSection": "20.1"
+    },
+    {
+      "requirementId": "SPEC-20.1-004",
+      "milestone": "M7",
+      "primaryPr": "M7-07",
+      "kind": "requirement",
+      "sourceSection": "20.1"
+    },
+    {
+      "requirementId": "SPEC-20.1-005",
+      "milestone": "M7",
+      "primaryPr": "M7-07",
+      "kind": "requirement",
+      "sourceSection": "20.1"
+    },
+    {
+      "requirementId": "SPEC-20.1-006",
+      "milestone": "M7",
+      "primaryPr": "M7-07",
+      "kind": "requirement",
+      "sourceSection": "20.1"
+    },
+    {
+      "requirementId": "SPEC-20.1-007",
+      "milestone": "M7",
+      "primaryPr": "M7-07",
+      "kind": "requirement",
+      "sourceSection": "20.1"
+    },
+    {
+      "requirementId": "SPEC-20.1-008",
+      "milestone": "M7",
+      "primaryPr": "M7-07",
+      "kind": "requirement",
+      "sourceSection": "20.1"
+    },
+    {
+      "requirementId": "SPEC-20.1-009",
+      "milestone": "M7",
+      "primaryPr": "M7-07",
+      "kind": "requirement",
+      "sourceSection": "20.1"
+    },
+    {
+      "requirementId": "SPEC-20.1-010",
+      "milestone": "M7",
+      "primaryPr": "M7-07",
+      "kind": "requirement",
+      "sourceSection": "20.1"
+    },
+    {
+      "requirementId": "SPEC-20.1-011",
+      "milestone": "M7",
+      "primaryPr": "M7-07",
+      "kind": "requirement",
+      "sourceSection": "20.1"
+    },
+    {
+      "requirementId": "SECTION-20.2",
+      "milestone": "M7",
+      "primaryPr": "M7-01",
+      "kind": "section-review",
+      "sourceSection": "20.2"
+    },
+    {
+      "requirementId": "SECTION-20.3",
+      "milestone": "M7",
+      "primaryPr": "M7-06",
+      "kind": "section-review",
+      "sourceSection": "20.3"
+    },
+    {
+      "requirementId": "SPEC-20.3-001",
+      "milestone": "M7",
+      "primaryPr": "M7-06",
+      "kind": "requirement",
+      "sourceSection": "20.3"
+    },
+    {
+      "requirementId": "SPEC-20.3-002",
+      "milestone": "M7",
+      "primaryPr": "M7-06",
+      "kind": "requirement",
+      "sourceSection": "20.3"
+    },
+    {
+      "requirementId": "SPEC-20.3-003",
+      "milestone": "M7",
+      "primaryPr": "M7-06",
+      "kind": "requirement",
+      "sourceSection": "20.3"
+    },
+    {
+      "requirementId": "SPEC-20.3-004",
+      "milestone": "M7",
+      "primaryPr": "M7-06",
+      "kind": "requirement",
+      "sourceSection": "20.3"
+    },
+    {
+      "requirementId": "SPEC-20.3-005",
+      "milestone": "M7",
+      "primaryPr": "M7-06",
+      "kind": "requirement",
+      "sourceSection": "20.3"
+    },
+    {
+      "requirementId": "SPEC-20.3-006",
+      "milestone": "M7",
+      "primaryPr": "M7-06",
+      "kind": "requirement",
+      "sourceSection": "20.3"
+    },
+    {
+      "requirementId": "SPEC-20.3-007",
+      "milestone": "M7",
+      "primaryPr": "M7-06",
+      "kind": "requirement",
+      "sourceSection": "20.3"
+    },
+    {
+      "requirementId": "SPEC-20.3-008",
+      "milestone": "M7",
+      "primaryPr": "M7-06",
+      "kind": "requirement",
+      "sourceSection": "20.3"
+    },
+    {
+      "requirementId": "SECTION-21",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "section-review",
+      "sourceSection": "21"
+    },
+    {
+      "requirementId": "SECTION-21.1",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "section-review",
+      "sourceSection": "21.1"
+    },
+    {
+      "requirementId": "SPEC-21.1-001",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "requirement",
+      "sourceSection": "21.1"
+    },
+    {
+      "requirementId": "SECTION-21.2",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "section-review",
+      "sourceSection": "21.2"
+    },
+    {
+      "requirementId": "SPEC-21.2-001",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "requirement",
+      "sourceSection": "21.2"
+    },
+    {
+      "requirementId": "SPEC-21.2-002",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "requirement",
+      "sourceSection": "21.2"
+    },
+    {
+      "requirementId": "SPEC-21.2-003",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "requirement",
+      "sourceSection": "21.2"
+    },
+    {
+      "requirementId": "SPEC-21.2-004",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "requirement",
+      "sourceSection": "21.2"
+    },
+    {
+      "requirementId": "SPEC-21.2-005",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "requirement",
+      "sourceSection": "21.2"
+    },
+    {
+      "requirementId": "SPEC-21.2-006",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "requirement",
+      "sourceSection": "21.2"
+    },
+    {
+      "requirementId": "SPEC-21.2-007",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "requirement",
+      "sourceSection": "21.2"
+    },
+    {
+      "requirementId": "SPEC-21.2-008",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "requirement",
+      "sourceSection": "21.2"
+    },
+    {
+      "requirementId": "SPEC-21.2-009",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "requirement",
+      "sourceSection": "21.2"
+    },
+    {
+      "requirementId": "SPEC-21.2-010",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "requirement",
+      "sourceSection": "21.2"
+    },
+    {
+      "requirementId": "SECTION-21.3",
+      "milestone": "M6",
+      "primaryPr": "M6-02",
+      "kind": "section-review",
+      "sourceSection": "21.3"
+    },
+    {
+      "requirementId": "SECTION-22",
+      "milestone": "M6",
+      "primaryPr": "M6-01",
+      "kind": "section-review",
+      "sourceSection": "22"
+    },
+    {
+      "requirementId": "SECTION-22.1",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "section-review",
+      "sourceSection": "22.1"
+    },
+    {
+      "requirementId": "SPEC-22.1-001",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.1"
+    },
+    {
+      "requirementId": "SPEC-22.1-002",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.1"
+    },
+    {
+      "requirementId": "SPEC-22.1-003",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.1"
+    },
+    {
+      "requirementId": "SPEC-22.1-004",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.1"
+    },
+    {
+      "requirementId": "SPEC-22.1-005",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.1"
+    },
+    {
+      "requirementId": "SPEC-22.1-006",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.1"
+    },
+    {
+      "requirementId": "SPEC-22.1-007",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.1"
+    },
+    {
+      "requirementId": "SPEC-22.1-008",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.1"
+    },
+    {
+      "requirementId": "SPEC-22.1-009",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.1"
+    },
+    {
+      "requirementId": "SECTION-22.2",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "section-review",
+      "sourceSection": "22.2"
+    },
+    {
+      "requirementId": "SPEC-22.2-001",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.2"
+    },
+    {
+      "requirementId": "SECTION-22.3",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "section-review",
+      "sourceSection": "22.3"
+    },
+    {
+      "requirementId": "SPEC-22.3-001",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.3"
+    },
+    {
+      "requirementId": "SECTION-22.4",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "section-review",
+      "sourceSection": "22.4"
+    },
+    {
+      "requirementId": "SPEC-22.4-001",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.4"
+    },
+    {
+      "requirementId": "SPEC-22.4-002",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.4"
+    },
+    {
+      "requirementId": "SPEC-22.4-003",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.4"
+    },
+    {
+      "requirementId": "SPEC-22.4-004",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.4"
+    },
+    {
+      "requirementId": "SPEC-22.4-005",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.4"
+    },
+    {
+      "requirementId": "SPEC-22.4-006",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.4"
+    },
+    {
+      "requirementId": "SPEC-22.4-007",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.4"
+    },
+    {
+      "requirementId": "SPEC-22.4-008",
+      "milestone": "M6",
+      "primaryPr": "M6-05",
+      "kind": "requirement",
+      "sourceSection": "22.4"
+    },
+    {
+      "requirementId": "SECTION-23",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "section-review",
+      "sourceSection": "23"
+    },
+    {
+      "requirementId": "SECTION-23.1",
+      "milestone": "M8",
+      "primaryPr": "M8-03",
+      "kind": "section-review",
+      "sourceSection": "23.1"
+    },
+    {
+      "requirementId": "SPEC-23.1-001",
+      "milestone": "M8",
+      "primaryPr": "M8-03",
+      "kind": "requirement",
+      "sourceSection": "23.1"
+    },
+    {
+      "requirementId": "SPEC-23.1-002",
+      "milestone": "M8",
+      "primaryPr": "M8-03",
+      "kind": "requirement",
+      "sourceSection": "23.1"
+    },
+    {
+      "requirementId": "SPEC-23.1-003",
+      "milestone": "M8",
+      "primaryPr": "M8-03",
+      "kind": "requirement",
+      "sourceSection": "23.1"
+    },
+    {
+      "requirementId": "SPEC-23.1-004",
+      "milestone": "M8",
+      "primaryPr": "M8-03",
+      "kind": "requirement",
+      "sourceSection": "23.1"
+    },
+    {
+      "requirementId": "SPEC-23.1-005",
+      "milestone": "M8",
+      "primaryPr": "M8-03",
+      "kind": "requirement",
+      "sourceSection": "23.1"
+    },
+    {
+      "requirementId": "SPEC-23.1-006",
+      "milestone": "M8",
+      "primaryPr": "M8-03",
+      "kind": "requirement",
+      "sourceSection": "23.1"
+    },
+    {
+      "requirementId": "SPEC-23.1-007",
+      "milestone": "M8",
+      "primaryPr": "M8-03",
+      "kind": "requirement",
+      "sourceSection": "23.1"
+    },
+    {
+      "requirementId": "SPEC-23.1-008",
+      "milestone": "M8",
+      "primaryPr": "M8-03",
+      "kind": "requirement",
+      "sourceSection": "23.1"
+    },
+    {
+      "requirementId": "SPEC-23.1-009",
+      "milestone": "M8",
+      "primaryPr": "M8-03",
+      "kind": "requirement",
+      "sourceSection": "23.1"
+    },
+    {
+      "requirementId": "SPEC-23.1-010",
+      "milestone": "M8",
+      "primaryPr": "M8-03",
+      "kind": "requirement",
+      "sourceSection": "23.1"
+    },
+    {
+      "requirementId": "SPEC-23.1-011",
+      "milestone": "M8",
+      "primaryPr": "M8-03",
+      "kind": "requirement",
+      "sourceSection": "23.1"
+    },
+    {
+      "requirementId": "SECTION-23.2",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "section-review",
+      "sourceSection": "23.2"
+    },
+    {
+      "requirementId": "SPEC-23.2-001",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "requirement",
+      "sourceSection": "23.2"
+    },
+    {
+      "requirementId": "SPEC-23.2-002",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "requirement",
+      "sourceSection": "23.2"
+    },
+    {
+      "requirementId": "SPEC-23.2-003",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "requirement",
+      "sourceSection": "23.2"
+    },
+    {
+      "requirementId": "SPEC-23.2-004",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "requirement",
+      "sourceSection": "23.2"
+    },
+    {
+      "requirementId": "SPEC-23.2-005",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "requirement",
+      "sourceSection": "23.2"
+    },
+    {
+      "requirementId": "SPEC-23.2-006",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "requirement",
+      "sourceSection": "23.2"
+    },
+    {
+      "requirementId": "SPEC-23.2-007",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "requirement",
+      "sourceSection": "23.2"
+    },
+    {
+      "requirementId": "SPEC-23.2-008",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "requirement",
+      "sourceSection": "23.2"
+    },
+    {
+      "requirementId": "SPEC-23.2-009",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "requirement",
+      "sourceSection": "23.2"
+    },
+    {
+      "requirementId": "SPEC-23.2-010",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "requirement",
+      "sourceSection": "23.2"
+    },
+    {
+      "requirementId": "SECTION-23.3",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "section-review",
+      "sourceSection": "23.3"
+    },
+    {
+      "requirementId": "SPEC-23.3-001",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "requirement",
+      "sourceSection": "23.3"
+    },
+    {
+      "requirementId": "SPEC-23.3-002",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "requirement",
+      "sourceSection": "23.3"
+    },
+    {
+      "requirementId": "SECTION-24",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "section-review",
+      "sourceSection": "24"
+    },
+    {
+      "requirementId": "SECTION-24.1",
+      "milestone": "M8",
+      "primaryPr": "M8-04",
+      "kind": "section-review",
+      "sourceSection": "24.1"
+    },
+    {
+      "requirementId": "SPEC-24.1-001",
+      "milestone": "M8",
+      "primaryPr": "M8-04",
+      "kind": "requirement",
+      "sourceSection": "24.1"
+    },
+    {
+      "requirementId": "SPEC-24.1-002",
+      "milestone": "M8",
+      "primaryPr": "M8-04",
+      "kind": "requirement",
+      "sourceSection": "24.1"
+    },
+    {
+      "requirementId": "SPEC-24.1-003",
+      "milestone": "M8",
+      "primaryPr": "M8-04",
+      "kind": "requirement",
+      "sourceSection": "24.1"
+    },
+    {
+      "requirementId": "SPEC-24.1-004",
+      "milestone": "M8",
+      "primaryPr": "M8-04",
+      "kind": "requirement",
+      "sourceSection": "24.1"
+    },
+    {
+      "requirementId": "SPEC-24.1-005",
+      "milestone": "M8",
+      "primaryPr": "M8-04",
+      "kind": "requirement",
+      "sourceSection": "24.1"
+    },
+    {
+      "requirementId": "SPEC-24.1-006",
+      "milestone": "M8",
+      "primaryPr": "M8-04",
+      "kind": "requirement",
+      "sourceSection": "24.1"
+    },
+    {
+      "requirementId": "SPEC-24.1-007",
+      "milestone": "M8",
+      "primaryPr": "M8-04",
+      "kind": "requirement",
+      "sourceSection": "24.1"
+    },
+    {
+      "requirementId": "SECTION-24.2",
+      "milestone": "M8",
+      "primaryPr": "M8-05",
+      "kind": "section-review",
+      "sourceSection": "24.2"
+    },
+    {
+      "requirementId": "SPEC-24.2-001",
+      "milestone": "M8",
+      "primaryPr": "M8-05",
+      "kind": "requirement",
+      "sourceSection": "24.2"
+    },
+    {
+      "requirementId": "SPEC-24.2-002",
+      "milestone": "M8",
+      "primaryPr": "M8-05",
+      "kind": "requirement",
+      "sourceSection": "24.2"
+    },
+    {
+      "requirementId": "SPEC-24.2-003",
+      "milestone": "M8",
+      "primaryPr": "M8-05",
+      "kind": "requirement",
+      "sourceSection": "24.2"
+    },
+    {
+      "requirementId": "SPEC-24.2-004",
+      "milestone": "M8",
+      "primaryPr": "M8-05",
+      "kind": "requirement",
+      "sourceSection": "24.2"
+    },
+    {
+      "requirementId": "SPEC-24.2-005",
+      "milestone": "M8",
+      "primaryPr": "M8-05",
+      "kind": "requirement",
+      "sourceSection": "24.2"
+    },
+    {
+      "requirementId": "SPEC-24.2-006",
+      "milestone": "M8",
+      "primaryPr": "M8-05",
+      "kind": "requirement",
+      "sourceSection": "24.2"
+    },
+    {
+      "requirementId": "SPEC-24.2-007",
+      "milestone": "M8",
+      "primaryPr": "M8-05",
+      "kind": "requirement",
+      "sourceSection": "24.2"
+    },
+    {
+      "requirementId": "SPEC-24.2-008",
+      "milestone": "M8",
+      "primaryPr": "M8-05",
+      "kind": "requirement",
+      "sourceSection": "24.2"
+    },
+    {
+      "requirementId": "SECTION-24.3",
+      "milestone": "M8",
+      "primaryPr": "M8-05",
+      "kind": "section-review",
+      "sourceSection": "24.3"
+    },
+    {
+      "requirementId": "SPEC-24.3-001",
+      "milestone": "M8",
+      "primaryPr": "M8-05",
+      "kind": "requirement",
+      "sourceSection": "24.3"
+    },
+    {
+      "requirementId": "SECTION-25",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "section-review",
+      "sourceSection": "25"
+    },
+    {
+      "requirementId": "SECTION-25.1",
+      "milestone": "M9",
+      "primaryPr": "M9-03",
+      "kind": "section-review",
+      "sourceSection": "25.1"
+    },
+    {
+      "requirementId": "SPEC-25.1-001",
+      "milestone": "M9",
+      "primaryPr": "M9-03",
+      "kind": "requirement",
+      "sourceSection": "25.1"
+    },
+    {
+      "requirementId": "SPEC-25.1-002",
+      "milestone": "M9",
+      "primaryPr": "M9-03",
+      "kind": "requirement",
+      "sourceSection": "25.1"
+    },
+    {
+      "requirementId": "SPEC-25.1-003",
+      "milestone": "M9",
+      "primaryPr": "M9-03",
+      "kind": "requirement",
+      "sourceSection": "25.1"
+    },
+    {
+      "requirementId": "SECTION-25.2",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "section-review",
+      "sourceSection": "25.2"
+    },
+    {
+      "requirementId": "SPEC-25.2-001",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "requirement",
+      "sourceSection": "25.2"
+    },
+    {
+      "requirementId": "SPEC-25.2-002",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "requirement",
+      "sourceSection": "25.2"
+    },
+    {
+      "requirementId": "SPEC-25.2-003",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "requirement",
+      "sourceSection": "25.2"
+    },
+    {
+      "requirementId": "SPEC-25.2-004",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "requirement",
+      "sourceSection": "25.2"
+    },
+    {
+      "requirementId": "SPEC-25.2-005",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "requirement",
+      "sourceSection": "25.2"
+    },
+    {
+      "requirementId": "SPEC-25.2-006",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "requirement",
+      "sourceSection": "25.2"
+    },
+    {
+      "requirementId": "SPEC-25.2-007",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "requirement",
+      "sourceSection": "25.2"
+    },
+    {
+      "requirementId": "SPEC-25.2-008",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "requirement",
+      "sourceSection": "25.2"
+    },
+    {
+      "requirementId": "SPEC-25.2-009",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "requirement",
+      "sourceSection": "25.2"
+    },
+    {
+      "requirementId": "SECTION-25.3",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "section-review",
+      "sourceSection": "25.3"
+    },
+    {
+      "requirementId": "SPEC-25.3-001",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "requirement",
+      "sourceSection": "25.3"
+    },
+    {
+      "requirementId": "SECTION-25.4",
+      "milestone": "M9",
+      "primaryPr": "M9-04",
+      "kind": "section-review",
+      "sourceSection": "25.4"
+    },
+    {
+      "requirementId": "SPEC-25.4-001",
+      "milestone": "M9",
+      "primaryPr": "M9-04",
+      "kind": "requirement",
+      "sourceSection": "25.4"
+    },
+    {
+      "requirementId": "SECTION-26",
+      "milestone": "M9",
+      "primaryPr": "M9-01",
+      "kind": "section-review",
+      "sourceSection": "26"
+    },
+    {
+      "requirementId": "SECTION-26.1",
+      "milestone": "M9",
+      "primaryPr": "M9-05",
+      "kind": "section-review",
+      "sourceSection": "26.1"
+    },
+    {
+      "requirementId": "SPEC-26.1-001",
+      "milestone": "M9",
+      "primaryPr": "M9-05",
+      "kind": "requirement",
+      "sourceSection": "26.1"
+    },
+    {
+      "requirementId": "SPEC-26.1-002",
+      "milestone": "M9",
+      "primaryPr": "M9-05",
+      "kind": "requirement",
+      "sourceSection": "26.1"
+    },
+    {
+      "requirementId": "SPEC-26.1-003",
+      "milestone": "M9",
+      "primaryPr": "M9-05",
+      "kind": "requirement",
+      "sourceSection": "26.1"
+    },
+    {
+      "requirementId": "SPEC-26.1-004",
+      "milestone": "M9",
+      "primaryPr": "M9-05",
+      "kind": "requirement",
+      "sourceSection": "26.1"
+    },
+    {
+      "requirementId": "SECTION-26.2",
+      "milestone": "M9",
+      "primaryPr": "M9-05",
+      "kind": "section-review",
+      "sourceSection": "26.2"
+    },
+    {
+      "requirementId": "SPEC-26.2-001",
+      "milestone": "M9",
+      "primaryPr": "M9-05",
+      "kind": "requirement",
+      "sourceSection": "26.2"
+    },
+    {
+      "requirementId": "SPEC-26.2-002",
+      "milestone": "M9",
+      "primaryPr": "M9-05",
+      "kind": "requirement",
+      "sourceSection": "26.2"
+    },
+    {
+      "requirementId": "SECTION-26.3",
+      "milestone": "M9",
+      "primaryPr": "M9-05",
+      "kind": "section-review",
+      "sourceSection": "26.3"
+    },
+    {
+      "requirementId": "SPEC-26.3-001",
+      "milestone": "M9",
+      "primaryPr": "M9-05",
+      "kind": "requirement",
+      "sourceSection": "26.3"
+    },
+    {
+      "requirementId": "SECTION-27",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "section-review",
+      "sourceSection": "27"
+    },
+    {
+      "requirementId": "SECTION-27.1",
+      "milestone": "M10",
+      "primaryPr": "M10-02",
+      "kind": "section-review",
+      "sourceSection": "27.1"
+    },
+    {
+      "requirementId": "SPEC-27.1-001",
+      "milestone": "M10",
+      "primaryPr": "M10-02",
+      "kind": "requirement",
+      "sourceSection": "27.1"
+    },
+    {
+      "requirementId": "SPEC-27.1-002",
+      "milestone": "M10",
+      "primaryPr": "M10-02",
+      "kind": "requirement",
+      "sourceSection": "27.1"
+    },
+    {
+      "requirementId": "SPEC-27.1-003",
+      "milestone": "M10",
+      "primaryPr": "M10-02",
+      "kind": "requirement",
+      "sourceSection": "27.1"
+    },
+    {
+      "requirementId": "SPEC-27.1-004",
+      "milestone": "M10",
+      "primaryPr": "M10-02",
+      "kind": "requirement",
+      "sourceSection": "27.1"
+    },
+    {
+      "requirementId": "SPEC-27.1-005",
+      "milestone": "M10",
+      "primaryPr": "M10-02",
+      "kind": "requirement",
+      "sourceSection": "27.1"
+    },
+    {
+      "requirementId": "SPEC-27.1-006",
+      "milestone": "M10",
+      "primaryPr": "M10-02",
+      "kind": "requirement",
+      "sourceSection": "27.1"
+    },
+    {
+      "requirementId": "SPEC-27.1-007",
+      "milestone": "M10",
+      "primaryPr": "M10-02",
+      "kind": "requirement",
+      "sourceSection": "27.1"
+    },
+    {
+      "requirementId": "SPEC-27.1-008",
+      "milestone": "M10",
+      "primaryPr": "M10-02",
+      "kind": "requirement",
+      "sourceSection": "27.1"
+    },
+    {
+      "requirementId": "SPEC-27.1-009",
+      "milestone": "M10",
+      "primaryPr": "M10-02",
+      "kind": "requirement",
+      "sourceSection": "27.1"
+    },
+    {
+      "requirementId": "SPEC-27.1-010",
+      "milestone": "M10",
+      "primaryPr": "M10-02",
+      "kind": "requirement",
+      "sourceSection": "27.1"
+    },
+    {
+      "requirementId": "SPEC-27.1-011",
+      "milestone": "M10",
+      "primaryPr": "M10-02",
+      "kind": "requirement",
+      "sourceSection": "27.1"
+    },
+    {
+      "requirementId": "SECTION-27.2",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "section-review",
+      "sourceSection": "27.2"
+    },
+    {
+      "requirementId": "SPEC-27.2-001",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.2"
+    },
+    {
+      "requirementId": "SPEC-27.2-002",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.2"
+    },
+    {
+      "requirementId": "SPEC-27.2-003",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.2"
+    },
+    {
+      "requirementId": "SPEC-27.2-004",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.2"
+    },
+    {
+      "requirementId": "SPEC-27.2-005",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.2"
+    },
+    {
+      "requirementId": "SPEC-27.2-006",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.2"
+    },
+    {
+      "requirementId": "SPEC-27.2-007",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.2"
+    },
+    {
+      "requirementId": "SPEC-27.2-008",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.2"
+    },
+    {
+      "requirementId": "SPEC-27.2-009",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.2"
+    },
+    {
+      "requirementId": "SPEC-27.2-010",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.2"
+    },
+    {
+      "requirementId": "SECTION-27.3",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "section-review",
+      "sourceSection": "27.3"
+    },
+    {
+      "requirementId": "SPEC-27.3-001",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.3"
+    },
+    {
+      "requirementId": "SPEC-27.3-002",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.3"
+    },
+    {
+      "requirementId": "SPEC-27.3-003",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.3"
+    },
+    {
+      "requirementId": "SPEC-27.3-004",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.3"
+    },
+    {
+      "requirementId": "SPEC-27.3-005",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.3"
+    },
+    {
+      "requirementId": "SPEC-27.3-006",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.3"
+    },
+    {
+      "requirementId": "SPEC-27.3-007",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.3"
+    },
+    {
+      "requirementId": "SPEC-27.3-008",
+      "milestone": "M10",
+      "primaryPr": "M10-04",
+      "kind": "requirement",
+      "sourceSection": "27.3"
+    },
+    {
+      "requirementId": "SECTION-28",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "section-review",
+      "sourceSection": "28"
+    },
+    {
+      "requirementId": "SECTION-28.1",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "section-review",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-001",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-002",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-003",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-004",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-005",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-006",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-007",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-008",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-009",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-010",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-011",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-012",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SPEC-28.1-013",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.1"
+    },
+    {
+      "requirementId": "SECTION-28.2",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "section-review",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-001",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-002",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-003",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-004",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-005",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-006",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-007",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-008",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-009",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-010",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-011",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-012",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SPEC-28.2-013",
+      "milestone": "M10",
+      "primaryPr": "M10-01",
+      "kind": "requirement",
+      "sourceSection": "28.2"
+    },
+    {
+      "requirementId": "SECTION-34",
+      "milestone": "M8",
+      "primaryPr": "M8-01",
+      "kind": "section-review",
+      "sourceSection": "34"
+    },
+    {
+      "requirementId": "SECTION-34.1",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "section-review",
+      "sourceSection": "34.1"
+    },
+    {
+      "requirementId": "SPEC-34.1-001",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.1"
+    },
+    {
+      "requirementId": "SPEC-34.1-002",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.1"
+    },
+    {
+      "requirementId": "SPEC-34.1-003",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.1"
+    },
+    {
+      "requirementId": "SPEC-34.1-004",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.1"
+    },
+    {
+      "requirementId": "SPEC-34.1-005",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.1"
+    },
+    {
+      "requirementId": "SPEC-34.1-006",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.1"
+    },
+    {
+      "requirementId": "SPEC-34.1-007",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.1"
+    },
+    {
+      "requirementId": "SPEC-34.1-008",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.1"
+    },
+    {
+      "requirementId": "SECTION-34.2",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "section-review",
+      "sourceSection": "34.2"
+    },
+    {
+      "requirementId": "SPEC-34.2-001",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.2"
+    },
+    {
+      "requirementId": "SPEC-34.2-002",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.2"
+    },
+    {
+      "requirementId": "SPEC-34.2-003",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.2"
+    },
+    {
+      "requirementId": "SPEC-34.2-004",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.2"
+    },
+    {
+      "requirementId": "SPEC-34.2-005",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.2"
+    },
+    {
+      "requirementId": "SECTION-34.3",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "section-review",
+      "sourceSection": "34.3"
+    },
+    {
+      "requirementId": "SPEC-34.3-001",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.3"
+    },
+    {
+      "requirementId": "SPEC-34.3-002",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.3"
+    },
+    {
+      "requirementId": "SPEC-34.3-003",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.3"
+    },
+    {
+      "requirementId": "SPEC-34.3-004",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.3"
+    },
+    {
+      "requirementId": "SPEC-34.3-005",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.3"
+    },
+    {
+      "requirementId": "SPEC-34.3-006",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.3"
+    },
+    {
+      "requirementId": "SPEC-34.3-007",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.3"
+    },
+    {
+      "requirementId": "SPEC-34.3-008",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.3"
+    },
+    {
+      "requirementId": "SPEC-34.3-009",
+      "milestone": "M8",
+      "primaryPr": "M8-07",
+      "kind": "requirement",
+      "sourceSection": "34.3"
+    },
+    {
+      "requirementId": "SPEC-40-040",
+      "milestone": "M3",
+      "primaryPr": "M3-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-041",
+      "milestone": "M3",
+      "primaryPr": "M3-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-042",
+      "milestone": "M3",
+      "primaryPr": "M3-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-043",
+      "milestone": "M3",
+      "primaryPr": "M3-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-044",
+      "milestone": "M3",
+      "primaryPr": "M3-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-045",
+      "milestone": "M3",
+      "primaryPr": "M3-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-046",
+      "milestone": "M3",
+      "primaryPr": "M3-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-047",
+      "milestone": "M3",
+      "primaryPr": "M3-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-048",
+      "milestone": "M3",
+      "primaryPr": "M3-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-049",
+      "milestone": "M3",
+      "primaryPr": "M3-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-050",
+      "milestone": "M3",
+      "primaryPr": "M3-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-051",
+      "milestone": "M3",
+      "primaryPr": "M3-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-052",
+      "milestone": "M4",
+      "primaryPr": "M4-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-053",
+      "milestone": "M4",
+      "primaryPr": "M4-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-054",
+      "milestone": "M4",
+      "primaryPr": "M4-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-055",
+      "milestone": "M4",
+      "primaryPr": "M4-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-056",
+      "milestone": "M4",
+      "primaryPr": "M4-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-057",
+      "milestone": "M4",
+      "primaryPr": "M4-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-058",
+      "milestone": "M4",
+      "primaryPr": "M4-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-059",
+      "milestone": "M4",
+      "primaryPr": "M4-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-060",
+      "milestone": "M5",
+      "primaryPr": "M5-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-061",
+      "milestone": "M5",
+      "primaryPr": "M5-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-062",
+      "milestone": "M5",
+      "primaryPr": "M5-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-063",
+      "milestone": "M5",
+      "primaryPr": "M5-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-064",
+      "milestone": "M5",
+      "primaryPr": "M5-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-065",
+      "milestone": "M5",
+      "primaryPr": "M5-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-066",
+      "milestone": "M5",
+      "primaryPr": "M5-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-067",
+      "milestone": "M5",
+      "primaryPr": "M5-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-068",
+      "milestone": "M5",
+      "primaryPr": "M5-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-069",
+      "milestone": "M6",
+      "primaryPr": "M6-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-070",
+      "milestone": "M6",
+      "primaryPr": "M6-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-071",
+      "milestone": "M6",
+      "primaryPr": "M6-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-072",
+      "milestone": "M6",
+      "primaryPr": "M6-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-073",
+      "milestone": "M6",
+      "primaryPr": "M6-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-074",
+      "milestone": "M6",
+      "primaryPr": "M6-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-075",
+      "milestone": "M6",
+      "primaryPr": "M6-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-076",
+      "milestone": "M7",
+      "primaryPr": "M7-09",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-077",
+      "milestone": "M7",
+      "primaryPr": "M7-09",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-078",
+      "milestone": "M7",
+      "primaryPr": "M7-09",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-079",
+      "milestone": "M7",
+      "primaryPr": "M7-09",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-080",
+      "milestone": "M7",
+      "primaryPr": "M7-09",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-081",
+      "milestone": "M7",
+      "primaryPr": "M7-09",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-082",
+      "milestone": "M7",
+      "primaryPr": "M7-09",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-083",
+      "milestone": "M7",
+      "primaryPr": "M7-09",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-084",
+      "milestone": "M8",
+      "primaryPr": "M8-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-085",
+      "milestone": "M8",
+      "primaryPr": "M8-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-086",
+      "milestone": "M8",
+      "primaryPr": "M8-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-087",
+      "milestone": "M8",
+      "primaryPr": "M8-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-088",
+      "milestone": "M8",
+      "primaryPr": "M8-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-089",
+      "milestone": "M8",
+      "primaryPr": "M8-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-090",
+      "milestone": "M8",
+      "primaryPr": "M8-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-091",
+      "milestone": "M8",
+      "primaryPr": "M8-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-092",
+      "milestone": "M9",
+      "primaryPr": "M9-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-093",
+      "milestone": "M9",
+      "primaryPr": "M9-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-094",
+      "milestone": "M9",
+      "primaryPr": "M9-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-095",
+      "milestone": "M9",
+      "primaryPr": "M9-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-096",
+      "milestone": "M9",
+      "primaryPr": "M9-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-097",
+      "milestone": "M9",
+      "primaryPr": "M9-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-098",
+      "milestone": "M9",
+      "primaryPr": "M9-07",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-099",
+      "milestone": "M10",
+      "primaryPr": "M10-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-100",
+      "milestone": "M10",
+      "primaryPr": "M10-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-101",
+      "milestone": "M10",
+      "primaryPr": "M10-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-102",
+      "milestone": "M10",
+      "primaryPr": "M10-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-103",
+      "milestone": "M10",
+      "primaryPr": "M10-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-104",
+      "milestone": "M10",
+      "primaryPr": "M10-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    },
+    {
+      "requirementId": "SPEC-40-105",
+      "milestone": "M10",
+      "primaryPr": "M10-08",
+      "kind": "requirement",
+      "sourceSection": "40"
+    }
+  ]
+}
