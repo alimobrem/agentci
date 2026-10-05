@@ -1849,6 +1849,23 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M3-R6",
+      "title": "Scope hosted PR-triggered review to the changed PR",
+      "requirementIds": [
+        "SECTION-13.4"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T18:10:09.219Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "PR events select only the triggering repository-scoped PR; missing/malformed trigger cannot fall back to an all-PR sweep. Push/schedule/manual sweeps retain bounded coverage, current identity reads and all existing evaluator gates. SDK request-count tests prove fewer discovery calls.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

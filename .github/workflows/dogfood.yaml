@@ -27,6 +27,7 @@ jobs:
       # Owner-approved M2 Docker release default; Podman adoption remains deferred.
       AGENTCI_CONTAINER_ENGINE: docker
       AGENTCI_REPOSITORY: alimobrem/agentci
+      AGENTCI_TRIGGER_PULL_REQUEST: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.number || '' }}
       GITHUB_APP_ID: '5179954'
       GITHUB_INSTALLATION_ID: '167655696'
       GITHUB_PRIVATE_KEY_FILE: .agentci/local/hosted-app.pem
