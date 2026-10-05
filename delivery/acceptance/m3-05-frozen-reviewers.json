@@ -1,0 +1,60 @@
+{
+  "verifiedAt": "2026-10-05T17:47:05.903Z",
+  "producer": {
+    "version": "0.4.0-m3-dev.1",
+    "sourceCommit": "36e6944007406142e9684d9d3c838e0a7894fd41",
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "runId": "37350324559",
+    "runAttempt": "1",
+    "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+    "evaluatorImage": "sha256:1ee08d8d6a91bd0be89341b4c9601546ee31375c995bfe4a85b90f35eeda2f56"
+  },
+  "runId": 37350324559,
+  "artifactId": 11362103357,
+  "head": "718eebdcc7e01b1ecfc97c51410ad2b46f01b74a",
+  "base": "36e6944007406142e9684d9d3c838e0a7894fd41",
+  "comparison": {
+    "id": "f16b3cb8-9ac8-4aa0-8083-0d0e22cd53cc",
+    "reviewId": "49fae871-0301-4614-8402-2feae79b0173",
+    "file": "comparison-f16b3cb8-9ac8-4aa0-8083-0d0e22cd53cc.ndjson",
+    "sha256": "sha256:300631a801df3d74a3db22c3fbbb2d97bb6738c7e5fcdd55d447ee2d48d738df",
+    "bytes": 21245
+  },
+  "summary": {
+    "state": "completed",
+    "outcome": "passed",
+    "executionGaps": [],
+    "unitCount": 6,
+    "comparisonCount": 3
+  },
+  "reviewerUnits": [
+    {
+      "id": "c3bf8fe5-1f52-4435-bdf3-3e5bac981e01",
+      "side": "base",
+      "assertionSide": "base",
+      "assertionGitSha": "36e6944007406142e9684d9d3c838e0a7894fd41",
+      "scenarioCount": 6,
+      "status": "passed"
+    },
+    {
+      "id": "f1556bb3-aefd-41f5-835e-cc8b76125cd8",
+      "side": "head",
+      "assertionSide": "base",
+      "assertionGitSha": "36e6944007406142e9684d9d3c838e0a7894fd41",
+      "scenarioCount": 6,
+      "status": "passed"
+    }
+  ],
+  "task": "M3-05",
+  "implementationPullRequest": "https://github.com/alimobrem/agentci/pull/33",
+  "implementationHead": "af3853d2191ed0e17582b5ff45fcaba317e75eeb",
+  "implementationVerificationRun": 37349098502,
+  "implementationVerificationResult": "success",
+  "productTreeComparison": "git diff --exit-code af3853d..718eebd for packages apps cmd deploy scripts specs/api evals and package lockfiles: identical",
+  "limitations": [
+    "Internal reviewer acceptance only; finding lifecycle and customer/API integration are subsequent tasks",
+    "Live-provider acceptance remains explicitly deferred",
+    "M3 release gates remain open"
+  ]
+}
