@@ -23,6 +23,10 @@ export function verifyAssembledIndex(role,index,receipts){
  if(index?.manifests?.some(m=>m.platform?.os!=='unknown' && (m.platform?.os!=='linux'||!['amd64','arm64'].includes(m.platform?.architecture))))throw new Error('Unexpected platform in assembled index');
  for(const receipt of receipts)if(platformManifestReference(role,index,receipt.arch)!==`ghcr.io/alimobrem/agentci-${role}@${receipt.manifestDigest}`)throw new Error('Assembled platform digest mismatch');
 }
+export function bindNativeScan(scan, expected){
+ const reference=`ghcr.io/alimobrem/agentci-${expected.role}@${expected.manifestDigest}`;
+ if(scan?.ArtifactType!=='container_image'||scan.ArtifactName!==reference||scan.Metadata?.ImageID!==expected.configDigest||scan.Metadata?.ImageConfig?.architecture!==expected.arch||scan.Metadata?.ImageConfig?.os!=='linux'||!scan.Metadata?.RepoDigests?.includes(reference))throw new Error('Scan does not bind accepted native image');
+}
 export function bindNativeImage(inspect, expected){
  if(!inspect||inspect.Os!=='linux'||inspect.Architecture!==expected.arch||!digest(inspect.Id)||inspect.Config?.Labels?.['org.opencontainers.image.revision']!==expected.sourceCommit||inspect.Config?.Labels?.['org.opencontainers.image.version']!==expected.version||inspect.Config?.Labels?.['org.opencontainers.image.source']!=='https://github.com/alimobrem/agentci')throw new Error('Native image platform/source/version mismatch');
  return inspect.Id;
@@ -41,6 +45,7 @@ if(process.argv[1]===fileURLToPath(import.meta.url)){
   const inspectBytes=await readFile(`published/${role}-${arch}-inspect.json`),inspect=JSON.parse(inspectBytes)[0];
   const configDigest=bindNativeImage(inspect,{...expected,arch});
   const scanBytes=await readFile(`published/${role}-${arch}-scan.json`);
+  bindNativeScan(JSON.parse(scanBytes),{...expected,arch,manifestDigest:manifest,configDigest});
   execFileSync(process.execPath,['scripts/check-scan.mjs',`published/${role}-${arch}-scan.json`],{stdio:'inherit'});
   let nativeSha256=null;
   if(['worker','eval-worker'].includes(role)){

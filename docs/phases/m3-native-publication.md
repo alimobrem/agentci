@@ -41,6 +41,7 @@ Validation implemented:
   evidence receipts before tag assembly.
 - Reject substituted manifests and extra runtime platforms in the assembled index.
 - Reject mismatched native image architecture and OCI identity labels.
+- Reject scan evidence for another manifest, configuration digest or platform.
 - Check that workflow ordering preserves evidence/cleanup time and forbids QEMU.
 
 Remaining acceptance: run native publication on a new candidate identity, retain

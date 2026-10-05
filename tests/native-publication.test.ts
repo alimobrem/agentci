@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {parse} from 'yaml';
 // @ts-expect-error operational ESM helper
-import {validateNativeReceipts,verifyAssembledIndex,bindNativeImage} from '../scripts/native-publication.mjs';
+import {validateNativeReceipts,verifyAssembledIndex,bindNativeImage,bindNativeScan} from '../scripts/native-publication.mjs';
 const expected={role:'worker',version:'0.4.0-m3',sourceCommit:'a'.repeat(40),runId:'123',attempt:'1'};
 const receipts=()=>['amd64','arm64'].map((arch,i)=>({...expected,arch,result:'passed',buildDigest:'sha256:'+(i?'b':'a').repeat(64),manifestDigest:'sha256:'+(i?'d':'c').repeat(64),configDigest:'sha256:'+'e'.repeat(64),scanSha256:'f'.repeat(64),inspectSha256:'1'.repeat(64),nativeSha256:'2'.repeat(64)}));
 test('native assembly refuses partial, stale, failed, duplicate and unbound platform receipts',()=>{
@@ -40,4 +40,12 @@ test('publication reserves evidence and cleanup time and gates tag assembly on n
  assert.match(compile.with.outputs,/push-by-digest=true/);assert.equal(compile.with.tags,undefined);
  const assemble=publish.steps.find((s:any)=>s.name==='Assemble only fully accepted native platforms').run;
  assert.ok(assemble.indexOf('native-publication.mjs verify')<assemble.indexOf('imagetools create -t'));
+});
+
+test('scan evidence must name the accepted manifest, configuration and native platform',()=>{
+ const expectedScan={...expected,arch:'arm64',manifestDigest:'sha256:'+'d'.repeat(64),configDigest:'sha256:'+'e'.repeat(64)};
+ const ref=`ghcr.io/alimobrem/agentci-worker@${expectedScan.manifestDigest}`;
+ const scan={ArtifactType:'container_image',ArtifactName:ref,Metadata:{ImageID:expectedScan.configDigest,ImageConfig:{architecture:'arm64',os:'linux'},RepoDigests:[ref]}};
+ bindNativeScan(scan,expectedScan);
+ for(const patch of [{ArtifactName:'another-image'},{ArtifactType:'filesystem'},{Metadata:{...scan.Metadata,ImageID:'sha256:'+'f'.repeat(64)}},{Metadata:{...scan.Metadata,RepoDigests:[]}},{Metadata:{...scan.Metadata,ImageConfig:{architecture:'amd64',os:'linux'}}}])assert.throws(()=>bindNativeScan({...scan,...patch},expectedScan),/Scan does not bind/);
 });
