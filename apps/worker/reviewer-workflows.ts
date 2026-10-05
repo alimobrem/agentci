@@ -1,4 +1,4 @@
-import {proxyActivities,CancellationScope,ActivityCancellationType,workflowInfo,isCancellation} from '@temporalio/workflow';
+import {proxyActivities,CancellationScope,ActivityCancellationType,workflowInfo,isCancellation,ActivityFailure,ApplicationFailure,CancelledFailure} from '@temporalio/workflow';
 export interface AdmittedReviewActivities {
  runAdmittedReview(id:string):Promise<string>;
  finishAdmittedReview(id:string,runId:string,status:'completed'|'failed'|'cancelled',resultDigest:string|null):Promise<void>;
@@ -12,7 +12,7 @@ export async function reviewAdmittedRequest(id:string):Promise<string>{
  const runId=workflowInfo().runId;
  let resultDigest:string;
  try{resultDigest=await activities.runAdmittedReview(id);if(!/^sha256:[a-f0-9]{64}$/.test(resultDigest))throw Error('invalid-review-result-digest');}
- catch(error){await CancellationScope.nonCancellable(()=>finish.finishAdmittedReview(id,runId,isCancellation(error)?'cancelled':'failed',null));throw error;}
+ catch(error){const cancelled=isCancellation(error)||(error instanceof ActivityFailure&&error.cause instanceof ApplicationFailure&&error.cause.type==='ReviewCancelled');await CancellationScope.nonCancellable(()=>finish.finishAdmittedReview(id,runId,cancelled?'cancelled':'failed',null));if(cancelled)throw new CancelledFailure('Review cancelled');throw error;}
  // Retain completed work even if cancellation arrives during finalization.
  await CancellationScope.nonCancellable(()=>finish.finishAdmittedReview(id,runId,'completed',resultDigest));
  return id;

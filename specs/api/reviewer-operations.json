@@ -365,6 +365,26 @@
         "summary-write failure recovery without redispatch",
         "immutable tenant-scoped restart reads and redacted outages"
       ]
+    },
+    {
+      "operationId": "createAdmittedReviewActivities",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.3",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/integration/admitted-review-activities.test.ts",
+        "tests/integration/review-dispatch.test.ts"
+      ],
+      "scenarios": [
+        "actual Temporal identity binds before provider execution",
+        "lost summary response retries retained evidence without provider charge",
+        "durable cancellation before dispatch and during provider invocation",
+        "possibly-sent cancellation preserves budget exposure",
+        "private source output and diagnostic sentinels absent from workflow history",
+        "success and cancellation workflow replay"
+      ]
     }
   ]
 }

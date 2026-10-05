@@ -11,7 +11,7 @@ test('review dispatch survives races, lease takeover, cancellation and restart w
   const admit=async()=>{const id=randomUUID();await admissions.admit({schemaVersion:'v1alpha1',id,subject:{...scope,pullRequest:1,baseSha:'a'.repeat(40),headSha:'b'.repeat(40)},profile:{id:'security',revision:digest('profile')},mode:'synthetic'});return id;};
   const id=await admit(),before=await store.get(id);assert.ok(before);assert.equal(before.dispatched,false);assert.ok(Number.isSafeInteger(before.admittedAtMs));
   const claimed=(await Promise.all([store.claim(),store.claim(),store.claim()])).filter(x=>x!==undefined);assert.equal(claimed.length,1);const first=claimed[0]!;
-  const runId=randomUUID(),finished=await store.finish(id,runId,'completed',digest('result'));
+  const runId=randomUUID();await assert.rejects(store.bindRun(id,'wrong-workflow',runId),/review-dispatch-conflict/);await store.bindRun(id,first.workflowId,runId);await assert.rejects(store.bindRun(id,first.workflowId,randomUUID()),/review-dispatch-conflict/);const finished=await store.finish(id,runId,'completed',digest('result'));
   assert.equal(finished.dispatched,false);assert.equal(finished.terminal?.status,'completed');
   const ack=await store.acknowledge(first,runId);assert.equal(ack.dispatched,true);assert.deepEqual(ack.terminal,finished.terminal);assert.deepEqual(await store.acknowledge(first,runId),ack);
   assert.deepEqual((await store.requestCancellation(id)).terminal,finished.terminal,'late cancellation must not replace completion');

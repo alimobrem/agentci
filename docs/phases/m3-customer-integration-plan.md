@@ -147,3 +147,15 @@ changed context. An injected summary-write failure recovers without additional
 provider calls; scoped reads work after reconnecting without executing reviewers.
 The summary reports partial/refused role coverage explicitly and stores no source
 content or credentials. Production finalization must consume this retained summary.
+
+`createAdmittedReviewActivities` now binds the actual Temporal run before spending,
+heartbeats only an ID, propagates durable cancellation to provider execution, and
+finalizes against retained summaries. A summary committed before a lost response
+is reused on activity retry; a late cancellation cannot erase completed evidence.
+Real Temporal/PostgreSQL acceptance covers pre-dispatch and in-flight cancellation,
+preserved possibly-sent budget exposure, lost summary responses, history replay
+and exclusion of source/provider/private-error sentinels from workflow history.
+The test caught and fixed database cancellation arriving before Temporal's own
+signal: an explicit nonretryable `ReviewCancelled` activity outcome now maps to
+workflow cancellation. Production worker registration and out-of-workflow
+termination/recovery acceptance remain outstanding.

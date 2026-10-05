@@ -36,6 +36,12 @@ export class ReviewDispatchStore {
    return {...this.decode(await this.row(c,r.id)),token};
   });
  }
+ async bindRun(id:string,workflowId:string,runId:string){
+  this.args(id);if(!uuid(runId))conflict();
+  return this.tx(async c=>{const r=await this.row(c,id,true);if(!r||this.decode(r).workflowId!==workflowId||(r.run_id&&r.run_id!==runId.toLowerCase()))conflict();
+   if(!r.run_id)await c.query('UPDATE agentci_review_admission_outbox SET run_id=$4 WHERE organization_id=$1 AND repository=$2 AND id=$3',[...this.args(id),runId.toLowerCase()]);return this.decode(await this.row(c,id));
+  });
+ }
  async acknowledge(entry:ReviewDispatchClaim,runId:string){
   if(!uuid(runId)||!uuid(entry.token))conflict();
   return this.tx(async c=>{const r=await this.row(c,entry.id,true);if(!r||this.decode(r).workflowId!==entry.workflowId||(r.run_id&&r.run_id!==runId.toLowerCase()))conflict();
