@@ -34,6 +34,8 @@ if (command === 'check' || command === 'release') {
   const event = { at: now, task: task.id, action, sourceCommit: execFileSync('git', ['rev-parse','HEAD'], {encoding:'utf8'}).trim(), details: action === 'defer'?task.deferral:action === 'block' ? task.blockedReason : action === 'reopen' ? rest.join(' ') : null };
   const { appendFile } = await import('node:fs/promises'); await appendFile('delivery/task-events.jsonl', JSON.stringify(event) + '\n');
   console.log(`${task.id}: ${task.status}`);
+} else if (command === 'evidence') {
+  const {evidenceCommand}=await import('./lib/evidence-command.ts');await evidenceCommand(argument,args);
 } else if (command === 'quality') {
   if (!['escaped-defect','dogfood-defect'].includes(argument ?? '') || !args[0] || !requirements.some(r=>r.id===args[0]) || !args[1]) throw new Error('quality needs escaped-defect/dogfood-defect, requirement ID and evidence path');
   await access(args[1]);
@@ -65,4 +67,4 @@ if (command === 'check' || command === 'release') {
   }));
   const report = { baselineCiSeconds: baselineCi, optimizedCiMedianSeconds: optimizedCi, optimizedSamples:runs.filter(r=>r.cohort==='optimized'&&r.conclusion==='success').length, firstPassAttempts:runs.filter(r=>r.attempt===1&&r.cohort==='optimized'&&['success','failure'].includes(r.conclusion)).length, firstPassFailures:runs.filter(r=>r.attempt===1&&r.cohort==='optimized'&&r.conclusion==='failure').length, preliminaryCiReductionPercent:baselineCi&&optimizedCi?100*(baselineCi-optimizedCi)/baselineCi:null, baselineLocalMedianSeconds:median(baseline.local.samples.map((s:any)=>s.seconds)), latestFastCheckSeconds:fast?.passed?fast.seconds:null, tasks:tasks.tasks.map(t=>({id:t.id,status:t.status,cycleSeconds:t.startedAt&&t.completedAt?(Date.parse(t.completedAt)-Date.parse(t.startedAt))/1000:null})), openReleaseGates:remaining, interpretation:'Feedback-loop timings only; no historical task-delivery baseline. Caches, suite size and runner conditions affect results; small samples do not prove causality.' };
   console.log(JSON.stringify({...report,ciByCache,tasks:report.tasks.map(t=>({...t,blockedSeconds:blockedSeconds(tasks.tasks.find(task=>task.id===t.id)!,taskEvents)})),quality:{firstPassFailures:report.firstPassFailures,reopenedTasks:taskEvents.filter(e=>e.action==='reopen').length,recordedEscapedDefects:quality.filter(e=>e.kind==='escaped-defect').length,recordedDogfoodDefects:quality.filter(e=>e.kind==='dogfood-defect').length,note:'Recorded events since tracking began; zero does not establish absence of unreported defects.'}},null,2));
-} else throw new Error('Command: check, release, task, collect-ci, report');
+} else throw new Error('Command: check, release, task, evidence, collect-ci, report');
