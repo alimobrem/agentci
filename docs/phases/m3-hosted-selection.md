@@ -19,4 +19,5 @@ processes. Existing trusted-main checkout and evaluator acceptance remain intact
 The real Octokit SDK tests in tests/hosted-selection.test.ts count discovery
 requests using synthetic responses. These establish reduced discovery and candidate
 selection, not measured end-to-end acceleration or complete resolution of API quota
-exhaustion. Hosted workflow acceptance remains pending until adoption on main.
+exhaustion. Hosted workflow acceptance passed on main;
+`delivery/acceptance/m3-r6.json` binds the trigger-39 run to its sole retained PR39 review.

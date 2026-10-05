@@ -1,0 +1,53 @@
+{
+  "hostedRun": 37361415576,
+  "artifactId": 11367091781,
+  "producer": {
+    "version": "0.4.0-m3-dev.1",
+    "sourceCommit": "989e32a3c6b8006d93fb3677a872c6a7c447b790",
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "runId": "37361415576",
+    "runAttempt": "1",
+    "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+    "evaluatorImage": "sha256:575a79ccfcf5faad4a520fcc10b3aa831a1b3bd3f5914d7fa128d5b71fd74bcc"
+  },
+  "job": {
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "pullRequest": 39,
+    "baseSha": "989e32a3c6b8006d93fb3677a872c6a7c447b790",
+    "headSha": "acc3548a7d343b83c0c16afa439db1d7897e9802"
+  },
+  "comparison": {
+    "id": "45783c66-4e91-4348-bb42-cde78e195ab0",
+    "reviewId": "b3163a71-f97b-4c08-b683-5a184e3d4c95",
+    "file": "comparison-45783c66-4e91-4348-bb42-cde78e195ab0.ndjson",
+    "sha256": "sha256:7b79c4a46249e3bb801fa89927cc08fa070670e9197da21b2dfc872f583504fb",
+    "bytes": 25096
+  },
+  "summary": {
+    "state": "completed",
+    "outcome": "passed",
+    "executionGaps": [],
+    "unitCount": 8,
+    "comparisonCount": 4
+  },
+  "coverageGaps": 0,
+  "selectionGaps": 0,
+  "regressions": 0,
+  "verification": "Independent report identity, exact file digest and chained comparison verification; runner/evaluator digests matched workflow logs.",
+  "task": "M3-R6",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/38",
+  "testedHead": "c712b2a87f2c67be1b223090a636447cb4e2b248",
+  "verificationRun": 37360320687,
+  "verificationResult": "success",
+  "coverage": [
+    "SDK selection tests reject malformed triggers and bound sweep discovery",
+    "Trusted-main PR event carried trigger 39; retained report contains exactly PR39"
+  ],
+  "limitations": [
+    "No cross-process quota state or completed-review cache",
+    "No induced production quota exhaustion; cooldown failure paths covered by SDK tests",
+    "Not an end-to-end velocity or M3 release claim"
+  ]
+}

@@ -33,5 +33,5 @@ trusted verifier, runner and exact subject identities before skipping work.
 
 `tests/github-rate-limit.test.ts` drives the real SDK with deterministic time and
 counts outbound fetches. No request is sent during cooldown and the first eligible
-request succeeds after expiry. Hosted adoption and post-reset acceptance remain
-pending. Timing follows [GitHub's documented limits](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api).
+request succeeds after expiry. Hosted adoption and post-reset acceptance passed; see
+`delivery/acceptance/m3-r5.json`. Timing follows [GitHub's documented limits](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api).

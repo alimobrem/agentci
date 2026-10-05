@@ -13,7 +13,7 @@ import {ComparisonAccumulator,type ExportHeader,type ExportItem} from '../evals/
 
 type Side='base'|'head';
 export type RunnerIdentity={runnerImage:string;runnerProvider?:never}|{runnerProvider:{id:string;revision:string};runnerImage?:never};
-export interface EvalUnitDefinition {suite:EvalSuite;side:Side;assertionSide:Side;model?:string;runner:RunnerIdentity}
+export interface EvalUnitDefinition {suite:EvalSuite;side:Side;assertionSide:Side;model?:string;runner:RunnerIdentity;executionLimits?:{engine:'docker'|'podman';memoryMb:number;cpus:number;pids:number;maxTrials:number}}
 export interface EvalPlan {suiteChanges:SuiteChange[];coverageGaps:string[];selectionGaps:string[]}
 type Inputs=Record<Side,{snapshot:Snapshot;omitted:string[]}>;
 export interface EvalUnit {id:string;jobId:string;definition:EvalUnitDefinition;inputs:Inputs;status:string;cancelRequested:boolean;result?:EvalRun}
@@ -21,7 +21,7 @@ export class EvalLeaseLost extends Error {}
 export class ImmutableEvalConflict extends Error {}
 const uuid=(value:string)=>/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(value);
 function definition(value:EvalUnitDefinition):EvalUnitDefinition {
-  if(!value||Object.keys(value).some(k=>!['suite','side','assertionSide','model','runner'].includes(k))||!['base','head'].includes(value.side)||!['base','head'].includes(value.assertionSide))throw new Error('Invalid eval unit definition');
+  if(!value||Object.keys(value).some(k=>!['suite','side','assertionSide','model','runner','executionLimits'].includes(k))||!['base','head'].includes(value.side)||!['base','head'].includes(value.assertionSide))throw new Error('Invalid eval unit definition');
   const suite=validateEvalSuite(value.suite),runner=value.runner;
   if(suite.spec.models?.length&&!value.model||value.model!==undefined&&!suite.spec.models?.includes(value.model))throw new Error('Invalid unit model variant');
   if(!runner||typeof runner!=='object')throw new Error('Invalid runner identity');
@@ -31,6 +31,11 @@ function definition(value:EvalUnitDefinition):EvalUnitDefinition {
     const provider=runner.runnerProvider;
     if(!provider||Object.keys(provider).some(k=>!['id','revision'].includes(k))||!/^[A-Za-z0-9][A-Za-z0-9_.-]{0,127}$/.test(provider.id)||!/^sha256:[a-f0-9]{64}$/.test(provider.revision)||suite.spec.runner.adapter!=='http'||suite.spec.runner.provider!==provider.id)throw new Error('Invalid HTTP unit provenance');
   }else throw new Error('Unit requires exactly one runner identity');
+  if(value.executionLimits){
+    const cap=value.executionLimits;
+    if(!runner.runnerImage||Object.keys(cap).sort().join(',')!=='cpus,engine,maxTrials,memoryMb,pids'||!Number.isSafeInteger(cap.maxTrials)||cap.maxTrials<suite.spec.trials.count||cap.maxTrials>1000)throw new Error('Invalid unit execution limits');
+    validateRunnerPolicy({image:runner.runnerImage,engine:cap.engine,memoryMb:cap.memoryMb,cpus:cap.cpus,pids:cap.pids});
+  }
   return structuredClone({...value,suite});
 }
 function validateInputs(inputs:Inputs):void {

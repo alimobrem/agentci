@@ -1,0 +1,52 @@
+{
+  "kind": "frozen-finding-contract-development-acceptance",
+  "requirementIds": [
+    "SECTION-12.3",
+    "SPEC-12.3-001",
+    "SECTION-12.4",
+    "SECTION-12.5",
+    "SPEC-12.5-001"
+  ],
+  "hostedRun": 37360316856,
+  "artifactId": 11365514924,
+  "producer": {
+    "version": "0.4.0-m3-dev.1",
+    "sourceCommit": "9b55e73eedf56390e826d49f76850d37fa3b36dd",
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "runId": "37360316856",
+    "runAttempt": "1",
+    "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+    "evaluatorImage": "sha256:a2d9f7faf1c5f5238f61d524de8eb5f336307a7105c5736866dbb74c081253b1"
+  },
+  "job": {
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "pullRequest": 38,
+    "baseSha": "9b55e73eedf56390e826d49f76850d37fa3b36dd",
+    "headSha": "c712b2a87f2c67be1b223090a636447cb4e2b248"
+  },
+  "comparison": {
+    "id": "8d339757-88c1-469f-ade8-34a3bd3da629",
+    "reviewId": "f458724d-9916-49cb-be2b-06e46d4bceb9",
+    "file": "comparison-8d339757-88c1-469f-ade8-34a3bd3da629.ndjson",
+    "sha256": "sha256:c5382b08c8d5284becd69463a69dc7cb1205416a614a3baa6102d4a44f7a7a3a",
+    "bytes": 25096
+  },
+  "summary": {
+    "state": "completed",
+    "outcome": "passed",
+    "executionGaps": [],
+    "unitCount": 8,
+    "comparisonCount": 4
+  },
+  "coverageGaps": 0,
+  "selectionGaps": 0,
+  "regressions": 0,
+  "scenario": "finding-lifecycle passed on both base and head using assertions frozen from base",
+  "verification": "Independent report identity, file digest and chained comparison verification; runner/evaluator identities matched workflow logs",
+  "limitations": [
+    "Finding contract only; does not cover durable-history implementation or isolated reproduction",
+    "Not M3 release acceptance; parent M3-06 remains in progress"
+  ]
+}

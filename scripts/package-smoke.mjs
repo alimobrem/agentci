@@ -32,6 +32,10 @@ try {
   if(!(await readFile(join(installedRoot,'deploy/migrations/006_m3_finding_history.sql'),'utf8')).includes('agentci_finding_events'))throw new Error('Installed finding history migration missing');
   const {FindingHistoryStore}=await import(pathToFileURL(join(installedRoot,'dist/packages/storage/finding-history.js')).href);
   if(typeof FindingHistoryStore!=='function')throw new Error('Installed finding history store missing');
+  if(!(await readFile(join(installedRoot,'deploy/migrations/007_m3_reproduction.sql'),'utf8')).includes('agentci_reproduction_receipts'))throw new Error('Installed reproduction migration missing');
+  const {FindingReproductionStore}=await import(pathToFileURL(join(installedRoot,'dist/packages/storage/finding-reproduction.js')).href);
+  const {compileFindingReproduction,reproductionReceipt}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/reproduction.js')).href);
+  if([FindingReproductionStore,compileFindingReproduction,reproductionReceipt].some(value=>typeof value!=='function'))throw new Error('Installed reproduction modules missing');
   const {validateModelFinding}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/model.js')).href);
   const findingFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-finding.json'),'utf8'));
   validateModelFinding(findingFixture,findingFixture.subject);

@@ -15,12 +15,19 @@ try{
     return {exitCode:result.status,report:JSON.parse(await readFile(join(root,'agentci-finding-result.json'),'utf8'))};
   };
   const baseline=await run();
-  if(baseline.exitCode!==0||baseline.report.results.length!==1||baseline.report.results.some(result=>result.status!=='passed'))throw Error('Finding corpus baseline failed');
+  if(baseline.exitCode!==0||baseline.report.results.length!==2||baseline.report.results.some(result=>result.status!=='passed'))throw Error('Finding corpus baseline failed');
   const subject=join(root,'packages/findings/lifecycle.ts'),original=await readFile(subject,'utf8');
   const guard="receipt.findingId!==before.id";
   if(original.split(guard).length!==2)throw Error('Receipt identity mutation target changed');
   await writeFile(subject,original.replace(guard,'false'));
   const mutation=await run();
   if(mutation.exitCode!==1||mutation.report.results.find(result=>result.scenario==='finding-lifecycle')?.status!=='failed')throw Error('Finding corpus failed to detect wrong-finding reproduction receipt');
-  console.log(JSON.stringify({baseline,mutation,scope:'Local frozen-harness acceptance; network isolation and hosted execution are separate gates.'}));
+  await writeFile(subject,original);
+  const reproduction=join(root,'packages/findings/reproduction.ts'),source=await readFile(reproduction,'utf8');
+  const reproductionGuard='run!.id!==unit.id';
+  if(source.split(reproductionGuard).length!==2)throw Error('Reproduction run identity mutation target changed');
+  await writeFile(reproduction,source.replace(reproductionGuard,'false'));
+  const substitutedRun=await run();
+  if(substitutedRun.exitCode!==1||substitutedRun.report.results.find(result=>result.scenario==='finding-reproduction')?.status!=='failed')throw Error('Finding corpus failed to detect substituted reproduction run');
+  console.log(JSON.stringify({baseline,mutation,substitutedRun,scope:'Local frozen-harness acceptance; network isolation and hosted execution are separate gates.'}));
 }finally{await rm(root,{recursive:true,force:true});}

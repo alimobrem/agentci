@@ -109,6 +109,119 @@
         "immutable event update and deletion rejection",
         "receipt failure rollback"
       ]
+    },
+    {
+      "operationId": "compileFindingReproduction",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/finding-reproduction.test.ts"
+      ],
+      "scenarios": [
+        "exact finding and source evidence binding",
+        "immutable baseline assertion selection",
+        "bounded structured local execution only"
+      ]
+    },
+    {
+      "operationId": "verifyReproductionUnit",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/finding-reproduction.test.ts"
+      ],
+      "scenarios": [
+        "recompile immutable execution definition and projected inputs"
+      ]
+    },
+    {
+      "operationId": "reproductionReceipt",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/finding-reproduction.test.ts",
+        "tests/integration/finding-reproduction.test.ts",
+        "tests/integration/finding-frozen-eval.test.ts"
+      ],
+      "scenarios": [
+        "exact terminal execution identity",
+        "positive negative crashed and missing observations",
+        "frozen isolated assertions reject substituted execution despite weakened candidate tests"
+      ]
+    },
+    {
+      "operationId": "FindingReproductionStore",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/integration/finding-reproduction-storage.test.ts"
+      ],
+      "scenarios": [
+        "controller approval rejects altered plans",
+        "concurrent reservation and stage retries",
+        "resource enforcement before lease acquisition",
+        "live cancellation and container cleanup",
+        "report symlink escape fails closed",
+        "restart receipt verification and immutable history",
+        "pre-staging cancellation survives retries",
+        "concurrent staging cancellation fences dispatch",
+        "requeue preserves the finding attempt cap",
+        "late cancellation preserves terminal receipts"
+      ]
+    },
+    {
+      "operationId": "createReproductionActivities",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/integration/finding-reproduction-storage.test.ts"
+      ],
+      "scenarios": [
+        "exact revision staging and terminal disposition"
+      ]
+    },
+    {
+      "operationId": "reproduceFinding",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/integration/finding-reproduction-temporal.test.ts"
+      ],
+      "scenarios": [
+        "ambiguous stage and finalize retry",
+        "cancellation during staging waits for cleanup",
+        "Temporal history replay"
+      ]
     }
   ]
 }
