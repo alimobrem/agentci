@@ -1512,14 +1512,16 @@
         "SECTION-13.4",
         "SPEC-13.4-001"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T05:16:56.975Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T06:01:52.172Z",
       "acceptance": [
         {
           "text": "Normalized invoke/stream/capabilities/extensions and usage; cancellation, bounded retries, unsupported-feature errors and budget exhaustion tests.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-01.json"
+          ]
         }
       ],
       "dependsOn": [
@@ -1532,8 +1534,8 @@
       "requirementIds": [
         "SPEC-13.3-002"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "in-progress",
+      "startedAt": "2026-10-05T06:01:52.383Z",
       "completedAt": null,
       "acceptance": [
         {
@@ -1782,6 +1784,37 @@
         "M3-R1",
         "M3-R2",
         "M3-R3"
+      ]
+    },
+    {
+      "id": "M3-01-evals",
+      "title": "Frozen provider-core behavioral eval corpus",
+      "requirementIds": [
+        "SECTION-13.1",
+        "SECTION-13.2",
+        "SPEC-13.2-001",
+        "SPEC-13.2-002",
+        "SPEC-13.2-003",
+        "SPEC-13.2-004",
+        "SPEC-13.2-005",
+        "SPEC-13.2-006",
+        "SPEC-13.2-007",
+        "SPEC-13.2-008",
+        "SECTION-13.4",
+        "SPEC-13.4-001"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T14:18:21.958Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Run frozen provider request, response, stream and execution assertions against both subjects; retain per-scenario failures, prove weakened subject behavior fails, and verify isolated hosted acceptance. Do not claim live provider or durable database coverage.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-01"
       ]
     }
   ]

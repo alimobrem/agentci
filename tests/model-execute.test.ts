@@ -18,8 +18,9 @@ test('bounded retries preserve possibly charged failures and release proven not-
 test('budget exhaustion and expired/cancelled calls never dispatch',async()=>{
  for(const mode of ['budget','expired','cancelled']){const s=setup(),req=request(),controller=new AbortController();if(mode==='budget')s.ledger.reserve=async()=>{throw new ProviderFailure('budget-exhausted');};if(mode==='expired')req.policy.deadlineAt=Date.now()-1;if(mode==='cancelled')controller.abort('private reason');await assert.rejects(invokeModel(s.provider,req,s.ledger,controller.signal),new RegExp(mode==='budget'?'budget-exhausted':mode==='expired'?'deadline':'cancelled'));assert.equal(s.calls(),0);}
 });
-test('deadline bounds an uncooperative provider and retains its reservation',async()=>{
- const s=setup(),req=request();req.policy.deadlineAt=Date.now()+40;s.provider.invoke=async()=>new Promise<ModelResponse>(()=>{});await assert.rejects(invokeModel(s.provider,req,s.ledger),/deadline/);assert.deepEqual(s.events,[['reserve',1],['unknown','attempt-1']]);
+test('deadline bounds an uncooperative provider and retains its reservation',async(t)=>{
+ t.mock.timers.enable({apis:['Date','setTimeout'],now:Date.now()});
+ const s=setup(),req=request();req.policy.deadlineAt=Date.now()+40;s.provider.invoke=async()=>{t.mock.timers.tick(41);return new Promise<ModelResponse>(()=>{});};await assert.rejects(invokeModel(s.provider,req,s.ledger),/deadline/);assert.deepEqual(s.events,[['reserve',1],['unknown','attempt-1']]);
 });
 test('cancellation during reservation releases after reservation completes without dispatch',async()=>{
  const s=setup(),controller=new AbortController();s.ledger.reserve=async()=>{controller.abort();return 'attempt-1';};await assert.rejects(invokeModel(s.provider,request(),s.ledger,controller.signal),/cancelled/);assert.equal(s.calls(),0);assert.deepEqual(s.events,[['release','attempt-1']]);
@@ -37,6 +38,7 @@ test('retry count is bounded and missing or invalid estimates prevent reservatio
 test('cancellation during settlement preserves known cost but cannot report success',async()=>{
  const s=setup(),controller=new AbortController();s.ledger.settle=async(id,cost)=>{s.events.push(['settle',id,cost]);controller.abort();};await assert.rejects(invokeModel(s.provider,request(),s.ledger,controller.signal),error=>error instanceof ProviderFailure&&error.code==='cancelled'&&error.dispatch==='possibly-sent');assert.deepEqual(s.events,[['reserve',1],['settle','attempt-1',10]]);assert.equal(s.calls(),1);
 });
-test('deadline reached during settlement records accounting before returning deadline',async()=>{
- const s=setup(),req=request();req.policy.deadlineAt=Date.now()+50;s.ledger.settle=async(id,cost)=>{s.events.push(['settle',id,cost]);await new Promise(resolve=>setTimeout(resolve,70));};await assert.rejects(invokeModel(s.provider,req,s.ledger),/deadline/);assert.deepEqual(s.events,[['reserve',1],['settle','attempt-1',10]]);
+test('deadline reached during settlement records accounting before returning deadline',async(t)=>{
+ t.mock.timers.enable({apis:['Date','setTimeout'],now:Date.now()});
+ const s=setup(),req=request();req.policy.deadlineAt=Date.now()+50;s.ledger.settle=async(id,cost)=>{s.events.push(['settle',id,cost]);t.mock.timers.tick(70);};await assert.rejects(invokeModel(s.provider,req,s.ledger),/deadline/);assert.deepEqual(s.events,[['reserve',1],['settle','attempt-1',10]]);
 });

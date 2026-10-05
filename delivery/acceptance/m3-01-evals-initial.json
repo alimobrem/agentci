@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "29f8d73d7bac00851abbe837ce806854e6e55061",
+  "runId": "37324182838",
+  "artifactId": "11351054561",
+  "comparison": {
+    "id": "dd4dc7c8-2030-4311-a876-842d36630cb8",
+    "reviewId": "309307b1-803d-48b9-8045-6cfd79c344d8",
+    "file": "comparison-dd4dc7c8-2030-4311-a876-842d36630cb8.ndjson",
+    "sha256": "sha256:0885ef75340ad50f36863ea3e8a7faf2bbc5d5724cca50f39188fe8250d68e19",
+    "bytes": 10950
+  },
+  "identity": {
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "pullRequest": 31,
+    "baseSha": "6f5cee2a24f2adba53cd3e7ea0aee07710a9d777",
+    "headSha": "29f8d73d7bac00851abbe837ce806854e6e55061"
+  },
+  "verification": "File digest, chained export, subject identity and runner identity verified with verifyHostedComparison",
+  "units": [
+    {
+      "suite": "agentci-provider-contracts",
+      "side": "head",
+      "assertionSide": "head",
+      "status": "passed",
+      "scenarioIds": [
+        "request-contract",
+        "response-contract",
+        "stream-contract",
+        "bounded-execution",
+        "stream-execution"
+      ]
+    },
+    {
+      "suite": "agentci-self-contracts",
+      "side": "base",
+      "assertionSide": "base",
+      "status": "passed",
+      "scenarioIds": [
+        "manifest",
+        "adapters",
+        "statistics",
+        "request-identity",
+        "comparison",
+        "export-client"
+      ]
+    },
+    {
+      "suite": "agentci-self-contracts",
+      "side": "head",
+      "assertionSide": "base",
+      "status": "passed",
+      "scenarioIds": [
+        "manifest",
+        "adapters",
+        "statistics",
+        "request-identity",
+        "comparison",
+        "export-client"
+      ]
+    }
+  ],
+  "summary": {
+    "state": "completed",
+    "outcome": "passed",
+    "executionGaps": [],
+    "unitCount": 3,
+    "comparisonCount": 1
+  },
+  "limitations": [
+    "Provider suite is newly added: isolated head execution passed, but no baseline provider unit exists in this comparison. Two-sided frozen provider acceptance remains pending.",
+    "No live provider compatibility or PostgreSQL durability is claimed."
+  ]
+}

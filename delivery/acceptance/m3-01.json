@@ -1,0 +1,110 @@
+{
+  "task": "M3-01",
+  "status": "accepted",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/27",
+  "testedHead": "1cbc9c582f3f37cd6295f34cc46c2b95b4aeada4",
+  "verificationRun": 37269728803,
+  "verificationResult": "success",
+  "sourceHashes": {
+    "deploy/migrations/004_m3_model_budget.sql": "df15b7eb19fa5cb55fd3f370f3dd210472550d5a6300c5c0dcba8a03ff9503e3",
+    "packages/providers/budget.ts": "af86b7f867670cd7208fe5120b798f10f807f991ff2139be3a84a1a14b892d6c",
+    "packages/providers/execute.ts": "d66b9641779bb24d1acb5c879f7424a2bdcae10a9f67bd365ec75091fa71c204",
+    "packages/providers/json/model-request.schema.json": "5fd879d3e7588903bcb0bddccb0f6a56684c92a675be46ca1ce27ec500554e65",
+    "packages/providers/request.ts": "3d857d4f09562e0b952f8a5069bdf93535d3926b11e957f09d80419cc9ab12e9",
+    "packages/providers/response.ts": "8e89526469d50b1c8eb63c97b48496feaacd87dd42fc8dc5aa3b0bb7815a78d5",
+    "packages/providers/stream.ts": "846e8a23ca403726bca2be8367717e3121e0346ba7a76fbd766f3575fa69a083",
+    "packages/providers/types.ts": "b70e4ccaf9fc25c57457808c4133d6acfec288bacf3f6988125b79bfb7234220",
+    "scripts/build-assets.mjs": "cbcfce9c25f4b39e3bdcef4d138b9f7a0b58db2f9de63ef87242ccc8c7662741",
+    "scripts/package-smoke.mjs": "6ec48d02ccbf912085a162870d97592b76ac0ba435167fcf586978f922179acd",
+    "specs/api/provider-operations.json": "c78d3e9d1889f147e872910cf3bb5b0f5712477124513bfe64bcd12e5d22cff7",
+    "tests/integration/model-budget.test.ts": "f4643a9fc8f11f24fdbeb8da0ea66555c59aca2ac0fffacc051bb5957de0a56b",
+    "tests/model-execute.test.ts": "12b749d08171ad66624c42262f1351141f705f1c54ccb42657bd7b7fe0e5035f",
+    "tests/model-request.test.ts": "356806eb10bbfc85369613685f2fb25e0d003dbf58f34f574800d756b98fb907",
+    "tests/model-response.test.ts": "eaf8982c47e5aa2697fdd724fc780cfa1f89ce626209ff4de664c9e2f053bd3c",
+    "tests/model-stream-execute.test.ts": "8b64a5e86ba136fadb213a171dbbfda745cb17b51d5f448f1f0ebec84d7b18ba",
+    "tests/model-stream.test.ts": "6ca39a0aa96406bd88cecd8c577fc757c60d7470201438b1a8c9c20668bbd0db"
+  },
+  "coverage": [
+    {
+      "area": "Normalized contract",
+      "evidence": [
+        "tests/model-request.test.ts",
+        "tests/model-response.test.ts",
+        "specs/api/provider-operations.json"
+      ],
+      "checks": [
+        "strict bounded requests",
+        "capability rejection before dispatch",
+        "tool history and schemas",
+        "response subject/attempt binding",
+        "unknown usage remains unknown"
+      ]
+    },
+    {
+      "area": "Bounded invocation",
+      "evidence": [
+        "tests/model-execute.test.ts"
+      ],
+      "checks": [
+        "reserve before dispatch",
+        "explicit bounded retry attempts",
+        "deadline and caller cancellation",
+        "uncooperative provider timeout",
+        "redacted errors",
+        "no success after accounting failure or cancellation"
+      ]
+    },
+    {
+      "area": "Streaming",
+      "evidence": [
+        "tests/model-stream.test.ts",
+        "tests/model-stream-execute.test.ts"
+      ],
+      "checks": [
+        "ordered bounded events and sticky validation failure",
+        "tool assembly and final content agreement",
+        "backpressured observers",
+        "stalled iterator/consumer deadline",
+        "no silent replay after provisional output",
+        "settlement before accepted completion"
+      ]
+    },
+    {
+      "area": "Durable accounting",
+      "evidence": [
+        "tests/integration/model-budget.test.ts",
+        "deploy/migrations/004_m3_model_budget.sql"
+      ],
+      "checks": [
+        "real PostgreSQL concurrency limits",
+        "scope and immutable accounting",
+        "unknown charge retention after store reconstruction",
+        "actual overrun retained",
+        "retry and stream executor integration",
+        "replay cannot redispatch"
+      ]
+    },
+    {
+      "area": "Distribution",
+      "evidence": [
+        "scripts/package-smoke.mjs",
+        "scripts/build-assets.mjs"
+      ],
+      "checks": [
+        "production-only package install",
+        "compiled provider imports",
+        "installed request/response schemas",
+        "budget migration distributed"
+      ]
+    }
+  ],
+  "limitations": [
+    "No live provider calls or credentials were used",
+    "Initial provider adapters and live acceptance are separate mandatory M3 tasks",
+    "No dashboard, review-role orchestration or finding reproduction acceptance claimed"
+  ],
+  "mergeCommit": "6f5cee2a24f2adba53cd3e7ea0aee07710a9d777",
+  "advisoryEvidence": "delivery/acceptance/m3-01-advisory-final.json",
+  "integrationGroupsPassed": 17,
+  "sourceFileHashesRevalidated": true
+}
