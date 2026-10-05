@@ -1,0 +1,930 @@
+{
+  "kind": "M2 exact-source scope acceptance audit",
+  "sourceCommit": "e05fdc254cc3ad18030a2786c32b8dd3ed539755",
+  "sourceCi": "releases/m2-final-source-ci.json",
+  "sourceCiRun": "https://github.com/alimobrem/agentci/actions/runs/37251414149",
+  "sourceUnitApiDomainTests": 134,
+  "sourceNativeIntegrationGroups": 15,
+  "skips": 0,
+  "scope": "Every section 11 entry and SPEC-40-030 through SPEC-40-039; no exit criterion removed.",
+  "entries": [
+    {
+      "id": "SECTION-11",
+      "text": "11. Eval Orchestration",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11",
+        "line": 640
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes",
+        "selection",
+        "statistics",
+        "engines",
+        "results"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms.",
+        "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit.",
+        "Configured repeated trials, observed pass thresholds, Wilson intervals, zero tolerated critical safety failures, missing/error outcomes and observed latency/cost/token aggregation.",
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open.",
+        "Strict normalized source/suite/model/runner identity, scenario outcomes, metrics and artifact digests; bounded identity-bound comparison and complete certified exports."
+      ]
+    },
+    {
+      "id": "SECTION-11.1",
+      "text": "11.1 Eval classes",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 642
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-001",
+      "text": "- deterministic unit tests",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 644
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-002",
+      "text": "- integration tests",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 645
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-003",
+      "text": "- contract tests",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 646
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-004",
+      "text": "- policy tests",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 647
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-005",
+      "text": "- golden behavior evals",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 648
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-006",
+      "text": "- regression evals",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 649
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-007",
+      "text": "- adversarial evals",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 650
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-008",
+      "text": "- safety evals",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 651
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-009",
+      "text": "- tool-use evals",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 652
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-010",
+      "text": "- trajectory evals",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 653
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-011",
+      "text": "- latency/performance evals",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 654
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-012",
+      "text": "- cost/token evals",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 655
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SPEC-11.1-013",
+      "text": "- model comparison evals",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.1",
+        "line": 656
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "classes"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+      ]
+    },
+    {
+      "id": "SECTION-11.2",
+      "text": "11.2 Eval selection",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.2",
+        "line": 658
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "selection"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit."
+      ]
+    },
+    {
+      "id": "SPEC-11.2-001",
+      "text": "The orchestrator MUST select evals based on change impact.",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.2",
+        "line": 660
+      },
+      "inventoryStatusAtFreeze": "tested",
+      "groups": [
+        "selection"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit."
+      ]
+    },
+    {
+      "id": "SPEC-11.2-002",
+      "text": "Examples:",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.2",
+        "line": 662
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "selection"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit."
+      ]
+    },
+    {
+      "id": "SPEC-11.2-003",
+      "text": "- prompt wording only -> targeted prompt/eval suite",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.2",
+        "line": 664
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "selection"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit."
+      ]
+    },
+    {
+      "id": "SPEC-11.2-004",
+      "text": "- tool schema change -> all tool-contract and affected behavioral evals",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.2",
+        "line": 665
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "selection"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit."
+      ]
+    },
+    {
+      "id": "SPEC-11.2-005",
+      "text": "- model change -> model matrix over required representative suite",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.2",
+        "line": 666
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "selection"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit."
+      ]
+    },
+    {
+      "id": "SPEC-11.2-006",
+      "text": "- permission expansion -> permission/policy/adversarial suite",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.2",
+        "line": 667
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "selection"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit."
+      ]
+    },
+    {
+      "id": "SPEC-11.2-007",
+      "text": "- spec change -> all mapped requirements plus coverage gap analysis",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.2",
+        "line": 668
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "selection"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit."
+      ]
+    },
+    {
+      "id": "SPEC-11.2-008",
+      "text": "- low-level library refactor -> deterministic tests plus mapped behavior regressions",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.2",
+        "line": 669
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "selection"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit."
+      ]
+    },
+    {
+      "id": "SECTION-11.3",
+      "text": "11.3 Statistical execution",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.3",
+        "line": 671
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "statistics"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Configured repeated trials, observed pass thresholds, Wilson intervals, zero tolerated critical safety failures, missing/error outcomes and observed latency/cost/token aggregation."
+      ]
+    },
+    {
+      "id": "SPEC-11.3-001",
+      "text": "Each eval may define trial semantics:",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.3",
+        "line": 673
+      },
+      "inventoryStatusAtFreeze": "in-progress",
+      "groups": [
+        "statistics"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Configured repeated trials, observed pass thresholds, Wilson intervals, zero tolerated critical safety failures, missing/error outcomes and observed latency/cost/token aggregation."
+      ]
+    },
+    {
+      "id": "SPEC-11.3-002",
+      "text": "Critical safety assertions SHOULD default to zero tolerated violations in the configured sample.",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.3",
+        "line": 683
+      },
+      "inventoryStatusAtFreeze": "in-progress",
+      "groups": [
+        "statistics"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Configured repeated trials, observed pass thresholds, Wilson intervals, zero tolerated critical safety failures, missing/error outcomes and observed latency/cost/token aggregation."
+      ]
+    },
+    {
+      "id": "SECTION-11.4",
+      "text": "11.4 Pluggable eval engines",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.4",
+        "line": 685
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "engines"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open."
+      ]
+    },
+    {
+      "id": "SPEC-11.4-001",
+      "text": "Adapters SHOULD support:",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.4",
+        "line": 687
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "engines"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open."
+      ]
+    },
+    {
+      "id": "SPEC-11.4-002",
+      "text": "- pytest/custom test commands",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.4",
+        "line": 689
+      },
+      "inventoryStatusAtFreeze": "tested",
+      "groups": [
+        "engines"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open."
+      ]
+    },
+    {
+      "id": "SPEC-11.4-003",
+      "text": "- DeepEval",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.4",
+        "line": 690
+      },
+      "inventoryStatusAtFreeze": "in-progress",
+      "groups": [
+        "engines"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open."
+      ]
+    },
+    {
+      "id": "SPEC-11.4-004",
+      "text": "- Promptfoo",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.4",
+        "line": 691
+      },
+      "inventoryStatusAtFreeze": "in-progress",
+      "groups": [
+        "engines"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open."
+      ]
+    },
+    {
+      "id": "SPEC-11.4-005",
+      "text": "- custom HTTP eval providers",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.4",
+        "line": 692
+      },
+      "inventoryStatusAtFreeze": "in-progress",
+      "groups": [
+        "engines"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open."
+      ]
+    },
+    {
+      "id": "SPEC-11.4-006",
+      "text": "- native AgentCI structured evals",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.4",
+        "line": 693
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "engines"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open."
+      ]
+    },
+    {
+      "id": "SPEC-11.4-007",
+      "text": "AgentCI owns orchestration and evidence normalization, not all evaluation algorithms.",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.4",
+        "line": 695
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "engines"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open."
+      ]
+    },
+    {
+      "id": "SECTION-11.5",
+      "text": "11.5 Eval result schema",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "11.5",
+        "line": 697
+      },
+      "inventoryStatusAtFreeze": "not-started",
+      "groups": [
+        "results"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Strict normalized source/suite/model/runner identity, scenario outcomes, metrics and artifact digests; bounded identity-bound comparison and complete certified exports."
+      ]
+    },
+    {
+      "id": "SPEC-40-030",
+      "text": "Build:",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "40",
+        "line": 2087
+      },
+      "inventoryStatusAtFreeze": "in-progress",
+      "groups": [
+        "classes",
+        "selection",
+        "statistics",
+        "engines",
+        "results",
+        "distribution"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms.",
+        "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit.",
+        "Configured repeated trials, observed pass thresholds, Wilson intervals, zero tolerated critical safety failures, missing/error outcomes and observed latency/cost/token aggregation.",
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open.",
+        "Strict normalized source/suite/model/runner identity, scenario outcomes, metrics and artifact digests; bounded identity-bound comparison and complete certified exports.",
+        "Implementation of release infrastructure is tested. Actual multi-platform publication, public anonymous downloads, release assets, customer replay, demo and retrospective are pending."
+      ]
+    },
+    {
+      "id": "SPEC-40-031",
+      "text": "- eval manifest",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "40",
+        "line": 2089
+      },
+      "inventoryStatusAtFreeze": "tested",
+      "groups": [
+        "classes",
+        "selection"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms.",
+        "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit."
+      ]
+    },
+    {
+      "id": "SPEC-40-032",
+      "text": "- native command runner",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "40",
+        "line": 2090
+      },
+      "inventoryStatusAtFreeze": "tested",
+      "groups": [
+        "engines"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open."
+      ]
+    },
+    {
+      "id": "SPEC-40-033",
+      "text": "- pytest adapter",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "40",
+        "line": 2091
+      },
+      "inventoryStatusAtFreeze": "tested",
+      "groups": [
+        "engines"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open."
+      ]
+    },
+    {
+      "id": "SPEC-40-034",
+      "text": "- Promptfoo/DeepEval adapter as optional plugins",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "40",
+        "line": 2092
+      },
+      "inventoryStatusAtFreeze": "in-progress",
+      "groups": [
+        "engines"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open."
+      ]
+    },
+    {
+      "id": "SPEC-40-035",
+      "text": "- result normalization",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "40",
+        "line": 2093
+      },
+      "inventoryStatusAtFreeze": "in-progress",
+      "groups": [
+        "results"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Strict normalized source/suite/model/runner identity, scenario outcomes, metrics and artifact digests; bounded identity-bound comparison and complete certified exports."
+      ]
+    },
+    {
+      "id": "SPEC-40-036",
+      "text": "- statistical trial handling",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "40",
+        "line": 2094
+      },
+      "inventoryStatusAtFreeze": "in-progress",
+      "groups": [
+        "statistics"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Configured repeated trials, observed pass thresholds, Wilson intervals, zero tolerated critical safety failures, missing/error outcomes and observed latency/cost/token aggregation."
+      ]
+    },
+    {
+      "id": "SPEC-40-037",
+      "text": "- base/head comparison",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "40",
+        "line": 2095
+      },
+      "inventoryStatusAtFreeze": "in-progress",
+      "groups": [
+        "statistics",
+        "results"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Configured repeated trials, observed pass thresholds, Wilson intervals, zero tolerated critical safety failures, missing/error outcomes and observed latency/cost/token aggregation.",
+        "Strict normalized source/suite/model/runner identity, scenario outcomes, metrics and artifact digests; bounded identity-bound comparison and complete certified exports."
+      ]
+    },
+    {
+      "id": "SPEC-40-038",
+      "text": "Exit criteria:",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "40",
+        "line": 2097
+      },
+      "inventoryStatusAtFreeze": "in-progress",
+      "groups": [
+        "distribution"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Implementation of release infrastructure is tested. Actual multi-platform publication, public anonymous downloads, release assets, customer replay, demo and retrospective are pending."
+      ]
+    },
+    {
+      "id": "SPEC-40-039",
+      "text": "- PR shows behavioral deltas and regression scenarios",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "40",
+        "line": 2099
+      },
+      "inventoryStatusAtFreeze": "in-progress",
+      "groups": [
+        "results",
+        "distribution"
+      ],
+      "releaseAcceptance": "pending",
+      "acceptanceBoundaries": [
+        "Strict normalized source/suite/model/runner identity, scenario outcomes, metrics and artifact digests; bounded identity-bound comparison and complete certified exports.",
+        "Implementation of release infrastructure is tested. Actual multi-platform publication, public anonymous downloads, release assets, customer replay, demo and retrospective are pending."
+      ]
+    }
+  ],
+  "groups": {
+    "classes": {
+      "implementation": [
+        "packages/evals/contracts.ts",
+        "packages/evals/json/eval-suite.schema.json",
+        "packages/evals/execution.ts"
+      ],
+      "tests": [
+        "tests/eval-contracts.test.ts",
+        "tests/eval-execution.test.ts",
+        "tests/integration/eval-runner.test.ts"
+      ],
+      "meaning": "Thirteen suite classes are operator-supplied assertion classifications using the shared trial pipeline; AgentCI does not supply arbitrary business, trajectory or model-quality algorithms."
+    },
+    "selection": {
+      "implementation": [
+        "packages/evals/contracts.ts",
+        "packages/evals/plan.ts"
+      ],
+      "tests": [
+        "tests/eval-contracts.test.ts",
+        "tests/eval-plan.test.ts"
+      ],
+      "meaning": "Change categories, paths, mapped requirements and required defensive classes select suites; missing baseline coverage and model matrices remain explicit."
+    },
+    "statistics": {
+      "implementation": [
+        "packages/evals/statistics.ts",
+        "packages/evals/execution.ts"
+      ],
+      "tests": [
+        "tests/eval-statistics.test.ts",
+        "tests/eval-execution.test.ts"
+      ],
+      "meaning": "Configured repeated trials, observed pass thresholds, Wilson intervals, zero tolerated critical safety failures, missing/error outcomes and observed latency/cost/token aggregation."
+    },
+    "engines": {
+      "implementation": [
+        "packages/evals/adapters.ts",
+        "packages/evals/http.ts",
+        "packages/evals/execution.ts"
+      ],
+      "tests": [
+        "tests/eval-adapters.test.ts",
+        "tests/eval-http.test.ts",
+        "tests/integration/eval-engines.test.ts",
+        "tests/integration/eval-runner.test.ts",
+        "tests/integration/eval-http-recovery.test.ts"
+      ],
+      "meaning": "Actual installed native/pytest/Promptfoo/DeepEval and registered HTTP integrations normalize external assertions. Optional node-forge security disposition and published-platform acceptance remain open."
+    },
+    "results": {
+      "implementation": [
+        "packages/evals/contracts.ts",
+        "packages/evals/json/eval-run.schema.json",
+        "packages/evals/comparison.ts",
+        "packages/evals/export.ts"
+      ],
+      "tests": [
+        "tests/eval-contracts.test.ts",
+        "tests/eval-comparison.test.ts",
+        "tests/eval-comparison-api.test.ts"
+      ],
+      "meaning": "Strict normalized source/suite/model/runner identity, scenario outcomes, metrics and artifact digests; bounded identity-bound comparison and complete certified exports."
+    },
+    "distribution": {
+      "implementation": [
+        ".github/workflows/images.yaml",
+        ".github/workflows/download-smoke.yaml",
+        "docs/definition-of-done.md"
+      ],
+      "tests": [
+        "tests/image-publication.test.ts",
+        "tests/delivery.test.ts"
+      ],
+      "meaning": "Implementation of release infrastructure is tested. Actual multi-platform publication, public anonymous downloads, release assets, customer replay, demo and retrospective are pending."
+    }
+  },
+  "sourceFileHashes": {
+    "packages/evals/contracts.ts": "sha256:5a506730bd68fcbd8aeaf229649a9d8300ba8c1acf004b771007f93e443e999c",
+    "packages/evals/json/eval-suite.schema.json": "sha256:fea723ded25475851e36101a9cf26cdeba0afebdbcd7971d00983e34f6222787",
+    "packages/evals/execution.ts": "sha256:1ef46838fbf8973db239b0b625c60741b51066b6e5cd7e8612042c35bd6648cc",
+    "tests/eval-contracts.test.ts": "sha256:a5f2701621a44303a562443f0eebd759bf883917883d7cda03350a29a767f976",
+    "tests/eval-execution.test.ts": "sha256:3af1a41953ee92a32f77367cb08d5445630d5e3c667c1b6dfb25ed160439a016",
+    "tests/integration/eval-runner.test.ts": "sha256:cf37e958482cb64ce416935561dc1c02e76e49e11bb21bb93303f7f3a24dca7f",
+    "packages/evals/plan.ts": "sha256:ffb37c9a709988ad7abcbbfe2484f2dfa45806f40c46dea4cf5dd888c518cb8c",
+    "tests/eval-plan.test.ts": "sha256:c9fc15399b90b849f7b14cb329fd4b9047f8adcbbe507815642e3f7d663c9247",
+    "packages/evals/statistics.ts": "sha256:b4253376cf5687f8a5925f7c73a4d862ef7d026305858f1b16098b60e050b7ae",
+    "tests/eval-statistics.test.ts": "sha256:70b8ec37d53bc3aae2f69f93a879a7fc7e69b518a17c3c3f107acd29958c9205",
+    "packages/evals/adapters.ts": "sha256:32da924624aff8a0169b3a4ada22ee91afa8b32c8d6bf5843b52fe87548b3bc9",
+    "packages/evals/http.ts": "sha256:4d492cfa9024a503d8a6e1b691360a9d2cb881fe910d155a914f7024c7aa2fa4",
+    "tests/eval-adapters.test.ts": "sha256:11f1eb97b98ba68967a5e9a2282369542bf45e8be28c3d3f3b85156bbc62b07f",
+    "tests/eval-http.test.ts": "sha256:987dca4ca73b43bccba373fca9426b01f761c6c8ef6f99cc6a4a1d77f88d17d8",
+    "tests/integration/eval-engines.test.ts": "sha256:6016bd0d325132c6534d37952d1c90a2338c007cac32712ba2ef2cbbfe01c3b6",
+    "tests/integration/eval-http-recovery.test.ts": "sha256:69d5f116cba7fd1d6465c61a4785aee9b6b69c08326977d5c7c6f5acd2ec6bc5",
+    "packages/evals/json/eval-run.schema.json": "sha256:577ef3be92d9454f4ea912dd101021b098eaaed32d71f518ac084b01254c4cc4",
+    "packages/evals/comparison.ts": "sha256:dbce91c53de32095cb865a4bc08897fd290462b3017349531a9b5c15b5a45d26",
+    "packages/evals/export.ts": "sha256:2c39e2b2f7485788c58a56da83f4677d95f88760b704d4498f7385e088b29350",
+    "tests/eval-comparison.test.ts": "sha256:fec2dbba66f037697acf6970040f29c6787e50d55909b87c54e4f6513622d9ce",
+    "tests/eval-comparison-api.test.ts": "sha256:9f881cb53ac10d2e23b1a6cbe4a6bbb5de0f6a349bdbae15496f05edeab55ad8",
+    ".github/workflows/images.yaml": "sha256:69e38d421ede383cf05cd2b37d53827c40f434be0567e64e1d66788880faa9d4",
+    ".github/workflows/download-smoke.yaml": "sha256:126007b0b259214b6c26bf87f03f5820f926d2de14260a241e6ea7f349969c00",
+    "docs/definition-of-done.md": "sha256:859a644cd57ab76286803447ae5c86430c8f25a2e6c9f887b9d6b5e81980d1ea",
+    "tests/image-publication.test.ts": "sha256:41466461e0877b8c780ba8cccb4500e79f13bfc1546431ae264863b04ba3d2c1",
+    "tests/delivery.test.ts": "sha256:b6981f26811b2ecce2d507d89eb66b4a44d0ba48b5b6cc457b837ec29783aa5a"
+  },
+  "limitations": [
+    "Component implementation/tests do not prove distribution or customer acceptance. All eighteen M2 release gates remain pending.",
+    "Inventory retains conservative historical statuses at source freeze; requirement status and milestone closure must be reconciled only with actual final acceptance evidence.",
+    "The class catalog integrates supplied assertions. It does not certify complete domain quality or model safety.",
+    "First frozen 0.3.0-m2 candidate: post-publication worker validation failed on a Docker index-reference collision. Corrected candidate 0.3.1-m2 needs its own final-source evidence."
+  ]
+}
