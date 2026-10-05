@@ -7,3 +7,18 @@ test('OpenAI request preserves instruction roles, parameters, tool history and s
 test('OpenAI request rejects unsupported fields instead of silently losing intent',()=>{
  for(const change of [{provider:'other'},{parameters:{maxOutputTokens:10,stop:['END']}},{providerExtensions:{openai:{baseURL:'https://untrusted.invalid'}}},{providerExtensions:{openai:{parallel_tool_calls:'true'}}}])assert.throws(()=>openAIRequest({...fixture(),...change}),/unsupported-capability/);
 });
+test('OpenAI schema preflight rejects optional/open objects and unsupported composition without rewriting',()=>{
+ const base={type:'object',properties:{value:{type:'string'}},required:['value'],additionalProperties:false};
+ for(const schema of [{...base,required:[]},{...base,additionalProperties:true},{...base,allOf:[{type:'object'}]},{...base,properties:{value:{not:{type:'number'}}}},{type:'array',items:{type:'string'}}]){
+  const req=fixture();req.responseSchema=schema;const before=JSON.stringify(req);
+  assert.throws(()=>openAIRequest(req),/unsupported-capability/);assert.equal(JSON.stringify(req),before);
+ }
+ const req=fixture();req.tools=[{name:'inspect',description:'Inspect',inputSchema:{type:'object'}}];assert.throws(()=>openAIRequest(req),/unsupported-capability/);
+});
+test('OpenAI schema preflight preserves nullable recursive schemas and treats property names as data',()=>{
+ const req=fixture();req.responseSchema={type:'object',properties:{not:{type:['string','null']},next:{anyOf:[{$ref:'#'},{type:'null'}]}},required:['not','next'],additionalProperties:false};
+ const before=JSON.stringify(req.responseSchema);const wire=openAIRequest(req);assert.equal(JSON.stringify(wire.text?.format?.type==='json_schema'?wire.text.format.schema:null),before);
+});
+test('OpenAI schema preflight bounds enum size before dispatch',()=>{
+ const req=fixture();req.responseSchema={type:'object',properties:{value:{type:'string',enum:Array.from({length:1001},(_,i)=>String(i))}},required:['value'],additionalProperties:false};assert.throws(()=>openAIRequest(req),/unsupported-capability/);
+});

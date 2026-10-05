@@ -1,4 +1,5 @@
 import type {ResponseCreateParamsNonStreaming,ResponseInput} from 'openai/resources/responses/responses';
+import {validateOpenAISchema} from './openai-schema.ts';
 import {validateModelRequest} from './request.ts';
 import {ProviderFailure,type ModelRequest} from './types.ts';
 /** Preserve portable semantics; unsupported parameters fail instead of disappearing. */
@@ -7,6 +8,8 @@ export function openAIRequest(input:ModelRequest):ResponseCreateParamsNonStreami
  if(request.provider!=='openai'||request.parameters.stop?.length)throw new ProviderFailure('unsupported-capability');
  const extension=request.providerExtensions.openai??{};
  if(Object.keys(extension).some(key=>key!=='parallel_tool_calls')||extension.parallel_tool_calls!==undefined&&typeof extension.parallel_tool_calls!=='boolean')throw new ProviderFailure('unsupported-capability');
+ for(const tool of request.tools)validateOpenAISchema(tool.inputSchema);
+ if(request.responseSchema)validateOpenAISchema(request.responseSchema);
  const messages:ResponseInput=[];
  if(request.system)messages.push({role:'system',content:request.system});
  if(request.developer)messages.push({role:'developer',content:request.developer});

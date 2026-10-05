@@ -31,7 +31,12 @@ this is deliberately conservative and can hold more budget than actual usage.
 Unknown charges remain held until trusted reconciliation. Profiles must cover all
 applicable price tiers; fixture prices are not production pricing.
 
-Remaining: strict schema subset preflight, verified real model capability/pricing
+Structural schema preflight rejects open objects, optional properties, unsupported
+composition and documented property/enum/string size excesses without rewriting
+the schema. Nullable and recursive schemas remain intact. This is partial subset
+coverage; depth/reference expansion and model-specific restrictions remain pending.
+
+Remaining: complete schema subset preflight, verified real model capability/pricing
 profiles, broader conformance and
 failure/recovery tests, and authorized live acceptance. Model aliases/snapshots need
 an explicit identity policy; current response mapping requires exact configured
