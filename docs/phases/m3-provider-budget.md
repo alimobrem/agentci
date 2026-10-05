@@ -30,8 +30,8 @@ must verify. Reconciliation is a trusted operation, never model-authored data.
 `tests/integration/model-budget.test.ts` requires PostgreSQL and verifies concurrent
 reservation limits, reconstructed-store recovery, replay rejection, scope mismatch,
 immutable terminal accounting and overrun retention. Local acceptance used the
-project's pinned PostgreSQL 18.6 image. The invoke executor is connected to the ledger; streaming integration and full
-provider-core acceptance remain unfinished.
+project's pinned PostgreSQL 18.6 image. The invoke and streaming executors are connected to the ledger; full provider-core
+integration acceptance remains unfinished.
 
 `invokeModel` validates the request and capabilities before reserving. A deadline
 or caller cancellation aborts the provider signal and bounds how long invocation
@@ -56,5 +56,10 @@ must satisfy the declared tool schema. A completed iterator without a terminal i
 invalid; events after terminal poison the stream. Validation failures are sticky.
 Deltas are provisional display data and must not trigger tools or finding actions.
 Callers must consume iterator completion and call `finish()` before accepting the
-terminal result. The stream validator is tested, but the budgeted streaming
-executor and cancellation/recovery integration remain pending.
+terminal result. `streamModel` consumes iterator completion internally and uses the same budget,
+deadline and cancellation controls as `invokeModel`. Its observer receives only
+provisional events; the returned response follows successful accounting. Observer
+promises provide backpressure without an unbounded event queue. A stalled observer
+or iterator cannot defeat the deadline. Once an observer sees any event, failures
+cannot automatically retry and replay output. Iterator cleanup is requested but
+cannot delay cancellation indefinitely; adapters must honor their abort signal.
