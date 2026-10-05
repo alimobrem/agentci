@@ -1,0 +1,233 @@
+{
+  "kind": "M2-verified-published-role-checkpoint",
+  "checkedAt": "2026-10-05T02:42:45.599Z",
+  "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+  "version": "0.3.1-m2",
+  "runId": "37253548685",
+  "roles": [
+    {
+      "role": "api",
+      "identity": {
+        "version": "0.3.1-m2",
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "role": "api",
+        "image": "ghcr.io/alimobrem/agentci-api@sha256:ccd2d24db9411d88956136d9840e6c36c23d3b44f8aaba89d9da7e2dbd0af612",
+        "platforms": [
+          "linux/amd64",
+          "linux/arm64"
+        ],
+        "runId": "37253548685",
+        "attempt": "1"
+      },
+      "artifactId": 11322022815,
+      "archiveSha256": "7ee6b2f0c68b818d5f4ecb017be29aa7228733db8d9c22d41a18793bfcf452b1",
+      "anonymousRegistryContentVerified": true,
+      "platforms": [
+        {
+          "platform": "linux/amd64",
+          "childManifest": "ghcr.io/alimobrem/agentci-api@sha256:1f9898aa9d8060b6e43d9cf67f335662adf59b4213451386f8dbab8f6eec745a",
+          "configDigest": "sha256:260e6848c0c85a0f39954fb19ab30673066a0233402f19d3a9cb89064f0c1f76",
+          "scanSha256": "28999594198aefb72a0eed634b43d12b08996690753514230e86d28c0c984ee9",
+          "findings": []
+        },
+        {
+          "platform": "linux/arm64",
+          "childManifest": "ghcr.io/alimobrem/agentci-api@sha256:ec253cc2a3009315eaa2e0257eb37bf3c033d9f0396420d4f083c88af423e0ba",
+          "configDigest": "sha256:db240ccdd41602e76199657c3e720bc6afe9c987e5d3be74da0b23cfeecaf4df",
+          "scanSha256": "50a1159db50ebdfd043303dc4dea1865ca6351f76533b04aeb436c58d5ed2397",
+          "findings": []
+        }
+      ]
+    },
+    {
+      "role": "worker",
+      "identity": {
+        "version": "0.3.1-m2",
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "role": "worker",
+        "image": "ghcr.io/alimobrem/agentci-worker@sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b",
+        "platforms": [
+          "linux/amd64",
+          "linux/arm64"
+        ],
+        "runId": "37253548685",
+        "attempt": "1"
+      },
+      "artifactId": 11321199272,
+      "archiveSha256": "b4737b60daf3c3b0e5801f6675361ed19cf91bfb91739d1542489af8958e1be1",
+      "anonymousRegistryContentVerified": true,
+      "platforms": [
+        {
+          "platform": "linux/amd64",
+          "childManifest": "ghcr.io/alimobrem/agentci-worker@sha256:a4212d97e01272d571fbb7383db07e4dcbdf45e5a7996c62335388254b0d6361",
+          "configDigest": "sha256:aa1a0568c3b0417f1392dca6b7650aaee64eb69ec25acdff379168e8f1f1f0b7",
+          "scanSha256": "2ae83a3840561f957ae07f0e6d39799b5e278e6fede8eb23fe923927f899fae7",
+          "findings": [],
+          "nativeReportSha256": "3b02c9603b629aecaf754905ecae3a71e4e4fb65988c07061c4272bc8136281a",
+          "native": {
+            "image": "sha256:aa1a0568c3b0417f1392dca6b7650aaee64eb69ec25acdff379168e8f1f1f0b7",
+            "engine": "docker",
+            "platform": "linux/amd64",
+            "temporalNativeArtifacts": "matched official npm artifact",
+            "files": {
+              "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+              "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+              "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+              "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+            },
+            "coverage": "Podman compiled module metadata is bound to exact official binary hashes; its source manifest includes additional modules. Cargo and Docker vendor manifests are upstream source inventories, not proofs of exact compiled dependency graphs."
+          }
+        },
+        {
+          "platform": "linux/arm64",
+          "childManifest": "ghcr.io/alimobrem/agentci-worker@sha256:688856b96e2d4ef039ff718bd3d9af54fd4c1bcc90df4e66bde3a93d115594a9",
+          "configDigest": "sha256:ae17cc771de5320fc614a17ac5b29390dc66b08e73ffee5d69b125f6895c7ffb",
+          "scanSha256": "e2659f8a0a0068b1fa1a83816f22ecba4f60a273f39c5dfe33c6cd7ea438d68c",
+          "findings": [],
+          "nativeReportSha256": "981419d939c381208bb6fb80ae5e8ed4cfe43176be443cddca0d64096fd9de50",
+          "native": {
+            "image": "sha256:ae17cc771de5320fc614a17ac5b29390dc66b08e73ffee5d69b125f6895c7ffb",
+            "engine": "docker",
+            "platform": "linux/arm64",
+            "temporalNativeArtifacts": "matched official npm artifact",
+            "files": {
+              "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+              "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+              "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+              "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+            },
+            "coverage": "Podman compiled module metadata is bound to exact official binary hashes; its source manifest includes additional modules. Cargo and Docker vendor manifests are upstream source inventories, not proofs of exact compiled dependency graphs."
+          }
+        }
+      ]
+    },
+    {
+      "role": "eval-worker",
+      "identity": {
+        "version": "0.3.1-m2",
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "role": "eval-worker",
+        "image": "ghcr.io/alimobrem/agentci-eval-worker@sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3",
+        "platforms": [
+          "linux/amd64",
+          "linux/arm64"
+        ],
+        "runId": "37253548685",
+        "attempt": "1"
+      },
+      "artifactId": 11322700367,
+      "archiveSha256": "20ee7049c4740a1653e1989ec8f4a3a340d2982a341f45a0a1bd9852e53a157d",
+      "anonymousRegistryContentVerified": true,
+      "platforms": [
+        {
+          "platform": "linux/amd64",
+          "childManifest": "ghcr.io/alimobrem/agentci-eval-worker@sha256:42404fc5e9295f184bb68a6a3ae9da62f4c04f14c21d735a75d23bba5648fdd3",
+          "configDigest": "sha256:7697711fd014a05d6f0b8488dcba1ff94a1fa3859ef8caa88389a5f7483e2a39",
+          "scanSha256": "ee18757e4c01741be9b78b877145264664fa0c37ca6b758fe26392f10a2a588a",
+          "findings": [],
+          "nativeReportSha256": "eb87f522789f906c8684cea0dd80c3a76c99e2db861d94c83ef5569f3cddeeea",
+          "native": {
+            "image": "sha256:7697711fd014a05d6f0b8488dcba1ff94a1fa3859ef8caa88389a5f7483e2a39",
+            "engine": "docker",
+            "platform": "linux/amd64",
+            "temporalNativeArtifacts": "matched official npm artifact",
+            "files": {
+              "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+              "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+              "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+              "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+            },
+            "dockerCli": {
+              "Version": "29.8.2",
+              "ApiVersion": "1.56",
+              "DefaultAPIVersion": "1.56",
+              "GitCommit": "7fc2dff",
+              "GoVersion": "go1.26.8",
+              "Os": "linux",
+              "Arch": "amd64",
+              "BuildTime": "Wed Sep 30 19:31:45 2026",
+              "Context": "default",
+              "sha256": "6f7a95d27f98fc8c5f6b220898988bf8f61dd9b040936797917cbdc72c6cabe6",
+              "vendorManifestSha256": "0836699fe2ae28a136aabd51f932b825e0653c48ae200613b72f07a74f2a3868"
+            },
+            "coverage": "Podman compiled module metadata is bound to exact official binary hashes; its source manifest includes additional modules. Cargo and Docker vendor manifests are upstream source inventories, not proofs of exact compiled dependency graphs."
+          }
+        },
+        {
+          "platform": "linux/arm64",
+          "childManifest": "ghcr.io/alimobrem/agentci-eval-worker@sha256:43ff3352952d19c008c5928b1c0acdb618193739900798ae05c48a9ba9deb3eb",
+          "configDigest": "sha256:30dab42bc323ad8239c69d70cac005725880daab5c2e5f32ef47dce69114e056",
+          "scanSha256": "768d0563ee57a0620a3a0b77319cdc675751356dde530ba9399c2b5aa673dcd1",
+          "findings": [],
+          "nativeReportSha256": "82614451b6f5f20efca65d1c70413512fc0cee7c9b1bc0c8f489bf894cd8a2ed",
+          "native": {
+            "image": "sha256:30dab42bc323ad8239c69d70cac005725880daab5c2e5f32ef47dce69114e056",
+            "engine": "docker",
+            "platform": "linux/arm64",
+            "temporalNativeArtifacts": "matched official npm artifact",
+            "files": {
+              "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+              "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+              "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+              "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+            },
+            "dockerCli": {
+              "Version": "29.8.2",
+              "ApiVersion": "1.56",
+              "DefaultAPIVersion": "1.56",
+              "GitCommit": "7fc2dff",
+              "GoVersion": "go1.26.8",
+              "Os": "linux",
+              "Arch": "arm64",
+              "BuildTime": "Wed Sep 30 19:31:29 2026",
+              "Context": "default",
+              "sha256": "37a53fed3445028a49443fd6f9338ccedeeeda9776de5d7fd4d7e7c936b789cc",
+              "vendorManifestSha256": "0836699fe2ae28a136aabd51f932b825e0653c48ae200613b72f07a74f2a3868"
+            },
+            "coverage": "Podman compiled module metadata is bound to exact official binary hashes; its source manifest includes additional modules. Cargo and Docker vendor manifests are upstream source inventories, not proofs of exact compiled dependency graphs."
+          }
+        }
+      ]
+    },
+    {
+      "role": "eval-runner",
+      "identity": {
+        "version": "0.3.1-m2",
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "role": "eval-runner",
+        "image": "ghcr.io/alimobrem/agentci-eval-runner@sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143",
+        "platforms": [
+          "linux/amd64",
+          "linux/arm64"
+        ],
+        "runId": "37253548685",
+        "attempt": "1"
+      },
+      "artifactId": 11321518569,
+      "archiveSha256": "885933b79178b52ff183582f351798fa9b12511da74139bcfd1157790db670d9",
+      "anonymousRegistryContentVerified": true,
+      "platforms": [
+        {
+          "platform": "linux/amd64",
+          "childManifest": "ghcr.io/alimobrem/agentci-eval-runner@sha256:12b9c42f793fcbaf96fefc6ff46b41f820e8f902f5b73fb934f37615aa7d6ba2",
+          "configDigest": "sha256:59d1a81a4d598a164b25883c54ea588e10cbdc2ecb0db19f1bd2b5ad8335f7e3",
+          "scanSha256": "e48e75d1380429652cdd926f5fb89975db107adf3db9955f250fe145e40fcc56",
+          "findings": []
+        },
+        {
+          "platform": "linux/arm64",
+          "childManifest": "ghcr.io/alimobrem/agentci-eval-runner@sha256:be1b52347ec77fac1599ac4171fcc712bf38bba2a614db5b5e2e4c2e91ab99cd",
+          "configDigest": "sha256:7e32ee9c5242c204089e24573d8709bed2f93710d2d6afa2b22f730437a835aa",
+          "scanSha256": "6844093bbd589272f547631e3c495121020d8bedc11618aba84602a34aa9624f",
+          "findings": []
+        }
+      ]
+    }
+  ],
+  "complete": false,
+  "limitations": [
+    "Publisher arm64 execution uses QEMU; native downloaded service runtime is a separate gate.",
+    "A successful scan policy does not mean absence of findings or complete compiled dependency coverage.",
+    "Release, customer deployment, native downloads and final security disposition require separate evidence."
+  ]
+}
