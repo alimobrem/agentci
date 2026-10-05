@@ -1200,7 +1200,7 @@
         "SPEC-40-034",
         "SPEC-40-039"
       ],
-      "status": "blocked",
+      "status": "in-progress",
       "startedAt": "2026-10-04T17:34:47.377Z",
       "completedAt": null,
       "acceptance": [
@@ -1209,8 +1209,7 @@
           "status": "pending",
           "evidence": []
         }
-      ],
-      "blockedReason": "First candidate worker native validation failed on classic Docker index collision; corrected platform-manifest publisher and new candidate verification pending."
+      ]
     },
     {
       "id": "M2-DOWNLOAD-ACCEPTANCE",
@@ -1355,12 +1354,32 @@
       "requirementIds": [
         "SPEC-40-038"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T01:37:57.549Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T02:27:26.661Z",
       "acceptance": [
         {
           "text": "Preserve the published worker failure; resolve exactly one valid linux/amd64 or linux/arm64 OCI child manifest, reject missing/ambiguous/malformed descriptors, and pull each native inventory by its immutable child digest without classic Docker index collisions. Verify actual corrected publication on both platforms with a new candidate version.",
+          "status": "passed",
+          "evidence": [
+            "releases/m2-platform-publication-acceptance.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-PUBLISHED-FORGE",
+      "title": "Verify downstream RSA remediation inside native downloaded engine images",
+      "requirementIds": [
+        "SPEC-40-034",
+        "SPEC-40-038"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T02:18:58.711Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Native amd64 and arm64 downloaded-engine jobs bind the RSA source, pinned metadata, fixture and verifier hashes to the release source; reject the malformed signature and accept valid signatures while preserving the upstream scanner finding and explicit downstream disposition.",
           "status": "pending",
           "evidence": []
         }
