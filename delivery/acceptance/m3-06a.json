@@ -1,0 +1,51 @@
+{
+  "task": "M3-06a",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/36",
+  "testedHead": "ce8436450a1b991cfc6205f3a1deed94e6a39b96",
+  "mergeCommit": "9b55e73eedf56390e826d49f76850d37fa3b36dd",
+  "verificationRun": 37352433926,
+  "verificationResult": "success",
+  "hostedRun": 37359124662,
+  "artifactId": 11366202454,
+  "producer": {
+    "version": "0.4.0-m3-dev.1",
+    "sourceCommit": "dc545263c1c6959abc87fcf0f09a7715496e7160",
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "runId": "37359124662",
+    "runAttempt": "1",
+    "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+    "evaluatorImage": "sha256:92d3df516a21d20e0f97ba9a9008c557d54192419b55af7d6cd02290bca07c87"
+  },
+  "job": {
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "pullRequest": 36,
+    "baseSha": "dc545263c1c6959abc87fcf0f09a7715496e7160",
+    "headSha": "ce8436450a1b991cfc6205f3a1deed94e6a39b96"
+  },
+  "comparison": {
+    "id": "3eb9b90f-028c-4985-8ec1-f5448eb6f1c2",
+    "reviewId": "64195ecc-daaf-4c76-bb40-5cbdd09c4e56",
+    "file": "comparison-3eb9b90f-028c-4985-8ec1-f5448eb6f1c2.ndjson",
+    "sha256": "sha256:68793404bf10edab8353f4f70c6d2073c20a31981e90018501bc0270152c452e",
+    "bytes": 23111
+  },
+  "summary": {
+    "state": "completed",
+    "outcome": "passed",
+    "executionGaps": [],
+    "unitCount": 7,
+    "comparisonCount": 3
+  },
+  "coverageGaps": 0,
+  "selectionGaps": 0,
+  "regressions": 0,
+  "verification": "Independent report identity, file digest and chained comparison verification passed; runner and evaluator digests matched workflow logs.",
+  "findingScenario": "finding-lifecycle passed with head assertions; new suite not yet present on base",
+  "limitations": [
+    "Internal contract slice only; durable history and isolated reproduction remain M3-06b and M3-06c",
+    "Frozen finding assertions and final parent acceptance remain M3-06c",
+    "Not an M3 release or live-provider claim"
+  ]
+}

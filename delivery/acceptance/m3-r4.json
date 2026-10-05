@@ -1,0 +1,24 @@
+{
+  "task": "M3-R4",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/34",
+  "testedHead": "9247e282d07d27716cbd9888bd274ee0716b75cb",
+  "mergeCommit": "dde1d2aa3d22d6a06a7e6686dd0062ed380e06f3",
+  "verificationRun": 37347757213,
+  "verificationResult": "success",
+  "hostedRun": 37348992741,
+  "hostedResult": "success on trusted main after diagnostic hook adoption",
+  "tests": [
+    "tests/github-failure-diagnostics.test.ts"
+  ],
+  "coverage": [
+    "allowlisted bounded numeric headers and request identifier",
+    "unknown 403 remains ambiguous",
+    "raw request credentials and response bodies excluded",
+    "real SDK rejection preserved",
+    "throwing diagnostic sink cannot replace request failure"
+  ],
+  "limitations": [
+    "No failed request occurred in the inspected trusted-main run; no diagnostic event was expected",
+    "The historical 403 cause remains unconfirmed; this is diagnostic instrumentation acceptance, not a root-cause repair claim"
+  ]
+}

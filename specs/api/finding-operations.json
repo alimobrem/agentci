@@ -89,6 +89,26 @@
         "explicit customer override preserves verification state",
         "synthetic evidence never blocks"
       ]
+    },
+    {
+      "operationId": "FindingHistoryStore",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/integration/finding-history.test.ts"
+      ],
+      "scenarios": [
+        "authenticated initial evidence reconstruction",
+        "concurrent version fencing and operation idempotency",
+        "tenant-scoped restart reconstruction",
+        "immutable event update and deletion rejection",
+        "receipt failure rollback"
+      ]
     }
   ]
 }
