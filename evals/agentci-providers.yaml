@@ -1,0 +1,32 @@
+apiVersion: agentci.io/v1alpha1
+kind: EvalSuite
+metadata:
+  id: agentci-provider-contracts
+  description: Frozen provider-core contract and bounded-execution assertions; no paid provider calls.
+spec:
+  class: contract
+  requirements: [SECTION-13.1, SECTION-13.2, SPEC-13.2-001, SPEC-13.2-002, SPEC-13.2-003, SPEC-13.2-004, SPEC-13.2-005, SPEC-13.2-006, SPEC-13.2-007, SPEC-13.2-008, SECTION-13.4, SPEC-13.4-001]
+  impact:
+    categories: [source, dependency, api, data-schema, specification, requirement, eval]
+    include: [packages/providers/**, tests/model-*.test.ts, specs/api/provider-operations.json, specs/api/fixtures/model-request.json, evals/agentci-providers.yaml, scripts/agentci-provider-eval.mjs, package.json, package-lock.json, npm-shrinkwrap.json]
+  runner:
+    adapter: native
+    command: [node, scripts/agentci-provider-eval.mjs]
+    report: agentci-provider-result.json
+    timeoutMs: 120000
+    maxOutputBytes: 1048576
+    harness:
+      - scripts/agentci-provider-eval.mjs
+      - tests/model-request.test.ts
+      - tests/model-response.test.ts
+      - tests/model-stream.test.ts
+      - tests/model-execute.test.ts
+      - tests/model-stream-execute.test.ts
+      - specs/api/fixtures/model-request.json
+  scenarios:
+    - {id: request-contract}
+    - {id: response-contract}
+    - {id: stream-contract}
+    - {id: bounded-execution}
+    - {id: stream-execution}
+  trials: {count: 1, passRate: 1, maxCriticalFailures: 0, confidenceMethod: wilson}

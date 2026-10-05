@@ -45,6 +45,8 @@ jobs:
       - run: npm ci
       - run: npm run check:fast
       - run: npm run check:api:compat
+      - name: Verify frozen provider eval detects regressions
+        run: mkdir -p releases && node scripts/verify-provider-eval.mjs > releases/provider-contract-eval.json
       - run: npm run check:workflows
       - name: Verify evaluator deployment boundary
         run: node scripts/check-eval-deployment.mjs
