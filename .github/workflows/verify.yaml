@@ -47,6 +47,8 @@ jobs:
       - run: npm run check:api:compat
       - name: Verify frozen provider eval detects regressions
         run: mkdir -p releases && node scripts/verify-provider-eval.mjs > releases/provider-contract-eval.json
+      - name: Verify reviewer eval rejects external dispatch from synthetic mode
+        run: mkdir -p releases && node scripts/verify-reviewer-eval.mjs > releases/reviewer-boundary-eval.json
       - run: npm run check:workflows
       - name: Verify evaluator deployment boundary
         run: node scripts/check-eval-deployment.mjs

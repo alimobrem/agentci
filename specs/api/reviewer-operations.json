@@ -1,0 +1,175 @@
+{
+  "apiVersion": "agentci.io/v1alpha1",
+  "transport": "Internal reviewer TypeScript contract; no new HTTP endpoints",
+  "operations": [
+    {
+      "operationId": "reviewerInstructions",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SPEC-12.1-002",
+        "SPEC-12.1-003",
+        "SPEC-12.1-004",
+        "SPEC-12.1-005",
+        "SPEC-12.1-006",
+        "SPEC-12.1-007",
+        "SPEC-12.1-008"
+      ],
+      "tests": [
+        "tests/reviewer-policy.test.ts"
+      ],
+      "scenarios": [
+        "seven distinct roles",
+        "unknown and prototype roles rejected",
+        "immutable role inventory"
+      ]
+    },
+    {
+      "operationId": "createIndependencePolicy",
+      "requirementIds": [
+        "SECTION-12.2",
+        "SPEC-12.2-001"
+      ],
+      "tests": [
+        "tests/reviewer-policy.test.ts"
+      ],
+      "scenarios": [
+        "same upstream aliases rejected",
+        "missing and wrong-subject provenance rejected",
+        "synthetic identity cannot satisfy external mode",
+        "trusted identity snapshot resists mutation"
+      ]
+    },
+    {
+      "operationId": "buildReviewContext",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SECTION-12.2"
+      ],
+      "tests": [
+        "tests/reviewer-context.test.ts"
+      ],
+      "scenarios": [
+        "canonical subject and document hashes",
+        "tampered and duplicate evidence rejected",
+        "unsafe paths and byte limits rejected"
+      ]
+    },
+    {
+      "operationId": "prepareReviewerRequest",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SECTION-12.2"
+      ],
+      "tests": [
+        "tests/reviewer-context.test.ts"
+      ],
+      "scenarios": [
+        "repository instruction text confined to user data",
+        "no tool grants",
+        "config prompt context and request digests change only with corresponding inputs"
+      ]
+    },
+    {
+      "operationId": "createReviewerExecutor",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SPEC-12.2-001",
+        "SECTION-13.4"
+      ],
+      "tests": [
+        "tests/reviewer-execute.test.ts"
+      ],
+      "scenarios": [
+        "all seven roles through budgeted core",
+        "policy and tenant rejection before reservation",
+        "synthetic mode rejects external dispatch",
+        "malformed output and accounting failure",
+        "refusal has no proposal",
+        "cancellation",
+        "private continuation omitted"
+      ]
+    },
+    {
+      "operationId": "validateReviewerResult",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SPEC-12.2-001"
+      ],
+      "tests": [
+        "tests/reviewer-result.test.ts",
+        "tests/reviewer-execute.test.ts"
+      ],
+      "scenarios": [
+        "exact subject and tenant binding",
+        "proposed state cannot promote to confirmed",
+        "response and authorization hash integrity",
+        "private fields rejected",
+        "bounded JSON and usage semantics"
+      ]
+    },
+    {
+      "operationId": "ReviewerResultStore",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SPEC-12.2-001",
+        "SECTION-13.4"
+      ],
+      "tests": [
+        "tests/integration/reviewer-results.test.ts",
+        "tests/reviewer-storage-failure.test.ts"
+      ],
+      "scenarios": [
+        "concurrent immutable save and reconstructed store retrieval",
+        "tenant and commit isolation",
+        "exact budget request and settled cost binding",
+        "unknown cost reservation retained",
+        "SQL update rejected",
+        "connection and transaction failures are redacted unavailable errors",
+        "rollback failure discards connection",
+        "corrupt evidence remains a distinct conflict"
+      ]
+    },
+    {
+      "operationId": "createPersistentReviewer",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SPEC-12.2-001",
+        "SECTION-13.4"
+      ],
+      "tests": [
+        "tests/integration/reviewer-results.test.ts"
+      ],
+      "scenarios": [
+        "same request recovers stored result without dispatch",
+        "concurrent replay dispatches at most once",
+        "different request bytes conflict",
+        "save failure after accounting cannot redispatch",
+        "authorized input detached before storage await"
+      ]
+    },
+    {
+      "operationId": "createSnapshotReviewContext",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SECTION-12.2"
+      ],
+      "tests": [
+        "tests/reviewer-snapshot.test.ts"
+      ],
+      "scenarios": [
+        "authorized repository and exact commit selection",
+        "caller mutation during snapshot read",
+        "invalid paths and missing or oversized evidence fail closed",
+        "cancellation and redacted reader failures"
+      ]
+    }
+  ]
+}

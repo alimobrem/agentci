@@ -25,6 +25,16 @@ try {
   const request=validateModelRequest(JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-request.json'),'utf8')));
   validateModelResponse({schemaVersion:'v1alpha1',requestId:request.requestId,attemptId:'installed-fixture',provider:request.provider,model:request.model,status:'completed',text:'installed',structuredOutput:{claim:'installed schema acceptance'},toolCalls:[],usage:{inputTokens:null,outputTokens:null,costUsdMicros:null,costKind:'unknown',pricingRevision:null},providerRequestId:null},request,'installed-fixture');
   if(!(await readFile(join(installedRoot,'deploy/migrations/004_m3_model_budget.sql'),'utf8')).includes('agentci_model_attempts'))throw new Error('Installed provider budget migration missing');
+  if(!(await readFile(join(installedRoot,'deploy/migrations/005_m3_reviewer_results.sql'),'utf8')).includes('agentci_reviewer_results'))throw new Error('Installed reviewer result migration missing');
+  const {validateReviewerResult}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/result.js')).href);
+  const reviewerFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/reviewer-result.json'),'utf8'));
+  validateReviewerResult(reviewerFixture,reviewerFixture.subject);
+  const {createSnapshotReviewContext}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/snapshot-context.js')).href);
+  const installedContext=await createSnapshotReviewContext(reviewerFixture.subject,async(repository,sha)=>{
+    if(repository!==reviewerFixture.subject.repository||sha!==reviewerFixture.subject.headSha)throw new Error('Installed snapshot identity changed');
+    return {sha,files:{'fixture.ts':'installed reviewer context'}};
+  })([{kind:'source',side:'head',path:'fixture.ts'}]);
+  if(installedContext.documents[0]?.content!=='installed reviewer context')throw new Error('Installed snapshot context failed');
   const {createOpenAIProvider}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/openai.js')).href);
   let installedProviderCalls=0;
   const installedProvider=createOpenAIProvider('synthetic-package-fixture',[{

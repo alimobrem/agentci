@@ -192,9 +192,12 @@ are release requirements.
 
 There are 11 milestones, M0–M10. M0 contracts and M1 semantic review, including customer
 onboarding and agent/API acceptance, are complete. M2 eval orchestration is
-published with verified customer and distribution evidence. Its
-[release/demo/retrospective record](docs/releases/m2.md) and gate ledger govern
-phase completion; M3 remains not-started until closure.
+published and closed with verified customer and distribution evidence; see its
+[release/demo/retrospective record](docs/releases/m2.md). M3 reviewer and dashboard
+development is in progress. The three provider adapters have merged implementations,
+with [live acceptance explicitly deferred](docs/phases/m3-live-validation-deferral.md).
+Development and fixture-based demonstrations require no provider accounts. These
+synthetic checks do not establish live compatibility or complete the original M3 scope.
 
 - [Milestones and acceptance scenarios](docs/milestone-gates.md)
 - [Current status](STATUS.md) and [release notes](CHANGELOG.md)

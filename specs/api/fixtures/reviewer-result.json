@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "v1alpha1",
+  "mode": "synthetic",
+  "subject": {
+    "organizationId": "00000000-0000-4000-8000-000000000001",
+    "repository": "owner/repo",
+    "pullRequest": 1,
+    "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "role": "security",
+  "requestId": "00000000-0000-4000-8000-000000000002",
+  "attemptId": "00000000-0000-4000-8000-000000000003",
+  "provider": "fixture",
+  "model": "fixture-model",
+  "status": "completed",
+  "independence": {
+    "mode": "synthetic",
+    "differentProvider": false,
+    "outcome": "not-required",
+    "reviewerUpstream": "fixture-upstream",
+    "codingUpstream": null,
+    "provenanceDigest": null
+  },
+  "coding": null,
+  "authorizationDigest": "sha256:633256ffaef5a0365cd01667ffa357ed71f3f84a887097f2ebb00304594be395",
+  "configDigest": "sha256:4fa1d567e8491f616e4d440035411b454e61d95e742fd008aa901514df021963",
+  "promptDigest": "sha256:194713ad972b9125a463802fa203cc68e814e7b681bece09a1975df5efd0fa11",
+  "contextDigest": "sha256:03b1f9b00e76a3c0ed1c5256ef6d715f2e12613d246c600693cdf14a4ca4ccc9",
+  "requestDigest": "sha256:2fe784b0d2911744e76efa456fb28b13ee979cbf0e84cb44272c3cbcc1e8a823",
+  "responseDigest": "sha256:8cfb9adcc3456c064baaec57414d03f7f70808fe8ae5020b600c18f41e400e37",
+  "response": {
+    "status": "completed",
+    "text": "Fixture claim only",
+    "structuredOutput": {
+      "claim": "Inspect the error path"
+    },
+    "usage": {
+      "inputTokens": 1,
+      "outputTokens": 1,
+      "costUsdMicros": 0,
+      "costKind": "reported",
+      "pricingRevision": null
+    },
+    "observedModel": "fixture-model",
+    "providerRequestId": null
+  },
+  "proposal": {
+    "verification": "proposed",
+    "output": {
+      "claim": "Inspect the error path"
+    }
+  }
+}

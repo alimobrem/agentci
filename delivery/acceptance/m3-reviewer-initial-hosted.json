@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "86ba02689354b5411265ecce0ee3f7c62e10a90c",
+  "baseCommit": "9e4f05498358d7cda1b6a8d4f95b97ad40516d6f",
+  "runId": 37347757134,
+  "artifactId": 11361766061,
+  "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/37347757134/artifacts/11361766061",
+  "producer": {
+    "version": "0.4.0-m3-dev.1",
+    "sourceCommit": "9e4f05498358d7cda1b6a8d4f95b97ad40516d6f",
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "runId": "37347757134",
+    "runAttempt": "1",
+    "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+    "evaluatorImage": "sha256:b9bdc0a26f680d83ff446ff46c1f16ad5d59e88fb7f61de018483714d4cc9ab3"
+  },
+  "comparison": {
+    "id": "5ff8e937-734a-458c-95ab-8f92ce066db0",
+    "reviewId": "a9c32c8f-f0e2-429d-83a4-7d558ee53b46",
+    "file": "comparison-5ff8e937-734a-458c-95ab-8f92ce066db0.ndjson",
+    "sha256": "sha256:408434807d4279dfb2249816d2bbd0d5146e9d599dc69509bdd2c6eb87b7da13",
+    "bytes": 17487
+  },
+  "verification": {
+    "functions": [
+      "verifyHostedReport",
+      "verifyHostedComparison"
+    ],
+    "verifierRevision": "sha256:9b8ce49d1f974f9cabfadd8a408e90e2fac581506424eddf4a551ee790f4353a",
+    "verifiedAt": "2026-10-05T17:30:21.934Z",
+    "result": "passed",
+    "reviewerUnitId": "c441a304-7c67-4f0b-aa5c-debde2dafe00",
+    "scenarioCount": 6,
+    "assertionSide": "head",
+    "unitCount": 5,
+    "comparisonCount": 2,
+    "coverageGaps": 0,
+    "selectionGaps": 0,
+    "executionGaps": 0
+  },
+  "limitations": [
+    "Initial added-suite head assertions; not a two-sided frozen reviewer baseline",
+    "Does not cover later storage failure tests",
+    "Does not prove live-provider compatibility or M3 release acceptance"
+  ]
+}

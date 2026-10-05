@@ -1,0 +1,34 @@
+apiVersion: agentci.io/v1alpha1
+kind: EvalSuite
+metadata:
+  id: agentci-reviewer-boundaries
+  description: Frozen reviewer identity, context, accounting and adversarial-output assertions using only fixtures.
+spec:
+  class: adversarial
+  requirements: [SECTION-12.1, SPEC-12.1-001, SPEC-12.1-002, SPEC-12.1-003, SPEC-12.1-004, SPEC-12.1-005, SPEC-12.1-006, SPEC-12.1-007, SPEC-12.1-008, SECTION-12.2, SPEC-12.2-001]
+  impact:
+    categories: [source, dependency, api, specification, requirement, eval, policy, prompt]
+    include: [packages/reviewers/**, packages/providers/**, tests/reviewer-*.test.ts, specs/api/reviewer-operations.json, evals/agentci-reviewers.yaml, scripts/agentci-reviewer-eval.mjs, package.json, package-lock.json, npm-shrinkwrap.json]
+  runner:
+    adapter: native
+    command: [node, scripts/agentci-reviewer-eval.mjs]
+    report: agentci-reviewer-result.json
+    timeoutMs: 120000
+    maxOutputBytes: 1048576
+    harness:
+      - scripts/agentci-reviewer-eval.mjs
+      - tests/reviewer-policy.test.ts
+      - tests/reviewer-context.test.ts
+      - tests/reviewer-execute.test.ts
+      - tests/reviewer-adversarial.test.ts
+      - tests/reviewer-result.test.ts
+      - tests/reviewer-snapshot.test.ts
+      - specs/api/fixtures/reviewer-result.json
+  scenarios:
+    - {id: identity-policy}
+    - {id: context-isolation}
+    - {id: budgeted-execution}
+    - {id: adversarial-output}
+    - {id: result-integrity}
+    - {id: snapshot-context}
+  trials: {count: 1, passRate: 1, maxCriticalFailures: 0, confidenceMethod: wilson}
