@@ -88,3 +88,10 @@ The private live-smoke command now accepts `provider: "xai"` and runs the shared
 four-scenario corpus, including a constant tool result. It requires explicit spend
 authorization and persistent budget accounting. Production-package smoke includes
 an installed official-SDK invocation with synthetic transport; this is not a live call.
+
+Executor-level SDK outage tests retain a possibly billed 503 attempt, reserve a
+fresh retry, and settle only the recovered response's reported cost. HTTP 429
+releases the rejected attempt before a separately reserved retry. A stream that
+fails after provisional text remains charged as unknown and cannot replay, even
+when the request policy allows more attempts. Invalid schemas fail before either
+reservation or network dispatch.
