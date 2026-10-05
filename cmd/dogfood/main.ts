@@ -1,3 +1,4 @@
+import {hostedReviewCandidates} from '../../packages/github/hosted-selection.ts';
 import {containerEngine} from '../../packages/evals/runner.ts';
 import {readFile,writeFile,mkdir,open,rm,stat} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';import {randomUUID,createHash} from 'node:crypto';import {execFileSync,spawnSync} from 'node:child_process';
@@ -59,7 +60,7 @@ if(process.argv[2]==='publish'){
   if(!ready)throw new Error('Separate hosted evaluator did not become ready');
   connection=await Connection.connect({address:process.env.TEMPORAL_ADDRESS});native=await NativeConnection.connect({address:process.env.TEMPORAL_ADDRESS});const client=new Client({connection}),queue=`agentci-hosted-${randomUUID()}`;
   worker=await Worker.create({connection:native,taskQueue:queue,workflowsPath:fileURLToPath(new URL('../../apps/worker/workflows.js',import.meta.url)),activities:createHostedReviewActivities(github,store,evals,{repository,installationId},policy)});running=worker.run();
-  const prs=await github.paginate(github.pulls.list,{owner,repo,state:'open',per_page:100});if(prs.length>100)throw new Error('Hosted PR budget exceeded');
+  const prs=await hostedReviewCandidates(github,repository,process.env.GITHUB_EVENT_NAME,process.env.AGENTCI_TRIGGER_PULL_REQUEST);
   for(const pr of prs){
    const {data}=await github.pulls.get({owner,repo,pull_number:pr.number});if(data.state!=='open')continue;
    const job:ReviewJob={repository,installationId,pullRequest:data.number,baseSha:data.base.sha,headSha:data.head.sha},attemptId=randomUUID(),review:HostedReview={job,attemptId,status:'unavailable'};report.reviews.push(review);
