@@ -26,9 +26,13 @@ passed file-digest, chained-export, subject and runner identity verification; se
 `delivery/acceptance/m3-01-evals-initial.json`. Full CI run 37324180104 also passed
 the mutation check, integration, API, package and container checks (warm cache).
 
-The provider suite exists only on the head in this first comparison. Task closure
-remains pending until a later comparison executes the accepted frozen provider
-harness against both subjects. The provider implementation itself is unchanged
+The provider suite exists only on the head in this first comparison. That first run did not close the task. Hosted run 37326306682 subsequently
+executed all five provider scenarios against both subjects in PR29 and PR30,
+using identical baseline assertion revisions within each comparison. Both passed;
+file digests, chained exports, subject and runner identities were verified.
+`delivery/acceptance/m3-01-evals.json` records the accepted corpus task. PR28
+still used the pre-corpus baseline in this run, so its two-sided acceptance remains
+open. The provider implementation itself is unchanged
 from this PR baseline; this is corpus adoption, not a provider behavior change.
 A newly introduced suite
 does not retroactively clear old coverage gaps; later comparisons must use the

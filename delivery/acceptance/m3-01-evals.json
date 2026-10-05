@@ -1,0 +1,259 @@
+{
+  "schemaVersion": 1,
+  "runId": "37326306682",
+  "artifactId": "11352622063",
+  "producer": {
+    "version": "0.4.0-m3-dev.1",
+    "sourceCommit": "54db2608e08649678a3747b34a47b2717a354226",
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "runId": "37326306682",
+    "runAttempt": "1",
+    "runnerImage": "sha256:88d09ea222f5aac7c05e6a396a4c1b22280dc4e2d12283690e5f20756343cd91",
+    "evaluatorImage": "sha256:cfa4b99309e183fe49833f0105dfe942359e1d0dfc74ee974c0cfcd2d5608251"
+  },
+  "verification": "verifyHostedComparison passed digest, chained frame, subject and runner identity checks for all three comparisons.",
+  "reviews": [
+    {
+      "identity": {
+        "repository": "alimobrem/agentci",
+        "installationId": 167655696,
+        "pullRequest": 30,
+        "baseSha": "78cbb5fd68d5ba11f9de5d73aa09abe7645f2990",
+        "headSha": "1b64ac3ed25e7d7619beb73360f478d28a03ed6f"
+      },
+      "comparison": {
+        "id": "902c676c-40af-4ba2-ae00-61433b541a42",
+        "reviewId": "9814a7d3-3537-42c9-954d-18b464a3866e",
+        "file": "comparison-902c676c-40af-4ba2-ae00-61433b541a42.ndjson",
+        "sha256": "sha256:afe1399a13bdcbb09170199bd879d4876c40fce6e1721b9773baf07cce8b1868",
+        "bytes": 14345
+      },
+      "units": [
+        {
+          "suite": "agentci-provider-contracts",
+          "side": "base",
+          "assertionSide": "base",
+          "revision": "sha256:651d0f65644f725d729b2f0198f0a07ba7eb04f804e88ee1af2c426b9c43fd32",
+          "status": "passed",
+          "scenarioIds": [
+            "request-contract",
+            "response-contract",
+            "stream-contract",
+            "bounded-execution",
+            "stream-execution"
+          ]
+        },
+        {
+          "suite": "agentci-provider-contracts",
+          "side": "head",
+          "assertionSide": "base",
+          "revision": "sha256:651d0f65644f725d729b2f0198f0a07ba7eb04f804e88ee1af2c426b9c43fd32",
+          "status": "passed",
+          "scenarioIds": [
+            "request-contract",
+            "response-contract",
+            "stream-contract",
+            "bounded-execution",
+            "stream-execution"
+          ]
+        },
+        {
+          "suite": "agentci-self-contracts",
+          "side": "base",
+          "assertionSide": "base",
+          "revision": "sha256:6559932cd72010aa1c4c6aceb8c850943149f37e59e180e42add47c0f861e2ea",
+          "status": "passed",
+          "scenarioIds": [
+            "manifest",
+            "adapters",
+            "statistics",
+            "request-identity",
+            "comparison",
+            "export-client"
+          ]
+        },
+        {
+          "suite": "agentci-self-contracts",
+          "side": "head",
+          "assertionSide": "base",
+          "revision": "sha256:6559932cd72010aa1c4c6aceb8c850943149f37e59e180e42add47c0f861e2ea",
+          "status": "passed",
+          "scenarioIds": [
+            "manifest",
+            "adapters",
+            "statistics",
+            "request-identity",
+            "comparison",
+            "export-client"
+          ]
+        }
+      ],
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 4,
+        "comparisonCount": 2
+      }
+    },
+    {
+      "identity": {
+        "repository": "alimobrem/agentci",
+        "installationId": 167655696,
+        "pullRequest": 29,
+        "baseSha": "4323345bf50ee2f0775f344ab19de750806aa92b",
+        "headSha": "78cbb5fd68d5ba11f9de5d73aa09abe7645f2990"
+      },
+      "comparison": {
+        "id": "0c189379-b154-4aae-bef4-54f8f2ac150a",
+        "reviewId": "2a2f305b-0b4e-46d5-a731-72d983a3185e",
+        "file": "comparison-0c189379-b154-4aae-bef4-54f8f2ac150a.ndjson",
+        "sha256": "sha256:061edf6dcbbabfaa12ca44df2e558e201f32992ee7bca6e24af4a46b8586f498",
+        "bytes": 14345
+      },
+      "units": [
+        {
+          "suite": "agentci-provider-contracts",
+          "side": "base",
+          "assertionSide": "base",
+          "revision": "sha256:781de0c95db4277d9ee394b0d08777c345270c09a3d71db12011e462cad4154e",
+          "status": "passed",
+          "scenarioIds": [
+            "request-contract",
+            "response-contract",
+            "stream-contract",
+            "bounded-execution",
+            "stream-execution"
+          ]
+        },
+        {
+          "suite": "agentci-provider-contracts",
+          "side": "head",
+          "assertionSide": "base",
+          "revision": "sha256:781de0c95db4277d9ee394b0d08777c345270c09a3d71db12011e462cad4154e",
+          "status": "passed",
+          "scenarioIds": [
+            "request-contract",
+            "response-contract",
+            "stream-contract",
+            "bounded-execution",
+            "stream-execution"
+          ]
+        },
+        {
+          "suite": "agentci-self-contracts",
+          "side": "base",
+          "assertionSide": "base",
+          "revision": "sha256:6559932cd72010aa1c4c6aceb8c850943149f37e59e180e42add47c0f861e2ea",
+          "status": "passed",
+          "scenarioIds": [
+            "manifest",
+            "adapters",
+            "statistics",
+            "request-identity",
+            "comparison",
+            "export-client"
+          ]
+        },
+        {
+          "suite": "agentci-self-contracts",
+          "side": "head",
+          "assertionSide": "base",
+          "revision": "sha256:6559932cd72010aa1c4c6aceb8c850943149f37e59e180e42add47c0f861e2ea",
+          "status": "passed",
+          "scenarioIds": [
+            "manifest",
+            "adapters",
+            "statistics",
+            "request-identity",
+            "comparison",
+            "export-client"
+          ]
+        }
+      ],
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 4,
+        "comparisonCount": 2
+      }
+    },
+    {
+      "identity": {
+        "repository": "alimobrem/agentci",
+        "installationId": 167655696,
+        "pullRequest": 28,
+        "baseSha": "6f5cee2a24f2adba53cd3e7ea0aee07710a9d777",
+        "headSha": "4323345bf50ee2f0775f344ab19de750806aa92b"
+      },
+      "comparison": {
+        "id": "aba28fbd-0888-4f3d-a055-82dd09b98c12",
+        "reviewId": "95047449-275b-4f73-a270-e5b2038df66b",
+        "file": "comparison-aba28fbd-0888-4f3d-a055-82dd09b98c12.ndjson",
+        "sha256": "sha256:cc44bcadeeac9856946412bee1a703cf394e177d5b093bd929c30312945721c4",
+        "bytes": 10950
+      },
+      "units": [
+        {
+          "suite": "agentci-provider-contracts",
+          "side": "head",
+          "assertionSide": "head",
+          "revision": "sha256:781de0c95db4277d9ee394b0d08777c345270c09a3d71db12011e462cad4154e",
+          "status": "passed",
+          "scenarioIds": [
+            "request-contract",
+            "response-contract",
+            "stream-contract",
+            "bounded-execution",
+            "stream-execution"
+          ]
+        },
+        {
+          "suite": "agentci-self-contracts",
+          "side": "base",
+          "assertionSide": "base",
+          "revision": "sha256:ebbce1727917e1add39ee57ff55e8e1c4b601b75045f08703a2bc9ff3df5f79e",
+          "status": "passed",
+          "scenarioIds": [
+            "manifest",
+            "adapters",
+            "statistics",
+            "request-identity",
+            "comparison",
+            "export-client"
+          ]
+        },
+        {
+          "suite": "agentci-self-contracts",
+          "side": "head",
+          "assertionSide": "base",
+          "revision": "sha256:ebbce1727917e1add39ee57ff55e8e1c4b601b75045f08703a2bc9ff3df5f79e",
+          "status": "passed",
+          "scenarioIds": [
+            "manifest",
+            "adapters",
+            "statistics",
+            "request-identity",
+            "comparison",
+            "export-client"
+          ]
+        }
+      ],
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 3,
+        "comparisonCount": 1
+      }
+    }
+  ],
+  "mutationEvidence": "delivery/acceptance/m3-01-evals-initial.json",
+  "scope": "Provider-core frozen corpus acceptance: both subjects passed identical baseline assertions in PR29 and PR30; CI mutation check proved weakened identity validation fails.",
+  "limitations": [
+    "PR28 in this run retains old pre-corpus baseline and has only head provider execution. Its two-sided acceptance remains pending.",
+    "This does not certify live provider compatibility, durable PostgreSQL accounting, adapters complete, or M3 release."
+  ]
+}
