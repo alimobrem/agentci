@@ -11,7 +11,18 @@ export async function currentPullRequest(client: Octokit, job: ReviewJob): Promi
   const { data } = await client.pulls.get({ ...names(job.repository), pull_number: job.pullRequest });
   return data.state === 'open' && data.base.sha === job.baseSha && data.head.sha === job.headSha;
 }
+interface VerifiedBlobCache { blobs: Map<string,{text:string;bytes:number}>; bytes:number; maxBytes:number; maxEntries:number }
+/** Scoped to one authenticated client lifetime; trees/authorization are never cached. */
+export function createRemoteSnapshotReader(client:Octokit,limits:{maxBytes?:number;maxEntries?:number}={}) {
+  const maxBytes=limits.maxBytes??64*1024*1024,maxEntries=limits.maxEntries??10_000;
+  if(!Number.isSafeInteger(maxBytes)||maxBytes<1||maxBytes>64*1024*1024||!Number.isSafeInteger(maxEntries)||maxEntries<1||maxEntries>10_000)throw new Error('Invalid snapshot cache bounds');
+  const cache:VerifiedBlobCache={blobs:new Map(),bytes:0,maxBytes,maxEntries};
+  return (repository:string,sha:string)=>readRemoteSnapshot(client,repository,sha,cache);
+}
 export async function remoteSnapshot(client: Octokit, repository: string, sha: string): Promise<Snapshot> {
+  return readRemoteSnapshot(client,repository,sha);
+}
+async function readRemoteSnapshot(client:Octokit,repository:string,sha:string,cache?:VerifiedBlobCache):Promise<Snapshot> {
   if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('Exact SHA required');
   const repo = names(repository);
   const { data: commit } = await client.git.getCommit({ ...repo, commit_sha: sha });
@@ -26,12 +37,27 @@ export async function remoteSnapshot(client: Octokit, repository: string, sha: s
     if (entry.type !== 'blob' || !['100644', '100755'].includes(entry.mode ?? '') || !entry.path || !entry.sha || entry.size === undefined) throw new Error('Unsupported Git tree entry');
     total += entry.size;
     if (entry.size > 2 * 1024 * 1024 || total > 32 * 1024 * 1024) throw new Error('Repository content exceeds review limits');
+    const cacheKey=repository+'\0'+entry.sha,cached=cache?.blobs.get(cacheKey);
+    if(cached){
+      if(cached.bytes!==entry.size)throw new Error('Mismatched cached blob size');
+      cache!.blobs.delete(cacheKey);cache!.blobs.set(cacheKey,cached);
+      files[entry.path]=cached.text;continue;
+    }
     const { data: blob } = await client.git.getBlob({ ...repo, file_sha: entry.sha });
     if (blob.encoding !== 'base64') throw new Error('Unsupported blob encoding');
     const bytes = Buffer.from(blob.content.replaceAll('\n', ''), 'base64');
     const blobSha = createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex');
     if (blob.sha !== entry.sha || blobSha !== entry.sha || bytes.length !== entry.size || bytes.includes(0)) throw new Error('Binary files or mismatched blobs are not supported in this candidate');
-    files[entry.path] = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+    const text=new TextDecoder('utf-8',{fatal:true}).decode(bytes);
+    files[entry.path]=text;
+    if(cache&&bytes.length<=cache.maxBytes){
+      // Another activity may have populated the same immutable blob while this fetch awaited.
+      const previous=cache.blobs.get(cacheKey);if(previous){cache.bytes-=previous.bytes;cache.blobs.delete(cacheKey);}
+      while(cache.blobs.size>=cache.maxEntries||cache.bytes+bytes.length>cache.maxBytes){
+        const oldest=cache.blobs.keys().next().value!;cache.bytes-=cache.blobs.get(oldest)!.bytes;cache.blobs.delete(oldest);
+      }
+      cache.blobs.set(cacheKey,{text,bytes:bytes.length});cache.bytes+=bytes.length;
+    }
   }
   return { sha, files };
 }
