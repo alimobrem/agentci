@@ -19,3 +19,8 @@ test('only declared schema-valid tool proposals are accepted; partial output is 
  for(const toolCalls of [[{...value.toolCalls[0],name:'execute'}],[{...value.toolCalls[0],arguments:{path:12}}],[...value.toolCalls,...value.toolCalls]])assert.throws(()=>validateModelResponse({...value,toolCalls},req,'attempt-1'),/invalid-output/);
  for(const status of ['refused','incomplete']){assert.throws(()=>validateModelResponse({...value,status},req,'attempt-1'),/invalid-output/);assert.equal(validateModelResponse({...value,status,toolCalls:[]},req,'attempt-1').status,status);}
 });
+test('observed model is optional for older adapters and bounded when reported',()=>{
+ const value=response();assert.equal(validateModelResponse(value,request(),'attempt-1').observedModel,undefined);
+ assert.equal(validateModelResponse({...value,observedModel:'upstream-snapshot'},request(),'attempt-1').observedModel,'upstream-snapshot');
+ for(const observedModel of ['',null,1,'x'.repeat(257)])assert.throws(()=>validateModelResponse({...value,observedModel},request(),'attempt-1'),/invalid-output/);
+});

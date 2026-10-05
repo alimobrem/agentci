@@ -7,7 +7,7 @@ export class OpenAIStreamTranslator {
  private sequence=-1;private responseId:string|undefined;private ended=false;private failed=false;
  private readonly validator:ModelStreamValidator;
  private readonly items=new Map<string,{index:number;type:string;callId?:string;name?:string;arguments:string}>();
- constructor(private readonly request:ModelRequest,private readonly attemptId:string){this.validator=new ModelStreamValidator(request,attemptId);}
+ constructor(private readonly request:ModelRequest,private readonly attemptId:string,private readonly acceptedModels:readonly string[]=[request.model]){this.validator=new ModelStreamValidator(request,attemptId);}
  accept(event:unknown,requestId:string|null):ModelEvent[]{
   try{
    if(this.failed||this.ended||!object(event)||!Number.isSafeInteger(event.sequence_number)||event.sequence_number!==this.sequence+1)throw Error();this.sequence=event.sequence_number;
@@ -36,7 +36,7 @@ export class OpenAIStreamTranslator {
      const item=this.items.get(event.item_id);if(!item||item.type!=='function_call'||item.index!==event.output_index||event.arguments!==item.arguments)throw Error();
     }else if(['response.completed','response.incomplete'].includes(event.type)){
      if(!object(event.response)||event.response.id!==this.responseId||event.response.status!==(event.type==='response.completed'?'completed':'incomplete'))throw Error();
-     const response=openAIResponse(event.response,this.request,this.attemptId,requestId);result.push({type:'usage',usage:response.usage},{type:'terminal',response});this.ended=true;
+     const response=openAIResponse(event.response,this.request,this.attemptId,requestId,this.acceptedModels);result.push({type:'usage',usage:response.usage},{type:'terminal',response});this.ended=true;
     }else if(event.type==='response.failed'||event.type==='error')throw new ProviderFailure('transport',false,'possibly-sent');
     else if(!['response.in_progress','response.output_item.done','response.content_part.added','response.content_part.done','response.output_text.done','response.refusal.done','response.reasoning_summary_part.added','response.reasoning_summary_part.done','response.reasoning_summary_text.delta','response.reasoning_summary_text.done','response.reasoning_text.delta','response.reasoning_text.done','response.output_text.annotation.added'].includes(event.type))throw Error();
    }

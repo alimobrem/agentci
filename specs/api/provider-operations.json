@@ -44,16 +44,19 @@
       "operationId": "validateModelResponse",
       "requirementIds": [
         "SECTION-13.1",
-        "SPEC-13.2-005"
+        "SPEC-13.2-005",
+        "SPEC-13.3-002"
       ],
       "tests": [
         "tests/model-response.test.ts",
-        "scripts/package-smoke.mjs"
+        "scripts/package-smoke.mjs",
+        "tests/openai-provider.test.ts"
       ],
       "scenarios": [
         "exact request and attempt binding",
         "tool and structured output schema",
-        "unknown cost is not zero"
+        "unknown cost is not zero",
+        "requested and observed model identity with explicit alias snapshot allowlist"
       ]
     },
     {

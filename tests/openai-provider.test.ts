@@ -23,3 +23,22 @@ test('schema rejection occurs before budget reservation or network dispatch',asy
  const req=request();req.responseSchema={type:'object',properties:{value:{type:'string'}},additionalProperties:false};
  await assert.rejects(invokeModel(provider,req,ledger),/invalid-request|unsupported-capability/);assert.deepEqual(records,[]);
 });
+test('model aliases accept only operator-approved snapshots and preserve observed identity',async()=>{
+ for(const stream of [false,true])for(const allowed of [false,true]){
+  const p=profile();if(allowed)p.responseModels=['fixture-snapshot'];
+  const payload={...response(),model:'fixture-snapshot'};
+  const provider=createOpenAIProvider('synthetic-fixture',[p],async()=>stream?new Response([
+   {type:'response.created',response:{id:'resp-fixture'}},
+   {type:'response.output_item.added',output_index:0,item:{id:'msg-1',type:'message'}},
+   {type:'response.output_text.delta',item_id:'msg-1',output_index:0,delta:'{"claim":"fixture"}'},
+   {type:'response.completed',response:payload}
+  ].map((e,sequence_number)=>`data: ${JSON.stringify({...e,sequence_number})}\n\n`).join(''),{headers:{'content-type':'text/event-stream'}}):new Response(JSON.stringify(payload),{headers:{'content-type':'application/json'}}));
+  // Later mutation must not widen the registered policy.
+  if(p.responseModels)p.responseModels.push('unapproved-snapshot');
+  const context={attemptId:'attempt-1',signal:new AbortController().signal};
+  const run=async()=>{if(!stream)return provider.invoke(request(),context);let terminal;for await(const event of provider.stream(request(),context))if(event.type==='terminal')terminal=event.response;return terminal!;};
+  if(allowed){const result=await run();assert.equal(result.model,'fixture-model');assert.equal(result.observedModel,'fixture-snapshot');}
+  else await assert.rejects(run(),/invalid-output/);
+ }
+ for(const responseModels of [[],[''],['same','same']])assert.throws(()=>createOpenAIProvider('synthetic-fixture',[{...profile(),responseModels}]),/invalid-request/);
+});

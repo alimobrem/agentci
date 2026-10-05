@@ -2,9 +2,9 @@ import {validateModelResponse} from './response.ts';
 import {ProviderFailure,type ModelRequest,type ModelResponse,type ToolCall} from './types.ts';
 const object=(value:unknown):value is Record<string,unknown>=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 /** Normalize only documented output kinds. Provider dollars are not inferred from token counts. */
-export function openAIResponse(value:unknown,request:ModelRequest,attemptId:string,requestId:string|null=null):ModelResponse{
+export function openAIResponse(value:unknown,request:ModelRequest,attemptId:string,requestId:string|null=null,acceptedModels:readonly string[]=[request.model]):ModelResponse{
  try{
-  if(!object(value)||value.model!==request.model||!['completed','incomplete'].includes(value.status as string)||!Array.isArray(value.output)||value.output.length>256)throw Error();
+  if(!object(value)||typeof value.model!=='string'||!acceptedModels.includes(value.model)||!['completed','incomplete'].includes(value.status as string)||!Array.isArray(value.output)||value.output.length>256)throw Error();
   let text='',refused=false;const toolCalls:ToolCall[]=[];
   for(const item of value.output){
    if(!object(item))throw Error();
@@ -29,6 +29,6 @@ export function openAIResponse(value:unknown,request:ModelRequest,attemptId:stri
   if(usage!==undefined&&usage!==null&&!object(usage))throw Error();
   const inputTokens=object(usage)?usage.input_tokens:null,outputTokens=object(usage)?usage.output_tokens:null;
   if(object(usage)&&(!Number.isSafeInteger(inputTokens)||!Number.isSafeInteger(outputTokens)||typeof usage.total_tokens!=='number'||usage.total_tokens!==(inputTokens as number)+(outputTokens as number)))throw Error();
-  return validateModelResponse({schemaVersion:'v1alpha1',requestId:request.requestId,attemptId,provider:request.provider,model:request.model,status,text,structuredOutput:status==='completed'&&request.responseSchema&&(!toolCalls.length||text.trim())?JSON.parse(text):null,toolCalls:status==='completed'?toolCalls:[],usage:{inputTokens,outputTokens,costUsdMicros:null,costKind:'unknown',pricingRevision:null},providerRequestId:requestId},request,attemptId);
+  return validateModelResponse({schemaVersion:'v1alpha1',requestId:request.requestId,attemptId,provider:request.provider,model:request.model,observedModel:value.model,status,text,structuredOutput:status==='completed'&&request.responseSchema&&(!toolCalls.length||text.trim())?JSON.parse(text):null,toolCalls:status==='completed'?toolCalls:[],usage:{inputTokens,outputTokens,costUsdMicros:null,costKind:'unknown',pricingRevision:null},providerRequestId:requestId},request,attemptId);
  }catch{throw new ProviderFailure('invalid-output',false,'possibly-sent');}
 }

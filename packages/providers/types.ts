@@ -16,6 +16,8 @@ export interface ModelUsage {inputTokens:number|null;outputTokens:number|null;co
 export interface CostEstimate {upperBoundUsdMicros:number;pricingRevision:string;maxInputTokens:number;maxOutputTokens:number}
 export interface ModelResponse {
  schemaVersion:'v1alpha1';requestId:string;attemptId:string;provider:string;model:string;
+ /** Observed upstream model when reported; absence means unknown, never inferred. */
+ observedModel?:string;
  status:'completed'|'refused'|'incomplete';text:string;structuredOutput:JsonValue;
  toolCalls:ToolCall[];
  usage:ModelUsage;providerRequestId:string|null;

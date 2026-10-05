@@ -25,10 +25,10 @@ export function createOpenAITransport(apiKey:string,fetchImpl:typeof fetch=globa
  const client=new OpenAI({apiKey,baseURL:'https://api.openai.com/v1',organization:null,project:null,maxRetries:0,logLevel:'off',fetch:boundedFetch});
  const options=(context:ProviderContext,request:ModelRequest)=>({signal:context.signal,maxRetries:0,timeout:Math.max(1,Math.min(2147483647,request.policy.deadlineAt-Date.now()))});
  return {
-  async invoke(request:ModelRequest,context:ProviderContext){
+  async invoke(request:ModelRequest,context:ProviderContext,acceptedModels:readonly string[]=[request.model]){
    const body=openAIRequest(request);
    if(context.signal.aborted||request.policy.deadlineAt<=Date.now())throw new ProviderFailure(context.signal.aborted?'cancelled':'deadline');
-   try{const {data,request_id}=await client.responses.create(body,options(context,request)).withResponse();return openAIResponse(data,request,context.attemptId,request_id);}
+   try{const {data,request_id}=await client.responses.create(body,options(context,request)).withResponse();return openAIResponse(data,request,context.attemptId,request_id,acceptedModels);}
    catch(error){throw openAIError(error,context.signal);}
   },
   async *events(request:ModelRequest,context:ProviderContext):AsyncIterable<{event:ResponseStreamEvent;requestId:string|null}>{

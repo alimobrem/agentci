@@ -44,12 +44,19 @@ remains required; local preflight alone cannot prove provider acceptance.
 
 Remaining: complete schema subset preflight, verified real model capability/pricing
 profiles, broader conformance and
-failure/recovery tests, and authorized live acceptance. Model aliases/snapshots need
-an explicit identity policy; current response mapping requires exact configured
-model identity. No live model call has been performed and this is not M3 completion.
+failure/recovery tests, and authorized live acceptance. Model profiles default to exact identity. An operator may configure an exact
+`responseModels` snapshot allowlist for an alias; its price and capability bounds
+must cover every listed snapshot. Both ordinary and streamed responses retain
+requested `model` and upstream `observedModel`; unlisted models fail validation.
+No prefix matching or automatic alias expansion occurs. No live model call has been performed and this is not M3 completion.
 
 Sources checked during adoption:
 - [Official JavaScript SDK](https://developers.openai.com/api/reference/typescript)
 - [Rate-limit handling](https://developers.openai.com/api/docs/guides/rate-limits)
 - [Streaming event definitions](https://developers.openai.com/api/reference/resources/responses/streaming-events)
 - [Structured outputs](https://developers.openai.com/api/docs/guides/structured-outputs)
+
+The internal M3 response contract adds optional `observedModel` (nonempty, at most
+256 characters). Older provider implementations remain accepted; absence means
+unknown. The OpenAI adapter always supplies the reported identity. No released
+M1/M2 HTTP contract or compatibility baseline changes.
