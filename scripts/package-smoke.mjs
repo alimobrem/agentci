@@ -50,6 +50,17 @@ try {
   });
   const anthropicResult=await anthropicProvider.invoke({...installedRequest,provider:'anthropic',developer:''},{attemptId:'installed-anthropic',signal:new AbortController().signal});
   if(anthropicResult.structuredOutput?.claim!=='installed Anthropic SDK acceptance')throw new Error('Installed Anthropic SDK invocation failed');
+  const {createXAIProvider}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/xai.js')).href);
+  const xaiProvider=createXAIProvider('synthetic-package-fixture',[{
+    model:'installed-fixture',contextTokens:1000,maxOutputTokens:512,
+    capabilities:{stream:true,tools:true,structuredOutput:true,developerInstructions:true,extensions:true},
+    temperature:false,topP:false,inputUsdMicrosPerMillion:1000000,outputUsdMicrosPerMillion:2000000,pricingRevision:'synthetic-package-prices'
+  }],async(input)=>{
+    if(!(input instanceof Request)||input.url!=='https://api.x.ai/v1/responses'||input.redirect!=='error')throw new Error('Installed xAI transport boundary changed');
+    return new Response(JSON.stringify({id:'installed-xai',model:'installed-fixture',status:'completed',output:[{type:'message',role:'assistant',content:[{type:'output_text',text:'{"claim":"installed xAI SDK acceptance"}'}]}],usage:{input_tokens:1,output_tokens:1,total_tokens:2,cost_in_usd_ticks:10000}}),{headers:{'content-type':'application/json'}});
+  });
+  const xaiResult=await xaiProvider.invoke({...installedRequest,provider:'xai'},{attemptId:'installed-xai',signal:new AbortController().signal});
+  if(xaiResult.structuredOutput?.claim!=='installed xAI SDK acceptance'||xaiResult.usage.costUsdMicros!==1)throw new Error('Installed xAI SDK invocation failed');
 
 
 
@@ -130,5 +141,5 @@ text: Packaged CLI validates a fresh project.
     execFileSync(cli, ['validate', '--root', join(root, 'project')], { stdio: 'pipe' });
     throw new Error('Invalid project unexpectedly passed');
   } catch (error) { if (error.status !== 1) throw error; }
-  console.log('Packaged CLI/client passed: production-only install, version, fresh init, overwrite rejection, client entry point, installed provider schemas/migration and OpenAI/Anthropic SDK invocation, MIT license, installed App setup/state rejection, validation and invalid input.');
+  console.log('Packaged CLI/client passed: production-only install, version, fresh init, overwrite rejection, client entry point, installed provider schemas/migration and OpenAI/Anthropic/xAI SDK invocation, MIT license, installed App setup/state rejection, validation and invalid input.');
 } finally { await rm(root, { recursive: true, force: true }); }

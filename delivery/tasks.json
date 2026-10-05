@@ -1534,7 +1534,7 @@
       "requirementIds": [
         "SPEC-13.3-002"
       ],
-      "status": "in-progress",
+      "status": "blocked",
       "startedAt": "2026-10-05T06:01:52.383Z",
       "completedAt": null,
       "acceptance": [
@@ -1547,7 +1547,8 @@
       "dependsOn": [
         "M3-01",
         "M3-R2"
-      ]
+      ],
+      "blockedReason": "Live acceptance awaits explicit spend authorization and private credential/database config paths; no paid provider request has been made."
     },
     {
       "id": "M3-03",
@@ -1555,7 +1556,7 @@
       "requirementIds": [
         "SPEC-13.3-003"
       ],
-      "status": "in-progress",
+      "status": "blocked",
       "startedAt": "2026-10-05T06:36:45.200Z",
       "completedAt": null,
       "acceptance": [
@@ -1568,7 +1569,8 @@
       "dependsOn": [
         "M3-01",
         "M3-R2"
-      ]
+      ],
+      "blockedReason": "Live acceptance awaits explicit spend authorization and private credential/database config paths; no paid provider request has been made."
     },
     {
       "id": "M3-04",
@@ -1576,8 +1578,8 @@
       "requirementIds": [
         "SPEC-13.3-004"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "blocked",
+      "startedAt": "2026-10-05T07:10:19.880Z",
       "completedAt": null,
       "acceptance": [
         {
@@ -1589,7 +1591,8 @@
       "dependsOn": [
         "M3-01",
         "M3-R2"
-      ]
+      ],
+      "blockedReason": "Hosted CI passed; live acceptance awaits explicit spend authorization and private credential/database config paths. No paid provider calls have been made."
     },
     {
       "id": "M3-05",
@@ -1803,14 +1806,16 @@
         "SECTION-13.4",
         "SPEC-13.4-001"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T14:18:21.958Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T14:44:05.896Z",
       "acceptance": [
         {
           "text": "Run frozen provider request, response, stream and execution assertions against both subjects; retain per-scenario failures, prove weakened subject behavior fails, and verify isolated hosted acceptance. Do not claim live provider or durable database coverage.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-01-evals.json"
+          ]
         }
       ],
       "dependsOn": [

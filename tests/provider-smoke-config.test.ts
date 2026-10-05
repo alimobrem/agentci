@@ -12,6 +12,7 @@ test('private smoke configuration requires explicit authorization and rejects un
   await symlink(key,join(root,'link'));await assert.rejects(readPrivateText(join(root,'link')),/invalid-private-smoke-config/);
   await writeFile(key,'x'.repeat(65537));await assert.rejects(readPrivateText(key),/invalid-private-smoke-config/);
   await writeFile(path,JSON.stringify({...config,provider:'anthropic'}));assert.equal((await loadSmokeConfig(path)).provider,'anthropic');
+  await writeFile(path,JSON.stringify({...config,provider:'xai'}));assert.equal((await loadSmokeConfig(path)).provider,'xai');
   for(const change of [{authorized:false},{provider:undefined},{provider:'unknown'},{provider:'https://untrusted.example'},{budget:{...config.budget,limitUsdMicros:0}},{credentialFile:'relative'},{secret:'must-not-be-accepted'}]){
    await writeFile(path,JSON.stringify({...config,...change}));await assert.rejects(loadSmokeConfig(path),/invalid-private-smoke-config/);
   }

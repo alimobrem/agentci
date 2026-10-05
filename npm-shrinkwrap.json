@@ -16,6 +16,7 @@
         "@temporalio/client": "^1.24.0",
         "@temporalio/worker": "^1.24.0",
         "@temporalio/workflow": "^1.24.0",
+        "@xai-official/sdk": "0.2.1",
         "ajv": "^8.20.0",
         "ajv-formats": "^3.0.1",
         "fast-xml-parser": "5.11.2",
@@ -2346,6 +2347,15 @@
       "dependencies": {
         "@webassemblyjs/ast": "1.14.1",
         "@xtuc/long": "4.2.2"
+      }
+    },
+    "node_modules/@xai-official/sdk": {
+      "version": "0.2.1",
+      "resolved": "https://registry.npmjs.org/@xai-official/sdk/-/sdk-0.2.1.tgz",
+      "integrity": "sha512-gMYbJNFMbbOyjPA3Vguyb3ub1gGeHYuumWuS4eCrzehiJX0VovwyHusDKFJ8ZLl801gZUZYVOjK6TxyltLaNCA==",
+      "license": "Apache-2.0",
+      "engines": {
+        "node": ">=22.13.0"
       }
     },
     "node_modules/@xtuc/ieee754": {
@@ -5230,6 +5240,11 @@
         "@webassemblyjs/ast": "1.14.1",
         "@xtuc/long": "4.2.2"
       }
+    },
+    "@xai-official/sdk": {
+      "version": "0.2.1",
+      "resolved": "https://registry.npmjs.org/@xai-official/sdk/-/sdk-0.2.1.tgz",
+      "integrity": "sha512-gMYbJNFMbbOyjPA3Vguyb3ub1gGeHYuumWuS4eCrzehiJX0VovwyHusDKFJ8ZLl801gZUZYVOjK6TxyltLaNCA=="
     },
     "@xtuc/ieee754": {
       "version": "1.2.0",
