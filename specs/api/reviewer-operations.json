@@ -314,6 +314,25 @@
         "revocation denies execution and cannot be undone by config reload",
         "tenant isolation restart and redacted outage errors"
       ]
+    },
+    {
+      "operationId": "createAdmittedReviewExecution",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SECTION-12.2",
+        "SECTION-12.3"
+      ],
+      "tests": [
+        "tests/integration/admitted-review-execution.test.ts"
+      ],
+      "scenarios": [
+        "exact admitted profile and selected snapshot execution",
+        "two role results retained across finding write failure",
+        "retry reuses results without additional model charge",
+        "synthetic findings retain contributing reviewer evidence",
+        "cancellation authorization revocation and execution-mode dispatch fences"
+      ]
     }
   ]
 }

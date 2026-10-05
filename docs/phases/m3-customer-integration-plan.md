@@ -112,3 +112,19 @@ is one-way for a revision; changing policy requires a new revision. Profile budg
 limits must be positive, matching `PostgresBudgetLedger`. Shared fixture and real
 PostgreSQL acceptance cover these boundaries. Activity integration must check
 revocation before dispatch; this store alone does not interrupt an in-flight call.
+
+`createAdmittedReviewExecution` now composes admitted profile resolution, exact
+snapshot selection, the shared PostgreSQL budget, persistent reviewer results,
+and authenticated finding creation. Real database acceptance runs two fixture
+reviewer roles, injects a finding-write failure after both results are saved, then
+recovers without another provider call or charge. Duplicate role findings retain
+both evidence sources and remain synthetic/unconfirmed. Cancellation, denied
+authorization, profile revocation and external registration in synthetic mode
+prevent dispatch. Coverage explicitly reports the selected files and completed
+roles rather than claiming whole-repository coverage.
+
+Outstanding before controller acceptance: separate admissions reviewing the same
+subject must merge additional finding evidence without conflicting with existing
+history; durable execution summaries, Temporal activity adaptation/registration,
+production authorization/provider configuration, and independent termination
+reconciliation remain required. This runner is not yet enabled in production.
