@@ -21,9 +21,12 @@ spec:
       - tests/reviewer-context.test.ts
       - tests/reviewer-execute.test.ts
       - tests/reviewer-adversarial.test.ts
+      - tests/reviewer-result.test.ts
+      - specs/api/fixtures/reviewer-result.json
   scenarios:
     - {id: identity-policy}
     - {id: context-isolation}
     - {id: budgeted-execution}
     - {id: adversarial-output}
+    - {id: result-integrity}
   trials: {count: 1, passRate: 1, maxCriticalFailures: 0, confidenceMethod: wilson}

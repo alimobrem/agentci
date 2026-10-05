@@ -52,9 +52,13 @@ const {validateModelRequest}=await import('../packages/providers/request.ts');
 validateModelRequest(JSON.parse(await readFile(new URL('../specs/api/fixtures/model-request.json',import.meta.url),'utf8')));
 
 const reviewerCoverage=JSON.parse(await readFile(new URL('../specs/api/reviewer-operations.json',import.meta.url),'utf8'));
-const reviewerOperations=new Set(['reviewerInstructions','createIndependencePolicy','buildReviewContext','prepareReviewerRequest','createReviewerExecutor']);
+const reviewerOperations=new Set(['reviewerInstructions','createIndependencePolicy','buildReviewContext','prepareReviewerRequest','createReviewerExecutor','validateReviewerResult']);
 for(const operation of reviewerCoverage.operations){
  if(!reviewerOperations.delete(operation.operationId)||!operation.requirementIds.length||!operation.tests.length||!operation.scenarios.length||operation.requirementIds.some((id:string)=>!requirementIds.has(id)))throw new Error('Incomplete reviewer operation coverage');
  for(const path of operation.tests)await access(new URL(`../${path}`,import.meta.url));
 }
 strictEqual(reviewerOperations.size,0,'Every reviewer operation needs acceptance coverage');
+
+const {validateReviewerResult}=await import('../packages/reviewers/result.ts');
+const reviewerFixture=JSON.parse(await readFile(new URL('../specs/api/fixtures/reviewer-result.json',import.meta.url),'utf8'));
+validateReviewerResult(reviewerFixture,reviewerFixture.subject);

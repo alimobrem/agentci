@@ -92,6 +92,25 @@
         "cancellation",
         "private continuation omitted"
       ]
+    },
+    {
+      "operationId": "validateReviewerResult",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SPEC-12.2-001"
+      ],
+      "tests": [
+        "tests/reviewer-result.test.ts",
+        "tests/reviewer-execute.test.ts"
+      ],
+      "scenarios": [
+        "exact subject and tenant binding",
+        "proposed state cannot promote to confirmed",
+        "response and authorization hash integrity",
+        "private fields rejected",
+        "bounded JSON and usage semantics"
+      ]
     }
   ]
 }

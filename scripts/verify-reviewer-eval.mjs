@@ -15,7 +15,7 @@ try{
     return {exitCode:result.status,report:JSON.parse(await readFile(join(root,'agentci-reviewer-result.json'),'utf8'))};
   };
   const baseline=await run();
-  if(baseline.exitCode!==0||baseline.report.results.length!==4||baseline.report.results.some(result=>result.status!=='passed'))throw Error('Reviewer corpus baseline failed');
+  if(baseline.exitCode!==0||baseline.report.results.length!==5||baseline.report.results.some(result=>result.status!=='passed'))throw Error('Reviewer corpus baseline failed');
   const subject=join(root,'packages/reviewers/independence.ts'),original=await readFile(subject,'utf8');
   const guard="input.mode === 'synthetic' && reviewer.execution !== 'fixture'";
   if(original.split(guard).length!==2)throw Error('Synthetic boundary mutation target changed');

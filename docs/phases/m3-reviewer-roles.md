@@ -57,8 +57,9 @@ These fixture tests prove control flow, not live upstream quality or compatibili
 
 ## Adversarial regression corpus
 
-`evals/agentci-reviewers.yaml` freezes sixteen assertions across four scenarios:
-identity policy, context isolation, budgeted execution and adversarial output.
+`evals/agentci-reviewers.yaml` freezes nineteen assertions across five scenarios:
+identity policy, context isolation, budgeted execution, adversarial output and
+result integrity.
 The fixture deliberately follows malicious repository suggestions in its output:
 unauthorized tool calls, forged confirmation fields, wrong request identity,
 confirmation language and truncated claims. Controller checks must reject invalid
@@ -70,3 +71,17 @@ removes the synthetic/external dispatch guard only in a temporary source copy an
 requires the execution scenario to fail. Local baseline and mutation acceptance
 passed. CI retains `releases/reviewer-boundary-eval.json`; isolated hosted execution
 and later two-sided frozen-baseline acceptance are still required before task closure.
+
+## Result contract before persistence
+
+The strict versioned `reviewer-result.schema.json` and shared API fixture define
+what may be retained. `validateReviewerResult` checks exact expected subject,
+policy/provenance relationships, response and authorization digests, usage
+semantics and proposed-only output. Unknown/private continuation fields,
+non-JSON values, deep recursion and payloads over 2 MiB are rejected. Completed
+executor output and refusals are checked against this contract in tests.
+
+The validator does not authenticate an author or reconstruct omitted original
+request/context bytes. A durable store must bind the whole record digest, writer
+scope and immutable request identity; database persistence is still pending.
+The compiled package includes the schema as a runtime asset.

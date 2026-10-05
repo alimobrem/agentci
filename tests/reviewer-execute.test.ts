@@ -6,6 +6,7 @@ import {createReviewerExecutor, type ReviewerExecutionInput} from '../packages/r
 import {ProviderFailure, type ModelProvider, type ModelResponse} from '../packages/providers/types.ts';
 import type {BudgetLedger, Reservation} from '../packages/providers/budget.ts';
 import {REVIEWER_ROLES} from '../packages/reviewers/roles.ts';
+import {validateReviewerResult} from '../packages/reviewers/result.ts';
 
 const subject = {organizationId: '00000000-0000-4000-8000-000000000001', repository: 'owner/repo', pullRequest: 1, baseSha: 'a'.repeat(40), headSha: 'b'.repeat(40)};
 const input = (): ReviewerExecutionInput => ({
@@ -45,6 +46,7 @@ test('reviewer reserves and settles through core and retains synthetic proposed 
   assert.equal(result.requestDigest, `sha256:${s.reservations[0]!.requestDigest}`);
   assert.equal(result.responseDigest, digest(canonical(result.response)));
   assert.equal(result.independence.outcome, 'distinct-upstreams');
+  assert.deepEqual(validateReviewerResult(result, subject), result);
 });
 
 test('wrong tenant, unknown provenance, aliases and synthetic/external mismatch never reserve or dispatch', async () => {
@@ -74,6 +76,7 @@ test('refused model result is accounted without producing a proposed finding', a
   s.provider.invoke = async (request, context) => ({...await invoke(request, context), status: 'refused', structuredOutput: null});
   const result = await createReviewerExecutor(s.registrations, subject, s.ledger)(input());
   assert.equal(result.status, 'refused'); assert.equal(result.proposal, null);
+  validateReviewerResult(result, subject);
   assert.deepEqual(s.events, ['reserve', 'dispatch', 'settle']);
 });
 
