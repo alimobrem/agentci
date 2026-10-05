@@ -371,16 +371,16 @@ Milestone assignments outside the build-plan list are planning estimates, not am
 | SECTION-12.5 | 12.5 / 764 | 12.5 Majority vote prohibited as sole blocking mechanism | M3 | not-started |  |
 | SPEC-12.5-001 | 12.5 / 766 | Consensus MAY increase priority, but three models making the same unsupported claim MUST NOT automatically block a PR unless configured by the customer. | M3 | not-started |  |
 | SECTION-13 | 13 / 770 | 13. Model Provider and Routing Layer | M3 | not-started |  |
-| SECTION-13.1 | 13.1 / 772 | 13.1 Normalized provider interface | M3 | not-started |  |
-| SECTION-13.2 | 13.2 / 783 | 13.2 Normalized model request | M3 | not-started |  |
-| SPEC-13.2-001 | 13.2 / 785 | Must represent: | M3 | not-started |  |
-| SPEC-13.2-002 | 13.2 / 787 | - messages/input | M3 | not-started |  |
-| SPEC-13.2-003 | 13.2 / 788 | - system/developer instructions | M3 | not-started |  |
-| SPEC-13.2-004 | 13.2 / 789 | - tool definitions | M3 | not-started |  |
-| SPEC-13.2-005 | 13.2 / 790 | - response schema | M3 | not-started |  |
-| SPEC-13.2-006 | 13.2 / 791 | - model parameters | M3 | not-started |  |
-| SPEC-13.2-007 | 13.2 / 792 | - metadata | M3 | not-started |  |
-| SPEC-13.2-008 | 13.2 / 793 | - timeout/retry policy | M3 | not-started |  |
+| SECTION-13.1 | 13.1 / 772 | 13.1 Normalized provider interface | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
+| SECTION-13.2 | 13.2 / 783 | 13.2 Normalized model request | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
+| SPEC-13.2-001 | 13.2 / 785 | Must represent: | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
+| SPEC-13.2-002 | 13.2 / 787 | - messages/input | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
+| SPEC-13.2-003 | 13.2 / 788 | - system/developer instructions | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
+| SPEC-13.2-004 | 13.2 / 789 | - tool definitions | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
+| SPEC-13.2-005 | 13.2 / 790 | - response schema | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
+| SPEC-13.2-006 | 13.2 / 791 | - model parameters | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
+| SPEC-13.2-007 | 13.2 / 792 | - metadata | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
+| SPEC-13.2-008 | 13.2 / 793 | - timeout/retry policy | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
 | SECTION-13.3 | 13.3 / 795 | 13.3 Provider adapters | M3 | not-started |  |
 | SPEC-13.3-001 | 13.3 / 797 | Initial adapters: | M3 | not-started |  |
 | SPEC-13.3-002 | 13.3 / 799 | - OpenAI | M3 | not-started |  |
@@ -391,8 +391,8 @@ Milestone assignments outside the build-plan list are planning estimates, not am
 | SPEC-13.3-007 | 13.3 / 806 | - OpenAI-compatible endpoints | M3 | not-started |  |
 | SPEC-13.3-008 | 13.3 / 807 | - Ollama | M3 | not-started |  |
 | SPEC-13.3-009 | 13.3 / 808 | - vLLM | M3 | not-started |  |
-| SECTION-13.4 | 13.4 / 810 | 13.4 Provider extensions | M3 | not-started |  |
-| SPEC-13.4-001 | 13.4 / 812 | Portable core MUST coexist with namespaced extensions: | M3 | not-started |  |
+| SECTION-13.4 | 13.4 / 810 | 13.4 Provider extensions | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
+| SPEC-13.4-001 | 13.4 / 812 | Portable core MUST coexist with namespaced extensions: | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
 | SECTION-13.5 | 13.5 / 821 | 13.5 Model router | M3 | not-started |  |
 | SPEC-13.5-001 | 13.5 / 823 | Not required for earliest MVP. | M3 | not-started |  |
 | SPEC-13.5-002 | 13.5 / 825 | When enabled, router inputs include: | M3 | not-started |  |

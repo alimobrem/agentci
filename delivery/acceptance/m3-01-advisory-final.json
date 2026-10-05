@@ -1,0 +1,53 @@
+{
+  "sourceCommit": "1cbc9c582f3f37cd6295f34cc46c2b95b4aeada4",
+  "run": "https://github.com/alimobrem/agentci/actions/runs/37269726249",
+  "artifactId": 11328485602,
+  "comparisonSha256": "sha256:541a148f512ad0977024535f1892b19da72f265ffca28b0d0147a598050bc506",
+  "frameChainVerified": true,
+  "summary": {
+    "state": "completed",
+    "outcome": "passed",
+    "executionGaps": [],
+    "unitCount": 2,
+    "comparisonCount": 1
+  },
+  "scenarios": [
+    {
+      "scenario": "manifest",
+      "baseStatus": "passed",
+      "headStatus": "passed",
+      "regression": false
+    },
+    {
+      "scenario": "adapters",
+      "baseStatus": "passed",
+      "headStatus": "passed",
+      "regression": false
+    },
+    {
+      "scenario": "statistics",
+      "baseStatus": "passed",
+      "headStatus": "passed",
+      "regression": false
+    },
+    {
+      "scenario": "request-identity",
+      "baseStatus": "passed",
+      "headStatus": "passed",
+      "regression": false
+    },
+    {
+      "scenario": "comparison",
+      "baseStatus": "passed",
+      "headStatus": "passed",
+      "regression": false
+    },
+    {
+      "scenario": "export-client",
+      "baseStatus": "passed",
+      "headStatus": "passed",
+      "regression": false
+    }
+  ],
+  "scope": "Existing six-scenario self-contract eval suite; dedicated provider tests and full CI are separate acceptance"
+}
