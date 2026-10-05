@@ -1,0 +1,861 @@
+{
+  "runId": 37251427975,
+  "attempt": 1,
+  "conclusion": "failure",
+  "cohort": "optimized",
+  "cache": "warm",
+  "collectedAt": "2026-10-05T02:57:18.667Z",
+  "sourceCommit": "e05fdc254cc3ad18030a2786c32b8dd3ed539755",
+  "url": "https://github.com/alimobrem/agentci/actions/runs/37251427975",
+  "event": "workflow_dispatch",
+  "jobs": [
+    {
+      "name": "verify / contracts-and-runtime",
+      "seconds": 313,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "seconds": 10,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:fast",
+          "seconds": 10,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:api:compat",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:workflows",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify evaluator deployment boundary",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run build",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm audit --audit-level=high",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Start isolated Temporal",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Wait for Temporal",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build isolated eval runner",
+          "seconds": 15,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build trusted-dependency self-eval runner",
+          "seconds": 11,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build optional eval engines",
+          "seconds": 59,
+          "conclusion": "success"
+        },
+        {
+          "name": "Integration tests with mandatory real eval isolation",
+          "seconds": 57,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run mkdir -p releases && npm pack --pack-destination releases && node scripts/package-smoke.mjs",
+          "seconds": 10,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build API image",
+          "seconds": 14,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build worker image",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build isolated eval worker image",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan service images",
+          "seconds": 59,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify compiled containers",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native artifact provenance",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify isolated eval worker runtime",
+          "seconds": 8,
+          "conclusion": "success"
+        },
+        {
+          "name": "Collect verification evidence",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build isolated eval worker image",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build worker image",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build API image",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build optional eval engines",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build trusted-dependency self-eval runner",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build isolated eval runner",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "verify / fast-feedback",
+      "seconds": 28,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:fast",
+          "seconds": 9,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "publish (eval-agentci)",
+      "seconds": 2945,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+          "seconds": 2886,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record published identity",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan every published platform and retain native inventories",
+          "seconds": 20,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "publish (eval-engines)",
+      "seconds": 3635,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+          "seconds": 3524,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record published identity",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan every published platform and retain native inventories",
+          "seconds": 56,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 32,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "publish (eval-worker)",
+      "seconds": 346,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+          "seconds": 265,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record published identity",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan every published platform and retain native inventories",
+          "seconds": 43,
+          "conclusion": "failure"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 8,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "publish (worker)",
+      "seconds": 239,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+          "seconds": 174,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record published identity",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan every published platform and retain native inventories",
+          "seconds": 36,
+          "conclusion": "failure"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "publish (api)",
+      "seconds": 240,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+          "seconds": 189,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record published identity",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan every published platform and retain native inventories",
+          "seconds": 19,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "publish (eval-runner)",
+      "seconds": 1581,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 12,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+          "seconds": 1522,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record published identity",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan every published platform and retain native inventories",
+          "seconds": 19,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}
