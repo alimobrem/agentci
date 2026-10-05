@@ -51,3 +51,16 @@ and references inside `allOf` are rejected without rewriting caller schemas.
 Execution tests verify rejection before reservation or fetch. Unpublished provider
 compiler limits still require server-side handling; passing local preflight is not
 proof of live acceptance. [Provider schema limits](https://platform.claude.com/docs/en/build-with-claude/structured-outputs#json-schema-limitations).
+
+`anthropicOpusProfile()` is an opt-in profile for `claude-opus-5-5`, checked against
+[official model limits](https://platform.claude.com/docs/en/models/opus-5-5/overview)
+and [pricing](https://platform.claude.com/docs/en/about-claude/pricing) on 2026-10-05 UTC.
+It uses a one-million-token context, 128,000 output ceiling, $8/M input upper rate
+(covering one-hour cache writes), and $20/M output. Sampling overrides are disabled.
+The full-context reservation with 256 output tokens is $8.005120, not an expected
+bill. No fast/regional inference options or built-in paid tools are exposed.
+
+Opus 5.5 has always-on thinking and model/conversation-bound thinking blocks.
+The current adapter handles first-turn text and tool proposals; preserving opaque
+thinking history for subsequent tool-result turns remains an acceptance gap.
+Do not claim multi-turn Opus support until that contract and live test pass.
