@@ -1534,7 +1534,7 @@
       "requirementIds": [
         "SPEC-13.3-002"
       ],
-      "status": "blocked",
+      "status": "deferred",
       "startedAt": "2026-10-05T06:01:52.383Z",
       "completedAt": null,
       "acceptance": [
@@ -1548,7 +1548,11 @@
         "M3-01",
         "M3-R2"
       ],
-      "blockedReason": "Live acceptance awaits explicit spend authorization and private credential/database config paths; no paid provider request has been made."
+      "deferral": {
+        "at": "2026-10-05T16:13:53.546Z",
+        "evidence": "docs/phases/m3-live-validation-deferral.md",
+        "reason": "Owner approved deferring live acceptance to avoid creating provider accounts; implementation and original acceptance retained."
+      }
     },
     {
       "id": "M3-03",
@@ -1556,7 +1560,7 @@
       "requirementIds": [
         "SPEC-13.3-003"
       ],
-      "status": "blocked",
+      "status": "deferred",
       "startedAt": "2026-10-05T06:36:45.200Z",
       "completedAt": null,
       "acceptance": [
@@ -1570,7 +1574,11 @@
         "M3-01",
         "M3-R2"
       ],
-      "blockedReason": "Live acceptance awaits explicit spend authorization and private credential/database config paths; no paid provider request has been made."
+      "deferral": {
+        "at": "2026-10-05T16:13:53.761Z",
+        "evidence": "docs/phases/m3-live-validation-deferral.md",
+        "reason": "Owner approved deferring live acceptance to avoid creating provider accounts; implementation and original acceptance retained."
+      }
     },
     {
       "id": "M3-04",
@@ -1578,7 +1586,7 @@
       "requirementIds": [
         "SPEC-13.3-004"
       ],
-      "status": "blocked",
+      "status": "deferred",
       "startedAt": "2026-10-05T07:10:19.880Z",
       "completedAt": null,
       "acceptance": [
@@ -1592,7 +1600,11 @@
         "M3-01",
         "M3-R2"
       ],
-      "blockedReason": "Hosted CI passed; live acceptance awaits explicit spend authorization and private credential/database config paths. No paid provider calls have been made."
+      "deferral": {
+        "at": "2026-10-05T16:13:53.982Z",
+        "evidence": "docs/phases/m3-live-validation-deferral.md",
+        "reason": "Owner approved deferring live acceptance to avoid creating provider accounts; implementation and original acceptance retained."
+      }
     },
     {
       "id": "M3-05",
@@ -1610,8 +1622,8 @@
         "SECTION-12.2",
         "SPEC-12.2-001"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "in-progress",
+      "startedAt": "2026-10-05T16:13:54.212Z",
       "completedAt": null,
       "acceptance": [
         {
@@ -1621,9 +1633,8 @@
         }
       ],
       "dependsOn": [
-        "M3-02",
-        "M3-03",
-        "M3-04"
+        "M3-01",
+        "M3-R2"
       ]
     },
     {
