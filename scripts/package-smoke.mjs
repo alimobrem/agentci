@@ -41,6 +41,10 @@ try {
   if(typeof ReviewAdmissionStore!=='function')throw new Error('Installed review admission store missing');
   const {validateReviewAdmission}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/admission.js')).href);
   validateReviewAdmission(JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/review-admission.json'),'utf8')));
+  if(!(await readFile(join(installedRoot,'deploy/migrations/009_m3_review_dispatch.sql'),'utf8')).includes('review_dispatch_identity'))throw new Error('Installed review dispatch migration missing');
+  const {ReviewDispatchStore}=await import(pathToFileURL(join(installedRoot,'dist/packages/storage/review-dispatch.js')).href);
+  const {validateReviewerProfile,bindReviewerProfile}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/profile.js')).href);
+  if([ReviewDispatchStore,validateReviewerProfile,bindReviewerProfile].some(value=>typeof value!=='function'))throw new Error('Installed review controller modules missing');
   const {validateModelFinding}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/model.js')).href);
   const findingFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-finding.json'),'utf8'));
   validateModelFinding(findingFixture,findingFixture.subject);

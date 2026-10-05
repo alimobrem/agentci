@@ -87,3 +87,11 @@ admission timestamp plus the profile duration. Unit acceptance covers conflictin
 revisions/modes, duplicate roles, invalid paths, detached configuration and shared
 budget identity across reviews. This does not yet register providers, authorize
 spending, persist profiles, dispatch workflows or prove controller recovery.
+
+Migration 009 and `ReviewDispatchStore` add scoped dispatch leases, immutable
+run identity, persistent cancellation requests, and terminal digest/status records.
+Real PostgreSQL acceptance covers concurrent claims, expired lease takeover,
+completion before start acknowledgement, late cancellation, tenant isolation and
+restart. Database triggers preserve admitted identity, cancellation and terminal
+evidence. These storage tests do not prove workflow termination cleanup; Temporal
+dispatch, independent reconciliation and production registration remain required.

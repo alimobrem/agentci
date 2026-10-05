@@ -250,6 +250,23 @@
         "persisted admission time fixes deadlines",
         "fresh reviews retain shared operator budget"
       ]
+    },
+    {
+      "operationId": "ReviewDispatchStore",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/integration/review-dispatch.test.ts"
+      ],
+      "scenarios": [
+        "concurrent dispatch claims and expired lease takeover",
+        "terminal completion before dispatch acknowledgement",
+        "durable cancellation before workflow creation and after completion",
+        "immutable execution identity and terminal evidence",
+        "tenant isolation restart and bounded outage errors"
+      ]
     }
   ]
 }
