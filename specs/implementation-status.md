@@ -365,11 +365,11 @@ Milestone assignments outside the build-plan list are planning estimates, not am
 | SPEC-12.1-008 | 12.1 / 734 | - operational reliability | M3 | in-progress | docs/phases/m3-reviewer-roles.md |
 | SECTION-12.2 | 12.2 / 736 | 12.2 Independence rule | M3 | in-progress | docs/phases/m3-reviewer-roles.md |
 | SPEC-12.2-001 | 12.2 / 738 | The implementation model SHOULD NOT be the sole required reviewer. Policies SHOULD allow `differentProvider: true` for designated reviews. | M3 | in-progress | docs/phases/m3-reviewer-roles.md |
-| SECTION-12.3 | 12.3 / 740 | 12.3 Finding lifecycle | M3 | not-started |  |
-| SPEC-12.3-001 | 12.3 / 742 | `proposed -> deduplicated -> reproduction-pending -> confirmed \| unconfirmed \| false-positive -> resolved` | M3 | not-started |  |
-| SECTION-12.4 | 12.4 / 744 | 12.4 Finding schema | M3 | not-started |  |
-| SECTION-12.5 | 12.5 / 764 | 12.5 Majority vote prohibited as sole blocking mechanism | M3 | not-started |  |
-| SPEC-12.5-001 | 12.5 / 766 | Consensus MAY increase priority, but three models making the same unsupported claim MUST NOT automatically block a PR unless configured by the customer. | M3 | not-started |  |
+| SECTION-12.3 | 12.3 / 740 | 12.3 Finding lifecycle | M3 | in-progress | docs/phases/m3-finding-history.md, docs/phases/m3-finding-reproduction.md |
+| SPEC-12.3-001 | 12.3 / 742 | `proposed -> deduplicated -> reproduction-pending -> confirmed \| unconfirmed \| false-positive -> resolved` | M3 | in-progress | docs/phases/m3-finding-history.md, docs/phases/m3-finding-reproduction.md |
+| SECTION-12.4 | 12.4 / 744 | 12.4 Finding schema | M3 | in-progress | docs/phases/m3-finding-history.md, docs/phases/m3-finding-reproduction.md |
+| SECTION-12.5 | 12.5 / 764 | 12.5 Majority vote prohibited as sole blocking mechanism | M3 | in-progress | docs/phases/m3-finding-history.md, docs/phases/m3-finding-reproduction.md |
+| SPEC-12.5-001 | 12.5 / 766 | Consensus MAY increase priority, but three models making the same unsupported claim MUST NOT automatically block a PR unless configured by the customer. | M3 | in-progress | docs/phases/m3-finding-history.md, docs/phases/m3-finding-reproduction.md |
 | SECTION-13 | 13 / 770 | 13. Model Provider and Routing Layer | M3 | not-started |  |
 | SECTION-13.1 | 13.1 / 772 | 13.1 Normalized provider interface | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
 | SECTION-13.2 | 13.2 / 783 | 13.2 Normalized model request | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |

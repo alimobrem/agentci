@@ -1,0 +1,22 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';import {execFileSync} from 'node:child_process';
+import {randomUUID} from 'node:crypto';import {parse} from 'yaml';
+import {executeSuite} from '../../packages/evals/execution.ts';
+import {containerEngine} from '../../packages/evals/runner.ts';
+const image=process.env.AGENTCI_TEST_SELF_IMAGE;
+if(!image)throw Error('Frozen finding acceptance requires immutable trusted dependency image; never silently skip');
+test('isolated frozen finding assertions detect substituted execution despite weakened candidate tests',{timeout:120000},async()=>{
+ const paths=execFileSync('git',['ls-files','-z'],{encoding:'utf8'}).split('\0').filter(Boolean),files:Record<string,string>={};
+ for(const path of paths)if(path==='package.json'||path.startsWith('packages/')||path.startsWith('tests/')||path.startsWith('specs/')||path==='scripts/agentci-finding-eval.mjs'||path==='evals/agentci-findings.yaml')files[path]=await readFile(path,'utf8');
+ const suite=parse(files['evals/agentci-findings.yaml']!),base={sha:'a'.repeat(40),files};
+ const ownership={unitId:randomUUID(),leaseToken:randomUUID()};
+ const baseline=await executeSuite('alimobrem/agentci',base,suite,{image},{assertionSnapshot:base,ownership});
+ assert.equal(baseline.status,'passed',JSON.stringify(baseline));assert.equal(baseline.scenarios.length,2);
+ const path='packages/findings/reproduction.ts',guard='run!.id!==unit.id';assert.equal(files[path]!.split(guard).length,2);
+ const head={sha:'b'.repeat(40),files:{...files,[path]:files[path]!.replace(guard,'false'),'scripts/agentci-finding-eval.mjs':'process.exit(0)','tests/finding-reproduction.test.ts':'process.exit(0)','tests/fixtures/reproduction.ts':'process.exit(0)'}};
+ const regression=await executeSuite('alimobrem/agentci',head,suite,{image},{assertionSnapshot:base,ownership});
+ assert.equal(regression.status,'failed',JSON.stringify(regression));
+ assert.equal(regression.subject.assertionGitSha,base.sha);assert.equal(regression.subject.gitSha,head.sha);assert.equal(regression.revision,baseline.revision);
+ assert.equal(regression.scenarios.find(s=>s.id==='finding-reproduction')!.status,'failed');
+ assert.equal(execFileSync(containerEngine(),['ps','-aq','--filter',`label=agentci.eval.unit=${ownership.unitId}`],{encoding:'utf8'}).trim(),'');
+});

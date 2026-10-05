@@ -66,4 +66,7 @@ the planned M3-07 customer integration; no customer route is enabled by exportin
 The frozen finding suite now includes the reproduction contract assertions and
 fixture dependencies. Its mutation verifier removes finding identity and run
 identity guards independently and requires each corresponding scenario to fail.
-Hosted adoption and execution of this expanded suite remain pending.
+The isolated frozen-corpus test also replaces the candidate harness, assertion
+test and fixture with no-op code while removing the execution identity guard.
+Pinned baseline assertions still detect the regression. Hosted execution of this
+new acceptance test remains pending on the updated PR revision.

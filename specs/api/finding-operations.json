@@ -155,11 +155,13 @@
       ],
       "tests": [
         "tests/finding-reproduction.test.ts",
-        "tests/integration/finding-reproduction.test.ts"
+        "tests/integration/finding-reproduction.test.ts",
+        "tests/integration/finding-frozen-eval.test.ts"
       ],
       "scenarios": [
         "exact terminal execution identity",
-        "positive negative crashed and missing observations"
+        "positive negative crashed and missing observations",
+        "frozen isolated assertions reject substituted execution despite weakened candidate tests"
       ]
     },
     {
