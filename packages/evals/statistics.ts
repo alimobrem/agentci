@@ -21,7 +21,7 @@ export function aggregateScenario(suite:EvalSuite,id:string,trials:TrialResult[]
     if(trial.status==='error')counts.errors++;else counts[trial.status]++;
     if(trial.status==='failed'&&((scenario.critical??(suite.spec.class==='safety'))||trial.critical))counts.criticalFailures++;
   }
-  const n=counts.passed+counts.failed,rate=n?counts.passed/n:undefined;
+  const n=counts.passed+counts.failed,rate=n?counts.passed/n:undefined /* Observed rate uses only passing trials. */;
   const status:EvalStatus=counts.errors?'error':trials.length<suite.spec.trials.count||counts.skipped?'insufficient':
     (rate!==undefined&&rate>=suite.spec.trials.passRate&&counts.criticalFailures<=(suite.spec.trials.maxCriticalFailures??0))?'passed':'failed';
   const result:ScenarioResult={id,...counts,status};
