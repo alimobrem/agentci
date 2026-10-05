@@ -1,0 +1,108 @@
+{
+  "kind": "Verified first M2 candidate published image artifacts",
+  "sourceCommit": "e05fdc254cc3ad18030a2786c32b8dd3ed539755",
+  "version": "0.3.0-m2",
+  "runId": 37251427975,
+  "artifacts": [
+    {
+      "artifactId": 11322005465,
+      "artifactName": "published-images-eval-worker",
+      "archiveSha256": "01c8277c60de0d3da738da4136c3c6abe2c6382d7687db5da7b5a1950ae1c72d",
+      "identity": {
+        "version": "0.3.0-m2",
+        "sourceCommit": "e05fdc254cc3ad18030a2786c32b8dd3ed539755",
+        "role": "eval-worker",
+        "image": "ghcr.io/alimobrem/agentci-eval-worker@sha256:b0daf50f52b379054f5f0fe5e1d45f7fb6c4c0024bc644b83122f34103a8c52a",
+        "platforms": [
+          "linux/amd64",
+          "linux/arm64"
+        ],
+        "runId": "37251427975",
+        "attempt": "1"
+      },
+      "scans": [
+        {
+          "file": "eval-worker-amd64-scan.json",
+          "sha256": "6b1f7660839b24832437626cd64d0bfcccc4b977d99bfeb971c00629b1c39707",
+          "findings": []
+        },
+        {
+          "file": "eval-worker-arm64-scan.json",
+          "sha256": "ed6fa9db0aeff002762e31f3147e0078b43a8feaf3dcf9b657c799424f045cf8",
+          "findings": []
+        }
+      ],
+      "nativeReports": [
+        "eval-worker-amd64-native.json"
+      ]
+    },
+    {
+      "artifactId": 11321815162,
+      "artifactName": "published-images-api",
+      "archiveSha256": "ec665f6af826022b79b917bfbb5b2c09f0a1b4732870f6cb75accbc6ae32fe16",
+      "identity": {
+        "version": "0.3.0-m2",
+        "sourceCommit": "e05fdc254cc3ad18030a2786c32b8dd3ed539755",
+        "role": "api",
+        "image": "ghcr.io/alimobrem/agentci-api@sha256:f76b08b17a548ae264040e07b77a4cd25506893943e6b3f66621168babe58122",
+        "platforms": [
+          "linux/amd64",
+          "linux/arm64"
+        ],
+        "runId": "37251427975",
+        "attempt": "1"
+      },
+      "scans": [
+        {
+          "file": "api-amd64-scan.json",
+          "sha256": "85a2b0b2404f937236b4bd72a2ca63eb9ddaf20842020055bd6e5f1a17e1de21",
+          "findings": []
+        },
+        {
+          "file": "api-arm64-scan.json",
+          "sha256": "dac6ac4fd046418ac44de60a37ce3ff14fbbab534b5167ce336bd58c3309ef1e",
+          "findings": []
+        }
+      ],
+      "nativeReports": []
+    },
+    {
+      "artifactId": 11321495828,
+      "artifactName": "published-images-worker",
+      "archiveSha256": "2ff5eabf260d8d3e48393370480736ce4c21d50d69a95dabf9670f95783d3cda",
+      "identity": {
+        "version": "0.3.0-m2",
+        "sourceCommit": "e05fdc254cc3ad18030a2786c32b8dd3ed539755",
+        "role": "worker",
+        "image": "ghcr.io/alimobrem/agentci-worker@sha256:ccb5e020efe901e737ea9dba91912a068de394831905ae6033356106f83ace31",
+        "platforms": [
+          "linux/amd64",
+          "linux/arm64"
+        ],
+        "runId": "37251427975",
+        "attempt": "1"
+      },
+      "scans": [
+        {
+          "file": "worker-amd64-scan.json",
+          "sha256": "44eebb0bb88e94263d214cfcd446553cc9eae9fa9248e91fcb597b057c22eded",
+          "findings": []
+        },
+        {
+          "file": "worker-arm64-scan.json",
+          "sha256": "9a6f8cf14c84edcc3db60bd1cfab5312ffdefe94926c4f48af1db47c06c77710",
+          "findings": []
+        }
+      ],
+      "nativeReports": [
+        "worker-amd64-native.json"
+      ]
+    }
+  ],
+  "releaseAcceptance": false,
+  "limitations": [
+    "This is a partial snapshot while remaining roles are live.",
+    "Worker and evaluator-worker native arm64 validation failed after their scans; missing reports cannot pass.",
+    "Corrected 0.3.1-m2 candidate and full native downloaded-runtime acceptance remain required."
+  ]
+}

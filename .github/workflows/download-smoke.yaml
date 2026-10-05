@@ -71,6 +71,24 @@ jobs:
           JS
       - name: Anonymously download and bind all six role digests
         run: node scripts/published-downloads.mjs
+      - name: Verify downstream RSA remediation inside the native downloaded engine
+        run: |
+          node --input-type=module - <<'JS'
+          import {readFileSync,writeFileSync} from 'node:fs';
+          import {createHash} from 'node:crypto';
+          import {execFileSync} from 'node:child_process';
+          const directory='deploy/engines/patches/',hash=p=>createHash('sha256').update(readFileSync(directory+p)).digest('hex');
+          const expected=JSON.parse(readFileSync(directory+'forge-backport.json','utf8'));
+          const image=execFileSync('docker',['image','inspect','agentci-eval-engines:downloaded','--format','{{.Id}}'],{encoding:'utf8'}).trim();
+          if(!/^sha256:[a-f0-9]{64}$/.test(image))throw new Error('Downloaded immutable engine ID required');
+          const run=args=>execFileSync('docker',['run','--rm','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges:true','--entrypoint','node',image,...args],{encoding:'utf8',timeout:60000,maxBuffer:1048576});
+          const observed=JSON.parse(run(['-e',`const fs=require('node:fs'),crypto=require('node:crypto');const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');console.log(JSON.stringify({arch:process.arch,rsaSha256:hash('/opt/promptfoo/node_modules/node-forge/lib/rsa.js'),metadata:JSON.parse(fs.readFileSync('/opt/agentci-patches/forge-backport.json','utf8')),verifierSha256:hash('/opt/agentci-patches/verify-forge-backport.cjs'),fixtureSha256:hash('/opt/agentci-patches/forge-nested-digest-fixture.json')}));`]));
+          if(observed.arch!==(process.env.RELEASE_ARCH==='amd64'?'x64':'arm64')||observed.rsaSha256!==expected.afterSha256||JSON.stringify(observed.metadata)!==JSON.stringify(expected)||observed.verifierSha256!==hash('verify-forge-backport.cjs')||observed.fixtureSha256!==hash('forge-nested-digest-fixture.json'))throw new Error('Published native downstream patch/input mismatch');
+          const output=run(['/opt/agentci-patches/verify-forge-backport.cjs','/opt/promptfoo/node_modules/node-forge']);
+          if(!output.includes('malformed nested DigestAlgorithm rejected'))throw new Error('Published RSA regression proof missing');
+          writeFileSync('downloaded-forge-backport.json',JSON.stringify({image,releaseImage:process.env.EVAL_ENGINES_IMAGE,sourceCommit:process.env.RELEASE_SOURCE,version:process.env.RELEASE_VERSION,platform:'linux/'+process.env.RELEASE_ARCH,observed,malformedRegressionRejected:true,validSignaturesAccepted:true,wrongMessagesRejected:true,scannerFindingRetained:true},null,2)+'\n');
+          console.log(output.trim());
+          JS
       - run: npm install --global npm@12.2.0
       - run: npm ci
       - run: npm run build

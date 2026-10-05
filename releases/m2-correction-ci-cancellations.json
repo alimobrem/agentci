@@ -1,0 +1,27 @@
+{
+  "kind": "Preserved M2 correction CI rework",
+  "attempts": [
+    {
+      "runId": 37252376036,
+      "sourceCommit": "84e284464e64468ee7fdf3c58df937b5c14772ee",
+      "conclusion": "cancelled",
+      "cache": "warm",
+      "cachedLogLines": 20,
+      "logSha256": "c15dc4f031f0b5f4024d9d1d0dcaceced1ec291c92ce3bc259b2e3a2546c3904",
+      "cause": "New branch pushes during verification canceled the superseded source run.",
+      "acceptanceClaim": false
+    },
+    {
+      "runId": 37252489100,
+      "sourceCommit": "46156fa8551d0d99ffb6b5de66d89ebd31c48329",
+      "conclusion": "cancelled",
+      "cache": "warm",
+      "cachedLogLines": 30,
+      "logSha256": "77f2460193138674c48acad58840cfe2a0b56111eb2978637cf11d64e42707b1",
+      "cause": "New branch pushes during verification canceled the superseded source run.",
+      "acceptanceClaim": false
+    }
+  ],
+  "lesson": "Finish evidence/ledger integration before starting expensive final-source verification; keep additional evidence on a separate branch while it runs.",
+  "measurementLimit": "These are canceled feedback attempts, not completed correctness evidence or total delivery acceleration."
+}

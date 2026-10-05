@@ -1,0 +1,285 @@
+{
+  "runId": 37252648422,
+  "attempt": 1,
+  "conclusion": "success",
+  "cohort": "optimized",
+  "cache": "warm",
+  "collectedAt": "2026-10-05T02:02:05.206Z",
+  "sourceCommit": "031603975c31139b2de1a435deb2d9899825a155",
+  "url": "https://github.com/alimobrem/agentci/actions/runs/37252648422",
+  "event": "pull_request",
+  "jobs": [
+    {
+      "name": "fast-feedback",
+      "seconds": 30,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:fast",
+          "seconds": 13,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "contracts-and-runtime",
+      "seconds": 749,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "seconds": 10,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:fast",
+          "seconds": 14,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:api:compat",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:workflows",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify evaluator deployment boundary",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run build",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm audit --audit-level=high",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Start isolated Temporal",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Wait for Temporal",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build isolated eval runner",
+          "seconds": 11,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build trusted-dependency self-eval runner",
+          "seconds": 34,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build optional eval engines",
+          "seconds": 363,
+          "conclusion": "success"
+        },
+        {
+          "name": "Integration tests with mandatory real eval isolation",
+          "seconds": 79,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run mkdir -p releases && npm pack --pack-destination releases && node scripts/package-smoke.mjs",
+          "seconds": 12,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build API image",
+          "seconds": 68,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build worker image",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build isolated eval worker image",
+          "seconds": 8,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan service images",
+          "seconds": 60,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify compiled containers",
+          "seconds": 10,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native artifact provenance",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify isolated eval worker runtime",
+          "seconds": 10,
+          "conclusion": "success"
+        },
+        {
+          "name": "Collect verification evidence",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build isolated eval worker image",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build worker image",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build API image",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build optional eval engines",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build trusted-dependency self-eval runner",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build isolated eval runner",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 23,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}
