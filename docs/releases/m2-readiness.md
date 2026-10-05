@@ -9,7 +9,13 @@ is `docs/phases/m2.md`, specification section 40 M2 and section 11.
 
 - Default isolated native/pytest execution, optional installed Promptfoo/DeepEval,
   statistical trials, frozen baseline/head comparisons and scoped persistence are
-  exercised by fourteen mandatory native integration groups without skips.
+  exercised by fifteen mandatory native integration groups without skips on the
+  current Docker foundation. Earlier checkpoints below used fourteen groups.
+  The integrated Docker source and cache-policy correction have independently
+  downloaded, source/tree/artifact-verified CI evidence in
+  `releases/m2-docker-default-ci.json` and
+  `releases/m2-hosted-cache-fix-ci.json` (128 unit/API/domain tests, fifteen real
+  integration groups, no skips). These checkpoints do not close release gates.
 - Authenticated comparison API, complete bounded exports and installed client
   identity/digest checks have exact-source CI and actual customer acceptance.
 - Independent controller recovery has source/tree/artifact-verified CI
@@ -28,18 +34,33 @@ is `docs/phases/m2.md`, specification section 40 M2 and section 11.
 1. Finish the full PR/phase requirement audit against exact-source component
    tests and final release behavior. Guidance and aggregate manifest/normalization
    component acceptance now pass; phase acceptance remains pending.
-2. Complete `M2-HOSTED-DOGFOOD`. The existing trusted-main hosted workflow still
-   performs M1 semantic review. M2 behavioral self-review must use isolated
-   evaluators and retain source-bound evidence before exact-head publication,
-   without a laptop or secrets exposed to reviewed code.
+2. Complete `M2-HOSTED-DOGFOOD`. The trusted-main workflow now includes M2
+   behavioral self-review using a separate evaluator and isolated assertion
+   runner, with retained source-bound evidence before exact-head publication.
+   The foundation is merged in `4d807e22f9eb739b52418df953a65e816c266531`; the
+   cache-policy fix is merged in `7e560b1d89ac538fc44dc675541e891de2e7dae9`.
+   Actual passing/regressing hosted evidence, failure/recovery and released
+   customer acceptance remain required; main adoption alone proves none of them.
    The local self-runner foundation now passes six frozen contract scenarios,
    regression/test-weakening and incomplete-execution probes, all fifteen native
    groups without skips, and a zero-finding arm64 image scan. Evidence is
    `releases/m2-hosted-self-runner-local.json`; exact-source foundation CI
    `37210326532` is verified in `releases/m2-hosted-self-runner-ci.json`. The
    connected hosted controller/evaluator/artifact pipeline now has local native
-   and real-repository prepare acceptance. Its final-source CI, main adoption,
-   actual hosted publication and released acceptance remain pending.
+   and real-repository prepare acceptance. Its foundation CI and main adoption now pass. Actual hosted
+   publication and released acceptance remain pending. The first failed cache
+   reservations are retained in `releases/m2-hosted-cache-failures.json`; no
+   evaluations ran in those attempts. The cache fix passed CI `37222610468`,
+   including artifact hash verification; the first post-merge hosted run is
+   `37223165980` passed. Independently downloaded evidence verifies four passing
+   PRs and the intentional PR #7 baseline-pass/head-fail (`statistics` and
+   `comparison`), with exact-head App Checks and chained export/file hashes.
+   PR #4 correctly remains insufficient. See `releases/m2-hosted-regression-ci.json`.
+   Corrected-head recovery now passes: run `37249660767` retains actual passing
+   assertions on head `b921125e1a2175d5f022e28614ff4184879d874f`, verified against
+   trusted checkout `8b0901bd6a9fe8ac4c2edffc5a97cd7b4452ca43`. See
+   `releases/m2-hosted-recovery-ci.json`. The demo PR was closed without merging.
+   Released customer replay remains pending.
 3. Complete `M2-SECURITY-RELEASE`. Include inventories and scanner coverage for all
    introduced service/runner/optional-engine platforms and current official pins.
    The optional image has `node-forge` 1.4.0 / GHSA-86w9-cpqp-85rv. The official
@@ -66,6 +87,9 @@ is `docs/phases/m2.md`, specification section 40 M2 and section 11.
 5. Build and publish immutable versioned UBI API/controller/evaluator/default
    runner/optional-engine images for claimed platforms, with source metadata,
    licenses, digest pins and scans. Verify actual registry pulls and deployment.
+   Focused PR #10 prepares all six image roles and per-platform identities/scans;
+   stacked PR #11 prepares anonymous native amd64/arm64 download acceptance.
+   Neither infrastructure PR is proof of actual publication or distribution.
 6. Publish the complete GitHub release, packages, checksums and configuration
    examples. Verify anonymous downloads and installed artifacts independently.
 7. Replay the real customer success/regression/failure/recovery and installed

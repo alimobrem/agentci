@@ -1179,14 +1179,16 @@
         "SPEC-34.2-003",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T17:52:09.149Z",
-      "completedAt": null,
+      "completedAt": "2026-10-04T18:27:26.419Z",
       "acceptance": [
         {
           "text": "Retain the failed hosted cache reservation attempts; use supported cache policy so read-only cache contexts do not export and cache-service failures do not invalidate successful image outputs. Preserve strict build, runtime, scan, evidence and publication checks; validate workflow configuration and actual hosted execution before closure.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-hosted-regression-ci.json"
+          ]
         }
       ]
     },
@@ -1235,14 +1237,16 @@
         "SPEC-34.2-003",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T18:19:16.710Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T01:13:36.770Z",
       "acceptance": [
         {
           "text": "Repeated base/head snapshots reuse only content-hash-verified UTF-8 blobs in a byte/entry-bounded client-and-repository-scoped cache, while freshly verifying commit/tree permissions and identities each read. Tests prove reduced blob requests, tampered cached-size rejection, separate-client/repository isolation, eviction and failed-response retry; preserve exact snapshot and full hosted acceptance. Record request-count improvement separately from unproven total delivery acceleration.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-hosted-recovery-ci.json"
+          ]
         }
       ]
     },
@@ -1278,10 +1282,30 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M2-READINESS-EVIDENCE",
+      "title": "Refresh M2 readiness against merged source and verified CI evidence",
+      "requirementIds": [
+        "SPEC-34.2-003",
+        "SPEC-40-039"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T18:12:33.335Z",
+      "completedAt": "2026-10-05T01:13:37.096Z",
+      "acceptance": [
+        {
+          "text": "Retain independently verified Docker/default and cache-fix source/tree/artifact CI checkpoints and CI timing attempts; update current M2 guidance to distinguish merged hosted capability, real hosted acceptance, historical fourteen versus current fifteen integration groups, distribution follow-ups and still-pending release gates. Validate links, task ledger and phase status without claiming completion.",
+          "status": "passed",
+          "evidence": [
+            "docs/releases/m2-readiness.md"
           ]
         }
       ]

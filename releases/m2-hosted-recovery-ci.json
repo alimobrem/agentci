@@ -1,0 +1,150 @@
+{
+  "kind": "verified-hosted-evaluation-checkpoint",
+  "producer": {
+    "version": "0.3.0-m2",
+    "sourceCommit": "8b0901bd6a9fe8ac4c2edffc5a97cd7b4452ca43",
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "runId": "37249660767",
+    "runAttempt": "1",
+    "runnerImage": "sha256:452cecbef0682732b181efab0342d2f3d6a551a4e9e8b392eb2b5c36fcbfa5b9",
+    "evaluatorImage": "sha256:4f340eaa16ffe82283ae809b4d0bf9c123ef792386b12070be0bd9fb54dbcc65"
+  },
+  "artifact": "https://github.com/alimobrem/agentci/actions/runs/37249660767/artifacts/11320971127",
+  "failed": false,
+  "reviews": [
+    {
+      "pullRequest": 12,
+      "baseSha": "8b0901bd6a9fe8ac4c2edffc5a97cd7b4452ca43",
+      "headSha": "cb26dbc423d33fe3a563aba2a0341bc632b367dd",
+      "status": "completed",
+      "attemptId": "7db9f24c-b4c4-4a1e-9718-bce84bec376a",
+      "comparison": {
+        "id": "b3be1bb4-4cfa-41b8-8c67-b489632f64ea",
+        "reviewId": "45b735e8-68cd-4768-ba90-e475ebd178dc",
+        "file": "comparison-b3be1bb4-4cfa-41b8-8c67-b489632f64ea.ndjson",
+        "sha256": "sha256:6eeee88543eb38625385c1e1970887a2378be6efd3da968f784769648bbdba2c",
+        "bytes": 8073
+      },
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 2,
+        "comparisonCount": 1
+      },
+      "regressions": 0,
+      "coverageGaps": 0,
+      "selectionGaps": 0
+    },
+    {
+      "pullRequest": 8,
+      "baseSha": "8b0901bd6a9fe8ac4c2edffc5a97cd7b4452ca43",
+      "headSha": "cdf93d3820709e0c74de9f41415014a4fbcdcf0c",
+      "status": "completed",
+      "attemptId": "fbf8620d-eae9-4a60-9804-ac5bc9f793c2",
+      "comparison": {
+        "id": "324a2d25-6dcb-4f1c-b45f-6af86c3f488b",
+        "reviewId": "da0c96e5-8d88-4734-8c8b-3ac10f2b8dfa",
+        "file": "comparison-324a2d25-6dcb-4f1c-b45f-6af86c3f488b.ndjson",
+        "sha256": "sha256:6a79cc795a463085f968d35ba018d4b9fe961a9a6554c3f655a6a72a19b60521",
+        "bytes": 8072
+      },
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 2,
+        "comparisonCount": 1
+      },
+      "regressions": 0,
+      "coverageGaps": 0,
+      "selectionGaps": 0
+    },
+    {
+      "pullRequest": 7,
+      "baseSha": "4d807e22f9eb739b52418df953a65e816c266531",
+      "headSha": "b921125e1a2175d5f022e28614ff4184879d874f",
+      "status": "completed",
+      "attemptId": "a1a5cbf4-a368-4846-83b2-f3ed53db4607",
+      "comparison": {
+        "id": "73758900-773f-4fad-8514-23d79fc5bd06",
+        "reviewId": "2ecd6e2a-8800-432d-a1d4-ab6be4f5d4f3",
+        "file": "comparison-73758900-773f-4fad-8514-23d79fc5bd06.ndjson",
+        "sha256": "sha256:656b4d611decad1614d59d81c7f79e5b005fb5e8629b7fa0ab89e213198f200c",
+        "bytes": 8072
+      },
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 2,
+        "comparisonCount": 1
+      },
+      "regressions": 0,
+      "coverageGaps": 0,
+      "selectionGaps": 0
+    },
+    {
+      "pullRequest": 6,
+      "baseSha": "8b0901bd6a9fe8ac4c2edffc5a97cd7b4452ca43",
+      "headSha": "5d9ebbd21b2abb42d3b63ba7a387087e61f3dc6d",
+      "status": "completed",
+      "attemptId": "2a332366-d64f-4142-846f-d2c81876177d",
+      "comparison": {
+        "id": "5c1e29d1-5b1d-466a-9776-673505169a4a",
+        "reviewId": "25f20d12-618a-425e-9417-d7ccd139fad8",
+        "file": "comparison-5c1e29d1-5b1d-466a-9776-673505169a4a.ndjson",
+        "sha256": "sha256:2eb11c714297db1c861c6d6252310eaec5a1f308204eb12dc11946b8cf8a3b06",
+        "bytes": 8072
+      },
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 2,
+        "comparisonCount": 1
+      },
+      "regressions": 0,
+      "coverageGaps": 0,
+      "selectionGaps": 0
+    },
+    {
+      "pullRequest": 4,
+      "baseSha": "15232a92d22e7640298f78ba190f098312919a17",
+      "headSha": "93faf2d2299634ed0959f49d127fba9e716d67f8",
+      "status": "completed",
+      "attemptId": "c8ea5333-e4f0-4a73-9fb3-e9a694e6ee57",
+      "comparison": {
+        "id": "5ed131d4-15f1-4d26-a868-7b38db4c17fa",
+        "reviewId": "787c1cf8-7fd9-4ddb-9c9a-fa32d3d8e8a5",
+        "file": "comparison-5ed131d4-15f1-4d26-a868-7b38db4c17fa.ndjson",
+        "sha256": "sha256:fd277ccc2b26b134d259126447a2fe3cfceb2aa95f67d50326857001870baa51",
+        "bytes": 1430
+      },
+      "summary": {
+        "state": "completed",
+        "outcome": "insufficient",
+        "executionGaps": [],
+        "unitCount": 0,
+        "comparisonCount": 0
+      },
+      "regressions": 0,
+      "coverageGaps": 0,
+      "selectionGaps": 2
+    }
+  ],
+  "archiveSha256": "6ea002d408f1331f0d5dad8af169cc978747dd2068a998dee5b02d30ce896f1d",
+  "artifactId": 11320971127,
+  "verified": [
+    "trusted checkout SHA independently matched Actions checkout log",
+    "every comparison file hash, byte count, chained frame and base/head/attempt identity",
+    "corrected head b921125e1a2175d5f022e28614ff4184879d874f ran evaluations and passed",
+    "exact-head agentci/evals App Check links retained official artifact"
+  ],
+  "limitations": [
+    "PR4 insufficient remains distinct from pass.",
+    "Current batch duration is an observation, not a controlled end-to-end velocity comparison.",
+    "Published package/image customer acceptance and all milestone release gates remain pending."
+  ]
+}
