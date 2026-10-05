@@ -31,7 +31,11 @@ export class ReviewSummaryStore {
  async save(value:unknown,documentsValue:unknown){
   let s;try{s=validateReviewExecutionSummary(value);}catch{return fail();}const key=this.key(s.admissionId),hash=digest(canonical(s));let documents:unknown;try{documents=structuredClone(documentsValue);}catch{return fail();}
   return this.tx(async c=>{
+   // The dispatch row is the shared commitment fence with terminal recovery.
+   // Lock it before reading evidence so neither side can commit a stale outcome.
+   const dispatch=(await c.query('SELECT terminal_status FROM agentci_review_admission_outbox WHERE organization_id=$1 AND repository=$2 AND id=$3 FOR UPDATE',key)).rows[0];if(!dispatch)fail();
    const prior=(await c.query('SELECT id,digest,summary FROM agentci_review_execution_summaries WHERE organization_id=$1 AND repository=$2 AND id=$3',key)).rows[0];if(prior){if(prior.digest!==hash)fail();return this.decode(prior);}
+   if(dispatch.terminal_status)fail();
    const admission=(await c.query('SELECT request,digest,floor(extract(epoch FROM created_at)*1000)::text AS admitted_ms FROM agentci_review_admissions WHERE organization_id=$1 AND repository=$2 AND id=$3',key)).rows[0];if(!admission)fail();
    try{
     const request=validateReviewAdmission(admission.request);if(request.subject.organizationId!==this.scope.organizationId||request.subject.repository!==this.scope.repository||admission.digest!==digest(canonical(request))||s.admissionDigest!==admission.digest||s.mode!==request.mode||s.profileRevision!==request.profile.revision)fail();

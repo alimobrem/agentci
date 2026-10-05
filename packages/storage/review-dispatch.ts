@@ -1,5 +1,7 @@
 import {randomUUID} from 'node:crypto';
 import type {Pool,PoolClient} from 'pg';
+import {canonical,digest} from '../review/engine.ts';
+import {validateReviewExecutionSummary} from '../reviewers/summary.ts';
 export class ReviewDispatchConflict extends Error {constructor(){super('review-dispatch-conflict');}}
 export class ReviewDispatchUnavailable extends Error {constructor(){super('review-dispatch-unavailable');}}
 export class ReviewDispatchLeaseLost extends Error {constructor(){super('review-dispatch-lease-lost');}}
@@ -66,7 +68,12 @@ export class ReviewDispatchStore {
  async finish(id:string,runId:string,status:ReviewTerminalStatus,resultDigest:string){return this.finishInternal(id,runId,status,resultDigest);}
  private async finishInternal(id:string,runId:string,status:ReviewTerminalStatus,resultDigest:string,lease?:ReviewDispatchClaim){
   this.args(id);if(!uuid(runId)||!['completed','failed','cancelled','terminated','timed-out'].includes(status)||typeof resultDigest!=='string'||!/^sha256:[a-f0-9]{64}$/.test(resultDigest))conflict();
-  return this.tx(async c=>{const r=await this.row(c,id,true);if(!r||(r.run_id&&r.run_id!==runId.toLowerCase()))conflict();if(lease&&(r.lease_token!==lease.token||!r.lease_live||this.decode(r).workflowId!==lease.workflowId))throw new ReviewDispatchLeaseLost();if(r.terminal_status){if(lease)return this.decode(r);if(r.terminal_status!==status||r.terminal_digest!==resultDigest)conflict();return this.decode(r);}
+  return this.tx(async c=>{const r=await this.row(c,id,true);if(!r||(r.run_id&&r.run_id!==runId.toLowerCase()))conflict();if(lease&&(r.lease_token!==lease.token||!r.lease_live||this.decode(r).workflowId!==lease.workflowId))throw new ReviewDispatchLeaseLost();
+   // Summary writers take this same outbox lock. Re-read under the lock rather
+   // than trusting recovery's earlier observation of an incomplete execution.
+   const saved=(await c.query('SELECT digest,summary FROM agentci_review_execution_summaries WHERE organization_id=$1 AND repository=$2 AND id=$3',this.args(id))).rows[0];
+   if(saved){let summary;try{summary=validateReviewExecutionSummary(saved.summary);}catch{return conflict();}if(summary.admissionId!==r.id||summary.admissionDigest!==r.request_digest||digest(canonical(summary))!==saved.digest)conflict();status='completed';resultDigest=saved.digest;}
+   if(r.terminal_status){if(lease)return this.decode(r);if(r.terminal_status!==status||r.terminal_digest!==resultDigest)conflict();return this.decode(r);}
    await c.query('UPDATE agentci_review_admission_outbox SET run_id=$4,terminal_status=$5,terminal_digest=$6,terminal_at=clock_timestamp() WHERE organization_id=$1 AND repository=$2 AND id=$3',[...this.args(id),runId.toLowerCase(),status,resultDigest]);return this.decode(await this.row(c,id));
   });
  }
