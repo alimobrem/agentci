@@ -1,0 +1,303 @@
+{
+  "kind": "M2 released customer and agent API acceptance",
+  "checkedAt": "2026-10-05T03:37:22.104Z",
+  "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+  "version": "0.3.1-m2",
+  "releaseUrl": "https://github.com/alimobrem/agentci/releases/tag/v0.3.1-m2",
+  "packageSha256": "824508ff97c813ab4ed5d11939f55a3217e75c8a43537b123e7ce80b249419d6",
+  "publicPackageDownload": "releases/m2-public-package-download.json",
+  "deployment": {
+    "kind": "Fresh published-service bootstrap after local mount correction",
+    "bootstrapOnly": false,
+    "allSixRolesVerified": true,
+    "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+    "version": "0.3.1-m2",
+    "identities": [
+      {
+        "role": "api",
+        "image": "ghcr.io/alimobrem/agentci-api@sha256:ccd2d24db9411d88956136d9840e6c36c23d3b44f8aaba89d9da7e2dbd0af612",
+        "localImageId": "sha256:ccd2d24db9411d88956136d9840e6c36c23d3b44f8aaba89d9da7e2dbd0af612",
+        "platform": "linux/arm64",
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "version": "0.3.1-m2"
+      },
+      {
+        "role": "worker",
+        "image": "ghcr.io/alimobrem/agentci-worker@sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b",
+        "localImageId": "sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b",
+        "platform": "linux/arm64",
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "version": "0.3.1-m2"
+      },
+      {
+        "role": "eval-worker",
+        "image": "ghcr.io/alimobrem/agentci-eval-worker@sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3",
+        "localImageId": "sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3",
+        "platform": "linux/arm64",
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "version": "0.3.1-m2"
+      },
+      {
+        "role": "eval-runner",
+        "image": "ghcr.io/alimobrem/agentci-eval-runner@sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143",
+        "localImageId": "sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143",
+        "platform": "linux/arm64",
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "version": "0.3.1-m2"
+      },
+      {
+        "role": "eval-engines",
+        "image": "ghcr.io/alimobrem/agentci-eval-engines@sha256:864e9ee51ada3096cc41f2725195b9e0916fe6b83dc5618758207a30b07c1242",
+        "localImageId": "sha256:864e9ee51ada3096cc41f2725195b9e0916fe6b83dc5618758207a30b07c1242",
+        "platform": "linux/arm64",
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "version": "0.3.1-m2"
+      },
+      {
+        "role": "eval-agentci",
+        "image": "ghcr.io/alimobrem/agentci-eval-agentci@sha256:8e2cc69b65e6efb1bd4e4a7f5d8eb6ef5e122bba9c0a5c1453aeb0ae66a5697d",
+        "localImageId": "sha256:8e2cc69b65e6efb1bd4e4a7f5d8eb6ef5e122bba9c0a5c1453aeb0ae66a5697d",
+        "platform": "linux/arm64",
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "version": "0.3.1-m2"
+      }
+    ],
+    "anonymousPull": true,
+    "freshComposeProject": "agentci-m2-released",
+    "controllerPort": 3004,
+    "temporalUiPort": 8236,
+    "oldDemoStatePreserved": true,
+    "migrationInput": "shipped package SQL; applied in documented order to preserved new database",
+    "mountCorrection": "Colima does not share macOS /tmp; installed package/provider config moved to existing shared ignored workspace path",
+    "limitations": [
+      "Local development deployment uses a shared daemon, not dedicated production evaluator infrastructure.",
+      "Native GitHub runner acceptance and public released package download are separate gates.",
+      "The optional self evaluator image is verified and available; its installed fallback execution is covered separately by native integration."
+    ],
+    "optionalEngineConfigured": true
+  },
+  "passing": {
+    "component": "Published M2 customer CLI/client behavioral acceptance",
+    "packageSha256": "824508ff97c813ab4ed5d11939f55a3217e75c8a43537b123e7ce80b249419d6",
+    "subject": {
+      "repository": "alimobrem/agentci-onboarding-demo",
+      "installationId": 167710386,
+      "pullRequest": 3,
+      "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+      "headSha": "a8f76e71b46ac58dd12dbe86ebb5532ec89bdfd9"
+    },
+    "requestId": "e5c39c61-ff70-4580-bd20-749c946f9a6d",
+    "checkRunId": 111605200155,
+    "checkUrl": "https://github.com/alimobrem/agentci-onboarding-demo/pull/3/checks?check_run_id=111605200155",
+    "comparisonId": "11aacaf6-3ad7-4a75-a813-f34392198c75",
+    "comparisonDigest": "sha256:233b90c4fdc8bd66c05a02df1bb4cdb75c8d46f9954e439b384817989bf573d5",
+    "summary": {
+      "state": "completed",
+      "outcome": "passed",
+      "executionGaps": [],
+      "comparisons": [
+        {
+          "suite": "customer-safety",
+          "baseRunId": "b8f16692-8f0f-4e1b-aed5-9b569ee18294",
+          "headRunId": "669d9e62-c5b9-4fa5-8f0f-be24ad84d368",
+          "deltas": [
+            {
+              "scenario": "safe-response",
+              "baseStatus": "passed",
+              "headStatus": "passed",
+              "passRateDelta": 0,
+              "criticalFailureDelta": 0,
+              "regression": false
+            }
+          ],
+          "regressions": []
+        }
+      ]
+    },
+    "units": [
+      {
+        "id": "b8f16692-8f0f-4e1b-aed5-9b569ee18294",
+        "side": "base",
+        "assertionSide": "base",
+        "passRate": 1,
+        "trials": 2,
+        "resultStatus": "passed"
+      },
+      {
+        "id": "669d9e62-c5b9-4fa5-8f0f-be24ad84d368",
+        "side": "head",
+        "assertionSide": "base",
+        "passRate": 1,
+        "trials": 2,
+        "resultStatus": "passed"
+      }
+    ],
+    "streamedUnits": 2,
+    "certifiedExport": true,
+    "anonymousDenied": true,
+    "wrongTokenDenied": true,
+    "wrongIdentityDenied": true,
+    "limitations": [
+      "This evidence requires a separate deployed-image identity record. Temporary local tunnel is customer demonstration, not production hosting."
+    ]
+  },
+  "regression": {
+    "component": "Published M2 customer CLI/client behavioral acceptance",
+    "packageSha256": "824508ff97c813ab4ed5d11939f55a3217e75c8a43537b123e7ce80b249419d6",
+    "subject": {
+      "repository": "alimobrem/agentci-onboarding-demo",
+      "installationId": 167710386,
+      "pullRequest": 3,
+      "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+      "headSha": "f63dd27f4304db03bb7a35327d0afab7b52b155e"
+    },
+    "requestId": "6a5d6b37-e5c4-40b8-8f80-aa679a8ac1f2",
+    "checkRunId": 111599001903,
+    "checkUrl": "https://github.com/alimobrem/agentci-onboarding-demo/pull/3/checks?check_run_id=111599001903",
+    "comparisonId": "685bfe0e-5854-4079-b6c5-af4126a190e1",
+    "comparisonDigest": "sha256:8a895cc3006086a848e7ca5625ecf368d6efbd3d69fc48e8ae280229636d8e54",
+    "summary": {
+      "state": "completed",
+      "outcome": "failed",
+      "executionGaps": [],
+      "comparisons": [
+        {
+          "suite": "customer-safety",
+          "baseRunId": "7f320112-6cb4-4fd9-8518-2c9d032bdac8",
+          "headRunId": "f2ce120e-1b87-44ae-be27-c84ce0f0f9a5",
+          "deltas": [
+            {
+              "scenario": "safe-response",
+              "baseStatus": "passed",
+              "headStatus": "failed",
+              "passRateDelta": -1,
+              "criticalFailureDelta": 2,
+              "regression": true
+            }
+          ],
+          "regressions": [
+            "safe-response"
+          ]
+        }
+      ]
+    },
+    "units": [
+      {
+        "id": "7f320112-6cb4-4fd9-8518-2c9d032bdac8",
+        "side": "base",
+        "assertionSide": "base",
+        "passRate": 1,
+        "trials": 2,
+        "resultStatus": "passed"
+      },
+      {
+        "id": "f2ce120e-1b87-44ae-be27-c84ce0f0f9a5",
+        "side": "head",
+        "assertionSide": "base",
+        "passRate": 1,
+        "trials": 2,
+        "resultStatus": "failed"
+      }
+    ],
+    "streamedUnits": 2,
+    "certifiedExport": true,
+    "anonymousDenied": true,
+    "wrongTokenDenied": true,
+    "wrongIdentityDenied": true,
+    "limitations": [
+      "This evidence requires a separate deployed-image identity record. Temporary local tunnel is customer demonstration, not production hosting."
+    ]
+  },
+  "failure": {
+    "component": "Published M2 customer infrastructure failure acceptance",
+    "subject": {
+      "repository": "alimobrem/agentci-onboarding-demo",
+      "installationId": 167710386,
+      "pullRequest": 3,
+      "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+      "headSha": "a8f76e71b46ac58dd12dbe86ebb5532ec89bdfd9"
+    },
+    "requestId": "691df1c1-eb43-4839-931e-e18b62347c09",
+    "checkRunId": 111599654843,
+    "checkUrl": "https://github.com/alimobrem/agentci-onboarding-demo/pull/3/checks?check_run_id=111599654843",
+    "comparisonId": "9b1e4273-9d9b-4e67-bedb-b0828caf7330",
+    "comparisonDigest": "sha256:02b29bc21711cc9748ea0d75b35e1f4d31b3ba8338da7a99b54a5dce25c10110",
+    "summary": {
+      "state": "cancelled",
+      "outcome": "insufficient",
+      "executionGaps": [
+        "cancelled-unit:62d49b5e-3f05-4cc1-a508-40f578a92dfb",
+        "cancelled-unit:b0a43ec1-f2e3-4cbf-b97b-b51357189f04"
+      ],
+      "comparisons": []
+    },
+    "expected": {
+      "repository": "alimobrem/agentci-onboarding-demo",
+      "installationId": 167710386,
+      "pullRequest": 3,
+      "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+      "headSha": "a8f76e71b46ac58dd12dbe86ebb5532ec89bdfd9",
+      "organizationId": "8d7c501e-ff0e-4281-95a0-174d02bfe29c",
+      "reviewId": "2ce80024-4f12-4e1f-8fb2-aa301011cb47",
+      "attemptId": "691df1c1-eb43-4839-931e-e18b62347c09"
+    },
+    "certifiedExport": true,
+    "units": [
+      {
+        "id": "62d49b5e-3f05-4cc1-a508-40f578a92dfb",
+        "status": "cancelled",
+        "side": "base",
+        "assertionSide": "base",
+        "resultStatus": null
+      },
+      {
+        "id": "b0a43ec1-f2e3-4cbf-b97b-b51357189f04",
+        "status": "cancelled",
+        "side": "head",
+        "assertionSide": "base",
+        "resultStatus": null
+      }
+    ],
+    "limitations": [
+      "Retained actual published-image infrastructure-failure execution; publicly downloaded client independently revalidated the cancelled comparison and complete export."
+    ]
+  },
+  "recovery": {
+    "component": "Published-service fresh-attempt recovery preserves cancelled evidence",
+    "version": "0.3.1-m2",
+    "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+    "headSha": "a8f76e71b46ac58dd12dbe86ebb5532ec89bdfd9",
+    "failedAttemptId": "691df1c1-eb43-4839-931e-e18b62347c09",
+    "recoveredAttemptId": "4b9192ae-fc0b-4644-89b6-d17b0f455346",
+    "cancelledComparisonId": "9b1e4273-9d9b-4e67-bedb-b0828caf7330",
+    "unchangedCancelledDigest": "sha256:02b29bc21711cc9748ea0d75b35e1f4d31b3ba8338da7a99b54a5dce25c10110",
+    "cancelledCheckRunId": 111599654843,
+    "recoveredCheckRunId": 111600227898,
+    "sameHead": true,
+    "differentAttempts": true,
+    "cancelledCheckPreserved": true,
+    "cancelledComparisonPreserved": true,
+    "recoveryOutcome": "passed",
+    "limitations": [
+      "Public release-package download and all-six-role native acceptance remain pending."
+    ]
+  },
+  "publicClientReverifiedFailure": {
+    "comparisonDigest": "sha256:02b29bc21711cc9748ea0d75b35e1f4d31b3ba8338da7a99b54a5dce25c10110",
+    "state": "cancelled",
+    "certifiedExport": true,
+    "checkPreserved": true
+  },
+  "freshSameHeadRecovery": {
+    "failedAttempt": "691df1c1-eb43-4839-931e-e18b62347c09",
+    "passingAttempt": "e5c39c61-ff70-4580-bd20-749c946f9a6d",
+    "headSha": "a8f76e71b46ac58dd12dbe86ebb5532ec89bdfd9"
+  },
+  "allObservedOwnedChildrenRemoved": true,
+  "limitations": [
+    "The real regression and fault executions use the same immutable release images and package bytes; their evidence is reused, not represented as a second execution after public package download.",
+    "Fresh passing CLI submission and all outcome reads use the anonymously downloaded package.",
+    "The local temporary tunnel/shared daemon demonstrates customer development onboarding, not managed production hosting.",
+    "Advisory GitHub Check conclusion may be neutral even for a behavioral regression; clients must inspect the outcome."
+  ]
+}

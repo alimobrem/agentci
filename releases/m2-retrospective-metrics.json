@@ -1,0 +1,88 @@
+{
+  "kind": "M2 retrospective measurement snapshot",
+  "checkedAt": "2026-10-05T03:38:39.580406+00:00",
+  "cohorts": {
+    "full-ci": {
+      "recordedAttempts": 65,
+      "successfulAttempts": 48,
+      "failedAttempts": 10,
+      "successfulLongestJobMedianSeconds": 309.0,
+      "cacheCohorts": {
+        "cold": {
+          "samples": 1,
+          "successfulLongestJobMedianSeconds": 204
+        },
+        "warm": {
+          "samples": 15,
+          "successfulLongestJobMedianSeconds": 381
+        },
+        "unknown": {
+          "samples": 32,
+          "successfulLongestJobMedianSeconds": 292.5
+        }
+      }
+    },
+    "publication": {
+      "recordedAttempts": 2,
+      "successfulAttempts": 1,
+      "failedAttempts": 1,
+      "successfulLongestJobMedianSeconds": 3464,
+      "cacheCohorts": {
+        "cold": {
+          "samples": 0,
+          "successfulLongestJobMedianSeconds": null
+        },
+        "warm": {
+          "samples": 1,
+          "successfulLongestJobMedianSeconds": 3464
+        },
+        "unknown": {
+          "samples": 0,
+          "successfulLongestJobMedianSeconds": null
+        }
+      }
+    },
+    "native-downloads": {
+      "recordedAttempts": 1,
+      "successfulAttempts": 1,
+      "failedAttempts": 0,
+      "successfulLongestJobMedianSeconds": 230,
+      "cacheCohorts": {
+        "cold": {
+          "samples": 1,
+          "successfulLongestJobMedianSeconds": 230
+        },
+        "warm": {
+          "samples": 0,
+          "successfulLongestJobMedianSeconds": null
+        },
+        "unknown": {
+          "samples": 0,
+          "successfulLongestJobMedianSeconds": null
+        }
+      }
+    }
+  },
+  "latestLocalFeedbackSeconds": 1.14,
+  "latestLocalFeedbackChecks": 9,
+  "latestLocalFeedbackTests": 135,
+  "quality": {
+    "reopenedTaskEvents": 11,
+    "recordedDogfoodDefects": 8,
+    "recordedEscapedDefects": 0
+  },
+  "releaseCriticalPath": {
+    "publicationRun": 37253548685,
+    "evalEnginesJobSeconds": 3464,
+    "evalAgentciJobSeconds": 3084,
+    "nativeDownloadRun": 37259025772,
+    "nativeLongestJobSeconds": 230
+  },
+  "limitations": [
+    "Full-CI cohorts span changing suite sizes and are descriptive, not matched acceleration experiments.",
+    "Publication/native-download workflows are separated from ordinary full CI; the earlier aggregate report mixed them.",
+    "Local baseline used a different command; no causal speedup inferred.",
+    "Historical end-to-end task delivery baseline and complete human intervention/cost data are unavailable.",
+    "Zero recorded escaped defects does not prove their absence."
+  ]
+}

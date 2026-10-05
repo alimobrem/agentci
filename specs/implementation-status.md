@@ -6,7 +6,7 @@ Statuses: `not-started`, `in-progress`, `implemented`, `tested`, `deferred`.
 
 The inventory conservatively includes every numbered section and every prose/list statement outside fenced examples.
 Direct source excerpts receive trace IDs; those IDs do not make explanatory or recommended prose normative.
-Such inventory entries remain draft until refined. Explicit M0 and M1 section 40 build/exit requirements are tested; unfinished product-wide requirements remain open.
+Such inventory entries remain draft until refined. Explicit completed-milestone build/exit requirements carry tested evidence; unfinished product-wide requirements remain open.
 A section remains not-started until its entire scope is satisfied; M0 schemas do not complete future product behavior.
 
 Milestone assignments outside the build-plan list are planning estimates, not amendments to the specification.
@@ -317,42 +317,42 @@ Milestone assignments outside the build-plan list are planning estimates, not am
 | SPEC-10.4-007 | 10.4 / 633 | - autonomy level | M1 | not-started |  |
 | SPEC-10.4-008 | 10.4 / 634 | - evidence confidence | M1 | not-started |  |
 | SPEC-10.4-009 | 10.4 / 636 | Do not collapse all decisions into a single opaque LLM score. | M1 | not-started |  |
-| SECTION-11 | 11 / 640 | 11. Eval Orchestration | M2 | not-started |  |
-| SECTION-11.1 | 11.1 / 642 | 11.1 Eval classes | M2 | not-started |  |
-| SPEC-11.1-001 | 11.1 / 644 | - deterministic unit tests | M2 | not-started |  |
-| SPEC-11.1-002 | 11.1 / 645 | - integration tests | M2 | not-started |  |
-| SPEC-11.1-003 | 11.1 / 646 | - contract tests | M2 | not-started |  |
-| SPEC-11.1-004 | 11.1 / 647 | - policy tests | M2 | not-started |  |
-| SPEC-11.1-005 | 11.1 / 648 | - golden behavior evals | M2 | not-started |  |
-| SPEC-11.1-006 | 11.1 / 649 | - regression evals | M2 | not-started |  |
-| SPEC-11.1-007 | 11.1 / 650 | - adversarial evals | M2 | not-started |  |
-| SPEC-11.1-008 | 11.1 / 651 | - safety evals | M2 | not-started |  |
-| SPEC-11.1-009 | 11.1 / 652 | - tool-use evals | M2 | not-started |  |
-| SPEC-11.1-010 | 11.1 / 653 | - trajectory evals | M2 | not-started |  |
-| SPEC-11.1-011 | 11.1 / 654 | - latency/performance evals | M2 | not-started |  |
-| SPEC-11.1-012 | 11.1 / 655 | - cost/token evals | M2 | not-started |  |
-| SPEC-11.1-013 | 11.1 / 656 | - model comparison evals | M2 | not-started |  |
-| SECTION-11.2 | 11.2 / 658 | 11.2 Eval selection | M2 | not-started |  |
-| SPEC-11.2-001 | 11.2 / 660 | The orchestrator MUST select evals based on change impact. | M2 | tested | packages/evals/contracts.ts, tests/eval-contracts.test.ts |
-| SPEC-11.2-002 | 11.2 / 662 | Examples: | M2 | not-started |  |
-| SPEC-11.2-003 | 11.2 / 664 | - prompt wording only -> targeted prompt/eval suite | M2 | not-started |  |
-| SPEC-11.2-004 | 11.2 / 665 | - tool schema change -> all tool-contract and affected behavioral evals | M2 | not-started |  |
-| SPEC-11.2-005 | 11.2 / 666 | - model change -> model matrix over required representative suite | M2 | not-started |  |
-| SPEC-11.2-006 | 11.2 / 667 | - permission expansion -> permission/policy/adversarial suite | M2 | not-started |  |
-| SPEC-11.2-007 | 11.2 / 668 | - spec change -> all mapped requirements plus coverage gap analysis | M2 | not-started |  |
-| SPEC-11.2-008 | 11.2 / 669 | - low-level library refactor -> deterministic tests plus mapped behavior regressions | M2 | not-started |  |
-| SECTION-11.3 | 11.3 / 671 | 11.3 Statistical execution | M2 | not-started |  |
-| SPEC-11.3-001 | 11.3 / 673 | Each eval may define trial semantics: | M2 | in-progress | packages/evals/statistics.ts, tests/eval-statistics.test.ts |
-| SPEC-11.3-002 | 11.3 / 683 | Critical safety assertions SHOULD default to zero tolerated violations in the configured sample. | M2 | in-progress | packages/evals/statistics.ts, tests/eval-statistics.test.ts |
-| SECTION-11.4 | 11.4 / 685 | 11.4 Pluggable eval engines | M2 | not-started |  |
-| SPEC-11.4-001 | 11.4 / 687 | Adapters SHOULD support: | M2 | not-started |  |
-| SPEC-11.4-002 | 11.4 / 689 | - pytest/custom test commands | M2 | tested | releases/m2-runner-ci.json, tests/integration/eval-runner.test.ts |
-| SPEC-11.4-003 | 11.4 / 690 | - DeepEval | M2 | in-progress | tests/integration/eval-engines.test.ts, releases/m2-optional-engines-local.json |
-| SPEC-11.4-004 | 11.4 / 691 | - Promptfoo | M2 | in-progress | tests/integration/eval-engines.test.ts, releases/m2-optional-engines-local.json |
-| SPEC-11.4-005 | 11.4 / 692 | - custom HTTP eval providers | M2 | in-progress | tests/eval-http.test.ts, docs/http-eval-provider.md |
-| SPEC-11.4-006 | 11.4 / 693 | - native AgentCI structured evals | M2 | not-started |  |
-| SPEC-11.4-007 | 11.4 / 695 | AgentCI owns orchestration and evidence normalization, not all evaluation algorithms. | M2 | not-started |  |
-| SECTION-11.5 | 11.5 / 697 | 11.5 Eval result schema | M2 | not-started |  |
+| SECTION-11 | 11 / 640 | 11. Eval Orchestration | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SECTION-11.1 | 11.1 / 642 | 11.1 Eval classes | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-001 | 11.1 / 644 | - deterministic unit tests | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-002 | 11.1 / 645 | - integration tests | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-003 | 11.1 / 646 | - contract tests | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-004 | 11.1 / 647 | - policy tests | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-005 | 11.1 / 648 | - golden behavior evals | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-006 | 11.1 / 649 | - regression evals | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-007 | 11.1 / 650 | - adversarial evals | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-008 | 11.1 / 651 | - safety evals | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-009 | 11.1 / 652 | - tool-use evals | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-010 | 11.1 / 653 | - trajectory evals | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-011 | 11.1 / 654 | - latency/performance evals | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-012 | 11.1 / 655 | - cost/token evals | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.1-013 | 11.1 / 656 | - model comparison evals | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SECTION-11.2 | 11.2 / 658 | 11.2 Eval selection | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.2-001 | 11.2 / 660 | The orchestrator MUST select evals based on change impact. | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.2-002 | 11.2 / 662 | Examples: | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.2-003 | 11.2 / 664 | - prompt wording only -> targeted prompt/eval suite | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.2-004 | 11.2 / 665 | - tool schema change -> all tool-contract and affected behavioral evals | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.2-005 | 11.2 / 666 | - model change -> model matrix over required representative suite | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.2-006 | 11.2 / 667 | - permission expansion -> permission/policy/adversarial suite | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.2-007 | 11.2 / 668 | - spec change -> all mapped requirements plus coverage gap analysis | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.2-008 | 11.2 / 669 | - low-level library refactor -> deterministic tests plus mapped behavior regressions | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SECTION-11.3 | 11.3 / 671 | 11.3 Statistical execution | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.3-001 | 11.3 / 673 | Each eval may define trial semantics: | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.3-002 | 11.3 / 683 | Critical safety assertions SHOULD default to zero tolerated violations in the configured sample. | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SECTION-11.4 | 11.4 / 685 | 11.4 Pluggable eval engines | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.4-001 | 11.4 / 687 | Adapters SHOULD support: | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.4-002 | 11.4 / 689 | - pytest/custom test commands | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.4-003 | 11.4 / 690 | - DeepEval | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.4-004 | 11.4 / 691 | - Promptfoo | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.4-005 | 11.4 / 692 | - custom HTTP eval providers | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.4-006 | 11.4 / 693 | - native AgentCI structured evals | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-11.4-007 | 11.4 / 695 | AgentCI owns orchestration and evidence normalization, not all evaluation algorithms. | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SECTION-11.5 | 11.5 / 697 | 11.5 Eval result schema | M2 | tested | releases/m2-final-acceptance-audit.json |
 | SECTION-12 | 12 / 722 | 12. Multi-Model Review | M3 | not-started |  |
 | SECTION-12.1 | 12.1 / 724 | 12.1 Reviewer roles | M3 | not-started |  |
 | SPEC-12.1-001 | 12.1 / 726 | Configure independent roles such as: | M3 | not-started |  |
@@ -1082,16 +1082,16 @@ Milestone assignments outside the build-plan list are planning estimates, not am
 | SPEC-40-027 | 40 / 2079 | - dependency changes | M1 | tested | packages/review/engine.ts, tests/review.test.ts, evals/m1-semantic.yaml, docs/releases/m1.md |
 | SPEC-40-028 | 40 / 2081 | Exit criteria: | M1 | tested | docs/releases/m1.md |
 | SPEC-40-029 | 40 / 2083 | - AgentCI repository uses advisory AgentCI check on every PR | M1 | tested | docs/dogfood/m1-first-check.md, docs/releases/m1.md |
-| SPEC-40-030 | 40 / 2087 | Build: | M2 | in-progress | docs/phases/m2.md |
-| SPEC-40-031 | 40 / 2089 | - eval manifest | M2 | tested | packages/evals/contracts.ts, tests/eval-contracts.test.ts, tests/project.test.ts |
-| SPEC-40-032 | 40 / 2090 | - native command runner | M2 | tested | releases/m2-runner-ci.json, tests/integration/eval-runner.test.ts |
-| SPEC-40-033 | 40 / 2091 | - pytest adapter | M2 | tested | releases/m2-runner-ci.json, tests/integration/eval-runner.test.ts |
-| SPEC-40-034 | 40 / 2092 | - Promptfoo/DeepEval adapter as optional plugins | M2 | in-progress | docs/phases/m2.md, tests/integration/eval-engines.test.ts, tests/eval-http.test.ts |
-| SPEC-40-035 | 40 / 2093 | - result normalization | M2 | in-progress | packages/evals/contracts.ts, tests/eval-contracts.test.ts |
-| SPEC-40-036 | 40 / 2094 | - statistical trial handling | M2 | in-progress | packages/evals/statistics.ts, tests/eval-statistics.test.ts |
-| SPEC-40-037 | 40 / 2095 | - base/head comparison | M2 | in-progress | packages/evals/execution.ts, docs/phases/m2.md |
-| SPEC-40-038 | 40 / 2097 | Exit criteria: | M2 | in-progress | docs/phases/m2.md, releases/m2-gates.json |
-| SPEC-40-039 | 40 / 2099 | - PR shows behavioral deltas and regression scenarios | M2 | in-progress | packages/evals/execution.ts, docs/phases/m2.md |
+| SPEC-40-030 | 40 / 2087 | Build: | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-40-031 | 40 / 2089 | - eval manifest | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-40-032 | 40 / 2090 | - native command runner | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-40-033 | 40 / 2091 | - pytest adapter | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-40-034 | 40 / 2092 | - Promptfoo/DeepEval adapter as optional plugins | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-40-035 | 40 / 2093 | - result normalization | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-40-036 | 40 / 2094 | - statistical trial handling | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-40-037 | 40 / 2095 | - base/head comparison | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-40-038 | 40 / 2097 | Exit criteria: | M2 | tested | releases/m2-final-acceptance-audit.json |
+| SPEC-40-039 | 40 / 2099 | - PR shows behavioral deltas and regression scenarios | M2 | tested | releases/m2-final-acceptance-audit.json |
 | SPEC-40-040 | 40 / 2103 | Build: | M3 | not-started |  |
 | SPEC-40-041 | 40 / 2105 | - provider abstraction | M3 | not-started |  |
 | SPEC-40-042 | 40 / 2106 | - OpenAI adapter | M3 | not-started |  |

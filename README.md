@@ -12,7 +12,7 @@ and release decisions. Its first working milestone reviews changes to requiremen
 permissions, tools, models, prompts and dependencies, then publishes an advisory
 GitHub Check. That is the first capability of the control plane, not its full scope.
 
-[Adapter authoring](docs/adapter-authoring.md) · [Try M1](#quickstart) · [Architecture](#architecture) · [Demo](docs/releases/m1-onboarding.md) · [Roadmap](docs/milestone-gates.md) · [Contributing](#contributing)
+[Adapter authoring](docs/adapter-authoring.md) · [Try AgentCI](#quickstart) · [Architecture](#architecture) · [Demo](docs/releases/m2.md) · [Roadmap](docs/milestone-gates.md) · [Contributing](#contributing)
 
 ## Why AgentCI?
 
@@ -29,9 +29,8 @@ without looking like a conventional code defect.
 
 AgentCI makes these changes visible and connects each review to exact Git commits
 and retained evidence. The goal is a reviewable chain from intended requirements
-to observed behavior and release decisions. Behavioral evaluations, tracing,
-production feedback and repair are later milestones; M1 delivers the first link:
-deterministic semantic PR review.
+to observed behavior and release decisions. M1 delivers deterministic semantic PR review; M2 adds behavioral evaluations.
+Tracing, production feedback and repair remain later milestones.
 
 ## Principles
 
@@ -55,29 +54,29 @@ deterministic semantic PR review.
 
 ## What works today?
 
-M1 distribution version: [0.2.1-m1](https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1).
-This public immutable prerelease has verified downloadable artifacts; the [gate ledger](https://github.com/alimobrem/agentci/blob/main/releases/m1-gates.json)
-records completion separately. AgentCI uses its own advisory review on pull requests.
+Current distribution: [0.3.1-m2](https://github.com/alimobrem/agentci/releases/tag/v0.3.1-m2).
+This public immutable prerelease has verified packages and native AMD64/ARM64
+images. See [the release evidence and demo](docs/releases/m2.md) and the
+[completion ledger](releases/m2-gates.json). AgentCI reviews its own pull requests.
 
 | Available now | Planned in later milestones |
 | --- | --- |
-| CLI repository validation and immutable-commit semantic diff | Behavioral eval execution (M2) |
-| Deterministic risk; verified and inferred findings | Independent multi-model review (M3) |
-| Signed webhooks, durable review workflows and immutable evidence | OpenTelemetry instrumentation and MCP enforcement (M4–M5) |
-| Advisory GitHub Checks with retained evidence | Release evidence, production feedback, replay and repair (M6–M10) |
-| Public UBI API/worker images for arm64 and amd64 | Production hosting and broader deployment integration |
+| Repository validation and semantic PR review | Independent multi-model review and first dashboard (M3) |
+| Impact-selected behavioral evals and frozen baseline assertions | OpenTelemetry instrumentation and MCP enforcement (M4–M5) |
+| Isolated command/pytest, Promptfoo/DeepEval and HTTP adapters | Release evidence, production feedback, replay and repair (M6–M10) |
+| Durable comparisons, statistical trials and authenticated API/client exports | Production hosting and broader deployment integration |
+| Advisory GitHub Checks and public UBI images for AMD64/ARM64 | Tekton/OpenShift integration (M7) |
 
 A neutral Check means the advisory analysis completed; it does not certify
 behavioral correctness or authorize deployment. Invalid inputs and infrastructure
 failures are reported explicitly. The current deployment is for one repository.
 
-## M2 release candidate
+## Behavioral review
 
-M2 adds behavioral evaluation orchestration. Its code and hosted self-review have
-verified acceptance; registry publication, anonymous downloaded-runtime checks,
-released customer replay and the full release/demo remain pending. M1 remains the
-latest published distribution until those gates pass. Follow the
-[M2 readiness record](docs/releases/m2-readiness.md) for current evidence.
+M2 compares behavior across exact base/head commits and keeps the baseline
+assertions fixed. Published images passed native integration and recovery on both
+architectures; the downloaded CLI/client passed real customer acceptance. Follow
+the [M2 release record](docs/releases/m2.md) for evidence and limitations.
 
 - Versioned EvalSuite manifests select native commands, pytest, optional
   Promptfoo/DeepEval or registered HTTP providers using impact and requirements.
@@ -139,9 +138,9 @@ releases; it is not published to the npm registry.
 mkdir agentci-demo
 cd agentci-demo
 npm init -y
-npm install --omit=dev https://github.com/alimobrem/agentci/releases/download/v0.2.1-m1/agentci-0.2.1-m1.tgz
+npm install --omit=dev https://github.com/alimobrem/agentci/releases/download/v0.3.1-m2/agentci-0.3.1-m2.tgz
 npx agentci --version
-# Expected: 0.2.1-m1
+# Expected: 0.3.1-m2
 ```
 
 Initialize a separate empty customer project and validate its contracts:
@@ -154,15 +153,17 @@ npx agentci validate --root ../my-agent-project --json
 Follow the [customer guide](docs/customer-onboarding.md) to register a private App
 for one repository and deploy the API/worker. Customers see advisory GitHub Checks;
 agents use the authenticated evidence API through `agentci/client`. The CLI
-provides bootstrap, setup, validation and local review. Validation checks contracts
-and eval YAML syntax. Behavioral execution is part of the M2 candidate described
-above; the released M1 CLI does not execute evals.
+provides bootstrap, setup, validation, local semantic review and submission of a
+service-backed review. Follow [the M2 guide](docs/m2-guide.md) to configure the
+separate evaluator. There is no standalone CLI `eval` command.
 
 ### Service images
 
-Public packages: [API](https://github.com/alimobrem/agentci/pkgs/container/agentci-api)
-and [worker](https://github.com/alimobrem/agentci/pkgs/container/agentci-worker).
-Use the immutable digests in the [release manifest](https://github.com/alimobrem/agentci/releases/download/v0.2.1-m1/m1-onboarding-manifest.json).
+Public packages include [API](https://github.com/alimobrem/agentci/pkgs/container/agentci-api),
+[controller worker](https://github.com/alimobrem/agentci/pkgs/container/agentci-worker),
+[evaluator](https://github.com/alimobrem/agentci/pkgs/container/agentci-eval-worker),
+default runner, optional engines and self-eval dependencies.
+Use the immutable digests in the [release manifest](https://github.com/alimobrem/agentci/releases/download/v0.3.1-m2/images.json).
 Images support linux/arm64 and linux/amd64; UBI 10 amd64 requires x86-64-v3.
 Follow the [customer deployment guide](docs/customer-onboarding.md) for PostgreSQL, Temporal,
 App permissions and secrets. The Temporal development server is for local use.
@@ -190,10 +191,10 @@ are release requirements.
 ## Roadmap and project status
 
 There are 11 milestones, M0–M10. M0 contracts and M1 semantic review, including customer
-onboarding and agent/API acceptance, are complete. M2 eval orchestration is in
-development; the latest released build remains M1. See the
-[M2 customer development demo](docs/demos/m2-development.md) for verified candidate
-behavior and remaining release gates.
+onboarding and agent/API acceptance, are complete. M2 eval orchestration is
+published with verified customer and distribution evidence. Its
+[release/demo/retrospective record](docs/releases/m2.md) and gate ledger govern
+phase completion; M3 remains not-started until closure.
 
 - [Milestones and acceptance scenarios](docs/milestone-gates.md)
 - [Current status](STATUS.md) and [release notes](CHANGELOG.md)

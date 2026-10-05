@@ -518,14 +518,16 @@
       "requirementIds": [
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T07:09:18.839Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T03:46:06.118Z",
       "acceptance": [
         {
           "text": "Real PR publishes behavioral deltas and regression scenarios with retained exact-identity evidence; retry/replay/restart/stale heads and authenticated agent API usage are tested",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-released-customer-acceptance.json"
+          ]
         }
       ]
     },
@@ -536,14 +538,16 @@
         "SPEC-40-038",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T13:52:48.601Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T03:47:46.006Z",
       "acceptance": [
         {
           "text": "Tests, eval corpus, compatible API, packaging, docs, scans, native UBI images, immutable GitHub release and anonymous downloads pass; released customer success/failure/recovery demo and retro delivered",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-closure.json"
+          ]
         }
       ]
     },
@@ -958,14 +962,16 @@
         "SPEC-40-037",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T11:39:49.369Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T03:46:06.559Z",
       "acceptance": [
         {
           "text": "Separate M2 controller and restricted evaluator deployment receives actual signed events from the approved demo App/repository, publishes immutable baseline/head behavioral Checks, exposes verified client evidence, demonstrates failure/recovery, and records exact source and limitations. Published-build replay is required for the milestone demo gate.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-released-customer-acceptance.json"
+          ]
         }
       ]
     },
@@ -1036,14 +1042,16 @@
         "SPEC-40-039",
         "SPEC-11.4-007"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T14:15:26.599Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T03:46:06.994Z",
       "acceptance": [
         {
           "text": "Every eligible AgentCI PR receives exact-attempt semantic and behavioral Checks using trusted main controller code and immutable isolated evaluator images, with no laptop dependency, secret exposure to PR code or mutable reviewed dependencies. Retain complete authenticated/source-bound evidence before publication, reconcile retries/stale heads and demonstrate actual hosted passing and failing PR revisions. Native/CI/package/docs validation passes before release acceptance.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-hosted-release-evidence-reuse.json"
+          ]
         }
       ]
     },
@@ -1144,14 +1152,16 @@
         "SPEC-40-038",
         "SPEC-11.4-007"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T16:53:25.509Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T03:46:07.440Z",
       "acceptance": [
         {
           "text": "Operator defaults consistently select Docker for M2. The released Docker evaluator contains only its pinned Docker CLI and native inventories; Podman remains an explicit separate development image with tracked security/stability/hosted acceptance. Reject mismatched packaged engine configuration before database/Temporal connection. Verify full native Docker execution/recovery, packaged service, API/config compatibility, license/native provenance and vulnerability coverage, docs, and hosted CI. Preserve all Podman findings and failed attempts; do not claim Podman adoption complete or remove any product requirement.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-native-published-downloads.json"
+          ]
         }
       ]
     },
@@ -1343,14 +1353,16 @@
         "SECTION-11",
         "SPEC-40-038"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T01:34:44.512Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T03:46:07.879Z",
       "acceptance": [
         {
           "text": "Every section 11 and M2 section 40 entry maps to actual implementation and source-bound acceptance; distinguish generic engine classes from supplied domain assertions and preserve pending distribution/customer/release gates.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-final-acceptance-audit.json"
+          ]
         }
       ]
     },

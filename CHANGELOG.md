@@ -1,13 +1,16 @@
 # Releases
 
-## 0.3.1-m2 — release candidate
+## 0.3.1-m2 — 2026-10-05
 
 Corrected publication candidate: native inventories resolve each platform child
 manifest independently. The first `0.3.0-m2` publication retained an API success
 and a worker validation failure caused by Docker's classic image-store index
-collision; those tags are preserved. No M2 milestone release is complete.
+collision; those tags are preserved. All six corrected roles passed native published-image
+acceptance on AMD64 and ARM64.
 
-Not yet published or milestone-complete; see [M2 readiness](docs/releases/m2-readiness.md).
+Published with verified anonymous package/image downloads and real customer
+CLI/client success, regression and failure/recovery evidence. See the
+[M2 release record](docs/releases/m2.md) and its completion ledger.
 
 - Strict EvalSuite contracts, impact/requirement selection and frozen baseline/head comparisons.
 - Isolated native/pytest runners, optional Promptfoo/DeepEval and registered HTTP adapters.
