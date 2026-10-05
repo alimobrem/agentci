@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "taskId": "M3-07c-4",
+  "scope": "Initial profiles, submit, show and cancel client/CLI slice",
+  "sourceCommit": "cd6b2c69a15d197fe9e25e597490020ff98428d9",
+  "integrationTest": {
+    "path": "tests/integration/model-review-client.test.ts",
+    "gitBlob": "d9adc8561c1074ec6dc2f507e5e665b931becc6d",
+    "sha256": "37d80bedacaa58edb0c7854bb510832e20b67c920155cf4d182b52c0159b8aaf",
+    "note": "The exact test bytes were uncommitted during these local runs and are retained with this record."
+  },
+  "localChecks": {
+    "build": "passed",
+    "typecheck": "passed",
+    "fastChecks": {"passed": 10, "total": 10, "seconds": 3.28},
+    "focusedTransportAndCliTests": {"passed": 7, "total": 7},
+    "scopedHelpCliTestsAfterHelpChange": {"passed": 2, "total": 2},
+    "compiledClientRealServer": {"passed": 1, "failed": 0, "skipped": 0, "seconds": 2.58232475},
+    "installedClientRealServer": {"passed": 1, "failed": 0, "skipped": 0, "seconds": 2.607545291}
+  },
+  "package": {
+    "name": "agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "0af004f3d25414ebb61ade48113e0c26b4fbe3e3c7b67fa2ad74c1d0a57d27cf",
+    "installation": "npm install --offline --omit=dev --no-audit --no-fund",
+    "installedAcceptance": "AGENTCI_TEST_CLIENT_PACKAGE_ROOT selects the actual installed client module and executable for the same real HTTP/PostgreSQL/Temporal test.",
+    "fullPackageSmokeAtThisSource": "failed: runtime instructions dropped the existing required M3-07c marker; server-owned correction pending",
+    "published": false
+  },
+  "coverage": [
+    "Actual model-review HTTP handlers and PostgreSQL admission/outbox/status stores",
+    "Same-ID concurrent/replayed submission retains one outbox row",
+    "New stale-head request denied while exact prior replay remains valid",
+    "Client pins exact admission identity and digest",
+    "Real Temporal seven-role synthetic execution with explicit selected coverage",
+    "Late cancellation preserves completed summary and terminal digest",
+    "All four compiled and installed executable CLI commands"
+  ],
+  "limitations": [
+    "Server uses real service code with fixture GitHub responses; no live provider or GitHub claim",
+    "Installed acceptance covers client/executable, not a packaged control-service deployment",
+    "Findings, export, reproduction and disposition client/CLI work remains pending",
+    "Hosted combined CI and full milestone release gates are separate"
+  ],
+  "taskComplete": false,
+  "releaseComplete": false
+}

@@ -71,6 +71,16 @@ performs a separate bounded status read before its mutation. `timeoutMs` may be
 set from 1 to 120000 and `maxAttempts` from 1 to 3 by Node callers. No polling or
 provider-readiness claim is inferred from profile discovery.
 
-Transport-fixture and executable CLI tests cover client behavior. They do not
-replace the required integrated real-server/PostgreSQL acceptance, installed
-package checks, or milestone release gates.
+Transport-fixture and executable CLI tests cover malformed responses, private
+configuration, bounded retry, and credential-free help. The integration test
+`tests/integration/model-review-client.test.ts` also passed against the actual
+HTTP handlers, PostgreSQL stores and Temporal workflow: concurrent/replayed
+admission, queued status, seven-role synthetic completion, exact identity checks,
+and late cancellation preserving terminal evidence. All four CLI commands passed
+through that real HTTP service.
+
+The same integration test passed with `AGENTCI_TEST_CLIENT_PACKAGE_ROOT` pointing
+to a production-only offline installation of the packed application. This verifies
+the installed client and executable; it does not claim a packaged control-service
+deployment, live provider acceptance, hosted combined CI, or an M3 release. Full
+package smoke and the remaining milestone gates retain their separate evidence.
