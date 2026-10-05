@@ -1,11 +1,13 @@
 import { Octokit } from '@octokit/rest';
 import { createAppAuth } from '@octokit/auth-app';
 import {observeGitHubFailures} from './failure-diagnostics.ts';
+import {guardGitHubRateLimits} from './rate-limit.ts';
 import { createHash } from 'node:crypto';
 import type { Analysis, Snapshot } from '../review/types.ts';
 import type { ReviewJob } from './webhook.ts';
 export function installationClient(appId: number, installationId: number, privateKey: string): Octokit {
   const client = new Octokit({ authStrategy: createAppAuth, auth: { appId, installationId, privateKey }, request: { timeout: 30_000 } });
+  guardGitHubRateLimits(client);
   observeGitHubFailures(client, diagnostic => console.warn(JSON.stringify(diagnostic)));
   return client;
 }
