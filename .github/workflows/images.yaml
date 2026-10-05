@@ -68,16 +68,19 @@ jobs:
         run: |
           docker volume create agentci-publish-trivy
           result=0
+          image="ghcr.io/alimobrem/agentci-$IMAGE_ROLE@$IMAGE_DIGEST"
+          docker buildx imagetools inspect "$image" --raw > "published/$IMAGE_ROLE-index.json"
           for arch in amd64 arm64; do
-            image="ghcr.io/alimobrem/agentci-$IMAGE_ROLE@$IMAGE_DIGEST"
             if docker run --rm -e TRIVY_USERNAME -e TRIVY_PASSWORD -v agentci-publish-trivy:/root/.cache/trivy aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa image --image-src remote --platform "linux/$arch" --scanners vuln --format json "$image" > "published/$IMAGE_ROLE-$arch-scan.json"; then
               node scripts/check-scan.mjs "published/$IMAGE_ROLE-$arch-scan.json" || result=1
             else
               result=1
             fi
             if [ "$IMAGE_ROLE" = worker ] || [ "$IMAGE_ROLE" = eval-worker ]; then
-              if docker pull --platform "linux/$arch" "$image"; then
-                native=$(docker image inspect "$image" --format '{{.Id}}')
+              # Classic Docker stores cannot attach two architectures to one index reference.
+              # Resolve and retain the index, then pull each unique child manifest by digest.
+              if native_ref=$(node scripts/image-publication.mjs platform "published/$IMAGE_ROLE-index.json" "$arch") && docker pull --platform "linux/$arch" "$native_ref"; then
+                native=$(docker image inspect "$native_ref" --format '{{.Id}}')
                 if node scripts/verify-native-provenance.mjs "$native" > "published/$IMAGE_ROLE-$arch-native.json"; then
                   node --input-type=module -e 'import {readFileSync} from "node:fs"; const report=JSON.parse(readFileSync(process.argv[1],"utf8")); if(report.platform!=="linux/"+process.argv[2])throw new Error("Native inventory platform mismatch")' "published/$IMAGE_ROLE-$arch-native.json" "$arch" || result=1
                 else

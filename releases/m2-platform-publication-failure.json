@@ -1,0 +1,45 @@
+{
+  "kind": "M2 retained first-candidate publication failure",
+  "task": "M2-PLATFORM-MANIFESTS",
+  "runId": 37251427975,
+  "attempt": 1,
+  "sourceCommit": "e05fdc254cc3ad18030a2786c32b8dd3ed539755",
+  "version": "0.3.0-m2",
+  "workerIdentity": {
+    "version": "0.3.0-m2",
+    "sourceCommit": "e05fdc254cc3ad18030a2786c32b8dd3ed539755",
+    "role": "worker",
+    "image": "ghcr.io/alimobrem/agentci-worker@sha256:ccb5e020efe901e737ea9dba91912a068de394831905ae6033356106f83ace31",
+    "platforms": [
+      "linux/amd64",
+      "linux/arm64"
+    ],
+    "runId": "37251427975",
+    "attempt": "1"
+  },
+  "workerJobId": 111580701189,
+  "failedStep": "Scan every published platform and retain native inventories",
+  "observedError": "cannot overwrite digest sha256:ccb5e020efe901e737ea9dba91912a068de394831905ae6033356106f83ace31",
+  "logSha256": "f697b6468639e202f60b13758155854c4d71c5051ecac01e79f65c4939f2d32c",
+  "artifact": {
+    "id": 11321495828,
+    "sha256": "2ff5eabf260d8d3e48393370480736ce4c21d50d69a95dabf9670f95783d3cda"
+  },
+  "observations": [
+    "Both worker platform scans completed with no HIGH/CRITICAL findings.",
+    "amd64 native provenance completed.",
+    "arm64 image pull failed before arm64 native provenance; no passing arm64 native claim.",
+    "Other matrix roles remained live at diagnosis; the complete attempt must still be collected."
+  ],
+  "rootCause": "Classic Docker image store refuses attaching a second architecture to the same multi-platform index digest reference.",
+  "correction": "Resolve exactly one platform child manifest from the retained index and pull its unique digest for each architecture.",
+  "releaseAcceptance": false,
+  "candidateTreatment": "Preserve 0.3.0-m2 tags and results; publish corrected 0.3.1-m2 candidate without overwriting.",
+  "evalWorkerFailure": {
+    "jobId": 111580701152,
+    "errors": [
+      "cannot overwrite digest sha256:b0daf50f52b379054f5f0fe5e1d45f7fb6c4c0024bc644b83122f34103a8c52a"
+    ],
+    "logSha256": "90e5302945da0a3e97970a8fbcd3001302df2b1a36cd876a435c91e535f0fd0a"
+  }
+}

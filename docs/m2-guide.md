@@ -1,6 +1,6 @@
 # M2 customer and release guide
 
-Target version: `0.3.0-m2`. This candidate is not yet published or phase-complete.
+Target version: `0.3.1-m2`. This candidate is not yet published or phase-complete.
 The latest downloadable release remains M1 `0.2.1-m1`. Follow the
 [readiness record](releases/m2-readiness.md) and [release gates](../releases/m2-gates.json)
 before relying on a distribution claim. Infrastructure CI and local examples do

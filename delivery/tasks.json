@@ -1200,7 +1200,7 @@
         "SPEC-40-034",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "blocked",
       "startedAt": "2026-10-04T17:34:47.377Z",
       "completedAt": null,
       "acceptance": [
@@ -1209,7 +1209,8 @@
           "status": "pending",
           "evidence": []
         }
-      ]
+      ],
+      "blockedReason": "First candidate worker native validation failed on classic Docker index collision; corrected platform-manifest publisher and new candidate verification pending."
     },
     {
       "id": "M2-DOWNLOAD-ACCEPTANCE",
@@ -1343,6 +1344,23 @@
       "acceptance": [
         {
           "text": "Every section 11 and M2 section 40 entry maps to actual implementation and source-bound acceptance; distinguish generic engine classes from supplied domain assertions and preserve pending distribution/customer/release gates.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-PLATFORM-MANIFESTS",
+      "title": "Validate published native inventories using distinct platform manifest digests",
+      "requirementIds": [
+        "SPEC-40-038"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T01:37:57.549Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Preserve the published worker failure; resolve exactly one valid linux/amd64 or linux/arm64 OCI child manifest, reject missing/ambiguous/malformed descriptors, and pull each native inventory by its immutable child digest without classic Docker index collisions. Verify actual corrected publication on both platforms with a new candidate version.",
           "status": "pending",
           "evidence": []
         }

@@ -18,11 +18,14 @@ immutability: other registry writers can still move a tag. Deploy and verify by
 digest. If a run partially publishes roles, choose a new version for a corrected
 candidate rather than overwriting published artifacts. Do not move release tags.
 
-Each matrix job retains `published-images-ROLE`, containing identity, both platform
+Each matrix job retains `published-images-ROLE`, containing identity, the OCI index, both platform
 scan reports, and worker/eval-worker native inventories. Fixable HIGH/CRITICAL
 findings fail the existing scan policy. Unfixed findings still require an explicit
 reviewed disposition in the release evidence. Cache export is optional; builds,
 scans, native input verification and evidence checks remain mandatory. Native
+inventories pull each platform by its distinct child manifest digest, avoiding
+classic Docker image-store collisions under a shared index reference. Resolution
+rejects missing, duplicate, malformed and unsupported platform descriptors. Native
 inventories are checked against pinned upstream artifacts and the requested
 platform. Arm64 inventory execution on the publisher uses QEMU; it proves artifact
 identity, not native-arm64 runtime/integration acceptance.
