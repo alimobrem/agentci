@@ -16,7 +16,7 @@ test('Anthropic runs the shared smoke corpus through SDK, streaming and per-requ
  const records=await runProviderSmoke(provider,'fixture-model',ledger);assert.equal(records.length,3);assert.deepEqual(actions,Array.from({length:3},()=>['reserve','fetch','unknown']).flat());assert.equal(provider.upstreamIdentity,'anthropic');
 });
 test('Anthropic profiles cannot advertise unsupported developer or extension semantics',()=>{
- for(const key of ['developerInstructions','extensions'] as const){const p=profile();p.capabilities[key]=true;assert.throws(()=>createAnthropicProvider('synthetic-fixture',[p]),/unsupported-capability/);}
+ for(const key of ['developerInstructions'] as const){const p=profile();p.capabilities[key]=true;assert.throws(()=>createAnthropicProvider('synthetic-fixture',[p]),/unsupported-capability/);}
  const p=profile(),provider=createAnthropicProvider('synthetic-fixture',[p]);p.capabilities.stream=false;assert.equal(provider.capabilities().stream,true);
 });
 test('unsupported Anthropic schema fails before reservation and network access',async()=>{

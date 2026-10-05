@@ -1,20 +1,23 @@
 import type {MessageCreateParamsNonStreaming,MessageParam,ContentBlockParam} from '@anthropic-ai/sdk/resources/messages/messages';
+import {anthropicHistory} from './anthropic-continuation.ts';
 import {validateAnthropicSchemas} from './anthropic-schema.ts';
 import {validateModelRequest} from './request.ts';
 import {ProviderFailure,type ModelRequest} from './types.ts';
 /** Portable metadata stays controller-side; it is not reinterpreted as Anthropic user identity. */
 export function anthropicRequest(input:ModelRequest):MessageCreateParamsNonStreaming{
  const request=validateModelRequest(input);
- if(request.provider!=='anthropic'||request.developer||Object.keys(request.providerExtensions.anthropic??{}).length)throw new ProviderFailure('unsupported-capability');
+ if(request.provider!=='anthropic'||request.developer)throw new ProviderFailure('unsupported-capability');
  if(request.parameters.temperature!==undefined&&request.parameters.temperature>1)throw new ProviderFailure('unsupported-capability');
  validateAnthropicSchemas(request.tools.map(tool=>tool.inputSchema),request.responseSchema);
+ const history=anthropicHistory(request);
  const messages:MessageParam[]=[];
  const append=(role:'user'|'assistant',content:ContentBlockParam[])=>{
   const last=messages.at(-1);
   if(last?.role===role)(last.content as ContentBlockParam[]).push(...content);
   else messages.push({role,content});
  };
- for(const message of request.messages){
+ for(const [index,message] of request.messages.entries()){
+  if(history.has(index)){append('assistant',history.get(index)! as unknown as ContentBlockParam[]);continue;}
   if(message.role==='tool')append('user',[{type:'tool_result',tool_use_id:message.toolCallId!,content:message.content}]);
   else{
    const content:ContentBlockParam[]=[];

@@ -20,7 +20,7 @@ export function createAnthropicProvider(apiKey:string,profiles:AnthropicModelPro
   const p=structuredClone(supplied);
   if(typeof p.model!=='string'||!p.model.length||p.model.length>256||models.has(p.model)||!positive(p.contextTokens)||!positive(p.maxOutputTokens)||p.maxOutputTokens>p.contextTokens||!positive(p.inputUsdMicrosPerMillion)||!positive(p.outputUsdMicrosPerMillion)||typeof p.pricingRevision!=='string'||!p.pricingRevision.length||p.pricingRevision.length>256||typeof p.temperature!=='boolean'||typeof p.topP!=='boolean'||!p.capabilities||['stream','tools','structuredOutput','developerInstructions','extensions'].some(key=>typeof p.capabilities[key as keyof ModelCapabilities]!=='boolean'))throw new ProviderFailure('invalid-request');
   if(p.responseModels!==undefined&&(!Array.isArray(p.responseModels)||!p.responseModels.length||p.responseModels.length>32||new Set(p.responseModels).size!==p.responseModels.length||p.responseModels.some(model=>typeof model!=='string'||!model.length||model.length>256)))throw new ProviderFailure('invalid-request');
-  if(p.capabilities.developerInstructions||p.capabilities.extensions)throw new ProviderFailure('unsupported-capability');
+  if(p.capabilities.developerInstructions)throw new ProviderFailure('unsupported-capability');
   models.set(p.model,p);
  }
  const registered=[...models.values()];

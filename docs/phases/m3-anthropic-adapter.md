@@ -75,3 +75,15 @@ remain valid without the optional field; released HTTP contracts are unchanged.
 Prefix binding covers system/developer instructions, tools, output schema, messages
 and prior Anthropic history. Replay validation and append-only tool-result wiring
 remain pending, so preservation alone does not close multi-turn acceptance.
+
+`appendAnthropicToolResults` now appends a validated assistant proposal and exactly
+one result per tool-call ID. It creates a new request ID without extending the
+original deadline. The caller may set a fresh authorized deadline explicitly.
+The Anthropic `history` extension carries each assistant continuation at its
+message index. Request mapping verifies the exact prefix digest, requested model,
+and text/tool projection before replaying original content blocks unchanged.
+Changed instructions, tools, messages, models or result IDs fail locally. These
+checks detect inconsistent local context; provider signatures remain authoritative
+and the digest is not an authentication token. Alias-to-snapshot continuation
+currently requires matching requested/observed identity. Live multi-turn acceptance
+and higher-level review-loop integration remain pending.
