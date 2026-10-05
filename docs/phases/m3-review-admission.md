@@ -1,6 +1,8 @@
 # M3-07a review admission
 
-Development is in progress. This is an internal request/admission contract, not
+Accepted in PR #41 with full CI run 37381483130 (34 integration tests, no failures
+or skips), installed-package and container runtime checks. Evidence is recorded in
+`delivery/acceptance/m3-07a.json`. This is an internal request/admission contract, not
 an enabled public route or a complete review consumer. M3-07b connects dispatch;
 M3-07c adds authenticated customer transport and its status representation.
 

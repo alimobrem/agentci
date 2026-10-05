@@ -1,0 +1,33 @@
+{
+  "task": "M3-07a",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/41",
+  "sourceCommit": "e77e1bb3990ea6492b0035a01d131a9617237a9b",
+  "mergeCommit": "57ba068a9307f24f7cf660eeeb59005435c87022",
+  "fullCiRun": 37381483130,
+  "fullCiMergePreview": "0c3c98e79dedbb49d285eeee5243162b2b02ad4d",
+  "verifiedSourceTree": "42724912f73cdbd39fc27562e5d51477bde7fa1d",
+  "integrationCounts": {
+    "tests": 34,
+    "failed": 0,
+    "skipped": 0
+  },
+  "hostedRun": 37381483447,
+  "artifactId": 11376160058,
+  "hostedEvidence": "delivery/acceptance/m3-06c-frozen.json",
+  "acceptance": [
+    "Strict shared request and approval contracts bind exact subject, profile revision and mode",
+    "Concurrent exact submissions create one admission and outbox entry",
+    "Forced conflicting concurrent submissions produce one success and one conflict",
+    "Outbox insertion failure rolls back admission",
+    "Explicit denial and redacted authorization or database outage errors",
+    "Tenant-scoped reads and writes, immutable records and restart recovery",
+    "Installed admission module, migration and shared contract fixture pass package smoke"
+  ],
+  "verification": "Completed CI source tree equals PR head tree. Real PostgreSQL admission test ran. Released API compatibility, regression evals, package installation, image scans and compiled isolated runtime checks passed. Hosted report and chained comparison independently verified.",
+  "limitations": [
+    "Internal admission contract only; production authorizer and controller dispatch/recovery are M3-07b.",
+    "Authenticated customer API/client/CLI transport is M3-07c.",
+    "Synthetic evidence does not replace deferred live-provider acceptance.",
+    "Development slice acceptance, not an M3 release."
+  ]
+}

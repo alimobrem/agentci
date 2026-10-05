@@ -42,3 +42,39 @@ semantics must be tested against real transport before adding available customer
 routes to the shipped OpenAPI/client. Do not activate partial customer routes
 that can enqueue work with no configured consumer. Router and additional provider
 adapters retain the original explicit later-integration/optional decisions.
+
+## Controller implementation notes for M3-07b
+
+The existing persistent reviewer already reuses stored results and fences
+ambiguous charged attempts. Build on it and the PostgreSQL budget ledger; do not
+create a second provider retry/accounting implementation. Derive stable per-role
+request IDs from the admitted review ID and immutable role configuration. A retry
+must not invent a new request identity to bypass an ambiguous charged attempt.
+
+Profiles bind selected role configurations, explicit evidence selection,
+synthetic/external provider registrations, independence policy and a shared
+operator budget scope. A fresh review request must not reset that shared budget.
+Changing its immutable limit requires an explicit new operator budget identity,
+with the old ledger retained. Profile revisions must remain resolvable after
+restart; replacing a file must not silently reinterpret already-admitted work.
+
+Extend the admission outbox with dispatch leases, deterministic workflow identity
+and terminal status. Start before acknowledging dispatch; an ambiguous start
+must resolve the existing workflow and verify its identity. Handle completion
+racing with dispatch acknowledgement without overwriting terminal evidence.
+Persist cancellation before contacting Temporal, including cancellation before
+any workflow exists. Terminated-workflow reconciliation must be independent of
+the failed parent's lifetime and preserve cleanup/failure evidence.
+
+Synthetic providers must be explicit fixture implementations with no network
+path, not a production adapter with dummy credentials. Synthetic findings remain
+labelled and nonblocking. Context selection must disclose its bounds; a selected
+set of files must not be presented as complete repository coverage. Runtime
+configuration and profile readers remain controller-owned.
+
+Profile retry policy should express a duration, not a permanently embedded
+absolute deadline. Materialize the execution deadline once from persisted
+admission/execution metadata, then reuse it across role retries. Recomputing
+`now + timeout` on every retry would change the request digest and extend the
+allowed execution indefinitely. Keep credential values outside profile/evidence
+serialization; provider factories resolve operator-owned secret references.
