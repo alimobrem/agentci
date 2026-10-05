@@ -1,7 +1,7 @@
 import {canonical} from '../../packages/review/engine.ts';
 import {EvalStore,EvalLeaseLost} from '../../packages/storage/evals.ts';
 import {executeSuite} from '../../packages/evals/execution.ts';
-import {reapPriorEvalContainers,reapCancelledEvalContainers,containerEngine,type ContainerEngine,type RunnerPolicy} from '../../packages/evals/runner.ts';
+import {reapPriorEvalContainers,reapCancelledEvalContainers,containerEngine,validateRunnerPolicy,type ContainerEngine,type RunnerPolicy} from '../../packages/evals/runner.ts';
 import {validateHttpProvider} from '../../packages/evals/http.ts';
 import type {EvalRun} from '../../packages/evals/contracts.ts';
 export class EvalUnitBusy extends Error {}
@@ -23,6 +23,11 @@ export async function executeStoredUnit(store:EvalStore,id:string,policy:RunnerP
   if(provider){if(provider.length!==1)throw new EvalUnitConfigurationError('Operator provider unavailable');validateHttpProvider(provider[0]!);}
   const identity=provider?{runnerProvider:{id:provider[0]!.id,revision:provider[0]!.revision}}:{runnerImage:policy.image};
   if(canonical(identity)!==canonical(def.runner))throw new EvalUnitConfigurationError('Operator runner does not match immutable eval unit');
+  if(def.executionLimits){
+    const operator=validateRunnerPolicy(policy),cap=def.executionLimits;
+    if(provider||cap.engine!==operator.engine||cap.memoryMb>operator.memoryMb||cap.cpus>operator.cpus||cap.pids>operator.pids||cap.maxTrials>(options.maxTrials??100))throw new EvalUnitConfigurationError('Approved execution limits exceed operator bounds');
+    policy={...policy,memoryMb:cap.memoryMb,cpus:cap.cpus,pids:cap.pids};
+  }
   const seconds=options.leaseSeconds??30,period=options.maintenanceMs??5000;
   if(!Number.isSafeInteger(period)||period<100||period>=seconds*1000/2)throw new Error('Invalid eval lease maintenance interval');
   const token=await store.claim(id,seconds);if(!token)throw new EvalUnitBusy('Eval unit already leased');
@@ -40,7 +45,7 @@ export async function executeStoredUnit(store:EvalStore,id:string,policy:RunnerP
   try{
     await maintain();
     const run=await executeSuite(store.repository,unit.inputs[def.side].snapshot,def.suite,policy,{
-      signal,ownership,runId:id,model:def.model,maxTrials:options.maxTrials,
+      signal,ownership,runId:id,model:def.model,maxTrials:def.executionLimits?.maxTrials??options.maxTrials,
       assertionSnapshot:unit.inputs[def.assertionSide].snapshot,priorOmittedInputs:unit.inputs[def.side].omitted,
       loadTrial:index=>store.trial(id,index),saveTrial:async(index,checkpoint)=>{
         await store.recordTrial(id,token,index,checkpoint);completedTrials=index+1;

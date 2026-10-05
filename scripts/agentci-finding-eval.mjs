@@ -1,7 +1,7 @@
 import {spawnSync} from 'node:child_process';
 import {writeFile,readFile} from 'node:fs/promises';
 // Frozen baseline harness. Subject modules come from the reviewed commit; dependencies from the pinned runner.
-const scenarios=[['finding-lifecycle','findings',5]];
+const scenarios=[['finding-lifecycle','findings',5],['finding-reproduction','finding-reproduction',3]];
 const results=[];
 for(const [scenario,file,minTests] of scenarios){
   const assertions=await readFile(`tests/${file}.test.ts`,'utf8'),names=[...assertions.matchAll(/^test\('([^']+)'/gm)].map(match=>match[1]);
