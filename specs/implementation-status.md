@@ -383,9 +383,9 @@ Milestone assignments outside the build-plan list are planning estimates, not am
 | SPEC-13.2-008 | 13.2 / 793 | - timeout/retry policy | M3 | in-progress | docs/phases/m3-provider-budget.md, specs/api/provider-operations.json |
 | SECTION-13.3 | 13.3 / 795 | 13.3 Provider adapters | M3 | not-started |  |
 | SPEC-13.3-001 | 13.3 / 797 | Initial adapters: | M3 | not-started |  |
-| SPEC-13.3-002 | 13.3 / 799 | - OpenAI | M3 | not-started |  |
-| SPEC-13.3-003 | 13.3 / 800 | - Anthropic | M3 | not-started |  |
-| SPEC-13.3-004 | 13.3 / 801 | - xAI | M3 | not-started |  |
+| SPEC-13.3-002 | 13.3 / 799 | - OpenAI | M3 | deferred | docs/phases/m3-live-validation-deferral.md |
+| SPEC-13.3-003 | 13.3 / 800 | - Anthropic | M3 | deferred | docs/phases/m3-live-validation-deferral.md |
+| SPEC-13.3-004 | 13.3 / 801 | - xAI | M3 | deferred | docs/phases/m3-live-validation-deferral.md |
 | SPEC-13.3-005 | 13.3 / 803 | Next: | M3 | not-started |  |
 | SPEC-13.3-006 | 13.3 / 805 | - Google | M3 | not-started |  |
 | SPEC-13.3-007 | 13.3 / 806 | - OpenAI-compatible endpoints | M3 | not-started |  |

@@ -26,7 +26,7 @@
     {
       "id": "M3",
       "name": "Multi-model review",
-      "exit": "A real PR is reviewed by a provider different from its coding provider; a reproduced defect is confirmed, while unsupported assertions remain unconfirmed.",
+      "exit": "Released reviewer, finding, API and authenticated dashboard workflow with explicitly synthetic success/failure/recovery demonstrations. Live provider compatibility and real different-provider demo deferred by owner decision docs/phases/m3-live-validation-deferral.md; do not claim original M3 fully complete.",
       "prs": [
         {
           "id": "M3-00",
@@ -86,7 +86,7 @@
             "M3-01",
             "M3-R2"
           ],
-          "acceptance": "Official provider integration behind core; request/stream/schema conformance, redacted errors, live opt-in smoke and outage tests.",
+          "acceptance": "Official provider integration behind core; request/stream/schema conformance, redacted errors, live opt-in smoke and outage tests. Live acceptance deferred by owner decision; original criterion retained, no completion claim.",
           "status": "planned"
         },
         {
@@ -97,7 +97,7 @@
             "M3-01",
             "M3-R2"
           ],
-          "acceptance": "Same conformance corpus; explicit feature translation/unsupported capabilities; live smoke without secret leakage.",
+          "acceptance": "Same conformance corpus; explicit feature translation/unsupported capabilities; live smoke without secret leakage. Live acceptance deferred by owner decision; original criterion retained, no completion claim.",
           "status": "planned"
         },
         {
@@ -108,7 +108,7 @@
             "M3-01",
             "M3-R2"
           ],
-          "acceptance": "Same conformance corpus plus live smoke; do not assume endpoint similarity proves compatibility.",
+          "acceptance": "Same conformance corpus plus live smoke; do not assume endpoint similarity proves compatibility. Live acceptance deferred by owner decision; original criterion retained, no completion claim.",
           "status": "planned"
         },
         {
@@ -116,9 +116,8 @@
           "title": "Independent reviewer roles",
           "size": "M",
           "dependsOn": [
-            "M3-02",
-            "M3-03",
-            "M3-04"
+            "M3-01",
+            "M3-R2"
           ],
           "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
           "status": "planned"
@@ -140,7 +139,7 @@
           "dependsOn": [
             "M3-06"
           ],
-          "acceptance": "Review CLI and API operations with compatibility coverage, exact-head Checks, independent-provider dogfood, unsupported claims and confirmed regression demo; decide optional router/later adapters explicitly.",
+          "acceptance": "Review CLI and API operations with compatibility coverage, exact-head Checks, independent-provider dogfood, unsupported claims and confirmed regression demo; decide optional router/later adapters explicitly. Account-free demonstrations use explicitly synthetic provider fixtures; live-only claims remain deferred under docs/phases/m3-live-validation-deferral.md.",
           "status": "planned"
         },
         {
@@ -185,7 +184,7 @@
             "M3-R2",
             "M3-R3"
           ],
-          "acceptance": "Publish verified CLI/service artifacts; fresh customer review, provider failure recovery and released-build success/failure demo; close all gates and retro.",
+          "acceptance": "Publish verified CLI/service artifacts; fresh customer review, provider failure recovery and released-build success/failure demo; close all gates and retro. Account-free demonstrations use explicitly synthetic provider fixtures; live-only claims remain deferred under docs/phases/m3-live-validation-deferral.md.",
           "status": "planned"
         }
       ]
