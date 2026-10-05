@@ -1200,7 +1200,7 @@
         "SPEC-40-034",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "blocked",
       "startedAt": "2026-10-04T17:34:47.377Z",
       "completedAt": null,
       "acceptance": [
@@ -1209,7 +1209,8 @@
           "status": "pending",
           "evidence": []
         }
-      ]
+      ],
+      "blockedReason": "First candidate worker native validation failed on classic Docker index collision; corrected platform-manifest publisher and new candidate verification pending."
     },
     {
       "id": "M2-DOWNLOAD-ACCEPTANCE",
@@ -1282,7 +1283,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"

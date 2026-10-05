@@ -1,0 +1,24 @@
+{
+  "kind": "Actual first-candidate arm64 child-manifest resolver acceptance",
+  "indexDigest": "sha256:ccb5e020efe901e737ea9dba91912a068de394831905ae6033356106f83ace31",
+  "manifest": "ghcr.io/alimobrem/agentci-worker@sha256:ea4b0c6bdc1a36d37b37588a3125e819dcf334b9a53e58e464622aba40bc4d03",
+  "sourceCommit": "e05fdc254cc3ad18030a2786c32b8dd3ed539755",
+  "version": "0.3.0-m2",
+  "anonymousPull": true,
+  "native": {
+    "image": "ghcr.io/alimobrem/agentci-worker@sha256:ea4b0c6bdc1a36d37b37588a3125e819dcf334b9a53e58e464622aba40bc4d03",
+    "engine": "docker",
+    "platform": "linux/arm64",
+    "temporalNativeArtifacts": "matched official npm artifact",
+    "files": {
+      "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+      "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+      "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+      "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+    },
+    "coverage": "Podman compiled module metadata is bound to exact official binary hashes; its source manifest includes additional modules. Cargo and Docker vendor manifests are upstream source inventories, not proofs of exact compiled dependency graphs."
+  },
+  "limitations": [
+    "Local arm64 child-manifest download and native hash verification only. Corrected two-platform publisher and complete downloaded-runtime acceptance remain required."
+  ]
+}

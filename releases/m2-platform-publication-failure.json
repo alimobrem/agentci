@@ -34,5 +34,12 @@
   "rootCause": "Classic Docker image store refuses attaching a second architecture to the same multi-platform index digest reference.",
   "correction": "Resolve exactly one platform child manifest from the retained index and pull its unique digest for each architecture.",
   "releaseAcceptance": false,
-  "candidateTreatment": "Preserve 0.3.0-m2 tags and results; publish corrected 0.3.1-m2 candidate without overwriting."
+  "candidateTreatment": "Preserve 0.3.0-m2 tags and results; publish corrected 0.3.1-m2 candidate without overwriting.",
+  "evalWorkerFailure": {
+    "jobId": 111580701152,
+    "errors": [
+      "cannot overwrite digest sha256:b0daf50f52b379054f5f0fe5e1d45f7fb6c4c0024bc644b83122f34103a8c52a"
+    ],
+    "logSha256": "90e5302945da0a3e97970a8fbcd3001302df2b1a36cd876a435c91e535f0fd0a"
+  }
 }
