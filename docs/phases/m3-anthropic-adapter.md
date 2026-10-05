@@ -12,8 +12,9 @@ controller-side and is not converted into an upstream user identifier.
 
 A distinct developer instruction role is rejected explicitly. No implicit role
 merging or endpoint override occurs. This is a partial implementation: provider
-schema preflight, registered model profiles, shared conformance and authorized live
-acceptance remain required. No live Anthropic request has been made.
+schema preflight, registered model profiles and synthetic shared conformance are
+implemented; authorized live acceptance and review-loop integration remain required.
+No live Anthropic request has been made.
 
 Sources: [official SDK](https://platform.claude.com/docs/en/cli-sdks-libraries/sdks/typescript),
 [Messages reference](https://platform.claude.com/docs/en/api/typescript/messages/create).
@@ -42,8 +43,8 @@ validation through the common executor. Profiles are detached, allowlist models
 and returned snapshots, declare capabilities and cap output tokens. Cost reservation
 uses full context at configured upper prices. Synthetic SDK tests pass the shared
 structured/streamed/tool-proposal suite with accounting before each result.
-Production capability/pricing profiles and provider-specific schema preflight are
-still pending; fixture profiles are not production settings.
+The opt-in production profile and schema preflight are described below; synthetic
+fixture profiles are not production settings.
 
 Schema preflight now enforces documented combined strict-tool, optional-field and
 union limits. Unsupported scalar/array constraints, recursive/external references
@@ -61,9 +62,9 @@ The full-context reservation with 256 output tokens is $8.005120, not an expecte
 bill. No fast/regional inference options or built-in paid tools are exposed.
 
 Opus 5.5 has always-on thinking and model/conversation-bound thinking blocks.
-The current adapter handles first-turn text and tool proposals; preserving opaque
-thinking history for subsequent tool-result turns remains an acceptance gap.
-Do not claim multi-turn Opus support until that contract and live test pass.
+The adapter preserves opaque thinking history for subsequent tool-result turns
+through the continuation helper below. Synthetic SDK acceptance covers two tool
+round trips and a final answer; live multi-turn Opus acceptance remains pending.
 
 The internal M3 response contract now has optional `continuation`: provider,
 observed model, conversation-prefix digest and bounded original content blocks.
@@ -74,7 +75,7 @@ do not display it as a finding or include it in public evidence. Existing adapte
 remain valid without the optional field; released HTTP contracts are unchanged.
 Prefix binding covers system/developer instructions, tools, output schema, messages
 and prior Anthropic history. Replay validation and append-only tool-result wiring
-remain pending, so preservation alone does not close multi-turn acceptance.
+are exercised through the actual SDK with synthetic HTTP responses.
 
 `appendAnthropicToolResults` now appends a validated assistant proposal and exactly
 one result per tool-call ID. It creates a new request ID without extending the
@@ -87,3 +88,10 @@ checks detect inconsistent local context; provider signatures remain authoritati
 and the digest is not an authentication token. Alias-to-snapshot continuation
 currently requires matching requested/observed identity. Live multi-turn acceptance
 and higher-level review-loop integration remain pending.
+
+The SDK round-trip test checks both earlier signed blocks and grouped tool results
+in every subsequent outbound request, separate reservation/accounting for each new
+request ID, and local rejection of changed instructions before reservation or HTTP.
+This verifies serialization and controller behavior, not upstream signature validity.
+Callers must use the continuation helper for signed tool turns: manually rebuilding
+portable assistant messages can omit provider state and is not live-validated.
