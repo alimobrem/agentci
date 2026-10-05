@@ -1227,6 +1227,24 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M2-SNAPSHOT-REUSE",
+      "title": "Bound hosted snapshot API work by reusing authenticated verified immutable blobs",
+      "requirementIds": [
+        "SPEC-34.2-003",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T18:19:16.710Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Repeated base/head snapshots reuse only content-hash-verified UTF-8 blobs in a byte/entry-bounded client-and-repository-scoped cache, while freshly verifying commit/tree permissions and identities each read. Tests prove reduced blob requests, tampered cached-size rejection, separate-client/repository isolation, eviction and failed-response retry; preserve exact snapshot and full hosted acceptance. Record request-count improvement separately from unproven total delivery acceleration.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
