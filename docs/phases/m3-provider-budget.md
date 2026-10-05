@@ -48,3 +48,13 @@ Estimated costs retain the conservative reservation; only reported costs settle.
 The execution tests cover retry limits, redaction, cancellation, an uncooperative
 provider, budget exhaustion and accounting failures. These are fixture tests;
 live provider billing and adapter behavior still require their own acceptance.
+
+Streaming normalization uses `ModelStreamValidator`: one matching start event,
+bounded text/tool deltas, optional final usage and one terminal response. Terminal
+text, tool proposals and usage must agree with accumulated events. Tool arguments
+must satisfy the declared tool schema. A completed iterator without a terminal is
+invalid; events after terminal poison the stream. Validation failures are sticky.
+Deltas are provisional display data and must not trigger tools or finding actions.
+Callers must consume iterator completion and call `finish()` before accepting the
+terminal result. The stream validator is tested, but the budgeted streaming
+executor and cancellation/recovery integration remain pending.
