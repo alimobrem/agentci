@@ -1,5 +1,5 @@
 import type {Pool} from 'pg';
-import {canonical,digest} from '../../packages/review/engine.ts';
+import {canonical} from '../../packages/review/engine.ts';
 import type {Snapshot} from '../../packages/review/types.ts';
 import {nameUuid} from '../../packages/evals/request-id.ts';
 import {PostgresBudgetLedger} from '../../packages/providers/budget.ts';
@@ -7,6 +7,7 @@ import {ProviderFailure,type ModelProvider} from '../../packages/providers/types
 import {ReviewAdmissionStore} from '../../packages/storage/review-admissions.ts';
 import {ReviewDispatchStore} from '../../packages/storage/review-dispatch.ts';
 import {ReviewerProfileStore} from '../../packages/storage/reviewer-profiles.ts';
+import {ReviewSummaryStore} from '../../packages/storage/review-summaries.ts';
 import {ReviewerResultStore} from '../../packages/storage/reviewer-results.ts';
 import {FindingHistoryStore} from '../../packages/storage/finding-history.ts';
 import {bindReviewerProfile} from '../../packages/reviewers/profile.ts';
@@ -54,7 +55,7 @@ export function createAdmittedReviewExecution(options:{
     await check();const saved=await history.ingest(finding,request.subject,nameUuid(request.id,`agentci:review-finding:v1:${finding.id}`));findings.push({id:finding.id,digest:saved.digest});
    }
    const summary={schemaVersion:'v1alpha1' as const,admissionId:request.id,admissionDigest:admission.digest,profileRevision:bound.revision,contextDigest:context.digest,mode:request.mode,coverage:{selectedFiles:context.documents.length,configuredRoles:roles.length,completedRoles:roles.filter(r=>r.status==='completed').length,wholeRepository:false},roles,findings};
-   return {summary,digest:digest(canonical(summary))};
+   return new ReviewSummaryStore(pool,scope).save(summary,context.documents);
   }catch(error){if(error instanceof ProviderFailure)throw error;throw Error('review-execution-unavailable');}
  };
 }

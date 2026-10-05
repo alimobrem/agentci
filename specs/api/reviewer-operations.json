@@ -333,6 +333,38 @@
         "synthetic findings retain contributing reviewer evidence",
         "cancellation authorization revocation and execution-mode dispatch fences"
       ]
+    },
+    {
+      "operationId": "validateReviewExecutionSummary",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.3",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/integration/admitted-review-execution.test.ts"
+      ],
+      "scenarios": [
+        "strict bounded identity-only summary",
+        "coverage counts agree with retained role statuses"
+      ]
+    },
+    {
+      "operationId": "ReviewSummaryStore",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SECTION-12.3",
+        "SECTION-31.1"
+      ],
+      "tests": [
+        "tests/integration/admitted-review-execution.test.ts"
+      ],
+      "scenarios": [
+        "first write rejects omitted roles findings and wrong context",
+        "exact profile role and finding evidence reconstruction",
+        "summary-write failure recovery without redispatch",
+        "immutable tenant-scoped restart reads and redacted outages"
+      ]
     }
   ]
 }

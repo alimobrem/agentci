@@ -1,7 +1,10 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {randomUUID} from 'node:crypto';import {readFile} from 'node:fs/promises';import {Pool} from 'pg';
+import {nameUuid} from '../../packages/evals/request-id.ts';
+import {bindReviewerProfile} from '../../packages/reviewers/profile.ts';
 import {canonical,digest} from '../../packages/review/engine.ts';
 import {ReviewAdmissionStore} from '../../packages/storage/review-admissions.ts';
 import {ReviewDispatchStore} from '../../packages/storage/review-dispatch.ts';
+import {ReviewSummaryStore} from '../../packages/storage/review-summaries.ts';
 import {ReviewerProfileStore} from '../../packages/storage/reviewer-profiles.ts';
 import {createAdmittedReviewExecution} from '../../apps/worker/reviewer-execution.ts';
 import {findingProposalSchema} from '../../packages/findings/model.ts';
@@ -10,7 +13,7 @@ const url=process.env.AGENTCI_TEST_DATABASE_URL;if(!url)throw Error('Admitted ex
 test('admitted execution recovers retained reviewer evidence without spending twice and creates synthetic findings',{timeout:30000},async()=>{
  const schema=`execution_${randomUUID().replaceAll('-','')}`,admin=new Pool({connectionString:url});await admin.query(`CREATE SCHEMA ${schema}`);const pool=new Pool({connectionString:url,options:`-c search_path=${schema}`});
  try{
-  for(const name of ['004_m3_model_budget','005_m3_reviewer_results','006_m3_finding_history','008_m3_review_admissions','009_m3_review_dispatch','010_m3_reviewer_profiles'])await pool.query(await readFile(new URL(`../../deploy/migrations/${name}.sql`,import.meta.url),'utf8'));
+  for(const name of ['004_m3_model_budget','005_m3_reviewer_results','006_m3_finding_history','008_m3_review_admissions','009_m3_review_dispatch','010_m3_reviewer_profiles','011_m3_review_summaries'])await pool.query(await readFile(new URL(`../../deploy/migrations/${name}.sql`,import.meta.url),'utf8'));
   const scope={organizationId:randomUUID(),repository:'owner/repo'},profiles=new ReviewerProfileStore(pool,scope),input=JSON.parse(await readFile(new URL('../../specs/api/fixtures/reviewer-profile.json',import.meta.url),'utf8'));
   input.budget.id=randomUUID();input.reviewers[0].responseSchema=findingProposalSchema;input.reviewers.push({...input.reviewers[0],role:'code-correctness'});const profile=await profiles.put(input);
   const admissions=new ReviewAdmissionStore(pool,scope,{approve:async r=>({requestDigest:digest(canonical(r)),policyDigest:digest('fixture-authority'),profileRevision:r.profile.revision,mode:r.mode})});
@@ -25,6 +28,15 @@ test('admitted execution recovers retained reviewer evidence without spending tw
   await pool.query('DROP TRIGGER fixture_failure ON agentci_finding_events');
   const result=await createAdmittedReviewExecution(options)(id);assert.equal(calls,2);assert.equal(result.summary.findings.length,1);assert.equal(result.summary.roles.length,2);assert.equal(result.summary.coverage.wholeRepository,false);assert.equal(result.summary.coverage.completedRoles,2);assert.equal(result.summary.mode,'synthetic');
   assert.deepEqual(await run(id),result);assert.equal(calls,2);assert.equal((await pool.query('SELECT count(*) FROM agentci_model_attempts')).rows[0].count,'2');assert.equal((await pool.query('SELECT sum(actual_usd_micros)::text AS spent FROM agentci_model_attempts')).rows[0].spent,'2');
+  const summaries=new ReviewSummaryStore(pool,scope);assert.deepEqual(await summaries.get(id),result);
+  const documents=[{kind:'source',side:'head',path:'src/main.ts',content,digest:digest(content)}];
+  await assert.rejects(summaries.save({...result.summary,findings:[]},documents),/review-summary-conflict/);
+  await assert.rejects(summaries.save({...result.summary,roles:[]},documents),/review-summary-conflict/);
+  assert.equal(await new ReviewSummaryStore(pool,{...scope,organizationId:randomUUID()}).get(id),undefined);
+  await assert.rejects(pool.query('UPDATE agentci_review_execution_summaries SET digest=digest'),/Immutable review admission/);
+  await assert.rejects(pool.query('DELETE FROM agentci_review_execution_summaries'),/Immutable review admission/);
+  const restartedPool=new Pool({connectionString:url,options:`-c search_path=${schema}`});try{assert.deepEqual(await new ReviewSummaryStore(restartedPool,scope).get(id),result);assert.equal(calls,2);}finally{await restartedPool.end();}
+  await assert.rejects(new ReviewSummaryStore(restartedPool,scope).get(id),/^Error: review-summary-unavailable$/);
   const event=(await pool.query('SELECT event FROM agentci_finding_events')).rows[0].event;assert.equal(event.finding.state,'deduplicated');assert.equal(event.finding.mode,'synthetic');assert.equal(event.finding.sources.length,2);
   const cancelled=await admit();await new ReviewDispatchStore(pool,scope).requestCancellation(cancelled);await assert.rejects(run(cancelled),/cancelled/);assert.equal(calls,2);
   const denied=await admit();authorized=false;await assert.rejects(run(denied),/^Error: review-execution-unavailable$/);assert.equal(calls,2);authorized=true;
@@ -33,6 +45,21 @@ test('admitted execution recovers retained reviewer evidence without spending tw
   const history=(await pool.query('SELECT event FROM agentci_finding_events ORDER BY version')).rows;
   assert.equal(history.length,2);assert.equal(history[1].event.action.type,'evidence');assert.equal(history[1].event.finding.sources.length,4);assert.equal(history[1].event.finding.state,'deduplicated');assert.equal(history[0].event.finding.sources.length,2);
   assert.deepEqual(await run(denied),repeated);assert.equal(calls,4);assert.equal((await pool.query('SELECT count(*) FROM agentci_finding_events')).rows[0].count,'2');
-  await profiles.revoke(profile.profile.id,profile.revision);await assert.rejects(run(denied),/^Error: review-execution-unavailable$/);assert.equal(calls,4);
+  const pending=await admit();
+  await pool.query('CREATE TRIGGER fixture_summary_failure BEFORE INSERT ON agentci_review_execution_summaries FOR EACH ROW EXECUTE FUNCTION fixture_finding_failure()');
+  await assert.rejects(run(pending),/review-summary-unavailable/);assert.equal(calls,6);assert.equal(await summaries.get(pending),undefined);
+  await pool.query('DROP TRIGGER fixture_summary_failure ON agentci_review_execution_summaries');
+  const admitted=(await admissions.get(pending))!,dispatch=(await new ReviewDispatchStore(pool,scope).get(pending))!,bound=bindReviewerProfile(admitted.request,profile.profile,dispatch.admittedAtMs);
+  const pendingRoles=[];
+  for(const role of bound.roles){const row=(await pool.query('SELECT digest,result FROM agentci_reviewer_results WHERE request_id=$1',[role.requestId])).rows[0];pendingRoles.push({requestId:role.requestId,role:role.config.role,digest:row.digest,status:row.result.status});}
+  const findingId=result.summary.findings[0]!.id,retained=(await pool.query('SELECT digest FROM agentci_finding_events WHERE operation_id=$1',[nameUuid(pending,`agentci:review-finding:v1:${findingId}`)])).rows[0];
+  const pendingSummary={...result.summary,admissionId:pending,admissionDigest:admitted.digest,roles:pendingRoles,findings:[{id:findingId,digest:retained.digest}]};
+  await assert.rejects(summaries.save({...pendingSummary,findings:[]},documents),/review-summary-conflict/);
+  await assert.rejects(summaries.save({...pendingSummary,roles:pendingRoles.slice(0,1),coverage:{...pendingSummary.coverage,configuredRoles:1,completedRoles:1}},documents),/review-summary-conflict/);
+  await assert.rejects(summaries.save({...pendingSummary,findings:[{id:findingId,digest:digest('unrelated evidence')}]},documents),/review-summary-conflict/);
+  await assert.rejects(summaries.save(pendingSummary,[{...documents[0],content:'changed',digest:digest('changed')}]),/review-summary-conflict/);
+  assert.equal(await summaries.get(pending),undefined,'invalid summaries never persist');
+  assert.deepEqual(await run(pending),await summaries.save(pendingSummary,documents));assert.equal(calls,6,'summary-write retry cannot redispatch paid roles');
+  await profiles.revoke(profile.profile.id,profile.revision);await assert.rejects(run(denied),/^Error: review-execution-unavailable$/);assert.equal(calls,6);
  }finally{await pool.end();await admin.query(`DROP SCHEMA ${schema} CASCADE`);await admin.end();}
 });

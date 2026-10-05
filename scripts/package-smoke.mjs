@@ -50,6 +50,10 @@ try {
   if(typeof ReviewerProfileStore!=='function')throw new Error('Installed reviewer profile store missing');
   const profileFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/reviewer-profile.json'),'utf8'));
   validateReviewerProfile(profileFixture);
+  if(!(await readFile(join(installedRoot,'deploy/migrations/011_m3_review_summaries.sql'),'utf8')).includes('review_execution_summary_immutable'))throw new Error('Installed review summary migration missing');
+  const {ReviewSummaryStore}=await import(pathToFileURL(join(installedRoot,'dist/packages/storage/review-summaries.js')).href);
+  const {validateReviewExecutionSummary}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/summary.js')).href);
+  if([ReviewSummaryStore,validateReviewExecutionSummary].some(value=>typeof value!=='function'))throw new Error('Installed review summary modules missing');
   const {validateModelFinding}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/model.js')).href);
   const findingFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-finding.json'),'utf8'));
   validateModelFinding(findingFixture,findingFixture.subject);

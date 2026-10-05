@@ -123,8 +123,7 @@ authorization, profile revocation and external registration in synthetic mode
 prevent dispatch. Coverage explicitly reports the selected files and completed
 roles rather than claiming whole-repository coverage.
 
-Outstanding before controller acceptance: durable execution summaries, Temporal
-activity adaptation/registration,
+Outstanding before controller acceptance: Temporal activity adaptation/registration,
 production authorization/provider configuration, and independent termination
 reconciliation remain required. This runner is not yet enabled in production.
 
@@ -138,3 +137,13 @@ for retry because its approved plan pins the current finding version. Existing
 are never silently dropped. Real database acceptance covers two admissions with
 four reviewer sources, unchanged first history, and no extra charges/events on
 retry. Pure acceptance covers preserved reproduction/operator dispositions.
+
+Migration 011 retains immutable execution summaries with admission/profile/context
+digests and reviewer/finding references. The store binds all configured role IDs
+to retained reviewer results, reconstructs findings using their exact context,
+and checks their immutable history events before accepting the first summary.
+First-write acceptance rejects missing roles/findings, unrelated event digests and
+changed context. An injected summary-write failure recovers without additional
+provider calls; scoped reads work after reconnecting without executing reviewers.
+The summary reports partial/refused role coverage explicitly and stores no source
+content or credentials. Production finalization must consume this retained summary.
