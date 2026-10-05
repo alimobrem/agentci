@@ -7,3 +7,6 @@ await cp(new URL('../packages/review/analysis.schema.json', import.meta.url),
 
 await cp(new URL('../packages/evals/json', import.meta.url),
   new URL('../dist/packages/evals/json', import.meta.url), { recursive: true });
+
+await cp(new URL('../packages/providers/json', import.meta.url),
+  new URL('../dist/packages/providers/json', import.meta.url), { recursive: true });

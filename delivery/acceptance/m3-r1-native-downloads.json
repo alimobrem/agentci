@@ -1,0 +1,451 @@
+{
+  "task": "M3-R1",
+  "status": "partial-acceptance",
+  "sourceCommit": "8b6dfabb704dcc4813072c68a3ea3f7148d51c26",
+  "version": "0.4.0-m3-dev.1",
+  "publicationRun": "https://github.com/alimobrem/agentci/actions/runs/37265297310",
+  "downloadRun": "https://github.com/alimobrem/agentci/actions/runs/37267522445",
+  "downloadWorkflowCommit": "20836683d6921079662974cc487b20ed4b49d51e",
+  "images": {
+    "api": "ghcr.io/alimobrem/agentci-api@sha256:df034376d01660ee38d9ce631db4e82c7d71e578da6415a011f8248567fe9862",
+    "worker": "ghcr.io/alimobrem/agentci-worker@sha256:52719346b43bb57c7b17178146bca2e8e135837d3905f44ac889f5885f088c6b",
+    "eval-worker": "ghcr.io/alimobrem/agentci-eval-worker@sha256:2e77cb6456ce9035d22f4dccb943bc4de3b696e5b15c8c1610f254dd1c601aa2",
+    "eval-runner": "ghcr.io/alimobrem/agentci-eval-runner@sha256:755014181cb6bfe06ae6f8bc7b58e9c27f65eabb5e7bc44b7a2221c54c21ba34",
+    "eval-engines": "ghcr.io/alimobrem/agentci-eval-engines@sha256:5af747d2d09be9903034effc15fda8f2402ff83dc89fb594b46343c2f0bc882d",
+    "eval-agentci": "ghcr.io/alimobrem/agentci-eval-agentci@sha256:d13b1b290f785c98e67f19d1370d4387f67921807b3c342f3c996b7a730c3fe7"
+  },
+  "platforms": [
+    {
+      "platform": "linux/amd64",
+      "anonymous": true,
+      "integrationGroupsPassed": 15,
+      "apiChecks": [
+        "non-root API/worker startup",
+        "M2 schema readiness",
+        "signature rejection",
+        "evidence authentication",
+        "comparison authentication/UUID/scoped lookup",
+        "compiled comparison API/client reads actual queued database evidence",
+        "compiled snapshot export/client completion",
+        "signed closed delivery",
+        "non-root persistent Temporal database startup/restart",
+        "graceful shutdown"
+      ],
+      "evaluatorChecks": [
+        "UBI non-root read-only runtime",
+        "only selected engine client; no package installers/App keys",
+        "mismatched engine rejected before database/Temporal connection",
+        "official pinned docker CLI execution",
+        "separately authenticated restricted database login",
+        "real Temporal workflow and isolated child execution",
+        "child has no database/App/socket credentials",
+        "behavioral failure preserved",
+        "worker graceful shutdown/restart",
+        "all owned children removed"
+      ],
+      "rsaPatchRegressionPassed": true,
+      "proofSha256": {
+        "downloaded-eval-worker-native.json": "e85c15d5633ad32fc13f65e54a3f5b51e3eed231df16c7fcdec4e81c0a4a1fae",
+        "downloaded-eval-worker-smoke.json": "d0015103c9e549b582849a16c23d406607ddb533eaf4be592dd7af0ef7a800d0",
+        "downloaded-forge-backport.json": "8f5748da934c533e3082e9e62aa63c68bf11cff8878c339ea7287edae7a29ab3",
+        "downloaded-identities.json": "eed1fa5329af8ec916ce272874f6d0fb1971111aad2de7624ef47fdb52a6edf3",
+        "downloaded-image-smoke.json": "03dfa1d2a3915dbadbaa92bb0267894fe80259898ae121aa01d6a578f75dfc9f",
+        "downloaded-integration.log": "335cbe050e388001b67becdd5adeb75da90ef927cebc386567d42aeda3121312",
+        "downloaded-worker-native.json": "de81a80d9dd5f8d20ec6e1212717f03ebbb84903db507d6aeaa9d4ebfb63c2c9"
+      }
+    },
+    {
+      "platform": "linux/arm64",
+      "anonymous": true,
+      "integrationGroupsPassed": 15,
+      "apiChecks": [
+        "non-root API/worker startup",
+        "M2 schema readiness",
+        "signature rejection",
+        "evidence authentication",
+        "comparison authentication/UUID/scoped lookup",
+        "compiled comparison API/client reads actual queued database evidence",
+        "compiled snapshot export/client completion",
+        "signed closed delivery",
+        "non-root persistent Temporal database startup/restart",
+        "graceful shutdown"
+      ],
+      "evaluatorChecks": [
+        "UBI non-root read-only runtime",
+        "only selected engine client; no package installers/App keys",
+        "mismatched engine rejected before database/Temporal connection",
+        "official pinned docker CLI execution",
+        "separately authenticated restricted database login",
+        "real Temporal workflow and isolated child execution",
+        "child has no database/App/socket credentials",
+        "behavioral failure preserved",
+        "worker graceful shutdown/restart",
+        "all owned children removed"
+      ],
+      "rsaPatchRegressionPassed": true,
+      "proofSha256": {
+        "downloaded-eval-worker-native.json": "3cdecf7c8498be23f38af1a24e38f174e9594be1e5f6a436928d05cd16105162",
+        "downloaded-eval-worker-smoke.json": "bd0b27ea867bd49d8ed5e2baa7393c1208a723d4863a7af0867c18891a2d25f5",
+        "downloaded-forge-backport.json": "148ab91be4fe277cff4ea74e3f4ebe4558fbe7e73f9f18b88a50852519c2c5ad",
+        "downloaded-identities.json": "a6bc36e06068cd22ebd631f3f5b6dc310afe21718058176d8a001ab68a9e6512",
+        "downloaded-image-smoke.json": "39163d63b854bd212b9babd6c1cb737e0b1c84cf536ab818cb3c2caad4a79d16",
+        "downloaded-integration.log": "9ad020b810de16df511d2cf6c7ccdfb5fba70fdc95df179da1f0843f00da12d5",
+        "downloaded-worker-native.json": "3432e058f6cedeb0b10ff5f5c8df2099e761911e0f87cf84806dbc169d4f6fa2"
+      }
+    }
+  ],
+  "publicationJobs": [
+    {
+      "name": "verify / contracts-and-runtime",
+      "conclusion": "success",
+      "seconds": 524.0,
+      "cacheState": "unknown"
+    },
+    {
+      "name": "verify / fast-feedback",
+      "conclusion": "success",
+      "seconds": 40.0,
+      "cacheState": "unknown"
+    },
+    {
+      "name": "build-native (eval-worker, ubuntu-24.04, amd64)",
+      "conclusion": "success",
+      "seconds": 139.0,
+      "cacheState": "cold"
+    },
+    {
+      "name": "build-native (worker, ubuntu-24.04-arm, arm64)",
+      "conclusion": "success",
+      "seconds": 130.0,
+      "cacheState": "cold"
+    },
+    {
+      "name": "build-native (worker, ubuntu-24.04, amd64)",
+      "conclusion": "success",
+      "seconds": 220.0,
+      "cacheState": "cold"
+    },
+    {
+      "name": "build-native (eval-engines, ubuntu-24.04, amd64)",
+      "conclusion": "success",
+      "seconds": 637.0,
+      "cacheState": "cold"
+    },
+    {
+      "name": "build-native (api, ubuntu-24.04-arm, arm64)",
+      "conclusion": "success",
+      "seconds": 112.0,
+      "cacheState": "cold"
+    },
+    {
+      "name": "build-native (eval-agentci, ubuntu-24.04, amd64)",
+      "conclusion": "success",
+      "seconds": 306.0,
+      "cacheState": "cold"
+    },
+    {
+      "name": "build-native (api, ubuntu-24.04, amd64)",
+      "conclusion": "success",
+      "seconds": 127.0,
+      "cacheState": "cold"
+    },
+    {
+      "name": "build-native (eval-engines, ubuntu-24.04-arm, arm64)",
+      "conclusion": "success",
+      "seconds": 661.0,
+      "cacheState": "cold"
+    },
+    {
+      "name": "build-native (eval-agentci, ubuntu-24.04-arm, arm64)",
+      "conclusion": "success",
+      "seconds": 212.0,
+      "cacheState": "cold"
+    },
+    {
+      "name": "build-native (eval-runner, ubuntu-24.04, amd64)",
+      "conclusion": "success",
+      "seconds": 210.0,
+      "cacheState": "cold"
+    },
+    {
+      "name": "build-native (eval-runner, ubuntu-24.04-arm, arm64)",
+      "conclusion": "success",
+      "seconds": 197.0,
+      "cacheState": "cold"
+    },
+    {
+      "name": "build-native (eval-worker, ubuntu-24.04-arm, arm64)",
+      "conclusion": "success",
+      "seconds": 143.0,
+      "cacheState": "cold"
+    },
+    {
+      "name": "publish (api)",
+      "conclusion": "success",
+      "seconds": 21.0,
+      "cacheState": "unknown"
+    },
+    {
+      "name": "publish (eval-agentci)",
+      "conclusion": "success",
+      "seconds": 26.0,
+      "cacheState": "unknown"
+    },
+    {
+      "name": "publish (eval-worker)",
+      "conclusion": "success",
+      "seconds": 27.0,
+      "cacheState": "unknown"
+    },
+    {
+      "name": "publish (eval-runner)",
+      "conclusion": "success",
+      "seconds": 63.0,
+      "cacheState": "unknown"
+    },
+    {
+      "name": "publish (eval-engines)",
+      "conclusion": "success",
+      "seconds": 29.0,
+      "cacheState": "unknown"
+    },
+    {
+      "name": "publish (worker)",
+      "conclusion": "success",
+      "seconds": 28.0,
+      "cacheState": "unknown"
+    }
+  ],
+  "securityFindings": [
+    {
+      "role": "api",
+      "arch": "amd64",
+      "findings": []
+    },
+    {
+      "role": "api",
+      "arch": "arm64",
+      "findings": []
+    },
+    {
+      "role": "worker",
+      "arch": "amd64",
+      "findings": []
+    },
+    {
+      "role": "worker",
+      "arch": "arm64",
+      "findings": []
+    },
+    {
+      "role": "eval-worker",
+      "arch": "amd64",
+      "findings": []
+    },
+    {
+      "role": "eval-worker",
+      "arch": "arm64",
+      "findings": []
+    },
+    {
+      "role": "eval-runner",
+      "arch": "amd64",
+      "findings": []
+    },
+    {
+      "role": "eval-runner",
+      "arch": "arm64",
+      "findings": []
+    },
+    {
+      "role": "eval-engines",
+      "arch": "amd64",
+      "findings": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "severity": "HIGH",
+          "fixedVersion": null
+        }
+      ]
+    },
+    {
+      "role": "eval-engines",
+      "arch": "arm64",
+      "findings": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "severity": "HIGH",
+          "fixedVersion": null
+        }
+      ]
+    },
+    {
+      "role": "eval-agentci",
+      "arch": "amd64",
+      "findings": []
+    },
+    {
+      "role": "eval-agentci",
+      "arch": "arm64",
+      "findings": []
+    }
+  ],
+  "remaining": [
+    "Review failure and partial-publication acceptance before task completion",
+    "Observe warm cache reuse on a future necessary publication; no unchanged rebuild solely for timing"
+  ],
+  "limitations": [
+    "Development candidate, not M3 milestone release",
+    "No live GitHub customer demo in these runtime artifacts",
+    "No causal delivery acceleration claim; cache cohorts not established"
+  ],
+  "cacheEvidence": {
+    "logSha256": "4b7a2a6c02d1b67695a6b0e0e9b0257a747b93510b17830184529a8c2996851e",
+    "classification": "No reused BuildKit layers observed in any of the twelve native build steps; classify native builds cold. Whole workflow includes separate verification/cache behavior and remains unknown.",
+    "nativeJobs": {
+      "build-native (eval-worker, ubuntu-24.04, amd64)": {
+        "cachedLayers": 0,
+        "cacheImportLines": 1
+      },
+      "build-native (worker, ubuntu-24.04-arm, arm64)": {
+        "cachedLayers": 0,
+        "cacheImportLines": 1
+      },
+      "build-native (worker, ubuntu-24.04, amd64)": {
+        "cachedLayers": 0,
+        "cacheImportLines": 1
+      },
+      "build-native (eval-engines, ubuntu-24.04, amd64)": {
+        "cachedLayers": 0,
+        "cacheImportLines": 1
+      },
+      "build-native (api, ubuntu-24.04-arm, arm64)": {
+        "cachedLayers": 0,
+        "cacheImportLines": 1
+      },
+      "build-native (eval-agentci, ubuntu-24.04, amd64)": {
+        "cachedLayers": 0,
+        "cacheImportLines": 1
+      },
+      "build-native (api, ubuntu-24.04, amd64)": {
+        "cachedLayers": 0,
+        "cacheImportLines": 1
+      },
+      "build-native (eval-engines, ubuntu-24.04-arm, arm64)": {
+        "cachedLayers": 0,
+        "cacheImportLines": 1
+      },
+      "build-native (eval-agentci, ubuntu-24.04-arm, arm64)": {
+        "cachedLayers": 0,
+        "cacheImportLines": 1
+      },
+      "build-native (eval-runner, ubuntu-24.04, amd64)": {
+        "cachedLayers": 0,
+        "cacheImportLines": 1
+      },
+      "build-native (eval-runner, ubuntu-24.04-arm, arm64)": {
+        "cachedLayers": 0,
+        "cacheImportLines": 1
+      },
+      "build-native (eval-worker, ubuntu-24.04-arm, arm64)": {
+        "cachedLayers": 0,
+        "cacheImportLines": 1
+      }
+    }
+  },
+  "timeoutEvidence": {
+    "jobLimitSeconds": 4500,
+    "buildLimitSeconds": 2400,
+    "scanLimitSeconds": 900,
+    "uploadLimitSeconds": 300,
+    "cleanupLimitSeconds": 120,
+    "nativeJobs": [
+      {
+        "name": "build-native (eval-worker, ubuntu-24.04, amd64)",
+        "buildSeconds": 77.0,
+        "scanSeconds": 27.0,
+        "allStepsSuccessful": true,
+        "jobMarginSeconds": 4361.0
+      },
+      {
+        "name": "build-native (worker, ubuntu-24.04-arm, arm64)",
+        "buildSeconds": 74.0,
+        "scanSeconds": 24.0,
+        "allStepsSuccessful": true,
+        "jobMarginSeconds": 4370.0
+      },
+      {
+        "name": "build-native (worker, ubuntu-24.04, amd64)",
+        "buildSeconds": 94.0,
+        "scanSeconds": 28.0,
+        "allStepsSuccessful": true,
+        "jobMarginSeconds": 4280.0
+      },
+      {
+        "name": "build-native (eval-engines, ubuntu-24.04, amd64)",
+        "buildSeconds": 497.0,
+        "scanSeconds": 81.0,
+        "allStepsSuccessful": true,
+        "jobMarginSeconds": 3863.0
+      },
+      {
+        "name": "build-native (api, ubuntu-24.04-arm, arm64)",
+        "buildSeconds": 68.0,
+        "scanSeconds": 23.0,
+        "allStepsSuccessful": true,
+        "jobMarginSeconds": 4388.0
+      },
+      {
+        "name": "build-native (eval-agentci, ubuntu-24.04, amd64)",
+        "buildSeconds": 246.0,
+        "scanSeconds": 32.0,
+        "allStepsSuccessful": true,
+        "jobMarginSeconds": 4194.0
+      },
+      {
+        "name": "build-native (api, ubuntu-24.04, amd64)",
+        "buildSeconds": 78.0,
+        "scanSeconds": 25.0,
+        "allStepsSuccessful": true,
+        "jobMarginSeconds": 4373.0
+      },
+      {
+        "name": "build-native (eval-engines, ubuntu-24.04-arm, arm64)",
+        "buildSeconds": 540.0,
+        "scanSeconds": 85.0,
+        "allStepsSuccessful": true,
+        "jobMarginSeconds": 3839.0
+      },
+      {
+        "name": "build-native (eval-agentci, ubuntu-24.04-arm, arm64)",
+        "buildSeconds": 164.0,
+        "scanSeconds": 28.0,
+        "allStepsSuccessful": true,
+        "jobMarginSeconds": 4288.0
+      },
+      {
+        "name": "build-native (eval-runner, ubuntu-24.04, amd64)",
+        "buildSeconds": 170.0,
+        "scanSeconds": 20.0,
+        "allStepsSuccessful": true,
+        "jobMarginSeconds": 4290.0
+      },
+      {
+        "name": "build-native (eval-runner, ubuntu-24.04-arm, arm64)",
+        "buildSeconds": 145.0,
+        "scanSeconds": 24.0,
+        "allStepsSuccessful": true,
+        "jobMarginSeconds": 4303.0
+      },
+      {
+        "name": "build-native (eval-worker, ubuntu-24.04-arm, arm64)",
+        "buildSeconds": 86.0,
+        "scanSeconds": 27.0,
+        "allStepsSuccessful": true,
+        "jobMarginSeconds": 4357.0
+      }
+    ]
+  }
+}

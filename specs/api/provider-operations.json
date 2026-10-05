@@ -1,0 +1,113 @@
+{
+  "apiVersion": "agentci.io/v1alpha1",
+  "transport": "Internal provider TypeScript contract; no new HTTP endpoints",
+  "operations": [
+    {
+      "operationId": "validateModelRequest",
+      "requirementIds": [
+        "SECTION-13.2",
+        "SPEC-13.2-001",
+        "SPEC-13.2-002",
+        "SPEC-13.2-003",
+        "SPEC-13.2-004",
+        "SPEC-13.2-005",
+        "SPEC-13.2-006",
+        "SPEC-13.2-007",
+        "SPEC-13.2-008"
+      ],
+      "tests": [
+        "tests/model-request.test.ts",
+        "scripts/package-smoke.mjs"
+      ],
+      "scenarios": [
+        "strict detached normalized request",
+        "tool history integrity",
+        "bounded JSON and schema validation"
+      ]
+    },
+    {
+      "operationId": "assertProviderCapabilities",
+      "requirementIds": [
+        "SECTION-13.1",
+        "SPEC-13.4-001"
+      ],
+      "tests": [
+        "tests/model-request.test.ts"
+      ],
+      "scenarios": [
+        "unsupported features rejected before dispatch",
+        "namespaced extensions",
+        "upstream identity"
+      ]
+    },
+    {
+      "operationId": "validateModelResponse",
+      "requirementIds": [
+        "SECTION-13.1",
+        "SPEC-13.2-005"
+      ],
+      "tests": [
+        "tests/model-response.test.ts",
+        "scripts/package-smoke.mjs"
+      ],
+      "scenarios": [
+        "exact request and attempt binding",
+        "tool and structured output schema",
+        "unknown cost is not zero"
+      ]
+    },
+    {
+      "operationId": "invokeModel",
+      "requirementIds": [
+        "SECTION-13.1",
+        "SPEC-13.2-008"
+      ],
+      "tests": [
+        "tests/model-execute.test.ts",
+        "tests/integration/model-budget.test.ts"
+      ],
+      "scenarios": [
+        "durable reservation before dispatch",
+        "bounded retries and deadlines",
+        "cancellation and ambiguous outcomes",
+        "replay cannot redispatch"
+      ]
+    },
+    {
+      "operationId": "streamModel",
+      "requirementIds": [
+        "SECTION-13.1",
+        "SPEC-13.2-008"
+      ],
+      "tests": [
+        "tests/model-stream.test.ts",
+        "tests/model-stream-execute.test.ts",
+        "tests/integration/model-budget.test.ts"
+      ],
+      "scenarios": [
+        "ordered bounded events",
+        "final response agrees with stream",
+        "backpressure and stalled consumers",
+        "no automatic replay after provisional output",
+        "accounting before completion"
+      ]
+    },
+    {
+      "operationId": "PostgresBudgetLedger",
+      "requirementIds": [
+        "SECTION-13.1",
+        "SPEC-13.2-008"
+      ],
+      "tests": [
+        "tests/integration/model-budget.test.ts",
+        "scripts/package-smoke.mjs"
+      ],
+      "scenarios": [
+        "concurrent reservations",
+        "immutable scope and terminal accounting",
+        "unknown charge retention",
+        "actual overrun recording"
+      ]
+    }
+  ]
+}

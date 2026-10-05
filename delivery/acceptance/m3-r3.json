@@ -1,0 +1,31 @@
+{
+  "task": "M3-R3",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/26",
+  "testedHead": "8aa2808892eb1f222b6781df78623bb2db2ea380",
+  "mergeCommit": "9917cf9662b0da92de2ffca5cb762bccb3393e0f",
+  "verificationRun": 37266955220,
+  "verificationResult": "success",
+  "advisoryRun": 37266955442,
+  "advisoryResult": "passed; zero regressions and requirement/selection/execution gaps",
+  "testedSourceFilesRevalidated": [
+    "scripts/lib/evidence-reuse.ts",
+    "scripts/lib/evidence-command.ts",
+    "scripts/lib/closure.ts",
+    "scripts/delivery.ts",
+    "tests/evidence-reuse.test.ts",
+    "tests/closure.test.ts"
+  ],
+  "coverage": [
+    "exact artifact/source/platform/verifier/boundary identity and sufficient coverage",
+    "append-only failure and invalidation history; no fallback to stale pass",
+    "repeat reasons and unchanged proof bytes enforced by real CLI tests",
+    "timing cohorts separated; unknown intervention effort preserved",
+    "M3 consolidated closure mapping, audit, retrospective and success/failure demo guard",
+    "M2 historical release ledger remains complete"
+  ],
+  "limitations": [
+    "Evidence metadata cannot establish semantic acceptance by itself; independent content audit remains mandatory",
+    "No overall development acceleration claimed",
+    "M3 release remains incomplete"
+  ]
+}
