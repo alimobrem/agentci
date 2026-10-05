@@ -18,6 +18,16 @@ const remaining = validateRelease(record, args.includes('--require-complete') ||
 if (command === 'check' || command === 'release') {
   for (const task of tasks.tasks) {if(task.deferral)await access(task.deferral.evidence);for (const acceptance of task.acceptance) for (const path of acceptance.evidence) await access(path);}
   for (const gate of record.gates) for (const proof of gate.evidence) if (proof.kind === 'file' && createHash('sha256').update(await readFile(proof.value)).digest('hex') !== proof.sha256) throw new Error(`Changed evidence file: ${proof.value}`);
+  if(Number(record.milestone.slice(1))>=3&&record.gates.find(g=>g.id==='closure')?.status==='passed'){
+    const closurePath=`releases/${record.milestone.toLowerCase()}-closure.json`;
+    if(!record.gates.find(g=>g.id==='closure')!.evidence.some(proof=>proof.kind==='file'&&proof.value===closurePath))throw new Error('Canonical consolidated closure proof required');
+    const readEvents=async<T>(path:string):Promise<T[]>=>{try{return(await readFile(path,'utf8')).split('\n').filter(Boolean).map(line=>JSON.parse(line));}catch(error){if((error as NodeJS.ErrnoException).code==='ENOENT')return [];throw error;}};
+    const {validateConsolidatedClosure}=await import('./lib/closure.ts');const {verifyEvidenceProof}=await import('./lib/evidence-reuse.ts');
+    const closure=JSON.parse(await readFile(closurePath,'utf8'));
+    const proofs=validateConsolidatedClosure(record,closure,await readEvents('delivery/evidence-records.jsonl'),await readEvents('delivery/evidence-invalidations.jsonl'));
+    for(const proof of proofs)await verifyEvidenceProof(proof);
+    for(const proof of [closure.requirementAudit,closure.retrospective])if(createHash('sha256').update(await readFile(proof.path)).digest('hex')!==proof.sha256)throw new Error('Closure audit/retrospective bytes changed');
+  }
   console.log(`${tasks.tasks.length} tasks validated; ${record.milestone} has ${remaining.length} open release gates.`);
 } else if (command === 'task') {
   const task = tasks.tasks.find(t => t.id === argument); if (!task) throw new Error('Unknown task');
@@ -36,6 +46,11 @@ if (command === 'check' || command === 'release') {
   console.log(`${task.id}: ${task.status}`);
 } else if (command === 'evidence') {
   const {evidenceCommand}=await import('./lib/evidence-command.ts');await evidenceCommand(argument,args);
+} else if (command === 'intervention') {
+  if(!tasks.tasks.some(task=>task.id===argument)||!args[0]||!args.slice(1).join(' ').trim())throw new Error('Intervention requires task ID, seconds or unknown, and reason');
+  const seconds=args[0]==='unknown'?null:Number(args[0]);if(seconds!==null&&(!Number.isFinite(seconds)||seconds<0))throw new Error('Invalid intervention duration');
+  const {appendFile}=await import('node:fs/promises');await appendFile('delivery/interventions.jsonl',JSON.stringify({at:new Date().toISOString(),task:argument,seconds,reason:args.slice(1).join(' '),sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()})+'\n');
+  console.log('Observed intervention recorded; unknown effort is not zero.');
 } else if (command === 'quality') {
   if (!['escaped-defect','dogfood-defect'].includes(argument ?? '') || !args[0] || !requirements.some(r=>r.id===args[0]) || !args[1]) throw new Error('quality needs escaped-defect/dogfood-defect, requirement ID and evidence path');
   await access(args[1]);
@@ -58,7 +73,7 @@ if (command === 'check' || command === 'release') {
   const runs = await Promise.all(files.filter(f=>f.endsWith('.json')).map(async f=>JSON.parse(await readFile(`delivery/runs/${f}`,'utf8'))));
   let fast: any;try {fast=JSON.parse(await readFile('.agentci/artifacts/delivery/fast-latest.json','utf8'));}catch{}
   const events = async (path:string) => { try { return (await readFile(path,'utf8')).trim().split('\n').filter(Boolean).map(line=>JSON.parse(line)); } catch(error:any) { if(error.code==='ENOENT')return [];throw error; } };
-  const quality = await events('delivery/quality-events.jsonl'), taskEvents = await events('delivery/task-events.jsonl');
+  const quality = await events('delivery/quality-events.jsonl'), taskEvents = await events('delivery/task-events.jsonl'), interventions = await events('delivery/interventions.jsonl');
   const baselineCi = median(baseline.ci.map((r:any)=>r.jobSeconds));
   const optimizedCi = median(runs.filter(r=>r.cohort==='optimized'&&r.conclusion==='success').map(r=>Math.max(...r.jobs.map((j:any)=>j.seconds))));
   const ciByCache=Object.fromEntries(['cold','warm','unknown'].map(cache=>{
@@ -66,5 +81,5 @@ if (command === 'check' || command === 'release') {
     const seconds=median(values);return[cache,{samples:values.length,medianSeconds:seconds,reductionPercent:baselineCi&&seconds?100*(baselineCi-seconds)/baselineCi:null}];
   }));
   const report = { baselineCiSeconds: baselineCi, optimizedCiMedianSeconds: optimizedCi, optimizedSamples:runs.filter(r=>r.cohort==='optimized'&&r.conclusion==='success').length, firstPassAttempts:runs.filter(r=>r.attempt===1&&r.cohort==='optimized'&&['success','failure'].includes(r.conclusion)).length, firstPassFailures:runs.filter(r=>r.attempt===1&&r.cohort==='optimized'&&r.conclusion==='failure').length, preliminaryCiReductionPercent:baselineCi&&optimizedCi?100*(baselineCi-optimizedCi)/baselineCi:null, baselineLocalMedianSeconds:median(baseline.local.samples.map((s:any)=>s.seconds)), latestFastCheckSeconds:fast?.passed?fast.seconds:null, tasks:tasks.tasks.map(t=>({id:t.id,status:t.status,cycleSeconds:t.startedAt&&t.completedAt?(Date.parse(t.completedAt)-Date.parse(t.startedAt))/1000:null})), openReleaseGates:remaining, interpretation:'Feedback-loop timings only; no historical task-delivery baseline. Caches, suite size and runner conditions affect results; small samples do not prove causality.' };
-  console.log(JSON.stringify({...report,ciByCache,tasks:report.tasks.map(t=>({...t,blockedSeconds:blockedSeconds(tasks.tasks.find(task=>task.id===t.id)!,taskEvents)})),quality:{firstPassFailures:report.firstPassFailures,reopenedTasks:taskEvents.filter(e=>e.action==='reopen').length,recordedEscapedDefects:quality.filter(e=>e.kind==='escaped-defect').length,recordedDogfoodDefects:quality.filter(e=>e.kind==='dogfood-defect').length,note:'Recorded events since tracking began; zero does not establish absence of unreported defects.'}},null,2));
-} else throw new Error('Command: check, release, task, evidence, collect-ci, report');
+  console.log(JSON.stringify({...report,ciByCache,tasks:report.tasks.map(t=>({...t,blockedSeconds:blockedSeconds(tasks.tasks.find(task=>task.id===t.id)!,taskEvents)})),interventions:{observations:interventions.length,knownSeconds:interventions.reduce((sum,event)=>sum+(event.seconds??0),0),unknownDuration:interventions.filter(event=>event.seconds===null).length,note:'Observed human interventions only; incomplete collection is not zero effort.'},quality:{firstPassFailures:report.firstPassFailures,reopenedTasks:taskEvents.filter(e=>e.action==='reopen').length,recordedEscapedDefects:quality.filter(e=>e.kind==='escaped-defect').length,recordedDogfoodDefects:quality.filter(e=>e.kind==='dogfood-defect').length,note:'Recorded events since tracking began; zero does not establish absence of unreported defects.'}},null,2));
+} else throw new Error('Command: check, release, task, evidence, intervention, collect-ci, report');

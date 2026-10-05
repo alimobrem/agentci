@@ -1456,14 +1456,16 @@
         "SPEC-40-050",
         "SPEC-40-051"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T04:43:19.131Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T05:08:09.081Z",
       "acceptance": [
         {
           "text": "Read-only preflight checks actual daemon-shared migration/provider paths, credential references, endpoint connectivity, configured spend limits and service readiness before webhook or live-provider mutation. Missing/unshared files and unauthorized endpoints fail with redacted actionable errors; preserve unrelated state.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-r2.json"
+          ]
         }
       ],
       "dependsOn": [

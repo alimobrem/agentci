@@ -260,5 +260,25 @@ that its owning operation stopped before removing it; do not restart work merely
 because observation timed out. Reports separate subject, boundary, platform,
 verifier, coverage and cache, retain failures and unknown timing, and do not infer
 end-to-end development acceleration. Task cycle time, blockers and rework continue to use their distinct delivery
-events. Human-intervention collection and consolidated-closure enforcement remain
-pending within M3-R3; this registry alone does not complete the prerequisite.
+events. Human interventions use `npm run delivery -- intervention TASK-ID SECONDS REASON`
+(or `unknown` instead of seconds). Record observed assistance only; do not invent
+historical effort. The report retains unknown durations and counts separately.
+
+
+## Consolidated closure from M3 onward
+
+A passed closure gate must bind the canonical `releases/mN-closure.json` file by
+SHA-256. Its identity matches the milestone/version/frozen source and release URL.
+It lists every gate once, with `evidenceIds` referencing current accepted registry
+records whose coverage includes `gate:GATE-ID`. Historical M0–M2 ledgers retain
+their existing formats. The closure gate itself uses an empty ID list to avoid
+self-attestation; an explicitly inapplicable gate also has no evidence IDs.
+
+The closure contains `requirementAudit` and `retrospective` file proofs (`path`,
+`sha256`), explicit `limitations`, and a `demo` with `deliveredAt`,
+`successEvidenceId` and `failureEvidenceId`. Demo records cover `demo:success` and
+`demo:failure`. The release command verifies proof bytes and rejects pending
+release gates, missing mappings, wrong identities, invalidated or superseded
+records, and missing success/failure demo evidence. Recording a claim does not
+prove its content: the independent release audit still examines the actual
+requirements, scope, artifacts and observed behavior before these entries pass.

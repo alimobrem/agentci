@@ -1,0 +1,25 @@
+{
+  "task": "M3-R2",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/25",
+  "testedHead": "03ec5835ce2d9f5994f8532542e7cc8ff9f48ecb",
+  "mergeCommit": "20836683d6921079662974cc487b20ed4b49d51e",
+  "verificationRun": 37265759612,
+  "verificationResult": "success",
+  "advisoryRun": 37265759683,
+  "advisoryResult": "passed with zero regressions and requirement/selection/execution gaps",
+  "installedAcceptance": "delivery/acceptance/m3-r2-installed-development.json",
+  "sourceFileHashesRevalidated": true,
+  "coverage": [
+    "private strict configuration before probes",
+    "no provider keys read or sent; no paid model calls",
+    "bounded isolated shared/unshared daemon mount checks and owned cleanup",
+    "readiness success/failure/recovery from installed CLI",
+    "provider origins, credential reference safety and authorized budget prerequisites",
+    "documentation, operation mapping and packaged template"
+  ],
+  "limitations": [
+    "Provider authentication/live model acceptance remains required per adapter and M3 release; preflight deliberately reports authentication unverified",
+    "Docker daemon exercised; no full Podman adoption claim",
+    "Diagnostics do not replace runtime budget reservation or release acceptance"
+  ]
+}
