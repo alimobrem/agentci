@@ -1,11 +1,14 @@
 import {createAnthropicTransport} from './anthropic-transport.ts';
 import {AnthropicStreamTranslator} from './anthropic-stream.ts';
 import {anthropicRequest} from './anthropic-request.ts';
+import {anthropicHistory} from './anthropic-continuation.ts';
 import {validateModelRequest} from './request.ts';
 import {ProviderFailure,type ModelProvider,type ModelRequest,type ModelCapabilities} from './types.ts';
 export interface AnthropicModelProfile {
  /** Exact upstream identities approved for this alias, covered by the same price/capability bounds. */
  responseModels?:string[];
+ /** Models with signed reasoning require original continuation for every tool turn. */
+ requireSignedToolHistory?:boolean;
  model:string;contextTokens:number;maxOutputTokens:number;
  capabilities:ModelCapabilities;temperature:boolean;topP:boolean;
  /** Upper prices must cover applicable context/service tiers; no cached-input discount. */
@@ -21,6 +24,7 @@ export function createAnthropicProvider(apiKey:string,profiles:AnthropicModelPro
   if(typeof p.model!=='string'||!p.model.length||p.model.length>256||models.has(p.model)||!positive(p.contextTokens)||!positive(p.maxOutputTokens)||p.maxOutputTokens>p.contextTokens||!positive(p.inputUsdMicrosPerMillion)||!positive(p.outputUsdMicrosPerMillion)||typeof p.pricingRevision!=='string'||!p.pricingRevision.length||p.pricingRevision.length>256||typeof p.temperature!=='boolean'||typeof p.topP!=='boolean'||!p.capabilities||['stream','tools','structuredOutput','developerInstructions','extensions'].some(key=>typeof p.capabilities[key as keyof ModelCapabilities]!=='boolean'))throw new ProviderFailure('invalid-request');
   if(p.responseModels!==undefined&&(!Array.isArray(p.responseModels)||!p.responseModels.length||p.responseModels.length>32||new Set(p.responseModels).size!==p.responseModels.length||p.responseModels.some(model=>typeof model!=='string'||!model.length||model.length>256)))throw new ProviderFailure('invalid-request');
   if(p.capabilities.developerInstructions)throw new ProviderFailure('unsupported-capability');
+  if(p.requireSignedToolHistory!==undefined&&typeof p.requireSignedToolHistory!=='boolean'||p.requireSignedToolHistory&&(!p.capabilities.extensions||!p.capabilities.tools))throw new ProviderFailure('invalid-request');
   models.set(p.model,p);
  }
  const registered=[...models.values()];
@@ -31,7 +35,12 @@ export function createAnthropicProvider(apiKey:string,profiles:AnthropicModelPro
   const c=profile.capabilities;
   if(stream&&!c.stream||request.tools.length&&!c.tools||request.messages.some(m=>m.toolCalls?.length||m.role==='tool')&&!c.tools||request.responseSchema&&!c.structuredOutput||request.developer&&!c.developerInstructions||Object.keys(request.providerExtensions.anthropic??{}).length&&!c.extensions||request.parameters.temperature!==undefined&&!profile.temperature||request.parameters.topP!==undefined&&!profile.topP||request.parameters.maxOutputTokens>profile.maxOutputTokens)throw new ProviderFailure('unsupported-capability');
   if(request.parameters.temperature!==undefined&&request.parameters.temperature>1)throw new ProviderFailure('unsupported-capability');
-  anthropicRequest(request);return {request,profile};
+  anthropicRequest(request);
+  if(profile.requireSignedToolHistory){
+   const history=anthropicHistory(request);
+   if(request.messages.some((message,index)=>message.role==='assistant'&&message.toolCalls?.length&&!history.has(index)))throw new ProviderFailure('invalid-request');
+  }
+  return {request,profile};
  };
  return {
   id:'anthropic',upstreamIdentity:'anthropic',

@@ -6,17 +6,20 @@ import {readFileSync} from 'node:fs';
 import {invokeModel} from '../packages/providers/execute.ts';
 import {appendAnthropicToolResults} from '../packages/providers/anthropic-continuation.ts';
 const profile=():AnthropicModelProfile=>({model:'fixture-model',contextTokens:10000,maxOutputTokens:2048,capabilities:{stream:true,tools:true,structuredOutput:true,developerInstructions:false,extensions:false},temperature:true,topP:true,inputUsdMicrosPerMillion:1000000,outputUsdMicrosPerMillion:2000000,pricingRevision:'synthetic'});
-test('Anthropic runs the shared smoke corpus through SDK, streaming and per-request budgets',async()=>{
+for(const continueTools of [false,true])test(`Anthropic runs the shared smoke corpus through SDK and budgets (tool continuation: ${continueTools})`,async()=>{
  const actions:string[]=[];
  const ledger:BudgetLedger={async reserve(r){actions.push('reserve');assert.equal(r.upperBoundUsdMicros,12048);return r.requestId;},async settle(){throw Error('No reported dollar cost');},async unknown(){actions.push('unknown');},async releaseNotSent(){throw Error();}};
- const provider=createAnthropicProvider('synthetic-fixture',[profile()],async(_url,init)=>{
-  actions.push('fetch');const body=JSON.parse(init!.body as string),tools=!!body.tools?.length;
+ const p=profile();p.capabilities.extensions=true;p.requireSignedToolHistory=true;
+ const provider=createAnthropicProvider('synthetic-fixture',[p],async(_url,init)=>{
+  actions.push('fetch');const body=JSON.parse(init!.body as string),tools=!!body.tools?.length&&!body.messages.some((m:any)=>Array.isArray(m.content)&&m.content.some((b:any)=>b.type==='tool_result'));
   const message={id:'msg-fixture',type:'message',role:'assistant',model:'fixture-model',stop_reason:tools?'tool_use':'end_turn',content:tools?[{type:'tool_use',id:'call-1',name:'check_fixture',input:{marker:'agentci-smoke'}}]:[{type:'text',text:'{"ok":true}'}],usage:{input_tokens:2,output_tokens:3,cache_creation_input_tokens:0,cache_read_input_tokens:0}};
   if(!body.stream)return new Response(JSON.stringify(message),{headers:{'content-type':'application/json'}});
   const events=[{type:'message_start',message:{...message,content:[],stop_reason:null,usage:{...message.usage,output_tokens:0}}},{type:'content_block_start',index:0,content_block:{type:'text',text:''}},{type:'content_block_delta',index:0,delta:{type:'text_delta',text:'{"ok":true}'}},{type:'content_block_stop',index:0},{type:'message_delta',delta:{stop_reason:'end_turn'},usage:{output_tokens:3}},{type:'message_stop'}];
   return new Response(events.map(e=>`event: ${e.type}\ndata: ${JSON.stringify(e)}\n\n`).join(''),{headers:{'content-type':'text/event-stream'}});
  });
- const records=await runProviderSmoke(provider,'fixture-model',ledger);assert.equal(records.length,3);assert.deepEqual(actions,Array.from({length:3},()=>['reserve','fetch','unknown']).flat());assert.equal(provider.upstreamIdentity,'anthropic');
+ const records=await runProviderSmoke(provider,'fixture-model',ledger,undefined,continueTools?{appendToolResults:appendAnthropicToolResults}:{}),count=continueTools?4:3;
+ assert.equal(records.length,count);assert.deepEqual(actions,Array.from({length:count},()=>['reserve','fetch','unknown']).flat());assert.equal(provider.upstreamIdentity,'anthropic');
+ assert.equal(records.at(-1)!.scenario,continueTools?'tool-result':'tool-proposal');assert.equal(JSON.stringify(records).includes('continuation'),false);
 });
 test('Anthropic profiles cannot advertise unsupported developer or extension semantics',()=>{
  for(const key of ['developerInstructions'] as const){const p=profile();p.capabilities[key]=true;assert.throws(()=>createAnthropicProvider('synthetic-fixture',[p]),/unsupported-capability/);}
@@ -29,7 +32,7 @@ test('unsupported Anthropic schema fails before reservation and network access',
  await assert.rejects(runProviderSmoke(provider,'fixture-model',ledger),/invalid-request|unsupported-capability/);assert.deepEqual(actions,[]);
 });
 test('SDK tool-result round trips preserve signed blocks and account for each fresh request',async()=>{
- const p=profile();p.capabilities.extensions=true;
+ const p=profile();p.capabilities.extensions=true;p.requireSignedToolHistory=true;
  const request={...JSON.parse(readFileSync(new URL('../specs/api/fixtures/model-request.json',import.meta.url),'utf8')),provider:'anthropic',developer:'',providerExtensions:{},tools:[{name:'inspect',description:'Inspect fixture',inputSchema:{type:'object',properties:{},additionalProperties:false}}],policy:{deadlineAt:Date.now()+60000,maxAttempts:1,baseDelayMs:0,maxDelayMs:0}};
  const actions:string[]=[],ids:string[]=[],blocks=[1,2].map(n=>[{type:'thinking',thinking:'',signature:`opaque-signed-state-${n}`},{type:'tool_use',id:`call-${n}`,name:'inspect',input:{}}]);
  const ledger:BudgetLedger={async reserve(r){actions.push('reserve');ids.push(r.requestId);return r.requestId;},async settle(){throw Error('No reported dollar cost');},async unknown(){actions.push('unknown');},async releaseNotSent(){throw Error('Unexpected pre-dispatch failure');}};
@@ -54,5 +57,6 @@ test('SDK tool-result round trips preserve signed blocks and account for each fr
  assert.deepEqual(actions,Array.from({length:3},()=>['reserve','fetch','unknown']).flat());
  // A changed prefix must fail before either reserving money or issuing HTTP.
  await assert.rejects(invokeModel(provider,{...next,system:'changed instructions'},ledger),/invalid-request/);
+ await assert.rejects(invokeModel(provider,{...next,providerExtensions:{}},ledger),/invalid-request/);
  assert.equal(actions.length,9);
 });

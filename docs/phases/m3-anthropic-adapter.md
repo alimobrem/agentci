@@ -93,5 +93,7 @@ The SDK round-trip test checks both earlier signed blocks and grouped tool resul
 in every subsequent outbound request, separate reservation/accounting for each new
 request ID, and local rejection of changed instructions before reservation or HTTP.
 This verifies serialization and controller behavior, not upstream signature validity.
-Callers must use the continuation helper for signed tool turns: manually rebuilding
-portable assistant messages can omit provider state and is not live-validated.
+The Opus profile requires a verified continuation entry for every prior assistant
+tool proposal. Dropping the history extension fails before reservation or HTTP.
+Callers use the continuation helper for signed tool turns; profiles for other
+models can explicitly opt into the same requirement.
