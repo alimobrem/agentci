@@ -22,7 +22,7 @@ export interface ModelResponse {
 }
 export type ProviderFailureCode='invalid-request'|'unsupported-capability'|'authentication'|'rate-limit'|'deadline'|'cancelled'|'budget-exhausted'|'transport'|'invalid-output'|'ambiguous-attempt';
 export class ProviderFailure extends Error {
- constructor(public readonly code:ProviderFailureCode,public readonly retryable=false,public readonly dispatch:'not-sent'|'possibly-sent'='not-sent'){
+ constructor(public readonly code:ProviderFailureCode,public readonly retryable=false,public readonly dispatch:'not-sent'|'possibly-sent'='not-sent',public readonly retryAfterMs:number|null=null){
   // Do not include raw provider bodies, credentials, URLs or request text in errors.
   super(code);this.name='ProviderFailure';
  }
