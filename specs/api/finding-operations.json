@@ -180,7 +180,11 @@
         "resource enforcement before lease acquisition",
         "live cancellation and container cleanup",
         "report symlink escape fails closed",
-        "restart receipt verification and immutable history"
+        "restart receipt verification and immutable history",
+        "pre-staging cancellation survives retries",
+        "concurrent staging cancellation fences dispatch",
+        "requeue preserves the finding attempt cap",
+        "late cancellation preserves terminal receipts"
       ]
     },
     {

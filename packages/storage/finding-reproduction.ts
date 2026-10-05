@@ -55,15 +55,23 @@ export class FindingReproductionStore {
   const unit=await this.evals.unit(job!.unitIds[0]!);if(!unit||unit.jobId!==job!.id)fail();
   try{verifyReproductionUnit(plan,unit!);}catch{fail();}return {job:job!,unit:unit!};
  }
+ private async cancelled(id:string):Promise<boolean>{
+  return this.transaction(async client=>(await client.query('SELECT 1 FROM agentci_reproduction_cancellations WHERE organization_id=$1 AND repository=$2 AND id=$3',[this.scope.organizationId,this.scope.repository,id])).rowCount===1);
+ }
  async stage(id:string,base:Snapshot,head:Snapshot){
   const plan=await this.get(id);if(!plan)fail();
   try{if(canonical(compileFindingReproduction(plan!.finding,plan!.approval,base,head,plan!.runner,plan!.limits))!==canonical(plan))fail();}catch{fail();}
+  if(await this.cancelled(id))fail();
   if(!await this.evals.recoveryPlan(id)){
    const history=await this.history.get(plan!.finding.id,plan!.finding.subject);
    if(canonical(history.at(-1)?.event.finding)!==canonical(plan!.finding))fail();
    await this.evals.stage(plan!.approval.reviewId,id,base,head,[plan!.definition],{suiteChanges:[],coverageGaps:[],selectionGaps:[]});
   }
-  const {job,unit}=await this.staged(plan!);return {jobId:job.id,unitId:unit.id};
+  const {job,unit}=await this.staged(plan!);
+  // A cancellation may commit while the immutable eval job is being staged.
+  // No unit identifier escapes this method until the second fence is checked.
+  if(await this.cancelled(id)){await this.evals.cancel(job.id);fail();}
+  return {jobId:job.id,unitId:unit.id};
  }
  async readReceipt(id:string,subject:ReviewSubject):Promise<FindingReceipt>{
   this.subject(subject);const plan=await this.get(id);if(!plan||canonical(plan.finding.subject)!==canonical(subject))fail();
@@ -84,6 +92,7 @@ export class FindingReproductionStore {
  }
  async cancel(id:string){
   const plan=await this.get(id);if(!plan)fail();
+  await this.transaction(async client=>{await client.query('INSERT INTO agentci_reproduction_cancellations(organization_id,repository,id) VALUES($1,$2,$3) ON CONFLICT DO NOTHING',[this.scope.organizationId,this.scope.repository,id]);});
   if(!await this.evals.recoveryPlan(id))return {jobId:null,unitIds:[] as string[]};
   const {job}=await this.staged(plan!);await this.evals.cancel(job.id);
   const {unit}=await this.staged(plan!);

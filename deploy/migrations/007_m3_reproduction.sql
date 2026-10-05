@@ -8,12 +8,12 @@ DO $migration$
 DECLARE applied text; source_body text;
 BEGIN
   source_body := substring(current_query() from E'-- BEGIN CHECKSUMMED MIGRATION BODY\\n(.*?)-- END CHECKSUMMED MIGRATION BODY');
-  IF source_body IS NULL OR encode(sha256(convert_to(source_body,'UTF8')),'hex') <> 'a65e2add8bf392d8a4df388a59a003e3abe4f8afdf6eb2087142f3edb33d0ab7' THEN
+  IF source_body IS NULL OR encode(sha256(convert_to(source_body,'UTF8')),'hex') <> 'f77c293791237f487b33e0a0691bbb1658ea570939fa99f78570aa89fb038413' THEN
     RAISE EXCEPTION 'Migration source checksum mismatch; create an explicit new migration';
   END IF;
   SELECT checksum INTO applied FROM agentci_schema_migrations WHERE version='007_m3_reproduction';
   IF applied IS NOT NULL THEN
-    IF applied <> 'a65e2add8bf392d8a4df388a59a003e3abe4f8afdf6eb2087142f3edb33d0ab7' THEN
+    IF applied <> 'f77c293791237f487b33e0a0691bbb1658ea570939fa99f78570aa89fb038413' THEN
       RAISE EXCEPTION 'Applied migration checksum mismatch; create an explicit new migration';
     END IF;
     RETURN;
@@ -33,6 +33,16 @@ CREATE TABLE agentci_reproduction_plans (
   FOREIGN KEY(organization_id,repository,finding_id,finding_version)
     REFERENCES agentci_finding_events(organization_id,repository,finding_id,version)
 );
+CREATE TABLE agentci_reproduction_cancellations (
+  organization_id uuid NOT NULL,
+  repository text NOT NULL,
+  id uuid NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT clock_timestamp(),
+  PRIMARY KEY(organization_id,repository,id),
+  FOREIGN KEY(organization_id,repository,id) REFERENCES agentci_reproduction_plans(organization_id,repository,id)
+);
+CREATE TRIGGER reproduction_cancellation_immutable BEFORE UPDATE OR DELETE ON agentci_reproduction_cancellations
+  FOR EACH ROW EXECUTE FUNCTION agentci_finding_event_immutable();
 CREATE TABLE agentci_reproduction_receipts (
   organization_id uuid NOT NULL,
   repository text NOT NULL,
@@ -49,6 +59,6 @@ CREATE TRIGGER reproduction_plan_immutable BEFORE UPDATE OR DELETE ON agentci_re
 CREATE TRIGGER reproduction_receipt_immutable BEFORE UPDATE OR DELETE ON agentci_reproduction_receipts
   FOR EACH ROW EXECUTE FUNCTION agentci_finding_event_immutable();
 -- END CHECKSUMMED MIGRATION BODY
-  INSERT INTO agentci_schema_migrations(version,checksum) VALUES('007_m3_reproduction','a65e2add8bf392d8a4df388a59a003e3abe4f8afdf6eb2087142f3edb33d0ab7');
+  INSERT INTO agentci_schema_migrations(version,checksum) VALUES('007_m3_reproduction','f77c293791237f487b33e0a0691bbb1658ea570939fa99f78570aa89fb038413');
 END $migration$;
 COMMIT;

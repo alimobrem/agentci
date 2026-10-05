@@ -31,6 +31,10 @@ can retry the same operation. Positive scenario observations confirm the finding
 negative observations, crashes and cancellation leave it unconfirmed. These
 synthetic fixture findings do not establish customer production acceptance.
 
+Cancellation first persists an immutable scoped cancellation record. Staging
+checks it before and after writing the eval job, preventing a retry or concurrent
+staging call from dispatching a cancelled plan. If no unit was ever staged, no
+execution receipt is fabricated; the finding remains unverified.
 Cancellation records terminal SQL state and prevents another execution lease.
 The controller must dispatch the existing cancelled-unit cleanup workflow and
 wait for cleanup completion; `cancel` alone is not proof that a container stopped.

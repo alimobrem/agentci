@@ -19,7 +19,7 @@ import {createReproductionActivities} from '../../apps/worker/reproduction-activ
 import {executeStoredUnit,cleanupCancelledUnit} from '../../apps/eval-worker/unit.ts';
 const url=process.env.AGENTCI_TEST_DATABASE_URL,image=process.env.AGENTCI_TEST_RUNNER_IMAGE;
 if(!url||!image)throw Error('Durable reproduction integration requires PostgreSQL and immutable runner image; never silently skip');
-for(const mode of ['positive','negative','crash','cancelled','live-cancelled','report-escape','temporal-positive','temporal-cancelled'] as const)test(`durable ${mode} reproduction fences authorization, execution and confirmation across restart`,{timeout:90000},async()=>{
+for(const mode of ['positive','negative','crash','cancelled','live-cancelled','report-escape','temporal-positive','temporal-cancelled','cancel-before-stage','cancel-during-stage'] as const)test(`durable ${mode} reproduction fences authorization, execution and confirmation across restart`,{timeout:90000},async()=>{
  const schema=`repro_${randomUUID().replaceAll('-','')}`,admin=new Pool({connectionString:url});
  await admin.query(`CREATE SCHEMA ${schema}`);
  const pool=new Pool({connectionString:url,options:`-c search_path=${schema}`});
@@ -43,6 +43,26 @@ for(const mode of ['positive','negative','crash','cancelled','live-cancelled','r
   await assert.rejects(reproduction.reserve(changed,f.base,f.head),/finding-reproduction-conflict/);
   const reservations=await Promise.all(Array.from({length:3},()=>reproduction.reserve(plan,f.base,f.head)));
   assert.ok(reservations.every(p=>p.id===plan.id));
+  if(mode==='cancel-during-stage'){
+   const originalStage=evals.stage.bind(evals);
+   let entered!:()=>void,release!:()=>void;
+   const observed=new Promise<void>(resolve=>{entered=resolve;}),resume=new Promise<void>(resolve=>{release=resolve;});
+   evals.stage=async(...args)=>{entered();await resume;return originalStage(...args);};
+   const staging=reproduction.stage(plan.id,f.base,f.head);
+   const rejected=assert.rejects(staging,/finding-reproduction-conflict/);
+   try{await observed;assert.deepEqual(await reproduction.cancel(plan.id),{jobId:null,unitIds:[]});}
+   finally{release();await rejected;evals.stage=originalStage;}
+   const job=await evals.recoveryPlan(plan.id);assert.ok(job);
+   const unit=await evals.unit(job.unitIds[0]!);assert.equal(unit!.status,'cancelled');assert.equal(unit!.result,undefined);
+   assert.equal((await reproduction.finalize(plan.id)).event.finding.state,'unconfirmed');
+   return;
+  }
+  if(mode==='cancel-before-stage'){
+   assert.deepEqual(await reproduction.cancel(plan.id),{jobId:null,unitIds:[]});
+   await assert.rejects(reproduction.stage(plan.id,f.base,f.head),/finding-reproduction-conflict/,'cancellation before dispatch must prevent later staging');
+   assert.equal(await evals.recoveryPlan(plan.id),undefined);
+   return;
+  }
   const activities=createReproductionActivities(reproduction,async(repository,sha)=>{assert.equal(repository,subject.repository);if(sha===f.base.sha)return f.base;if(sha===f.head.sha)return f.head;throw Error('Unexpected revision');});
   const staged=await activities.stageFindingReproduction(plan.id);
   assert.deepEqual(await reproduction.stage(plan.id,f.base,f.head),staged);
@@ -93,8 +113,8 @@ for(const mode of ['positive','negative','crash','cancelled','live-cancelled','r
    assert.deepEqual(await reproduction.finalize(plan.id),confirmed);
    assert.equal((await recoveredHistory.get(f.finding.id,subject)).length,3);
   }finally{await restarted.end();}
-  for(const table of ['agentci_reproduction_plans','agentci_reproduction_receipts']){
-   await assert.rejects(pool.query(`UPDATE ${table} SET digest=digest`),/Immutable finding event/);
+  for(const table of ['agentci_reproduction_plans','agentci_reproduction_receipts','agentci_reproduction_cancellations']){
+   await assert.rejects(pool.query(`UPDATE ${table} SET id=id`),/Immutable finding event/);
    await assert.rejects(pool.query(`DELETE FROM ${table}`),/Immutable finding event/);
    assert.equal((await pool.query(`SELECT count(*) FROM ${table}`)).rows[0].count,'1');
   }
