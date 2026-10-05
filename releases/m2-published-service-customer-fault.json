@@ -1,0 +1,60 @@
+{
+  "component": "Published M2 customer infrastructure failure acceptance",
+  "subject": {
+    "repository": "alimobrem/agentci-onboarding-demo",
+    "installationId": 167710386,
+    "pullRequest": 3,
+    "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+    "headSha": "a8f76e71b46ac58dd12dbe86ebb5532ec89bdfd9"
+  },
+  "requestId": "691df1c1-eb43-4839-931e-e18b62347c09",
+  "checkRunId": 111599654843,
+  "checkUrl": "https://github.com/alimobrem/agentci-onboarding-demo/pull/3/checks?check_run_id=111599654843",
+  "comparisonId": "9b1e4273-9d9b-4e67-bedb-b0828caf7330",
+  "comparisonDigest": "sha256:02b29bc21711cc9748ea0d75b35e1f4d31b3ba8338da7a99b54a5dce25c10110",
+  "summary": {
+    "state": "cancelled",
+    "outcome": "insufficient",
+    "executionGaps": [
+      "cancelled-unit:62d49b5e-3f05-4cc1-a508-40f578a92dfb",
+      "cancelled-unit:b0a43ec1-f2e3-4cbf-b97b-b51357189f04"
+    ],
+    "comparisons": []
+  },
+  "expected": {
+    "repository": "alimobrem/agentci-onboarding-demo",
+    "installationId": 167710386,
+    "pullRequest": 3,
+    "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+    "headSha": "a8f76e71b46ac58dd12dbe86ebb5532ec89bdfd9",
+    "organizationId": "8d7c501e-ff0e-4281-95a0-174d02bfe29c",
+    "reviewId": "2ce80024-4f12-4e1f-8fb2-aa301011cb47",
+    "attemptId": "691df1c1-eb43-4839-931e-e18b62347c09"
+  },
+  "certifiedExport": true,
+  "units": [
+    {
+      "id": "62d49b5e-3f05-4cc1-a508-40f578a92dfb",
+      "status": "cancelled",
+      "side": "base",
+      "assertionSide": "base",
+      "resultStatus": null
+    },
+    {
+      "id": "b0a43ec1-f2e3-4cbf-b97b-b51357189f04",
+      "status": "cancelled",
+      "side": "head",
+      "assertionSide": "base",
+      "resultStatus": null
+    }
+  ],
+  "limitations": [
+    "Configuration and deployed image identity are separate records.",
+    "No successful behavioral verification is claimed for this infrastructure-failure attempt.",
+    "Fresh-attempt recovery and unchanged retained failure digest must still be verified.",
+    "Package installed from the verified frozen-source CI archive; the GitHub release is a draft. Anonymous public release-package installation and all-six-role native download acceptance remain pending."
+  ],
+  "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+  "version": "0.3.1-m2",
+  "releaseAcceptance": false
+}

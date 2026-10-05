@@ -1,0 +1,151 @@
+{
+  "kind": "M2 corrected-scope and distribution evidence CI",
+  "candidateCommit": "b144933907ecb08bae83b42fab77931b054d9949",
+  "ciCommit": "bbbb71ea8759d2dfd65e6c6dbfe26abf626b5c0d",
+  "verifiedTree": "11bc627a0ad0444f109250418f7813c28997ecc4",
+  "run": {
+    "id": 37256697154,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37256697154",
+    "attempt": 1,
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 11322978188,
+    "name": "m1-verification",
+    "sha256": "8ddb0bf66e157394a91488c4d28af934e5e119a9ff0f3ac99ed67c5d32b3a962"
+  },
+  "verification": {
+    "unitApiDomainTests": 135,
+    "integrationGroups": 15,
+    "skips": 0,
+    "apiCompatibility": 0,
+    "runtime": {
+      "result": "passed",
+      "version": "ci",
+      "platform": "x64",
+      "checks": [
+        "non-root API/worker startup",
+        "M2 schema readiness",
+        "signature rejection",
+        "evidence authentication",
+        "comparison authentication/UUID/scoped lookup",
+        "compiled comparison API/client reads actual queued database evidence",
+        "compiled snapshot export/client completion",
+        "signed closed delivery",
+        "non-root persistent Temporal database startup/restart",
+        "graceful shutdown"
+      ],
+      "github": "synthetic credentials; no live GitHub review claimed"
+    },
+    "evalWorkerRuntime": {
+      "result": "passed",
+      "deployment": "native-CLI",
+      "engine": "docker",
+      "platform": "linux/amd64",
+      "workerImage": "sha256:1e56fb423e3af8f0e0972466ec654efaed3b1260125dcf09a1c87cea69338a6d",
+      "runnerImage": "sha256:6fc4dd04b769fd9e8d1b88d5d4041f564ee598bed05ab00c9142dcc782b39842",
+      "uid": 1001,
+      "node": "v26.10.0",
+      "cli": "Docker version 29.8.2, build 7fc2dff",
+      "license": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+      "checks": [
+        "UBI non-root read-only runtime",
+        "only selected engine client; no package installers/App keys",
+        "mismatched engine rejected before database/Temporal connection",
+        "official pinned docker CLI execution",
+        "separately authenticated restricted database login",
+        "real Temporal workflow and isolated child execution",
+        "child has no database/App/socket credentials",
+        "behavioral failure preserved",
+        "worker graceful shutdown/restart",
+        "all owned children removed"
+      ],
+      "github": "no live GitHub publication claimed"
+    },
+    "scans": [
+      {
+        "path": "scan-results/api.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-agentci.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "findings": 1,
+        "issues": [
+          {
+            "id": "CVE-2026-85393",
+            "severity": "HIGH",
+            "package": "node-forge",
+            "fixed": null
+          }
+        ]
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/eval-worker.json",
+        "findings": 0,
+        "issues": []
+      },
+      {
+        "path": "scan-results/worker.json",
+        "findings": 0,
+        "issues": []
+      }
+    ],
+    "declaredArtifacts": [
+      {
+        "path": ".agentci/artifacts/native-provenance-worker.json",
+        "sha256": "f8bcb1038ed6ec0a79605155ba4a4c777aad244db2128839daa7931ca319181d"
+      },
+      {
+        "path": ".agentci/artifacts/native-provenance-eval-worker.json",
+        "sha256": "37edf70543eee2180c936a50a4b130ba6bfe6bf716832f8e91233a760a7034c5"
+      },
+      {
+        "path": ".agentci/artifacts/eval-worker-image-smoke.json",
+        "sha256": "83ff630fd31ccd9e25bf464d7e792826ea6da0c33fa2861ccc9bcb078774683e"
+      },
+      {
+        "path": "releases/agentci-0.3.1-m2.tgz",
+        "sha256": "e2fe15d668cf5ad16b5a6a5237f1dc58c253ee88dd0d883fe4aae931652070a3"
+      },
+      {
+        "path": "scan-results/api.json",
+        "sha256": "814b28ed21b62a31473934397213181fcd5b7c45536ab610236ae6f1649f55b9"
+      },
+      {
+        "path": "scan-results/eval-agentci.json",
+        "sha256": "069f8183ae0f799af377b088a52656c58ecb223f9e4341ccde84c058722296da"
+      },
+      {
+        "path": "scan-results/eval-engines.json",
+        "sha256": "cd0a6cb972c853482cad02b97bd8ed232f33cab14aa1387d0eb785bd6f2ac05d"
+      },
+      {
+        "path": "scan-results/eval-runner.json",
+        "sha256": "6b16ece2b27efd10c48317ecba894fb61b113175702ca8943d88da57e7548c56"
+      },
+      {
+        "path": "scan-results/eval-worker.json",
+        "sha256": "206cb167cc30321bfa4091b9a73f17ad163a0ee1490f09c377ef9357e8eba63e"
+      },
+      {
+        "path": "scan-results/worker.json",
+        "sha256": "503f4efb127a027241fd18f4f0d6df0fcb8c60b5fca9082695cba54ebd6cfc19"
+      }
+    ]
+  },
+  "limitations": [
+    "This verifies the evidence/documentation branch, not a new product release source. The release package and image source remain frozen at 9bcff7d57c40536c9ddec126e998aa97bd045f03.",
+    "Public release downloads, optional-engine native/security acceptance and final phase gates remain pending."
+  ]
+}

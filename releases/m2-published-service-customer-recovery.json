@@ -1,0 +1,69 @@
+{
+  "component": "Published M2 customer CLI/client behavioral acceptance",
+  "packageSha256": "824508ff97c813ab4ed5d11939f55a3217e75c8a43537b123e7ce80b249419d6",
+  "subject": {
+    "repository": "alimobrem/agentci-onboarding-demo",
+    "installationId": 167710386,
+    "pullRequest": 3,
+    "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+    "headSha": "a8f76e71b46ac58dd12dbe86ebb5532ec89bdfd9"
+  },
+  "requestId": "4b9192ae-fc0b-4644-89b6-d17b0f455346",
+  "checkRunId": 111600227898,
+  "checkUrl": "https://github.com/alimobrem/agentci-onboarding-demo/pull/3/checks?check_run_id=111600227898",
+  "comparisonId": "19ba8d23-a9c9-4ad1-8713-1068ad42b902",
+  "comparisonDigest": "sha256:4e1d4ea49dc9c6d30d83ae403b01158987823f37983a9a5fbc439ae1140fbd85",
+  "summary": {
+    "state": "completed",
+    "outcome": "passed",
+    "executionGaps": [],
+    "comparisons": [
+      {
+        "suite": "customer-safety",
+        "baseRunId": "be0fb0c1-5940-4e09-b295-a9193dd2d596",
+        "headRunId": "afbf4890-da28-4eb6-b67c-592840ec3488",
+        "deltas": [
+          {
+            "scenario": "safe-response",
+            "baseStatus": "passed",
+            "headStatus": "passed",
+            "passRateDelta": 0,
+            "criticalFailureDelta": 0,
+            "regression": false
+          }
+        ],
+        "regressions": []
+      }
+    ]
+  },
+  "units": [
+    {
+      "id": "be0fb0c1-5940-4e09-b295-a9193dd2d596",
+      "side": "base",
+      "assertionSide": "base",
+      "passRate": 1,
+      "trials": 2,
+      "resultStatus": "passed"
+    },
+    {
+      "id": "afbf4890-da28-4eb6-b67c-592840ec3488",
+      "side": "head",
+      "assertionSide": "base",
+      "passRate": 1,
+      "trials": 2,
+      "resultStatus": "passed"
+    }
+  ],
+  "streamedUnits": 2,
+  "certifiedExport": true,
+  "anonymousDenied": true,
+  "wrongTokenDenied": true,
+  "wrongIdentityDenied": true,
+  "limitations": [
+    "This evidence requires a separate deployed-image identity record. Temporary local tunnel is customer demonstration, not production hosting.",
+    "Package installed from the verified frozen-source CI archive; the GitHub release is a draft. Anonymous public release-package installation and all-six-role native download acceptance remain pending."
+  ],
+  "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+  "version": "0.3.1-m2",
+  "releaseAcceptance": false
+}

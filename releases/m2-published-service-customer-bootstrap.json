@@ -1,0 +1,54 @@
+{
+  "kind": "Fresh published-service bootstrap after local mount correction",
+  "bootstrapOnly": true,
+  "allSixRolesVerified": false,
+  "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+  "version": "0.3.1-m2",
+  "identities": [
+    {
+      "role": "api",
+      "image": "ghcr.io/alimobrem/agentci-api@sha256:ccd2d24db9411d88956136d9840e6c36c23d3b44f8aaba89d9da7e2dbd0af612",
+      "localImageId": "sha256:ccd2d24db9411d88956136d9840e6c36c23d3b44f8aaba89d9da7e2dbd0af612",
+      "platform": "linux/arm64",
+      "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+      "version": "0.3.1-m2"
+    },
+    {
+      "role": "worker",
+      "image": "ghcr.io/alimobrem/agentci-worker@sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b",
+      "localImageId": "sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b",
+      "platform": "linux/arm64",
+      "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+      "version": "0.3.1-m2"
+    },
+    {
+      "role": "eval-worker",
+      "image": "ghcr.io/alimobrem/agentci-eval-worker@sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3",
+      "localImageId": "sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3",
+      "platform": "linux/arm64",
+      "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+      "version": "0.3.1-m2"
+    },
+    {
+      "role": "eval-runner",
+      "image": "ghcr.io/alimobrem/agentci-eval-runner@sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143",
+      "localImageId": "sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143",
+      "platform": "linux/arm64",
+      "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+      "version": "0.3.1-m2"
+    }
+  ],
+  "anonymousPull": true,
+  "freshComposeProject": "agentci-m2-released",
+  "controllerPort": 3004,
+  "temporalUiPort": 8236,
+  "oldDemoStatePreserved": true,
+  "migrationInput": "shipped package SQL; applied in documented order to preserved new database",
+  "mountCorrection": "Colima does not share macOS /tmp; installed package/provider config moved to existing shared ignored workspace path",
+  "limitations": [
+    "Optional/self-eval roles, public package download, native release acceptance and customer PR demo are pending.",
+    "Shared local daemon is development infrastructure, not dedicated production isolation.",
+    "Package installed from the verified frozen-source CI archive; the GitHub release is a draft. Anonymous public release-package installation and all-six-role native download acceptance remain pending."
+  ],
+  "releaseAcceptance": false
+}
