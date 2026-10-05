@@ -108,3 +108,21 @@ identities remain in `releases/m2-hosted-cache-failures.json`; no successful
 hosted/customer acceptance is claimed from those attempts. Cache hits and export
 availability are different observations; partial cache reuse is not proof of a
 fully populated or successful cache export.
+
+## Bounded snapshot reuse
+
+The M2 controller snapshot reader reuses verified immutable Git blobs within one
+activity-factory/authenticated-client lifetime. Keys include repository and Git
+blob SHA; cache entries are never shared between clients or persisted to disk.
+Each snapshot still fetches and validates its exact commit and tree, including
+current read access, truncation, entry modes, content budgets and cached blob size.
+Only hash-verified, valid UTF-8 content enters the cache. Failed reads do not enter
+it. The cache is bounded to 64 MiB of UTF-8 content and 10,000 entries, with least
+recently used eviction; decoded strings/metadata add memory overhead. Concurrent
+reads account for an existing entry before reinserting so byte totals stay bounded.
+
+The controlled unchanged base/head fixture now uses two blob requests instead of
+four, with two fresh commit and two fresh tree requests. This measures request
+reuse only. Hosted wall-clock time, actual API quota pressure, failure/recovery and
+release acceptance require final-source CI and real hosted observations; no total
+delivery acceleration is inferred from the fixture.

@@ -1209,6 +1209,62 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M2-IMAGE-PUBLICATION",
+      "title": "Publish all M2 UBI image roles with immutable version guards and platform evidence",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-034",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T17:34:47.377Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Publication workflow covers API/controller, evaluator, default runner, optional engines and trusted self-eval dependency image for amd64/arm64; exact source/version labels and digest manifests bind all inputs. Existing version tags cannot be overwritten, including on ambiguous registry/auth/network failure. Every published platform is scanned, native service inventories are independently verified, and failed attempts retain evidence. Validate guards, workflows and applicable checks before hosted publication; publication/download/runtime gates remain pending until exercised.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-DOWNLOAD-ACCEPTANCE",
+      "title": "Verify anonymous downloads and native runtime acceptance for all M2 images",
+      "requirementIds": [
+        "SPEC-40-032",
+        "SPEC-40-034",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T18:03:23.197Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Pull all six public role digests anonymously; bind source/version/native platform identities; execute actual API/worker/eval-worker and mandatory runner/optional-engine/self-eval integration on native amd64 and arm64. Retain per-platform download and failure/recovery evidence before completion.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M2-SNAPSHOT-REUSE",
+      "title": "Bound hosted snapshot API work by reusing authenticated verified immutable blobs",
+      "requirementIds": [
+        "SPEC-34.2-003",
+        "SPEC-40-039"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-04T18:19:16.710Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Repeated base/head snapshots reuse only content-hash-verified UTF-8 blobs in a byte/entry-bounded client-and-repository-scoped cache, while freshly verifying commit/tree permissions and identities each read. Tests prove reduced blob requests, tampered cached-size rejection, separate-client/repository isolation, eviction and failed-response retry; preserve exact snapshot and full hosted acceptance. Record request-count improvement separately from unproven total delivery acceleration.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
