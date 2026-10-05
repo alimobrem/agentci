@@ -4,6 +4,7 @@ import { resolve, join } from 'node:path';
 import { execFileSync, spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { once } from 'node:events';
+import {pathToFileURL} from 'node:url';
 import {ComparisonAccumulator,frameExport} from '../dist/packages/evals/export.js';
 import {canonical,digest} from '../dist/packages/review/engine.js';
 
@@ -17,6 +18,14 @@ try {
   const cli = join(root, 'node_modules/.bin/agentci');
   const version = execFileSync(cli, ['--version'], { encoding: 'utf8' }).trim();
   if (version !== expectedVersion) throw new Error('Unexpected packaged version');
+  // Exercise installed provider modules and their runtime schema assets, not source imports.
+  const installedRoot=join(root,'node_modules/agentci');
+  const {validateModelRequest}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/request.js')).href);
+  const {validateModelResponse}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/response.js')).href);
+  const request=validateModelRequest(JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-request.json'),'utf8')));
+  validateModelResponse({schemaVersion:'v1alpha1',requestId:request.requestId,attemptId:'installed-fixture',provider:request.provider,model:request.model,status:'completed',text:'installed',structuredOutput:{claim:'installed schema acceptance'},toolCalls:[],usage:{inputTokens:null,outputTokens:null,costUsdMicros:null,costKind:'unknown',pricingRevision:null},providerRequestId:null},request,'installed-fixture');
+  if(!(await readFile(join(installedRoot,'deploy/migrations/004_m3_model_budget.sql'),'utf8')).includes('agentci_model_attempts'))throw new Error('Installed provider budget migration missing');
+
   if(!execFileSync(cli,['--help'],{encoding:'utf8'}).includes('review --config PRIVATE_JSON'))throw new Error('Installed operator review command missing');
   if(!execFileSync(cli,['--help'],{encoding:'utf8'}).includes('preflight --config PRIVATE_JSON'))throw new Error('Installed preflight command missing');
   try{execFileSync(cli,['preflight','--config',join(root,'missing-preflight.json')],{encoding:'utf8',stdio:'pipe'});throw new Error('Installed preflight accepted missing private config');}catch(error){if(error.status!==2||JSON.parse(error.stderr).error.code!=='invalid-private-preflight-config')throw error;}
@@ -94,5 +103,5 @@ text: Packaged CLI validates a fresh project.
     execFileSync(cli, ['validate', '--root', join(root, 'project')], { stdio: 'pipe' });
     throw new Error('Invalid project unexpectedly passed');
   } catch (error) { if (error.status !== 1) throw error; }
-  console.log('Packaged CLI/client passed: production-only install, version, fresh init, overwrite rejection, client entry point, MIT license, installed App setup/state rejection, validation and invalid input.');
+  console.log('Packaged CLI/client passed: production-only install, version, fresh init, overwrite rejection, client entry point, installed provider schemas/migration, MIT license, installed App setup/state rejection, validation and invalid input.');
 } finally { await rm(root, { recursive: true, force: true }); }

@@ -1,0 +1,1803 @@
+{
+  "runId": 37265297310,
+  "attempt": 1,
+  "conclusion": "success",
+  "cohort": "publication-native",
+  "cache": "unknown",
+  "collectedAt": "2026-10-05T05:47:59.574Z",
+  "sourceCommit": "8b6dfabb704dcc4813072c68a3ea3f7148d51c26",
+  "url": "https://github.com/alimobrem/agentci/actions/runs/37265297310",
+  "event": "workflow_dispatch",
+  "jobs": [
+    {
+      "name": "verify / contracts-and-runtime",
+      "seconds": 524,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "seconds": 13,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:fast",
+          "seconds": 16,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:api:compat",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:workflows",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify evaluator deployment boundary",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run build",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm audit --audit-level=high",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Start isolated Temporal",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Wait for Temporal",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build isolated eval runner",
+          "seconds": 18,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build trusted-dependency self-eval runner",
+          "seconds": 94,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build optional eval engines",
+          "seconds": 93,
+          "conclusion": "success"
+        },
+        {
+          "name": "Integration tests with mandatory real eval isolation",
+          "seconds": 79,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run mkdir -p releases && npm pack --pack-destination releases && node scripts/package-smoke.mjs",
+          "seconds": 13,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build API image",
+          "seconds": 21,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build worker image",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build isolated eval worker image",
+          "seconds": 28,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan service images",
+          "seconds": 65,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify compiled containers",
+          "seconds": 9,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify native artifact provenance",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify isolated eval worker runtime",
+          "seconds": 10,
+          "conclusion": "success"
+        },
+        {
+          "name": "Collect verification evidence",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build isolated eval worker image",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build worker image",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build API image",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build optional eval engines",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build trusted-dependency self-eval runner",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build isolated eval runner",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "verify / fast-feedback",
+      "seconds": 40,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:fast",
+          "seconds": 16,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "build-native (eval-worker, ubuntu-24.04, amd64)",
+      "seconds": 139,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 10,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build native image by digest",
+          "seconds": 77,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and bind native publication evidence",
+          "seconds": 27,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record attempt even when build or scan fails",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain partial and complete publication evidence",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bounded owned-builder cleanup",
+          "seconds": 10,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build native image by digest",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "build-native (worker, ubuntu-24.04-arm, arm64)",
+      "seconds": 130,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 8,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build native image by digest",
+          "seconds": 74,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and bind native publication evidence",
+          "seconds": 24,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record attempt even when build or scan fails",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain partial and complete publication evidence",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bounded owned-builder cleanup",
+          "seconds": 8,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build native image by digest",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "build-native (worker, ubuntu-24.04, amd64)",
+      "seconds": 220,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 8,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build native image by digest",
+          "seconds": 94,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and bind native publication evidence",
+          "seconds": 28,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record attempt even when build or scan fails",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain partial and complete publication evidence",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bounded owned-builder cleanup",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build native image by digest",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "build-native (eval-engines, ubuntu-24.04, amd64)",
+      "seconds": 637,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 13,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build native image by digest",
+          "seconds": 497,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and bind native publication evidence",
+          "seconds": 81,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record attempt even when build or scan fails",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain partial and complete publication evidence",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bounded owned-builder cleanup",
+          "seconds": 33,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build native image by digest",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "build-native (api, ubuntu-24.04-arm, arm64)",
+      "seconds": 112,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build native image by digest",
+          "seconds": 68,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and bind native publication evidence",
+          "seconds": 23,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record attempt even when build or scan fails",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain partial and complete publication evidence",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bounded owned-builder cleanup",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build native image by digest",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "build-native (eval-agentci, ubuntu-24.04, amd64)",
+      "seconds": 306,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build native image by digest",
+          "seconds": 246,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and bind native publication evidence",
+          "seconds": 32,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record attempt even when build or scan fails",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain partial and complete publication evidence",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bounded owned-builder cleanup",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build native image by digest",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "build-native (api, ubuntu-24.04, amd64)",
+      "seconds": 127,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build native image by digest",
+          "seconds": 78,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and bind native publication evidence",
+          "seconds": 25,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record attempt even when build or scan fails",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain partial and complete publication evidence",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bounded owned-builder cleanup",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build native image by digest",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "build-native (eval-engines, ubuntu-24.04-arm, arm64)",
+      "seconds": 661,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 8,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build native image by digest",
+          "seconds": 540,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and bind native publication evidence",
+          "seconds": 85,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record attempt even when build or scan fails",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain partial and complete publication evidence",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bounded owned-builder cleanup",
+          "seconds": 11,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build native image by digest",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "build-native (eval-agentci, ubuntu-24.04-arm, arm64)",
+      "seconds": 212,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build native image by digest",
+          "seconds": 164,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and bind native publication evidence",
+          "seconds": 28,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record attempt even when build or scan fails",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain partial and complete publication evidence",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bounded owned-builder cleanup",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build native image by digest",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "build-native (eval-runner, ubuntu-24.04, amd64)",
+      "seconds": 210,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build native image by digest",
+          "seconds": 170,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and bind native publication evidence",
+          "seconds": 20,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record attempt even when build or scan fails",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain partial and complete publication evidence",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bounded owned-builder cleanup",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build native image by digest",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "build-native (eval-runner, ubuntu-24.04-arm, arm64)",
+      "seconds": 197,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 11,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build native image by digest",
+          "seconds": 145,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and bind native publication evidence",
+          "seconds": 24,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record attempt even when build or scan fails",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain partial and complete publication evidence",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bounded owned-builder cleanup",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build native image by digest",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "build-native (eval-worker, ubuntu-24.04-arm, arm64)",
+      "seconds": 143,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Refuse existing version tags or ambiguous registry state",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 9,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build native image by digest",
+          "seconds": 86,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and bind native publication evidence",
+          "seconds": 27,
+          "conclusion": "success"
+        },
+        {
+          "name": "Record attempt even when build or scan fails",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain partial and complete publication evidence",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bounded owned-builder cleanup",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build native image by digest",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "publish (api)",
+      "seconds": 21,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble only fully accepted native platforms",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "publish (eval-agentci)",
+      "seconds": 26,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble only fully accepted native platforms",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "publish (eval-worker)",
+      "seconds": 27,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 8,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble only fully accepted native platforms",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "publish (eval-runner)",
+      "seconds": 63,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble only fully accepted native platforms",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "publish (eval-engines)",
+      "seconds": 29,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble only fully accepted native platforms",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "publish (worker)",
+      "seconds": 28,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Assemble only fully accepted native platforms",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

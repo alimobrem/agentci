@@ -1,0 +1,53 @@
+{
+  "sourceCommit": "dfa3c9701d7bc3d1956cf3b00515f7486c09c12a",
+  "run": "https://github.com/alimobrem/agentci/actions/runs/37269094120",
+  "artifactId": 11328020543,
+  "comparisonSha256": "sha256:c809b1b0f98cf18320e431e6adf24788fd162418c833db1a29ec9ad66cf0a1e8",
+  "frameChainVerified": true,
+  "summary": {
+    "state": "completed",
+    "outcome": "passed",
+    "executionGaps": [],
+    "unitCount": 2,
+    "comparisonCount": 1
+  },
+  "scenarios": [
+    {
+      "scenario": "manifest",
+      "baseStatus": "passed",
+      "headStatus": "passed",
+      "regression": false
+    },
+    {
+      "scenario": "adapters",
+      "baseStatus": "passed",
+      "headStatus": "passed",
+      "regression": false
+    },
+    {
+      "scenario": "statistics",
+      "baseStatus": "passed",
+      "headStatus": "passed",
+      "regression": false
+    },
+    {
+      "scenario": "request-identity",
+      "baseStatus": "passed",
+      "headStatus": "passed",
+      "regression": false
+    },
+    {
+      "scenario": "comparison",
+      "baseStatus": "passed",
+      "headStatus": "passed",
+      "regression": false
+    },
+    {
+      "scenario": "export-client",
+      "baseStatus": "passed",
+      "headStatus": "passed",
+      "regression": false
+    }
+  ],
+  "scope": "Existing six-scenario self-contract eval suite; provider-core acceptance also requires its dedicated tests and full CI"
+}

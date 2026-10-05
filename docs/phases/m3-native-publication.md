@@ -1,7 +1,8 @@
 # M3 native publication prerequisite
 
-State: implemented locally; hosted publication, native runtime acceptance and
-comparable timing remain pending. This is M3-R1, not an M3 release claim.
+State: native publication and downloaded runtime acceptance verified for development
+candidate `0.4.0-m3-dev.1`. Warm-cache comparison remains unmeasured. This is
+M3-R1 infrastructure acceptance, not an M3 release claim.
 
 The publication workflow verifies source first, then builds each of six image
 roles on separate native AMD64 and ARM64 runners. Each role/platform has its own
@@ -44,11 +45,27 @@ Validation implemented:
 - Reject scan evidence for another manifest, configuration digest or platform.
 - Check that workflow ordering preserves evidence/cleanup time and forbids QEMU.
 
-Remaining acceptance: run native publication on a new candidate identity, retain
-both platform scans/inventories and partial-failure behavior, exercise the
-published native runtimes, and record timings with actual cache state. Preserve
-M2's failed QEMU attempt and successful publication as historical cohorts; do not
-infer total development acceleration from a shorter build.
+Observed acceptance is retained in
+`delivery/acceptance/m3-r1-native-downloads.json` and
+`delivery/acceptance/m3-r1-publication-failures.json`. Publication run 37265297310
+built all twelve native images and assembled six indices. Download run 37267522445
+anonymously exercised the same digests, all fifteen integration groups per platform,
+API/worker startup, evaluator isolation/recovery, official Temporal native artifact
+provenance and RSA patch regressions. The optional-engine node-forge HIGH finding
+remains visible; the downstream patch checks do not constitute a clean scan.
+
+The actual preparation command rejected missing platform evidence and changed scan
+bytes without emitting assembly inputs. The workflow's failure-recording command
+retained a failed build outcome with no digest. Remote runner loss/upload failures
+were not injected; the limits described above still apply.
+
+All twelve native build steps reported no reused BuildKit layers. The longest
+publication job took 661 seconds, within its 4500-second limit; per-job build/scan
+and timeout margins are recorded. These are cold native observations, not a matched
+warm-cache comparison. Warm reuse will be measured on the next necessary candidate,
+without republishing unchanged artifacts solely for timing. Preserve M2's failed
+QEMU attempt and successful publication as historical cohorts; do not infer total
+development acceleration from a shorter build.
 
 The newly introduced artifact download action is pinned to official stable
 `actions/download-artifact` v8.0.1, commit

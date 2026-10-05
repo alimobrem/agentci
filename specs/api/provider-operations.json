@@ -16,7 +16,8 @@
         "SPEC-13.2-008"
       ],
       "tests": [
-        "tests/model-request.test.ts"
+        "tests/model-request.test.ts",
+        "scripts/package-smoke.mjs"
       ],
       "scenarios": [
         "strict detached normalized request",
@@ -46,7 +47,8 @@
         "SPEC-13.2-005"
       ],
       "tests": [
-        "tests/model-response.test.ts"
+        "tests/model-response.test.ts",
+        "scripts/package-smoke.mjs"
       ],
       "scenarios": [
         "exact request and attempt binding",
@@ -97,7 +99,8 @@
         "SPEC-13.2-008"
       ],
       "tests": [
-        "tests/integration/model-budget.test.ts"
+        "tests/integration/model-budget.test.ts",
+        "scripts/package-smoke.mjs"
       ],
       "scenarios": [
         "concurrent reservations",
