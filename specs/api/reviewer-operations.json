@@ -170,6 +170,53 @@
         "invalid paths and missing or oversized evidence fail closed",
         "cancellation and redacted reader failures"
       ]
+    },
+    {
+      "operationId": "validateReviewAdmission",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/review-admission.test.ts"
+      ],
+      "scenarios": [
+        "strict exact subject and immutable profile revision",
+        "synthetic versus live binding",
+        "UUID normalization and detached caller data"
+      ]
+    },
+    {
+      "operationId": "validateReviewAdmissionApproval",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/review-admission.test.ts"
+      ],
+      "scenarios": [
+        "trusted approval binds normalized request and policy",
+        "wrong subject profile request or mode rejected"
+      ]
+    },
+    {
+      "operationId": "ReviewAdmissionStore",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/integration/review-admissions.test.ts"
+      ],
+      "scenarios": [
+        "concurrent duplicate admission creates one outbox row",
+        "conflicting idempotency identity rejected",
+        "authorization and unavailable errors redacted",
+        "cross-tenant isolation and restart recovery",
+        "outbox failure rolls back admission",
+        "immutable request update and deletion rejection"
+      ]
     }
   ]
 }
