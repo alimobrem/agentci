@@ -29,6 +29,12 @@ try {
   const {validateReviewerResult}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/result.js')).href);
   const reviewerFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/reviewer-result.json'),'utf8'));
   validateReviewerResult(reviewerFixture,reviewerFixture.subject);
+  const {createSnapshotReviewContext}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/snapshot-context.js')).href);
+  const installedContext=await createSnapshotReviewContext(reviewerFixture.subject,async(repository,sha)=>{
+    if(repository!==reviewerFixture.subject.repository||sha!==reviewerFixture.subject.headSha)throw new Error('Installed snapshot identity changed');
+    return {sha,files:{'fixture.ts':'installed reviewer context'}};
+  })([{kind:'source',side:'head',path:'fixture.ts'}]);
+  if(installedContext.documents[0]?.content!=='installed reviewer context')throw new Error('Installed snapshot context failed');
   const {createOpenAIProvider}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/openai.js')).href);
   let installedProviderCalls=0;
   const installedProvider=createOpenAIProvider('synthetic-package-fixture',[{

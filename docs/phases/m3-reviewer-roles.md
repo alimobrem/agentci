@@ -13,8 +13,8 @@ cannot establish independence. Its synthetic outcome must remain visibly
 synthetic in later evidence and UI. An external-mode decision checks configured
 identity separation, not live provider availability or compatibility.
 
-This is internal policy groundwork, not a completed reviewer. Persistent result evidence, hosted adversarial acceptance and customer/API integration
-remain open. Instruction text alone is not a prompt-injection security boundary. Model
+The internal executor and persistent result store are implemented. Hosted adversarial
+acceptance and customer/API integration remain open. Instruction text alone is not a prompt-injection security boundary. Model
 claims must remain proposed until independent reproduction evidence exists.
 
 ## Bounded request assembly
@@ -49,17 +49,16 @@ provider retry loop or credential lookup is introduced.
 Synthetic mode accepts only fixture reviewers; external mode rejects fixtures.
 Successful output is explicitly proposed, never confirmed. Refused or incomplete
 responses produce no proposal. The result binds role, subject, request/attempt,
-model, usage and digests while omitting private continuation material. Persisting
-that result and proving its durable retrieval remain later acceptance work.
+model, usage and digests while omitting private continuation material. The PostgreSQL store and replay wrapper below retain and recover that result.
 Tests exercise all seven roles, cross-scope/policy rejection before reservation,
 budget exhaustion, malformed output, refusal, cancellation and accounting failure.
 These fixture tests prove control flow, not live upstream quality or compatibility.
 
 ## Adversarial regression corpus
 
-`evals/agentci-reviewers.yaml` freezes nineteen assertions across five scenarios:
+`evals/agentci-reviewers.yaml` freezes twenty-two assertions across six scenarios:
 identity policy, context isolation, budgeted execution, adversarial output and
-result integrity.
+result integrity and snapshot context.
 The fixture deliberately follows malicious repository suggestions in its output:
 unauthorized tool calls, forged confirmation fields, wrong request identity,
 confirmation language and truncated claims. Controller checks must reject invalid
@@ -125,3 +124,22 @@ changed-input conflicts, failed save after settlement and input mutation during
 storage lookup. Storage unavailability has a separate redacted error from an
 immutable evidence conflict. These checks do not replace Temporal crash/recovery
 acceptance or a released customer demo.
+
+## Context from authorized snapshots
+
+`createSnapshotReviewContext(authorizedSubject, readSnapshot)` binds a subject
+already authenticated by the controller. In the GitHub integration, supply
+`createRemoteSnapshotReader(installationClient)` as the reader; it verifies exact
+commit, tree and blob identities. This does not authenticate a caller by itself.
+The loader accepts only source/requirement references, reads the bound base/head
+commits, checks the returned SHA and copies only selected files into bounded context.
+It cannot accept supplied document bytes or arbitrary diff text. Missing, oversized
+or unsafe references fail; nothing is silently truncated. Selected paths remain
+untrusted data and explicit selection does not imply complete review coverage.
+
+Selection and subject are detached before awaiting I/O. Cancellation prevents
+subsequent reads and result delivery; it does not interrupt an already active
+reader request, which retains the GitHub client's 30-second timeout. Reader failures
+are redacted. Unit and frozen-corpus assertions cover exact read identity, mutation,
+missing/oversized files, invalid selection and cancellation. Customer workflow
+wiring and authenticated provenance receipt handling remain in M3-07.

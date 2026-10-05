@@ -22,6 +22,7 @@ spec:
       - tests/reviewer-execute.test.ts
       - tests/reviewer-adversarial.test.ts
       - tests/reviewer-result.test.ts
+      - tests/reviewer-snapshot.test.ts
       - specs/api/fixtures/reviewer-result.json
   scenarios:
     - {id: identity-policy}
@@ -29,4 +30,5 @@ spec:
     - {id: budgeted-execution}
     - {id: adversarial-output}
     - {id: result-integrity}
+    - {id: snapshot-context}
   trials: {count: 1, passRate: 1, maxCriticalFailures: 0, confidenceMethod: wilson}

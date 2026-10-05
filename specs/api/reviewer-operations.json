@@ -149,6 +149,23 @@
         "save failure after accounting cannot redispatch",
         "authorized input detached before storage await"
       ]
+    },
+    {
+      "operationId": "createSnapshotReviewContext",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SECTION-12.2"
+      ],
+      "tests": [
+        "tests/reviewer-snapshot.test.ts"
+      ],
+      "scenarios": [
+        "authorized repository and exact commit selection",
+        "caller mutation during snapshot read",
+        "invalid paths and missing or oversized evidence fail closed",
+        "cancellation and redacted reader failures"
+      ]
     }
   ]
 }
