@@ -199,3 +199,16 @@ comparison. That distinction remains an open closure item. Later storage-failure
 tests are not covered by this earlier source's hosted run.
 
 [Retained initial acceptance](https://github.com/alimobrem/agentci/actions/runs/37347757134/artifacts/11361766061).
+
+### Merged foundation
+
+PR33 merged as `36e6944` after exact source
+`af3853d2191ed0e17582b5ff45fcaba317e75eeb` passed full verification run
+`37349098502` and isolated hosted comparison
+`4a55a132-e16b-4ab7-ac1a-07fc640acbe9` from run `37348992741`, artifact
+`11362072301`. The independently checked receipt is
+`delivery/acceptance/m3-reviewer-merged-head.json`. The hosted result passed with
+five units, two paired comparisons and no coverage, selection or execution gaps.
+The reviewer suite was still new at that source. M3-05 therefore remains open
+pending its first two-sided comparison using assertions frozen on merged main.
+The next-task breakdown is in `m3-finding-pr-plan.md`; it does not advance M3-06.
