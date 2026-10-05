@@ -181,3 +181,21 @@ M3-06 owns deduplication, lifecycle and reproduction. M3-07 owns customer/API/ch
 wiring and authenticated provenance handling. Their existence in the plan does not
 prove them implemented. Original live-provider acceptance remains deferred under
 `m3-live-validation-deferral.md`; fixture results do not satisfy that acceptance.
+
+### Initial isolated hosted acceptance
+
+Advisory run `37347757134`, artifact `11361766061`, independently verified with
+`verifyHostedReport` and `verifyHostedComparison`, retained comparison
+`5ff8e937-734a-458c-95ab-8f92ce066db0` for PR33 head
+`86ba02689354b5411265ecce0ee3f7c62e10a90c` against base
+`9e4f05498358d7cda1b6a8d4f95b97ad40516d6f`.
+The reviewer unit `c441a304-7c67-4f0b-aa5c-debde2dafe00` completed all six scenarios
+with no failed, skipped or error trials under runner
+`sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57`.
+The complete comparison reports five units, two paired comparisons and no
+coverage, selection or execution gaps. The added reviewer suite uses head
+assertions: it is initial isolated acceptance, not a two-sided frozen-baseline
+comparison. That distinction remains an open closure item. Later storage-failure
+tests are not covered by this earlier source's hosted run.
+
+[Retained initial acceptance](https://github.com/alimobrem/agentci/actions/runs/37347757134/artifacts/11361766061).
