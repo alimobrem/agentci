@@ -111,6 +111,25 @@
         "private fields rejected",
         "bounded JSON and usage semantics"
       ]
+    },
+    {
+      "operationId": "ReviewerResultStore",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SPEC-12.2-001",
+        "SECTION-13.4"
+      ],
+      "tests": [
+        "tests/integration/reviewer-results.test.ts"
+      ],
+      "scenarios": [
+        "concurrent immutable save and reconstructed store retrieval",
+        "tenant and commit isolation",
+        "exact budget request and settled cost binding",
+        "unknown cost reservation retained",
+        "SQL update rejected"
+      ]
     }
   ]
 }

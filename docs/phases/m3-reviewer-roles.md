@@ -83,5 +83,23 @@ executor output and refusals are checked against this contract in tests.
 
 The validator does not authenticate an author or reconstruct omitted original
 request/context bytes. A durable store must bind the whole record digest, writer
-scope and immutable request identity; database persistence is still pending.
+scope and immutable request identity; the PostgreSQL store below implements that binding.
 The compiled package includes the schema as a runtime asset.
+
+## Durable PostgreSQL results
+
+Migration `005_m3_reviewer_results.sql` follows the checksummed, serialized
+migration protocol and requires migration 004. `ReviewerResultStore` binds a
+controller-owned organization/repository/budget. A write requires the exact
+request digest and attempt in that budget, settled reported cost or an unknown
+reservation. Concurrent identical writes reuse one immutable record; changed
+bytes conflict. Reads revalidate subject, full-record digest and internal hashes.
+SQL updates are rejected. A reconstructed store can retrieve retained results.
+
+Real PostgreSQL acceptance covers concurrent writes, scope/commit rejection,
+pre-accounting rejection, cost mismatch, unknown reservations, repeated migrations
+and update rejection. The store is internal, with no customer read endpoint yet.
+Controller orchestration must still connect execution, save and recovery; this
+store alone does not claim crash-safe end-to-end reviewer scheduling. Pool setup
+must bound connection time; transactions bound locks and statements and return
+redacted storage errors. The migration and result schema ship in the package.
