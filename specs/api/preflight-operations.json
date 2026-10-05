@@ -1,0 +1,32 @@
+{
+  "apiVersion": "agentci.io/v1alpha1",
+  "transport": "Operator CLI; unauthenticated bounded readiness/connectivity and isolated daemon mount diagnostics; no new HTTP API",
+  "operations": [
+    {
+      "operationId": "preflightPrerequisites",
+      "command": "agentci preflight --config PRIVATE_JSON",
+      "input": "Private strict configuration with requested deployment/provider scopes; immutable preinstalled image, absolute nonsecret mount paths, private credential references and authorized spend ceiling",
+      "output": "Sanitized check results, requested scope, no-paid-request indicator; exit 0 pass, 1 probe failure, 2 configuration failure",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SECTION-13"
+      ],
+      "tests": [
+        "tests/provider-preflight.test.ts",
+        "tests/mount-preflight.test.ts",
+        "tests/preflight-command.test.ts",
+        "scripts/package-smoke.mjs"
+      ],
+      "scenarios": [
+        "configuration rejected before probes",
+        "shared and unshared daemon paths",
+        "read-only isolated owned container cleanup",
+        "no credential forwarding or provider model calls",
+        "private bounded credential/config files",
+        "readiness failure, redirects, oversized replies",
+        "explicit scope and unverified provider authentication"
+      ]
+    }
+  ]
+}

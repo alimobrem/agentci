@@ -18,6 +18,10 @@ try {
   const version = execFileSync(cli, ['--version'], { encoding: 'utf8' }).trim();
   if (version !== expectedVersion) throw new Error('Unexpected packaged version');
   if(!execFileSync(cli,['--help'],{encoding:'utf8'}).includes('review --config PRIVATE_JSON'))throw new Error('Installed operator review command missing');
+  if(!execFileSync(cli,['--help'],{encoding:'utf8'}).includes('preflight --config PRIVATE_JSON'))throw new Error('Installed preflight command missing');
+  try{execFileSync(cli,['preflight','--config',join(root,'missing-preflight.json')],{encoding:'utf8',stdio:'pipe'});throw new Error('Installed preflight accepted missing private config');}catch(error){if(error.status!==2||JSON.parse(error.stderr).error.code!=='invalid-private-preflight-config')throw error;}
+  const preflightTemplate=JSON.parse(await readFile(join(root,'node_modules/agentci/deploy/preflight.example.json'),'utf8'));
+  if(preflightTemplate.providers.length||preflightTemplate.liveTests!==null)throw new Error('Preflight template must not enable live provider tests');
   const operatorTemplate=JSON.parse(await readFile(join(root,'node_modules/agentci/deploy/review-operator.example.json'),'utf8'));
   if(Object.keys(operatorTemplate).sort().join(',')!=='appId,installationId,privateKeyFile,repository,url,webhookSecretFile')throw new Error('Unexpected packaged operator credential boundary');
   try{execFileSync(cli,['review','--config',join(root,'missing-private-operator.json'),'--pr','1'],{encoding:'utf8',stdio:'pipe'});throw new Error('Installed operator accepted missing private config');}catch(error){if(error.status!==2||JSON.parse(error.stderr).error.code!=='invalid-private-operator-file')throw error;}
