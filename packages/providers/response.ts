@@ -36,7 +36,7 @@ export function validateModelResponse(value:unknown,request:ModelRequest,attempt
   }
   // Partial/refused results may carry text, but cannot carry actionable output.
   if(value.status!=='completed'&&(value.structuredOutput!==null||value.toolCalls.length))throw Error();
-  if(value.status==='completed'&&request.responseSchema&&!matches(request.responseSchema,value.structuredOutput))throw Error();
+  if(value.status==='completed'&&request.responseSchema&&!(value.toolCalls.length&&value.structuredOutput===null)&&!matches(request.responseSchema,value.structuredOutput))throw Error();
   if(!request.responseSchema&&value.structuredOutput!==null)throw Error();
   return structuredClone(value) as unknown as ModelResponse;
  }catch{throw new ProviderFailure('invalid-output',false,'possibly-sent');}
