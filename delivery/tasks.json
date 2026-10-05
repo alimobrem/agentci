@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -1922,6 +1922,23 @@
       ],
       "dependsOn": [
         "M3-06b"
+      ]
+    },
+    {
+      "id": "M3-R5",
+      "title": "Respect GitHub rate-limit cooldown during hosted review",
+      "requirementIds": [
+        "SECTION-13.4"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T18:04:58.254Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Confirmed primary exhaustion or retry-after prevents further outbound requests through the same App client until reset; deadline is bounded and failures remain explicit/redacted; tests cover cooldown expiry and no credential/body leakage. Retain observed hosted failure and retry only after reset.",
+          "status": "pending",
+          "evidence": []
+        }
       ]
     }
   ]
