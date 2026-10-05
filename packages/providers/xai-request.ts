@@ -1,16 +1,19 @@
 import type {CreateParams,InputItem} from '@xai-official/sdk';
 import {validateModelRequest} from './request.ts';
+import {xAIHistory} from './xai-continuation.ts';
 import {ProviderFailure,type ModelRequest} from './types.ts';
 /** Translate portable input using the xAI SDK contract, not OpenAI's schema subset. */
 export function xAIRequest(input:ModelRequest):CreateParams{
  const request=validateModelRequest(input);
  if(request.provider!=='xai'||request.parameters.stop?.length)throw new ProviderFailure('unsupported-capability');
  const extension=request.providerExtensions.xai??{};
- if(Object.keys(extension).some(key=>key!=='parallel_tool_calls')||extension.parallel_tool_calls!==undefined&&typeof extension.parallel_tool_calls!=='boolean')throw new ProviderFailure('unsupported-capability');
+ if(Object.keys(extension).some(key=>!['history','parallel_tool_calls'].includes(key))||extension.parallel_tool_calls!==undefined&&typeof extension.parallel_tool_calls!=='boolean')throw new ProviderFailure('unsupported-capability');
+ const history=xAIHistory(request);
  const messages:InputItem[]=[];
  if(request.system)messages.push({role:'system',content:request.system});
  if(request.developer)messages.push({role:'developer',content:request.developer});
- for(const message of request.messages){
+ for(const [index,message] of request.messages.entries()){
+  if(history.has(index)){messages.push(...history.get(index)!);continue;}
   if(message.role==='tool')messages.push({type:'function_call_output',call_id:message.toolCallId!,output:message.content});
   else{
    if(message.content||!message.toolCalls?.length)messages.push({role:message.role,content:message.content});
