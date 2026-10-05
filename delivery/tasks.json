@@ -1849,6 +1849,23 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M3-R5",
+      "title": "Respect GitHub rate-limit cooldown during hosted review",
+      "requirementIds": [
+        "SECTION-13.4"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T18:04:58.254Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Confirmed primary exhaustion or retry-after prevents further outbound requests through the same App client until reset; deadline is bounded and failures remain explicit/redacted; tests cover cooldown expiry and no credential/body leakage. Retain observed hosted failure and retry only after reset.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
