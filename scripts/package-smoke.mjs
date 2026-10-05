@@ -36,6 +36,11 @@ try {
   const {FindingReproductionStore}=await import(pathToFileURL(join(installedRoot,'dist/packages/storage/finding-reproduction.js')).href);
   const {compileFindingReproduction,reproductionReceipt}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/reproduction.js')).href);
   if([FindingReproductionStore,compileFindingReproduction,reproductionReceipt].some(value=>typeof value!=='function'))throw new Error('Installed reproduction modules missing');
+  if(!(await readFile(join(installedRoot,'deploy/migrations/008_m3_review_admissions.sql'),'utf8')).includes('agentci_review_admission_outbox'))throw new Error('Installed review admission migration missing');
+  const {ReviewAdmissionStore}=await import(pathToFileURL(join(installedRoot,'dist/packages/storage/review-admissions.js')).href);
+  if(typeof ReviewAdmissionStore!=='function')throw new Error('Installed review admission store missing');
+  const {validateReviewAdmission}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/admission.js')).href);
+  validateReviewAdmission(JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/review-admission.json'),'utf8')));
   const {validateModelFinding}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/model.js')).href);
   const findingFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-finding.json'),'utf8'));
   validateModelFinding(findingFixture,findingFixture.subject);
