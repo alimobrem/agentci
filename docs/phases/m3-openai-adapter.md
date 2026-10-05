@@ -17,6 +17,8 @@ abort signal and remaining timeout reach the SDK. Streams use the SDK's SSE pars
 the normalized translator verifies sequence and item identity, final argument
 agreement, and explicit completed/refused/incomplete outcomes. A synthetic
 fetch implementation exercises the actual SDK without contacting a provider.
+The production-only installed-package smoke also invokes the compiled adapter
+through the SDK with synthetic fetch; this verifies packaging, not live acceptance.
 
 Error mapping strips raw messages and bodies. Quota failures do not retry. Retryable
 throttling/transport errors carry bounded retry-delay metadata; the controller does
