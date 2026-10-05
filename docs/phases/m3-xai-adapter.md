@@ -15,7 +15,7 @@ Portable metadata stays controller-side because the SDK's generated API contract
 marks upstream metadata unsupported. Schema constraints are retained without
 claiming that OpenAI's schema subset applies to xAI.
 
-Provider-specific schema preflight, stream semantic validation, model
+Provider-specific schema preflight, registered provider composition, model
 profiles, encrypted reasoning replay, package acceptance and authorized live
 smoke remain pending. No live xAI request has been made. The SDK's optional partial
 JSON convenience output must not be accepted as a completed finding, and automatic
@@ -25,7 +25,7 @@ The transport now uses the pinned SDK against only `POST https://api.x.ai/v1/res
 with an explicit credential, redirects rejected, retries disabled, deadline/abort
 propagation and a four-MiB cumulative response bound. JSON calls explicitly set
 `stream:false`; streaming calls consume raw SDK events and require terminal completion.
-Stream semantic validation remains separate pending work.
+Semantic stream validation is implemented separately from the transport.
 
 Synthetic SDK tests cover serialized storage/service/authentication settings,
 HTTP rate limits and retry delays, server errors, malformed/oversized responses,
@@ -42,3 +42,12 @@ Missing raw usage stays unknown instead of taking SDK defaults. Reported nano-US
 or USD-tick charges are rounded upward to the ledger's microdollar precision; if
 both are present the larger rounded amount is retained. Invalid counts/charges or
 reported server-side tool use fail validation.
+
+The stream translator bounds events/bytes, validates item identity and tool-argument
+completion, and compares final output against completed items and provisional text.
+Optional SDK sequence/locator fields are accepted only when ordering and item
+selection remain unambiguous. Missing terminal completion, identity changes,
+unknown events and inconsistent final output fail closed. Synthetic SDK SSE tests
+exercise the translator as well as direct negative fixtures; live acceptance remains
+required. Refusal deltas exposed as unknown by SDK 0.2.1 are recognized narrowly
+and retain refusal status without producing actionable output.
