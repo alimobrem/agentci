@@ -12,7 +12,7 @@ and release decisions. Its first working milestone reviews changes to requiremen
 permissions, tools, models, prompts and dependencies, then publishes an advisory
 GitHub Check. That is the first capability of the control plane, not its full scope.
 
-[Try M1](#quickstart) · [Architecture](#architecture) · [Demo](docs/releases/m1-onboarding.md) · [Roadmap](docs/milestone-gates.md) · [Contributing](#contributing)
+[Adapter authoring](docs/adapter-authoring.md) · [Try M1](#quickstart) · [Architecture](#architecture) · [Demo](docs/releases/m1-onboarding.md) · [Roadmap](docs/milestone-gates.md) · [Contributing](#contributing)
 
 ## Why AgentCI?
 
