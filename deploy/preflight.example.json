@@ -1,0 +1,11 @@
+{
+  "deployment": {
+    "engine": "docker",
+    "image": "REPLACE_WITH_PREINSTALLED_IMAGE_AT_SHA256_DIGEST",
+    "directory": "/ABSOLUTE/PATH/TO/deploy/migrations",
+    "files": ["001_m1.sql"],
+    "url": "http://127.0.0.1:3000"
+  },
+  "providers": [],
+  "liveTests": null
+}

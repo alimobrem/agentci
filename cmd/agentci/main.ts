@@ -18,12 +18,21 @@ setup  Register a repository-scoped App using AGENTCI_SETUP_* environment variab
 review --config PRIVATE_JSON --pr NUMBER [--request-id UUID]
   Queue a fresh current-PR review using existing scoped operator credentials.
   Reuse request-id only for ambiguous submission retries, not cancelled reviews.
+preflight --config PRIVATE_JSON  Check configured mounts, readiness and provider prerequisites.
+  No model calls or webhook changes; provider authentication remains unverified.
 Future CLI commands: eval, replay, repair.
 `;
 
 export async function main(args: string[]): Promise<number> {
   if (!args.length || args[0] === '--help' || args[0] === 'help') { console.log(help); return 0; }
   if (args[0] === '--version') { console.log(VERSION); return 0; }
+  if (args[0] === 'preflight') {
+    if(args.length!==3||args[1]!=='--config'||!args[2]||args[2].startsWith('--')){console.error(JSON.stringify({error:{code:'invalid-preflight-arguments'}}));return 2;}
+    const {loadPreflightConfig,runPreflight}=await import('../../packages/onboarding/preflight-command.ts');
+    const {PreflightError}=await import('../../packages/onboarding/preflight.ts');
+    try{const result=await runPreflight(await loadPreflightConfig(args[2]));console.log(JSON.stringify(result));return result.passed?0:1;}
+    catch(error){console.error(JSON.stringify({error:{code:error instanceof PreflightError?error.code:'preflight-unavailable'}}));return 2;}
+  }
   if (args[0] === 'review') {
     const options: Record<string,string> = {};
     for(let i=1;i<args.length;i+=2){const name=args[i],value=args[i+1];if(!name||!['--config','--pr','--request-id'].includes(name)||!value||value.startsWith('--')||options[name]){console.error(JSON.stringify({error:{code:'invalid-review-arguments'}}));return 2;}options[name]=value;}

@@ -33,3 +33,10 @@ for (const operation of coverage.operations) {
 }
 for (const [path, item] of Object.entries(contract.paths)) for (const method of Object.keys(item as object)) if (['get','post','put','patch','delete','head','options'].includes(method) && !covered.has(`${method} ${path}`)) throw new Error(`Unmapped API operation ${method} ${path}`);
 console.log('OpenAPI contract valid');
+
+const preflightCoverage=JSON.parse(await readFile(new URL('../specs/api/preflight-operations.json',import.meta.url),'utf8'));
+for(const operation of preflightCoverage.operations){
+ if(operation.operationId!=='preflightPrerequisites'||!operation.command||!operation.requirementIds.length||!operation.tests.length||!operation.scenarios.length||operation.requirementIds.some((id:string)=>!requirementIds.has(id)))throw new Error('Incomplete preflight operation coverage');
+ for(const path of operation.tests)await access(new URL(`../${path}`,import.meta.url));
+}
+strictEqual(preflightCoverage.operations.length,1);
