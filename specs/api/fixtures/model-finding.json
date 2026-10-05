@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "v1alpha1",
+  "subject": {
+    "organizationId": "00000000-0000-4000-8000-000000000001",
+    "repository": "owner/repo",
+    "pullRequest": 1,
+    "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "mode": "synthetic",
+  "category": "security",
+  "severity": "high",
+  "claim": "Missing authorization",
+  "evidence": [
+    {
+      "side": "head",
+      "path": "app.ts",
+      "digest": "sha256:4252f8d56b4bb236d0b1bc95a1202e392ca84ce0644bf628398fbb9517287da8",
+      "startLine": 1,
+      "endLine": 2
+    }
+  ],
+  "sources": [
+    {
+      "requestId": "00000000-0000-4000-8000-000000000002",
+      "attemptId": "00000000-0000-4000-8000-000000000003",
+      "provider": "fixture",
+      "model": "fixture-model",
+      "reviewerResultDigest": "sha256:f41b80499444690b03bb32051820d937b8d961ecd3fc8b82e7e106e173e85ba2",
+      "originalClaim": "Missing authorization"
+    }
+  ],
+  "state": "proposed",
+  "version": 0,
+  "disposition": null,
+  "id": "sha256:4994b95212629251cb7fa46c2fe141f89ae105ad29e04e9a98bfb97874884394"
+}
