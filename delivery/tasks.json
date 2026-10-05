@@ -1841,14 +1841,16 @@
       "requirementIds": [
         "SECTION-13.4"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T17:18:35.578Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T18:01:01.891Z",
       "acceptance": [
         {
           "text": "Allowlisted HTTP and rate-limit diagnostics distinguish observed failure metadata without exposing credentials or raw responses; preserve request failure behavior; verify hosted evidence when available.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-r4.json"
+          ]
         }
       ]
     },

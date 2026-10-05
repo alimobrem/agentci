@@ -29,3 +29,9 @@ Classification follows [GitHub's rate-limit documentation](https://docs.github.c
 A 429 without primary-limit evidence is `rate-limit`. Use the retained reset and
 retry-after fields when diagnosing pacing; this change does not add automatic
 retries or claim the underlying failure is repaired.
+
+Instrumentation acceptance is now retained in `delivery/acceptance/m3-r4.json`:
+PR34 passed full CI and merged, and trusted-main advisory run 37348992741 completed
+successfully. No failed request occurred in that inspected run, so no diagnostic
+event was expected. M3-R4 closes the instrumentation task only; the cause of the
+historical 403 responses remains unconfirmed.
