@@ -40,3 +40,13 @@ for(const operation of preflightCoverage.operations){
  for(const path of operation.tests)await access(new URL(`../${path}`,import.meta.url));
 }
 strictEqual(preflightCoverage.operations.length,1);
+
+const providerCoverage=JSON.parse(await readFile(new URL('../specs/api/provider-operations.json',import.meta.url),'utf8'));
+const providerOperations=new Set(['validateModelRequest','assertProviderCapabilities','validateModelResponse','invokeModel','streamModel','PostgresBudgetLedger']);
+for(const operation of providerCoverage.operations){
+ if(!providerOperations.delete(operation.operationId)||!operation.requirementIds.length||!operation.tests.length||!operation.scenarios.length||operation.requirementIds.some((id:string)=>!requirementIds.has(id)))throw new Error('Incomplete provider operation coverage');
+ for(const path of operation.tests)await access(new URL(`../${path}`,import.meta.url));
+}
+strictEqual(providerOperations.size,0,'Every provider operation needs acceptance coverage');
+const {validateModelRequest}=await import('../packages/providers/request.ts');
+validateModelRequest(JSON.parse(await readFile(new URL('../specs/api/fixtures/model-request.json',import.meta.url),'utf8')));
