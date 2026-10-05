@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "milestone": "M2",
+  "milestone": "M3",
   "trackingStartedAt": "2026-10-03T22:37:12.749908Z",
   "note": "Existing work has unknown start time; do not invent historical cycle times. Log all future task transitions.",
   "tasks": [
@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -1403,6 +1403,379 @@
             "releases/m2-native-published-downloads.json"
           ]
         }
+      ]
+    },
+    {
+      "id": "M3-00",
+      "title": "Scope and API design",
+      "requirementIds": [
+        "SECTION-12",
+        "SECTION-13"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T04:00:56.003Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Audit cross-cutting requirements and schema examples; freeze provider/review/finding contracts, versioning, budget policy and acceptance corpus before implementation. Record mandatory retro dependencies, live-provider prerequisites, coding-provider identity, initial OIDC/session decision and exact release/demo scenarios; no paid calls without configured authorization and total budget. Validate dependency graphs and reject task start/completion when prerequisite acceptance is incomplete. Preserve both released M1 and M2 API baselines and prove removal of an M2-only endpoint fails compatibility.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M2-RELEASE"
+      ]
+    },
+    {
+      "id": "M3-R1",
+      "title": "Native image publication and bounded cleanup",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Build AMD64/ARM64 on native runners with pinned runtime-layer reuse, immutable digest assembly and explicit post-build timeout margin. Verify failed/partial publication retention, both platform scans/runtime gates and record matched-cache timing before claiming acceleration.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-00"
+      ]
+    },
+    {
+      "id": "M3-R2",
+      "title": "Deployment and provider preflight",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Read-only preflight checks actual daemon-shared migration/provider paths, credential references, endpoint connectivity, configured spend limits and service readiness before webhook or live-provider mutation. Missing/unshared files and unauthorized endpoints fail with redacted actionable errors; preserve unrelated state.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-00"
+      ]
+    },
+    {
+      "id": "M3-R3",
+      "title": "Evidence reuse and delivery measurement enforcement",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Record evidence by product source, artifact digest, platform and verifier revision; require invalidation reasons for repeated acceptance. Separate CI/publication/download/cycle/blocker/intervention/rework cohorts, preserve failed attempts, and make one consolidated closure record the default. Reject wrong-source/digest/coverage reuse.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-00"
+      ]
+    },
+    {
+      "id": "M3-01",
+      "title": "Provider core and bounded execution",
+      "requirementIds": [
+        "SECTION-13.1",
+        "SECTION-13.2",
+        "SPEC-13.2-001",
+        "SPEC-13.2-002",
+        "SPEC-13.2-003",
+        "SPEC-13.2-004",
+        "SPEC-13.2-005",
+        "SPEC-13.2-006",
+        "SPEC-13.2-007",
+        "SPEC-13.2-008",
+        "SECTION-13.4",
+        "SPEC-13.4-001"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Normalized invoke/stream/capabilities/extensions and usage; cancellation, bounded retries, unsupported-feature errors and budget exhaustion tests.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-00"
+      ]
+    },
+    {
+      "id": "M3-02",
+      "title": "OpenAI adapter",
+      "requirementIds": [
+        "SPEC-13.3-002"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Official provider integration behind core; request/stream/schema conformance, redacted errors, live opt-in smoke and outage tests.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-01",
+        "M3-R2"
+      ]
+    },
+    {
+      "id": "M3-03",
+      "title": "Anthropic adapter",
+      "requirementIds": [
+        "SPEC-13.3-003"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Same conformance corpus; explicit feature translation/unsupported capabilities; live smoke without secret leakage.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-01",
+        "M3-R2"
+      ]
+    },
+    {
+      "id": "M3-04",
+      "title": "xAI adapter",
+      "requirementIds": [
+        "SPEC-13.3-004"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Same conformance corpus plus live smoke; do not assume endpoint similarity proves compatibility.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-01",
+        "M3-R2"
+      ]
+    },
+    {
+      "id": "M3-05",
+      "title": "Independent reviewer roles",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SPEC-12.1-002",
+        "SPEC-12.1-003",
+        "SPEC-12.1-004",
+        "SPEC-12.1-005",
+        "SPEC-12.1-006",
+        "SPEC-12.1-007",
+        "SPEC-12.1-008",
+        "SECTION-12.2",
+        "SPEC-12.2-001"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-02",
+        "M3-03",
+        "M3-04"
+      ]
+    },
+    {
+      "id": "M3-06",
+      "title": "Finding lifecycle and reproduction",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-05"
+      ]
+    },
+    {
+      "id": "M3-07",
+      "title": "Customer/API/check integration",
+      "requirementIds": [
+        "SECTION-13.3",
+        "SPEC-13.3-001",
+        "SPEC-13.3-005",
+        "SPEC-13.3-006",
+        "SPEC-13.3-007",
+        "SPEC-13.3-008",
+        "SPEC-13.3-009",
+        "SECTION-13.5",
+        "SPEC-13.5-001",
+        "SPEC-13.5-002",
+        "SPEC-13.5-003",
+        "SPEC-13.5-004",
+        "SPEC-13.5-005",
+        "SPEC-13.5-006",
+        "SPEC-13.5-007",
+        "SPEC-13.5-008",
+        "SPEC-13.5-009",
+        "SPEC-13.5-010",
+        "SPEC-13.5-011",
+        "SPEC-13.5-012",
+        "SPEC-13.5-013"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Review CLI and API operations with compatibility coverage, exact-head Checks, independent-provider dogfood, unsupported claims and confirmed regression demo; decide optional router/later adapters explicitly.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-06"
+      ]
+    },
+    {
+      "id": "M3-07-ui-foundation",
+      "title": "Next.js UI foundation and packaging",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Next.js App Router React/TS shell with Tailwind and reviewed shadcn/Radix source, theme/accessibility tokens, Zod UI-input contracts; production standalone UBI image startup, build/license/security checks and no server secrets in client bundles. Data views stay unavailable until authenticated routes ship.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07",
+        "M3-R1"
+      ]
+    },
+    {
+      "id": "M3-07-ui-session",
+      "title": "Browser session and authorized API access",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Server-managed secure sessions/OIDC decision, authorization on every Next.js server data route, tenant/repository scoping and contract-checked API access; no operator bearer tokens or App/provider keys in browser assets. Unauthorized, expired, CSRF and cross-tenant cases fail; sensitive data is not shared by caching.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07-ui-foundation"
+      ]
+    },
+    {
+      "id": "M3-07-dashboard",
+      "title": "Initial web control-plane dashboard",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Read-only Next.js/React/TypeScript with Tailwind/shadcn/Radix PR dashboard shows exact head, review/eval status, risk, confirmed/unconfirmed findings, model disagreement and evidence links. Authenticated backend access, tenant isolation, accessible empty/error states and live customer walkthrough; never embed operator/App credentials in browser assets.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07-ui-session"
+      ]
+    },
+    {
+      "id": "M3-08",
+      "title": "Release and demo",
+      "requirementIds": [
+        "SPEC-40-040",
+        "SPEC-40-041",
+        "SPEC-40-042",
+        "SPEC-40-043",
+        "SPEC-40-044",
+        "SPEC-40-045",
+        "SPEC-40-046",
+        "SPEC-40-047",
+        "SPEC-40-048",
+        "SPEC-40-049",
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Publish verified CLI/service artifacts; fresh customer review, provider failure recovery and released-build success/failure demo; close all gates and retro.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07",
+        "M3-07-dashboard",
+        "M3-R1",
+        "M3-R2",
+        "M3-R3"
       ]
     }
   ]

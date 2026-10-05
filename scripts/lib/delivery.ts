@@ -3,7 +3,7 @@ export interface Proof { kind: 'file' | 'url'; value: string; sourceCommit: stri
 export interface Gate { id: string; status: 'pending' | 'passed' | 'failed' | 'inapplicable'; reason?: string; evidence: Proof[] }
 export const customerGateIds = ['customer-onboarding', 'agent-api'] as const;
 export interface Release { milestone: string; version: string; sourceCommit: string | null; gates: Gate[]; customerAcceptance?: boolean }
-export interface Task { id: string; title: string; requirementIds: string[]; status: 'not-started' | 'in-progress' | 'blocked' | 'done' | 'deferred'; startedAt: string | null; completedAt: string | null; acceptance: { text: string; status: 'pending' | 'passed'; evidence: string[] }[]; blockedReason?: string; deferral?: {at:string;reason:string;evidence:string} }
+export interface Task { id: string; title: string; requirementIds: string[]; dependsOn?: string[]; status: 'not-started' | 'in-progress' | 'blocked' | 'done' | 'deferred'; startedAt: string | null; completedAt: string | null; acceptance: { text: string; status: 'pending' | 'passed'; evidence: string[] }[]; blockedReason?: string; deferral?: {at:string;reason:string;evidence:string} }
 export function releaseLedgerPath(milestone: string) {
   if (!/^M(?:[0-9]|10)$/.test(milestone)) throw new Error('Unknown specification milestone');
   return `releases/${milestone.toLowerCase()}-gates.json`;
@@ -29,6 +29,31 @@ export function validateTasks(tasks: Task[], requirementIds: Set<string>) {
     for (const value of [task.startedAt, task.completedAt]) if (value && !Number.isFinite(Date.parse(value))) throw new Error(`Invalid task timestamp ${task.id}`);
     if (task.startedAt && task.completedAt && Date.parse(task.completedAt) < Date.parse(task.startedAt)) throw new Error(`Reversed timestamps ${task.id}`);
   }
+  const byId = new Map(tasks.map(task => [task.id, task]));
+  for (const task of tasks) {
+    if (task.dependsOn !== undefined && (!Array.isArray(task.dependsOn) || new Set(task.dependsOn).size !== task.dependsOn.length || task.dependsOn.some(id => typeof id !== 'string' || !byId.has(id)))) throw new Error(`Invalid task dependencies for ${task.id}`);
+  }
+  const visiting = new Set<string>(), visited = new Set<string>();
+  const visit = (id: string) => {
+    if (visiting.has(id)) throw new Error(`Cyclic task dependency: ${id}`);
+    if (visited.has(id)) return;
+    visiting.add(id);
+    for (const dependency of byId.get(id)!.dependsOn ?? []) visit(dependency);
+    visiting.delete(id); visited.add(id);
+  };
+  for (const task of tasks) visit(task.id);
+}
+export function requireCompletedDependencies(task: Task, tasks: Task[]) {
+  const byId = new Map(tasks.map(value => [value.id, value])), visited = new Set<string>(), incomplete: string[] = [];
+  const visit = (id: string) => {
+    if (visited.has(id)) return;
+    visited.add(id);
+    const dependency = byId.get(id);
+    if (!dependency || dependency.status !== 'done' || !dependency.completedAt || dependency.acceptance.some(a => a.status !== 'passed' || !a.evidence.length)) incomplete.push(id);
+    for (const ancestor of dependency?.dependsOn ?? []) visit(ancestor);
+  };
+  for (const id of task.dependsOn ?? []) visit(id);
+  if (incomplete.length) throw new Error(`Incomplete task prerequisites for ${task.id}: ${incomplete.join(', ')}`);
 }
 export function validateRelease(record: Release, requireComplete = false) {
   releaseLedgerPath(record.milestone);

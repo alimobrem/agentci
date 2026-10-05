@@ -20,7 +20,7 @@ Within an active phase, independent adapter/SDK implementations may run concurre
 
 ## Existing phases and remaining M2
 
-M0 and expanded M1 have release records; audit their existing evidence rather than recreate releases or claim newly added gates passed historically. M2 remains in-progress. PR #5 is already broad and contains core integration plus retained evidence; do not rewrite published history to create artificial small-PR metrics. Its exact 95b4d90 source passed CI run 37219379040; that is not an M2 release.
+M0 and expanded M1 have release records; audit their existing evidence rather than recreate releases or claim newly added gates passed historically. M2 is complete in public `0.3.1-m2`, with closure PR #21 merged and all eighteen gates passed. The rows below retain the completed M2 plan. PR #5 is already broad and contains core integration plus retained evidence; do not rewrite published history to create artificial small-PR metrics. Its exact 95b4d90 source passed CI run 37219379040; that is not an M2 release.
 
 | PR boundary | Size | Depends on | Observable acceptance |
 | --- | --- | --- | --- |
@@ -36,7 +36,7 @@ Do not change already-started tracking dates. New PR tasks are created just befo
 
 | Phase | Planned PRs | Summed focused effort range, excluding external waits |
 | --- | --- | --- |
-| M3 | 12 | 15.5–38 engineering days |
+| M3 | 15 | 18.5–47 engineering days |
 | M4 | 7 | 9–23 engineering days |
 | M5 | 7 | 11–25 engineering days |
 | M6 | 7 | 9–23 engineering days |
@@ -51,6 +51,9 @@ Every row inherits API correctness/compatibility, security/privacy, meaningful p
 
 ### M3 — Multi-model review
 
+The active [M3 scope/API plan](phases/m3.md) records prerequisite access, contracts,
+release demo and mandatory M2 retrospective dependencies.
+
 UI sequencing refinement: start a minimal web control-plane dashboard in M3, alongside GitHub Checks/CLI/API. Extend trace navigation in M4, application/incident views in M8, and repair/approval views in M10. The early dashboard is a separately sized proposal for the M3 scope freeze; it does not expand M2 or implement later incident/repair features.
 
 Exit demo: A real PR is reviewed by a provider different from its coding provider; a reproduced defect is confirmed, while unsupported assertions remain unconfirmed.
@@ -60,17 +63,20 @@ Inventory: 54 requirement records plus 12 section/schema review records assigned
 | Planned PR | Size | Depends on | Scope and observable acceptance |
 | --- | --- | --- | --- |
 | M3-00: Scope and API design | S | M2 closure | Audit cross-cutting requirements and schema examples; freeze provider/review/finding contracts, versioning, budget policy and acceptance corpus before implementation. |
+| M3-R1: Native image publication | M | 00 | Native AMD64/ARM64 builds, pinned runtime reuse, immutable index assembly and scan/upload/cleanup timeout margin; required before UI packaging and release |
+| M3-R2: Setup/provider preflight | M | 00 | Actual daemon-shared mount, credential-reference, endpoint, budget and readiness checks before live mutations; required by all three initial provider adapters |
+| M3-R3: Evidence/metrics enforcement | M | 00 | Source/digest/platform/verifier evidence keys, recorded rerun reasons, separate delivery cohorts and one consolidated closure; required before release |
 | M3-01: Provider core and bounded execution | M | 00 | Normalized invoke/stream/capabilities/extensions and usage; cancellation, bounded retries, unsupported-feature errors and budget exhaustion tests. |
-| M3-02: OpenAI adapter | M | 01 | Official provider integration behind core; request/stream/schema conformance, redacted errors, live opt-in smoke and outage tests. |
-| M3-03: Anthropic adapter | M | 01 | Same conformance corpus; explicit feature translation/unsupported capabilities; live smoke without secret leakage. |
-| M3-04: xAI adapter | M | 01 | Same conformance corpus plus live smoke; do not assume endpoint similarity proves compatibility. |
+| M3-02: OpenAI adapter | M | 01,R2 | Official provider integration behind core; request/stream/schema conformance, redacted errors, live opt-in smoke and outage tests. |
+| M3-03: Anthropic adapter | M | 01,R2 | Same conformance corpus; explicit feature translation/unsupported capabilities; live smoke without secret leakage. |
+| M3-04: xAI adapter | M | 01,R2 | Same conformance corpus plus live smoke; do not assume endpoint similarity proves compatibility. |
 | M3-05: Independent reviewer roles | M | 02,03,04 | Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests. |
 | M3-06: Finding lifecycle and reproduction | L | 05 | Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation. |
 | M3-07: Customer/API/check integration | M | 06 | Review CLI and API operations with compatibility coverage, exact-head Checks, independent-provider dogfood, unsupported claims and confirmed regression demo; decide optional router/later adapters explicitly. |
-| M3-07-ui-foundation: Next.js UI foundation and packaging | M | 07 | App Router React/TS shell, Tailwind, reviewed shadcn/Radix components and Zod UI-input contracts; production standalone UBI image and build/license/security verification; no secrets in client bundles |
+| M3-07-ui-foundation: Next.js UI foundation and packaging | M | 07,R1 | App Router React/TS shell, Tailwind, reviewed shadcn/Radix components and Zod UI-input contracts; production standalone UBI image and build/license/security verification; no secrets in client bundles |
 | M3-07-ui-session: Browser session and authorized API access | M | 07-ui-foundation | Secure server-managed session/SSO decision, authorization on every server data route, scoped API access, expired/unauthorized/CSRF/cross-tenant tests and private caching; no browser operator/App/provider credentials |
 | M3-07-dashboard: Initial web control-plane dashboard | M | 07-ui-session | Read-only Next.js/React/TS PR dashboard: exact head, review/eval status, risk, confirmed/unconfirmed findings, disagreement and evidence links. Auth, tenant isolation, accessibility, empty/error states and live customer walkthrough; no App/operator credentials embedded in browser assets |
-| M3-08: Release and demo | L | 07,07-dashboard | Publish verified CLI/service artifacts; fresh customer review, provider failure recovery and released-build success/failure demo; close all gates and retro. |
+| M3-08: Release and demo | L | 07,07-dashboard,R1,R2,R3 | Publish verified CLI/service artifacts; fresh customer review, provider failure recovery and released-build success/failure demo; close all gates and retro. |
 
 ### M4 — Instrumentation
 

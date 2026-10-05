@@ -2,7 +2,7 @@ import { readFile, writeFile, mkdir, access } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { parse } from 'yaml';
-import { validateTasks, validateRelease, validatePhaseCoverage, releaseLedgerPath, median, blockedSeconds, type Task, type Release } from './lib/delivery.ts';
+import { validateTasks, validateRelease, validatePhaseCoverage, releaseLedgerPath, requireCompletedDependencies, median, blockedSeconds, type Task, type Release } from './lib/delivery.ts';
 const invocation = process.argv.slice(2), milestoneIndex = invocation.indexOf('--milestone');
 let explicitMilestone: string | undefined;
 if (milestoneIndex !== -1) { explicitMilestone = invocation[milestoneIndex + 1]; if (!explicitMilestone) throw new Error('--milestone requires M0–M10'); invocation.splice(milestoneIndex, 2); }
@@ -22,12 +22,12 @@ if (command === 'check' || command === 'release') {
 } else if (command === 'task') {
   const task = tasks.tasks.find(t => t.id === argument); if (!task) throw new Error('Unknown task');
   const [action, ...rest] = args, now = new Date().toISOString();
-  if (action === 'start') { if (task.status === 'done') throw new Error('Cannot restart completed task'); task.startedAt ??= now; task.status = 'in-progress'; delete task.blockedReason; }
+  if (action === 'start') { if (task.status === 'done') throw new Error('Cannot restart completed task'); requireCompletedDependencies(task, tasks.tasks); task.startedAt ??= now; task.status = 'in-progress'; delete task.blockedReason; }
   else if (action === 'block') { if (!rest.length || task.status !== 'in-progress') throw new Error('Block requires an active task and reason'); task.status = 'blocked'; task.blockedReason = rest.join(' '); }
   else if(action==='defer'){if(task.status==='done'||!rest[0]||!rest.slice(1).join(' ').trim())throw new Error('Defer requires unfinished task, evidence path and reason');await access(rest[0]);task.deferral={at:now,evidence:rest[0],reason:rest.slice(1).join(' ')};task.status='deferred';delete task.blockedReason;}
   else if (action === 'accept') { if(task.status==='deferred')throw new Error('Resume deferred task before accepting work');const index = Number(rest[0]); if (!Number.isInteger(index) || !task.acceptance[index] || !rest[1]) throw new Error('accept needs criterion index and evidence path'); await access(rest[1]); task.acceptance[index]!.status = 'passed'; task.acceptance[index]!.evidence = [rest[1]]; }
-  else if (action === 'done') { if (task.status !== 'in-progress' || task.acceptance.some(a => a.status !== 'passed')) throw new Error('Complete acceptance before marking done'); task.status = 'done'; task.completedAt = now; }
-  else if (action === 'reopen') { if (task.status !== 'done' || !rest.length) throw new Error('Reopen requires a completed task and reason'); task.status = 'in-progress'; task.startedAt = now; task.completedAt = null; task.acceptance = task.acceptance.map(a=>({...a,status:'pending',evidence:[]})); }
+  else if (action === 'done') { if (task.status !== 'in-progress' || task.acceptance.some(a => a.status !== 'passed')) throw new Error('Complete acceptance before marking done'); requireCompletedDependencies(task, tasks.tasks); task.status = 'done'; task.completedAt = now; }
+  else if (action === 'reopen') { if (task.status !== 'done' || !rest.length) throw new Error('Reopen requires a completed task and reason'); requireCompletedDependencies(task, tasks.tasks); task.status = 'in-progress'; task.startedAt = now; task.completedAt = null; task.acceptance = task.acceptance.map(a=>({...a,status:'pending',evidence:[]})); }
   else throw new Error('Task action: start, block, defer, accept, done, reopen');
   validateTasks(tasks.tasks, new Set(requirements.map(r => r.id)));
   await writeFile('delivery/tasks.json', JSON.stringify(tasks, null, 2) + '\n');
