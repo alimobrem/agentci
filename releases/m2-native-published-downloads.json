@@ -1,0 +1,406 @@
+{
+  "kind": "M2 independently verified native published-image acceptance",
+  "checkedAt": "2026-10-05T03:26:05.902504+00:00",
+  "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+  "version": "0.3.1-m2",
+  "runId": 37259025772,
+  "runUrl": "https://github.com/alimobrem/agentci/actions/runs/37259025772",
+  "conclusion": "success",
+  "workflowSourceCommit": "50a54d8eed5fbe662d186b168cb3c8fa10c96819",
+  "workflowSha256": "0ebdf92752435850a0ea55933d61152a09b57f3f9405afcfcab7ae6c269fcd12",
+  "platforms": [
+    {
+      "platform": "linux/amd64",
+      "artifactId": 11323987606,
+      "archiveSha256": "ee84e70826d14922339bc3c4c63c1eb545cd46c9ec4fce48cb4362a6e4e85333",
+      "files": {
+        "downloaded-eval-worker-native.json": "71f966a395c06f21088f4c77f2f428dddd81c32965c833acd1539de4bd6c5dd4",
+        "downloaded-eval-worker-smoke.json": "97ef317fcb9f92761988ddbe5d1647286619e0b74d067ce0e3a2099e0bde6f88",
+        "downloaded-forge-backport.json": "22bb32cd1f12e37bcfb4530d1d291ec0cb122a13ae87630babd2a7df5bba0b59",
+        "downloaded-identities.json": "de987d9a1fa875f0d857b73224c406951d3f5e4ec06bb909bc463db68b1aa42e",
+        "downloaded-image-smoke.json": "03dfa1d2a3915dbadbaa92bb0267894fe80259898ae121aa01d6a578f75dfc9f",
+        "downloaded-integration.log": "e4b5ce34d87ccbaf646cc2b61227f55ce3ad7d037b669b6c191c407ddbcb68e5",
+        "downloaded-worker-native.json": "fd47504b746756897dbc503a120597887c2e6267f5a4241edb8d82eef1ef70a9"
+      },
+      "identities": {
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "version": "0.3.1-m2",
+        "platform": "linux/amd64",
+        "execution": "native",
+        "anonymous": true,
+        "dockerServer": {
+          "version": "28.0.4",
+          "architecture": "x86_64"
+        },
+        "images": [
+          {
+            "role": "api",
+            "image": "ghcr.io/alimobrem/agentci-api@sha256:ccd2d24db9411d88956136d9840e6c36c23d3b44f8aaba89d9da7e2dbd0af612",
+            "localImageId": "sha256:260e6848c0c85a0f39954fb19ab30673066a0233402f19d3a9cb89064f0c1f76",
+            "platform": "linux/amd64",
+            "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+            "version": "0.3.1-m2"
+          },
+          {
+            "role": "worker",
+            "image": "ghcr.io/alimobrem/agentci-worker@sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b",
+            "localImageId": "sha256:aa1a0568c3b0417f1392dca6b7650aaee64eb69ec25acdff379168e8f1f1f0b7",
+            "platform": "linux/amd64",
+            "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+            "version": "0.3.1-m2"
+          },
+          {
+            "role": "eval-worker",
+            "image": "ghcr.io/alimobrem/agentci-eval-worker@sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3",
+            "localImageId": "sha256:7697711fd014a05d6f0b8488dcba1ff94a1fa3859ef8caa88389a5f7483e2a39",
+            "platform": "linux/amd64",
+            "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+            "version": "0.3.1-m2"
+          },
+          {
+            "role": "eval-runner",
+            "image": "ghcr.io/alimobrem/agentci-eval-runner@sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143",
+            "localImageId": "sha256:59d1a81a4d598a164b25883c54ea588e10cbdc2ecb0db19f1bd2b5ad8335f7e3",
+            "platform": "linux/amd64",
+            "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+            "version": "0.3.1-m2"
+          },
+          {
+            "role": "eval-engines",
+            "image": "ghcr.io/alimobrem/agentci-eval-engines@sha256:864e9ee51ada3096cc41f2725195b9e0916fe6b83dc5618758207a30b07c1242",
+            "localImageId": "sha256:303fb52d0426e6090729f2ebfae11f396d763f5d07c3507ad8ccc601d3cd3bac",
+            "platform": "linux/amd64",
+            "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+            "version": "0.3.1-m2"
+          },
+          {
+            "role": "eval-agentci",
+            "image": "ghcr.io/alimobrem/agentci-eval-agentci@sha256:8e2cc69b65e6efb1bd4e4a7f5d8eb6ef5e122bba9c0a5c1453aeb0ae66a5697d",
+            "localImageId": "sha256:1b7f1ea64d0023fe8aef3f2a4314250e50709733f271bf3d86ffa4ce69ba2222",
+            "platform": "linux/amd64",
+            "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+            "version": "0.3.1-m2"
+          }
+        ]
+      },
+      "forgeRemediation": {
+        "image": "sha256:303fb52d0426e6090729f2ebfae11f396d763f5d07c3507ad8ccc601d3cd3bac",
+        "releaseImage": "ghcr.io/alimobrem/agentci-eval-engines@sha256:864e9ee51ada3096cc41f2725195b9e0916fe6b83dc5618758207a30b07c1242",
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "version": "0.3.1-m2",
+        "platform": "linux/amd64",
+        "observed": {
+          "arch": "x64",
+          "rsaSha256": "acc22e5d36e27832c34e02dd3933aad7977d45b047eead5016520735efedc9c5",
+          "metadata": {
+            "package": "node-forge",
+            "publishedVersion": "1.4.0",
+            "advisory": "GHSA-86w9-cpqp-85rv",
+            "upstreamPullRequest": "https://github.com/digitalbazaar/forge/pull/1152",
+            "upstreamCommit": "ceba34402e329f0365134f23fe19898756527d65",
+            "upstreamStatus": "open-unmerged",
+            "beforeSha256": "fd4740238145ec26470eb3f06a627c72039538ce1307dbdce40521f94dfd0a50",
+            "afterSha256": "acc22e5d36e27832c34e02dd3933aad7977d45b047eead5016520735efedc9c5",
+            "old": "          // validate DigestInfo structure and element count\n          var capture = {};\n          var errors = [];\n          if(!asn1.validate(obj, digestInfoValidator, capture, errors) ||\n            obj.value.length !== 2) {",
+            "replacement": "          // validate DigestInfo structure and element counts (outer DigestInfo\n          // and nested DigestAlgorithm). asn1.validate ignores extra children,\n          // so length must be checked explicitly at each nesting level to\n          // prevent low-exponent PKCS#1 v1.5 signature forgery (CVE-2026-85393).\n          var capture = {};\n          var errors = [];\n          if(!asn1.validate(obj, digestInfoValidator, capture, errors) ||\n            obj.value.length !== 2 ||\n            obj.value[0].value.length !==\n              (('parameters' in capture) ? 2 : 1)) {"
+          },
+          "verifierSha256": "6790c645ad48b9e09f0396882a5d03af69bc5044c09eea365c719434e0e37cdb",
+          "fixtureSha256": "542603a55c4eef10700594ab6dfddc68ad4b4ea44cf61c027b23632961c5b5e0"
+        },
+        "malformedRegressionRejected": true,
+        "validSignaturesAccepted": true,
+        "wrongMessagesRejected": true,
+        "scannerFindingRetained": true
+      },
+      "serviceRuntime": {
+        "result": "passed",
+        "version": "downloaded",
+        "platform": "x64",
+        "checks": [
+          "non-root API/worker startup",
+          "M2 schema readiness",
+          "signature rejection",
+          "evidence authentication",
+          "comparison authentication/UUID/scoped lookup",
+          "compiled comparison API/client reads actual queued database evidence",
+          "compiled snapshot export/client completion",
+          "signed closed delivery",
+          "non-root persistent Temporal database startup/restart",
+          "graceful shutdown"
+        ],
+        "github": "synthetic credentials; no live GitHub review claimed"
+      },
+      "evaluatorRuntime": {
+        "result": "passed",
+        "deployment": "native-CLI",
+        "engine": "docker",
+        "platform": "linux/amd64",
+        "workerImage": "sha256:7697711fd014a05d6f0b8488dcba1ff94a1fa3859ef8caa88389a5f7483e2a39",
+        "runnerImage": "sha256:59d1a81a4d598a164b25883c54ea588e10cbdc2ecb0db19f1bd2b5ad8335f7e3",
+        "uid": 1001,
+        "node": "v26.10.0",
+        "cli": "Docker version 29.8.2, build 7fc2dff",
+        "license": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+        "checks": [
+          "UBI non-root read-only runtime",
+          "only selected engine client; no package installers/App keys",
+          "mismatched engine rejected before database/Temporal connection",
+          "official pinned docker CLI execution",
+          "separately authenticated restricted database login",
+          "real Temporal workflow and isolated child execution",
+          "child has no database/App/socket credentials",
+          "behavioral failure preserved",
+          "worker graceful shutdown/restart",
+          "all owned children removed"
+        ],
+        "github": "no live GitHub publication claimed"
+      },
+      "nativeInventories": {
+        "worker": {
+          "image": "ghcr.io/alimobrem/agentci-worker@sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b",
+          "engine": "docker",
+          "platform": "linux/amd64",
+          "temporalNativeArtifacts": "matched official npm artifact",
+          "files": {
+            "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+            "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+            "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+            "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+          },
+          "coverage": "Podman compiled module metadata is bound to exact official binary hashes; its source manifest includes additional modules. Cargo and Docker vendor manifests are upstream source inventories, not proofs of exact compiled dependency graphs."
+        },
+        "eval-worker": {
+          "image": "ghcr.io/alimobrem/agentci-eval-worker@sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3",
+          "engine": "docker",
+          "platform": "linux/amd64",
+          "temporalNativeArtifacts": "matched official npm artifact",
+          "files": {
+            "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+            "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+            "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+            "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+          },
+          "dockerCli": {
+            "Version": "29.8.2",
+            "ApiVersion": "1.56",
+            "DefaultAPIVersion": "1.56",
+            "GitCommit": "7fc2dff",
+            "GoVersion": "go1.26.8",
+            "Os": "linux",
+            "Arch": "amd64",
+            "BuildTime": "Wed Sep 30 19:31:45 2026",
+            "Context": "default",
+            "sha256": "6f7a95d27f98fc8c5f6b220898988bf8f61dd9b040936797917cbdc72c6cabe6",
+            "vendorManifestSha256": "0836699fe2ae28a136aabd51f932b825e0653c48ae200613b72f07a74f2a3868"
+          },
+          "coverage": "Podman compiled module metadata is bound to exact official binary hashes; its source manifest includes additional modules. Cargo and Docker vendor manifests are upstream source inventories, not proofs of exact compiled dependency graphs."
+        }
+      },
+      "integration": {
+        "tests": 15,
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "platform": "linux/arm64",
+      "artifactId": 11324166742,
+      "archiveSha256": "5dad82f4b7fb420c9e1abe10817e1655b2959e9104eb9d0d3c45c889ed236df4",
+      "files": {
+        "downloaded-eval-worker-native.json": "9bef1a3b7607ec5d33041e6cc31d5d96c524fe953ad98773aa43b1beea9ad791",
+        "downloaded-eval-worker-smoke.json": "ee9bd34c089092b5deb2b5942fd4dee9a991555e72d255b33dbe031c540d0946",
+        "downloaded-forge-backport.json": "3a0a1471f6af382f49ec88d75718f61dee81255d20740aa35bc7ee564819b996",
+        "downloaded-identities.json": "6cd2c3422c35a214da8f3b43aeaf52144f5efab43f3efe818e4b69847e06d821",
+        "downloaded-image-smoke.json": "39163d63b854bd212b9babd6c1cb737e0b1c84cf536ab818cb3c2caad4a79d16",
+        "downloaded-integration.log": "a8193e94d3d7861e86c7dd320918580e168abc91c26698e12dee60dbedb30e87",
+        "downloaded-worker-native.json": "bfed4fbbdcdf02e876cb86c76965bd3a74b475c1097c62878f2e68cb78b83c35"
+      },
+      "identities": {
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "version": "0.3.1-m2",
+        "platform": "linux/arm64",
+        "execution": "native",
+        "anonymous": true,
+        "dockerServer": {
+          "version": "28.0.4",
+          "architecture": "aarch64"
+        },
+        "images": [
+          {
+            "role": "api",
+            "image": "ghcr.io/alimobrem/agentci-api@sha256:ccd2d24db9411d88956136d9840e6c36c23d3b44f8aaba89d9da7e2dbd0af612",
+            "localImageId": "sha256:db240ccdd41602e76199657c3e720bc6afe9c987e5d3be74da0b23cfeecaf4df",
+            "platform": "linux/arm64",
+            "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+            "version": "0.3.1-m2"
+          },
+          {
+            "role": "worker",
+            "image": "ghcr.io/alimobrem/agentci-worker@sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b",
+            "localImageId": "sha256:ae17cc771de5320fc614a17ac5b29390dc66b08e73ffee5d69b125f6895c7ffb",
+            "platform": "linux/arm64",
+            "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+            "version": "0.3.1-m2"
+          },
+          {
+            "role": "eval-worker",
+            "image": "ghcr.io/alimobrem/agentci-eval-worker@sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3",
+            "localImageId": "sha256:30dab42bc323ad8239c69d70cac005725880daab5c2e5f32ef47dce69114e056",
+            "platform": "linux/arm64",
+            "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+            "version": "0.3.1-m2"
+          },
+          {
+            "role": "eval-runner",
+            "image": "ghcr.io/alimobrem/agentci-eval-runner@sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143",
+            "localImageId": "sha256:7e32ee9c5242c204089e24573d8709bed2f93710d2d6afa2b22f730437a835aa",
+            "platform": "linux/arm64",
+            "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+            "version": "0.3.1-m2"
+          },
+          {
+            "role": "eval-engines",
+            "image": "ghcr.io/alimobrem/agentci-eval-engines@sha256:864e9ee51ada3096cc41f2725195b9e0916fe6b83dc5618758207a30b07c1242",
+            "localImageId": "sha256:b0ddc7283695628c85da9009dc01b28cf3e67b300c1f6d61e551eabc06a7ef08",
+            "platform": "linux/arm64",
+            "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+            "version": "0.3.1-m2"
+          },
+          {
+            "role": "eval-agentci",
+            "image": "ghcr.io/alimobrem/agentci-eval-agentci@sha256:8e2cc69b65e6efb1bd4e4a7f5d8eb6ef5e122bba9c0a5c1453aeb0ae66a5697d",
+            "localImageId": "sha256:6201c90d30ff9953728dc52fbd75f00b1a667d0ae5cf430a60d94a0885d8c4cc",
+            "platform": "linux/arm64",
+            "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+            "version": "0.3.1-m2"
+          }
+        ]
+      },
+      "forgeRemediation": {
+        "image": "sha256:b0ddc7283695628c85da9009dc01b28cf3e67b300c1f6d61e551eabc06a7ef08",
+        "releaseImage": "ghcr.io/alimobrem/agentci-eval-engines@sha256:864e9ee51ada3096cc41f2725195b9e0916fe6b83dc5618758207a30b07c1242",
+        "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+        "version": "0.3.1-m2",
+        "platform": "linux/arm64",
+        "observed": {
+          "arch": "arm64",
+          "rsaSha256": "acc22e5d36e27832c34e02dd3933aad7977d45b047eead5016520735efedc9c5",
+          "metadata": {
+            "package": "node-forge",
+            "publishedVersion": "1.4.0",
+            "advisory": "GHSA-86w9-cpqp-85rv",
+            "upstreamPullRequest": "https://github.com/digitalbazaar/forge/pull/1152",
+            "upstreamCommit": "ceba34402e329f0365134f23fe19898756527d65",
+            "upstreamStatus": "open-unmerged",
+            "beforeSha256": "fd4740238145ec26470eb3f06a627c72039538ce1307dbdce40521f94dfd0a50",
+            "afterSha256": "acc22e5d36e27832c34e02dd3933aad7977d45b047eead5016520735efedc9c5",
+            "old": "          // validate DigestInfo structure and element count\n          var capture = {};\n          var errors = [];\n          if(!asn1.validate(obj, digestInfoValidator, capture, errors) ||\n            obj.value.length !== 2) {",
+            "replacement": "          // validate DigestInfo structure and element counts (outer DigestInfo\n          // and nested DigestAlgorithm). asn1.validate ignores extra children,\n          // so length must be checked explicitly at each nesting level to\n          // prevent low-exponent PKCS#1 v1.5 signature forgery (CVE-2026-85393).\n          var capture = {};\n          var errors = [];\n          if(!asn1.validate(obj, digestInfoValidator, capture, errors) ||\n            obj.value.length !== 2 ||\n            obj.value[0].value.length !==\n              (('parameters' in capture) ? 2 : 1)) {"
+          },
+          "verifierSha256": "6790c645ad48b9e09f0396882a5d03af69bc5044c09eea365c719434e0e37cdb",
+          "fixtureSha256": "542603a55c4eef10700594ab6dfddc68ad4b4ea44cf61c027b23632961c5b5e0"
+        },
+        "malformedRegressionRejected": true,
+        "validSignaturesAccepted": true,
+        "wrongMessagesRejected": true,
+        "scannerFindingRetained": true
+      },
+      "serviceRuntime": {
+        "result": "passed",
+        "version": "downloaded",
+        "platform": "arm64",
+        "checks": [
+          "non-root API/worker startup",
+          "M2 schema readiness",
+          "signature rejection",
+          "evidence authentication",
+          "comparison authentication/UUID/scoped lookup",
+          "compiled comparison API/client reads actual queued database evidence",
+          "compiled snapshot export/client completion",
+          "signed closed delivery",
+          "non-root persistent Temporal database startup/restart",
+          "graceful shutdown"
+        ],
+        "github": "synthetic credentials; no live GitHub review claimed"
+      },
+      "evaluatorRuntime": {
+        "result": "passed",
+        "deployment": "native-CLI",
+        "engine": "docker",
+        "platform": "linux/arm64",
+        "workerImage": "sha256:30dab42bc323ad8239c69d70cac005725880daab5c2e5f32ef47dce69114e056",
+        "runnerImage": "sha256:7e32ee9c5242c204089e24573d8709bed2f93710d2d6afa2b22f730437a835aa",
+        "uid": 1001,
+        "node": "v26.10.0",
+        "cli": "Docker version 29.8.2, build 7fc2dff",
+        "license": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+        "checks": [
+          "UBI non-root read-only runtime",
+          "only selected engine client; no package installers/App keys",
+          "mismatched engine rejected before database/Temporal connection",
+          "official pinned docker CLI execution",
+          "separately authenticated restricted database login",
+          "real Temporal workflow and isolated child execution",
+          "child has no database/App/socket credentials",
+          "behavioral failure preserved",
+          "worker graceful shutdown/restart",
+          "all owned children removed"
+        ],
+        "github": "no live GitHub publication claimed"
+      },
+      "nativeInventories": {
+        "worker": {
+          "image": "ghcr.io/alimobrem/agentci-worker@sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b",
+          "engine": "docker",
+          "platform": "linux/arm64",
+          "temporalNativeArtifacts": "matched official npm artifact",
+          "files": {
+            "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+            "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+            "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+            "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+          },
+          "coverage": "Podman compiled module metadata is bound to exact official binary hashes; its source manifest includes additional modules. Cargo and Docker vendor manifests are upstream source inventories, not proofs of exact compiled dependency graphs."
+        },
+        "eval-worker": {
+          "image": "ghcr.io/alimobrem/agentci-eval-worker@sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3",
+          "engine": "docker",
+          "platform": "linux/arm64",
+          "temporalNativeArtifacts": "matched official npm artifact",
+          "files": {
+            "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+            "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+            "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+            "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+          },
+          "dockerCli": {
+            "Version": "29.8.2",
+            "ApiVersion": "1.56",
+            "DefaultAPIVersion": "1.56",
+            "GitCommit": "7fc2dff",
+            "GoVersion": "go1.26.8",
+            "Os": "linux",
+            "Arch": "arm64",
+            "BuildTime": "Wed Sep 30 19:31:29 2026",
+            "Context": "default",
+            "sha256": "37a53fed3445028a49443fd6f9338ccedeeeda9776de5d7fd4d7e7c936b789cc",
+            "vendorManifestSha256": "0836699fe2ae28a136aabd51f932b825e0653c48ae200613b72f07a74f2a3868"
+          },
+          "coverage": "Podman compiled module metadata is bound to exact official binary hashes; its source manifest includes additional modules. Cargo and Docker vendor manifests are upstream source inventories, not proofs of exact compiled dependency graphs."
+        }
+      },
+      "integration": {
+        "tests": 15,
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "limitations": [
+    "Hosted runner Docker daemon 28.0.4 is external acceptance infrastructure; the shipped evaluator CLI is pinned Docker 29.8.2.",
+    "Native integration and container runtime fixtures do not substitute for the separate live GitHub customer demo.",
+    "The retained node-forge HIGH finding is treated by a pinned downstream source patch with native regression and compatibility evidence, not an upstream fixed package version."
+  ]
+}
