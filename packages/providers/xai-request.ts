@@ -1,6 +1,7 @@
 import type {CreateParams,InputItem} from '@xai-official/sdk';
 import {validateModelRequest} from './request.ts';
 import {xAIHistory} from './xai-continuation.ts';
+import {validateXAISchema} from './xai-schema.ts';
 import {ProviderFailure,type ModelRequest} from './types.ts';
 /** Translate portable input using the xAI SDK contract, not OpenAI's schema subset. */
 export function xAIRequest(input:ModelRequest):CreateParams{
@@ -9,6 +10,8 @@ export function xAIRequest(input:ModelRequest):CreateParams{
  const extension=request.providerExtensions.xai??{};
  if(Object.keys(extension).some(key=>!['history','parallel_tool_calls'].includes(key))||extension.parallel_tool_calls!==undefined&&typeof extension.parallel_tool_calls!=='boolean')throw new ProviderFailure('unsupported-capability');
  const history=xAIHistory(request);
+ for(const tool of request.tools)validateXAISchema(tool.inputSchema);
+ if(request.responseSchema)validateXAISchema(request.responseSchema);
  const messages:InputItem[]=[];
  if(request.system)messages.push({role:'system',content:request.system});
  if(request.developer)messages.push({role:'developer',content:request.developer});

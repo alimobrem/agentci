@@ -15,9 +15,8 @@ Portable metadata stays controller-side because the SDK's generated API contract
 marks upstream metadata unsupported. Schema constraints are retained without
 claiming that OpenAI's schema subset applies to xAI.
 
-Provider-specific schema preflight, production model
-profiles, package acceptance and authorized live
-smoke remain pending. No live xAI request has been made. The SDK's optional partial
+Hosted integration, authorized live smoke and full review acceptance remain pending.
+No live xAI request has been made. The SDK's optional partial
 JSON convenience output must not be accepted as a completed finding, and automatic
 retries must be disabled so every attempt uses the durable budget ledger.
 
@@ -68,4 +67,24 @@ model identities, enforce capabilities and reserve a full-context upper charge.
 Profiles can require continuation for every historical tool proposal. The shared
 synthetic SDK corpus covers structured output, streaming, a tool proposal and its
 result, with independent reservation and reported-cost settlement for each attempt.
-Only fixture profiles are tested so far; no production xAI model is enabled.
+No production xAI model is enabled automatically.
+
+`xAIGrokProfile()` opts into `grok-4.7` with a 500,000-token context and exact returned
+identity. The 128,000-output-token limit is AgentCI's execution cap, based on the API
+default, not a claim about the model's maximum. Full-context reservations use
+$4/M input and $12/M output to cover the long-context tier on the fixed global
+default-service endpoint. Sources checked 2026-10-05:
+[model](https://docs.x.ai/developers/models/grok-4.7),
+[pricing](https://docs.x.ai/developers/pricing), and the pinned SDK API contract.
+
+Schema preflight rejects documented invalid shapes, external/circular references
+and unsupported regex constructs. Accepted best-effort constraints are retained
+unchanged and enforced by AgentCI's result validator; local preflight is not proof
+of upstream acceptance. Provider regex matching differs from JavaScript, and some
+keywords are not structurally guaranteed upstream. See the
+[schema reference](https://docs.x.ai/developers/model-capabilities/text/structured-outputs).
+
+The private live-smoke command now accepts `provider: "xai"` and runs the shared
+four-scenario corpus, including a constant tool result. It requires explicit spend
+authorization and persistent budget accounting. Production-package smoke includes
+an installed official-SDK invocation with synthetic transport; this is not a live call.
