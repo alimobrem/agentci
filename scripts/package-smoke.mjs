@@ -57,6 +57,26 @@ try {
   if(!(await readFile(join(installedRoot,'deploy/migrations/012_m3_review_recovery.sql'),'utf8')).includes('review_admission_recovery_pending'))throw new Error('Installed review recovery migration missing');
   const {reconcileAdmittedReviews}=await import(pathToFileURL(join(installedRoot,'dist/apps/worker/reviewer-recovery.js')).href);
   if(typeof reconcileAdmittedReviews!=='function')throw new Error('Installed review recovery module missing');
+  // Verify the opt-in runtime from the production-only installation and shipped example.
+  const {loadReviewerRuntime}=await import(pathToFileURL(join(installedRoot,'dist/packages/runtime/reviewers.js')).href);
+  const {initializeReviewerController}=await import(pathToFileURL(join(installedRoot,'dist/apps/worker/reviewer-runtime.js')).href);
+  const {prepareReviewerRequest}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/request.js')).href);
+  if(typeof initializeReviewerController!=='function')throw new Error('Installed reviewer initializer missing');
+  const runtime=await loadReviewerRuntime({AGENTCI_REVIEWER_CONFIG_FILE:join(installedRoot,'deploy/reviewers.synthetic.example.json')});
+  if(runtime.definition.profiles[0].reviewers.length!==7||runtime.registrations.length!==1||runtime.registrations[0].execution!=='fixture')throw new Error('Installed synthetic configuration changed');
+  const originalFetch=globalThis.fetch;
+  try{
+    globalThis.fetch=async()=>{throw new Error('Synthetic installed reviewer attempted network');};
+    for(const role of runtime.definition.profiles[0].reviewers){
+      const configured=prepareReviewerRequest(request.requestId,{...role,policy:{...role.policy,deadlineAt:Date.now()+10000}},reviewerFixture.subject,[{kind:'source',side:'head',path:'README.md',content:'Installed fixture',digest:digest('Installed fixture')}]).request;
+      const result=await runtime.registrations[0].provider.invoke(configured,{attemptId:'installed-role-'+role.role,signal:new AbortController().signal});
+      if(JSON.stringify(result.structuredOutput)!=='{"findings":[]}'||result.usage.costUsdMicros!==0)throw new Error('Installed synthetic role failed');
+    }
+  }finally{globalThis.fetch=originalFetch;}
+  const {parse}=await import(pathToFileURL(join(root,'node_modules/yaml/dist/index.js')).href);
+  const overlay=parse(await readFile(join(installedRoot,'deploy/reviewer.compose.yaml'),'utf8'));
+  if(overlay.services.worker.environment.AGENTCI_REVIEWER_CONFIG_FILE!=='/run/agentci/reviewers.json'||!overlay.services.worker.volumes.some(value=>value.endsWith(':/run/agentci/reviewers.json:ro')))throw new Error('Installed operator config mount missing');
+  if(!(await readFile(join(installedRoot,'docs/phases/m3-reviewer-runtime.md'),'utf8')).includes('M3-07c'))throw new Error('Installed development runtime instructions missing');
   const {validateModelFinding}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/model.js')).href);
   const findingFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-finding.json'),'utf8'));
   validateModelFinding(findingFixture,findingFixture.subject);
@@ -182,5 +202,5 @@ text: Packaged CLI validates a fresh project.
     execFileSync(cli, ['validate', '--root', join(root, 'project')], { stdio: 'pipe' });
     throw new Error('Invalid project unexpectedly passed');
   } catch (error) { if (error.status !== 1) throw error; }
-  console.log('Packaged CLI/client passed: production-only install, version, fresh init, overwrite rejection, client entry point, installed provider schemas/migration and OpenAI/Anthropic/xAI SDK invocation, MIT license, installed App setup/state rejection, validation and invalid input.');
+  console.log('Packaged CLI/client passed: production-only install, version, fresh init, overwrite rejection, client entry point, installed provider schemas/migration and OpenAI/Anthropic/xAI SDK invocation, seven-role no-network reviewer runtime and read-only configuration overlay, MIT license, installed App setup/state rejection, validation and invalid input.');
 } finally { await rm(root, { recursive: true, force: true }); }
