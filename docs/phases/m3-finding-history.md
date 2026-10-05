@@ -1,6 +1,6 @@
 # M3-06b durable finding history
 
-Development implementation; acceptance remains in progress. This slice adds the
+Development slice acceptance passed; see delivery/acceptance/m3-06b.json. This slice adds the
 internal FindingHistoryStore, not customer endpoints or an M3 release.
 
 A finding starts as a deduplicated record reconstructed from controller-authenticated

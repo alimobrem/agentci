@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -1890,14 +1890,16 @@
         "SECTION-12.5",
         "SPEC-12.5-001"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T18:59:22.485Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T19:17:39.614Z",
       "acceptance": [
         {
           "text": "Tenant-scoped immutable event history, idempotency and optimistic concurrency; real PostgreSQL restart, conflict and isolation acceptance; shipped migration and schema.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-06b.json"
+          ]
         }
       ],
       "dependsOn": [
@@ -1914,8 +1916,8 @@
         "SECTION-12.5",
         "SPEC-12.5-001"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "in-progress",
+      "startedAt": "2026-10-05T19:17:40.744Z",
       "completedAt": null,
       "acceptance": [
         {
@@ -1934,14 +1936,16 @@
       "requirementIds": [
         "SECTION-13.4"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T18:04:58.254Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T19:17:40.075Z",
       "acceptance": [
         {
           "text": "Confirmed primary exhaustion or retry-after prevents further outbound requests through the same App client until reset; deadline is bounded and failures remain explicit/redacted; tests cover cooldown expiry and no credential/body leakage. Retain observed hosted failure and retry only after reset.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-r5.json"
+          ]
         }
       ]
     },
@@ -1951,14 +1955,16 @@
       "requirementIds": [
         "SECTION-13.4"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T18:10:09.219Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T19:17:40.521Z",
       "acceptance": [
         {
           "text": "PR events select only the triggering repository-scoped PR; missing/malformed trigger cannot fall back to an all-PR sweep. Push/schedule/manual sweeps retain bounded coverage, current identity reads and all existing evaluator gates. SDK request-count tests prove fewer discovery calls.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-r6.json"
+          ]
         }
       ]
     }
