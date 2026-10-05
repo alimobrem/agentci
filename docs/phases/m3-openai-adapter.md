@@ -60,3 +60,22 @@ The internal M3 response contract adds optional `observedModel` (nonempty, at mo
 256 characters). Older provider implementations remain accepted; absence means
 unknown. The OpenAI adapter always supplies the reported identity. No released
 M1/M2 HTTP contract or compatibility baseline changes.
+
+## Reviewed opt-in model profile
+
+`openAILunaProfile()` supplies GPT-6 Luna for bounded live conformance work; it
+neither enables credentials nor makes requests. Official model and pricing pages
+were checked on 2026-10-05 UTC. The profile uses a 1,050,000-token context and
+128,000-token output ceiling, with streaming, function calls and structured output.
+Sampling overrides remain disabled by profile policy. The published model name is
+the only accepted response identity; no dated snapshot is invented.
+
+Requests explicitly select `service_tier: default`. Conservative prices use the
+long-context Standard cache-write input upper rate ($0.25/M) and output rate
+($0.75/M). Reserving the entire context plus 256 output tokens holds $0.262692.
+This is an upper reservation, not a billed-cost claim. Built-in paid tools and
+regional endpoints are not exposed by this adapter. Revalidate prices/capabilities
+before release; account availability and actual response identity remain live gates.
+
+Sources: [model capabilities](https://developers.openai.com/api/docs/models/gpt-6-luna),
+[pricing and context tiers](https://developers.openai.com/api/docs/pricing).

@@ -20,7 +20,7 @@ export function openAIRequest(input:ModelRequest):ResponseCreateParamsNonStreami
    for(const call of message.toolCalls??[])messages.push({type:'function_call',call_id:call.id,name:call.name,arguments:JSON.stringify(call.arguments)});
   }
  }
- return {model:request.model,input:messages,store:false,stream:false,max_output_tokens:request.parameters.maxOutputTokens,
+ return {model:request.model,input:messages,store:false,stream:false,service_tier:'default',max_output_tokens:request.parameters.maxOutputTokens,
   ...(request.parameters.temperature!==undefined?{temperature:request.parameters.temperature}:{}),
   ...(request.parameters.topP!==undefined?{top_p:request.parameters.topP}:{}),
   ...(extension.parallel_tool_calls!==undefined?{parallel_tool_calls:extension.parallel_tool_calls}:{}),
