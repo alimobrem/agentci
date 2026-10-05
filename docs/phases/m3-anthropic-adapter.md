@@ -36,3 +36,11 @@ cumulative usage and an explicit final message stop. Tool JSON is assembled and
 validated only as a proposal; truncated arguments are discarded. Unknown events,
 model switches, decreasing counts and missing terminal events fail acceptance.
 Reasoning blocks are non-actionable and not exposed as review text.
+
+The registered provider now composes request, transport, stream and response
+validation through the common executor. Profiles are detached, allowlist models
+and returned snapshots, declare capabilities and cap output tokens. Cost reservation
+uses full context at configured upper prices. Synthetic SDK tests pass the shared
+structured/streamed/tool-proposal suite with accounting before each result.
+Production capability/pricing profiles and provider-specific schema preflight are
+still pending; fixture profiles are not production settings.
