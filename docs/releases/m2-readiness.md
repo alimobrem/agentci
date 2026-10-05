@@ -56,7 +56,11 @@ is `docs/phases/m2.md`, specification section 40 M2 and section 11.
    PRs and the intentional PR #7 baseline-pass/head-fail (`statistics` and
    `comparison`), with exact-head App Checks and chained export/file hashes.
    PR #4 correctly remains insufficient. See `releases/m2-hosted-regression-ci.json`.
-   Corrected-head recovery and released customer replay remain pending.
+   Corrected-head recovery now passes: run `37249660767` retains actual passing
+   assertions on head `b921125e1a2175d5f022e28614ff4184879d874f`, verified against
+   trusted checkout `8b0901bd6a9fe8ac4c2edffc5a97cd7b4452ca43`. See
+   `releases/m2-hosted-recovery-ci.json`. The demo PR was closed without merging.
+   Released customer replay remains pending.
 3. Complete `M2-SECURITY-RELEASE`. Include inventories and scanner coverage for all
    introduced service/runner/optional-engine platforms and current official pins.
    The optional image has `node-forge` 1.4.0 / GHSA-86w9-cpqp-85rv. The official
