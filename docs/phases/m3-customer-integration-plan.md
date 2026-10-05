@@ -95,3 +95,11 @@ completion before start acknowledgement, late cancellation, tenant isolation and
 restart. Database triggers preserve admitted identity, cancellation and terminal
 evidence. These storage tests do not prove workflow termination cleanup; Temporal
 dispatch, independent reconciliation and production registration remain required.
+
+The Temporal dispatch boundary now has real PostgreSQL/Temporal acceptance for
+start-before-ack recovery, deterministic workflow reuse, single fixture activity
+execution, conflicting task-queue rejection, terminal-write retry and history
+replay. `reviewAdmittedRequest` carries only IDs and result digests. Activities in
+this integration test are fixtures: production profile persistence, provider and
+finding activities, cancellation/termination reconciliation and worker registration
+are still outstanding. These results do not prove actual provider execution.

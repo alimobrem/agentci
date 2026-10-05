@@ -267,6 +267,36 @@
         "immutable execution identity and terminal evidence",
         "tenant isolation restart and bounded outage errors"
       ]
+    },
+    {
+      "operationId": "dispatchAdmittedReviews",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/integration/reviewer-dispatch-temporal.test.ts"
+      ],
+      "scenarios": [
+        "real Temporal start with lost acknowledgement",
+        "deterministic identity reuse and single execution",
+        "wrong queue cannot acknowledge existing workflow"
+      ]
+    },
+    {
+      "operationId": "reviewAdmittedRequest",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/integration/reviewer-dispatch-temporal.test.ts"
+      ],
+      "scenarios": [
+        "ID and digest only workflow orchestration",
+        "finalization retry after committed terminal evidence",
+        "real workflow history replay"
+      ]
     }
   ]
 }

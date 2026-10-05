@@ -4,7 +4,7 @@ export class ReviewDispatchConflict extends Error {constructor(){super('review-d
 export class ReviewDispatchUnavailable extends Error {constructor(){super('review-dispatch-unavailable');}}
 export class ReviewDispatchLeaseLost extends Error {constructor(){super('review-dispatch-lease-lost');}}
 export type ReviewTerminalStatus='completed'|'failed'|'cancelled'|'terminated'|'timed-out';
-export interface ReviewDispatchRecord {id:string;workflowId:string;runId:string|null;admittedAtMs:number;cancelRequested:boolean;dispatched:boolean;terminal:{status:ReviewTerminalStatus;digest:string}|null}
+export interface ReviewDispatchRecord {id:string;requestDigest:string;workflowId:string;runId:string|null;admittedAtMs:number;cancelRequested:boolean;dispatched:boolean;terminal:{status:ReviewTerminalStatus;digest:string}|null}
 export interface ReviewDispatchClaim extends ReviewDispatchRecord {token:string}
 const uuid=(s:unknown):s is string=>typeof s==='string'&&/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(s);
 const conflict=():never=>{throw new ReviewDispatchConflict();};
@@ -20,14 +20,14 @@ export class ReviewDispatchStore {
  }
  private args(id:string){if(!uuid(id))conflict();return [this.scope.organizationId,this.scope.repository,id.toLowerCase()];}
  private decode(row:any):ReviewDispatchRecord{
-  return {id:row.id,workflowId:`agentci:reviewer:${this.scope.organizationId}:${this.scope.repository}:${row.id}`,runId:row.run_id,admittedAtMs:Number(row.admitted_ms),cancelRequested:row.cancel_requested_at!==null,dispatched:row.dispatched_at!==null,terminal:row.terminal_status?{status:row.terminal_status,digest:row.terminal_digest}:null};
+  return {id:row.id,requestDigest:row.request_digest,workflowId:`agentci:reviewer:${this.scope.organizationId}:${this.scope.repository}:${row.id}`,runId:row.run_id,admittedAtMs:Number(row.admitted_ms),cancelRequested:row.cancel_requested_at!==null,dispatched:row.dispatched_at!==null,terminal:row.terminal_status?{status:row.terminal_status,digest:row.terminal_digest}:null};
  }
  private async tx<T>(fn:(c:PoolClient)=>Promise<T>):Promise<T>{
   let c:PoolClient;try{c=await this.pool.connect();}catch{throw new ReviewDispatchUnavailable();}
   let broken=false;try{await c.query('BEGIN');await c.query("SET LOCAL lock_timeout='5s'");await c.query("SET LOCAL statement_timeout='10s'");const r=await fn(c);await c.query('COMMIT');return r;}
   catch(e){try{await c.query('ROLLBACK');}catch{broken=true;}if(e instanceof ReviewDispatchConflict||e instanceof ReviewDispatchLeaseLost)throw e;throw new ReviewDispatchUnavailable();}finally{c.release(broken);}
  }
- private async row(c:PoolClient,id:string,lock=false){return (await c.query(`SELECT o.*,floor(extract(epoch FROM a.created_at)*1000)::text AS admitted_ms FROM agentci_review_admission_outbox o JOIN agentci_review_admissions a USING(organization_id,repository,id) WHERE o.organization_id=$1 AND o.repository=$2 AND o.id=$3 ${lock?'FOR UPDATE OF o':''}`,this.args(id))).rows[0];}
+ private async row(c:PoolClient,id:string,lock=false){return (await c.query(`SELECT o.*,a.digest AS request_digest,floor(extract(epoch FROM a.created_at)*1000)::text AS admitted_ms FROM agentci_review_admission_outbox o JOIN agentci_review_admissions a USING(organization_id,repository,id) WHERE o.organization_id=$1 AND o.repository=$2 AND o.id=$3 ${lock?'FOR UPDATE OF o':''}`,this.args(id))).rows[0];}
  async get(id:string){this.args(id);return this.tx(async c=>{const r=await this.row(c,id);return r?this.decode(r):undefined;});}
  async claim():Promise<ReviewDispatchClaim|undefined>{
   return this.tx(async c=>{
