@@ -35,7 +35,37 @@
           "dependsOn": [
             "M2 closure"
           ],
-          "acceptance": "Audit cross-cutting requirements and schema examples; freeze provider/review/finding contracts, versioning, budget policy and acceptance corpus before implementation.",
+          "acceptance": "Audit cross-cutting requirements and schema examples; freeze provider/review/finding contracts, versioning, budget policy and acceptance corpus before implementation. Record mandatory retro dependencies, live-provider prerequisites, coding-provider identity, initial OIDC/session decision and exact release/demo scenarios; no paid calls without configured authorization and total budget.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-R1",
+          "title": "Native image publication and bounded cleanup",
+          "size": "M",
+          "dependsOn": [
+            "M3-00"
+          ],
+          "acceptance": "Build AMD64/ARM64 on native runners with pinned runtime-layer reuse, immutable digest assembly and explicit post-build timeout margin. Verify failed/partial publication retention, both platform scans/runtime gates and record matched-cache timing before claiming acceleration.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-R2",
+          "title": "Deployment and provider preflight",
+          "size": "M",
+          "dependsOn": [
+            "M3-00"
+          ],
+          "acceptance": "Read-only preflight checks actual daemon-shared migration/provider paths, credential references, endpoint connectivity, configured spend limits and service readiness before webhook or live-provider mutation. Missing/unshared files and unauthorized endpoints fail with redacted actionable errors; preserve unrelated state.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-R3",
+          "title": "Evidence reuse and delivery measurement enforcement",
+          "size": "M",
+          "dependsOn": [
+            "M3-00"
+          ],
+          "acceptance": "Record evidence by product source, artifact digest, platform and verifier revision; require invalidation reasons for repeated acceptance. Separate CI/publication/download/cycle/blocker/intervention/rework cohorts, preserve failed attempts, and make one consolidated closure record the default. Reject wrong-source/digest/coverage reuse.",
           "status": "planned"
         },
         {
@@ -53,7 +83,8 @@
           "title": "OpenAI adapter",
           "size": "M",
           "dependsOn": [
-            "M3-01"
+            "M3-01",
+            "M3-R2"
           ],
           "acceptance": "Official provider integration behind core; request/stream/schema conformance, redacted errors, live opt-in smoke and outage tests.",
           "status": "planned"
@@ -63,7 +94,8 @@
           "title": "Anthropic adapter",
           "size": "M",
           "dependsOn": [
-            "M3-01"
+            "M3-01",
+            "M3-R2"
           ],
           "acceptance": "Same conformance corpus; explicit feature translation/unsupported capabilities; live smoke without secret leakage.",
           "status": "planned"
@@ -73,7 +105,8 @@
           "title": "xAI adapter",
           "size": "M",
           "dependsOn": [
-            "M3-01"
+            "M3-01",
+            "M3-R2"
           ],
           "acceptance": "Same conformance corpus plus live smoke; do not assume endpoint similarity proves compatibility.",
           "status": "planned"
@@ -115,7 +148,8 @@
           "title": "Next.js UI foundation and packaging",
           "size": "M",
           "dependsOn": [
-            "M3-07"
+            "M3-07",
+            "M3-R1"
           ],
           "acceptance": "Next.js App Router React/TS shell with Tailwind and reviewed shadcn/Radix source, theme/accessibility tokens, Zod UI-input contracts; production standalone UBI image startup, build/license/security checks and no server secrets in client bundles. Data views stay unavailable until authenticated routes ship.",
           "status": "planned"
@@ -146,7 +180,10 @@
           "size": "L",
           "dependsOn": [
             "M3-07",
-            "M3-07-dashboard"
+            "M3-07-dashboard",
+            "M3-R1",
+            "M3-R2",
+            "M3-R3"
           ],
           "acceptance": "Publish verified CLI/service artifacts; fresh customer review, provider failure recovery and released-build success/failure demo; close all gates and retro.",
           "status": "planned"

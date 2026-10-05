@@ -1,7 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { gateIds, validateRelease, validateTasks, validatePhaseCoverage, releaseLedgerPath, median, blockedSeconds, type Release, type Task } from '../scripts/lib/delivery.ts';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { gateIds, validateRelease, validateTasks, validatePhaseCoverage, releaseLedgerPath, requireCompletedDependencies, median, blockedSeconds, type Release, type Task } from '../scripts/lib/delivery.ts';
 const sha = 'a'.repeat(40);
 const release = (): Release => ({ milestone: 'M1', version: '0.2.0-m1', sourceCommit: sha, gates: gateIds.map(id => ({ id, status: 'passed', evidence: [{ kind: 'url', value: 'https://github.com/alimobrem/agentci/actions/runs/1', sourceCommit: sha }] })) });
 test('release completion rejects missing gates, pending checks and evidence from another SHA', () => {
@@ -66,4 +70,53 @@ test('delivery CLI checks a selected historical phase and rejects unsupported ph
   assert.equal(result.status,0,result.stderr); assert.match(result.stdout,/M1 has 0 open release gates/);
   const unknown=spawnSync(process.execPath,['--import','tsx','scripts/delivery.ts','release','--milestone','M11'],{encoding:'utf8'});
   assert.notEqual(unknown.status,0); assert.match(unknown.stderr,/Unknown specification milestone/);
+});
+
+test('task dependencies reject missing/cyclic graphs and incomplete transitive acceptance', () => {
+  const task = (id: string): Task => ({id,title:id,requirementIds:['R1'],status:'not-started',startedAt:null,completedAt:null,acceptance:[{text:'Observed acceptance',status:'pending',evidence:[]}]});
+  const a=task('A'), b={...task('B'),dependsOn:['A']}, c={...task('C'),dependsOn:['B']};
+  validateTasks([a,b,c],new Set(['R1']));
+  assert.throws(()=>validateTasks([a,{...b,dependsOn:['missing']}],new Set(['R1'])),/Invalid task dependencies/);
+  assert.throws(()=>validateTasks([a,{...b,dependsOn:['A','A']}],new Set(['R1'])),/Invalid task dependencies/);
+  assert.throws(()=>validateTasks([{...a,dependsOn:['C']},b,c],new Set(['R1'])),/Cyclic task dependency/);
+  const done = (value:Task):Task => ({...value,status:'done',completedAt:'2026-10-05T00:00:00Z',acceptance:[{...value.acceptance[0]!,status:'passed',evidence:['tests/delivery.test.ts']}]});
+  assert.throws(()=>requireCompletedDependencies(c,[a,done(b),c]),/prerequisites for C: A/);
+  assert.throws(()=>requireCompletedDependencies(c,[done(a),{...done(b),status:'deferred'},c]),/prerequisites for C: B/);
+  requireCompletedDependencies(c,[done(a),done(b),c]);
+});
+
+test('delivery CLI refuses premature start, completion and reopen without altering ledger or events', () => {
+  const directory=mkdtempSync(join(tmpdir(),'agentci-dependency-gate-'));
+  const script=fileURLToPath(new URL('../scripts/delivery.ts',import.meta.url));
+  try {
+    for(const folder of ['delivery','specs','releases'])mkdirSync(join(directory,folder));
+    writeFileSync(join(directory,'specs/requirements.yaml'),'requirements:\n  - id: R1\n    text: "- Phase acceptance"\n    source: {section: "40"}\n    implementation: {milestone: M3}\n');
+    writeFileSync(join(directory,'releases/m3-gates.json'),JSON.stringify({milestone:'M3',version:'0.4.0-m3',sourceCommit:null,gates:gateIds.map(id=>({id,status:'pending',evidence:[]}))}));
+    const parent:Task={id:'P',title:'Preflight',requirementIds:['R1'],status:'not-started',startedAt:null,completedAt:null,acceptance:[{text:'Preflight works',status:'pending',evidence:[]}]};
+    for(const action of ['start','done','reopen']){
+      const child:Task={...parent,id:'C',dependsOn:['P'],status:action==='start'?'not-started':action==='done'?'in-progress':'done',completedAt:action==='reopen'?'2026-10-05T00:00:00Z':null,acceptance:[{text:'Child works',status:'passed',evidence:['proof.json']}]};
+      const before=JSON.stringify({milestone:'M3',tasks:[parent,child]});writeFileSync(join(directory,'delivery/tasks.json'),before);
+      const result=spawnSync(process.execPath,['--import',import.meta.resolve('tsx'),script,'task','C',action,...(action==='reopen'?['New work']:[])],{cwd:directory,encoding:'utf8'});
+      assert.notEqual(result.status,0);assert.match(result.stderr,/Incomplete task prerequisites for C: P/);
+      assert.equal(readFileSync(join(directory,'delivery/tasks.json'),'utf8'),before);assert.equal(existsSync(join(directory,'delivery/task-events.jsonl')),false);
+    }
+  } finally {rmSync(directory,{recursive:true,force:true});}
+});
+
+test('phase plan cannot drop mandatory retro gates or drift from executable task dependencies', () => {
+  const directory=mkdtempSync(join(tmpdir(),'agentci-retro-plan-'));
+  try {
+    for(const folder of ['delivery','specs'])mkdirSync(join(directory,folder));
+    writeFileSync(join(directory,'specs/requirements.yaml'),readFileSync(new URL('../specs/requirements.yaml',import.meta.url)));
+    const script=fileURLToPath(new URL('../scripts/check-phase-pr-plan.mjs',import.meta.url));
+    for(const mutation of ['provider','release','task-drift']){
+      const plan=JSON.parse(readFileSync(new URL('../delivery/phase-pr-plan.json',import.meta.url),'utf8'));
+      const tasks=JSON.parse(readFileSync(new URL('../delivery/tasks.json',import.meta.url),'utf8'));
+      if(mutation==='task-drift')tasks.tasks.find((t:Task)=>t.id==='M3-02').dependsOn=[];
+      else {const pr=plan.phases[0].prs.find((p:{id:string})=>p.id===(mutation==='provider'?'M3-02':'M3-08'));pr.dependsOn=pr.dependsOn.filter((id:string)=>id!==(mutation==='provider'?'M3-R2':'M3-R1'));}
+      writeFileSync(join(directory,'delivery/phase-pr-plan.json'),JSON.stringify(plan));writeFileSync(join(directory,'delivery/tasks.json'),JSON.stringify(tasks));
+      const result=spawnSync(process.execPath,[script],{cwd:directory,encoding:'utf8'});
+      assert.notEqual(result.status,0);assert.match(result.stderr,mutation==='task-drift'?/Task dependency drift/:/Missing required retrospective dependency/);
+    }
+  } finally {rmSync(directory,{recursive:true,force:true});}
 });

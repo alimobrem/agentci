@@ -211,3 +211,17 @@ Observe a live job only when its result determines the next action. Continue
 independent work while it runs and back off unchanged polling. Never restart a
 job because an observation timed out. Track release critical-path time and
 repeated verification overhead separately from local feedback speed.
+
+## Enforced task prerequisites
+
+Tasks may declare `dependsOn` IDs. The delivery CLI rejects start, completion and
+reopen when a direct or transitive prerequisite is incomplete: every prerequisite
+must be done, have a completion timestamp, and have passed acceptance with evidence.
+Unknown IDs, duplicate edges and cycles fail validation. A rejected transition
+leaves the task ledger and event history unchanged. Existing historical tasks
+without dependency declarations retain their recorded history.
+
+The phase-plan check also rejects removal of mandatory M3 retrospective edges or
+drift between the plan and executable task dependencies. It runs in `check:fast`.
+Dependency checks enforce recorded acceptance; reviewers must still inspect the
+evidence itself before accepting a task or release gate.

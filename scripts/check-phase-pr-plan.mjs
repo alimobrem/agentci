@@ -37,4 +37,20 @@ for (const owner of plan.requirementOwners) {
 }
 const missing = [...expected.keys()].filter(id => !assigned.has(id));
 if (missing.length) fail(`Unassigned requirements: ${missing.join(', ')}`);
+const m3 = plan.phases.find(phase => phase.id === 'M3');
+const requiredRetroDependencies = {
+  'M3-02': ['M3-R2'], 'M3-03': ['M3-R2'], 'M3-04': ['M3-R2'],
+  'M3-07-ui-foundation': ['M3-R1'], 'M3-08': ['M3-R1', 'M3-R2', 'M3-R3'],
+};
+for (const [id, dependencies] of Object.entries(requiredRetroDependencies)) {
+  const pr = m3.prs.find(pr => pr.id === id);
+  for (const dependency of dependencies) if (!pr?.dependsOn.includes(dependency)) fail(`Missing required retrospective dependency ${dependency} for ${id}`);
+}
+const tasks = JSON.parse(readFileSync('delivery/tasks.json', 'utf8')).tasks;
+for (const pr of m3.prs) {
+  const task = tasks.find(task => task.id === pr.id);
+  if (!task) continue; // A prospective plan does not pre-start future implementation.
+  const expectedDependencies = pr.dependsOn.map(id => id === 'M2 closure' ? 'M2-RELEASE' : id).sort();
+  if (JSON.stringify([...(task.dependsOn ?? [])].sort()) !== JSON.stringify(expectedDependencies)) fail(`Task dependency drift for ${pr.id}`);
+}
 console.log(`${plan.phases.length} phases, ${prs.size} planned PRs, ${assigned.size} inventory entries assigned; no implementation claims.`);

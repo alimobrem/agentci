@@ -18,15 +18,36 @@ try { await access(archive); } catch {
 }
 if(createHash('sha256').update(await readFile(archive)).digest('hex')!==entry[1])throw new Error('oasdiff archive checksum mismatch');
 execFileSync('tar',['-xzf',archive,'-C',directory,'oasdiff']);
-const base='specs/api/baselines/m1-0.2.1-openapi.json', current='specs/api/openapi.json';
-const compare = file => spawnSync(join(directory,'oasdiff'),['breaking',base,file,'--allow-external-refs=false','--format','json','--fail-on','WARN'],{encoding:'utf8',timeout:30_000});
-const result = compare(current);
-if(result.status!==0){console.error(result.stdout,result.stderr);process.exitCode=1;}
-else if(process.argv.includes('--self-test')){
-  const temp=await mkdtemp(join(tmpdir(),'agentci-api-compat-'));
-  try{const broken=JSON.parse(await readFile(current,'utf8'));delete broken.paths['/v1/evidence/{id}'];const path=join(temp,'broken.json');await writeFile(path,JSON.stringify(broken));const negative=compare(path);if(negative.status!==1||!JSON.parse(negative.stdout).length)throw new Error('Breaking endpoint removal did not fail the gate');}
-  finally{await rm(temp,{recursive:true,force:true});}
+const baselines = ['m1-0.2.1', 'm2-0.3.1'];
+const current='specs/api/openapi.json';
+const compare = (base, file) => spawnSync(join(directory,'oasdiff'),['breaking',base,file,'--allow-external-refs=false','--format','json','--fail-on','WARN'],{encoding:'utf8',timeout:30_000});
+const results=[];
+for (const name of baselines) {
+  const base=`specs/api/baselines/${name}-openapi.json`;
+  const identity=JSON.parse(await readFile(`specs/api/baselines/${name}-identity.json`,'utf8'));
+  const baselineSha256=createHash('sha256').update(await readFile(base)).digest('hex');
+  if(identity.baseline!==base || identity.baselineSha256!==baselineSha256)throw new Error(`Released baseline identity mismatch: ${name}`);
+  const result=compare(base,current);
+  results.push({baseline:base,baselineSha256,exitCode:result.status??1,changes:result.stdout,diagnostics:result.stderr});
+  if(result.status!==0){console.error(result.stdout,result.stderr);process.exitCode=1;}
 }
-const report={tool:'oasdiff',version:'1.33.0',sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),baseline:base,baselineSha256:createHash('sha256').update(await readFile(base)).digest('hex'),currentSha256:createHash('sha256').update(await readFile(current)).digest('hex'),exitCode:result.status,selfTest:process.argv.includes('--self-test')?'endpoint-removal rejected':null,changes:result.stdout};
+const selfTests=[];
+if(!process.exitCode && process.argv.includes('--self-test')){
+  const temp=await mkdtemp(join(tmpdir(),'agentci-api-compat-'));
+  try{
+    for(const [name,endpoint] of [['m1-0.2.1','/v1/evidence/{id}'],['m2-0.3.1','/v1/eval-comparisons/{id}']]){
+      const broken=JSON.parse(await readFile(current,'utf8'));
+      if(!broken.paths[endpoint])throw new Error(`Missing self-test endpoint: ${endpoint}`);
+      delete broken.paths[endpoint];
+      const path=join(temp,`${name}-broken.json`);await writeFile(path,JSON.stringify(broken));
+      const negative=compare(`specs/api/baselines/${name}-openapi.json`,path);
+      if(negative.status!==1||!JSON.parse(negative.stdout).length)throw new Error(`Breaking endpoint removal did not fail ${name} gate`);
+      if(name==='m2-0.3.1' && compare('specs/api/baselines/m1-0.2.1-openapi.json',path).status!==0)throw new Error('M2-only negative fixture must remain compatible with M1');
+      selfTests.push({baseline:name,endpoint,result:'endpoint-removal rejected'});
+    }
+  }finally{await rm(temp,{recursive:true,force:true});}
+}
+// Keep legacy summary fields for consumers; exitCode aggregates every baseline.
+const report={tool:'oasdiff',version:'1.33.0',sourceCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),...results.at(-1),currentSha256:createHash('sha256').update(await readFile(current)).digest('hex'),exitCode:results.some(result=>result.exitCode!==0)?1:0,selfTest:selfTests.length?'endpoint-removal rejected':null,selfTests,baselines:results};
 await mkdir('.agentci/artifacts',{recursive:true});await writeFile('.agentci/artifacts/api-compatibility.json',JSON.stringify(report,null,2)+'\n');
-if(!process.exitCode)console.log('API compatibility passed against immutable released M1 0.2.1-m1.');
+if(!process.exitCode)console.log('API compatibility passed against immutable released M1 0.2.1-m1 and M2 0.3.1-m2.');
