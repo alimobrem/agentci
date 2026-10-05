@@ -46,8 +46,12 @@ official npm/PyPI registries. Promptfoo's compatible `basic-ftp` override pins
 DeepEval's stable OpenTelemetry SDK requires the upstream `0.66b0` semantic
 conventions package. This transitive prerelease-numbered package is an explicit
 upstream compatibility exception, not a prerelease engine selection.
-The image retains an unpatched high-severity node-forge finding; it requires a
-release applicability decision and must not be represented as zero findings.
-Local adoption evidence is in `releases/m2-optional-engine-dependencies.json`
-and `releases/m2-optional-engines-local.json`; native amd64 and final release
-verification remain required.
+The scanner still reports the upstream node-forge 1.4.0 HIGH advisory. The M2
+release applies a checksum-bound downstream RSA backport and records its native
+regression tests and maintenance obligations in
+[the native security assessment](releases/m2-native-security.md). Do not describe
+the optional image as having zero findings or the backport as an upstream release.
+The earlier local adoption records remain in
+`releases/m2-optional-engine-dependencies.json` and
+`releases/m2-optional-engines-local.json`; final publication and verification
+evidence is recorded in [the M2 release record](releases/m2.md).
