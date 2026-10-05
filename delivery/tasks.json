@@ -1512,14 +1512,16 @@
         "SECTION-13.4",
         "SPEC-13.4-001"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T05:16:56.975Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T06:01:52.172Z",
       "acceptance": [
         {
           "text": "Normalized invoke/stream/capabilities/extensions and usage; cancellation, bounded retries, unsupported-feature errors and budget exhaustion tests.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-01.json"
+          ]
         }
       ],
       "dependsOn": [
@@ -1532,8 +1534,8 @@
       "requirementIds": [
         "SPEC-13.3-002"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "in-progress",
+      "startedAt": "2026-10-05T06:01:52.383Z",
       "completedAt": null,
       "acceptance": [
         {
