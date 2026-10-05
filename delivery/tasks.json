@@ -1578,7 +1578,7 @@
       "requirementIds": [
         "SPEC-13.3-004"
       ],
-      "status": "in-progress",
+      "status": "blocked",
       "startedAt": "2026-10-05T07:10:19.880Z",
       "completedAt": null,
       "acceptance": [
@@ -1591,7 +1591,8 @@
       "dependsOn": [
         "M3-01",
         "M3-R2"
-      ]
+      ],
+      "blockedReason": "Hosted CI passed; live acceptance awaits explicit spend authorization and private credential/database config paths. No paid provider calls have been made."
     },
     {
       "id": "M3-05",
