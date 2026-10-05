@@ -189,7 +189,7 @@ a comparable end-to-end baseline and complete cost/human-effort telemetry; no
 acceleration claim is established. Measurement collection continues now, with
 product analytics still unimplemented. Connected changes use focused development
 checks and full integration/release checkpoints. Milestone order and release gates
-remain in effect; discussion of parallel phases has not started M3.
+remain in effect. M2 closure is merged; M3 prerequisite tasks are active.
 
 ## Reuse verified immutable evidence
 
@@ -225,3 +225,60 @@ The phase-plan check also rejects removal of mandatory M3 retrospective edges or
 drift between the plan and executable task dependencies. It runs in `check:fast`.
 Dependency checks enforce recorded acceptance; reviewers must still inspect the
 evidence itself before accepting a task or release gate.
+
+## Evidence registry (M3 development)
+
+Use `npm run delivery -- evidence record RECORD.json` to append a verification
+result, `evidence reuse IDENTITY.json` before scheduling repeated acceptance,
+`evidence invalidate RECORD-ID REASON` when a finding changes the assessment, and
+`evidence report` for separate timing cohorts. These commands track evidence;
+they do not execute tests or prove the semantic claims inside a submitted proof.
+Review the actual acceptance scope before recording it.
+
+An identity contains `sourceCommit` (full product SHA), `artifactDigest`
+(`sha256:` digest), `platform`, `verifierRevision` (digest of the exact verifier
+inputs), `subject` (artifact/role), `boundary` (`local-feedback`, `ci`,
+`publication`, or `download`) and unique `coverage` scenario IDs. A result adds
+`result` (`passed`/`failed`), `reason` (null for first observation; required for
+repeat verification), `proof` with a repository-relative JSON/Markdown `path`
+and `sha256`, `seconds` (null when unknown), and `cache` (`cold`/`warm`/`unknown`).
+The CLI supplies record ID and observation timestamp; these are not invented
+historical task start dates. Never put credentials or private logs in proof files.
+
+Reuse requires the same identity and verification boundary, a latest passed
+record covering every requested scenario, no explicit invalidation, and unchanged
+proof bytes. A later failure blocks fallback to an old pass. Coverage/verifier
+changes, new platforms, product/digest changes and CI/publication/download
+boundaries cannot borrow unrelated evidence. A rejected duplicate leaves history
+unchanged; accepted repeats retain earlier results and require a concrete reason.
+Only small durable proof records are hashed during reuse (maximum 4 MiB), not the
+large image/package itself. No registry download or test execution occurs.
+
+Records and invalidations are append-only JSONL files under `delivery/`. Writers
+use an exclusive lock for validation and append. A stale lock requires confirming
+that its owning operation stopped before removing it; do not restart work merely
+because observation timed out. Reports separate subject, boundary, platform,
+verifier, coverage and cache, retain failures and unknown timing, and do not infer
+end-to-end development acceleration. Task cycle time, blockers and rework continue to use their distinct delivery
+events. Human interventions use `npm run delivery -- intervention TASK-ID SECONDS REASON`
+(or `unknown` instead of seconds). Record observed assistance only; do not invent
+historical effort. The report retains unknown durations and counts separately.
+
+
+## Consolidated closure from M3 onward
+
+A passed closure gate must bind the canonical `releases/mN-closure.json` file by
+SHA-256. Its identity matches the milestone/version/frozen source and release URL.
+It lists every gate once, with `evidenceIds` referencing current accepted registry
+records whose coverage includes `gate:GATE-ID`. Historical M0–M2 ledgers retain
+their existing formats. The closure gate itself uses an empty ID list to avoid
+self-attestation; an explicitly inapplicable gate also has no evidence IDs.
+
+The closure contains `requirementAudit` and `retrospective` file proofs (`path`,
+`sha256`), explicit `limitations`, and a `demo` with `deliveredAt`,
+`successEvidenceId` and `failureEvidenceId`. Demo records cover `demo:success` and
+`demo:failure`. The release command verifies proof bytes and rejects pending
+release gates, missing mappings, wrong identities, invalidated or superseded
+records, and missing success/failure demo evidence. Recording a claim does not
+prove its content: the independent release audit still examines the actual
+requirements, scope, artifacts and observed behavior before these entries pass.

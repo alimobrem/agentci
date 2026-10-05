@@ -120,3 +120,21 @@ test('phase plan cannot drop mandatory retro gates or drift from executable task
     }
   } finally {rmSync(directory,{recursive:true,force:true});}
 });
+
+test('interventions preserve unknown effort and reject invalid measurements without changing history',()=>{
+ const directory=mkdtempSync(join(tmpdir(),'agentci-intervention-'));
+ const script=fileURLToPath(new URL('../scripts/delivery.ts',import.meta.url));
+ try{
+  for(const folder of ['delivery','specs','releases'])mkdirSync(join(directory,folder));
+  assert.equal(spawnSync('git',['init','-q'],{cwd:directory}).status,0);
+  assert.equal(spawnSync('git',['-c','user.name=Fixture','-c','user.email=fixture@example.invalid','-c','core.hooksPath=/dev/null','commit','--allow-empty','-qm','fixture'],{cwd:directory}).status,0);
+  writeFileSync(join(directory,'specs/requirements.yaml'),'requirements:\n  - id: R1\n    text: "- Phase acceptance"\n    source: {section: "40"}\n    implementation: {milestone: M3}\n');
+  writeFileSync(join(directory,'delivery/tasks.json'),JSON.stringify({milestone:'M3',tasks:[{id:'T',title:'Task',requirementIds:['R1'],status:'not-started',startedAt:null,completedAt:null,acceptance:[{text:'Pass',status:'pending',evidence:[]}]}]}));
+  writeFileSync(join(directory,'releases/m3-gates.json'),JSON.stringify({milestone:'M3',version:'0.4.0-m3',sourceCommit:null,gates:gateIds.map(id=>({id,status:'pending',evidence:[]}))}));
+  const invoke=(seconds:string)=>spawnSync(process.execPath,['--import',import.meta.resolve('tsx'),script,'intervention','T',seconds,'Observed setup assistance'],{cwd:directory,encoding:'utf8'});
+  const first=invoke('unknown');assert.equal(first.status,0,first.stderr);
+  const path=join(directory,'delivery/interventions.jsonl'),before=readFileSync(path,'utf8');assert.equal(JSON.parse(before).seconds,null);
+  assert.notEqual(invoke('-1').status,0);assert.equal(readFileSync(path,'utf8'),before);
+  assert.equal(invoke('12.5').status,0);assert.equal(JSON.parse(readFileSync(path,'utf8').trim().split('\n')[1]!).seconds,12.5);
+ }finally{rmSync(directory,{recursive:true,force:true});}
+});
