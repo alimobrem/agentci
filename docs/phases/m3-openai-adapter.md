@@ -82,3 +82,11 @@ before release; account availability and actual response identity remain live ga
 
 Sources: [model capabilities](https://developers.openai.com/api/docs/models/gpt-6-luna),
 [pricing and context tiers](https://developers.openai.com/api/docs/pricing).
+
+`runProviderSmoke` runs one structured request and one streamed request through
+the normal executor and caller-supplied durable budget ledger. Each has a fresh
+request ID, one attempt, a 60-second deadline and 1,024 output-token ceiling.
+Failure stops the suite. Returned records contain identity, usage and duration,
+not raw response text or provider request IDs. Synthetic suite tests do not prove
+live acceptance; authorized credential loading and a durable shared budget are
+required before running against a real endpoint.
