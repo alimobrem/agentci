@@ -1247,6 +1247,27 @@
       ]
     },
     {
+      "id": "M2-ADAPTER-GUIDE",
+      "title": "Document supported configuration and custom eval adapter authoring",
+      "requirementIds": [
+        "SPEC-11.4-005",
+        "SPEC-11.4-006",
+        "SPEC-11.4-007"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-04T17:44:20.371Z",
+      "completedAt": "2026-10-04T17:46:07.094Z",
+      "acceptance": [
+        {
+          "text": "Provide a discoverable adapter-authoring guide with a validated native manifest/result example, HTTP registration/protocol/retry obligations, trust boundaries, conformance cases, contribution paths and compatibility limits; clearly distinguish released M1, unreleased M2 and future provider/CI/telemetry extensions. Verify examples against current contracts and execution behavior; do not advertise a dynamic plugin SDK that does not exist.",
+          "status": "passed",
+          "evidence": [
+            "docs/adapter-authoring.md"
+          ]
+        }
+      ]
+    },
+    {
       "id": "M2-PHASE-PR-PLAN",
       "title": "Plan reviewable PRs and predictable release gates for every remaining milestone",
       "requirementIds": [
