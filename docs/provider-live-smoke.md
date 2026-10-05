@@ -39,10 +39,13 @@ PostgreSQL connection URL. Both must be private regular files, at most 64 KiB,
 without symlinks. Do not put secrets in shell arguments or repository files.
 
 The command uses the reviewed Luna profile, Standard service and fixed OpenAI
-origin. It runs two requests sequentially (structured output, then streaming),
+origin. It runs three requests sequentially (structured output, streaming, then a tool proposal),
 with one attempt and a 60-second deadline each. Each reserves its conservative
 upper charge before dispatch; unknown costs remain held. Failure stops execution.
 A completed request with unknown dollar cost does not free its reservation.
+
+Reported input/output token usage is required for acceptance; missing usage fails
+the smoke after accounting, without releasing an unknown charge.
 
 Success prints sanitized identity, usage and duration records. Failure exits 1
 with a stable code; invalid private configuration exits 2. SIGINT/SIGTERM cancel
@@ -50,6 +53,6 @@ in-flight model execution. Database accounting is awaited. Previously successful
 attempts and ambiguous failures remain in the database even if the command fails
 before printing a final report. Preserve those records when investigating failures.
 
-A successful run proves only these two live scenarios. Tool calling, provider
-outage cases, full review integration and released-build acceptance have separate
+A successful run proves only these three live scenarios. Tool proposals are validated and never executed.
+Provider outage cases, full review integration and released-build acceptance have separate
 M3 gates. Synthetic tests never substitute for live provider evidence.
