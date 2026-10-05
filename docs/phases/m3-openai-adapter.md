@@ -14,7 +14,8 @@ Transport always uses `https://api.openai.com/v1/responses`, explicit credential
 null organization/project overrides, disabled SDK logging and zero SDK retries.
 Redirects are rejected, response bodies are capped at four MiB, and the controller's
 abort signal and remaining timeout reach the SDK. Streams use the SDK's SSE parser;
-the normalized model-event translator is still under implementation. A synthetic
+the normalized translator verifies sequence and item identity, final argument
+agreement, and explicit completed/refused/incomplete outcomes. A synthetic
 fetch implementation exercises the actual SDK without contacting a provider.
 
 Error mapping strips raw messages and bodies. Quota failures do not retry. Retryable
@@ -22,8 +23,16 @@ throttling/transport errors carry bounded retry-delay metadata; the controller d
 not shorten a server delay that exceeds its allowed delay/deadline. Connections
 with uncertain outcomes retain budget reservations. Backoff uses jitter.
 
-Remaining: strict schema subset preflight, model capability/pricing configuration,
-normalized stream translation, complete adapter registration, conformance and
+Registered model profiles are copied at construction and define capabilities,
+context/output limits and upper input/output prices with a pricing revision.
+Unknown models and unsupported parameters fail before network access. Reservations
+use the full configured context limit at the upper input price plus capped output;
+this is deliberately conservative and can hold more budget than actual usage.
+Unknown charges remain held until trusted reconciliation. Profiles must cover all
+applicable price tiers; fixture prices are not production pricing.
+
+Remaining: strict schema subset preflight, verified real model capability/pricing
+profiles, broader conformance and
 failure/recovery tests, and authorized live acceptance. Model aliases/snapshots need
 an explicit identity policy; current response mapping requires exact configured
 model identity. No live model call has been performed and this is not M3 completion.
