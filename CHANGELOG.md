@@ -1,6 +1,11 @@
 # Releases
 
-## 0.3.0-m2 — release candidate
+## 0.3.1-m2 — release candidate
+
+Corrected publication candidate: native inventories resolve each platform child
+manifest independently. The first `0.3.0-m2` publication retained an API success
+and a worker validation failure caused by Docker's classic image-store index
+collision; those tags are preserved. No M2 milestone release is complete.
 
 Not yet published or milestone-complete; see [M2 readiness](docs/releases/m2-readiness.md).
 

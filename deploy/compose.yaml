@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
   api:
     user: "${AGENTCI_UID:-1001}:${AGENTCI_GID:-0}"
-    image: ${AGENTCI_API_IMAGE:-agentci-api:0.3.0-m2}
+    image: ${AGENTCI_API_IMAGE:-agentci-api:0.3.1-m2}
     build: { context: .., target: api }
     env_file: ${AGENTCI_ENV_FILE:-../.env}
     environment:
@@ -38,7 +38,7 @@ services:
     restart: unless-stopped
   worker:
     user: "${AGENTCI_UID:-1001}:${AGENTCI_GID:-0}"
-    image: ${AGENTCI_WORKER_IMAGE:-agentci-worker:0.3.0-m2}
+    image: ${AGENTCI_WORKER_IMAGE:-agentci-worker:0.3.1-m2}
     build: { context: .., target: worker }
     env_file: ${AGENTCI_ENV_FILE:-../.env}
     environment:

@@ -1327,6 +1327,23 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M2-PLATFORM-MANIFESTS",
+      "title": "Validate published native inventories using distinct platform manifest digests",
+      "requirementIds": [
+        "SPEC-40-038"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T01:37:57.549Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Preserve the published worker failure; resolve exactly one valid linux/amd64 or linux/arm64 OCI child manifest, reject missing/ambiguous/malformed descriptors, and pull each native inventory by its immutable child digest without classic Docker index collisions. Verify actual corrected publication on both platforms with a new candidate version.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
