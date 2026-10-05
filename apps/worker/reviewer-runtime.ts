@@ -15,6 +15,17 @@ import {createAdmittedReviewActivities} from './reviewer-activities.ts';
  * separately; only this operator-owned runtime supplies authorization/readers.
  */
 export async function initializeReviewerController(pool:Pool,github:Octokit,config:{organizationId:string;repository:string;installationId:number},runtime:ReturnType<typeof createReviewerRuntime>){
+ // Resolve required relations/columns before registering profiles or accepting
+ // work. LIMIT 0 probes the deployed schema without reading customer evidence.
+ try{await pool.query(`SELECT a.request,a.approval,o.run_id,o.dispatched_at,
+   o.cancel_requested_at,o.terminal_status,o.terminal_digest,o.lease_token,o.lease_until,o.recovery_after,
+   p.profile,p.revoked_at,s.summary,s.digest,r.result,r.budget_id,f.event,
+   b.limit_usd_micros,m.state,m.actual_usd_micros
+  FROM agentci_review_admissions a,agentci_review_admission_outbox o,
+   agentci_reviewer_profiles p,agentci_review_execution_summaries s,
+   agentci_reviewer_results r,agentci_finding_events f,
+   agentci_model_budgets b,agentci_model_attempts m LIMIT 0`);
+ }catch{throw Error('reviewer-runtime-storage-unavailable');}
  const scope={organizationId:config.organizationId.toLowerCase(),repository:config.repository},definition=structuredClone(runtime.definition),policyDigest=digest(canonical({scope,installationId:config.installationId,runtimePolicy:runtime.policyDigest}));
  const profiles=new ReviewerProfileStore(pool,scope),allowed=new Set<string>();
  for(const supplied of definition.profiles){const record=await profiles.put(supplied);allowed.add(canonical([record.profile.id,record.revision]));}

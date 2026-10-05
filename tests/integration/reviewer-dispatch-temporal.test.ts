@@ -11,7 +11,7 @@ test('real Temporal resolves lost dispatch acknowledgements and rejects conflict
  const queue=`review-dispatch-${randomUUID()}`,workflowsPath=new URL('../../dist/apps/worker/reviewer-workflows.js',import.meta.url).pathname;
  let worker:Worker|undefined,running:Promise<void>|undefined;const handles:ReturnType<typeof client.workflow.getHandle>[]=[];
  try{
-  for(const name of ['008_m3_review_admissions','009_m3_review_dispatch'])await pool.query(await readFile(new URL(`../../deploy/migrations/${name}.sql`,import.meta.url),'utf8'));
+  for(const name of ['008_m3_review_admissions','009_m3_review_dispatch','011_m3_review_summaries'])await pool.query(await readFile(new URL(`../../deploy/migrations/${name}.sql`,import.meta.url),'utf8'));
   const scope={organizationId:randomUUID(),repository:'owner/repo'},admissions=new ReviewAdmissionStore(pool,scope,{approve:async r=>({requestDigest:digest(canonical(r)),policyDigest:digest('policy'),profileRevision:r.profile.revision,mode:r.mode})}),store=new ReviewDispatchStore(pool,scope);
   const admit=async()=>{const id=randomUUID();await admissions.admit({schemaVersion:'v1alpha1',id,subject:{...scope,pullRequest:1,baseSha:'a'.repeat(40),headSha:'b'.repeat(40)},profile:{id:'security',revision:digest('profile')},mode:'synthetic'});return id;};
   const id=await admit(),entry=(await store.get(id))!,options={taskQueue:queue,timeoutMs:45000};
