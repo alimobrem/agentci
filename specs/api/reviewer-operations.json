@@ -1,0 +1,18 @@
+{
+  "apiVersion": "agentci.io/v1alpha1",
+  "transport": "Internal reviewer TypeScript contract; no new HTTP endpoints",
+  "operations": [
+    {
+      "operationId": "reviewerInstructions",
+      "requirementIds": ["SECTION-12.1", "SPEC-12.1-001", "SPEC-12.1-002", "SPEC-12.1-003", "SPEC-12.1-004", "SPEC-12.1-005", "SPEC-12.1-006", "SPEC-12.1-007", "SPEC-12.1-008"],
+      "tests": ["tests/reviewer-policy.test.ts"],
+      "scenarios": ["seven distinct roles", "unknown and prototype roles rejected", "immutable role inventory"]
+    },
+    {
+      "operationId": "createIndependencePolicy",
+      "requirementIds": ["SECTION-12.2", "SPEC-12.2-001"],
+      "tests": ["tests/reviewer-policy.test.ts"],
+      "scenarios": ["same upstream aliases rejected", "missing and wrong-subject provenance rejected", "synthetic identity cannot satisfy external mode", "trusted identity snapshot resists mutation"]
+    }
+  ]
+}
