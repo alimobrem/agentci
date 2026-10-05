@@ -15,8 +15,30 @@ Portable metadata stays controller-side because the SDK's generated API contract
 marks upstream metadata unsupported. Schema constraints are retained without
 claiming that OpenAI's schema subset applies to xAI.
 
-Transport, provider-specific schema preflight, response/stream validation, model
-profiles, encrypted reasoning continuation, package acceptance and authorized live
+Provider-specific schema preflight, stream semantic validation, model
+profiles, encrypted reasoning replay, package acceptance and authorized live
 smoke remain pending. No live xAI request has been made. The SDK's optional partial
 JSON convenience output must not be accepted as a completed finding, and automatic
 retries must be disabled so every attempt uses the durable budget ledger.
+
+The transport now uses the pinned SDK against only `POST https://api.x.ai/v1/responses`,
+with an explicit credential, redirects rejected, retries disabled, deadline/abort
+propagation and a four-MiB cumulative response bound. JSON calls explicitly set
+`stream:false`; streaming calls consume raw SDK events and require terminal completion.
+Stream semantic validation remains separate pending work.
+
+Synthetic SDK tests cover serialized storage/service/authentication settings,
+HTTP rate limits and retry delays, server errors, malformed/oversized responses,
+cancelled/expired requests and truncated SSE. Stream errors remain potentially
+billable even when their code is a rate limit. Returned errors exclude upstream
+details. `XAI_DEBUG=1` is rejected before dispatch because this SDK has no per-client
+logging switch; the adapter never changes the process environment.
+
+Response normalization checks observed model identity, declared output kinds,
+structured output and tool arguments. Refusal/truncation cannot expose actionable
+output or continuation. Completed responses retain original output, including
+encrypted reasoning, in private prefix-bound continuation; replay is not yet wired.
+Missing raw usage stays unknown instead of taking SDK defaults. Reported nano-USD
+or USD-tick charges are rounded upward to the ledger's microdollar precision; if
+both are present the larger rounded amount is retained. Invalid counts/charges or
+reported server-side tool use fail validation.
