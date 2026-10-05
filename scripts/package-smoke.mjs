@@ -29,6 +29,9 @@ try {
   const {validateReviewerResult}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/result.js')).href);
   const reviewerFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/reviewer-result.json'),'utf8'));
   validateReviewerResult(reviewerFixture,reviewerFixture.subject);
+  if(!(await readFile(join(installedRoot,'deploy/migrations/006_m3_finding_history.sql'),'utf8')).includes('agentci_finding_events'))throw new Error('Installed finding history migration missing');
+  const {FindingHistoryStore}=await import(pathToFileURL(join(installedRoot,'dist/packages/storage/finding-history.js')).href);
+  if(typeof FindingHistoryStore!=='function')throw new Error('Installed finding history store missing');
   const {validateModelFinding}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/model.js')).href);
   const findingFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-finding.json'),'utf8'));
   validateModelFinding(findingFixture,findingFixture.subject);
