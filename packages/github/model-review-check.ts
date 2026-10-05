@@ -11,7 +11,7 @@ export interface ModelReviewCheckSource {
   * Never substitute the requested old admission when newer work is present. */
  latest(subject:ReviewSubject):Promise<ModelReviewStatus|undefined>;
  /** Authoritative admission ordering, never inferred from a remote external ID. */
- isOlder(subject:ReviewSubject,id:string,thanId:string):Promise<boolean>;
+ olderIds(subject:ReviewSubject,ids:string[],thanId:string):Promise<string[]>;
 }
 const fail=():never=>{throw Error('invalid-model-review-check-evidence');};
 const escape=(v:string)=>v.replace(/[\x00-\x1f\x7f\u2028\u2029]/g,' ').replace(/[\\`*_{}\[\]()<>#!]/g,'\\$&');
@@ -67,12 +67,15 @@ export function createModelReviewPublisher(client:Octokit,source:ModelReviewChec
    }
    const owned=runs.filter(run=>run.name===name&&run.app?.id===config.appId&&run.head_sha===subject.headSha&&run.external_id?.startsWith(prefix));
    const existing=owned.find(run=>run.external_id===externalId);
-   const obsolete=[];
-   for(const run of owned){
+   const candidates=owned.filter(run=>{
     const id=run.external_id!.slice(prefix.length);
-    if(run.status==='completed'||id===selected.id||superseded&&id!==request.id||!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(id))continue;
-    if(await source.isOlder(subject,id,selected.id))obsolete.push(run);
-   }
+    return run.status!=='completed'&&id!==selected.id&&(!superseded||id===request.id)&&/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(id);
+   });
+   const older=new Set(await source.olderIds(subject,candidates.map(run=>run.external_id!.slice(prefix.length)),selected.id));
+   const obsolete=candidates.filter(run=>older.has(run.external_id!.slice(prefix.length)));
+   // Supersession cleanup is a publication too: never write after observing a
+   // closed PR or changed subject. Recheck again before the selected Check write.
+   if(!await currentPullRequest(client,{...subject,installationId:config.installationId}))return 'superseded';
    // Partial cleanup is safe to retry; it never alters a completed result or the
    // selected/newer admission. Bound each pass to avoid monopolizing the lock.
    for(const run of obsolete.slice(0,20))await client.checks.update({owner:owner!,repo:repo!,check_run_id:run.id,status:'completed',conclusion:'neutral',output:{title:'AgentCI model review: superseded',summary:`This admission was superseded by review ${selected.id}. No completed result or clean review is claimed. Base: ${subject.baseSha}; head: ${subject.headSha}.`} });

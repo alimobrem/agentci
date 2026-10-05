@@ -11,14 +11,16 @@ export function modelReviewPublicationSource(pool:Pool,scope:{organizationId:str
  const store=new Store(pool,scope.organizationId,scope.repository),reads=new ModelReviewReads(pool,scope);
  return {
   withPublicationLock:(key,operation)=>store.withPublicationLock(key,operation),
-  async isOlder(subject:ReviewSubject,id:string,thanId:string){
+  async olderIds(subject:ReviewSubject,ids:string[],thanId:string){
    if(subject.organizationId!==scope.organizationId||subject.repository!==scope.repository)throw Error('model-review-publication-scope');
-   const result=await pool.query(`SELECT 1 FROM agentci_review_admissions older
+   if(ids.length>1000||ids.some(id=>!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(id)))throw Error('model-review-publication-inventory');
+   if(!ids.length)return [];
+   const result=await pool.query(`SELECT older.id FROM agentci_review_admissions older
     JOIN agentci_review_admissions newer USING(organization_id,repository)
-    WHERE older.organization_id=$1 AND older.repository=$2 AND older.id=$3 AND newer.id=$4
+    WHERE older.organization_id=$1 AND older.repository=$2 AND older.id=ANY($3::uuid[]) AND newer.id=$4
     AND older.request->'subject'=$5::jsonb AND newer.request->'subject'=$5::jsonb
-    AND (older.created_at,older.id)<(newer.created_at,newer.id)`,[scope.organizationId,scope.repository,id,thanId,canonical(subject)]);
-   return result.rowCount===1;
+    AND (older.created_at,older.id)<(newer.created_at,newer.id)`,[scope.organizationId,scope.repository,ids,thanId,canonical(subject)]);
+   return result.rows.map(row=>row.id as string);
   },
   async latest(subject:ReviewSubject){
    if(subject.organizationId!==scope.organizationId||subject.repository!==scope.repository)throw Error('model-review-publication-scope');

@@ -65,6 +65,7 @@ test('model Check HTTP publication fences retries across controllers and reconci
   const oldRuns=[];
   for(let i=0;i<21;i++){const old={...request,id:randomUUID()};await admissions.admit(old);const run={id:1000+i,name:'agentci/model-review',head_sha:subject.headSha,external_id:prefix+old.id,app:{id:42},status:'in_progress'};state.runs.push(run);oldRuns.push(run);}
   const latest={...request,id:randomUUID()};await admissions.admit(latest);
+  const beforeStaleCleanup=state.writes;state.stale=true;assert.equal(await publish(latest),'superseded');assert.equal(state.writes,beforeStaleCleanup,'stale subject with obsolete owned Checks receives no cleanup writes');assert.ok(oldRuns.every(run=>run.status==='in_progress'));state.stale=false;
   await assert.rejects(publish(latest),/^Error: model-review-publication-unavailable$/);
   assert.equal(oldRuns.filter(run=>run.status==='completed').length,20,'cleanup pass has a fixed write bound');
   assert.equal(await second(latest),'published');assert.ok(oldRuns.every(run=>run.status==='completed'),'next pass converges without abandoned progress Checks');

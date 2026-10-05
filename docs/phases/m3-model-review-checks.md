@@ -33,7 +33,8 @@ then reloads the newest admission (ordered by admission creation time and ID) an
 its coherent status snapshot. Old owned in-progress Checks are closed neutral as superseded only after a
 database comparison proves their admissions precede the selected admission for
 this exact subject. Completed results and foreign/unretained Check identities
-are preserved. Cleanup writes at most 20 Checks per pass; remaining cleanup
+are preserved. Admission ordering for the bounded remote inventory is checked in one SQL
+query, avoiding per-run queries. Cleanup writes at most 20 Checks per pass; remaining cleanup
 causes a retry and converges across passes. Inventory is bounded at 1000 Checks;
 larger histories fail explicitly for operator action rather than silently
 searching a prefix. An old admission retry can close only its own obsolete Check,
@@ -42,8 +43,9 @@ current work rereads terminal state instead of replaying captured progress.
 An existing Check is reconciled only when its App ID, name, head and external ID
 match. The external ID includes PR/base/head and admission ID. Reconciliation
 handles a committed create whose response was lost without creating a duplicate.
-The current open PR/base/head is checked after reconciliation reads, immediately
-before writing. A stale subject receives no write.
+The current open PR/base/head is checked after reconciliation reads before the
+cleanup batch, and checked again immediately before the selected Check write.
+A known stale subject receives no write.
 
 This is serialization among cooperating controllers using the same database,
 not an atomic SQL/GitHub transaction. Admission selection and coherent status
