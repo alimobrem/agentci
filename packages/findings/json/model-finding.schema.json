@@ -1,0 +1,242 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agentci.dev/schemas/model-finding-v1alpha1.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": "v1alpha1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "organizationId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+          "maxLength": 256
+        },
+        "pullRequest": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "baseSha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "headSha": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        }
+      },
+      "required": [
+        "organizationId",
+        "repository",
+        "pullRequest",
+        "baseSha",
+        "headSha"
+      ]
+    },
+    "mode": {
+      "enum": [
+        "synthetic",
+        "external"
+      ]
+    },
+    "category": {
+      "enum": [
+        "specification",
+        "correctness",
+        "architecture",
+        "security",
+        "adversarial",
+        "test-coverage",
+        "reliability"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ]
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8192
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "side": {
+            "enum": [
+              "base",
+              "head"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1024
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "startLine": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          },
+          "endLine": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000000
+          }
+        },
+        "required": [
+          "side",
+          "path",
+          "digest",
+          "startLine",
+          "endLine"
+        ]
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "attemptId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "provider": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "reviewerResultDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "originalClaim": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8192
+          }
+        },
+        "required": [
+          "requestId",
+          "attemptId",
+          "provider",
+          "model",
+          "reviewerResultDigest",
+          "originalClaim"
+        ]
+      }
+    },
+    "state": {
+      "enum": [
+        "proposed",
+        "deduplicated",
+        "reproduction-pending",
+        "confirmed",
+        "unconfirmed",
+        "false-positive",
+        "resolved"
+      ]
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "disposition": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "enum": [
+                "reproduction",
+                "operator"
+              ]
+            },
+            "evidenceDigest": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 4096
+            },
+            "outcome": {
+              "enum": [
+                "reproduced",
+                "not-reproduced",
+                "error",
+                "false-positive",
+                "resolved"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "evidenceDigest",
+            "reason",
+            "outcome"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "subject",
+    "mode",
+    "category",
+    "severity",
+    "claim",
+    "evidence",
+    "sources",
+    "state",
+    "version",
+    "disposition"
+  ]
+}

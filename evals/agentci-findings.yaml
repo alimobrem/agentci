@@ -1,0 +1,24 @@
+apiVersion: agentci.io/v1alpha1
+kind: EvalSuite
+metadata:
+  id: agentci-finding-boundaries
+  description: Frozen finding normalization, lifecycle and receipt identity assertions using only fixtures.
+spec:
+  class: adversarial
+  requirements: [SECTION-12.3, SPEC-12.3-001, SECTION-12.4, SECTION-12.5, SPEC-12.5-001]
+  impact:
+    categories: [source, dependency, api, specification, requirement, eval, policy]
+    include: [packages/findings/**, packages/reviewers/**, tests/findings.test.ts, specs/api/finding-operations.json, evals/agentci-findings.yaml, scripts/agentci-finding-eval.mjs, package.json, package-lock.json, npm-shrinkwrap.json]
+  runner:
+    adapter: native
+    command: [node, scripts/agentci-finding-eval.mjs]
+    report: agentci-finding-result.json
+    timeoutMs: 120000
+    maxOutputBytes: 1048576
+    harness:
+      - scripts/agentci-finding-eval.mjs
+      - tests/findings.test.ts
+      - specs/api/fixtures/reviewer-result.json
+  scenarios:
+    - {id: finding-lifecycle}
+  trials: {count: 1, passRate: 1, maxCriticalFailures: 0, confidenceMethod: wilson}

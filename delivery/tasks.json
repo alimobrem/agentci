@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -1622,14 +1622,16 @@
         "SECTION-12.2",
         "SPEC-12.2-001"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T16:13:54.212Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T17:47:40.683Z",
       "acceptance": [
         {
           "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-05-frozen-reviewers.json"
+          ]
         }
       ],
       "dependsOn": [
@@ -1647,8 +1649,8 @@
         "SECTION-12.5",
         "SPEC-12.5-001"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "in-progress",
+      "startedAt": "2026-10-05T17:48:08.387Z",
       "completedAt": null,
       "acceptance": [
         {
@@ -1845,6 +1847,95 @@
       "acceptance": [
         {
           "text": "Allowlisted HTTP and rate-limit diagnostics distinguish observed failure metadata without exposing credentials or raw responses; preserve request failure behavior; verify hosted evidence when available.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M3-06a",
+      "title": "Finding contract and lifecycle transitions",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T17:48:08.625Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Versioned schema and fixture, exact-subject evidence normalization, deterministic duplicate identity, all legal lifecycle transitions; forged confirmation and unsupported default blocking rejected.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-05"
+      ]
+    },
+    {
+      "id": "M3-06b",
+      "title": "Durable finding history",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Tenant-scoped immutable event history, idempotency and optimistic concurrency; real PostgreSQL restart, conflict and isolation acceptance; shipped migration and schema.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-06a"
+      ]
+    },
+    {
+      "id": "M3-06c",
+      "title": "Isolated reproduction and finding acceptance",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "status": "not-started",
+      "startedAt": null,
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Controller-approved M2-isolated reproduction, exact claim/assertion evidence, positive/negative/crash/cancellation/escape acceptance, frozen adversarial corpus and success/failure fixture demo.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-06b"
+      ]
+    },
+    {
+      "id": "M3-R5",
+      "title": "Respect GitHub rate-limit cooldown during hosted review",
+      "requirementIds": [
+        "SECTION-13.4"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-05T18:04:58.254Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Confirmed primary exhaustion or retry-after prevents further outbound requests through the same App client until reset; deadline is bounded and failures remain explicit/redacted; tests cover cooldown expiry and no credential/body leakage. Retain observed hosted failure and retry only after reset.",
           "status": "pending",
           "evidence": []
         }

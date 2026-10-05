@@ -29,6 +29,9 @@ try {
   const {validateReviewerResult}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/result.js')).href);
   const reviewerFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/reviewer-result.json'),'utf8'));
   validateReviewerResult(reviewerFixture,reviewerFixture.subject);
+  const {validateModelFinding}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/model.js')).href);
+  const findingFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-finding.json'),'utf8'));
+  validateModelFinding(findingFixture,findingFixture.subject);
   const {createSnapshotReviewContext}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/snapshot-context.js')).href);
   const installedContext=await createSnapshotReviewContext(reviewerFixture.subject,async(repository,sha)=>{
     if(repository!==reviewerFixture.subject.repository||sha!==reviewerFixture.subject.headSha)throw new Error('Installed snapshot identity changed');
