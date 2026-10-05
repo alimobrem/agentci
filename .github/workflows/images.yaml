@@ -15,13 +15,108 @@ jobs:
   verify:
     uses: ./.github/workflows/verify.yaml
     permissions: { contents: read }
-  publish:
+  build-native:
     needs: verify
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+    runs-on: ${{ matrix.platform.runner }}
+    timeout-minutes: 75
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 4
+      matrix:
+        role: [api, worker, eval-worker, eval-runner, eval-engines, eval-agentci]
+        platform:
+          - { runner: ubuntu-24.04, arch: amd64 }
+          - { runner: ubuntu-24.04-arm, arch: arm64 }
+    env:
+      IMAGE_ROLE: ${{ matrix.role }}
+      PUBLICATION_ARCH: ${{ matrix.platform.arch }}
+      CANDIDATE_VERSION: ${{ inputs.version }}
+      DOCKER_BUILD_RECORD_UPLOAD: 'false'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0 }
+      - name: Refuse existing version tags or ambiguous registry state
+        env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
+        run: node scripts/image-publication.mjs preflight
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
+        id: builder
+        with: { cleanup: false }
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build native image by digest
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
+        id: image
+        timeout-minutes: 40
+        with:
+          context: .
+          target: ${{ matrix.role }}
+          platforms: linux/${{ matrix.platform.arch }}
+          outputs: type=image,name=ghcr.io/alimobrem/agentci-${{ matrix.role }},push-by-digest=true,name-canonical=true,push=true
+          provenance: mode=min
+          labels: |
+            org.opencontainers.image.source=https://github.com/alimobrem/agentci
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.version=${{ inputs.version }}
+          cache-from: type=gha,scope=agentci-${{ matrix.role }}-native-${{ matrix.platform.arch }}
+          cache-to: type=gha,scope=agentci-${{ matrix.role }}-native-${{ matrix.platform.arch }},mode=max,ignore-error=true,timeout=2m
+      - name: Scan and bind native publication evidence
+        timeout-minutes: 15
+        env:
+          IMAGE_DIGEST: ${{ steps.image.outputs.digest }}
+          TRIVY_USERNAME: ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p published
+          image="ghcr.io/alimobrem/agentci-$IMAGE_ROLE@$IMAGE_DIGEST"
+          prefix="published/$IMAGE_ROLE-$PUBLICATION_ARCH"
+          docker buildx imagetools inspect "$image" --raw > "$prefix-index.json"
+          native_ref=$(node scripts/image-publication.mjs platform "$prefix-index.json" "$PUBLICATION_ARCH")
+          docker pull --platform "linux/$PUBLICATION_ARCH" "$native_ref"
+          docker image inspect "$native_ref" > "$prefix-inspect.json"
+          native=$(docker image inspect "$native_ref" --format '{{.Id}}')
+          docker run --rm -e TRIVY_USERNAME -e TRIVY_PASSWORD aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa image --image-src remote --platform "linux/$PUBLICATION_ARCH" --scanners vuln --format json "$native_ref" > "$prefix-scan.json"
+          if [ "$IMAGE_ROLE" = worker ] || [ "$IMAGE_ROLE" = eval-worker ]; then
+            node scripts/verify-native-provenance.mjs "$native" > "$prefix-native.json"
+          fi
+          node scripts/native-publication.mjs record
+      - name: Record attempt even when build or scan fails
+        if: always()
+        timeout-minutes: 1
+        env:
+          BUILD_OUTCOME: ${{ steps.image.outcome }}
+          BUILD_DIGEST: ${{ steps.image.outputs.digest }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          node --input-type=module - <<'JS'
+          import {mkdirSync,writeFileSync} from 'node:fs';
+          const e=process.env;
+          mkdirSync('published',{recursive:true});
+          writeFileSync(`published/${e.IMAGE_ROLE}-${e.PUBLICATION_ARCH}-attempt.json`,JSON.stringify({role:e.IMAGE_ROLE,arch:e.PUBLICATION_ARCH,version:e.CANDIDATE_VERSION,sourceCommit:e.GITHUB_SHA,runId:e.GITHUB_RUN_ID,attempt:e.GITHUB_RUN_ATTEMPT,buildOutcome:e.BUILD_OUTCOME,buildDigest:e.BUILD_DIGEST||null,status:e.JOB_STATUS},null,2)+'\n');
+          JS
+      - name: Retain partial and complete publication evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        timeout-minutes: 5
+        with:
+          name: native-publication-${{ matrix.role }}-${{ matrix.platform.arch }}
+          path: published/
+          if-no-files-found: warn
+      - name: Bounded owned-builder cleanup
+        if: always() && steps.builder.outputs.name != ''
+        timeout-minutes: 2
+        env: { BUILDER_NAME: "${{ steps.builder.outputs.name }}" }
+        run: docker buildx rm "$BUILDER_NAME"
+  publish:
+    needs: build-native
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
       matrix:
         role: [api, worker, eval-worker, eval-runner, eval-engines, eval-agentci]
     env:
@@ -32,68 +127,36 @@ jobs:
         with: { persist-credentials: false }
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with: { node-version: 26.10.0 }
-      - name: Refuse existing version tags or ambiguous registry state
-        env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
-        run: node scripts/image-publication.mjs preflight
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          pattern: native-publication-${{ matrix.role }}-*
+          path: published/
+          merge-multiple: true
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
-      - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1
-        with: { platforms: arm64 }
       - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc
-        id: image
-        with:
-          context: .
-          target: ${{ matrix.role }}
-          push: true
-          platforms: linux/amd64,linux/arm64
-          tags: ghcr.io/alimobrem/agentci-${{ matrix.role }}:${{ inputs.version }}
-          labels: |
-            org.opencontainers.image.source=https://github.com/alimobrem/agentci
-            org.opencontainers.image.revision=${{ github.sha }}
-            org.opencontainers.image.version=${{ inputs.version }}
-          cache-from: type=gha,scope=agentci-${{ matrix.role }}-publish
-          cache-to: type=gha,scope=agentci-${{ matrix.role }}-publish,mode=max,ignore-error=true
-      - name: Record published identity
-        env: { IMAGE_DIGEST: "${{ steps.image.outputs.digest }}" }
-        run: node scripts/image-publication.mjs record
-      - name: Scan every published platform and retain native inventories
-        env:
-          IMAGE_DIGEST: ${{ steps.image.outputs.digest }}
-          TRIVY_USERNAME: ${{ github.actor }}
-          TRIVY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+      - name: Assemble only fully accepted native platforms
+        timeout-minutes: 5
+        env: { GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
         run: |
-          docker volume create agentci-publish-trivy
-          result=0
-          image="ghcr.io/alimobrem/agentci-$IMAGE_ROLE@$IMAGE_DIGEST"
-          docker buildx imagetools inspect "$image" --raw > "published/$IMAGE_ROLE-index.json"
-          for arch in amd64 arm64; do
-            if docker run --rm -e TRIVY_USERNAME -e TRIVY_PASSWORD -v agentci-publish-trivy:/root/.cache/trivy aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa image --image-src remote --platform "linux/$arch" --scanners vuln --format json "$image" > "published/$IMAGE_ROLE-$arch-scan.json"; then
-              node scripts/check-scan.mjs "published/$IMAGE_ROLE-$arch-scan.json" || result=1
-            else
-              result=1
-            fi
-            if [ "$IMAGE_ROLE" = worker ] || [ "$IMAGE_ROLE" = eval-worker ]; then
-              # Classic Docker stores cannot attach two architectures to one index reference.
-              # Resolve and retain the index, then pull each unique child manifest by digest.
-              if native_ref=$(node scripts/image-publication.mjs platform "published/$IMAGE_ROLE-index.json" "$arch") && docker pull --platform "linux/$arch" "$native_ref"; then
-                native=$(docker image inspect "$native_ref" --format '{{.Id}}')
-                if node scripts/verify-native-provenance.mjs "$native" > "published/$IMAGE_ROLE-$arch-native.json"; then
-                  node --input-type=module -e 'import {readFileSync} from "node:fs"; const report=JSON.parse(readFileSync(process.argv[1],"utf8")); if(report.platform!=="linux/"+process.argv[2])throw new Error("Native inventory platform mismatch")' "published/$IMAGE_ROLE-$arch-native.json" "$arch" || result=1
-                else
-                  result=1
-                fi
-              else
-                result=1
-              fi
-            fi
-          done
-          exit "$result"
+          refs=$(node scripts/native-publication.mjs prepare)
+          read -r amd64 arm64 <<< "$refs"
+          docker buildx imagetools create --dry-run "$amd64" "$arm64" > "published/$IMAGE_ROLE-index.json"
+          node scripts/native-publication.mjs verify
+          node scripts/image-publication.mjs preflight
+          tag="ghcr.io/alimobrem/agentci-$IMAGE_ROLE:$CANDIDATE_VERSION"
+          docker buildx imagetools create -t "$tag" "$amd64" "$arm64"
+          docker buildx imagetools inspect "$tag" --raw > "published/$IMAGE_ROLE-index.json"
+          node scripts/native-publication.mjs verify
+          IMAGE_DIGEST=$(docker buildx imagetools inspect "$tag" --format '{{.Manifest.Digest}}')
+          export IMAGE_DIGEST
+          node scripts/image-publication.mjs record
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
+        timeout-minutes: 5
         with:
           name: published-images-${{ matrix.role }}
           path: published/

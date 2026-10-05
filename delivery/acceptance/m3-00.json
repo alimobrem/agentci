@@ -1,0 +1,35 @@
+{
+  "task": "M3-00",
+  "scope": "Planning, compatibility boundaries and prerequisite enforcement only; no M3 product or release acceptance",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/22",
+  "testedHead": "26df57e6292a55c9bab1ee01d406c2684a93f01a",
+  "mergeCommit": "bfc6f9b003e5d0c6f01b8914b74e9844ab3c3866",
+  "plan": "docs/phases/m3.md",
+  "ownership": "delivery/phase-pr-plan.json",
+  "tests": [
+    "tests/delivery.test.ts",
+    "scripts/api-compatibility.mjs --self-test"
+  ],
+  "verification": {
+    "runId": 37262852634,
+    "result": "success",
+    "coverage": [
+      "fast checks",
+      "API compatibility with M1 and M2 endpoint-removal negative cases",
+      "integration and real isolation",
+      "package smoke",
+      "container runtime and native provenance",
+      "scans"
+    ]
+  },
+  "advisory": {
+    "runId": 37262852708,
+    "result": "passed",
+    "pairedScenarios": 6,
+    "regressions": 0,
+    "requirementGaps": 0,
+    "selectionGaps": 0,
+    "executionGaps": 0
+  },
+  "livePrerequisites": "Provider credentials and authorized spending ceiling remain pending; no live acceptance claimed"
+}

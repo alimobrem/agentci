@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -1412,14 +1412,16 @@
         "SECTION-12",
         "SECTION-13"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T04:00:56.003Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T04:25:37.884Z",
       "acceptance": [
         {
           "text": "Audit cross-cutting requirements and schema examples; freeze provider/review/finding contracts, versioning, budget policy and acceptance corpus before implementation. Record mandatory retro dependencies, live-provider prerequisites, coding-provider identity, initial OIDC/session decision and exact release/demo scenarios; no paid calls without configured authorization and total budget. Validate dependency graphs and reject task start/completion when prerequisite acceptance is incomplete. Preserve both released M1 and M2 API baselines and prove removal of an M2-only endpoint fails compatibility.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-00.json"
+          ]
         }
       ],
       "dependsOn": [
@@ -1433,8 +1435,8 @@
         "SPEC-40-050",
         "SPEC-40-051"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "in-progress",
+      "startedAt": "2026-10-05T04:25:38.109Z",
       "completedAt": null,
       "acceptance": [
         {
