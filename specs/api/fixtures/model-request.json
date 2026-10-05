@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "v1alpha1",
+  "requestId": "dfb6b155-4495-4c50-a71f-7059f18fce1e",
+  "provider": "fixture",
+  "model": "fixture-model",
+  "system": "Review only the supplied evidence.",
+  "developer": "Keep unsupported claims unconfirmed.",
+  "messages": [{"role":"user","content":"Review the bounded fixture diff."}],
+  "tools": [],
+  "responseSchema": {"type":"object","properties":{"claim":{"type":"string"}},"required":["claim"],"additionalProperties":false},
+  "parameters": {"maxOutputTokens":256},
+  "metadata": {"scenario":"request-conformance"},
+  "policy": {"deadlineAt":1791176400000,"maxAttempts":2,"baseDelayMs":100,"maxDelayMs":1000},
+  "providerExtensions": {"fixture":{}}
+}
