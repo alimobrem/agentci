@@ -13,7 +13,7 @@ cannot establish independence. Its synthetic outcome must remain visibly
 synthetic in later evidence and UI. An external-mode decision checks configured
 identity separation, not live provider availability or compatibility.
 
-This is internal policy groundwork, not a completed reviewer. Persistent result evidence, broader injection evals and customer/API integration
+This is internal policy groundwork, not a completed reviewer. Persistent result evidence, hosted adversarial acceptance and customer/API integration
 remain open. Instruction text alone is not a prompt-injection security boundary. Model
 claims must remain proposed until independent reproduction evidence exists.
 
@@ -54,3 +54,19 @@ that result and proving its durable retrieval remain later acceptance work.
 Tests exercise all seven roles, cross-scope/policy rejection before reservation,
 budget exhaustion, malformed output, refusal, cancellation and accounting failure.
 These fixture tests prove control flow, not live upstream quality or compatibility.
+
+## Adversarial regression corpus
+
+`evals/agentci-reviewers.yaml` freezes sixteen assertions across four scenarios:
+identity policy, context isolation, budgeted execution and adversarial output.
+The fixture deliberately follows malicious repository suggestions in its output:
+unauthorized tool calls, forged confirmation fields, wrong request identity,
+confirmation language and truncated claims. Controller checks must reject invalid
+output or retain a visibly synthetic, proposed/non-actionable result. This is a
+controller-boundary evaluation; it does not measure a live model's susceptibility.
+
+The harness rejects missing/skipped/cancelled assertions. The mutation verifier
+removes the synthetic/external dispatch guard only in a temporary source copy and
+requires the execution scenario to fail. Local baseline and mutation acceptance
+passed. CI retains `releases/reviewer-boundary-eval.json`; isolated hosted execution
+and later two-sided frozen-baseline acceptance are still required before task closure.
