@@ -20,7 +20,17 @@ controlled timers to avoid machine-speed-dependent failures.
 
 Local acceptance passed all five baseline scenarios and rejected the weakened
 identity guard. CI retains this verification as `releases/provider-contract-eval.json`.
-Hosted isolated execution and task closure remain pending. A newly introduced suite
+Hosted run 37324182838 passed all five provider scenarios in the isolated runner
+for source `29f8d73d7bac00851abbe837ce806854e6e55061`. The retained comparison
+passed file-digest, chained-export, subject and runner identity verification; see
+`delivery/acceptance/m3-01-evals-initial.json`. Full CI run 37324180104 also passed
+the mutation check, integration, API, package and container checks (warm cache).
+
+The provider suite exists only on the head in this first comparison. Task closure
+remains pending until a later comparison executes the accepted frozen provider
+harness against both subjects. The provider implementation itself is unchanged
+from this PR baseline; this is corpus adoption, not a provider behavior change.
+A newly introduced suite
 does not retroactively clear old coverage gaps; later comparisons must use the
 accepted baseline harness, and earlier attempts remain retained.
 
