@@ -16,3 +16,10 @@ test('model allowlist and capabilities reject unsupported requests before networ
  const p=profile();p.inputUsdMicrosPerMillion=0;assert.throws(()=>createOpenAIProvider('synthetic-fixture',[p]),/invalid-request/);
 });
 test('registered profiles are detached from later caller mutation',()=>{const p=profile(),provider=createOpenAIProvider('synthetic-fixture',[p]);p.capabilities.stream=false;p.inputUsdMicrosPerMillion=999999999;assert.equal(provider.capabilities().stream,true);assert.equal(provider.estimateCost!(request()).upperBoundUsdMicros,1512);});
+test('schema rejection occurs before budget reservation or network dispatch',async()=>{
+ const records:string[]=[];
+ const ledger:BudgetLedger={async reserve(){records.push('reserve');return 'attempt-1';},async settle(){records.push('settle');},async unknown(){records.push('unknown');},async releaseNotSent(){records.push('release');}};
+ const provider=createOpenAIProvider('synthetic-fixture',[profile()],async()=>{records.push('fetch');throw Error('Unexpected network call');});
+ const req=request();req.responseSchema={type:'object',properties:{value:{type:'string'}},additionalProperties:false};
+ await assert.rejects(invokeModel(provider,req,ledger),/invalid-request|unsupported-capability/);assert.deepEqual(records,[]);
+});

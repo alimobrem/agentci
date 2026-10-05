@@ -8,8 +8,8 @@ export function openAIRequest(input:ModelRequest):ResponseCreateParamsNonStreami
  if(request.provider!=='openai'||request.parameters.stop?.length)throw new ProviderFailure('unsupported-capability');
  const extension=request.providerExtensions.openai??{};
  if(Object.keys(extension).some(key=>key!=='parallel_tool_calls')||extension.parallel_tool_calls!==undefined&&typeof extension.parallel_tool_calls!=='boolean')throw new ProviderFailure('unsupported-capability');
- for(const tool of request.tools)validateOpenAISchema(tool.inputSchema);
- if(request.responseSchema)validateOpenAISchema(request.responseSchema);
+ for(const tool of request.tools)validateOpenAISchema(tool.inputSchema,request.model.startsWith('ft:'));
+ if(request.responseSchema)validateOpenAISchema(request.responseSchema,request.model.startsWith('ft:'));
  const messages:ResponseInput=[];
  if(request.system)messages.push({role:'system',content:request.system});
  if(request.developer)messages.push({role:'developer',content:request.developer});

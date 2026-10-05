@@ -33,8 +33,12 @@ applicable price tiers; fixture prices are not production pricing.
 
 Structural schema preflight rejects open objects, optional properties, unsupported
 composition and documented property/enum/string size excesses without rewriting
-the schema. Nullable and recursive schemas remain intact. This is partial subset
-coverage; depth/reference expansion and model-specific restrictions remain pending.
+the schema. Nullable and recursive schemas remain intact. Depth checks follow local
+references, reject remote/non-schema references, and stop recursive back-edges.
+The documented string-format set and fine-tuned constraint exclusions are checked.
+Schema graph traversal is bounded at 50,000 visits. Execution tests confirm rejected
+schemas reserve no budget and make no network call. Provider-side live conformance
+remains required; local preflight alone cannot prove provider acceptance.
 
 Remaining: complete schema subset preflight, verified real model capability/pricing
 profiles, broader conformance and
