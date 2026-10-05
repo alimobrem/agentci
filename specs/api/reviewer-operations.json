@@ -385,6 +385,24 @@
         "private source output and diagnostic sentinels absent from workflow history",
         "success and cancellation workflow replay"
       ]
+    },
+    {
+      "operationId": "reconcileAdmittedReviews",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/integration/admitted-review-activities.test.ts",
+        "tests/integration/review-dispatch.test.ts"
+      ],
+      "scenarios": [
+        "independent reconciliation after real workflow termination",
+        "possibly-sent charges retained after provider termination",
+        "summary committed before termination remains completed evidence",
+        "exclusive recovery leases and stale worker rejection",
+        "running reviews use bounded polling delay"
+      ]
     }
   ]
 }

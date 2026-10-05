@@ -6,7 +6,7 @@ const url=process.env.AGENTCI_TEST_DATABASE_URL;if(!url)throw Error('Review disp
 test('review dispatch survives races, lease takeover, cancellation and restart without replacing terminal evidence',{timeout:30000},async()=>{
  const schema=`dispatch_${randomUUID().replaceAll('-','')}`,admin=new Pool({connectionString:url});await admin.query(`CREATE SCHEMA ${schema}`);const pool=new Pool({connectionString:url,options:`-c search_path=${schema}`});
  try{
-  for(const name of ['008_m3_review_admissions','009_m3_review_dispatch']){const sql=await readFile(new URL(`../../deploy/migrations/${name}.sql`,import.meta.url),'utf8');await pool.query(sql);await pool.query(sql);}
+  for(const name of ['008_m3_review_admissions','009_m3_review_dispatch','012_m3_review_recovery']){const sql=await readFile(new URL(`../../deploy/migrations/${name}.sql`,import.meta.url),'utf8');await pool.query(sql);await pool.query(sql);}
   const scope={organizationId:randomUUID(),repository:'owner/repo'},admissions=new ReviewAdmissionStore(pool,scope,{approve:async r=>({requestDigest:digest(canonical(r)),policyDigest:digest('policy'),profileRevision:r.profile.revision,mode:r.mode})}),store=new ReviewDispatchStore(pool,scope);
   const admit=async()=>{const id=randomUUID();await admissions.admit({schemaVersion:'v1alpha1',id,subject:{...scope,pullRequest:1,baseSha:'a'.repeat(40),headSha:'b'.repeat(40)},profile:{id:'security',revision:digest('profile')},mode:'synthetic'});return id;};
   const id=await admit(),before=await store.get(id);assert.ok(before);assert.equal(before.dispatched,false);assert.ok(Number.isSafeInteger(before.admittedAtMs));
@@ -31,5 +31,11 @@ test('review dispatch survives races, lease takeover, cancellation and restart w
   const restartedPool=new Pool({connectionString:url,options:`-c search_path=${schema}`});try{const restarted=new ReviewDispatchStore(restartedPool,scope);assert.deepEqual(await restarted.get(id),await store.get(id));assert.equal((await restarted.get(queued))?.cancelRequested,true);assert.equal(await restarted.claim(),undefined);}finally{await restartedPool.end();}
   await assert.rejects(new ReviewDispatchStore(restartedPool,scope).get(id),/^Error: review-dispatch-unavailable$/);
   const terminated=await admit(),terminating=await store.claim();assert.ok(terminating);const terminationRun=randomUUID();await store.acknowledge(terminating,terminationRun);await store.finish(terminated,terminationRun,'terminated',digest('terminated'));assert.equal((await store.get(terminated))?.terminal?.status,'terminated');
+  const recoverId=await admit(),toStart=await store.claim();assert.ok(toStart);const recoverRun=randomUUID();await store.acknowledge(toStart,recoverRun);
+  const recoveryClaims=(await Promise.all([store.claimRecovery(),store.claimRecovery()])).filter(x=>x!==undefined);assert.equal(recoveryClaims.length,1);const oldRecovery=recoveryClaims[0]!;
+  await pool.query("UPDATE agentci_review_admission_outbox SET lease_until=clock_timestamp()-interval '1 second' WHERE id=$1",[recoverId]);const newRecovery=await store.claimRecovery();assert.ok(newRecovery);assert.notEqual(oldRecovery.token,newRecovery.token);
+  await assert.rejects(store.finishRecovery(oldRecovery,'terminated',digest('terminal')),/review-dispatch-lease-lost/);await assert.rejects(store.releaseRecovery(oldRecovery),/review-dispatch-lease-lost/);
+  await store.releaseRecovery(newRecovery);assert.equal(await store.claimRecovery(),undefined,'released running reviews wait before being polled again');
+  await pool.query("UPDATE agentci_review_admission_outbox SET recovery_after=clock_timestamp()-interval '1 second' WHERE id=$1",[recoverId]);const finalRecovery=await store.claimRecovery();assert.ok(finalRecovery);await store.finishRecovery(finalRecovery,'terminated',digest('terminal'));await store.releaseRecovery(finalRecovery);assert.equal(await store.claimRecovery(),undefined);
  }finally{await pool.end();await admin.query(`DROP SCHEMA ${schema} CASCADE`);await admin.end();}
 });

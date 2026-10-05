@@ -54,6 +54,9 @@ try {
   const {ReviewSummaryStore}=await import(pathToFileURL(join(installedRoot,'dist/packages/storage/review-summaries.js')).href);
   const {validateReviewExecutionSummary}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/summary.js')).href);
   if([ReviewSummaryStore,validateReviewExecutionSummary].some(value=>typeof value!=='function'))throw new Error('Installed review summary modules missing');
+  if(!(await readFile(join(installedRoot,'deploy/migrations/012_m3_review_recovery.sql'),'utf8')).includes('review_admission_recovery_pending'))throw new Error('Installed review recovery migration missing');
+  const {reconcileAdmittedReviews}=await import(pathToFileURL(join(installedRoot,'dist/apps/worker/reviewer-recovery.js')).href);
+  if(typeof reconcileAdmittedReviews!=='function')throw new Error('Installed review recovery module missing');
   const {validateModelFinding}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/model.js')).href);
   const findingFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-finding.json'),'utf8'));
   validateModelFinding(findingFixture,findingFixture.subject);

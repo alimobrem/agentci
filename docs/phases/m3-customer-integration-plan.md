@@ -159,3 +159,14 @@ The test caught and fixed database cancellation arriving before Temporal's own
 signal: an explicit nonretryable `ReviewCancelled` activity outcome now maps to
 workflow cancellation. Production worker registration and out-of-workflow
 termination/recovery acceptance remain outstanding.
+
+Migration 012 and independent `reconcileAdmittedReviews` use exclusive recovery
+leases and a persisted polling delay. Recovery verifies workflow ID, run, type,
+queue and admission digest; missing/unknown Temporal state is retained for retry.
+Real termination during a provider call sets durable cancellation and retains the
+uncertain budget exposure; activity polling/heartbeat stops local execution. This
+does not claim the remote provider has rolled back a dispatched request. A summary
+committed before termination remains completed review evidence even though the
+Temporal workflow itself was terminated. Real acceptance covers both termination
+windows, idempotent recovery, concurrent claims and stale lease rejection.
+Production startup/registration and operator configuration remain outstanding.
