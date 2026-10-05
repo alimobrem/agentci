@@ -103,3 +103,12 @@ replay. `reviewAdmittedRequest` carries only IDs and result digests. Activities 
 this integration test are fixtures: production profile persistence, provider and
 finding activities, cancellation/termination reconciliation and worker registration
 are still outstanding. These results do not prove actual provider execution.
+
+Migration 010 and `ReviewerProfileStore` retain operator profiles by exact
+normalized revision. Updating configuration adds a revision; it cannot reinterpret
+an old admission. Revoked revisions remain readable for evidence but `resolve`
+rejects them for execution, including after restart or config reload. Revocation
+is one-way for a revision; changing policy requires a new revision. Profile budget
+limits must be positive, matching `PostgresBudgetLedger`. Shared fixture and real
+PostgreSQL acceptance cover these boundaries. Activity integration must check
+revocation before dispatch; this store alone does not interrupt an in-flight call.

@@ -22,7 +22,7 @@ export function validateReviewerProfile(value:unknown):{profile:ReviewerProfile;
  try{
   const v=value as ReviewerProfile;
   if(!exact(v,['schemaVersion','id','mode','budget','timeoutMs','differentProvider','selection','reviewers'])||v.schemaVersion!=='v1alpha1'||typeof v.id!=='string'||!/^[A-Za-z0-9._-]{1,128}$/.test(v.id)||!['synthetic','live'].includes(v.mode)||typeof v.differentProvider!=='boolean'||!Number.isSafeInteger(v.timeoutMs)||v.timeoutMs<1000||v.timeoutMs>86400000)fail();
-  if(!exact(v.budget,['id','limitUsdMicros'])||typeof v.budget.id!=='string'||!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(v.budget.id)||!Number.isSafeInteger(v.budget.limitUsdMicros)||v.budget.limitUsdMicros<0)fail();
+  if(!exact(v.budget,['id','limitUsdMicros'])||typeof v.budget.id!=='string'||!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(v.budget.id)||!Number.isSafeInteger(v.budget.limitUsdMicros)||v.budget.limitUsdMicros<1)fail();
   if(!Array.isArray(v.selection)||!v.selection.length||v.selection.length>64)fail();
   const documents=v.selection.map(ref=>{if(!exact(ref,['kind','side','path'])||!['source','requirement'].includes(ref.kind))fail();return {...ref,content:'',digest:digest('')};});
   const selection=buildReviewContext(subject,documents).documents.map(({kind,side,path})=>({kind:kind as ReviewerSelection['kind'],side,path}));

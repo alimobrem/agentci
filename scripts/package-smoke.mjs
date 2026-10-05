@@ -45,6 +45,11 @@ try {
   const {ReviewDispatchStore}=await import(pathToFileURL(join(installedRoot,'dist/packages/storage/review-dispatch.js')).href);
   const {validateReviewerProfile,bindReviewerProfile}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/profile.js')).href);
   if([ReviewDispatchStore,validateReviewerProfile,bindReviewerProfile].some(value=>typeof value!=='function'))throw new Error('Installed review controller modules missing');
+  if(!(await readFile(join(installedRoot,'deploy/migrations/010_m3_reviewer_profiles.sql'),'utf8')).includes('reviewer_profile_identity'))throw new Error('Installed reviewer profile migration missing');
+  const {ReviewerProfileStore}=await import(pathToFileURL(join(installedRoot,'dist/packages/storage/reviewer-profiles.js')).href);
+  if(typeof ReviewerProfileStore!=='function')throw new Error('Installed reviewer profile store missing');
+  const profileFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/reviewer-profile.json'),'utf8'));
+  validateReviewerProfile(profileFixture);
   const {validateModelFinding}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/model.js')).href);
   const findingFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-finding.json'),'utf8'));
   validateModelFinding(findingFixture,findingFixture.subject);

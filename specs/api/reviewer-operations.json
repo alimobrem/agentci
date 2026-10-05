@@ -297,6 +297,23 @@
         "finalization retry after committed terminal evidence",
         "real workflow history replay"
       ]
+    },
+    {
+      "operationId": "ReviewerProfileStore",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SECTION-12.2"
+      ],
+      "tests": [
+        "tests/integration/reviewer-profiles.test.ts"
+      ],
+      "scenarios": [
+        "concurrent registration retains one immutable revision",
+        "changed configuration preserves old revisions",
+        "revocation denies execution and cannot be undone by config reload",
+        "tenant isolation restart and redacted outage errors"
+      ]
     }
   ]
 }
