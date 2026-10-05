@@ -13,3 +13,6 @@ await cp(new URL('../packages/providers/json', import.meta.url),
 
 await cp(new URL('../packages/reviewers/json', import.meta.url),
   new URL('../dist/packages/reviewers/json', import.meta.url), { recursive: true });
+
+await cp(new URL('../packages/findings/json', import.meta.url),
+  new URL('../dist/packages/findings/json', import.meta.url), { recursive: true });
