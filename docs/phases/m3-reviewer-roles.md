@@ -13,9 +13,8 @@ cannot establish independence. Its synthetic outcome must remain visibly
 synthetic in later evidence and UI. An external-mode decision checks configured
 identity separation, not live provider availability or compatibility.
 
-This is internal policy groundwork, not a completed reviewer. Execution through the budgeted
-provider core, result evidence, injection evals and customer/API integration remain
-open. Instruction text alone is not a prompt-injection security boundary. Model
+This is internal policy groundwork, not a completed reviewer. Persistent result evidence, broader injection evals and customer/API integration
+remain open. Instruction text alone is not a prompt-injection security boundary. Model
 claims must remain proposed until independent reproduction evidence exists.
 
 ## Bounded request assembly
@@ -36,4 +35,22 @@ digests. Configuration includes response schema, model parameters, execution
 policy and provider extensions. Tests place instruction-override and credential
 exfiltration text in repository evidence and prove it cannot overwrite system
 instructions or grant tools. This tests structural isolation, not model obedience.
-Independence authorization and budgeted dispatch still require execution integration.
+The controller must authenticate provenance before constructing the executor.
+
+## Budgeted execution boundary
+
+`createReviewerExecutor` snapshots controller-owned provider registrations and binds
+one tenant/repository scope and budget ledger. It prepares the bounded request,
+checks exact-subject coding provenance and upstream independence, and includes the
+policy/provenance digest in the request reserved by `invokeModel`. The existing
+core performs cancellation, deadlines, bounded retries and accounting. No new
+provider retry loop or credential lookup is introduced.
+
+Synthetic mode accepts only fixture reviewers; external mode rejects fixtures.
+Successful output is explicitly proposed, never confirmed. Refused or incomplete
+responses produce no proposal. The result binds role, subject, request/attempt,
+model, usage and digests while omitting private continuation material. Persisting
+that result and proving its durable retrieval remain later acceptance work.
+Tests exercise all seven roles, cross-scope/policy rejection before reservation,
+budget exhaustion, malformed output, refusal, cancellation and accounting failure.
+These fixture tests prove control flow, not live upstream quality or compatibility.

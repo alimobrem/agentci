@@ -71,6 +71,27 @@
         "no tool grants",
         "config prompt context and request digests change only with corresponding inputs"
       ]
+    },
+    {
+      "operationId": "createReviewerExecutor",
+      "requirementIds": [
+        "SECTION-12.1",
+        "SPEC-12.1-001",
+        "SPEC-12.2-001",
+        "SECTION-13.4"
+      ],
+      "tests": [
+        "tests/reviewer-execute.test.ts"
+      ],
+      "scenarios": [
+        "all seven roles through budgeted core",
+        "policy and tenant rejection before reservation",
+        "synthetic mode rejects external dispatch",
+        "malformed output and accounting failure",
+        "refusal has no proposal",
+        "cancellation",
+        "private continuation omitted"
+      ]
     }
   ]
 }

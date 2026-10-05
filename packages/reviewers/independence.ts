@@ -21,7 +21,7 @@ export interface IndependenceInput {
   coding: TrustedCodingProvenance | null;
 }
 export class ReviewPolicyFailure extends Error {
-  constructor(public readonly code: 'invalid-policy' | 'unknown-provider' | 'missing-provenance' | 'wrong-subject' | 'same-upstream' | 'synthetic-provider') {
+  constructor(public readonly code: 'invalid-policy' | 'unknown-provider' | 'missing-provenance' | 'wrong-subject' | 'same-upstream' | 'synthetic-provider' | 'external-provider') {
     super(code); this.name = 'ReviewPolicyFailure';
   }
 }
@@ -42,6 +42,7 @@ export function createIndependencePolicy(registrations: readonly TrustedProvider
     const reviewer = identities.get(input.reviewerProviderId);
     if (!reviewer) throw new ReviewPolicyFailure('unknown-provider');
     if (input.mode === 'external' && reviewer.execution === 'fixture') throw new ReviewPolicyFailure('synthetic-provider');
+    if (input.mode === 'synthetic' && reviewer.execution !== 'fixture') throw new ReviewPolicyFailure('external-provider');
     let coding: {upstream: string; execution: 'fixture' | 'external'} | undefined;
     if (input.coding !== null) {
       const provenance = input.coding;
