@@ -1,0 +1,256 @@
+{
+  "notice": "Synthetic contract examples, not retained execution evidence. exportHeader is an intentionally incomplete stream prefix, never a certified export.",
+  "request": {
+    "schemaVersion": "v1alpha1",
+    "id": "11111111-1111-4111-8111-111111111111",
+    "subject": {
+      "organizationId": "00000000-0000-4000-8000-000000000001",
+      "repository": "owner/repo",
+      "pullRequest": 7,
+      "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "profile": {
+      "id": "security-review",
+      "revision": "sha256:0fa833c5c87be797b22d68dc02c8fac37838119edcfc262572c378b41e2bb994"
+    },
+    "mode": "synthetic"
+  },
+  "accepted": {
+    "schemaVersion": "v1alpha1",
+    "id": "11111111-1111-4111-8111-111111111111",
+    "requestDigest": "sha256:1ea7db15163559f6ee367ce6c7a32f39b4eede9cff51e53c10dc09a3538372a2"
+  },
+  "statuses": {
+    "queued": {
+      "schemaVersion": "v1alpha1",
+      "admission": {
+        "request": {
+          "schemaVersion": "v1alpha1",
+          "id": "11111111-1111-4111-8111-111111111111",
+          "subject": {
+            "organizationId": "00000000-0000-4000-8000-000000000001",
+            "repository": "owner/repo",
+            "pullRequest": 7,
+            "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "profile": {
+            "id": "security-review",
+            "revision": "sha256:0fa833c5c87be797b22d68dc02c8fac37838119edcfc262572c378b41e2bb994"
+          },
+          "mode": "synthetic"
+        },
+        "digest": "sha256:1ea7db15163559f6ee367ce6c7a32f39b4eede9cff51e53c10dc09a3538372a2"
+      },
+      "execution": {
+        "state": "queued",
+        "cancelRequested": false,
+        "terminalDigest": null
+      },
+      "summary": null
+    },
+    "awaitingFinalization": {
+      "schemaVersion": "v1alpha1",
+      "admission": {
+        "request": {
+          "schemaVersion": "v1alpha1",
+          "id": "11111111-1111-4111-8111-111111111111",
+          "subject": {
+            "organizationId": "00000000-0000-4000-8000-000000000001",
+            "repository": "owner/repo",
+            "pullRequest": 7,
+            "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "profile": {
+            "id": "security-review",
+            "revision": "sha256:0fa833c5c87be797b22d68dc02c8fac37838119edcfc262572c378b41e2bb994"
+          },
+          "mode": "synthetic"
+        },
+        "digest": "sha256:1ea7db15163559f6ee367ce6c7a32f39b4eede9cff51e53c10dc09a3538372a2"
+      },
+      "execution": {
+        "state": "dispatched",
+        "cancelRequested": false,
+        "terminalDigest": null
+      },
+      "summary": {
+        "summary": {
+          "schemaVersion": "v1alpha1",
+          "admissionId": "11111111-1111-4111-8111-111111111111",
+          "admissionDigest": "sha256:1ea7db15163559f6ee367ce6c7a32f39b4eede9cff51e53c10dc09a3538372a2",
+          "profileRevision": "sha256:0fa833c5c87be797b22d68dc02c8fac37838119edcfc262572c378b41e2bb994",
+          "contextDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "mode": "synthetic",
+          "coverage": {
+            "selectedFiles": 1,
+            "configuredRoles": 1,
+            "completedRoles": 0,
+            "wholeRepository": false
+          },
+          "roles": [
+            {
+              "requestId": "169091d3-eaf0-83a5-8e0b-de0308a632d6",
+              "role": "security",
+              "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "status": "refused"
+            }
+          ],
+          "findings": []
+        },
+        "digest": "sha256:72dadab4e05d565a272ab564826a0896e0f8830d0e5e316def32b7e25a989b9f"
+      }
+    },
+    "completedWithRefusal": {
+      "schemaVersion": "v1alpha1",
+      "admission": {
+        "request": {
+          "schemaVersion": "v1alpha1",
+          "id": "11111111-1111-4111-8111-111111111111",
+          "subject": {
+            "organizationId": "00000000-0000-4000-8000-000000000001",
+            "repository": "owner/repo",
+            "pullRequest": 7,
+            "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "profile": {
+            "id": "security-review",
+            "revision": "sha256:0fa833c5c87be797b22d68dc02c8fac37838119edcfc262572c378b41e2bb994"
+          },
+          "mode": "synthetic"
+        },
+        "digest": "sha256:1ea7db15163559f6ee367ce6c7a32f39b4eede9cff51e53c10dc09a3538372a2"
+      },
+      "execution": {
+        "state": "completed",
+        "cancelRequested": false,
+        "terminalDigest": "sha256:72dadab4e05d565a272ab564826a0896e0f8830d0e5e316def32b7e25a989b9f"
+      },
+      "summary": {
+        "summary": {
+          "schemaVersion": "v1alpha1",
+          "admissionId": "11111111-1111-4111-8111-111111111111",
+          "admissionDigest": "sha256:1ea7db15163559f6ee367ce6c7a32f39b4eede9cff51e53c10dc09a3538372a2",
+          "profileRevision": "sha256:0fa833c5c87be797b22d68dc02c8fac37838119edcfc262572c378b41e2bb994",
+          "contextDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "mode": "synthetic",
+          "coverage": {
+            "selectedFiles": 1,
+            "configuredRoles": 1,
+            "completedRoles": 0,
+            "wholeRepository": false
+          },
+          "roles": [
+            {
+              "requestId": "169091d3-eaf0-83a5-8e0b-de0308a632d6",
+              "role": "security",
+              "digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+              "status": "refused"
+            }
+          ],
+          "findings": []
+        },
+        "digest": "sha256:72dadab4e05d565a272ab564826a0896e0f8830d0e5e316def32b7e25a989b9f"
+      }
+    },
+    "cancelledBeforeSummary": {
+      "schemaVersion": "v1alpha1",
+      "admission": {
+        "request": {
+          "schemaVersion": "v1alpha1",
+          "id": "11111111-1111-4111-8111-111111111111",
+          "subject": {
+            "organizationId": "00000000-0000-4000-8000-000000000001",
+            "repository": "owner/repo",
+            "pullRequest": 7,
+            "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          },
+          "profile": {
+            "id": "security-review",
+            "revision": "sha256:0fa833c5c87be797b22d68dc02c8fac37838119edcfc262572c378b41e2bb994"
+          },
+          "mode": "synthetic"
+        },
+        "digest": "sha256:1ea7db15163559f6ee367ce6c7a32f39b4eede9cff51e53c10dc09a3538372a2"
+      },
+      "execution": {
+        "state": "cancelled",
+        "cancelRequested": true,
+        "terminalDigest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      },
+      "summary": null
+    }
+  },
+  "cancellation": {
+    "schemaVersion": "v1alpha1",
+    "id": "11111111-1111-4111-8111-111111111111",
+    "cancelRequested": true
+  },
+  "emptyFindingsPage": {
+    "schemaVersion": "v1alpha1",
+    "reviewId": "11111111-1111-4111-8111-111111111111",
+    "summaryDigest": "sha256:72dadab4e05d565a272ab564826a0896e0f8830d0e5e316def32b7e25a989b9f",
+    "items": [],
+    "nextCursor": null
+  },
+  "exportHeader": {
+    "type": "header",
+    "data": {
+      "schemaVersion": "v1alpha1",
+      "review": {
+        "schemaVersion": "v1alpha1",
+        "admission": {
+          "request": {
+            "schemaVersion": "v1alpha1",
+            "id": "11111111-1111-4111-8111-111111111111",
+            "subject": {
+              "organizationId": "00000000-0000-4000-8000-000000000001",
+              "repository": "owner/repo",
+              "pullRequest": 7,
+              "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            "profile": {
+              "id": "security-review",
+              "revision": "sha256:0fa833c5c87be797b22d68dc02c8fac37838119edcfc262572c378b41e2bb994"
+            },
+            "mode": "synthetic"
+          },
+          "digest": "sha256:1ea7db15163559f6ee367ce6c7a32f39b4eede9cff51e53c10dc09a3538372a2"
+        },
+        "execution": {
+          "state": "cancelled",
+          "cancelRequested": true,
+          "terminalDigest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        },
+        "summary": null
+      },
+      "configuredRoles": [
+        {
+          "requestId": "169091d3-eaf0-83a5-8e0b-de0308a632d6",
+          "role": "security"
+        }
+      ],
+      "retainedRoles": [],
+      "missingRoleIds": [
+        "169091d3-eaf0-83a5-8e0b-de0308a632d6"
+      ],
+      "findings": [],
+      "reviewerCount": 0,
+      "eventCount": 0,
+      "snapshotDigest": "sha256:d23fae466849603a0d513cd1d795d589eecf426fad1dd7f8f0fe332af5767c44"
+    },
+    "sequence": 0,
+    "previousDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "digest": "sha256:50ae7f81f8dec6e0c84460ebd7c9b14ac15d9a5f3ee99278737896a76b38877e"
+  },
+  "error": {
+    "error": {
+      "code": "version-conflict"
+    }
+  }
+}

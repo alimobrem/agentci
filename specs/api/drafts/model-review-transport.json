@@ -1,0 +1,360 @@
+{
+  "schemaVersion": 1,
+  "state": "draft-not-shipped",
+  "apiVersion": "agentci.io/v1alpha1",
+  "document": "docs/phases/m3-customer-api-contract.md",
+  "examples": "specs/api/drafts/model-review-examples.json",
+  "authority": {
+    "read": [
+      "AGENTCI_EVIDENCE_TOKEN",
+      "AGENTCI_OPERATOR_TOKEN"
+    ],
+    "mutation": [
+      "AGENTCI_OPERATOR_TOKEN"
+    ],
+    "legacyReadRoutes": "AGENTCI_EVIDENCE_TOKEN only; unchanged"
+  },
+  "domainContracts": {
+    "admission": "packages/reviewers/admission.ts#validateReviewAdmission",
+    "summary": "packages/reviewers/summary.ts#validateReviewExecutionSummary",
+    "reviewer": "packages/reviewers/result.ts#validateReviewerResult",
+    "finding": "packages/findings/model.ts#validateModelFinding",
+    "history": "packages/storage/finding-history.ts#FindingHistoryRecord",
+    "lifecycle": "packages/findings/lifecycle.ts#createFindingTransitions"
+  },
+  "limits": {
+    "admissionBodyBytes": 4096,
+    "mutationBodyBytes": 8192,
+    "jsonResponseBytes": 4194304,
+    "pageDefault": 25,
+    "pageMaximum": 100,
+    "cursorCharacters": 2048,
+    "cursorSeconds": 900,
+    "exportFrameBytes": 4194304,
+    "exportBytes": 134217728,
+    "exportMilliseconds": 120000,
+    "concurrentExports": 2
+  },
+  "errors": {
+    "400": [
+      "invalid-request",
+      "invalid-cursor"
+    ],
+    "401": [
+      "unauthorized"
+    ],
+    "403": [
+      "forbidden",
+      "review-denied"
+    ],
+    "404": [
+      "not-found"
+    ],
+    "405": [
+      "method-not-allowed"
+    ],
+    "409": [
+      "idempotency-conflict",
+      "version-conflict",
+      "review-not-complete",
+      "invalid-transition",
+      "approval-conflict"
+    ],
+    "413": [
+      "body-too-large",
+      "response-too-large"
+    ],
+    "415": [
+      "unsupported-media-type",
+      "unsupported-content-encoding"
+    ],
+    "503": [
+      "service-unavailable"
+    ]
+  },
+  "operations": [
+    {
+      "operationId": "listReviewerProfiles",
+      "method": "GET",
+      "path": "/v1/reviewer-profiles",
+      "owner": "07c-1",
+      "authority": "read",
+      "input": "none",
+      "output": "bounded safe profile descriptors",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "scenarios": [
+        "no prompts keys budgets or paths",
+        "revoked immutable revision visible",
+        "read token required"
+      ]
+    },
+    {
+      "operationId": "createModelReview",
+      "method": "POST",
+      "path": "/v1/model-reviews",
+      "owner": "07c-1",
+      "authority": "mutation",
+      "input": "ReviewAdmissionRequest; id is idempotency key",
+      "output": "202 admission acknowledgment + Location",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "scenarios": [
+        "exact concurrent replay one outbox row",
+        "changed reuse 409",
+        "read token cannot mutate",
+        "stale head and revoked profile denied",
+        "missing configuration no outbox",
+        "offline worker queues without false live claim"
+      ]
+    },
+    {
+      "operationId": "getModelReview",
+      "method": "GET",
+      "path": "/v1/model-reviews/{id}",
+      "owner": "07c-1",
+      "authority": "read",
+      "input": "UUID id",
+      "output": "200 coherent admission/execution/summary",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "scenarios": [
+        "cross scope absent",
+        "no raw Temporal IDs or failures",
+        "retained summary before finalization",
+        "refusal is not clean coverage",
+        "summary and terminal read atomically"
+      ]
+    },
+    {
+      "operationId": "cancelModelReview",
+      "method": "POST",
+      "path": "/v1/model-reviews/{id}/cancellation",
+      "owner": "07c-1",
+      "authority": "mutation",
+      "input": "empty body; review id is monotonic operation key",
+      "output": "202 cancellation acknowledgment",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "scenarios": [
+        "repeated and late intent preserve terminal evidence",
+        "not a remote charge refund",
+        "works while admissions disabled"
+      ]
+    },
+    {
+      "operationId": "listReviewFindings",
+      "method": "GET",
+      "path": "/v1/model-reviews/{id}/findings",
+      "owner": "07c-2",
+      "authority": "read",
+      "input": "limit and cursor only",
+      "output": "200 pinned reference page",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "scenarios": [
+        "no summary 409",
+        "bounded empty completion",
+        "page updates cannot alter pinned evidence",
+        "cursor wrong scope expiry and filters rejected"
+      ]
+    },
+    {
+      "operationId": "getFinding",
+      "method": "GET",
+      "path": "/v1/findings/{id}",
+      "owner": "07c-2",
+      "authority": "read",
+      "input": "required reviewId; optional version",
+      "output": "200 FindingHistoryRecord",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "scenarios": [
+        "review association checked",
+        "canonical event digest verified",
+        "latest and historical versions explicit"
+      ]
+    },
+    {
+      "operationId": "getFindingHistory",
+      "method": "GET",
+      "path": "/v1/findings/{id}/history",
+      "owner": "07c-2",
+      "authority": "read",
+      "input": "required reviewId; limit/cursor",
+      "output": "200 ascending history page + throughVersion",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "scenarios": [
+        "stable watermark under appended evidence",
+        "no duplicates or missing version",
+        "byte bound preserves next cursor"
+      ]
+    },
+    {
+      "operationId": "exportModelReview",
+      "method": "GET",
+      "path": "/v1/model-reviews/{id}/export",
+      "owner": "07c-2",
+      "authority": "read",
+      "input": "none",
+      "output": "200 complete authenticated NDJSON snapshot",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "scenarios": [
+        "failed cancelled queued exports preserve null summary and missing roles",
+        "M3-C11 interrupted export never certified",
+        "reject wrong identity reordered missing or extra frames",
+        "refused reviewer retained",
+        "concurrent lifecycle change isolated by captured version manifest",
+        "oversized snapshot fails before headers"
+      ]
+    },
+    {
+      "operationId": "setFindingDisposition",
+      "method": "POST",
+      "path": "/v1/findings/{id}/dispositions",
+      "owner": "07c-3",
+      "authority": "mutation",
+      "input": "operationId subject expectedVersion disposition reason evidenceDigest",
+      "output": "200 immutable FindingHistoryRecord",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "scenarios": [
+        "only legal false-positive/resolved transition",
+        "hash alone not authority",
+        "stale new operation 409",
+        "exact replay after later history reuses outcome"
+      ]
+    },
+    {
+      "operationId": "requestFindingReproduction",
+      "method": "POST",
+      "path": "/v1/findings/{id}/reproductions",
+      "owner": "07c-3",
+      "authority": "mutation",
+      "input": "operationId subject expectedVersion approvalId approvalDigest",
+      "output": "202 operation/reproduction/plan digest; final schema before shipping",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "scenarios": [
+        "approved entire immutable plan only",
+        "no commands images URLs budgets credentials",
+        "version and approval substitution rejected",
+        "configured consumer and durable dispatch required"
+      ]
+    },
+    {
+      "operationId": "getFindingReproduction",
+      "method": "GET",
+      "path": "/v1/finding-reproductions/{id}",
+      "owner": "07c-3",
+      "authority": "read",
+      "input": "required reviewId",
+      "output": "200 status and receipt|null; final schema before shipping",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "scenarios": [
+        "never staged cancelled stays unverified",
+        "exact receipt identity",
+        "no executable plan bytes"
+      ]
+    },
+    {
+      "operationId": "cancelFindingReproduction",
+      "method": "POST",
+      "path": "/v1/finding-reproductions/{id}/cancellation",
+      "owner": "07c-3",
+      "authority": "mutation",
+      "input": "empty body; reproduction id is monotonic operation key",
+      "output": "202 cancellation acknowledgment",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "scenarios": [
+        "pre-stage cancellation survives retry",
+        "termination cleanup independent",
+        "late cancellation preserves receipt"
+      ]
+    }
+  ],
+  "pendingBeforePublicReproduction": [
+    "Final reproduction status response fields bound to actual dispatch/recovery",
+    "Operator approval/evidence registry configuration; authorization boundary is fixed"
+  ],
+  "cli": {
+    "requirementIds": [
+      "SECTION-32"
+    ],
+    "newGroups": [
+      "model-review",
+      "finding"
+    ],
+    "preserved": "agentci review --config PRIVATE_JSON --pr NUMBER [--request-id UUID]"
+  },
+  "futureAcceptance": [
+    "real HTTP boundary",
+    "real PostgreSQL and Temporal replay/concurrency",
+    "packaged CLI/service/container",
+    "immutable M1 and M2 baseline compatibility",
+    "M3-C11 complete export verification"
+  ]
+}
