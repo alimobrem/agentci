@@ -19,10 +19,11 @@ export function validateModelResponse(value:unknown,request:ModelRequest,attempt
    if(!object(item))throw Error();for(const child of Object.values(item))visit(child,depth+1);
   };
   visit(value,0);if(Buffer.byteLength(JSON.stringify(value))>1048576||!object(value))throw Error();
-  if(!exact(value,['schemaVersion','requestId','attemptId','provider','model','status','text','structuredOutput','toolCalls','usage','providerRequestId',...(Object.hasOwn(value,'observedModel')?['observedModel']:[])]))throw Error();
+  if(!exact(value,['schemaVersion','requestId','attemptId','provider','model','status','text','structuredOutput','toolCalls','usage','providerRequestId',...(Object.hasOwn(value,'observedModel')?['observedModel']:[]),...(Object.hasOwn(value,'continuation')?['continuation']:[])]))throw Error();
   if(value.schemaVersion!=='v1alpha1'||value.requestId!==request.requestId||value.attemptId!==attemptId||value.provider!==request.provider||value.model!==request.model)throw Error();
   if(!['completed','refused','incomplete'].includes(value.status as string)||typeof value.text!=='string'||value.text.length>524288)throw Error();
   if(Object.hasOwn(value,'observedModel')&&(typeof value.observedModel!=='string'||!value.observedModel.length||value.observedModel.length>256))throw Error();
+  if(Object.hasOwn(value,'continuation')){const c=value.continuation;if(!object(c)||!exact(c,['provider','model','prefixDigest','content'])||c.provider!==value.provider||c.model!==value.observedModel||typeof c.prefixDigest!=='string'||!/^[0-9a-f]{64}$/.test(c.prefixDigest)||!Array.isArray(c.content)||c.content.length>256||value.status!=='completed')throw Error();}
   if(value.providerRequestId!==null&&(typeof value.providerRequestId!=='string'||!value.providerRequestId.length||value.providerRequestId.length>512))throw Error();
   if(!object(value.usage)||!exact(value.usage,['inputTokens','outputTokens','costUsdMicros','costKind','pricingRevision']))throw Error();
   const usage=value.usage;

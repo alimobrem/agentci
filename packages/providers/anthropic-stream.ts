@@ -35,7 +35,7 @@ export class AnthropicStreamTranslator {
      if(block.type==='text'&&delta.type==='text_delta'&&typeof delta.text==='string'){block.text+=delta.text;if(delta.text)result.push({type:'text-delta',text:delta.text});}
      else if(block.type==='tool_use'&&delta.type==='input_json_delta'&&typeof delta.partial_json==='string'){
       this.arguments.set(this.active,this.arguments.get(this.active)!+delta.partial_json);result.push({type:'tool-delta',id:block.id,name:null,argumentsDelta:delta.partial_json});
-     }else if(block.type==='thinking'&&((delta.type==='thinking_delta'&&typeof delta.thinking==='string')||(delta.type==='signature_delta'&&typeof delta.signature==='string'))){/* Non-actionable reasoning is not exposed. */}
+     }else if(block.type==='thinking'&&((delta.type==='thinking_delta'&&typeof delta.thinking==='string')||(delta.type==='signature_delta'&&typeof delta.signature==='string'))){if(delta.type==='thinking_delta')block.thinking=(block.thinking??'')+delta.thinking;else block.signature=(block.signature??'')+delta.signature;}
      else throw Error();
     }else if(event.type==='content_block_stop'){
      if(this.active<0||event.index!==this.active)throw Error();

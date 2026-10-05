@@ -21,3 +21,9 @@ test('empty tool arguments without deltas remain a valid proposal',()=>{
  const req=request();req.tools=[{name:'inspect',description:'Inspect',inputSchema:{type:'object',properties:{},additionalProperties:false}}];const t=new AnthropicStreamTranslator(req,'attempt');
  [start(),{type:'content_block_start',index:0,content_block:{type:'tool_use',id:'call-1',name:'inspect',input:{}}},{type:'content_block_stop',index:0},{type:'message_delta',delta:{stop_reason:'tool_use'},usage:{output_tokens:1}},{type:'message_stop'}].forEach(e=>t.accept(e,null));assert.deepEqual(t.finish().toolCalls[0]?.arguments,{});
 });
+test('streamed thinking and signature fragments survive only in continuation data',()=>{
+ const t=new AnthropicStreamTranslator(request(),'attempt');
+ const e=[start(),{type:'content_block_start',index:0,content_block:{type:'thinking',thinking:'',signature:''}},{type:'content_block_delta',index:0,delta:{type:'thinking_delta',thinking:'private-reasoning'}},{type:'content_block_delta',index:0,delta:{type:'signature_delta',signature:'signed-'}},{type:'content_block_delta',index:0,delta:{type:'signature_delta',signature:'fixture'}},{type:'content_block_stop',index:0},...events().slice(1).map((event:any)=>'index' in event?{...event,index:1}:event)];
+ const seen=e.flatMap(event=>t.accept(event,null));assert.equal(JSON.stringify(seen.filter(event=>event.type==='text-delta')).includes('private-reasoning'),false);
+ assert.deepEqual(t.finish().continuation?.content[0],{type:'thinking',thinking:'private-reasoning',signature:'signed-fixture'});
+});

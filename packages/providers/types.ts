@@ -18,6 +18,8 @@ export interface ModelResponse {
  schemaVersion:'v1alpha1';requestId:string;attemptId:string;provider:string;model:string;
  /** Observed upstream model when reported; absence means unknown, never inferred. */
  observedModel?:string;
+ /** Provider-owned continuation data; never a finding or executable instruction. */
+ continuation?:{provider:string;model:string;prefixDigest:string;content:JsonValue[]};
  status:'completed'|'refused'|'incomplete';text:string;structuredOutput:JsonValue;
  toolCalls:ToolCall[];
  usage:ModelUsage;providerRequestId:string|null;

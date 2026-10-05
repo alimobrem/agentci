@@ -24,3 +24,9 @@ test('observed model is optional for older adapters and bounded when reported',(
  assert.equal(validateModelResponse({...value,observedModel:'upstream-snapshot'},request(),'attempt-1').observedModel,'upstream-snapshot');
  for(const observedModel of ['',null,1,'x'.repeat(257)])assert.throws(()=>validateModelResponse({...value,observedModel},request(),'attempt-1'),/invalid-output/);
 });
+test('continuation must bind provider and observed model and cannot accompany partial output',()=>{
+ const value={...response(),observedModel:'snapshot',continuation:{provider:'fixture',model:'snapshot',prefixDigest:'a'.repeat(64),content:[]}};
+ assert.deepEqual(validateModelResponse(value,request(),'attempt-1').continuation,value.continuation);
+ for(const change of [{provider:'other'},{model:'other'},{prefixDigest:'bad'},{extra:true}])assert.throws(()=>validateModelResponse({...value,continuation:{...value.continuation,...change}},request(),'attempt-1'),/invalid-output/);
+ assert.throws(()=>validateModelResponse({...value,status:'incomplete',structuredOutput:null},request(),'attempt-1'),/invalid-output/);
+});

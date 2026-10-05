@@ -64,3 +64,14 @@ Opus 5.5 has always-on thinking and model/conversation-bound thinking blocks.
 The current adapter handles first-turn text and tool proposals; preserving opaque
 thinking history for subsequent tool-result turns remains an acceptance gap.
 Do not claim multi-turn Opus support until that contract and live test pass.
+
+The internal M3 response contract now has optional `continuation`: provider,
+observed model, conversation-prefix digest and bounded original content blocks.
+Anthropic completed responses retain signed thinking blocks there, including
+streamed signature fragments. Review text excludes those blocks. Partial/refused
+responses cannot carry continuation. Treat continuation as private provider data;
+do not display it as a finding or include it in public evidence. Existing adapters
+remain valid without the optional field; released HTTP contracts are unchanged.
+Prefix binding covers system/developer instructions, tools, output schema, messages
+and prior Anthropic history. Replay validation and append-only tool-result wiring
+remain pending, so preservation alone does not close multi-turn acceptance.

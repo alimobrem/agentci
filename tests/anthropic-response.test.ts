@@ -19,3 +19,9 @@ test('Anthropic validates tool proposals, stop reasons and explicitly approved s
  for(const change of [{stop_reason:'unknown'},{stop_reason:null},{model:'unapproved'},{stop_reason:'tool_use',content:[]},{content:[tool]},{content:[{type:'server_tool_use'}]},{stop_reason:'stop_sequence',stop_sequence:'unexpected'}])assert.throws(()=>anthropicResponse({...response(),...change},req,'attempt'),/invalid-output/);
  assert.equal(anthropicResponse({...response(),model:'snapshot'},req,'attempt',null,['snapshot']).observedModel,'snapshot');
 });
+test('Anthropic preserves signed continuation blocks without exposing them as review text',()=>{
+ const blocks=[{type:'thinking',thinking:'provider-private-reasoning',signature:'opaque-signature'},...response().content];
+ const result=anthropicResponse({...response(),content:blocks},request(),'attempt');assert.deepEqual(result.continuation?.content,blocks);assert.equal(result.text.includes('provider-private-reasoning'),false);assert.match(result.continuation!.prefixDigest,/^[a-f0-9]{64}$/);
+ (blocks[0] as any).signature='changed';assert.equal((result.continuation!.content[0] as any).signature,'opaque-signature');
+ assert.throws(()=>anthropicResponse({...response(),content:[{type:'thinking',thinking:''}]},request(),'attempt'),/invalid-output/);
+});

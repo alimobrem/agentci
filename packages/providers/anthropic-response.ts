@@ -1,3 +1,4 @@
+import {anthropicPrefixDigest} from './anthropic-continuation.ts';
 import {validateModelResponse} from './response.ts';
 import {ProviderFailure,type ModelRequest,type ModelResponse,type ToolCall} from './types.ts';
 const object=(v:unknown):v is Record<string,unknown>=>v!==null&&typeof v==='object'&&!Array.isArray(v);
@@ -19,7 +20,9 @@ export function anthropicResponse(value:unknown,request:ModelRequest,attemptId:s
      if(reason!=='tool_use'||typeof block.id!=='string'||typeof block.name!=='string'||!object(block.input))throw Error();
      toolCalls.push({id:block.id,name:block.name,arguments:block.input as ToolCall['arguments']});
     }
-   }else if(!['thinking','redacted_thinking'].includes(block.type as string))throw Error();
+   }else if(block.type==='thinking'){if(typeof block.thinking!=='string'||typeof block.signature!=='string'||!block.signature)throw Error();}
+   else if(block.type==='redacted_thinking'){if(typeof block.data!=='string'||!block.data)throw Error();}
+   else throw Error();
   }
   if(reason==='tool_use'&&!toolCalls.length)throw Error();
   if(!object(value.usage)||!tokens(value.usage.input_tokens)||!tokens(value.usage.output_tokens))throw Error();
@@ -28,6 +31,7 @@ export function anthropicResponse(value:unknown,request:ModelRequest,attemptId:s
   // Missing cache counters stay unknown; do not undercount total input usage.
   const inputTokens=cache.every(tokens)?(usage.input_tokens as number)+(cache[0] as number)+(cache[1] as number):null;
   return validateModelResponse({schemaVersion:'v1alpha1',requestId:request.requestId,attemptId,provider:request.provider,model:request.model,observedModel:value.model,status,text,
+   ...(status==='completed'?{continuation:{provider:request.provider,model:value.model,prefixDigest:anthropicPrefixDigest(request),content:value.content}}:{}),
    structuredOutput:status==='completed'&&request.responseSchema&&(!toolCalls.length||text.trim())?JSON.parse(text):null,toolCalls,
    usage:{inputTokens,outputTokens:usage.output_tokens,costUsdMicros:null,costKind:'unknown',pricingRevision:null},providerRequestId:requestId},request,attemptId);
  }catch{throw new ProviderFailure('invalid-output',false,'possibly-sent');}
