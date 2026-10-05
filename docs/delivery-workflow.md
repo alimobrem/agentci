@@ -190,3 +190,24 @@ acceleration claim is established. Measurement collection continues now, with
 product analytics still unimplemented. Connected changes use focused development
 checks and full integration/release checkpoints. Milestone order and release gates
 remain in effect; discussion of parallel phases has not started M3.
+
+## Reuse verified immutable evidence
+
+Verify at the boundary that can introduce a new failure: CI build output,
+published registry images, and public release downloads/installation. Retain the
+source SHA, artifact digest, platform, verifier revision and observed results.
+Once that scope passes, reuse the record for the same immutable inputs. A status
+update or documentation edit alone does not justify downloading and executing the
+same artifact again.
+
+Rerun affected checks when product/build inputs or verifier coverage change, a
+result is missing or inconsistent, a new security finding changes the assessment,
+or another required platform/deployment boundary has not been exercised. Preserve
+failed attempts and explain why a rerun was necessary. Documentation and ledger
+changes receive focused checks; they do not invalidate an unchanged released
+binary's runtime evidence. Required hosted checks still run under branch policy.
+
+Observe a live job only when its result determines the next action. Continue
+independent work while it runs and back off unchanged polling. Never restart a
+job because an observation timed out. Track release critical-path time and
+repeated verification overhead separately from local feedback speed.

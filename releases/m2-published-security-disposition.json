@@ -1,0 +1,432 @@
+{
+  "kind": "M2 published-platform security disposition",
+  "checkedAt": "2026-10-05T03:27:46.033100+00:00",
+  "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+  "version": "0.3.1-m2",
+  "status": "accepted-with-documented-downstream-backport",
+  "platformScans": [
+    {
+      "role": "api",
+      "platform": "linux/amd64",
+      "image": "ghcr.io/alimobrem/agentci-api@sha256:ccd2d24db9411d88956136d9840e6c36c23d3b44f8aaba89d9da7e2dbd0af612",
+      "configDigest": "sha256:260e6848c0c85a0f39954fb19ab30673066a0233402f19d3a9cb89064f0c1f76",
+      "sha256": "28999594198aefb72a0eed634b43d12b08996690753514230e86d28c0c984ee9",
+      "scanner": {
+        "Version": "0.75.0"
+      },
+      "targets": [
+        {
+          "target": "ghcr.io/alimobrem/agentci-api@sha256:ccd2d24db9411d88956136d9840e6c36c23d3b44f8aaba89d9da7e2dbd0af612 (redhat 10.2)",
+          "class": "os-pkgs",
+          "type": "redhat",
+          "packages": 101
+        },
+        {
+          "target": "Node.js",
+          "class": "lang-pkgs",
+          "type": "node-pkg",
+          "packages": 209
+        },
+        {
+          "target": "app/node_modules/@temporalio/core-bridge/Cargo.lock",
+          "class": "lang-pkgs",
+          "type": "cargo",
+          "packages": 376
+        }
+      ],
+      "findings": []
+    },
+    {
+      "role": "api",
+      "platform": "linux/arm64",
+      "image": "ghcr.io/alimobrem/agentci-api@sha256:ccd2d24db9411d88956136d9840e6c36c23d3b44f8aaba89d9da7e2dbd0af612",
+      "configDigest": "sha256:db240ccdd41602e76199657c3e720bc6afe9c987e5d3be74da0b23cfeecaf4df",
+      "sha256": "50a1159db50ebdfd043303dc4dea1865ca6351f76533b04aeb436c58d5ed2397",
+      "scanner": {
+        "Version": "0.75.0"
+      },
+      "targets": [
+        {
+          "target": "ghcr.io/alimobrem/agentci-api@sha256:ccd2d24db9411d88956136d9840e6c36c23d3b44f8aaba89d9da7e2dbd0af612 (redhat 10.2)",
+          "class": "os-pkgs",
+          "type": "redhat",
+          "packages": 101
+        },
+        {
+          "target": "Node.js",
+          "class": "lang-pkgs",
+          "type": "node-pkg",
+          "packages": 209
+        },
+        {
+          "target": "app/node_modules/@temporalio/core-bridge/Cargo.lock",
+          "class": "lang-pkgs",
+          "type": "cargo",
+          "packages": 376
+        }
+      ],
+      "findings": []
+    },
+    {
+      "role": "worker",
+      "platform": "linux/amd64",
+      "image": "ghcr.io/alimobrem/agentci-worker@sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b",
+      "configDigest": "sha256:aa1a0568c3b0417f1392dca6b7650aaee64eb69ec25acdff379168e8f1f1f0b7",
+      "sha256": "2ae83a3840561f957ae07f0e6d39799b5e278e6fede8eb23fe923927f899fae7",
+      "scanner": {
+        "Version": "0.75.0"
+      },
+      "targets": [
+        {
+          "target": "ghcr.io/alimobrem/agentci-worker@sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b (redhat 10.2)",
+          "class": "os-pkgs",
+          "type": "redhat",
+          "packages": 101
+        },
+        {
+          "target": "Node.js",
+          "class": "lang-pkgs",
+          "type": "node-pkg",
+          "packages": 209
+        },
+        {
+          "target": "app/node_modules/@temporalio/core-bridge/Cargo.lock",
+          "class": "lang-pkgs",
+          "type": "cargo",
+          "packages": 376
+        }
+      ],
+      "findings": []
+    },
+    {
+      "role": "worker",
+      "platform": "linux/arm64",
+      "image": "ghcr.io/alimobrem/agentci-worker@sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b",
+      "configDigest": "sha256:ae17cc771de5320fc614a17ac5b29390dc66b08e73ffee5d69b125f6895c7ffb",
+      "sha256": "e2659f8a0a0068b1fa1a83816f22ecba4f60a273f39c5dfe33c6cd7ea438d68c",
+      "scanner": {
+        "Version": "0.75.0"
+      },
+      "targets": [
+        {
+          "target": "ghcr.io/alimobrem/agentci-worker@sha256:9d3a1c29f5d725750bf7665fac83dcb5f78dc9fcadf1be1cb5d8dcb26149308b (redhat 10.2)",
+          "class": "os-pkgs",
+          "type": "redhat",
+          "packages": 101
+        },
+        {
+          "target": "Node.js",
+          "class": "lang-pkgs",
+          "type": "node-pkg",
+          "packages": 209
+        },
+        {
+          "target": "app/node_modules/@temporalio/core-bridge/Cargo.lock",
+          "class": "lang-pkgs",
+          "type": "cargo",
+          "packages": 376
+        }
+      ],
+      "findings": []
+    },
+    {
+      "role": "eval-worker",
+      "platform": "linux/amd64",
+      "image": "ghcr.io/alimobrem/agentci-eval-worker@sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3",
+      "configDigest": "sha256:7697711fd014a05d6f0b8488dcba1ff94a1fa3859ef8caa88389a5f7483e2a39",
+      "sha256": "ee18757e4c01741be9b78b877145264664fa0c37ca6b758fe26392f10a2a588a",
+      "scanner": {
+        "Version": "0.75.0"
+      },
+      "targets": [
+        {
+          "target": "ghcr.io/alimobrem/agentci-eval-worker@sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3 (redhat 10.2)",
+          "class": "os-pkgs",
+          "type": "redhat",
+          "packages": 92
+        },
+        {
+          "target": "Node.js",
+          "class": "lang-pkgs",
+          "type": "node-pkg",
+          "packages": 209
+        },
+        {
+          "target": "app/node_modules/@temporalio/core-bridge/Cargo.lock",
+          "class": "lang-pkgs",
+          "type": "cargo",
+          "packages": 376
+        },
+        {
+          "target": "usr/local/bin/docker",
+          "class": "lang-pkgs",
+          "type": "gobinary",
+          "packages": 1
+        }
+      ],
+      "findings": []
+    },
+    {
+      "role": "eval-worker",
+      "platform": "linux/arm64",
+      "image": "ghcr.io/alimobrem/agentci-eval-worker@sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3",
+      "configDigest": "sha256:30dab42bc323ad8239c69d70cac005725880daab5c2e5f32ef47dce69114e056",
+      "sha256": "768d0563ee57a0620a3a0b77319cdc675751356dde530ba9399c2b5aa673dcd1",
+      "scanner": {
+        "Version": "0.75.0"
+      },
+      "targets": [
+        {
+          "target": "ghcr.io/alimobrem/agentci-eval-worker@sha256:fdbdf621fb09567cd03bdfe54fb8ce91fc46c18557006e6955306400a2c112e3 (redhat 10.2)",
+          "class": "os-pkgs",
+          "type": "redhat",
+          "packages": 92
+        },
+        {
+          "target": "Node.js",
+          "class": "lang-pkgs",
+          "type": "node-pkg",
+          "packages": 209
+        },
+        {
+          "target": "app/node_modules/@temporalio/core-bridge/Cargo.lock",
+          "class": "lang-pkgs",
+          "type": "cargo",
+          "packages": 376
+        },
+        {
+          "target": "usr/local/bin/docker",
+          "class": "lang-pkgs",
+          "type": "gobinary",
+          "packages": 1
+        }
+      ],
+      "findings": []
+    },
+    {
+      "role": "eval-runner",
+      "platform": "linux/amd64",
+      "image": "ghcr.io/alimobrem/agentci-eval-runner@sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143",
+      "configDigest": "sha256:59d1a81a4d598a164b25883c54ea588e10cbdc2ecb0db19f1bd2b5ad8335f7e3",
+      "sha256": "e48e75d1380429652cdd926f5fb89975db107adf3db9955f250fe145e40fcc56",
+      "scanner": {
+        "Version": "0.75.0"
+      },
+      "targets": [
+        {
+          "target": "ghcr.io/alimobrem/agentci-eval-runner@sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143 (redhat 10.2)",
+          "class": "os-pkgs",
+          "type": "redhat",
+          "packages": 102
+        },
+        {
+          "target": "Python",
+          "class": "lang-pkgs",
+          "type": "python-pkg",
+          "packages": 5
+        }
+      ],
+      "findings": []
+    },
+    {
+      "role": "eval-runner",
+      "platform": "linux/arm64",
+      "image": "ghcr.io/alimobrem/agentci-eval-runner@sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143",
+      "configDigest": "sha256:7e32ee9c5242c204089e24573d8709bed2f93710d2d6afa2b22f730437a835aa",
+      "sha256": "6844093bbd589272f547631e3c495121020d8bedc11618aba84602a34aa9624f",
+      "scanner": {
+        "Version": "0.75.0"
+      },
+      "targets": [
+        {
+          "target": "ghcr.io/alimobrem/agentci-eval-runner@sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143 (redhat 10.2)",
+          "class": "os-pkgs",
+          "type": "redhat",
+          "packages": 102
+        },
+        {
+          "target": "Python",
+          "class": "lang-pkgs",
+          "type": "python-pkg",
+          "packages": 5
+        }
+      ],
+      "findings": []
+    },
+    {
+      "role": "eval-engines",
+      "platform": "linux/amd64",
+      "image": "ghcr.io/alimobrem/agentci-eval-engines@sha256:864e9ee51ada3096cc41f2725195b9e0916fe6b83dc5618758207a30b07c1242",
+      "configDigest": "sha256:303fb52d0426e6090729f2ebfae11f396d763f5d07c3507ad8ccc601d3cd3bac",
+      "sha256": "f25ba96de1cceef30e4219cc0f0cb9178016a73923bb385132552b8967408983",
+      "scanner": {
+        "Version": "0.75.0"
+      },
+      "targets": [
+        {
+          "target": "ghcr.io/alimobrem/agentci-eval-engines@sha256:864e9ee51ada3096cc41f2725195b9e0916fe6b83dc5618758207a30b07c1242 (redhat 10.2)",
+          "class": "os-pkgs",
+          "type": "redhat",
+          "packages": 102
+        },
+        {
+          "target": "Node.js",
+          "class": "lang-pkgs",
+          "type": "node-pkg",
+          "packages": 847
+        },
+        {
+          "target": "Python",
+          "class": "lang-pkgs",
+          "type": "python-pkg",
+          "packages": 78
+        }
+      ],
+      "findings": [
+        {
+          "target": "Node.js",
+          "id": "CVE-2026-85393",
+          "severity": "HIGH",
+          "package": "node-forge",
+          "installedVersion": "1.4.0",
+          "fixedVersion": null
+        }
+      ]
+    },
+    {
+      "role": "eval-engines",
+      "platform": "linux/arm64",
+      "image": "ghcr.io/alimobrem/agentci-eval-engines@sha256:864e9ee51ada3096cc41f2725195b9e0916fe6b83dc5618758207a30b07c1242",
+      "configDigest": "sha256:b0ddc7283695628c85da9009dc01b28cf3e67b300c1f6d61e551eabc06a7ef08",
+      "sha256": "96495f68eae1ee21e38c717d23d08bc80c158ac65706de0d280d06615f58ffd5",
+      "scanner": {
+        "Version": "0.75.0"
+      },
+      "targets": [
+        {
+          "target": "ghcr.io/alimobrem/agentci-eval-engines@sha256:864e9ee51ada3096cc41f2725195b9e0916fe6b83dc5618758207a30b07c1242 (redhat 10.2)",
+          "class": "os-pkgs",
+          "type": "redhat",
+          "packages": 102
+        },
+        {
+          "target": "Node.js",
+          "class": "lang-pkgs",
+          "type": "node-pkg",
+          "packages": 846
+        },
+        {
+          "target": "Python",
+          "class": "lang-pkgs",
+          "type": "python-pkg",
+          "packages": 78
+        }
+      ],
+      "findings": [
+        {
+          "target": "Node.js",
+          "id": "CVE-2026-85393",
+          "severity": "HIGH",
+          "package": "node-forge",
+          "installedVersion": "1.4.0",
+          "fixedVersion": null
+        }
+      ]
+    },
+    {
+      "role": "eval-agentci",
+      "platform": "linux/amd64",
+      "image": "ghcr.io/alimobrem/agentci-eval-agentci@sha256:8e2cc69b65e6efb1bd4e4a7f5d8eb6ef5e122bba9c0a5c1453aeb0ae66a5697d",
+      "configDigest": "sha256:1b7f1ea64d0023fe8aef3f2a4314250e50709733f271bf3d86ffa4ce69ba2222",
+      "sha256": "e4e7e14f341567d09256e6193da289e8d2acfff96b576c075fc9b1e9dcb4043a",
+      "scanner": {
+        "Version": "0.75.0"
+      },
+      "targets": [
+        {
+          "target": "ghcr.io/alimobrem/agentci-eval-agentci@sha256:8e2cc69b65e6efb1bd4e4a7f5d8eb6ef5e122bba9c0a5c1453aeb0ae66a5697d (redhat 10.2)",
+          "class": "os-pkgs",
+          "type": "redhat",
+          "packages": 102
+        },
+        {
+          "target": "Node.js",
+          "class": "lang-pkgs",
+          "type": "node-pkg",
+          "packages": 211
+        },
+        {
+          "target": "Python",
+          "class": "lang-pkgs",
+          "type": "python-pkg",
+          "packages": 5
+        },
+        {
+          "target": "node_modules/@temporalio/core-bridge/Cargo.lock",
+          "class": "lang-pkgs",
+          "type": "cargo",
+          "packages": 376
+        }
+      ],
+      "findings": []
+    },
+    {
+      "role": "eval-agentci",
+      "platform": "linux/arm64",
+      "image": "ghcr.io/alimobrem/agentci-eval-agentci@sha256:8e2cc69b65e6efb1bd4e4a7f5d8eb6ef5e122bba9c0a5c1453aeb0ae66a5697d",
+      "configDigest": "sha256:6201c90d30ff9953728dc52fbd75f00b1a667d0ae5cf430a60d94a0885d8c4cc",
+      "sha256": "ae04aac096ef5e33c4ab2d893d7d629d9414e06ebbdecb5b7a36952ac70d639c",
+      "scanner": {
+        "Version": "0.75.0"
+      },
+      "targets": [
+        {
+          "target": "ghcr.io/alimobrem/agentci-eval-agentci@sha256:8e2cc69b65e6efb1bd4e4a7f5d8eb6ef5e122bba9c0a5c1453aeb0ae66a5697d (redhat 10.2)",
+          "class": "os-pkgs",
+          "type": "redhat",
+          "packages": 102
+        },
+        {
+          "target": "Node.js",
+          "class": "lang-pkgs",
+          "type": "node-pkg",
+          "packages": 211
+        },
+        {
+          "target": "Python",
+          "class": "lang-pkgs",
+          "type": "python-pkg",
+          "packages": 5
+        },
+        {
+          "target": "node_modules/@temporalio/core-bridge/Cargo.lock",
+          "class": "lang-pkgs",
+          "type": "cargo",
+          "packages": 376
+        }
+      ],
+      "findings": []
+    }
+  ],
+  "nativeAcceptance": "releases/m2-native-published-downloads.json",
+  "officialPins": "releases/m2-official-stable-pins.json",
+  "upstreamRecheck": "releases/m2-forge-official-source-recheck.json",
+  "nodeForge": {
+    "advisory": "GHSA-86w9-cpqp-85rv",
+    "cve": "CVE-2026-85393",
+    "packageVersion": "1.4.0",
+    "upstreamFixedVersion": null,
+    "disposition": "Pinned reviewed upstream source backport applied to both published optional-engine platforms; installed bytes and malformed/valid/wrong-message regressions independently verified natively. Version-based HIGH remains recorded.",
+    "maintenanceOwner": "AgentCI repository maintainers",
+    "maintenancePolicy": "docs/releases/m2-native-security.md",
+    "upstreamCommit": "ceba34402e329f0365134f23fe19898756527d65",
+    "installedRsaSha256": "acc22e5d36e27832c34e02dd3933aad7977d45b047eead5016520735efedc9c5"
+  },
+  "coverageLimits": [
+    "Docker vendor and Temporal Cargo manifests are upstream source inventories, not exact compiled dependency graphs or proof of full reproducibility.",
+    "Scanner results do not establish absence of unknown vulnerabilities.",
+    "The malformed ASN.1 fixture isolates the reported validation defect with padding checks skipped; it does not demonstrate a full production signature-forgery exploit.",
+    "Deferred Podman development image findings remain unresolved and are excluded from the Docker-only M2 distribution; operator daemon security is independently managed."
+  ],
+  "releaseAcceptance": "Security component acceptance only; publication, public package installation, customer demo and phase closure require their own evidence."
+}

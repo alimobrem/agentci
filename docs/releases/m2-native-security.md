@@ -1,4 +1,13 @@
-# M2 native dependency evidence (release pending)
+# M2 native dependency evidence and release disposition
+
+The Docker-only `0.3.1-m2` security component is accepted with the documented
+downstream node-forge backport below. All twelve published role/platform scans
+and both native downloaded runtime suites are verified in
+`releases/m2-published-security-disposition.json` and
+`releases/m2-native-published-downloads.json`. Public package distribution and
+the milestone release/demo gates remain separate.
+
+## Earlier Podman development candidate
 
 The earlier combined-client evaluator packaged the official Podman 6.1.3 static
 remote client and Docker 29.8.2 CLI in UBI. The owner subsequently approved a
@@ -38,11 +47,9 @@ These are retained findings, not exemptions. The two HIGH findings fail current
 CI scan policy. Latest upstream Podman does not by itself dispose of them. Exact
 binary analysis using official govulncheck 1.8.0 confirms affected gRPC symbols
 are present in the arm64 release binary. Command-call-path assessment is in progress; no non-applicability
-or patched-client claim is made. M2's native security gate stays open until findings
-are resolved or concretely assessed with a documented release treatment, and both
-published platforms have independent scan and runtime evidence. Promptfoo's
-separate node-forge finding and reviewed backport also remain under release
-assessment.
+or patched-client claim is made. These findings remain open for deferred Podman
+adoption. Podman is absent from the released Docker-only evaluator. The separate
+Promptfoo finding is assessed below against the actual published artifacts.
 
 ## Corrected release candidate evidence
 
@@ -50,12 +57,15 @@ The frozen `0.3.1-m2` product source is
 `9bcff7d57c40536c9ddec126e998aa97bd045f03`. Its full source CI passed 135
 unit/API/domain tests and fifteen mandatory integration groups with no skips;
 see `releases/m2-corrected-final-source-ci.json`. Independent publication
-verification in `releases/m2-four-role-publication.json` checks the official
+verification in `releases/m2-six-role-publication.json` checks the official
 archive hashes, anonymously reads content-addressed registry manifests/configs,
-and binds both platform labels and scan reports to that source. At this checkpoint
-API, worker, eval-worker and eval-runner are verified; the two remaining roles
-and native downloaded runtime acceptance are pending. This is partial evidence,
-not a passed milestone safety gate.
+and binds both platform labels and scan reports to that source. All six roles
+are verified on amd64 and arm64. Run `37259025772` anonymously downloaded and
+executed the images on native runners, passing all fifteen integration groups
+without skips on each architecture, service startup/shutdown, evaluator isolation,
+failure/recovery and owned-child cleanup. The shipped Docker CLI is 29.8.2;
+GitHub's external acceptance daemon was 28.0.4. The operator's daemon is not part
+of AgentCI's image distribution.
 
 ## node-forge downstream patch and maintenance
 
@@ -72,7 +82,7 @@ This is an AgentCI-maintained backport, not an upstream fixed release.
 The official advisory and upstream PR recheck are retained in
 `releases/m2-forge-official-source-recheck.json`. The advisory lists no fixed
 upstream version at that checkpoint. Trivy's version-based HIGH finding is
-retained in the source CI and will also be retained in published-platform scan
+retained in the source CI and in both published-platform scan
 reports. No ignore rule, fabricated package version or clean-scan claim is used.
 
 The acceptance workflow merged in PR #17 checks the actual anonymously downloaded
@@ -80,8 +90,9 @@ engine on native amd64 and arm64 runners. It compares installed RSA, metadata,
 fixture and verifier hashes to the frozen release source, then executes the
 shipped regression verifier. That verifier rejects the malformed nested structure,
 accepts valid SHA-256 and SHA-512 RSA signatures, and rejects wrong messages.
-These downloaded checks have not yet run; adding them is not remediation proof
-for a published artifact. The malformed fixture uses skipped padding checks to
+Both native downloaded checks passed, with official archive hashes and installed
+image/config identities independently checked against the publication record.
+The malformed fixture uses skipped padding checks to
 isolate the ASN.1 validation defect; it does not demonstrate a complete production
 signature-forgery exploit or establish the safety of every forge call path.
 
@@ -94,5 +105,7 @@ engine's release. Once upstream publishes a supported fix, replace the backport
 with the verified upstream version and retain the regression and historical
 scanner evidence. An affected shipped engine requires a new immutable release
 and an explicit upgrade notice; existing image tags and assets must not be
-rewritten. The final release disposition remains pending the published native
-checks and complete platform inventory/scanner assessment.
+rewritten. The release disposition accepts this specific downstream remediation
+with the retained finding and maintenance obligation. All other published role
+scans report zero findings at this checkpoint. The source-inventory and scanner
+coverage limits above remain explicit; this is not a universal security guarantee.

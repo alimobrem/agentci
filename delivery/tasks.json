@@ -1054,14 +1054,16 @@
         "SPEC-40-038",
         "SPEC-11.4-007"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T13:58:09.949Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T03:29:11.034Z",
       "acceptance": [
         {
           "text": "Published default and optional-engine inventories include current official dependency/runtime verification, image-platform scans, Docker CLI and Temporal/native scanner coverage. Resolve fixable findings. For node-forge GHSA-86w9-cpqp-85rv, provide an upstream-supported fix, a pinned reviewed upstream backport with before/after crypto regressions and explicit downstream maintenance/scanner treatment, or concrete call-path/exploitability evidence and explicit documented release treatment; no silent ignored finding, fabricated clean scan or removed M2 optional-engine scope. Re-run actual Promptfoo/DeepEval/native acceptance and verify pinned artifacts.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-published-security-disposition.json"
+          ]
         }
       ]
     },
@@ -1200,14 +1202,16 @@
         "SPEC-40-034",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T17:34:47.377Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T03:29:09.712Z",
       "acceptance": [
         {
           "text": "Publication workflow covers API/controller, evaluator, default runner, optional engines and trusted self-eval dependency image for amd64/arm64; exact source/version labels and digest manifests bind all inputs. Existing version tags cannot be overwritten, including on ambiguous registry/auth/network failure. Every published platform is scanned, native service inventories are independently verified, and failed attempts retain evidence. Validate guards, workflows and applicable checks before hosted publication; publication/download/runtime gates remain pending until exercised.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-six-role-publication.json"
+          ]
         }
       ]
     },
@@ -1219,14 +1223,16 @@
         "SPEC-40-034",
         "SPEC-40-039"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-04T18:03:23.197Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T03:29:10.141Z",
       "acceptance": [
         {
           "text": "Pull all six public role digests anonymously; bind source/version/native platform identities; execute actual API/worker/eval-worker and mandatory runner/optional-engine/self-eval integration on native amd64 and arm64. Retain per-platform download and failure/recovery evidence before completion.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-native-published-downloads.json"
+          ]
         }
       ]
     },
@@ -1374,14 +1380,16 @@
         "SPEC-40-034",
         "SPEC-40-038"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T02:18:58.711Z",
-      "completedAt": null,
+      "completedAt": "2026-10-05T03:29:10.573Z",
       "acceptance": [
         {
           "text": "Native amd64 and arm64 downloaded-engine jobs bind the RSA source, pinned metadata, fixture and verifier hashes to the release source; reject the malformed signature and accept valid signatures while preserving the upstream scanner finding and explicit downstream disposition.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "releases/m2-native-published-downloads.json"
+          ]
         }
       ]
     }
