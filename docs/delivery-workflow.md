@@ -8,6 +8,13 @@ AgentCI product milestones or replace human evidence review.
 
 ## Daily development
 
+Before the next phase, review the [phase/PR plan](phase-pr-plan.md). It sizes
+M3–M10 into reviewable changes, records dependencies and acceptance, and lists
+decisions needed before implementation. Its [ownership map](../delivery/phase-pr-plan.json)
+is planning evidence, not implementation status. Validate it with
+`node scripts/check-phase-pr-plan.mjs`; create tracked tasks only when starting
+the corresponding work. Current phase release gates still precede later phases.
+
 ```sh
 npm run check:fast
 npm run delivery -- report
