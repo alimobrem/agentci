@@ -71,6 +71,32 @@ A neutral Check means the advisory analysis completed; it does not certify
 behavioral correctness or authorize deployment. Invalid inputs and infrastructure
 failures are reported explicitly. The current deployment is for one repository.
 
+## M2 release candidate
+
+M2 adds behavioral evaluation orchestration. Its code and hosted self-review have
+verified acceptance; registry publication, anonymous downloaded-runtime checks,
+released customer replay and the full release/demo remain pending. M1 remains the
+latest published distribution until those gates pass. Follow the
+[M2 readiness record](docs/releases/m2-readiness.md) for current evidence.
+
+- Versioned EvalSuite manifests select native commands, pytest, optional
+  Promptfoo/DeepEval or registered HTTP providers using impact and requirements.
+- Frozen baseline assertions evaluate exact base/head code; deleting or weakening
+  a head's suite cannot erase the baseline. Missing execution stays explicit.
+- Repeated trials retain pass rates, Wilson intervals, critical failures and
+  observed metrics, then report scenario deltas and regressions.
+- A separate evaluator runs untrusted commands in disposable non-root containers;
+  GitHub App credentials stay in the controller. Docker is the M2 default, with
+  UBI service images. Podman adoption remains tracked separately.
+- GitHub Checks expose outcomes and retained evidence. Agents retrieve scoped
+  comparisons and verified streaming exports through the API/client.
+
+Start with the [M2 customer and release guide](docs/m2-guide.md),
+[adapter-authoring guide](docs/adapter-authoring.md),
+[comparison API](docs/eval-comparison-api.md) and
+[recovery guide](docs/eval-recovery.md). The first web dashboard is planned for M3;
+current interfaces are GitHub Checks, CLI operator commands and the API/client.
+
 ## Architecture
 
 ```mermaid
@@ -78,11 +104,16 @@ flowchart LR
   GH[GitHub PR] --> API[Signed webhook API]
   API --> PG[(PostgreSQL receipt and outbox)]
   PG --> T[Temporal workflow]
-  T --> W[Review worker]
+  T --> W[Review controller]
   W --> G[Immutable Git objects]
   W --> D[Semantic diff and risk rules]
   D --> E[(Immutable evidence)]
-  E --> C[Advisory GitHub Check]
+  E --> C[Advisory GitHub Checks]
+  W --> U[(Scoped eval units)]
+  U --> V[Separate evaluator]
+  V --> R[Disposable isolated runners]
+  R --> B[(Behavioral observations)]
+  B --> E
 ```
 
 The TypeScript API durably receives scoped events. Temporal coordinates retries;
@@ -124,7 +155,8 @@ Follow the [customer guide](docs/customer-onboarding.md) to register a private A
 for one repository and deploy the API/worker. Customers see advisory GitHub Checks;
 agents use the authenticated evidence API through `agentci/client`. The CLI
 provides bootstrap, setup, validation and local review. Validation checks contracts
-and eval YAML syntax; behavioral eval execution starts in M2.
+and eval YAML syntax. Behavioral execution is part of the M2 candidate described
+above; the released M1 CLI does not execute evals.
 
 ### Service images
 

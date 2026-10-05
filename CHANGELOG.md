@@ -1,5 +1,18 @@
 # Releases
 
+## 0.3.0-m2 — release candidate
+
+Not yet published or milestone-complete; see [M2 readiness](docs/releases/m2-readiness.md).
+
+- Strict EvalSuite contracts, impact/requirement selection and frozen baseline/head comparisons.
+- Isolated native/pytest runners, optional Promptfoo/DeepEval and registered HTTP adapters.
+- Scenario normalization, repeated trials, pass/critical thresholds and Wilson intervals.
+- Durable scoped eval units, controller/evaluator recovery, cancellation and stale-head fences.
+- Authenticated comparison API/client and bounded identity/digest-verified streaming exports.
+- Trusted hosted behavioral self-review with retained exact-head failure and passing recovery evidence.
+- Docker-default UBI evaluator packaging, six-role image publication and native download acceptance infrastructure.
+- Bounded verified snapshot reuse; recorded timings do not imply proven total delivery acceleration.
+
 ## 0.2.1-m1 — 2026-10-03
 
 - Empty-project initialization and configurable customer-owned GitHub App setup.
