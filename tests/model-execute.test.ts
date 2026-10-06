@@ -31,7 +31,9 @@ test('malformed output and raw errors are redacted and never retried implicitly'
 test('accounting failure cannot return success or authorize another dispatch',async()=>{
  const s=setup();s.ledger.settle=async()=>{throw Error('private database details');};await assert.rejects(invokeModel(s.provider,request(),s.ledger),/ambiguous-attempt/);assert.equal(s.calls(),1);
 });
-test('retry count is bounded and missing or invalid estimates prevent reservation',async()=>{
+test('retry count is bounded and missing or invalid estimates prevent reservation',async t=>{
+ // This case checks attempt count, not elapsed time; real backoff timers remain active.
+ t.mock.timers.enable({apis:['Date'],now:Date.UTC(2026,9,6)});
  const s=setup();let tries=0;s.provider.invoke=async()=>{tries++;throw new ProviderFailure('rate-limit',true,'not-sent');};await assert.rejects(invokeModel(s.provider,request(),s.ledger),/rate-limit/);assert.equal(tries,3);assert.equal(s.events.filter(event=>event[0]==='reserve').length,3);
  for(const estimateCost of [undefined,()=>{throw Error('private fixture');},()=>({upperBoundUsdMicros:0,pricingRevision:'fixture',maxInputTokens:10,maxOutputTokens:256})]){const fixture=setup();fixture.provider.estimateCost=estimateCost;await assert.rejects(invokeModel(fixture.provider,request(),fixture.ledger),/invalid-request/);assert.deepEqual(fixture.events,[]);}
 });
