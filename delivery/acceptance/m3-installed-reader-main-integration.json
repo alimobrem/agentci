@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "v1alpha1",
+  "scope": "PR65 accepted-main integration; no new product implementation or milestone closure",
+  "originalHead": "b191ecf4dadcffa3e88a5091b961ac7274cefc56",
+  "acceptedMain": "241d5a689507874706814c95c7d601c571c43bb9",
+  "preservedPaths": [
+    "packages",
+    "apps",
+    "cmd",
+    "scripts/package-smoke.mjs",
+    "package.json",
+    "package-lock.json",
+    "tests/integration/reproduction-installed-reader.test.ts",
+    ".github/workflows/verify.yaml",
+    "docs/phases/m3-installed-history-reader.md"
+  ],
+  "productChanges": false,
+  "checks": {
+    "fast": "10 passed, 4.27 seconds",
+    "delivery": "110 tasks validated; 18 M3 gates open",
+    "firstFastAttempt": "sandbox loopback listen EPERM; preserved, authorized rerun passed"
+  },
+  "logs": {
+    "/private/tmp/agentci-pr65-main-fast.log": {
+      "sha256": "da4f29ec8d353fafa050bbaa742873bd1644e3abafc466dfa820c73a480f0af6"
+    },
+    "/private/tmp/agentci-pr65-main-fast-authorized.log": {
+      "sha256": "fc1af307bee5ffdd6e9ce8b2b19e2f00ce191d3ce3c4a2f00ae30921fa4f6702"
+    },
+    "/private/tmp/agentci-pr65-main-delivery.log": {
+      "sha256": "6ed912f77bee03126ecb83427729775b4288b915a22443be3610473648657053"
+    }
+  },
+  "previousExactHostedProof": {
+    "run": "37416120979",
+    "pr": "65",
+    "candidate": "b191ecf4dadcffa3e88a5091b961ac7274cefc56",
+    "base": "1fe6a38bf52629bb34bd3b5b25f7287b6166fd18",
+    "testedPreview": "0fa837ec6e74e47995b9e9690383e62a2f8a75cd",
+    "acceptedTree": "288c693d23168c71c6ec87e7b01b22e2d8a84318",
+    "artifact": {
+      "id": 11392165869,
+      "digest": "sha256:a64ba54e8e0134432d9548d7f5afc04b418371ec110d85356ade44c761a010e9",
+      "downloadedOnce": true
+    },
+    "hashesVerified": 10,
+    "counts": {
+      "fast": {
+        "tests": 405,
+        "pass": 405,
+        "fail": 0,
+        "skipped": 0
+      },
+      "integration": {
+        "tests": 109,
+        "pass": 109,
+        "fail": 0,
+        "skipped": 0
+      }
+    },
+    "fastChecks": 10,
+    "api": "Both immutable baselines and removal-negative checks pass",
+    "package": "Installed production package smoke pass",
+    "runtime": "Compiled containers and isolated eval worker actual Temporal execution/restart/cleanup passed linux/amd64",
+    "native": "Both Temporal artifacts match official npm hashes",
+    "scans": {
+      "eval-engines": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "fixed": null
+        }
+      ],
+      "eval-worker": [],
+      "api": [],
+      "worker": [],
+      "eval-runner": [],
+      "eval-agentci": []
+    },
+    "cache": "warm: logged cache restoration and BuildKit CACHED layers; changed inputs rebuilt",
+    "logSha256": "5ca04a8df52fefee7c7df18665d6459e1de9dd66abe433d48d6525854590f3f2",
+    "constraints": [
+      "Exact PR65 installed-reader test headb191 against original PR64base1fe; not new PR64head11819f9 or later main",
+      "405 fast and109 integration tests passed; separate packaging invocation ran one additional realPG reader test against fresh production-only installed tarball with zero skips.",
+      "Existing base migrations014/015 remain packaged exactly",
+      "No phase release/live-provider/public-distribution/ARM64 runtime acceptance inferred",
+      "Earlier source proofs and cancelled attempts retained separately"
+    ],
+    "baseMigrationsPackagedExactly": {
+      "014_m3_reproduction_reservations.sql": "9a8956b2a7d4d75751f34b2e78f52c97dae98ed5dd99ae6581edea55dcf48d0c",
+      "015_m3_reproduction_eval_source.sql": "e3ddc12ae2b90b22bebfa18570c736c2ef953518f8acbf6dde70cd7d4a3948cc"
+    },
+    "installedPostgresReader": {
+      "invocation": "node scripts/package-smoke.mjs --postgres-readers",
+      "install": {
+        "acceptance": "installed-v2-reader",
+        "version": "0.4.0-m3-dev.1",
+        "install": "npm install --omit=dev",
+        "offline": false,
+        "developmentLoaderInstalled": false,
+        "publicExport": "agentci/client"
+      },
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "Installed public export reads genuine PostgreSQL retained v2 history through authenticated source-hosted control HTTP",
+      "resolution": "package-smoke sets AGENTCI_TEST_CLIENT_PACKAGE_ROOT to fresh installed package; fixture asserts resolved export equals installed dist/packages/client/index.js",
+      "scope": "Installed client, source-hosted test server; not installed server deployment",
+      "stepLogSha256": "3c38d0e0d14481b201c833a3624ad02115cc9f3722f61547f56e47fabe7c6876"
+    },
+    "auditCorrection": "Initial audit overlooked separate packaging PG invocation; corrected from existing workflow/source/logs without rerunning tests."
+  },
+  "installedSmoke": "Not repeated: package runtime/source, package manifests, packaging hook, fixture and public export unchanged. Prior exact candidate CI installed PostgreSQL acceptance is retained above. Final merged-source hosted acceptance remains pending.",
+  "authorityCompletion": "Not changed; canonical c3d1 completion retained by parent PR67."
+}

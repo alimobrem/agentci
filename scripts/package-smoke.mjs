@@ -11,6 +11,8 @@ import {canonical,digest} from '../dist/packages/review/engine.js';
 const expectedVersion = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')).version;
 const arguments_ = process.argv.slice(2);
 const offline = arguments_.includes('--offline');
+const postgresReaders = arguments_.includes('--postgres-readers');
+if(postgresReaders&&!process.env.AGENTCI_TEST_DATABASE_URL)throw new Error('--postgres-readers requires AGENTCI_TEST_DATABASE_URL; never silently skip');
 const archive = resolve(arguments_.find(argument => !argument.startsWith('--')) ?? `releases/agentci-${expectedVersion}.tgz`);
 const root = await mkdtemp(join(tmpdir(), 'agentci-package-'));
 try {
@@ -20,6 +22,14 @@ try {
   if (version !== expectedVersion) throw new Error('Unexpected packaged version');
   // Exercise installed provider modules and their runtime schema assets, not source imports.
   const installedRoot=join(root,'node_modules/agentci');
+  if(postgresReaders){
+    const installedManifest=JSON.parse(await readFile(join(installedRoot,'package.json'),'utf8'));
+    if(installedManifest.name!=='agentci'||installedManifest.version!==expectedVersion)throw new Error('Installed package dependency identity mismatch');
+    try{await readFile(join(root,'node_modules/tsx/package.json'));throw new Error('Development test loader entered production installation');}catch(error){if(error.code!=='ENOENT')throw error;}
+    console.log(JSON.stringify({acceptance:'installed-v2-reader',version:expectedVersion,install:'npm install --omit=dev',offline,developmentLoaderInstalled:false,publicExport:'agentci/client'}));
+    execFileSync(process.execPath,['--import','tsx','--test',resolve('tests/integration/reproduction-installed-reader.test.ts')],{env:{...process.env,AGENTCI_TEST_CLIENT_PACKAGE_ROOT:installedRoot},stdio:'inherit',timeout:60000});
+    console.log('Installed public v2 reader passed against authenticated control HTTP and real PostgreSQL; no Temporal or provider credentials.');
+  }
   const {validateModelRequest}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/request.js')).href);
   const {validateModelResponse}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/response.js')).href);
   const request=validateModelRequest(JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-request.json'),'utf8')));
