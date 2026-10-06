@@ -2325,15 +2325,15 @@
         "SECTION-12.4",
         "SECTION-12.5"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T03:15:15.071Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T04:32:13.656Z",
       "acceptance": [
         {
           "text": "Controller-owned bounded immutable approval registry resolves strict caller selectors to exact current finding/version and approved queue successor, assertion inputs and runner policy. Reject unknown fields, changed digest/subject/version, duplicate registry IDs and mutated plans; detached outputs and invalid lifecycle cases remain safe. Document atomic queue/reservation/dispatch and real HTTP/PG/Temporal as dependent c3 acceptance, with no production route claim.",
           "status": "passed",
           "evidence": [
-            "delivery/acceptance/m3-reproduction-approval-registry-local.json"
+            "delivery/acceptance/m3-reproduction-a-merged.json"
           ]
         }
       ],
@@ -2375,15 +2375,15 @@
         "SECTION-12.4",
         "SECTION-12.5"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T03:26:04.209Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T04:32:14.145Z",
       "acceptance": [
         {
           "text": "Real PostgreSQL proves full-selector replay, exact admitted-review membership, conflicting operation and stale-version rejection, and one atomic authorized queue event, immutable plan, operation receipt and dispatch intent. Concurrent duplicates and injected transaction failures cannot strand partial state. No production dispatcher or HTTP route is enabled; Temporal and customer transport remain original c3 acceptance.",
           "status": "passed",
           "evidence": [
-            "delivery/acceptance/m3-reproduction-reservations-local.json"
+            "delivery/acceptance/m3-reproduction-b-merged.json"
           ]
         }
       ],
