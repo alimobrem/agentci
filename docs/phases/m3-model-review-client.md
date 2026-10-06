@@ -137,5 +137,9 @@ the initial identity read, and an optional Node caller `signal`. Each HTTP read
 keeps its existing per-operation timeout. History is capped at 10,000 versions and
 32 MiB in total. Malformed/expired cursors, missing final pages, changed watermarks,
 and invalid transitions fail closed. The focused fixture tests exercise these
-client boundaries; real-service and installed-package read acceptance is pending
-integration with the server slice.
+client boundaries. The real HTTP/PostgreSQL/Temporal acceptance also passed with
+the compiled client and again with the offline production-only installed public
+package and CLI. It verifies summary pins survive a real queue transition,
+current versus historical reads, full paginated history, and the read commands.
+The local acceptance record is `delivery/acceptance/m3-07c-client-reads.json`;
+hosted CI, certified export, and milestone release gates remain separate.
