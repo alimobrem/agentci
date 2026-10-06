@@ -1,0 +1,109 @@
+{
+  "run": "37399175969",
+  "artifact": {
+    "id": 11385025045,
+    "archiveDigest": "sha256:b72b1a1c1ecc0d3787f6ffb50341e1b241bc98d3368b960b083a9bc83faa7bfa",
+    "downloadedOnce": true
+  },
+  "producer": {
+    "version": "0.4.0-m3-dev.1",
+    "sourceCommit": "f08fd043e4bd3c29d6dfa277d7d86e3c9afd8618",
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "runId": "37399175969",
+    "runAttempt": "1",
+    "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+    "evaluatorImage": "sha256:08a74e03d2a0a6ae71116430f010f906fd6f4535e2bb285a23b4ffdddd9b75c5"
+  },
+  "subject": {
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "pullRequest": 51,
+    "baseSha": "f08fd043e4bd3c29d6dfa277d7d86e3c9afd8618",
+    "headSha": "e5b1ee777d54abf857f58156125a1c80ce9371be"
+  },
+  "comparison": {
+    "id": "8ffeb1ba-e0b6-49f5-a00d-0883f207f9f7",
+    "reviewId": "35e6298c-d09a-4183-9bac-edc88061d1cd",
+    "file": "comparison-8ffeb1ba-e0b6-49f5-a00d-0883f207f9f7.ndjson",
+    "sha256": "sha256:33d080107a0e0e58eea1ef4b012eaeb2ae42935c6cf7997a1ccc5279a655a6c6",
+    "bytes": 25722
+  },
+  "verification": {
+    "header": {
+      "id": "8ffeb1ba-e0b6-49f5-a00d-0883f207f9f7",
+      "reviewId": "35e6298c-d09a-4183-9bac-edc88061d1cd",
+      "attemptId": "16148334-05f1-4b8c-a5a4-473714e2dd77",
+      "organizationId": "00000000-0000-4000-8000-000000000001",
+      "subject": {
+        "repository": "alimobrem/agentci",
+        "pullRequest": 51,
+        "baseSha": "f08fd043e4bd3c29d6dfa277d7d86e3c9afd8618",
+        "headSha": "e5b1ee777d54abf857f58156125a1c80ce9371be"
+      },
+      "cancelRequested": false,
+      "unitCount": 8,
+      "snapshotDigest": "sha256:1d6077b7711823de0635d0d34932357a4aaf6a825cf9c6d10ff9486d8a1fbabd",
+      "suiteChanges": [],
+      "coverageGaps": [],
+      "selectionGaps": []
+    },
+    "evidence": {
+      "comparisonId": "8ffeb1ba-e0b6-49f5-a00d-0883f207f9f7",
+      "reviewId": "35e6298c-d09a-4183-9bac-edc88061d1cd",
+      "attemptId": "16148334-05f1-4b8c-a5a4-473714e2dd77",
+      "identity": {
+        "organizationId": "00000000-0000-4000-8000-000000000001",
+        "reviewId": "35e6298c-d09a-4183-9bac-edc88061d1cd",
+        "attemptId": "16148334-05f1-4b8c-a5a4-473714e2dd77",
+        "repository": "alimobrem/agentci",
+        "pullRequest": 51,
+        "baseSha": "f08fd043e4bd3c29d6dfa277d7d86e3c9afd8618",
+        "headSha": "e5b1ee777d54abf857f58156125a1c80ce9371be"
+      },
+      "snapshotDigest": "sha256:1d6077b7711823de0635d0d34932357a4aaf6a825cf9c6d10ff9486d8a1fbabd",
+      "endDigest": "sha256:d79033c461a26fa0142709bd09e298a4935e07a189194764fca22f0fba71826d",
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 8,
+        "comparisonCount": 4
+      },
+      "abbreviated": false,
+      "coverageGaps": 0,
+      "selectionGaps": 0,
+      "suiteChanges": 0,
+      "regressions": 0
+    }
+  },
+  "frames": 15,
+  "unitCount": 8,
+  "scenarioObservations": 38,
+  "assertionGitSha": "f08fd043e4bd3c29d6dfa277d7d86e3c9afd8618",
+  "zeroSkips": true,
+  "suiteChanges": [],
+  "changedCorpusInputs": [
+    "tests/model-stream-execute.test.ts"
+  ],
+  "files": [
+    {
+      "file": "comparison-8ffeb1ba-e0b6-49f5-a00d-0883f207f9f7.ndjson",
+      "sha256": "33d080107a0e0e58eea1ef4b012eaeb2ae42935c6cf7997a1ccc5279a655a6c6"
+    },
+    {
+      "file": "pr-51-16148334-05f1-4b8c-a5a4-473714e2dd77-history.json",
+      "sha256": "77201dbd894d9d4c34b92220bca50c4ae94a5868c80eccd63a151cbec3ee7e59"
+    },
+    {
+      "file": "reviews.json",
+      "sha256": "41d75db0735c7b88d12002ee59da2b15146e790d328cd12648e4d9d7cb5dc133"
+    }
+  ],
+  "limits": [
+    "One trial per scenario; not a repeated reliability estimate.",
+    "Candidate stream test changed; all comparison units used frozen base assertions, not candidate assertions.",
+    "Promoting corrected assertions requires reviewed trusted-main merge and fresh downstream comparisons.",
+    "Image values are local Docker config IDs, not published OCI manifest digests."
+  ]
+}

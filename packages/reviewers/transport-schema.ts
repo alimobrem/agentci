@@ -1,3 +1,6 @@
+import {readFileSync} from 'node:fs';
+import {evalOpenApiSchema} from '../evals/openapi.ts';
+function findingSchema(){const convert=(v:any):any=>{if(Array.isArray(v))return v.map(convert);if(v&&typeof v==='object'){if(v.type==='null')return {nullable:true,enum:[null]};return Object.fromEntries(Object.entries(v).map(([k,x])=>[k,convert(x)]));}return v;};return convert(evalOpenApiSchema(JSON.parse(readFileSync(new URL('../findings/json/model-finding.schema.json',import.meta.url),'utf8'))));}
 import {REVIEWER_ROLES} from './roles.ts';
 // OpenAPI shapes for the implemented transport. Semantic identity/hash checks
 // remain in authoritative domain validators composed by transport.ts.
@@ -21,4 +24,14 @@ export const modelReviewOpenApiSchemas={
  ModelReviewExecutionSummary:summary,
  ModelReviewStatus:object({schemaVersion:version,admission:object({request:ref('ModelReviewAdmission'),digest:hash}),execution:object({state:{type:'string',enum:['queued','dispatched','completed','failed','cancelled','terminated','timed-out']},cancelRequested:{type:'boolean'},terminalDigest:nullableHash}),summary:{...object({summary:ref('ModelReviewExecutionSummary'),digest:hash}),nullable:true}}),
  ModelReviewError:object({error:object({code:{type:'string',enum:['invalid-request','unauthorized','forbidden','review-denied','not-found','method-not-allowed','idempotency-conflict','body-too-large','unsupported-media-type','unsupported-content-encoding','service-unavailable']}})}),
+};
+const eventVersion={type:'integer',minimum:1,maximum:10000};
+const nullableCursor={type:'string',pattern:'^[A-Za-z0-9_-]{1,2048}$',nullable:true};
+const receipt=object({findingId:hash,subjectDigest:hash,evidenceDigest:hash,assertionDigest:nullableHash,actor:{type:'string',enum:['reproduction','operator']},outcome:{type:'string',enum:['reproduced','not-reproduced','error','false-positive','resolved']},reason:{type:'string',minLength:1,maxLength:4096}});
+export const findingOpenApiSchemas={
+ ModelFinding:findingSchema(),
+ FindingHistoryRecord:object({digest:hash,event:object({schemaVersion:version,operationId:uuid,inputDigest:hash,previousDigest:nullableHash,action:{oneOf:[object({type:{type:'string',enum:['create']}}),object({type:{type:'string',enum:['evidence']},finding:ref('ModelFinding')}),object({type:{type:'string',enum:['queue']}}),object({type:{type:'string',enum:['reproduce','false-positive','resolve']},receiptId:inputUuid})]},receipt:{...receipt,nullable:true},finding:ref('ModelFinding')})}),
+ ModelReviewFindings:object({schemaVersion:version,reviewId:uuid,summaryDigest:hash,items:{type:'array',maxItems:100,items:object({id:hash,version:eventVersion,digest:hash})},nextCursor:nullableCursor}),
+ ModelFindingHistory:object({schemaVersion:version,reviewId:uuid,findingId:hash,throughVersion:eventVersion,items:{type:'array',minItems:1,maxItems:100,items:ref('FindingHistoryRecord')},nextCursor:nullableCursor}),
+ FindingReadError:object({error:object({code:{type:'string',enum:['invalid-request','invalid-cursor','unauthorized','not-found','method-not-allowed','review-not-complete','response-too-large','service-unavailable']}})}),
 };

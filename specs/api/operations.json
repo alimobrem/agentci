@@ -200,6 +200,126 @@
         "not a remote charge refund",
         "works while admissions disabled"
       ]
+    },
+    {
+      "operationId": "listReviewFindings",
+      "method": "get",
+      "path": "/v1/model-reviews/{id}/findings",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/integration/model-finding-api.test.ts",
+        "tests/integration/model-finding-read-adversarial.test.ts",
+        "tests/integration/model-finding-read-bounds.test.ts",
+        "tests/integration/model-review-control-startup.test.ts",
+        "tests/model-finding-history-adversarial.test.ts",
+        "tests/model-finding-cursor-adversarial.test.ts"
+      ],
+      "scenarios": [
+        "no summary 409",
+        "bounded empty completion",
+        "page updates cannot alter pinned evidence",
+        "cursor wrong scope expiry and filters rejected",
+        "Partial review reads require deterministic ingestion association",
+        "Immutable summary version differs explicitly from current finding",
+        "Signed cursor binds scope and retained watermark; every page authenticates",
+        "Cumulative 10s SQL budget and 4MiB response bound"
+      ]
+    },
+    {
+      "operationId": "getFinding",
+      "method": "get",
+      "path": "/v1/findings/{id}",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/integration/model-finding-api.test.ts",
+        "tests/integration/model-finding-read-adversarial.test.ts",
+        "tests/integration/model-finding-read-bounds.test.ts",
+        "tests/integration/model-review-control-startup.test.ts",
+        "tests/model-finding-history-adversarial.test.ts",
+        "tests/model-finding-cursor-adversarial.test.ts"
+      ],
+      "scenarios": [
+        "review association checked",
+        "canonical event digest verified",
+        "latest and historical versions explicit",
+        "Partial review reads require deterministic ingestion association",
+        "Immutable summary version differs explicitly from current finding",
+        "Signed cursor binds scope and retained watermark; every page authenticates",
+        "Cumulative 10s SQL budget and 4MiB response bound"
+      ]
+    },
+    {
+      "operationId": "getFindingHistory",
+      "method": "get",
+      "path": "/v1/findings/{id}/history",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "tests": [
+        "tests/integration/model-finding-api.test.ts",
+        "tests/integration/model-finding-read-adversarial.test.ts",
+        "tests/integration/model-finding-read-bounds.test.ts",
+        "tests/integration/model-review-control-startup.test.ts",
+        "tests/model-finding-history-adversarial.test.ts",
+        "tests/model-finding-cursor-adversarial.test.ts"
+      ],
+      "scenarios": [
+        "stable watermark under appended evidence",
+        "no duplicates or missing version",
+        "byte bound preserves next cursor",
+        "Partial review reads require deterministic ingestion association",
+        "Immutable summary version differs explicitly from current finding",
+        "Signed cursor binds scope and retained watermark; every page authenticates",
+        "Cumulative 10s SQL budget and 4MiB response bound"
+      ]
+    },
+    {
+      "operationId": "exportModelReview",
+      "method": "get",
+      "path": "/v1/model-reviews/{id}/export",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/integration/model-review-export.test.ts",
+        "tests/integration/model-review-export-adversarial.test.ts",
+        "tests/integration/model-review-control-startup.test.ts",
+        "tests/model-review-export-adversarial.test.ts"
+      ],
+      "scenarios": [
+        "failed cancelled queued exports preserve null summary and missing roles",
+        "M3-C11 interrupted export never certified",
+        "reject wrong identity reordered missing or extra frames",
+        "refused reviewer retained",
+        "concurrent lifecycle change isolated by captured version manifest",
+        "oversized snapshot fails before headers",
+        "Two active exports and 120-second whole-response deadline",
+        "Snapshot transaction and batch reads released before network backpressure",
+        "No paid provider execution or repository fetch during export"
+      ]
     }
   ]
 }

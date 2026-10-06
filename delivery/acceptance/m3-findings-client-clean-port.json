@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "v1alpha1",
+  "scope": "Clean stacked port on PR52 findings server; local acceptance only",
+  "baseCommit": "00ffed6dad87e172032148eec7492d147d62fd4c",
+  "testedSourceCommit": "911e0ca703d7909185c2275e29dd43c6b4b5cc2b",
+  "testedSourceTree": "16a260c916dba534b135f45e6ecd09bb38d5d504",
+  "reviewedOriginalCommit": "7cd7e42df5b8144b9cd8d25db55c6000a470830b",
+  "unchangedProductFiles": [
+    "cmd/agentci/finding.ts",
+    "cmd/agentci/main.ts",
+    "cmd/agentci/model-review.ts",
+    "docs/phases/m3-model-review-client.md",
+    "packages/client/index.ts",
+    "packages/client/model-review.ts",
+    "tests/integration/model-review-client.test.ts",
+    "tests/model-finding-client.test.ts"
+  ],
+  "checks": {
+    "build": "passed",
+    "fast": {
+      "passed": 10,
+      "seconds": 5.77
+    },
+    "actualService": {
+      "files": [
+        "tests/integration/model-review-client.test.ts"
+      ],
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "testDurationMs": 3863.055125,
+      "suiteDurationMs": 4482.368875
+    }
+  },
+  "taskTracking": "Unchanged from base; existing M3-07c-2 and M3-07c-4 task events preserved.",
+  "dependencyAudit": "No Check publication or Check scheduler implementation is inherited; product files match reviewed originals exactly.",
+  "limitations": [
+    "No new hosted CI, containers, installed-package or release claim for this clean source; existing original acceptance records remain historical."
+  ],
+  "excluded": "CLI export and its later deadline fix remain on original export-client branch for subsequent combined integration.",
+  "mutationVerifierFollowUp": {
+    "baseFix": "ec08cbc47b2855b01b1c2fe4f0d01cd825c2dc77",
+    "testedMergedHead": "b8613a5b2e42cfca6299cd8f2a74afbf0ae68db3",
+    "mergeChanges": [
+      "scripts/verify-finding-eval.mjs",
+      "delivery/acceptance/m3-finding-mutation-target-repair.json",
+      "delivery/runs/37400121195-attempt-1.json"
+    ],
+    "result": {
+      "baseline": {
+        "exitCode": 0,
+        "report": {
+          "schemaVersion": "v1alpha1",
+          "results": [
+            {
+              "scenario": "finding-lifecycle",
+              "status": "passed"
+            },
+            {
+              "scenario": "finding-reproduction",
+              "status": "passed"
+            }
+          ]
+        }
+      },
+      "mutation": {
+        "exitCode": 1,
+        "report": {
+          "schemaVersion": "v1alpha1",
+          "results": [
+            {
+              "scenario": "finding-lifecycle",
+              "status": "failed"
+            },
+            {
+              "scenario": "finding-reproduction",
+              "status": "passed"
+            }
+          ]
+        }
+      },
+      "substitutedRun": {
+        "exitCode": 1,
+        "report": {
+          "schemaVersion": "v1alpha1",
+          "results": [
+            {
+              "scenario": "finding-lifecycle",
+              "status": "passed"
+            },
+            {
+              "scenario": "finding-reproduction",
+              "status": "failed"
+            }
+          ]
+        }
+      },
+      "scope": "Local frozen-harness acceptance; network isolation and hosted execution are separate gates."
+    },
+    "preservedPriorRuns": [
+      37400399149
+    ],
+    "cacheEvidence": "Failed Verify log contains primary npm cache hit; cancelled advisory cache is unknown.",
+    "productSource": "No production changes from previously tested clean port."
+  }
+}

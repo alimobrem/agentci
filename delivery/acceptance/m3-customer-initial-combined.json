@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "kind": "local-combined-integration-not-release",
+  "sourceCommit": "6adf2a463bde4dca322ae3967df7f8748f3f31f0",
+  "tree": "3be40ade985d3bbf37a6850c4da264bce63b8bd1",
+  "inputs": {
+    "contract": "3ae4de5a5423a30c807d0c6f36c769b0f4b48608",
+    "server": "35f215a29b56e01b1fd0d5cf5809d7d814b423e6",
+    "client": "ced8eee88d4d7d2bdd280030837ced1cdd311bf7",
+    "checksAndScheduler": "42eb3167cfaf43d9e47e9cf3ed56d70c7dda8137"
+  },
+  "build": "passed",
+  "fastChecks": {
+    "passed": 10,
+    "seconds": 3.46
+  },
+  "integration": {
+    "glob": "tests/integration/model-review-*.test.ts",
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 3.47466,
+    "services": "owned real PostgreSQL and Temporal; synthetic GitHub HTTP fixtures, no live provider dispatch"
+  },
+  "package": {
+    "offlineProductionInstallSmoke": "passed",
+    "sha256": "faf9f9ac2c8a4f33f192ea85cae246bb0072240e9050482c71a70a14780ff12c",
+    "version": "0.4.0-m3-dev.1"
+  },
+  "logs": {
+    "build": {
+      "localPath": "/private/tmp/agentci-customer-combined-build.log",
+      "sha256": "261e646d160bdfbb881537da43a24ef9a7ed2a677da3e5740a6707c70d038fc4"
+    },
+    "fast": {
+      "localPath": "/private/tmp/agentci-customer-combined-fast.log",
+      "sha256": "6b6e459d2279ac90788432677f6d95a27d42ffde5fd05610f49c4910084701fd"
+    },
+    "integration": {
+      "localPath": "/private/tmp/agentci-customer-combined-integration.log",
+      "sha256": "8bb8c89bdcdf083cc9e8437c1cedb5723d5e418947cbf4efa4d8def4c187c115"
+    },
+    "package-smoke": {
+      "localPath": "/private/tmp/agentci-customer-combined-package-smoke.log",
+      "sha256": "7bdb9850f5459c0d294d797f6d60104be7b8eb6f834be52fe694ac04cf18abc5"
+    }
+  },
+  "remaining": [
+    "hosted exact-PR acceptance and retained advisory verification",
+    "finding/history/export routes and clients",
+    "approved reproduction/disposition routes and clients",
+    "finding lifecycle and verified receipt Check updates",
+    "packaged full customer path, UI and all M3 release gates"
+  ],
+  "milestoneComplete": false
+}

@@ -1,4 +1,4 @@
-import type {Pool} from 'pg';
+import type {Pool,PoolClient} from 'pg';
 import {canonical,digest} from '../review/engine.ts';
 import {validateReviewAdmissionApproval} from '../reviewers/admission.ts';
 import {validateReviewerProfile,type ReviewerProfile} from '../reviewers/profile.ts';
@@ -8,7 +8,7 @@ import {validateModelReviewStatus,validateReviewerProfileList} from '../reviewer
  */
 export class ModelReviewReads {
  private scope:{organizationId:string;repository:string};
- constructor(private pool:Pool,scope:{organizationId:string;repository:string}){this.scope={...scope,organizationId:scope.organizationId.toLowerCase()};}
+ constructor(private pool:Pool|PoolClient,scope:{organizationId:string;repository:string}){this.scope={...scope,organizationId:scope.organizationId.toLowerCase()};}
  async status(id:string){
   const row=(await this.pool.query(`SELECT a.request,a.digest,a.approval,a.approval_digest,
    o.run_id IS NOT NULL OR o.dispatched_at IS NOT NULL AS dispatched,o.cancel_requested_at IS NOT NULL AS cancelled,

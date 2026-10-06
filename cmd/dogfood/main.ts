@@ -1,9 +1,10 @@
+import {trustedGitBlobSeed} from '../../packages/github/git-object-seed.ts';
 import {hostedReviewCandidates} from '../../packages/github/hosted-selection.ts';
 import {containerEngine} from '../../packages/evals/runner.ts';
 import {readFile,writeFile,mkdir,open,rm,stat} from 'node:fs/promises';
 import {fileURLToPath} from 'node:url';import {randomUUID,createHash} from 'node:crypto';import {execFileSync,spawnSync} from 'node:child_process';
 import {Pool} from 'pg';import {Client,Connection} from '@temporalio/client';import {NativeConnection,Worker} from '@temporalio/worker';
-import {installationClient,currentPullRequest,publishCheck} from '../../packages/github/client.ts';import {verifyExport} from '../../packages/github/dogfood.ts';
+import {installationClient,currentPullRequest,publishCheck,createRemoteSnapshotReader} from '../../packages/github/client.ts';import {verifyExport} from '../../packages/github/dogfood.ts';
 import {verifyHostedReport,verifyHostedComparison,MAX_HOSTED_EXPORT_BYTES,type HostedProducer,type HostedReport,type HostedReview} from '../../packages/github/hosted-evidence.ts';
 import {publishHostedEvalCheck,publishHostedEvalUnavailable} from '../../packages/github/eval-check.ts';
 import type {ReviewJob} from '../../packages/github/webhook.ts';import {Store} from '../../packages/storage/postgres.ts';import {EvalStore} from '../../packages/storage/evals.ts';
@@ -34,6 +35,7 @@ if(process.argv[2]==='publish'){
  }
  console.log(`Processed ${report.reviews.length} retained hosted review candidates; stale heads are skipped.`);
 }else if(process.argv[2]==='prepare'){
+ const snapshots=createRemoteSnapshotReader(github,{seed:trustedGitBlobSeed(process.cwd(),repository)});
  const policy=controllerEvalPolicy(),pool=new Pool({connectionString:process.env.DATABASE_URL,connectionTimeoutMillis:5000,query_timeout:10000});
  let connection:Connection|undefined,native:NativeConnection|undefined,worker:Worker|undefined,running:Promise<void>|undefined,evaluator:string|undefined;
  const evaluatorEnv='.agentci/local/hosted-evaluator.env',report:HostedReport={schemaVersion:'v1alpha1',producer,reviews:[],failed:false};
@@ -59,7 +61,7 @@ if(process.argv[2]==='publish'){
   let ready=false;for(let i=0;i<60;i++){const captured=spawnSync(engine,['logs',evaluator],{encoding:'utf8',timeout:10000,maxBuffer:1024*1024}),logs=captured.stdout+captured.stderr;if(captured.status===0&&logs.includes("state: 'RUNNING'")){ready=true;break;}if(container(['inspect','--format','{{.State.Running}}',evaluator])!=='true')break;await new Promise(r=>setTimeout(r,1000));}
   if(!ready)throw new Error('Separate hosted evaluator did not become ready');
   connection=await Connection.connect({address:process.env.TEMPORAL_ADDRESS});native=await NativeConnection.connect({address:process.env.TEMPORAL_ADDRESS});const client=new Client({connection}),queue=`agentci-hosted-${randomUUID()}`;
-  worker=await Worker.create({connection:native,taskQueue:queue,workflowsPath:fileURLToPath(new URL('../../apps/worker/workflows.js',import.meta.url)),activities:createHostedReviewActivities(github,store,evals,{repository,installationId},policy)});running=worker.run();
+  worker=await Worker.create({connection:native,taskQueue:queue,workflowsPath:fileURLToPath(new URL('../../apps/worker/workflows.js',import.meta.url)),activities:createHostedReviewActivities(github,store,evals,{repository,installationId},policy,snapshots)});running=worker.run();
   const prs=await hostedReviewCandidates(github,repository,process.env.GITHUB_EVENT_NAME,process.env.AGENTCI_TRIGGER_PULL_REQUEST);
   for(const pr of prs){
    const {data}=await github.pulls.get({owner,repo,pull_number:pr.number});if(data.state!=='open')continue;
@@ -80,6 +82,7 @@ if(process.argv[2]==='publish'){
   }
  }catch{report.failed=true;process.exitCode=1;console.error('Hosted prepare did not complete; no successful hosted review is claimed.');}
  finally{
+  console.log(JSON.stringify({event:'hosted-snapshot-reads',...snapshots.metrics()}));
   try{worker?.shutdown();await running;}
   catch{report.failed=true;process.exitCode=1;for(const review of report.reviews)if(review.status==='completed')review.status='unavailable';console.error('Hosted controller shutdown unavailable.');}
   finally{

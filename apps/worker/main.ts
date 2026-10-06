@@ -1,3 +1,4 @@
+import {initializeModelReviewCheckScheduler} from './model-review-publication.ts';
 import {loadReviewerRuntime} from '../../packages/runtime/reviewers.ts';
 import {initializeReviewerController} from './reviewer-runtime.ts';
 import {dispatchAdmittedReviews} from './reviewer-dispatch.ts';
@@ -27,6 +28,7 @@ const connection = await Connection.connect({ address: config.temporalAddress })
 const native = await NativeConnection.connect({ address: config.temporalAddress });
 const client = new Client({ connection, namespace: config.namespace });
 const github = installationClient(config.appId, config.installationId, config.privateKey);
+const modelReviewChecks=await initializeModelReviewCheckScheduler(pool,github,config);
 const reviewerRuntime=await loadReviewerRuntime();
 const reviewers=reviewerRuntime?await initializeReviewerController(pool,github,config,reviewerRuntime):null;
 const evalActivities=createEvalReviewActivities(github,store,evals,config,evalPolicy);
@@ -47,6 +49,7 @@ async function dispatch() {
         reconcileAdmittedReviews(reviewers.dispatch,reviewers.summaries,client,{taskQueue:config.taskQueue,shouldStop:()=>stopped}),
       ]);if(operations.some(result=>result.status==='rejected'))throw Error('Admitted review dispatch/recovery unavailable');
     })());
+    if(modelReviewChecks)pipelines.push(modelReviewChecks.tick(()=>stopped).then(()=>{}));
     const results=await Promise.allSettled(pipelines);if(results.some(result=>result.status==='rejected'))throw Error('Review dispatch/recovery unavailable');
   } catch { console.error('Review dispatch/recovery unavailable; retained work will retry'); }
   finally { dispatching = false; }

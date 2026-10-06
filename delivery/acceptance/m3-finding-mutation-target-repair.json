@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "v1alpha1",
+  "task": "M3-07c-2",
+  "scope": "Mutation verifier maintenance after shared receipt validator extraction; not product acceptance relaxation",
+  "baseCommit": "00ffed6dad87e172032148eec7492d147d62fd4c",
+  "verifierGitBlob": "ff5f68959357be8e20836a1a04807552fb958870",
+  "failedHostedAttempt": {
+    "runId": 37400121195,
+    "attempt": 1,
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37400121195",
+    "sourceCommit": "00ffed6dad87e172032148eec7492d147d62fd4c",
+    "sample": "delivery/runs/37400121195-attempt-1.json",
+    "step": "Verify finding eval rejects wrong reproduction identity",
+    "failure": "Receipt identity mutation target changed",
+    "cache": "warm",
+    "cacheEvidence": "Both fast-feedback and contracts-and-runtime logs explicitly report primary npm cache key hits/restores. Full log read once locally; no logs committed."
+  },
+  "cause": "Finding history reads reuse validateFindingActionReceipt(action,receipt,finding), extracted from createFindingTransitions. The same findingId check now references finding.id; live transitions invoke the shared validator with before.",
+  "change": {
+    "before": "receipt.findingId!==before.id",
+    "after": "receipt.findingId!==finding.id",
+    "mutation": "replace exactly one guard with false",
+    "unchanged": [
+      "Exact single mutation target requirement",
+      "Frozen corpus and minimum test counts",
+      "Baseline and targeted-negative pass/fail criteria",
+      "All production modules and API contracts"
+    ]
+  },
+  "localBefore": "Reproduced original Receipt identity mutation target changed error after passing baseline.",
+  "localAfter": {
+    "baseline": {
+      "exitCode": 0,
+      "report": {
+        "schemaVersion": "v1alpha1",
+        "results": [
+          {
+            "scenario": "finding-lifecycle",
+            "status": "passed"
+          },
+          {
+            "scenario": "finding-reproduction",
+            "status": "passed"
+          }
+        ]
+      }
+    },
+    "mutation": {
+      "exitCode": 1,
+      "report": {
+        "schemaVersion": "v1alpha1",
+        "results": [
+          {
+            "scenario": "finding-lifecycle",
+            "status": "failed"
+          },
+          {
+            "scenario": "finding-reproduction",
+            "status": "passed"
+          }
+        ]
+      }
+    },
+    "substitutedRun": {
+      "exitCode": 1,
+      "report": {
+        "schemaVersion": "v1alpha1",
+        "results": [
+          {
+            "scenario": "finding-lifecycle",
+            "status": "passed"
+          },
+          {
+            "scenario": "finding-reproduction",
+            "status": "failed"
+          }
+        ]
+      }
+    },
+    "scope": "Local frozen-harness acceptance; network isolation and hosted execution are separate gates."
+  },
+  "fast": {
+    "passed": 10,
+    "seconds": 3.48
+  },
+  "limitations": [
+    "Fresh hosted verification is still required.",
+    "No new API compatibility run needed: verifier-only source change; fast API gate passed."
+  ]
+}

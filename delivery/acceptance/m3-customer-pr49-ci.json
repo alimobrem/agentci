@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "pullRequest": 49,
+  "run": 37391960770,
+  "artifactId": 11381757433,
+  "candidate": "35f215a29b56e01b1fd0d5cf5809d7d814b423e6",
+  "preview": "d41e4e69755671c8ad07b62156f251c634f96ef8",
+  "previewParents": [
+    "3ae4de5a5423a30c807d0c6f36c769b0f4b48608",
+    "35f215a29b56e01b1fd0d5cf5809d7d814b423e6"
+  ],
+  "verifiedMergeTree": "a2b9bd9980f7030823fab61249b029432dd2986f",
+  "manifestSha256": "5e0dabdf02672563664cf481bed29581ce81b194cb1fa276f879badea4efe6be",
+  "verifiedFileHashes": 10,
+  "integration": {
+    "tests": 47,
+    "passed": 47,
+    "failed": 0,
+    "skipped": 0
+  },
+  "cache": "warm: exact npm primary-key restores and BuildKit cached layers",
+  "package": "passed",
+  "apiCompatibility": {
+    "tool": "oasdiff",
+    "version": "1.33.0",
+    "sourceCommit": "d41e4e69755671c8ad07b62156f251c634f96ef8",
+    "baseline": "specs/api/baselines/m2-0.3.1-openapi.json",
+    "baselineSha256": "d9515b059d4240bb92b2b34c4a34e85981bfbe54141a8511d2adfbd49dadf16f",
+    "exitCode": 0,
+    "changes": "[]\n",
+    "diagnostics": "",
+    "currentSha256": "6ebfd84fbdf354399db4bf57526a617a8daf50a917789d2a8d80ed4de358988f",
+    "selfTest": "endpoint-removal rejected",
+    "selfTests": [
+      {
+        "baseline": "m1-0.2.1",
+        "endpoint": "/v1/evidence/{id}",
+        "result": "endpoint-removal rejected"
+      },
+      {
+        "baseline": "m2-0.3.1",
+        "endpoint": "/v1/eval-comparisons/{id}",
+        "result": "endpoint-removal rejected"
+      }
+    ],
+    "baselines": [
+      {
+        "baseline": "specs/api/baselines/m1-0.2.1-openapi.json",
+        "baselineSha256": "28c56cc252b460ca0a496f8459b59792ceea16affb2d60c7b22a8f8a35f9174d",
+        "exitCode": 0,
+        "changes": "[]\n",
+        "diagnostics": ""
+      },
+      {
+        "baseline": "specs/api/baselines/m2-0.3.1-openapi.json",
+        "baselineSha256": "d9515b059d4240bb92b2b34c4a34e85981bfbe54141a8511d2adfbd49dadf16f",
+        "exitCode": 0,
+        "changes": "[]\n",
+        "diagnostics": ""
+      }
+    ]
+  },
+  "runtime": {
+    "result": "passed",
+    "version": "ci",
+    "platform": "x64",
+    "checks": [
+      "non-root API/worker startup",
+      "M2 schema readiness",
+      "signature rejection",
+      "evidence authentication",
+      "comparison authentication/UUID/scoped lookup",
+      "compiled comparison API/client reads actual queued database evidence",
+      "compiled snapshot export/client completion",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  },
+  "securityLimitation": "Only optional eval-engines retains the existing node-forge CVE-2026-85393 HIGH without scanner FixedVersion; checksum-bound downstream backport remains required. Other five images have no HIGH/CRITICAL findings.",
+  "sourceProvenance": "Actual preview matches the independently computed base/head merge. Non-eval-worker CI labels inherit UBI metadata; current-run BuildKit provenance/image IDs bind source. Release publication overrides and independently verifies AgentCI labels.",
+  "releaseComplete": false
+}
