@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2300,15 +2300,15 @@
         "SPEC-13.2-003",
         "SPEC-13.2-006"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T01:24:36.271Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T02:01:52.426Z",
       "acceptance": [
         {
           "text": "A controlled clock proves expiry before reservation produces no charge while expiry after iterator or observer dispatch retains unknown charge, with iterator cleanup and cancellation assertions preserved; focused provider tests, frozen provider eval and fast checks pass without increasing deadlines, weakening thresholds or substituting candidate assertions for the trusted baseline. Hosted failed comparison 37398142115 remains retained for diagnosis.",
           "status": "passed",
           "evidence": [
-            "docs/phases/m3-stream-deadline-acceptance.md"
+            "delivery/acceptance/m3-stream-deadline-merged.json"
           ]
         }
       ],
@@ -2390,6 +2390,64 @@
       "dependsOn": [
         "M3-07c-2"
       ]
+    },
+    {
+      "id": "M3-ACCEPTANCE-RECONCILIATION",
+      "title": "Reconcile review addendum with full original requirement/test/evidence scope",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SECTION-46",
+        "SECTION-51"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-06T03:25:46.098Z",
+      "completedAt": "2026-10-06T03:28:34.944Z",
+      "acceptance": [
+        {
+          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "status": "passed",
+          "evidence": [
+            "docs/acceptance-reconciliation.md"
+          ]
+        },
+        {
+          "text": "Reconciliation check verifies row coverage, source identity, evidence digests and no unavailable/inconclusive pass promotion; report reviewed remaining gaps and threshold approval proposals",
+          "status": "passed",
+          "evidence": [
+            "scripts/reconcile-acceptance.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07e-2",
+      "title": "Bounded trusted Git object reuse for hosted snapshot reads",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SECTION-12.5",
+        "SECTION-13.5"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-06T01:58:50.914Z",
+      "completedAt": "2026-10-06T03:52:36.582Z",
+      "acceptance": [
+        {
+          "text": "Explicit hosted-only raw Git object reuse preserves fresh repository authorization, commit/tree identity and existing bounded verified blob cache; cold/seeded snapshots match and actual Git fixtures prove no candidate checkout, replacement/hook/lazy fetch, corrupt/hash/size/UTF8/oversize acceptance or cross-repository reuse. Missing local objects fall back to REST; subprocess time/output/concurrency and cache bounds remain enforced. Redacted counters distinguish local/memory/remote byte sources and proven local cooldown rejections; fast/build/API and applicable mutation checks pass, structural request estimates remain separate from hosted measured velocity.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-hosted-git-seed-local.json"
+          ]
+        },
+        {
+          "text": "Reviewed exact-source hosted verification/advisory and packaged documentation establish publication acceptance; prior quota failures remain retained and no milestone release is claimed by local checks alone.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-hosted-git-seed-published-source.json"
+          ]
+        }
+      ],
+      "dependsOn": []
     },
     {
       "id": "M3-07c-3c",

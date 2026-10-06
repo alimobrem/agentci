@@ -1,7 +1,7 @@
 # Model-review client and CLI: admission and evidence reads
 
 Development support for profile discovery, admission, status, cancellation, and
-finding evidence reads. Export, reproduction, and disposition commands remain pending later
+finding evidence reads and certified export downloads. Reproduction and disposition commands remain pending later
 M3-07c slices. This document does not declare M3 released.
 
 Keep the exact admission JSON used for submission. It contains the request UUID,
@@ -143,3 +143,52 @@ package and CLI. It verifies summary pins survive a real queue transition,
 current versus historical reads, full paginated history, and the read commands.
 The local acceptance record is `delivery/acceptance/m3-07c-client-reads.json`;
 hosted CI, certified export, and milestone release gates remain separate.
+
+
+## Certified export downloads (development source)
+
+```sh
+agentci model-review export --request /absolute/admission.json > review-export.ndjson
+```
+
+The client validates the export header against the exact saved admission. It
+checks the server's snapshot manifest, frame digest chain, retained reviewer
+results, and complete finding histories through the shared domain verifier.
+Each output line with `type: "record"` is explicitly `provisional: true`, including
+the server's end frame. Only after the HTTP body reaches EOF and verification
+finishes does the client emit `type: "complete"` with the header and end digest.
+Require this certificate and exit 0 before accepting the file. A valid prefix,
+missing end, trailing content, disconnection, or deadline failure exits 2 and
+leaves any earlier records provisional. A certified download can still describe
+a partial, failed, or cancelled review; inspect its status and coverage.
+
+```js
+let completion;
+for await (const item of client.modelReviewExport(admission, {signal})) {
+  if (item.type === 'record') retainProvisional(item.frame);
+  else completion = item.data;
+}
+if (!completion?.complete) throw new Error('Incomplete export');
+```
+
+The export deadline defaults to 120 seconds, including response reading and CLI
+output backpressure. If an open downstream pipe stops reading, the CLI exits 2
+and discards pending output when the deadline expires; reporting the error is
+best effort with at most 100 milliseconds for stderr to flush. Treat any partial
+output as invalid, even if earlier lines were verified. Node
+callers may set `timeoutMs` from 1–120000 or supply an abort signal. Frames are
+bounded to 4 MiB and the whole response to 128 MiB. Fatal UTF-8 decoding rejects
+malformed text. Streaming requests are never automatically retried because a
+retry could change the snapshot or duplicate provisional output. Restart an
+interrupted download into a new file. Both read credentials and private config
+work as for other commands; no credentials appear in the exported records.
+
+Focused tests exercise EOF gating, truncation, trailing records, malformed UTF-8,
+size limits, identity checks, cancellation (including buffered records while a
+consumer pauses), and executable exit behavior. Export acceptance passed against
+the real HTTP handlers, PostgreSQL, and Temporal, then again through the offline
+production-only installed public client and CLI. Both certify the same retained
+seven-reviewer snapshot and full finding history after a queue transition. See
+`delivery/acceptance/m3-07c-client-export.json` for the exact tested source and
+package. This does not claim packaged control deployment, live providers, hosted
+combined CI, or completion of M3.

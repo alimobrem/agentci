@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 1,
+  "scope": "Published trusted-main source and hosted snapshot optimization task only; M3 release/distribution gates remain pending",
+  "ci": {
+    "run": "37408039167",
+    "result": "success",
+    "artifactId": 11388162175,
+    "artifactDigest": "sha256:16e62e22c607528da3158d87a0eec710da2c5abbc143a0e22abd7eb449cb5aed",
+    "downloadedOnce": true,
+    "candidate": "4fa4f03394f65220953b6bcb5b455f03a21a7927",
+    "base": "8c6b03185189f754c832e1c37561412a53d64521",
+    "testedPreview": "6ebbc3c9b33cad3c762b78c78f24dd104da1b9f8",
+    "acceptedTree": "6c0a7ded6d68a119bb81074d41329b4a717489f5",
+    "headTreeMatchesPreview": true,
+    "artifactHashesVerified": 10,
+    "fast": {
+      "checks": 10,
+      "tests": 352,
+      "failed": 0,
+      "skipped": 0
+    },
+    "integration": {
+      "tests": 49,
+      "failed": 0,
+      "skipped": 0
+    },
+    "package": "production-only installed package smoke passed",
+    "api": "Both immutable M1/M2 baselines passed and endpoint-removal self-tests rejected",
+    "runtime": "Compiled API/worker and isolated eval-worker real Temporal/child isolation/restart/cleanup passed linux/amd64",
+    "native": "Worker and eval-worker Temporal native artifacts matched official npm hashes",
+    "scan": {
+      "roles": 6,
+      "gate": "unchanged gate passed",
+      "remainingHighCritical": [
+        {
+          "image": "eval-engines",
+          "package": "node-forge",
+          "id": "CVE-2026-85393",
+          "fixedVersion": null
+        }
+      ],
+      "otherFiveImagesHighCritical": 0
+    },
+    "cache": "warm: npm/cache restoration and repeated BuildKit CACHED layer records; changed inputs rebuilt",
+    "logSha256": "51bc6ed8c742bcb08d04587b25038814870763e96274646b7bfb8ecdca715cb7",
+    "limits": [
+      "Not milestone release acceptance or published package/image download evidence",
+      "linux/amd64 execution only; no new ARM64 runtime claim",
+      "No live-provider validation or real hosted GitHub seed-metrics proof",
+      "Exact new-head advisory acceptance remains separate",
+      "Earlier failed/cancelled attempts remain historical evidence"
+    ]
+  },
+  "hosted": {
+    "run": "37409830966",
+    "productionSeedExecuted": true,
+    "productionMetricsAvailable": true,
+    "producer": {
+      "version": "0.4.0-m3-dev.1",
+      "sourceCommit": "a6f5da0fe2ff3ce4059a33283c32beaa219739cb",
+      "repository": "alimobrem/agentci",
+      "installationId": 167655696,
+      "runId": "37409830966",
+      "runAttempt": "1",
+      "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+      "evaluatorImage": "sha256:1607a19bd92175d26d853172de959c9e26c6cbcab31c80728555aa29ae2e4104"
+    },
+    "artifact": {
+      "id": 11388582827,
+      "digest": "sha256:eb64f418232ed42c1f5dbc50c8a4574c1c53d98d09facc5265c209e9398a7c20",
+      "downloadedOnce": true
+    },
+    "reviews": [
+      {
+        "subject": {
+          "repository": "alimobrem/agentci",
+          "installationId": 167655696,
+          "pullRequest": 60,
+          "baseSha": "ef3edac0c86f9ccd4383f8ed1140e4a15e24505f",
+          "headSha": "a14994a770e59a863ccc0c7f2aac54d08e1a2f66"
+        },
+        "status": "completed",
+        "comparison": {
+          "id": "ef529e77-c523-4441-8fba-d20f7f4123df",
+          "reviewId": "6646be8a-e77c-4651-b899-7697bcdf3524",
+          "file": "comparison-ef529e77-c523-4441-8fba-d20f7f4123df.ndjson",
+          "sha256": "sha256:424862b3a53922c70321f658770ad2f6e2e8d412e845546088ab77ad29deb313",
+          "bytes": 25722
+        },
+        "summary": {
+          "state": "completed",
+          "outcome": "passed",
+          "executionGaps": [],
+          "unitCount": 8,
+          "comparisonCount": 4
+        },
+        "frames": 15,
+        "units": 8,
+        "scenarioObservations": 38,
+        "assertionGitShas": [
+          "ef3edac0c86f9ccd4383f8ed1140e4a15e24505f"
+        ],
+        "suiteChanges": [],
+        "coverageGaps": [],
+        "selectionGaps": [],
+        "changedTests": []
+      },
+      {
+        "subject": {
+          "repository": "alimobrem/agentci",
+          "installationId": 167655696,
+          "pullRequest": 59,
+          "baseSha": "ef3edac0c86f9ccd4383f8ed1140e4a15e24505f",
+          "headSha": "0f07284cae802ca43e08e2d2f207c290c1b4c7f8"
+        },
+        "status": "completed",
+        "comparison": {
+          "id": "107ba296-659d-4d74-a683-b132dd364930",
+          "reviewId": "bd56a4c9-3bbb-4e9d-ad21-64c708ed2dfd",
+          "file": "comparison-107ba296-659d-4d74-a683-b132dd364930.ndjson",
+          "sha256": "sha256:ba0ab2b3cd931d95d4d561cdcdaa08c1892286a43f18523c4d0b7405f483d4b9",
+          "bytes": 25722
+        },
+        "summary": {
+          "state": "completed",
+          "outcome": "passed",
+          "executionGaps": [],
+          "unitCount": 8,
+          "comparisonCount": 4
+        },
+        "frames": 15,
+        "units": 8,
+        "scenarioObservations": 38,
+        "assertionGitShas": [
+          "ef3edac0c86f9ccd4383f8ed1140e4a15e24505f"
+        ],
+        "suiteChanges": [],
+        "coverageGaps": [],
+        "selectionGaps": [],
+        "changedTests": [
+          "tests/integration/model-review-client.test.ts",
+          "tests/model-review-export-client.test.ts"
+        ]
+      },
+      {
+        "subject": {
+          "repository": "alimobrem/agentci",
+          "installationId": 167655696,
+          "pullRequest": 58,
+          "baseSha": "a6f5da0fe2ff3ce4059a33283c32beaa219739cb",
+          "headSha": "3c9207257d18275d3300fe691688aec60c29e05d"
+        },
+        "status": "completed",
+        "comparison": {
+          "id": "9914119a-5771-4347-ace3-cf11fac6779d",
+          "reviewId": "60d5db5a-528f-4d35-9f38-78f8ac3e19dd",
+          "file": "comparison-9914119a-5771-4347-ace3-cf11fac6779d.ndjson",
+          "sha256": "sha256:ec28712be6446c7866558103b69d7e8ef36302ff446d0b95f31631ec9e74f44f",
+          "bytes": 25722
+        },
+        "summary": {
+          "state": "completed",
+          "outcome": "passed",
+          "executionGaps": [],
+          "unitCount": 8,
+          "comparisonCount": 4
+        },
+        "frames": 15,
+        "units": 8,
+        "scenarioObservations": 38,
+        "assertionGitShas": [
+          "a6f5da0fe2ff3ce4059a33283c32beaa219739cb"
+        ],
+        "suiteChanges": [],
+        "coverageGaps": [],
+        "selectionGaps": [],
+        "changedTests": [
+          "tests/model-execute.test.ts"
+        ]
+      },
+      {
+        "subject": {
+          "repository": "alimobrem/agentci",
+          "installationId": 167655696,
+          "pullRequest": 57,
+          "baseSha": "a6f5da0fe2ff3ce4059a33283c32beaa219739cb",
+          "headSha": "ef3a20b79fd1ec006e904a037fca8274d5ce4ff2"
+        },
+        "status": "completed",
+        "comparison": {
+          "id": "e625505c-4c82-43c4-bd15-22b825ead101",
+          "reviewId": "1ecbcf73-2b33-45b2-9531-f11617111866",
+          "file": "comparison-e625505c-4c82-43c4-bd15-22b825ead101.ndjson",
+          "sha256": "sha256:2e460770ad6c01e33619d5080f22d596282a8d91ada0953f30050fe5b78ee305",
+          "bytes": 25722
+        },
+        "summary": {
+          "state": "completed",
+          "outcome": "passed",
+          "executionGaps": [],
+          "unitCount": 8,
+          "comparisonCount": 4
+        },
+        "frames": 15,
+        "units": 8,
+        "scenarioObservations": 38,
+        "assertionGitShas": [
+          "a6f5da0fe2ff3ce4059a33283c32beaa219739cb"
+        ],
+        "suiteChanges": [],
+        "coverageGaps": [],
+        "selectionGaps": [],
+        "changedTests": []
+      },
+      {
+        "subject": {
+          "repository": "alimobrem/agentci",
+          "installationId": 167655696,
+          "pullRequest": 4,
+          "baseSha": "15232a92d22e7640298f78ba190f098312919a17",
+          "headSha": "93faf2d2299634ed0959f49d127fba9e716d67f8"
+        },
+        "status": "completed",
+        "comparison": {
+          "id": "4c1ac485-52d0-48e5-8d6f-8896e711b976",
+          "reviewId": "79391334-fb49-457f-b484-dfb7868b9163",
+          "file": "comparison-4c1ac485-52d0-48e5-8d6f-8896e711b976.ndjson",
+          "sha256": "sha256:118c9f9c06be61290b9fde899a13efe45edd05ef50a3cac65b6498b6cc494146",
+          "bytes": 1430
+        },
+        "summary": {
+          "state": "completed",
+          "outcome": "insufficient",
+          "executionGaps": [],
+          "unitCount": 0,
+          "comparisonCount": 0
+        },
+        "frames": 3,
+        "units": 0,
+        "scenarioObservations": 0,
+        "assertionGitShas": [],
+        "suiteChanges": [],
+        "coverageGaps": [],
+        "selectionGaps": [
+          "missing-adversarial-suite",
+          "missing-policy-suite"
+        ],
+        "changedTests": []
+      }
+    ],
+    "files": [
+      {
+        "file": "comparison-107ba296-659d-4d74-a683-b132dd364930.ndjson",
+        "sha256": "ba0ab2b3cd931d95d4d561cdcdaa08c1892286a43f18523c4d0b7405f483d4b9"
+      },
+      {
+        "file": "comparison-4c1ac485-52d0-48e5-8d6f-8896e711b976.ndjson",
+        "sha256": "118c9f9c06be61290b9fde899a13efe45edd05ef50a3cac65b6498b6cc494146"
+      },
+      {
+        "file": "comparison-9914119a-5771-4347-ace3-cf11fac6779d.ndjson",
+        "sha256": "ec28712be6446c7866558103b69d7e8ef36302ff446d0b95f31631ec9e74f44f"
+      },
+      {
+        "file": "comparison-e625505c-4c82-43c4-bd15-22b825ead101.ndjson",
+        "sha256": "2e460770ad6c01e33619d5080f22d596282a8d91ada0953f30050fe5b78ee305"
+      },
+      {
+        "file": "comparison-ef529e77-c523-4441-8fba-d20f7f4123df.ndjson",
+        "sha256": "424862b3a53922c70321f658770ad2f6e2e8d412e845546088ab77ad29deb313"
+      },
+      {
+        "file": "pr-4-6d171bfe-e0d4-47f6-a845-649d14f68608-history.json",
+        "sha256": "9ddfcf12ef77d751f4e82c0586f5b9d4546bf615f153670c877eafa21f041ffa"
+      },
+      {
+        "file": "pr-57-b9f0d645-c3f3-4431-bebc-6c0e1d37eae2-history.json",
+        "sha256": "a6b3a7e4992f1d86d5ceb605c467d4b669c66e05d4b8807d601f0006fd450dfd"
+      },
+      {
+        "file": "pr-58-cc7d7532-afbb-459e-b98d-5ef3fce7682a-history.json",
+        "sha256": "743fff2df2b49d021ce52f8c35541dcc872bb1d98806276030edce1619d0cca7"
+      },
+      {
+        "file": "pr-59-2325fe55-c3c8-4bed-bbd2-bb890d2623c1-history.json",
+        "sha256": "9087bea981ea0c7ded27e75eb289b9aeedaca74ba2051e28adb5067b32b6db6a"
+      },
+      {
+        "file": "pr-60-a58e003c-2f7f-40b9-a9b9-88fe368f785b-history.json",
+        "sha256": "a647366c4dfc5df204b0f3d59de5661f94f2b503b854ad3cc53a99be8720b67f"
+      },
+      {
+        "file": "reviews.json",
+        "sha256": "de260a8a46dee5e60f5af73721dd9f5fb9bd418d16d3102dcd14cace12f9ef1e"
+      }
+    ],
+    "limits": [
+      "One trial per scenario, not repeated reliability evidence.",
+      "Each comparison uses its own exact PR base assertions, not producer main or candidate assertions.",
+      "Image IDs are Docker config digests, not published OCI manifests.",
+      "Prior failed/cancelled runs remain retained and are not superseded as historical evidence.",
+      "Measured blob-source counters for this run; no total delivery speed causal claim.",
+      "Prior structural estimates used different PR trees; useful context only, not a matched before/after experiment."
+    ],
+    "snapshotReadMetrics": {
+      "event": "hosted-snapshot-reads",
+      "commitAttempts": 10,
+      "treeAttempts": 10,
+      "memoryHits": 6586,
+      "localHits": 909,
+      "localMisses": 159,
+      "remoteBlobAttempts": 159,
+      "remoteHits": 159,
+      "requestFailures": 0,
+      "localCooldownBlocks": 0,
+      "localReadFailures": 0,
+      "verificationFailures": 0
+    },
+    "logSha256": "0432a0664e84ecbba19aad074721e453c4e1da57711f8deaa8cf4ce6ae957f18",
+    "measuredAvoidance": {
+      "seedSavedBlobFetches": 909,
+      "memoryMissDenominator": 1068,
+      "seedAvoidancePercentOfMemoryMisses": 85.11235955056179,
+      "remoteBlobRequests": 159,
+      "allBlobLookupDenominator": 7654,
+      "memoryPlusSeedAvoidanceCount": 7495,
+      "memoryPlusSeedAvoidancePercent": 97.92265482100862,
+      "interpretation": "Counters measured across all captured subjects, including old PR4. Seed avoids909 remote blob fetches among1068 memory misses (85.11%). Existing memory cache separately serves6586 lookups. These are logical blob-read counts, not byte savings, all-GitHub-request savings or causal elapsed delivery acceleration."
+    }
+  },
+  "packagedDocs": {
+    "path": "docs/phases/m3-hosted-git-seed.md",
+    "sha256": "bffd99d745fe7d4881fac3dd25fcaf938661e6fa07490571600e23ae4b3199e5",
+    "matchesAcceptedSource": true
+  },
+  "sourcePublication": {
+    "mergeCommit": "a6f5da0fe2ff3ce4059a33283c32beaa219739cb",
+    "url": "https://github.com/alimobrem/agentci/commit/a6f5da0fe2ff3ce4059a33283c32beaa219739cb",
+    "noVersionedReleaseClaim": true
+  },
+  "earlierFailureRefs": [
+    "37404082498",
+    "37408037978",
+    "37406628819"
+  ],
+  "interpretation": "One observed batch. Blob fetch avoidance is not measured total delivery acceleration; SDK request-attempt counters are not a complete HTTP packet count."
+}
