@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "v1alpha1",
+  "scope": "PR65 accepted dispatch main integration; no activation or task completion",
+  "previousHead": "4c00792c0d5329f608cbe0069e739405916994dd",
+  "acceptedMain": "e43d35f9ff4ba0e76e6b50b58292a0ada1f1f427",
+  "unchangedPaths": [
+    "packages/client",
+    "apps/control",
+    "cmd",
+    "scripts/package-smoke.mjs",
+    "package.json",
+    "package-lock.json",
+    "tests/integration/reproduction-installed-reader.test.ts",
+    ".github/workflows/verify.yaml",
+    "docs/phases/m3-installed-history-reader.md"
+  ],
+  "previousExactHostedProof": {
+    "run": "37417728697",
+    "pr": "65",
+    "candidate": "4c00792c0d5329f608cbe0069e739405916994dd",
+    "base": "241d5a689507874706814c95c7d601c571c43bb9",
+    "testedPreview": "0051f10a12e5f43c61ab01678b488ae7d59a2bdd",
+    "acceptedTree": "8a432284c72cca87e96b303410d01fdbeee1a982",
+    "artifact": {
+      "id": 11392255082,
+      "digest": "sha256:a3c408ddec75d70d6b9b5037aba846f2bd6a8a3931330e32bcbe143fa59c2736",
+      "downloadedOnce": true
+    },
+    "hashesVerified": 10,
+    "counts": {
+      "fast": {
+        "tests": 405,
+        "pass": 405,
+        "fail": 0,
+        "skipped": 0
+      },
+      "integration": {
+        "tests": 109,
+        "pass": 109,
+        "fail": 0,
+        "skipped": 0
+      }
+    },
+    "fastChecks": 10,
+    "api": "Both immutable baselines and removal-negative checks pass",
+    "package": "Installed production package smoke pass",
+    "runtime": "Compiled containers and isolated eval worker actual Temporal execution/restart/cleanup passed linux/amd64",
+    "native": "Both Temporal artifacts match official npm hashes",
+    "scans": {
+      "eval-engines": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "fixed": null
+        }
+      ],
+      "eval-worker": [],
+      "api": [],
+      "worker": [],
+      "eval-runner": [],
+      "eval-agentci": []
+    },
+    "cache": "warm: logged cache restoration and BuildKit CACHED layers; changed inputs rebuilt",
+    "logSha256": "0a8630824c6df05a7f818717981687082b3d5d9bbe262a07fd3afc9bce336a70",
+    "constraints": [
+      "Exact current-main base 241d5 and head 4c00792 acceptance for installed public v2 reader.",
+      "No live provider, release publication or ARM64 runtime acceptance implied.",
+      "Earlier failed/cancelled attempts remain separate; same-head advisory 37417726791 was cancelled."
+    ],
+    "packagedMigrationsExactSourceSha256": {
+      "package/deploy/migrations/001_m1.sql": "2a2cae25973b77d7c0f6d4877728156bc0717271dc5c5e9c26e27804c524c1aa",
+      "package/deploy/migrations/002_m2_eval_role.sql": "91088fbbef44424d02df41e7f42cd8cbcea64d202ca5510968ae99378fa569e9",
+      "package/deploy/migrations/002_m2.sql": "164cfb3a398b225706766cde13d6ef98a0c7e35933b94e27a26b1dd17a1e2d3c",
+      "package/deploy/migrations/003_m2_review_recovery.sql": "c268d010c7f67313774494dfc69a32be29f6927c5c7dc912d7af1d420a17a43a",
+      "package/deploy/migrations/004_m3_model_budget.sql": "df15b7eb19fa5cb55fd3f370f3dd210472550d5a6300c5c0dcba8a03ff9503e3",
+      "package/deploy/migrations/005_m3_reviewer_results.sql": "b3804db49801a4a18d5fc7de7b5bd1f61032d7f5859a1df2061afa1b95b51286",
+      "package/deploy/migrations/006_m3_finding_history.sql": "b2762a4e525f86c8fae7abd3314bfbc593eadf30f46a50781478f332bc29683b",
+      "package/deploy/migrations/007_m3_reproduction.sql": "9518f6eeae24b298b855f355899f82b1ddf511e7396c016052d7902e1fed8a03",
+      "package/deploy/migrations/008_m3_review_admissions.sql": "981659a7d9aaa6fa38b5232e8aa29b2db21234ad01c67b84788b0a913277f404",
+      "package/deploy/migrations/009_m3_review_dispatch.sql": "18df64ce6be5443c639e6bc42bb9d8ebbd73645603d3ffad9c920edf1ae95eae",
+      "package/deploy/migrations/010_m3_reviewer_profiles.sql": "484de8942a0d2e716382c5709d441cffdd3f687b5eb3569203f47b75d6e5deb0",
+      "package/deploy/migrations/011_m3_review_summaries.sql": "09564336bd2d8c02210cfbfc64b319ac414b525ec0fa88a3bc419d89296054b9",
+      "package/deploy/migrations/012_m3_review_recovery.sql": "2b5577630d92bd510cfe2eacc97d69f8b2c13ac753a2fe0b807c35ebce3aaca2",
+      "package/deploy/migrations/013_model_review_publication.sql": "6c45062a3705f14cd29e02fbd51b9347ea8ff8d435b30bf7c940252fc6c7675b",
+      "package/deploy/migrations/014_m3_reproduction_reservations.sql": "9a8956b2a7d4d75751f34b2e78f52c97dae98ed5dd99ae6581edea55dcf48d0c",
+      "package/deploy/migrations/015_m3_reproduction_eval_source.sql": "e3ddc12ae2b90b22bebfa18570c736c2ef953518f8acbf6dde70cd7d4a3948cc",
+      "package/deploy/migrations/016_m3_reproduction_authority.sql": "ddae4b25a23144eea745d21c5786877a85ebcad11085ef100e43f7ab850417b4"
+    },
+    "installedPostgresReader": {
+      "invocation": "node scripts/package-smoke.mjs --postgres-readers",
+      "install": "npm install --omit=dev",
+      "publicExport": "agentci/client",
+      "developmentLoaderInstalled": false,
+      "counts": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      "stepLogSha256": "9de9e2efb84e3772daf267341e556cca4e562e0c5b2e4a4974a59356eaff44f4",
+      "scope": "Installed production client against source-hosted authenticated control HTTP and real PostgreSQL; not installed server deployment."
+    },
+    "advisoryProof": "/private/tmp/agentci-advisory-proof-37417727858.json"
+  },
+  "ciSample": "delivery/runs/37417728697-attempt-1.json",
+  "cache": "warm as audited by parent from run logs",
+  "checks": {
+    "fast": "10 passed",
+    "delivery": "passed"
+  },
+  "logs": {
+    "/private/tmp/agentci-pr65-dispatch-fast.log": "86dbaa040aa3e825b70e3d812c18caec61ccfdb1b54fda9680f106d7510460e5",
+    "/private/tmp/agentci-pr65-dispatch-delivery.log": "4d8902b54ebd02225939503c86349dff197113c461ea43ed0e908aaec6cb8688",
+    "/private/tmp/agentci-pr65-dispatch-collect.log": "e0ca2ccb6db24de96991fdff9206afe2d404203befa720df801424e464bc9aeb"
+  },
+  "installedAcceptance": "Prior exact-source installed PostgreSQL acceptance retained; no unnecessary reinstall of unchanged public client/fixture/hook. Dispatch addition has independent accepted evidence. Final combined hosted acceptance pending.",
+  "authorityCompletion": "No c3d1 completion edit; parent PR67 owns canonical completion."
+}

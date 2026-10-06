@@ -72,8 +72,9 @@ queued rollback. Regressions now require zero committed side effects in both cas
 These are recorded review rework, not human interventions or escaped release defects.
 
 Compiled build and shared-reader source checks do not establish compatibility of an
-already installed package with v2 events. Installed-artifact v2 acceptance remains
-pending for the consumer/customer integration slice. Future consumer staging must
+already installed package with v2 events. Installed-artifact v2 acceptance is tracked separately in
+[the installed history reader acceptance](m3-installed-history-reader.md); the
+authority prerequisite alone does not establish that package evidence. Future consumer staging must
 use the same authorized SQL transaction: calling the existing pool-owned stage
 method from a withApproval callback is not atomic and is not supported as integration.
 Transaction composition, reader/evaluator readiness and side-effect wiring are gates

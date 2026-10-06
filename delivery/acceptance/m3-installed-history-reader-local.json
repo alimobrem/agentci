@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3d-1b",
+  "sourceCommit": "f2c6a758a0d84b860cc08a1320c45ecfa1386451",
+  "authorityBase": "1fe6a38bf52629bb34bd3b5b25f7287b6166fd18",
+  "scope": "Compiled and production-only installed public client reads real retained PostgreSQL v2 history over authenticated control HTTP; test server remains source-hosted",
+  "sourceFiles": {
+    ".github/workflows/verify.yaml": "b7169b2c11ce3e2cfb316ffe6ac5b35c3a4dc91add8d0beba6c93de0ecddf4bf",
+    "scripts/package-smoke.mjs": "13f2585f6f78cce0cfea3323fe4e39980f5dc588050ad61fb7e17b3ca8a65e5d",
+    "tests/integration/reproduction-installed-reader.test.ts": "50ba3016b6d955573200a583341a47b03ecd9712f4f66ea8961cd62d5b23ce2e",
+    "docs/phases/m3-installed-history-reader.md": "8e7fcfd85fe392becc9388310fd7424abd1e757de3b30364b770c1c45041ac48",
+    "docs/phases/m3-reproduction-authority.md": "a54082a3e2224cad42ce8c1685285769846bc4c7241740a1eb74f604b18bd60b"
+  },
+  "archive": {
+    "path": "/private/tmp/agentci-v2-reader-package/agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "7b1aeb98dec35b7fb79c1a50cf5d111a24f1df2ff354b42ef795d904cf7a2394",
+    "size": 778894,
+    "npmIntegrity": "sha512-U90dHjthkp6zwenPPTq3+DMwGeJsRKcBfrQQ/ipKvauqAYfHqOauCslsFlx+J89wx794nTSMnbclVZBns11kaw==",
+    "npmShasum": "80185451cc8f3cef7d12183215edf9b9205c1b3b",
+    "version": "0.4.0-m3-dev.1"
+  },
+  "checks": {
+    "compiledPublicClient": {
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 578.912375,
+      "log": {
+        "path": "/private/tmp/agentci-v2-reader-compiled-final.log",
+        "sha256": "c6f574c3d356b163d07073080408bcf4fd0e7f561eee9ad3afbf4930c8e3f806"
+      }
+    },
+    "installedPublicClientAndLegacySmoke": {
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 626.667958,
+      "installation": [
+        "npm install --offline --omit=dev --no-audit --no-fund --prefix temporary-consumer ARCHIVE",
+        "Installed manifest name/version exact",
+        "Development tsx loader absent from production installation",
+        "Public export resolves to installed dist/packages/client/index.js via consumer probe, never source fallback"
+      ],
+      "legacyPackageCliComparisonExportPassed": true,
+      "log": {
+        "path": "/private/tmp/agentci-v2-reader-installed-final.log",
+        "sha256": "977e47fcbf67a2882de598491267166d780e1d8f3e6b7aeef62a73592761bc1e"
+      }
+    },
+    "missingDatabase": {
+      "explicitFailureBeforeInstall": true,
+      "log": {
+        "path": "/private/tmp/agentci-v2-reader-missing-db.log",
+        "sha256": "88ec7833e106a7fd70b6f29c250e1c51427c300acf2c620e778e9f954c1611b2"
+      }
+    },
+    "fast": {
+      "passed": true,
+      "checks": 10,
+      "seconds": 4.25555625,
+      "log": {
+        "path": "/private/tmp/agentci-v2-reader-fast-final.log",
+        "sha256": "fb25b08b7a8070284e5abdf714a4f3a5305cd7f9eacde8c675643a2c4fa3fd2b"
+      }
+    },
+    "workflowContexts": {
+      "passed": true,
+      "negativeControl": "invalid runner context rejected",
+      "log": {
+        "path": "/private/tmp/agentci-v2-reader-workflows.log",
+        "sha256": "37a16504ca3a43d829af2074d354e1100e57deda44024ab25cb068224b942b2f"
+      }
+    },
+    "buildAndTypecheck": {
+      "passed": true,
+      "buildRepeatedByFinalNpmPack": true,
+      "log": {
+        "path": "/private/tmp/agentci-v2-reader-build.log",
+        "sha256": "261e646d160bdfbb881537da43a24ef9a7ed2a677da3e5740a6707c70d038fc4"
+      }
+    }
+  },
+  "demonstrated": [
+    "Trusted never-staged cancellation retains distinct receipt:null v1alpha2 proof",
+    "Current finding and one-record pagination across v1/v1/v2 exactly equal retained SQL history",
+    "Pinned historical v1 finding still readable",
+    "Bearer rejection, caller subject mismatch and isolated controller scope rejection",
+    "Rehashed unknown future version and substituted proof subject rejected by installed client after real authenticated DB reads",
+    "Interrupted corrupt pagination never completes; two valid v1 pages remain provisional history traversal",
+    "Zero execution receipts, eval jobs, eval units and legacy review rows"
+  ],
+  "priorFailedAttempts": [
+    {
+      "reason": "macOS /var versus /private/var aliases caused overly literal expected public export path comparison; expected path now uses realpath with exact compiled export assertion",
+      "log": {
+        "path": "/private/tmp/agentci-v2-reader-installed-path-failure.log",
+        "sha256": "75129775a1a3f078c1b0cca19f12bf3e81569a8e628a643c365ef893e4203be3"
+      }
+    },
+    {
+      "reason": "npm ls classified local tar dependency invalid across the same macOS path aliases; installation itself succeeded. Replaced inspection with exact installed manifest identity and absent development loader, retaining npm --omit=dev installation requirement",
+      "log": {
+        "path": "/private/tmp/agentci-v2-reader-npm-ls-path-failure.log",
+        "sha256": "f48695dca877860f1425d8898c39fdb538829795f14a9a528179f11d978a7d04"
+      }
+    }
+  ],
+  "limits": [
+    "Installed client only; test server and trusted fixture helpers run from source checkout",
+    "No Temporal, provider credentials, runner image or GitHub client required by this fixture",
+    "No product behavior changes, route/consumer activation, container publication or milestone release",
+    "Hosted stacked PR acceptance pending; default manual package-smoke behavior preserved"
+  ]
+}
