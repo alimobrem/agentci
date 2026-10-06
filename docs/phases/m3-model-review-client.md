@@ -180,6 +180,11 @@ interrupted download into a new file. Both read credentials and private config
 work as for other commands; no credentials appear in the exported records.
 
 Focused tests exercise EOF gating, truncation, trailing records, malformed UTF-8,
-size limits, identity checks, cancellation, and executable exit behavior. This
-export slice awaits real-service and installed-package acceptance with the server
-export implementation; the earlier read acceptance does not certify export.
+size limits, identity checks, cancellation (including buffered records while a
+consumer pauses), and executable exit behavior. Export acceptance passed against
+the real HTTP handlers, PostgreSQL, and Temporal, then again through the offline
+production-only installed public client and CLI. Both certify the same retained
+seven-reviewer snapshot and full finding history after a queue transition. See
+`delivery/acceptance/m3-07c-client-export.json` for the exact tested source and
+package. This does not claim packaged control deployment, live providers, hosted
+combined CI, or completion of M3.

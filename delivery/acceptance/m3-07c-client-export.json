@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "v1alpha1",
+  "scope": "M3-07c-4 certified export client local acceptance; not milestone closure",
+  "sourceCommit": "e5c2143f8c1d6039f5fa0e4579ca243e1387e022",
+  "sourceTree": "30b563d1550dfc0ce1426b55e94ab28c89967173",
+  "uncommittedTestAtExecution": {
+    "path": "tests/integration/model-review-client.test.ts",
+    "gitBlob": "591ffefb7cb420aefcc610c2503184c7b89f7b63"
+  },
+  "package": {
+    "name": "agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "77435e4d6b318202177b6a62e373362beb510d9606bee139dccc907185ec6b94",
+    "installation": "offline, production dependencies only",
+    "publicImport": "agentci/client from consumer context"
+  },
+  "checks": {
+    "build": "passed",
+    "focusedExportTests": 6,
+    "fastChecks": 10,
+    "compiledRealService": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "testDurationMs": 3702.258625
+    },
+    "installedRealService": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "testDurationMs": 3572.412625
+    }
+  },
+  "demonstrated": [
+    "Actual HTTP handlers, isolated PostgreSQL schema and real Temporal execution with synthetic provider",
+    "Seven retained reviewer results and full finding history verified through mandatory end and EOF",
+    "Export header binds exact admission, retained status, finding watermark and latest digest",
+    "Public client and CLI certify identical snapshot after actual finding queue transition",
+    "Existing admission/status/cancellation/current/versioned/history client acceptance preserved"
+  ],
+  "limitations": [
+    "Installed client and executable use source control handlers, not packaged control deployment",
+    "Trusted synthetic GitHub reader and model provider; no live App/provider validation",
+    "No hosted combined CI, image validation or release claim",
+    "Reproduction remains pending"
+  ]
+}
