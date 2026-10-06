@@ -2493,13 +2493,16 @@
       "acceptance": [
         {
           "text": "Explicit operator config revisions resolve exact retained finding/plan and trusted snapshots; durable apply uses CAS with revocation/expiry checks and no stale startup resurrection. Separate authenticated non-execution proof binds scope/plan/operation/version and keeps execution receipt null; never-staged cancellation can transition to unconfirmed/error and fresh authorized retry without rewriting execution evidence. Real PostgreSQL races/replay and additive history version compatibility pass; no HTTP or worker activation.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-reproduction-authority-local.json"
+          ]
         }
       ],
       "dependsOn": [
         "M3-07c-3a",
-        "M3-07c-3b"
+        "M3-07c-3b",
+        "M3-07c-3c"
       ]
     }
   ]

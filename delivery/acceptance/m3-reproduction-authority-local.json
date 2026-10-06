@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3d-1",
+  "sourceCommit": "8b73f1b83caa45f02c2a9a3b01989efa910e5e2f",
+  "scope": "Inactive operator authority + non-execution outcome prerequisite; no routes/consumer activation",
+  "sourceFiles": {
+    "deploy/migrations/016_m3_reproduction_authority.sql": "ddae4b25a23144eea745d21c5786877a85ebcad11085ef100e43f7ab850417b4",
+    "docs/phases/m3-reproduction-authority.md": "f48db3583258779d8274b91d5c7edc29a5626dc1dde605a162d4c6247d488687",
+    "packages/findings/history.ts": "fc6a5e138e14fd86c4bf3a13e72c0f183abd05e3fbd894541d791d443d7cfd39",
+    "packages/findings/non-execution.ts": "d418b130639c4fde976fcb0008143fe450994ea4362ab18a6fec0e5c5d072d08",
+    "packages/findings/reproduction-config.ts": "bcedda510f64242f0ae8a83f75037b2183f64f3b3c92b2c70a4068e8bc57979e",
+    "packages/reviewers/transport-schema.ts": "e1ddf68b295d8c82d69b679d6f8ca70a34eaa8d05e5f7840a311992e8e8636a3",
+    "packages/storage/finding-history.ts": "85d3762663eb2449ac98aa669fd64e7cc87f7a5c78ea32981491c1b35bb2184a",
+    "packages/storage/reproduction-authority.ts": "319e9e99ba3226e31e743d019297d49d83507efbd400a03fc08c0f6da3d5b44c",
+    "packages/storage/reproduction-non-execution.ts": "b808ebf7c8a26a8a5f765df718282ffef7e709e12226e61bb3446c49504f2af9",
+    "scripts/check-api.ts": "178544337c50de483bb8c8d2076523637e337832470b11d6139dd0969a44ce68",
+    "specs/api/finding-operations.json": "3ebaee1accc3c57f3c5561f32a2f014f19da8d58fb6c506ba83f7814abd83453",
+    "specs/api/openapi.json": "04f34b8081101ca61a56227358afebe94ecfb291f6772316b66d8e676fe70ac6",
+    "tests/integration/reproduction-authority.test.ts": "b2198e1471549613283f368980cceebadc8ba87d28f9b3bb60bb69b2b97c371b"
+  },
+  "checks": {
+    "independentPostgres": {
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 22476.777125,
+      "log": {
+        "path": "/private/tmp/agentci-c3d1-independent-fixed-tests.log",
+        "sha256": "39e0e7485a9cbd3664496bb2dbc740ac7b6b8d80597518927591762cf254e44b"
+      },
+      "sourceScope": "Before final history budget preflight; remaining source unchanged"
+    },
+    "finalAffectedPostgres": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 1204.353792,
+      "log": {
+        "path": "/private/tmp/agentci-c3d-budget-final.log",
+        "sha256": "ac2550fa337917304743c3e7d5b0aab0732698e70fc2f6b63fadc110909526eb"
+      },
+      "sourceScope": "Final source adds existing count/32 MiB budget before loading retained proof history; all affected proof/lifecycle cases rerun"
+    },
+    "fast": {
+      "passed": true,
+      "checks": 10,
+      "seconds": 4.292015500000001,
+      "log": {
+        "path": "/private/tmp/agentci-c3d-final-fast.log",
+        "sha256": "0899797d9ce59a951e9041e0233a0c2523310f058e34ff64db581721d2eee7e2"
+      }
+    },
+    "build": {
+      "passed": true,
+      "log": {
+        "path": "/private/tmp/agentci-c3d-final-build.log",
+        "sha256": "261e646d160bdfbb881537da43a24ef9a7ed2a677da3e5740a6707c70d038fc4"
+      }
+    },
+    "apiCompatibility": {
+      "passed": true,
+      "baselines": [
+        "m1-0.2.1",
+        "m2-0.3.1"
+      ],
+      "negativeControls": 2,
+      "log": {
+        "path": "/private/tmp/agentci-c3d-final-api.log",
+        "sha256": "0ac28536ceafa0163df6a786587f3db18be783732be4834c3659cf1c9a950b44"
+      }
+    },
+    "frozenFindingMutation": {
+      "baselineScenariosPassed": 2,
+      "negativeControlsRejected": 2,
+      "log": {
+        "path": "/private/tmp/agentci-c3d-mutation.log",
+        "sha256": "36c345cc14ff6718cea7f3f29385b320b202420ad23d37072ddff51fb52623bc"
+      }
+    }
+  },
+  "independentReview": {
+    "record": {
+      "scope": "Independent c3d-1 review of uncommitted authority implementation",
+      "expiryRace": {
+        "steps": [
+          "approval expires in1000ms",
+          "second permission callback waits1200ms thenreturns true",
+          "withApproval inserts SQL effect"
+        ],
+        "observed": {
+          "outcome": "committed",
+          "rows": 1,
+          "permissionCalls": 2,
+          "expired": true
+        }
+      },
+      "timeoutLateWrite": {
+        "steps": [
+          "withApproval SQL sideEffect waits11000ms",
+          "query SELECT pg_sleep(2)",
+          "then query INSERT INTO fixture_effects VALUES(1)",
+          "transaction callback timeout12000ms queues ROLLBACK behind active SQL"
+        ],
+        "observed": {
+          "outcome": "reproduction-authority-conflict",
+          "lateQuery": "rejected",
+          "rows": 1
+        },
+        "impact": "Late callback SQL runs in autocommit after queued rollback despite conflict response and connection destruction"
+      },
+      "environment": "Real PostgreSQL127.0.0.1:32783; unique fixture schema removed; no shared services stopped",
+      "status": "Both defects fixed and independently verified",
+      "postFix": {
+        "tests": 11,
+        "passed": 11,
+        "failed": 0,
+        "skipped": 0,
+        "durationMs": 22476.777125,
+        "expiryRows": 0,
+        "lateWriteRows": 0,
+        "lateQueryRejected": true,
+        "databaseUsable": true,
+        "log": "/private/tmp/agentci-c3d1-independent-fixed-tests.log",
+        "sha256": "39e0e7485a9cbd3664496bb2dbc740ac7b6b8d80597518927591762cf254e44b"
+      }
+    },
+    "recordFile": {
+      "path": "/private/tmp/agentci-c3d1-independent-repros.json",
+      "sha256": "b9dab761c40e568d689adbde0076dbb1e60241f659f928e2f73628b262eb71cb"
+    }
+  },
+  "reviewRework": [
+    {
+      "finding": "Approval expired while final permission callback was awaited",
+      "regressionBefore": {
+        "path": "/private/tmp/agentci-c3d-expiry-before.log",
+        "sha256": "19add8bab5d6b76c7c05edf3e7eb0f01534f1f07eb920248b1b0ff46aab2d198"
+      },
+      "regressionAfter": {
+        "path": "/private/tmp/agentci-c3d-expiry-after.log",
+        "sha256": "e43094e741819aa60c997340e1eb1dea5d4e57bfce8fd9b779875209a1a04897"
+      },
+      "fix": "Bound permission callback, then final database clock check before commit; expired effect rolls back"
+    },
+    {
+      "finding": "Queued rollback after transaction timeout allowed late callback INSERT in autocommit",
+      "regressionAfter": {
+        "path": "/private/tmp/agentci-c3d-timeout-after.log",
+        "sha256": "65199761e8425bf1f74ef8552bfe84641542392cd86f45fc4548a1b225797604"
+      },
+      "fix": "Immediately destroy checked-out client on deadline/error; server rollback and queued SQL rejection prevent late autocommit"
+    }
+  ],
+  "qualityInterpretation": "Two pre-publication independent review defects corrected with real SQL regressions. Not human intervention and not escaped release defects. Raw diagnostic logs are not committed.",
+  "demonstrated": [
+    "Explicit revision/digest CAS; concurrent applies have one winner; stale startup cannot apply config",
+    "Immutable per-plan revocation tombstones; exact referenced finding/plan/snapshot validation",
+    "Permission5s and transaction12s bounds with database expiry after final awaited permission",
+    "Non-execution proof binds scope/plan/original reservation operation/queued version and keeps executionReceipt null/verified false",
+    "Proof and staging serialize on exact shared staging/finding locks plus SQL absence guard; completed execution receipt preserved",
+    "Never-staged cancellation -> v1alpha2 unconfirmed/error -> fresh approved plan and typed staged unit",
+    "Legacy v1alpha1 event branch and FindingReceipt shape unchanged; mixed chains supported and unknown future version rejected"
+  ],
+  "limitations": [
+    "No HTTP reproduction mutation, production consumer or workflow activation",
+    "Installed-artifact v2 acceptance remains pending in customer/consumer integration; old installed clients reject new version",
+    "Transaction-aware staging core on same PoolClient remains next prerequisite; existing pool-owned stage is not safe as nested callback",
+    "Permission outage/revocation/expiry execution-stop and Temporal reconciliation remain consumer scope",
+    "Local evidence only; hosted CI/publication pending",
+    "No provider/GitHub App calls in local acceptance"
+  ],
+  "priorPrerequisite": "delivery/acceptance/m3-reproduction-staging-merged.json"
+}
