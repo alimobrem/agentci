@@ -1,3 +1,4 @@
+import {once} from 'node:events';
 import {open, constants} from 'node:fs/promises';
 import {dirname, resolve} from 'node:path';
 import {ModelReviewClient, type ModelReviewClientOptions} from '../../packages/client/model-review.ts';
@@ -44,25 +45,27 @@ export async function modelReviewCommand(args: string[]): Promise<number> {
        agentci model-review submit --request ADMISSION_JSON [--config PRIVATE_JSON]
        agentci model-review show --request ADMISSION_JSON [--config PRIVATE_JSON]
        agentci model-review cancel --request ADMISSION_JSON [--config PRIVATE_JSON]
+       agentci model-review export --request ADMISSION_JSON [--config PRIVATE_JSON]
        agentci model-review findings --request ADMISSION_JSON [--limit PAGE_SIZE] [--config PRIVATE_JSON]
 
 profiles  List safe configured profile descriptors; this does not prove readiness.
 submit    Durably admit the exact request; retry ambiguous outcomes with the same file.
 show      Verify status against the original request identity and digest.
 cancel    Verify identity, then record cancellation intent; stopping/refunds are not guaranteed.
+export    Stream provisional records; only final complete certificate and exit 0 certify a download.
 findings  Fetch complete original-summary finding references across bounded pages.
 
-Keep the original admission JSON: submit/show/cancel/findings require --request.
+Keep the original admission JSON: submit/show/cancel/findings/export require --request.
 Credentials come from private 0600 config/token files, or AGENTCI_API_URL with
 AGENTCI_EVIDENCE_TOKEN for reads and AGENTCI_OPERATOR_TOKEN for mutations.
 The operator token also permits reads. Tokens must differ; never pass tokens in argv.
 Exit 0 means the operation succeeded, not that a review passed; errors exit 2.
-Use agentci finding --help for current findings and history. Export and reproduction remain pending.`);
+Use agentci finding --help for current findings and history. Reproduction remains pending.`);
     return 0;
   }
   try {
     const [command, ...flags] = args;
-    if (!command || !['submit', 'show', 'cancel', 'profiles', 'findings'].includes(command)) throw new AgentCIError('invalid-model-review-arguments');
+    if (!command || !['submit', 'show', 'cancel', 'profiles', 'findings', 'export'].includes(command)) throw new AgentCIError('invalid-model-review-arguments');
     const options: Record<string, string> = {};
     for (let i = 0; i < flags.length; i += 2) {
       const name = flags[i], value = flags[i + 1];
@@ -74,6 +77,10 @@ Use agentci finding --help for current findings and history. Export and reproduc
     const client = new ModelReviewClient(await loadModelReviewClientConfig(options['--config']));
     if (command === 'profiles') {console.log(JSON.stringify(await client.profiles())); return 0;}
     const request = await loadModelReviewRequest(options['--request']!);
+    if (command === 'export') {
+      for await (const record of client.modelReviewExport(request)) if (!process.stdout.write(JSON.stringify(record) + '\n')) await once(process.stdout, 'drain');
+      return 0;
+    }
     if (command === 'findings') {console.log(JSON.stringify(await client.findings(request, {limit: options['--limit'] ? Number(options['--limit']) : undefined}))); return 0;}
     const result = command === 'submit' ? await client.submit(request) : command === 'show' ? await client.show(request) : await client.cancel(request);
     console.log(JSON.stringify(result)); return 0;

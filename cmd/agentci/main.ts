@@ -26,6 +26,7 @@ model-review submit|show|cancel --request ADMISSION_JSON [--config PRIVATE_JSON]
   Submit or inspect an exact pinned model-review admission. Cancellation records intent.
   Credentials: private token-file config, or AGENTCI_API_URL and evidence/operator token environment.
   Successful submission/status/cancellation is not a passing review verdict.
+model-review export --request ADMISSION_JSON [--config PRIVATE_JSON]
 model-review findings --request ADMISSION_JSON [--limit PAGE_SIZE] [--config PRIVATE_JSON]
   Retrieve original-summary finding references, preserving pinned versions.
 finding show|history --request ADMISSION_JSON --id SHA256_ID [--config PRIVATE_JSON]
