@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "scope": "Completed prerequisite source acceptance; customer dispatcher/HTTP/release remain pending",
+  "mergeCommit": "9e63c688676e91bc6a2bf715033161016b93d93b",
+  "tree": "a364ea54a6312ba9288777bc97784353a7659a6b",
+  "exactAcceptedTreeMatches": true,
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/61",
+  "hosted": {
+    "run": "37411580740",
+    "pr": "61",
+    "candidate": "ac1614833a5c0dc2d056d801366c55460edbf049",
+    "base": "f7fc7cb00ad11d1356196dbeb59011af02c01ce4",
+    "testedPreview": "fb77e75b174e771a181e083d7e19d72e6b4502f1",
+    "acceptedTree": "a364ea54a6312ba9288777bc97784353a7659a6b",
+    "artifact": {
+      "id": 11390115267,
+      "digest": "sha256:409a4149bdc7980438c649b8b87ea2f2d705cead1c93bc431e5d26e62127681e",
+      "downloadedOnce": true
+    },
+    "hashesVerified": 10,
+    "counts": {
+      "fast": {
+        "tests": 404,
+        "pass": 404,
+        "fail": 0,
+        "skipped": 0
+      },
+      "integration": {
+        "tests": 72,
+        "pass": 72,
+        "fail": 0,
+        "skipped": 0
+      }
+    },
+    "fastChecks": 10,
+    "api": "Both immutable baselines and removal-negative checks pass",
+    "package": "Installed production package smoke pass",
+    "migration014ExactPackagedSourceSha256": null,
+    "migration015Absent": true,
+    "runtime": "Compiled containers and isolated eval worker actual Temporal execution/restart/cleanup passed linux/amd64",
+    "native": "Both Temporal artifacts match official npm hashes",
+    "scans": {
+      "eval-engines": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "fixed": null
+        }
+      ],
+      "eval-worker": [],
+      "api": [],
+      "worker": [],
+      "eval-runner": [],
+      "eval-agentci": []
+    },
+    "cache": "warm: logged cache restoration and BuildKit CACHED layers; changed inputs rebuilt",
+    "logSha256": "34d5c1424cde3ad67e79bfd4ce80ea622fd2345a80b2956f92df91f0a7ad8e40",
+    "constraints": [
+      "No scope expansion or later consumer/migration015",
+      "Original c3 source preserved as in agentci-c3ab-stack-proof.json",
+      "Stacked exact-subject acceptance only, not retargeted later-main acceptance",
+      "No release/publication/live provider/ARM64 runtime acceptance implied",
+      "Earlier failed/cancelled attempts remain separate"
+    ]
+  },
+  "local": "delivery/acceptance/m3-reproduction-approval-registry-local.json",
+  "releaseComplete": false
+}

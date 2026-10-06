@@ -761,6 +761,37 @@
                 }
               }
             }
+          },
+          "409": {
+            "description": "Authenticated admission-backed reproduction evidence has a distinct internal source and is not a legacy review comparison; no export frames are emitted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "unsupported-eval-source"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
           }
         }
       }
@@ -957,6 +988,37 @@
                 "schema": {
                   "type": "string",
                   "pattern": "^[0-9]+$"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Authenticated admission-backed reproduction evidence has a distinct internal source and is not a legacy review comparison; no export frames are emitted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "unsupported-eval-source"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
                 }
               }
             }
