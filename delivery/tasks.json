@@ -2584,6 +2584,31 @@
         }
       ],
       "dependsOn": []
+    },
+    {
+      "id": "M3-07c-3d-2a",
+      "title": "Internal reproduction dispatch persistence and recovery leases",
+      "requirementIds": [
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SPEC-12.5-001",
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T04:49:27.506Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Scoped mutable dispatch state references immutable reproduction intents and binds immutable workflow/queue/subject/plan/operation identity with versioned authority snapshots per dispatch attempt. Real PostgreSQL verifies idempotent backfill, concurrent lease claims, expiry fencing, exact acknowledgement replay, conflicting run/identity rejection, durable cancellation causes, rollback and corrupted lineage rejection. Persistence only: no consumer, HTTP or Temporal activation; full c3 runtime/recovery acceptance remains open.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-3b"
+      ]
     }
   ]
 }

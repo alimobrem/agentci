@@ -1,0 +1,77 @@
+{
+  "task": "M3-07c-3d-2a",
+  "scope": "Internal persistence only; no runtime activation, completion, hosted CI or release claim",
+  "base": "8b73f1b",
+  "checks": {
+    "realPostgres": {
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 3034.851917
+    },
+    "checkFast": {
+      "checksPassed": 10,
+      "durationSeconds": 4.2
+    }
+  },
+  "logs": [
+    {
+      "path": "/private/tmp/agentci-dispatch-final-real.log",
+      "sha256": "5f6a435a1c7ec88408bdc33cefe60c2a13679e6d9f9db8d3a4d69502df1e7bbe"
+    },
+    {
+      "path": "/private/tmp/agentci-dispatch-final-fast.log",
+      "sha256": "0794db5c5ff339b9d3633a0e9fbef93782c994885f1f7b0e48fe86031c977d32"
+    }
+  ],
+  "preservedEarlierAttempts": [
+    "/private/tmp/agentci-reproduction-dispatch-real.log (initial scoped workflow identity failure)",
+    "/private/tmp/agentci-dispatch-fast.log (sandbox loopback denied)",
+    "/private/tmp/agentci-dispatch-attempt-tests.log (subsequently overwritten by authorized success; sandbox EPERM captured in tool transcript)"
+  ],
+  "remaining": [
+    "Hosted CI and packaging",
+    "Configured consumer and current authority rechecks",
+    "Temporal start/ambiguous response reconciliation",
+    "Actual execution cancellation and receipt-preserving completion",
+    "Full c3 customer route/runtime acceptance and milestone release"
+  ],
+  "sourceHashes": {
+    "packages/storage/reproduction-dispatch.ts": "02cfb36a90755f47a74965039ff6ba4158737541c9339ac5cf7d97e98d0e59a6",
+    "deploy/migrations/017_m3_reproduction_dispatch_state.sql": "32c08a0ef1816791e4660b5946f5e6ce01415acfba346e1011e93cf938954562",
+    "tests/integration/reproduction-dispatch.test.ts": "07c887314ffcc0437c6f150bee21c2d2a016bcc75b14007f3848731674a3870a"
+  },
+  "independentReview": {
+    "findings": "No blocking findings within persistence-only scope",
+    "passed": 11,
+    "skipped": 0,
+    "durationMs": 3077.381375,
+    "log": "/private/tmp/agentci-dispatch-independent-review.log",
+    "sha256": "36c6e5f4683f3d1fb565d2556374f9e5d5abf3d10b5e54fdea7d800c9de4f054"
+  },
+  "priorFailureHashes": {
+    "/private/tmp/agentci-reproduction-dispatch-real.log": "1f6300cdcfe21744b9f68b9711509e6794dcbc6f29bc2b07e35046c4adec3a2c",
+    "/private/tmp/agentci-dispatch-fast.log": "4d0494f5e397d6dd92463b644bd0502e8c0e9735fe6211f5da55a1cb0f56f4ba"
+  },
+  "mergedAuthorityBase": "c0f31caf7b95be29a672c74d26d8a6fc57b5647e",
+  "mergedChecks": {
+    "fast": {
+      "passed": 10,
+      "seconds": 4.23
+    },
+    "delivery": {
+      "tasks": 110,
+      "openM3ReleaseGates": 18
+    },
+    "logs": [
+      {
+        "path": "/private/tmp/agentci-dispatch-merged-fast.log",
+        "sha256": "60f0c8fbc1382b63eebbda87596085c1c7e7795e8b5cb4a30d07edd31d3a987b"
+      },
+      {
+        "path": "/private/tmp/agentci-dispatch-merged-delivery.log",
+        "sha256": "6ed912f77bee03126ecb83427729775b4288b915a22443be3610473648657053"
+      }
+    ]
+  }
+}
