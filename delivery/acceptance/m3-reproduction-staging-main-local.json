@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3c",
+  "sourceCommit": "9a286a279e33ec6ef3758a5865f89091f7d25e0f",
+  "mainBase": "c5acdd7",
+  "resourceCorrection": "Existing 32 MiB serialized UTF-8 staging payload cap checked before eval insertion; ReproductionEvalInputLimit is bounded, distinct and retryable:false; no shrinking",
+  "sourceFiles": {
+    "apps/control/server.ts": "5f5db7ac40485b0d378f7cacfd91154deb367fbb5c2b83dad6172139bf34c1e5",
+    "packages/storage/evals.ts": "5e29b6c231162403eed577b2a702a4af93f0174c202dd32dbdf14d440c41bc60",
+    "packages/storage/finding-reproduction.ts": "7019c2ec691139049eef3bd067009396df9940646f7f7e512e34bbb03a1a31ae",
+    "packages/storage/reproduction-evals.ts": "966d7c3d3a898c7e9c3825f3324921385603bbefe0af6e85ab4667984bd23681",
+    "packages/evals/source.ts": "80dc31d09a32943ba209f85f1ea009b4a0cf976b0cec44039ec8ee41123b0694",
+    "deploy/migrations/015_m3_reproduction_eval_source.sql": "e3ddc12ae2b90b22bebfa18570c736c2ef953518f8acbf6dde70cd7d4a3948cc",
+    "tests/helpers/reproduction-staging-fixture.ts": "bdff6ae9761809acb8441a5fb3d358cc049ebabbe690862253599a6a895096c7",
+    "tests/integration/reproduction-staging.test.ts": "5167a459cfeedb533fa8ad812f1ec500c15af822e4cc0ed65107213d2427b225",
+    "scripts/check-api.ts": "4fbde795eff1fecf967e9eef93e7d806eee3e074306712c7e279636fdffd1b7f",
+    "specs/api/openapi.json": "3dc0f9e62458c8f5495702cd4fc1edd50863147d2e62e771e342efaf4605f219",
+    "specs/api/finding-operations.json": "34ba26e0ef1dedd2477d9fb344b36afe259a09f3cac49a62fef10c344417f7ff",
+    "docs/phases/m3-reproduction-staging-decision.md": "a9285472b54a7a3372f1c08570e8abd6091db22ff519e9f4cc8d8bce29988409"
+  },
+  "mergeProof": {
+    "scopedProductBlobsEqualPreMerge12cfa3e": true,
+    "bothParentsTaskEventsPreserved": true,
+    "taskStartAndAcceptancePreserved": true,
+    "legacyTestsUnchanged": true
+  },
+  "checks": {
+    "staging": {
+      "tests": 11,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 2608.763083,
+      "log": {
+        "path": "/private/tmp/agentci-c3c-main-staging.log",
+        "sha256": "bcfda083cab1916c8b668dde202b4c7571a8a184a7b0b39bf96d0ab6ac22c767"
+      }
+    },
+    "fast": {
+      "passed": true,
+      "checks": 10,
+      "seconds": 4.275514584000001,
+      "sourceCommit": "9a286a279e33ec6ef3758a5865f89091f7d25e0f",
+      "dirtyReason": "Only untracked node_modules dependency symlink",
+      "log": {
+        "path": "/private/tmp/agentci-c3c-main-fast.log",
+        "sha256": "e2f3cbb66f6ed5c6aebd7f70dc9f17565bd01992523e5994b5d9e3bacac6c9f3"
+      }
+    },
+    "build": {
+      "passed": true,
+      "log": {
+        "path": "/private/tmp/agentci-c3c-main-build.log",
+        "sha256": "261e646d160bdfbb881537da43a24ef9a7ed2a677da3e5740a6707c70d038fc4"
+      }
+    },
+    "apiCompatibility": {
+      "passed": true,
+      "sourceCommit": "9a286a279e33ec6ef3758a5865f89091f7d25e0f",
+      "currentSha256": "3dc0f9e62458c8f5495702cd4fc1edd50863147d2e62e771e342efaf4605f219",
+      "baselines": [
+        "m1-0.2.1",
+        "m2-0.3.1"
+      ],
+      "negativeControls": 2,
+      "log": {
+        "path": "/private/tmp/agentci-c3c-main-api.log",
+        "sha256": "0ac28536ceafa0163df6a786587f3db18be783732be4834c3659cf1c9a950b44"
+      }
+    }
+  },
+  "priorEvidence": "delivery/acceptance/m3-reproduction-staging-local.json",
+  "reuse": "Legacy12 and frozenfinding mutation evidence retained from prior reviewed source; resource guard changes only admission staging and does not change legacy execution or mutation-tested domain files. Accepted main integrated; no unrelated full CI rerun claim.",
+  "limits": [
+    "Local acceptance only; hosted CI/publication pending",
+    "Oversize fixture independently supplies trusted registry to exercise storage cap beyond earlier production registry-loading cap; production registry cap unchanged",
+    "No HTTP reproduction mutation or consumer activation; old-worker drain/readiness still required"
+  ]
+}

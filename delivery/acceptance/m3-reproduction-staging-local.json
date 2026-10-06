@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3c",
+  "scope": "Local admission-backed staging authority acceptance; no production reproduction routes or consumer activation",
+  "sourceCommit": "f661add1526d82cc0503173aa6cddb1391043b49",
+  "sourceFiles": {
+    "apps/control/server.ts": "5f5db7ac40485b0d378f7cacfd91154deb367fbb5c2b83dad6172139bf34c1e5",
+    "deploy/migrations/015_m3_reproduction_eval_source.sql": "e3ddc12ae2b90b22bebfa18570c736c2ef953518f8acbf6dde70cd7d4a3948cc",
+    "docs/phases/m3-reproduction-staging-decision.md": "0ef925fb2cd91bf1fe68447098708d81f95abd0472636be4f7b8b13746d3a384",
+    "packages/evals/source.ts": "80dc31d09a32943ba209f85f1ea009b4a0cf976b0cec44039ec8ee41123b0694",
+    "packages/storage/evals.ts": "5e29b6c231162403eed577b2a702a4af93f0174c202dd32dbdf14d440c41bc60",
+    "packages/storage/finding-reproduction.ts": "7019c2ec691139049eef3bd067009396df9940646f7f7e512e34bbb03a1a31ae",
+    "packages/storage/reproduction-evals.ts": "90532aef6dbaaa80787d640064fa798c334b46fb42f104d4cab1fabc551fd243",
+    "scripts/check-api.ts": "4fbde795eff1fecf967e9eef93e7d806eee3e074306712c7e279636fdffd1b7f",
+    "specs/api/finding-operations.json": "34ba26e0ef1dedd2477d9fb344b36afe259a09f3cac49a62fef10c344417f7ff",
+    "specs/api/openapi.json": "3dc0f9e62458c8f5495702cd4fc1edd50863147d2e62e771e342efaf4605f219",
+    "tests/helpers/reproduction-staging-fixture.ts": "c35e308f58ea2fc235db5c2cfe921866d7f097f68ddc82d8461eafbecce6bc34",
+    "tests/integration/reproduction-staging.test.ts": "9141cc22a3963fb29e431caf434ee27a28b8a8602c1933258a02531207178977"
+  },
+  "checks": {
+    "staging": {
+      "tests": 10,
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 2257.632458,
+      "log": {
+        "path": "/private/tmp/agentci-reproduction-staging-final.log",
+        "sha256": "6c8d6fb9b134086f90f665f176db009fe1323b8286b074296f950aeec2fad5e6"
+      }
+    },
+    "legacyRegression": {
+      "tests": 12,
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 9068.944125,
+      "testsFiles": [
+        "tests/integration/eval-storage.test.ts",
+        "tests/integration/eval-migrations.test.ts",
+        "tests/integration/finding-reproduction-storage.test.ts"
+      ],
+      "isolation": "Disposable database and fixture-owned schemas; shared servers unchanged",
+      "log": {
+        "path": "/private/tmp/agentci-c3c-legacy.log",
+        "sha256": "56b367091d653ad68bd8521ae9eb9b0ccb42a88934a5a53978b8b5551ab1b3e7"
+      }
+    },
+    "fast": {
+      "passed": true,
+      "checks": 10,
+      "seconds": 3.8590174999999998,
+      "sourceCommit": "f661add1526d82cc0503173aa6cddb1391043b49",
+      "dirtyExplanation": "Only untracked node_modules dependency symlink",
+      "log": {
+        "path": "/private/tmp/agentci-c3c-committed-fast.log",
+        "sha256": "320997ff7610a9c648dd53471998f2cea57bfab67a942993dbea20d5e4d5f148"
+      }
+    },
+    "build": {
+      "passed": true,
+      "log": {
+        "path": "/private/tmp/agentci-c3c-final-build.log",
+        "sha256": "261e646d160bdfbb881537da43a24ef9a7ed2a677da3e5740a6707c70d038fc4"
+      }
+    },
+    "apiCompatibility": {
+      "passed": true,
+      "immutableBaselines": [
+        "m1-0.2.1",
+        "m2-0.3.1"
+      ],
+      "endpointRemovalNegativeControls": 2,
+      "openapiSha256": "3dc0f9e62458c8f5495702cd4fc1edd50863147d2e62e771e342efaf4605f219",
+      "log": {
+        "path": "/private/tmp/agentci-c3c-api-cached.log",
+        "sha256": "0ac28536ceafa0163df6a786587f3db18be783732be4834c3659cf1c9a950b44"
+      }
+    },
+    "findingFrozenMutation": {
+      "baselineScenariosPassed": 2,
+      "wrongFindingReceiptRejected": true,
+      "substitutedRunRejected": true,
+      "log": {
+        "path": "/private/tmp/agentci-c3c-mutation.log",
+        "sha256": "36c345cc14ff6718cea7f3f29385b320b202420ad23d37072ddff51fb52623bc"
+      }
+    }
+  },
+  "runnerImage": "sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143",
+  "demonstrated": [
+    "No legacy review rows for admitted execution; same operation yields same job/unit under concurrent staging",
+    "SQL source union and scoped operation/plan/admission authority reject NULL keys, substituted subject and self-rehashed executable inputs",
+    "Restricted separately authenticated evaluator login retains old table/column grants; no authority table access",
+    "Existing checkpoint resumes without re-execution and unit completion survives typed recovery",
+    "Actual isolated runner executes approved base assertion against admitted head, finalizes receipt and replays retained result",
+    "Cancellation before and during staging fences dispatch; never-staged cancellation has no verified receipt",
+    "Privileged fixture-only plan/operation/input corruption rejected; interrupted unit insert rolls back whole staging transaction",
+    "UTF-8 canonical text and JSONB structural matching; migration body/applied checksum checks",
+    "Legacy hashes and comparison/export frames identical before/after015; auth precedes409 and export emits no frames"
+  ],
+  "priorAttempts": [
+    {
+      "kind": "sandbox restriction",
+      "reason": "Local socket EPERM in initial fast; compatibility archive unavailable before permitted fetch",
+      "logs": [
+        {
+          "path": "/private/tmp/agentci-c3c-fast.log",
+          "sha256": "a8dea612f00d2c30755b0761526fd619f3005591d334670aa2189e6dc603f438"
+        },
+        {
+          "path": "/private/tmp/agentci-c3c-api.log",
+          "sha256": "5631b6b27ff46b4e8765e494b6b5892af3366622e3b1d0e8a03952e80bfed1fa"
+        }
+      ]
+    },
+    {
+      "kind": "fixture correction",
+      "reason": "Legacy fixture lacked required specification; typed receipt fixture initially read receipt before finalize",
+      "logs": [
+        {
+          "path": "/private/tmp/agentci-reproduction-staging-pg-fixture-failure.log",
+          "sha256": "1ee399ed6c1618d92923442bf085e3b57a9c11587c7485b67d44a9f4618552d1"
+        },
+        {
+          "path": "/private/tmp/agentci-reproduction-staging-pg-runner-fixture-failure.log",
+          "sha256": "cb52772d092bda60bf633768f7293639cf03b28afb62f115d55b49b77ff90923"
+        }
+      ]
+    },
+    {
+      "kind": "operation coverage synchronization",
+      "reason": "New operation map correctly failed whitelist until matching check-api entry was added",
+      "log": {
+        "path": "/private/tmp/agentci-c3c-final-fast.log",
+        "sha256": "87257007eb632e02cdcfce397fb76f18e7fa1b1704ee44d85ad1a85b72eb9c59"
+      }
+    }
+  ],
+  "limitations": [
+    "Local proof only; no hosted combined CI, package publication or release",
+    "Migration015 required; activation must drain old evaluators and preflight upgraded code/registry/schema; no mixed-version support claim",
+    "No customer HTTP reproduction mutation or durable outbox consumer activated",
+    "No live provider or GitHub App calls",
+    "Log hashes reference local diagnostic files, not committed logs or credential-bearing artifacts"
+  ]
+}
