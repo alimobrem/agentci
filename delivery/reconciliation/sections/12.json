@@ -1949,16 +1949,18 @@
         },
         {
           "id": "M3-07c-2",
-          "status": "not-started",
-          "startedAt": null,
-          "completedAt": null,
+          "status": "done",
+          "startedAt": "2026-10-06T00:20:28.814Z",
+          "completedAt": "2026-10-06T03:24:11.672Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Exact-subject finding/history reads, bounded stable pagination and integrity-verifiable complete export work over real HTTP. Wrong scope, invalid cursors and interrupted/truncated exports fail explicitly; M3-C11 export capability is retained.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-07c-2-merged-read-export.json"
+              ]
             }
           ]
         },
@@ -2189,6 +2191,76 @@
           ]
         },
         {
+          "operationId": "listReviewFindings",
+          "path": "/v1/model-reviews/{id}/findings",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "no summary 409",
+            "bounded empty completion",
+            "page updates cannot alter pinned evidence",
+            "cursor wrong scope expiry and filters rejected",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFinding",
+          "path": "/v1/findings/{id}",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "review association checked",
+            "canonical event digest verified",
+            "latest and historical versions explicit",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFindingHistory",
+          "path": "/v1/findings/{id}/history",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "stable watermark under appended evidence",
+            "no duplicates or missing version",
+            "byte bound preserves next cursor",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
           "operationId": "createAdmittedReviewExecution",
           "map": "specs/api/reviewer-operations.json",
           "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
@@ -2257,6 +2329,12 @@
         "tests/integration/finding-reproduction-storage.test.ts",
         "tests/integration/finding-reproduction-temporal.test.ts",
         "tests/finding-evidence.test.ts",
+        "tests/integration/model-finding-api.test.ts",
+        "tests/integration/model-finding-read-adversarial.test.ts",
+        "tests/integration/model-finding-read-bounds.test.ts",
+        "tests/integration/model-review-control-startup.test.ts",
+        "tests/model-finding-history-adversarial.test.ts",
+        "tests/model-finding-cursor-adversarial.test.ts",
         "tests/integration/admitted-review-activities.test.ts",
         "tests/integration/review-dispatch.test.ts"
       ],
@@ -2307,7 +2385,13 @@
         },
         {
           "path": "docs/phases/m3-customer-api-contract.md",
-          "sha256": "9ab1e8edf9beb4a159d9cd932807cb761e856bb2826eb0ba8ac37b8aff645a08",
+          "sha256": "1c61b3f35d5cbb812bd7addde31a77a055a7e35e8ec85e69cf6ea9dab49541be",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-07c-2-merged-read-export.json",
+          "sha256": "cc6c98bc93eb0be1f8fd43b2e379e4f0659a061312244f96579e702d08305af6",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -2601,6 +2685,76 @@
             "cancellation during staging waits for cleanup",
             "Temporal history replay"
           ]
+        },
+        {
+          "operationId": "listReviewFindings",
+          "path": "/v1/model-reviews/{id}/findings",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "no summary 409",
+            "bounded empty completion",
+            "page updates cannot alter pinned evidence",
+            "cursor wrong scope expiry and filters rejected",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFinding",
+          "path": "/v1/findings/{id}",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "review association checked",
+            "canonical event digest verified",
+            "latest and historical versions explicit",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFindingHistory",
+          "path": "/v1/findings/{id}/history",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "stable watermark under appended evidence",
+            "no duplicates or missing version",
+            "byte bound preserves next cursor",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
         }
       ],
       "testReferences": [
@@ -2611,7 +2765,13 @@
         "tests/integration/finding-reproduction.test.ts",
         "tests/integration/finding-frozen-eval.test.ts",
         "tests/integration/finding-reproduction-storage.test.ts",
-        "tests/integration/finding-reproduction-temporal.test.ts"
+        "tests/integration/finding-reproduction-temporal.test.ts",
+        "tests/integration/model-finding-api.test.ts",
+        "tests/integration/model-finding-read-adversarial.test.ts",
+        "tests/integration/model-finding-read-bounds.test.ts",
+        "tests/integration/model-review-control-startup.test.ts",
+        "tests/model-finding-history-adversarial.test.ts",
+        "tests/model-finding-cursor-adversarial.test.ts"
       ],
       "plannedPRs": [
         {
@@ -2948,6 +3108,76 @@
             "cancellation during staging waits for cleanup",
             "Temporal history replay"
           ]
+        },
+        {
+          "operationId": "listReviewFindings",
+          "path": "/v1/model-reviews/{id}/findings",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "no summary 409",
+            "bounded empty completion",
+            "page updates cannot alter pinned evidence",
+            "cursor wrong scope expiry and filters rejected",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFinding",
+          "path": "/v1/findings/{id}",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "review association checked",
+            "canonical event digest verified",
+            "latest and historical versions explicit",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFindingHistory",
+          "path": "/v1/findings/{id}/history",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "stable watermark under appended evidence",
+            "no duplicates or missing version",
+            "byte bound preserves next cursor",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
         }
       ],
       "testReferences": [
@@ -2958,7 +3188,13 @@
         "tests/integration/finding-reproduction.test.ts",
         "tests/integration/finding-frozen-eval.test.ts",
         "tests/integration/finding-reproduction-storage.test.ts",
-        "tests/integration/finding-reproduction-temporal.test.ts"
+        "tests/integration/finding-reproduction-temporal.test.ts",
+        "tests/integration/model-finding-api.test.ts",
+        "tests/integration/model-finding-read-adversarial.test.ts",
+        "tests/integration/model-finding-read-bounds.test.ts",
+        "tests/integration/model-review-control-startup.test.ts",
+        "tests/model-finding-history-adversarial.test.ts",
+        "tests/model-finding-cursor-adversarial.test.ts"
       ],
       "plannedPRs": [
         {
@@ -3310,6 +3546,76 @@
             "cancellation during staging waits for cleanup",
             "Temporal history replay"
           ]
+        },
+        {
+          "operationId": "listReviewFindings",
+          "path": "/v1/model-reviews/{id}/findings",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "no summary 409",
+            "bounded empty completion",
+            "page updates cannot alter pinned evidence",
+            "cursor wrong scope expiry and filters rejected",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFinding",
+          "path": "/v1/findings/{id}",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "review association checked",
+            "canonical event digest verified",
+            "latest and historical versions explicit",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFindingHistory",
+          "path": "/v1/findings/{id}/history",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "stable watermark under appended evidence",
+            "no duplicates or missing version",
+            "byte bound preserves next cursor",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
         }
       ],
       "testReferences": [
@@ -3320,7 +3626,13 @@
         "tests/integration/finding-reproduction.test.ts",
         "tests/integration/finding-frozen-eval.test.ts",
         "tests/integration/finding-reproduction-storage.test.ts",
-        "tests/integration/finding-reproduction-temporal.test.ts"
+        "tests/integration/finding-reproduction-temporal.test.ts",
+        "tests/integration/model-finding-api.test.ts",
+        "tests/integration/model-finding-read-adversarial.test.ts",
+        "tests/integration/model-finding-read-bounds.test.ts",
+        "tests/integration/model-review-control-startup.test.ts",
+        "tests/model-finding-history-adversarial.test.ts",
+        "tests/model-finding-cursor-adversarial.test.ts"
       ],
       "plannedPRs": [
         {
@@ -3660,6 +3972,76 @@
             "cancellation during staging waits for cleanup",
             "Temporal history replay"
           ]
+        },
+        {
+          "operationId": "listReviewFindings",
+          "path": "/v1/model-reviews/{id}/findings",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "no summary 409",
+            "bounded empty completion",
+            "page updates cannot alter pinned evidence",
+            "cursor wrong scope expiry and filters rejected",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFinding",
+          "path": "/v1/findings/{id}",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "review association checked",
+            "canonical event digest verified",
+            "latest and historical versions explicit",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFindingHistory",
+          "path": "/v1/findings/{id}/history",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "stable watermark under appended evidence",
+            "no duplicates or missing version",
+            "byte bound preserves next cursor",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
         }
       ],
       "testReferences": [
@@ -3670,7 +4052,13 @@
         "tests/integration/finding-reproduction.test.ts",
         "tests/integration/finding-frozen-eval.test.ts",
         "tests/integration/finding-reproduction-storage.test.ts",
-        "tests/integration/finding-reproduction-temporal.test.ts"
+        "tests/integration/finding-reproduction-temporal.test.ts",
+        "tests/integration/model-finding-api.test.ts",
+        "tests/integration/model-finding-read-adversarial.test.ts",
+        "tests/integration/model-finding-read-bounds.test.ts",
+        "tests/integration/model-review-control-startup.test.ts",
+        "tests/model-finding-history-adversarial.test.ts",
+        "tests/model-finding-cursor-adversarial.test.ts"
       ],
       "plannedPRs": [
         {

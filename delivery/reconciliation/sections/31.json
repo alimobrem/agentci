@@ -122,31 +122,35 @@
         },
         {
           "id": "M3-07c-1",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-05T23:46:27.340Z",
-          "completedAt": null,
+          "completedAt": "2026-10-06T00:20:28.586Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Real HTTP/PostgreSQL/Temporal verifies durable admission, exact authenticated retries, conflicting identities, stale heads/profiles, disabled consumer rejection, cancellation/restart and bounded redacted failures. Publish only working OpenAPI operations and preserve both released compatibility baselines.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-07c-1.json"
+              ]
             }
           ]
         },
         {
           "id": "M3-07c-2",
-          "status": "not-started",
-          "startedAt": null,
-          "completedAt": null,
+          "status": "done",
+          "startedAt": "2026-10-06T00:20:28.814Z",
+          "completedAt": "2026-10-06T03:24:11.672Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Exact-subject finding/history reads, bounded stable pagination and integrity-verifiable complete export work over real HTTP. Wrong scope, invalid cursors and interrupted/truncated exports fail explicitly; M3-C11 export capability is retained.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-07c-2-merged-read-export.json"
+              ]
             }
           ]
         },
@@ -186,7 +190,7 @@
           "operationId": "listReviewerProfiles",
           "path": "/v1/reviewer-profiles",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts",
@@ -203,7 +207,7 @@
           "operationId": "createModelReview",
           "path": "/v1/model-reviews",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts",
@@ -223,7 +227,7 @@
           "operationId": "getModelReview",
           "path": "/v1/model-reviews/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts",
@@ -242,7 +246,7 @@
           "operationId": "cancelModelReview",
           "path": "/v1/model-reviews/{id}/cancellation",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts"
@@ -251,6 +255,99 @@
             "repeated and late intent preserve terminal evidence",
             "not a remote charge refund",
             "works while admissions disabled"
+          ]
+        },
+        {
+          "operationId": "listReviewFindings",
+          "path": "/v1/model-reviews/{id}/findings",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "no summary 409",
+            "bounded empty completion",
+            "page updates cannot alter pinned evidence",
+            "cursor wrong scope expiry and filters rejected",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFinding",
+          "path": "/v1/findings/{id}",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "review association checked",
+            "canonical event digest verified",
+            "latest and historical versions explicit",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFindingHistory",
+          "path": "/v1/findings/{id}/history",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "stable watermark under appended evidence",
+            "no duplicates or missing version",
+            "byte bound preserves next cursor",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "exportModelReview",
+          "path": "/v1/model-reviews/{id}/export",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-review-export.test.ts",
+            "tests/integration/model-review-export-adversarial.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-review-export-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "failed cancelled queued exports preserve null summary and missing roles",
+            "M3-C11 interrupted export never certified",
+            "reject wrong identity reordered missing or extra frames",
+            "refused reviewer retained",
+            "concurrent lifecycle change isolated by captured version manifest",
+            "oversized snapshot fails before headers",
+            "Two active exports and 120-second whole-response deadline",
+            "Snapshot transaction and batch reads released before network backpressure",
+            "No paid provider execution or repository fetch during export"
           ]
         },
         {
@@ -447,6 +544,14 @@
         "tests/model-review-api.test.ts",
         "tests/integration/model-review-api.test.ts",
         "tests/integration/model-review-control-startup.test.ts",
+        "tests/integration/model-finding-api.test.ts",
+        "tests/integration/model-finding-read-adversarial.test.ts",
+        "tests/integration/model-finding-read-bounds.test.ts",
+        "tests/model-finding-history-adversarial.test.ts",
+        "tests/model-finding-cursor-adversarial.test.ts",
+        "tests/integration/model-review-export.test.ts",
+        "tests/integration/model-review-export-adversarial.test.ts",
+        "tests/model-review-export-adversarial.test.ts",
         "tests/review-admission.test.ts",
         "tests/integration/review-admissions.test.ts",
         "tests/integration/review-dispatch.test.ts",
@@ -466,7 +571,19 @@
         },
         {
           "path": "docs/phases/m3-customer-api-contract.md",
-          "sha256": "9ab1e8edf9beb4a159d9cd932807cb761e856bb2826eb0ba8ac37b8aff645a08",
+          "sha256": "1c61b3f35d5cbb812bd7addde31a77a055a7e35e8ec85e69cf6ea9dab49541be",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-07c-1.json",
+          "sha256": "54105fd485f2e70ef021837c000f8a1345990e925b7066d3e5cf741a0a383bda",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-07c-2-merged-read-export.json",
+          "sha256": "cc6c98bc93eb0be1f8fd43b2e379e4f0659a061312244f96579e702d08305af6",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -650,31 +767,35 @@
         },
         {
           "id": "M3-07c-1",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-05T23:46:27.340Z",
-          "completedAt": null,
+          "completedAt": "2026-10-06T00:20:28.586Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Real HTTP/PostgreSQL/Temporal verifies durable admission, exact authenticated retries, conflicting identities, stale heads/profiles, disabled consumer rejection, cancellation/restart and bounded redacted failures. Publish only working OpenAPI operations and preserve both released compatibility baselines.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-07c-1.json"
+              ]
             }
           ]
         },
         {
           "id": "M3-07c-2",
-          "status": "not-started",
-          "startedAt": null,
-          "completedAt": null,
+          "status": "done",
+          "startedAt": "2026-10-06T00:20:28.814Z",
+          "completedAt": "2026-10-06T03:24:11.672Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Exact-subject finding/history reads, bounded stable pagination and integrity-verifiable complete export work over real HTTP. Wrong scope, invalid cursors and interrupted/truncated exports fail explicitly; M3-C11 export capability is retained.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-07c-2-merged-read-export.json"
+              ]
             }
           ]
         },
@@ -714,7 +835,7 @@
           "operationId": "listReviewerProfiles",
           "path": "/v1/reviewer-profiles",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts",
@@ -731,7 +852,7 @@
           "operationId": "createModelReview",
           "path": "/v1/model-reviews",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts",
@@ -751,7 +872,7 @@
           "operationId": "getModelReview",
           "path": "/v1/model-reviews/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts",
@@ -770,7 +891,7 @@
           "operationId": "cancelModelReview",
           "path": "/v1/model-reviews/{id}/cancellation",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts"
@@ -779,6 +900,99 @@
             "repeated and late intent preserve terminal evidence",
             "not a remote charge refund",
             "works while admissions disabled"
+          ]
+        },
+        {
+          "operationId": "listReviewFindings",
+          "path": "/v1/model-reviews/{id}/findings",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "no summary 409",
+            "bounded empty completion",
+            "page updates cannot alter pinned evidence",
+            "cursor wrong scope expiry and filters rejected",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFinding",
+          "path": "/v1/findings/{id}",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "review association checked",
+            "canonical event digest verified",
+            "latest and historical versions explicit",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFindingHistory",
+          "path": "/v1/findings/{id}/history",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-finding-api.test.ts",
+            "tests/integration/model-finding-read-adversarial.test.ts",
+            "tests/integration/model-finding-read-bounds.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "stable watermark under appended evidence",
+            "no duplicates or missing version",
+            "byte bound preserves next cursor",
+            "Partial review reads require deterministic ingestion association",
+            "Immutable summary version differs explicitly from current finding",
+            "Signed cursor binds scope and retained watermark; every page authenticates",
+            "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "exportModelReview",
+          "path": "/v1/model-reviews/{id}/export",
+          "map": "specs/api/operations.json",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "tests": [
+            "tests/integration/model-review-export.test.ts",
+            "tests/integration/model-review-export-adversarial.test.ts",
+            "tests/integration/model-review-control-startup.test.ts",
+            "tests/model-review-export-adversarial.test.ts"
+          ],
+          "scenarios": [
+            "failed cancelled queued exports preserve null summary and missing roles",
+            "M3-C11 interrupted export never certified",
+            "reject wrong identity reordered missing or extra frames",
+            "refused reviewer retained",
+            "concurrent lifecycle change isolated by captured version manifest",
+            "oversized snapshot fails before headers",
+            "Two active exports and 120-second whole-response deadline",
+            "Snapshot transaction and batch reads released before network backpressure",
+            "No paid provider execution or repository fetch during export"
           ]
         },
         {
@@ -884,6 +1098,14 @@
         "tests/model-review-api.test.ts",
         "tests/integration/model-review-api.test.ts",
         "tests/integration/model-review-control-startup.test.ts",
+        "tests/integration/model-finding-api.test.ts",
+        "tests/integration/model-finding-read-adversarial.test.ts",
+        "tests/integration/model-finding-read-bounds.test.ts",
+        "tests/model-finding-history-adversarial.test.ts",
+        "tests/model-finding-cursor-adversarial.test.ts",
+        "tests/integration/model-review-export.test.ts",
+        "tests/integration/model-review-export-adversarial.test.ts",
+        "tests/model-review-export-adversarial.test.ts",
         "tests/review-admission.test.ts",
         "tests/integration/review-admissions.test.ts",
         "tests/integration/review-dispatch.test.ts",
@@ -900,7 +1122,19 @@
         },
         {
           "path": "docs/phases/m3-customer-api-contract.md",
-          "sha256": "9ab1e8edf9beb4a159d9cd932807cb761e856bb2826eb0ba8ac37b8aff645a08",
+          "sha256": "1c61b3f35d5cbb812bd7addde31a77a055a7e35e8ec85e69cf6ea9dab49541be",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-07c-1.json",
+          "sha256": "54105fd485f2e70ef021837c000f8a1345990e925b7066d3e5cf741a0a383bda",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-07c-2-merged-read-export.json",
+          "sha256": "cc6c98bc93eb0be1f8fd43b2e379e4f0659a061312244f96579e702d08305af6",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

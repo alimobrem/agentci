@@ -61,31 +61,35 @@
         },
         {
           "id": "M3-07c-1",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-05T23:46:27.340Z",
-          "completedAt": null,
+          "completedAt": "2026-10-06T00:20:28.586Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Real HTTP/PostgreSQL/Temporal verifies durable admission, exact authenticated retries, conflicting identities, stale heads/profiles, disabled consumer rejection, cancellation/restart and bounded redacted failures. Publish only working OpenAPI operations and preserve both released compatibility baselines.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-07c-1.json"
+              ]
             }
           ]
         },
         {
           "id": "M3-07c-2",
-          "status": "not-started",
-          "startedAt": null,
-          "completedAt": null,
+          "status": "done",
+          "startedAt": "2026-10-06T00:20:28.814Z",
+          "completedAt": "2026-10-06T03:24:11.672Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Exact-subject finding/history reads, bounded stable pagination and integrity-verifiable complete export work over real HTTP. Wrong scope, invalid cursors and interrupted/truncated exports fail explicitly; M3-C11 export capability is retained.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-07c-2-merged-read-export.json"
+              ]
             }
           ]
         },
@@ -126,7 +130,19 @@
       "evidence": [
         {
           "path": "docs/phases/m3-customer-api-contract.md",
-          "sha256": "9ab1e8edf9beb4a159d9cd932807cb761e856bb2826eb0ba8ac37b8aff645a08",
+          "sha256": "1c61b3f35d5cbb812bd7addde31a77a055a7e35e8ec85e69cf6ea9dab49541be",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-07c-1.json",
+          "sha256": "54105fd485f2e70ef021837c000f8a1345990e925b7066d3e5cf741a0a383bda",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-07c-2-merged-read-export.json",
+          "sha256": "cc6c98bc93eb0be1f8fd43b2e379e4f0659a061312244f96579e702d08305af6",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

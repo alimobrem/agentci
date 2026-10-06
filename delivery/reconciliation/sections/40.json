@@ -434,7 +434,7 @@
       "evidence": [
         {
           "path": "cmd/agentci/main.ts",
-          "sha256": "b116f7d01aac5ecf5172c8a80c57272eefb7934503c3d6bf74f1c713c5fe6617",
+          "sha256": "e478e3bc558a4a93e985c4f6bcce9751a74add45deeea72f7cec8cd51ecf2c73",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -932,7 +932,7 @@
           "operationId": "healthz",
           "path": "/healthz",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/control-api.test.ts"
           ],
@@ -944,7 +944,7 @@
           "operationId": "readyz",
           "path": "/readyz",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/control-api.test.ts",
             "tests/client.test.ts"
@@ -959,7 +959,7 @@
           "operationId": "ingestGitHubWebhook",
           "path": "/v1/webhooks/github",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/control-api.test.ts",
             "tests/integration/m1.test.ts"
@@ -1626,7 +1626,7 @@
           "operationId": "getEvidence",
           "path": "/v1/evidence/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/control-api.test.ts",
             "tests/integration/m1.test.ts",
@@ -3505,7 +3505,7 @@
           "operationId": "getEvalComparison",
           "path": "/v1/eval-comparisons/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/integration/eval-storage.test.ts"
@@ -3525,7 +3525,7 @@
           "operationId": "exportEvalComparison",
           "path": "/v1/eval-comparisons/{id}/export",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/eval-export.test.ts",
@@ -5051,7 +5051,7 @@
           "operationId": "getEvalComparison",
           "path": "/v1/eval-comparisons/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/integration/eval-storage.test.ts"
@@ -5071,7 +5071,7 @@
           "operationId": "exportEvalComparison",
           "path": "/v1/eval-comparisons/{id}/export",
           "map": "specs/api/operations.json",
-          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/eval-export.test.ts",
@@ -6067,6 +6067,23 @@
           ]
         },
         {
+          "id": "M3-R1-security-1",
+          "status": "done",
+          "startedAt": "2026-10-06T02:42:09.397Z",
+          "completedAt": "2026-10-06T03:17:09.664Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Official upstream and npm release evidence selects a compatible stable Promptfoo dependency update; installed dependency licenses and positive/negative/error report cases pass in the actual UBI evaluator image. Fresh image scan removes the four fixable PR55 findings without weakening scan thresholds or removing the existing forge backport and unresolved finding. Preserve failed run37404082498 artifact11386399646 and distinguish skipped runtime gates.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-promptfoo-security-hosted.json"
+              ]
+            }
+          ]
+        },
+        {
           "id": "M3-ACCEPTANCE-RECONCILIATION",
           "status": "done",
           "startedAt": "2026-10-06T03:25:46.098Z",
@@ -6141,14 +6158,20 @@
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
+          "path": "delivery/acceptance/m3-promptfoo-security-hosted.json",
+          "sha256": "765d5d587dd9a5cf3eef6fe534ca103386e54f4f96ecebd367102d8bf475412a",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
           "path": "docs/acceptance-reconciliation.md",
-          "sha256": "8afab1286508f3e2b1121f2eb374f91f3eed035da6ad06acac575d7278f9ac01",
+          "sha256": "ef8bb302f5556abeb45b170d6f28cc11bdcb9fad54ec9faa4415d35740b857a2",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
           "path": "scripts/reconcile-acceptance.mjs",
-          "sha256": "a9cee2c54e89eac5ca31174ac134ad00212ed086b8c0be77b1534b53a222b4d9",
+          "sha256": "4caa474710a8cf2322aa2db98e49cb502dc8ce48ffe3cb2f56f9ba8d12c57540",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -6299,6 +6322,23 @@
           ]
         },
         {
+          "id": "M3-R1-security-1",
+          "status": "done",
+          "startedAt": "2026-10-06T02:42:09.397Z",
+          "completedAt": "2026-10-06T03:17:09.664Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Official upstream and npm release evidence selects a compatible stable Promptfoo dependency update; installed dependency licenses and positive/negative/error report cases pass in the actual UBI evaluator image. Fresh image scan removes the four fixable PR55 findings without weakening scan thresholds or removing the existing forge backport and unresolved finding. Preserve failed run37404082498 artifact11386399646 and distinguish skipped runtime gates.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-promptfoo-security-hosted.json"
+              ]
+            }
+          ]
+        },
+        {
           "id": "M3-ACCEPTANCE-RECONCILIATION",
           "status": "done",
           "startedAt": "2026-10-06T03:25:46.098Z",
@@ -6373,14 +6413,20 @@
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
+          "path": "delivery/acceptance/m3-promptfoo-security-hosted.json",
+          "sha256": "765d5d587dd9a5cf3eef6fe534ca103386e54f4f96ecebd367102d8bf475412a",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
           "path": "docs/acceptance-reconciliation.md",
-          "sha256": "8afab1286508f3e2b1121f2eb374f91f3eed035da6ad06acac575d7278f9ac01",
+          "sha256": "ef8bb302f5556abeb45b170d6f28cc11bdcb9fad54ec9faa4415d35740b857a2",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
           "path": "scripts/reconcile-acceptance.mjs",
-          "sha256": "a9cee2c54e89eac5ca31174ac134ad00212ed086b8c0be77b1534b53a222b4d9",
+          "sha256": "4caa474710a8cf2322aa2db98e49cb502dc8ce48ffe3cb2f56f9ba8d12c57540",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -9442,7 +9488,7 @@
       "evidence": [
         {
           "path": "cmd/agentci/main.ts",
-          "sha256": "b116f7d01aac5ecf5172c8a80c57272eefb7934503c3d6bf74f1c713c5fe6617",
+          "sha256": "e478e3bc558a4a93e985c4f6bcce9751a74add45deeea72f7cec8cd51ecf2c73",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

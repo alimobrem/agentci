@@ -1,7 +1,28 @@
 {
   "schemaVersion": 1,
   "authority": "Requested audit snapshot; does not adopt review document or new numeric gates",
-  "basisCommit": "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+  "specificationAuditBasisCommit": "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+  "snapshotInputs": {
+    "tasks": {
+      "path": "delivery/tasks.json",
+      "sha256": "0576f31521f4d2a64df1e3dae3ebf138347463db0854fcd8acaf11a6a47a76cd",
+      "availability": "present",
+      "meaning": "Source/test/record reference; presence is not execution acceptance"
+    },
+    "phasePlan": {
+      "path": "delivery/phase-pr-plan.json",
+      "sha256": "42752969ac0bbd110d1996ab1b7f255b8a7a07188c0eafdaad38e4a0e4c297b5",
+      "availability": "present",
+      "meaning": "Source/test/record reference; presence is not execution acceptance"
+    },
+    "apiSchema": {
+      "path": "specs/api/openapi.json",
+      "sha256": "addd32aeb218ed995637348d23510d3240e6ea8b9dfe476cc2f24882b421fc3e",
+      "availability": "present",
+      "meaning": "Source/test/record reference; presence is not execution acceptance"
+    },
+    "apiVersion": "0.4.0-m3-dev.1"
+  },
   "source": {
     "spec": {
       "path": "specs/agentci-full-spec.md",
@@ -2040,7 +2061,7 @@
     {
       "path": "delivery/reconciliation/sections/12.json",
       "count": 17,
-      "sha256": "68ee2275f86b98793c7a2da4740034b5a1cb86b05929c3007bf4f55b78d8ae4f"
+      "sha256": "a101fa9c9eef45dcd744ebd19bad97f12d98cb006c047651b17aa813d07eaaf2"
     },
     {
       "path": "delivery/reconciliation/sections/13.json",
@@ -2135,12 +2156,12 @@
     {
       "path": "delivery/reconciliation/sections/31.json",
       "count": 18,
-      "sha256": "ef9fb18964f3bff1301901ff60cfb6a52f89195920efe1f7ae44b74136f6c453"
+      "sha256": "763dc16a6c94c1edc70e5f3afef1aca50682872c8a9e33922a1f45f1eb9a2cd7"
     },
     {
       "path": "delivery/reconciliation/sections/32.json",
       "count": 4,
-      "sha256": "fb2c6cde72296c4e7b24fb3084579a33792394f0329dfab20b2ed29c260b4f60"
+      "sha256": "11b1a130c5f899a4fd1429f3b91ef5871ceeed948e404155a55ee5af51505230"
     },
     {
       "path": "delivery/reconciliation/sections/33.json",
@@ -2180,7 +2201,7 @@
     {
       "path": "delivery/reconciliation/sections/40.json",
       "count": 116,
-      "sha256": "f5bf0a3141a0352e42355f8885572a5701bacfa443dcd7d71a1c4c8e3bec3841"
+      "sha256": "b1e7f108d52c4b51994624fa9acf6565b29b625b9fc6b0911ff2e812907094d8"
     },
     {
       "path": "delivery/reconciliation/sections/41.json",
@@ -2210,7 +2231,7 @@
     {
       "path": "delivery/reconciliation/sections/46.json",
       "count": 32,
-      "sha256": "212a2e8138a69f8a4a91156c1d6e62a70c19163b44d2a4823a651d8d44ee5d41"
+      "sha256": "1e317bd41398ee834becd0f16dc721054288d69ec820666b2e4223da9e7bae2d"
     },
     {
       "path": "delivery/reconciliation/sections/47.json",
@@ -2235,7 +2256,7 @@
     {
       "path": "delivery/reconciliation/sections/51.json",
       "count": 19,
-      "sha256": "8f5d3f3fde768267debfb8a7d5a422310a8f945fcaf9ed5ed26e5da32ab26968"
+      "sha256": "1abc5b5692c11053224363e1b620e3a19893040cbdf46332ad38ecd9724e1720"
     }
   ]
 }

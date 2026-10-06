@@ -26,6 +26,9 @@ under their original parent IDs; proposed endpoints retain their proposed modali
 Section files are individually digested and kept below AgentCI’s per-file
 review limit so the platform can review its own audit. No source row is dropped.
 
+The register records hashes of the refreshed task/PR-plan/API-schema inputs,
+separately from the original specification audit commit.
+
 Regenerate with `node scripts/reconcile-acceptance.mjs`; verify with
 `node scripts/reconcile-acceptance.mjs --check`. Use the project-supported Node
 runtime and locked dependencies. A source-file or test-file reference is not an
@@ -214,3 +217,14 @@ Do not advance beyond M3 until every other applicable gate has observed evidence
 and the provider-only exception is disclosed in closure, README, release and demo.
 This audit is not M3 acceptance and does not authorize automatic PR enforcement,
 merge, deployment, paid provider usage or publication of the review attachment.
+
+## Build progress after the original audit
+
+Security PR56, scheduler PR50, finding/history server PR52, export server PR53
+and typed findings client PR54 have merged. Prospective integrated trees matched
+the actual merges; real HTTP/PostgreSQL recovery and compatibility checks passed.
+`delivery/acceptance/m3-07c-2-merged-read-export.json` preserves exact evidence.
+The read/export server task is complete; reproduction/client export work, UI and
+all eighteen M3 release gates remain pending. User-approved observed-rate
+calibration semantics are unchanged. Historical audit observations above remain
+identified by their original basis rather than rewritten as current certification.

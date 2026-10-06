@@ -471,5 +471,245 @@
     "No full integration, packaging, release, anonymous download or live-provider tests executed for this documentation audit",
     "Historical results retained without rerun",
     "Numeric policy proposals not adopted"
-  ]
+  ],
+  "shardedCurrentIntegrationAudit": {
+    "forgedSectionPassRejected": true,
+    "feedback": {
+      "schemaVersion": 1,
+      "startedAt": "2026-10-06T03:32:06.758Z",
+      "finishedAt": "2026-10-06T03:32:10.494Z",
+      "sourceCommit": "9d931f61679f9fd09db291faca79dfb7d5898e7f",
+      "dirty": true,
+      "node": "v26.10.0",
+      "platform": "darwin",
+      "arch": "arm64",
+      "seconds": 3.7531146669999997,
+      "passed": true,
+      "checks": [
+        {
+          "name": "types",
+          "command": [
+            "/private/tmp/agentci-node26/bin/node",
+            "node_modules/typescript/bin/tsc",
+            "--noEmit"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "seconds": 0.7137355,
+          "output": ""
+        },
+        {
+          "name": "tests",
+          "command": [
+            "/private/tmp/agentci-node26/bin/node",
+            "--import",
+            "tsx",
+            "--test",
+            "tests/anthropic-continuation.test.ts",
+            "tests/anthropic-profiles.test.ts",
+            "tests/anthropic-provider.test.ts",
+            "tests/anthropic-request.test.ts",
+            "tests/anthropic-response.test.ts",
+            "tests/anthropic-schema.test.ts",
+            "tests/anthropic-stream.test.ts",
+            "tests/anthropic-transport.test.ts",
+            "tests/api.test.ts",
+            "tests/client.test.ts",
+            "tests/closure.test.ts",
+            "tests/container-engine.test.ts",
+            "tests/control-api.test.ts",
+            "tests/delivery.test.ts",
+            "tests/dogfood.test.ts",
+            "tests/eval-adapters.test.ts",
+            "tests/eval-check.test.ts",
+            "tests/eval-comparison-api.test.ts",
+            "tests/eval-comparison.test.ts",
+            "tests/eval-contracts.test.ts",
+            "tests/eval-execution.test.ts",
+            "tests/eval-export.test.ts",
+            "tests/eval-harness.test.ts",
+            "tests/eval-http.test.ts",
+            "tests/eval-orchestration.test.ts",
+            "tests/eval-plan.test.ts",
+            "tests/eval-request-id.test.ts",
+            "tests/eval-statistics.test.ts",
+            "tests/eval-worker-config.test.ts",
+            "tests/evidence-reuse.test.ts",
+            "tests/finding-evidence.test.ts",
+            "tests/finding-reproduction.test.ts",
+            "tests/findings.test.ts",
+            "tests/forge-backport.test.ts",
+            "tests/github-failure-diagnostics.test.ts",
+            "tests/github-rate-limit.test.ts",
+            "tests/github.test.ts",
+            "tests/hosted-evidence.test.ts",
+            "tests/hosted-selection.test.ts",
+            "tests/image-publication.test.ts",
+            "tests/model-execute.test.ts",
+            "tests/model-finding-client.test.ts",
+            "tests/model-finding-cursor-adversarial.test.ts",
+            "tests/model-finding-history-adversarial.test.ts",
+            "tests/model-request.test.ts",
+            "tests/model-response.test.ts",
+            "tests/model-review-api.test.ts",
+            "tests/model-review-check.test.ts",
+            "tests/model-review-cli.test.ts",
+            "tests/model-review-client.test.ts",
+            "tests/model-review-export-adversarial.test.ts",
+            "tests/model-review-transport-draft.test.ts",
+            "tests/model-stream-execute.test.ts",
+            "tests/model-stream.test.ts",
+            "tests/mount-preflight.test.ts",
+            "tests/native-publication.test.ts",
+            "tests/onboarding.test.ts",
+            "tests/openai-error.test.ts",
+            "tests/openai-profiles.test.ts",
+            "tests/openai-provider.test.ts",
+            "tests/openai-request.test.ts",
+            "tests/openai-response.test.ts",
+            "tests/openai-schema.test.ts",
+            "tests/openai-stream.test.ts",
+            "tests/openai-transport.test.ts",
+            "tests/operator-review.test.ts",
+            "tests/preflight-command.test.ts",
+            "tests/project.test.ts",
+            "tests/provider-conformance.test.ts",
+            "tests/provider-preflight.test.ts",
+            "tests/provider-smoke-config.test.ts",
+            "tests/published-downloads.test.ts",
+            "tests/review-admission.test.ts",
+            "tests/review.test.ts",
+            "tests/reviewer-adversarial.test.ts",
+            "tests/reviewer-context.test.ts",
+            "tests/reviewer-execute.test.ts",
+            "tests/reviewer-policy.test.ts",
+            "tests/reviewer-profile.test.ts",
+            "tests/reviewer-result.test.ts",
+            "tests/reviewer-runtime.test.ts",
+            "tests/reviewer-snapshot.test.ts",
+            "tests/reviewer-storage-failure.test.ts",
+            "tests/scan-gate.test.ts",
+            "tests/schemas.test.ts",
+            "tests/xai-continuation.test.ts",
+            "tests/xai-profiles.test.ts",
+            "tests/xai-provider.test.ts",
+            "tests/xai-request.test.ts",
+            "tests/xai-response.test.ts",
+            "tests/xai-schema.test.ts",
+            "tests/xai-stream.test.ts",
+            "tests/xai-transport.test.ts"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "seconds": 3.723257875,
+          "output": "✔ tool results append signed blocks unchanged and bind preceding context (145.697958ms)\n✔ continuation rejects missing or duplicate tool results and response/prefix mismatch (103.62725ms)\n✔ reviewed Opus profile uses full-context cache-write upper bound and exact identity (34.910458ms)\n✔ Anthropic runs the shared smoke corpus through SDK and budgets (tool continuation: false) (251.548375ms)\n✔ Anthropic runs the shared smoke corpus through SDK and budgets (tool continuation: true) (169.753ms)\n✔ Anthropic profiles cannot advertise unsupported developer or extension semantics (0.427ms)\n✔ unsupported Anthropic schema fails before reservation and network access (51.137959ms)\n✔ SDK tool-result round trips preserve signed blocks and account for each fresh request (362.859959ms)\n✔ Anthropic mapping preserves tool-result grouping, schemas and standard service (44.208125ms)\n✔ Anthropic mapping rejects unsupported roles/extensions and preserves sampling parameters (16.99475ms)\n✔ Anthropic output preserves observed identity and includes cache tokens without fabricating cost (20.402709ms)\n✔ Anthropic refusal, truncation and pause never return actionable output (0.60425ms)\n✔ Anthropic validates tool proposals, stop reasons and explicitly approved snapshots (7.892541ms)\n✔ Anthropic preserves signed continuation blocks without exposing them as review text (28.912416ms)\n✔ Anthropic explicit limits apply across tools and output without removing constraints (0.803667ms)\n✔ Anthropic accepts local acyclic references but rejects recursive or external schemas (0.222125ms)\n✔ Anthropic stream validates ordered blocks, cumulative usage and terminal output (34.696625ms)\n✔ Anthropic stream fails closed on missing terminal, bad block order, decreasing usage and model changes (0.76075ms)\n✔ Anthropic stream validates complete tool JSON while truncation discards partial proposals (16.438167ms)\n✔ empty tool arguments without deltas remain a valid proposal (11.301916ms)\n✔ streamed thinking and signature fragments survive only in continuation data (7.872125ms)\n✔ Anthropic SDK uses pinned origin, explicit key and standard service (45.780875ms)\n✔ Anthropic SDK cannot retry internally or expose provider messages (13.773584ms)\n✔ Anthropic transport rejects expired, cancelled, redirected and oversized responses (18.730167ms)\n✔ Anthropic SDK parses SSE while retaining the upstream request identity (6.409917ms)\n✔ API health and schema retrieval (60.870375ms)\n✔ API validates a contract and rejects invalid contracts (10.428541ms)\n✔ API rejects invalid JSON and unsupported schema names (42.551375ms)\n✔ API does not expose future product resources (9.048708ms)\n✔ API rejects oversized bodies with a usable 413 response (3.750667ms)\n✔ agent client verifies evidence identity/digest and keeps bearer tokens off readiness (120.894459ms)\n✔ agent client rejects authentication, redirects and invalid records without leaking provider errors (22.243084ms)\n✔ consolidated closure rejects wrong source, incomplete gates, missing demos and invalidated proofs (4.51ms)\n✔ closure refuses pending release gates and stale evidence after a later failed verification (0.212791ms)\n✔ release CLI enforces canonical closure and rejects changed proof bytes (453.121ms)\n✔ operator container selection defaults to Docker and rejects arbitrary executables before execution (0.524417ms)\n✔ signed webhook returns contracted receipt, queues once, and detects conflicting replay (65.706375ms)\n✔ invalid signature, malformed JSON, wrong installation and invalid SHA cannot dispatch work (71.414958ms)\n✔ closed PRs are recorded as ignored; unsupported methods and oversized bodies fail (10.85325ms)\n✔ evidence API requires credentials before revealing IDs and matches documented errors (41.554333ms)\n✔ readiness covers healthy and unavailable dependencies; evidence success matches the shared contract (18.724541ms)\n✔ webhook media, delivery headers and persistence failures match the contract without dispatch (6.109875ms)\n✔ release completion rejects missing gates, pending checks and evidence from another SHA (2.884292ms)\n✔ missing proof, invalid scope exceptions and escaped evidence paths cannot close a gate (0.215916ms)\n✔ task completion requires known requirements, passed acceptance and explicit evidence (0.289084ms)\n✔ timing summaries do not invent empty samples and use median rather than best run (0.346333ms)\n✔ deferral preserves unfinished acceptance and rejects absent evidence, escapes and false completion (0.430458ms)\n✔ blocked time is separate from cycle time and unknown starts stay unknown (0.083416ms)\n✔ expanded customer acceptance cannot close with only historical M1 gates (0.214625ms)\n✔ phase identity and coverage cannot reuse a prior milestone ledger or omit an exit requirement (0.259333ms)\n✔ delivery CLI checks a selected historical phase and rejects unsupported phases (800.601416ms)\n✔ task dependencies reject missing/cyclic graphs and incomplete transitive acceptance (0.3375ms)\n✔ delivery CLI refuses premature start, completion and reopen without altering ledger or events (255.544667ms)\n✔ phase plan cannot drop mandatory retro gates or drift from executable task dependencies (601.944709ms)\n✔ interventions preserve unknown effort and reject invalid measurements without changing history (351.792041ms)\n✔ Hosted evidence links are restricted to GitHub artifacts in the configured repository (0.604875ms)\n✔ Hosted publication verifies PR, head, base, repository, installation and digest before publishing (0.325958ms)\n✔ native reports must account for every scenario and agree with process outcome (0.605792ms)\n✔ pytest XML maps stable scenarios, preserves skipped/error outcomes and rejects ambiguous reports (37.129791ms)\n✔ selectors and command arguments cannot alias assertions or contain NUL bytes (0.960792ms)\n✔ Promptfoo maps JSONL assertions, separates provider errors and rejects contradictory or incomplete results (0.408917ms)\n✔ DeepEval uses its real pytest plugin and enforces the same complete JUnit accounting (0.204458ms)\n✔ Check evidence requires a complete identity-bound export and derives regression/gap status (48.3825ms)\n✔ Check display caps UTF-8 bytes while complete large evidence and all regressions remain validated (147.943709ms)\n✔ comparison API authenticates before UUID disclosure and matches every documented response (192.76875ms)\n✔ export authenticates and validates IDs before storage, and sanitizes startup failure (21.53225ms)\n✔ export concurrency is bounded and abandoned HTTP streams release their slots (19.14475ms)\n✔ agent client verifies exact comparison scope, source, review, attempt, digest and derived result (12.80075ms)\n✔ comparison API rejects cross-scope records and oversized evidence without truncating results (608.816792ms)\n✔ comparison client rejects provider redirects, malformed/forged evidence and oversized responses without private diagnostics (17.781458ms)\n✔ comparison UUID spelling variants retain canonical evidence and complete export without weakening identity (55.077042ms)\n✔ comparison evidence derives exact-source regressions and rejects forged summaries/digests (7.6295ms)\n✔ pending, cancelled, incomplete pair and missing coverage never pass (1.623833ms)\n✔ unit results and planned pairs cannot substitute source, assertion, model or runner provenance (0.961041ms)\n✔ eval contract is strict, immutable and preserves explicit argv including repeated args (33.597833ms)\n✔ eval manifests reject duplicate scenarios, escaping paths and ambiguous exit-code assertions (0.318916ms)\n✔ critical safety suites default to zero violations and cannot loosen that threshold (0.137625ms)\n✔ impact selection includes required tool, model, permission and implementation classes and reports gaps (8.194416ms)\n✔ normalized results cannot hide infrastructure errors, skipped trials, count or identity contradictions (5.015584ms)\n✔ model-impact selection reports missing representative suites and incomplete model matrices (0.351875ms)\n✔ missing tool contracts and permission defenses remain explicit without requirement mappings (0.296917ms)\n✔ baseline-configured repeated trials expose behavioral regression and preserve exact commit identities (4.144667ms)\n✔ model matrix evaluates every configured variant on both commits with a total budget (1.201708ms)\n✔ trial budgets, explicit model variants, error and cancellation outcomes cannot quietly pass (0.648125ms)\n✔ durable comparison contexts cannot reuse a run ID, checkpoint callbacks or lease across base/head units (0.158125ms)\n✔ export hash chain rejects sequence, unknown keys, identity and digest substitutions (11.862583ms)\n✔ export consumer rejects truncation, reordered units, forged summaries, extra frames and scope substitution (37.069833ms)\n✔ baseline assertion content is fixed while subject content and exact subject commit remain head-bound (1.793792ms)\n✔ protected tracked paths are omitted explicitly and cannot become hidden assertion inputs (2.597917ms)\n✔ default baseline eval namespace restores deleted tests and removes newly injected assertion files (3.903875ms)\n✔ HTTP provider configuration belongs to the operator, requires pinned IP and verified HTTPS (30.447708ms)\n✔ real HTTP transport binds input identity and contains redirects, errors, deadlines, cancellation and payload limits (100.714084ms)\n✔ HTTPS verifies the operator trust root and pinned destination before sending eval credentials or input (50.492833ms)\n✔ HTTP suites use the default trial pipeline, stable baseline assertions, model matrix and provider provenance (13.67475ms)\n✔ controller expands frozen baseline models for both commits and added suites for head only (72.712875ms)\n✔ operator budgets cover every model and side; zero selected plans remain explicit (7.879791ms)\n✔ HTTP provenance is public operator identity only; optional engines require separate immutable pins (23.02225ms)\n✔ changing or removing suite selectors cannot erase baseline assertions (32.322083ms)\n✔ spec changes select mapped suites and expose uncovered or unknown requirements (9.642958ms)\n✔ added suites and removed scenarios remain explicit; malformed and duplicated catalog data fail (9.412292ms)\n✔ head-only defensive suites cannot conceal missing baseline impact coverage (6.671667ms)\n✔ permission expansion requires defenses from the frozen baseline catalog (13.434333ms)\n✔ SHA-256 name-based UUIDv8 matches RFC 9562 B.2 and separates unit/trial identities (0.792917ms)\n✔ Wilson intervals match published binomial boundary calculations without asserting universal safety (0.468875ms)\n✔ configured observed pass threshold remains distinct from descriptive confidence and critical safety limits (0.273833ms)\n✔ missing/skipped trials and infrastructure errors cannot produce a passing statistical result (0.126292ms)\n✔ observed metrics are bounded, aggregated and never manufactured for absent measurements (0.381959ms)\n✔ eval worker refuses controller credentials and repository-defined mutable runner images (1.118958ms)\n✔ immutable evidence reuse requires exact identity and sufficient coverage at the same boundary (6.075792ms)\n✔ failed or invalidated evidence cannot fall back to a stale earlier pass (4.820834ms)\n✔ measurement cohorts preserve failures, unknown timings and distinct cache/platform/coverage (3.264084ms)\n✔ evidence CLI preserves history, rejects changed proof and requires repeat reasons (464.177708ms)\n✔ additional reviewer evidence preserves disposition and cannot interrupt pinned reproduction (5.497709ms)\n✔ reproduction approval binds exact finding version, evidence, assertion, resources and structured report (6.265916ms)\n✔ structured finding assertion confirms only its authorized complete outcome (8.263292ms)\n✔ receipt rejects substituted runs and pending work; cancellation retains explicit nonconfirmation (2.592ms)\n✔ finding proposals bind exact selected evidence and reject model-supplied lifecycle fields (6.284ms)\n✔ exact duplicate aggregation is deterministic and agreement does not confirm or block (10.363ms)\n✔ lifecycle requires exact trusted reproduction and operator receipts and preserves the input (13.158333ms)\n✔ forged confirmation, stale version, wrong subject and receipt outages fail closed (1.503916ms)\n✔ explicit customer override is separate from verification and synthetic findings never block (0.609959ms)\n✔ forge security backport refuses upgrades and altered source without writing a patch (75.021542ms)\n✔ GitHub failure diagnostics allow only bounded metadata and never infer permission failure from 403 alone (1.712208ms)\n✔ GitHub request hook reports failures without changing SDK rejection and ignores sink failures (13.245625ms)\n✔ confirmed primary exhaustion suppresses subsequent requests until reset without extending cooldown (12.756708ms)\n✔ retry-after and primary reset use the later deadline; unspecified 429 timing backs off one minute (1.620834ms)\n✔ bare access denial is not mislabeled throttling and malformed timing cannot bypass confirmed exhaustion (1.331292ms)\n✔ GitHub adapter reads exact Git objects and rejects truncation and content identity mismatch (87.252ms)\n✔ Checks reconcile retries only against this App and exact head; current-head check rejects force pushes (28.492167ms)\nGET /repos/example/repo/git/commits/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb - 403 with id UNKNOWN in 6ms\n✔ verified snapshot reuse reduces blob requests while freshly checking trees and rejecting tampered sizes (28.412042ms)\n✔ snapshot cache is bounded, client-local and never retains corrupt responses (49.037125ms)\n✔ concurrent verified blob reads do not double-count cache capacity (14.976375ms)\n✔ hosted producer rejects mismatched source/run/image/scope, hidden failures and incomplete completion (1.41125ms)\n✔ hosted retained export verifies file and frame digests, scope and complete behavioral outcome (29.620666ms)\n✔ PR-triggered selection performs no all-PR discovery and never trusts event commit data (1.393625ms)\n✔ scheduled main and manual sweeps preserve bounded discovery (18.906708ms)\n✔ sweep limit prevents unbounded pagination and duplicate identities fail closed (1.119625ms)\n✔ published native inventory resolves distinct platform manifests and excludes attestations (0.684084ms)\n✔ publication refuses existing tags and ambiguous registry failures without leaking credentials (20.489708ms)\n✔ publication allows only explicit authenticated absence for valid repository-scoped roles (0.256625ms)\n✔ invoke reserves before dispatch, validates output and settles only reported cost (38.9025ms)\n✔ bounded retries preserve possibly charged failures and release proven not-sent failures (46.039542ms)\n✔ budget exhaustion and expired/cancelled calls never dispatch (17.161833ms)\n✔ deadline bounds an uncooperative provider and retains its reservation (4.030167ms)\n✔ cancellation during reservation releases after reservation completes without dispatch (3.62775ms)\n✔ malformed output and raw errors are redacted and never retried implicitly (7.319084ms)\n✔ accounting failure cannot return success or authorize another dispatch (6.278959ms)\n✔ retry count is bounded and missing or invalid estimates prevent reservation (18.645ms)\n✔ cancellation during settlement preserves known cost but cannot report success (6.649667ms)\n✔ deadline reached during settlement records accounting before returning deadline (6.181333ms)\n✔ server retry delays beyond policy are not shortened into early retries (3.371125ms)\n✔ public client reads current and pinned versions independently and validates paginated lifecycle (34.350166ms)\n✔ history rejects changed watermark, missing prefix, cross-page lifecycle mutation and interrupted completion (47.108708ms)\n✔ findings require a complete manifest and never return partial or substituted references (18.886167ms)\n✔ read arguments and exact finding identity fail closed (35.6115ms)\n✔ executable finding CLI discovers reads and exits unsuccessfully for interrupted history (2237.641916ms)\n✔ pinned manifest traversal rejects cross-page reordering, repeats and changed summary (12.660459ms)\n✔ caller cancellation interrupts initial identity read and later history page (2.907ms)\n✔ finding cursor binds tenant, repository, route, review, finding, signing key, and exact expiry (1.186125ms)\n✔ cursor tampering cannot change immutable watermark, summary, offset, expiration or add filters (0.368458ms)\n▶ standalone retained event rejects self-consistent forged versions actions and receipt envelopes\n  ✔ unretained version zero (0.313583ms)\n  ✔ unknown action (0.108333ms)\n  ✔ unknown action fields (0.078375ms)\n  ✔ queue with receipt (0.06675ms)\n  ✔ confirmation missing receipt (0.070417ms)\n  ✔ receipt for another finding (0.064ms)\n  ✔ receipt and disposition mismatch (0.067625ms)\n  ✔ unknown receipt fields (0.076ms)\n✔ standalone retained event rejects self-consistent forged versions actions and receipt envelopes (3.824625ms)\n✔ finding history chain rejects omitted duplicated reordered and wrong-predecessor events (5.485166ms)\n✔ normalized model request is strict, detached and never coerces or mutates input (7.543541ms)\n✔ requests reject non-JSON extension data, oversized input, recursive data and unresolved schemas (13.122125ms)\n✔ provider identity and unsupported capabilities fail before dispatch; extensions remain namespaced (13.150042ms)\n✔ tool conversation history preserves proposals and requires one matching result per call (4.132542ms)\n✔ response binds exact request and attempt; validates structured output without coercion (90.184792ms)\n✔ usage preserves unknown costs and rejects false accounting precision (50.99675ms)\n✔ only declared schema-valid tool proposals are accepted; partial output is not actionable (28.912125ms)\n✔ observed model is optional for older adapters and bounded when reported (38.968875ms)\n✔ continuation must bind provider and observed model and cannot accompany partial output (24.164042ms)\n✔ new routes enforce separate mutation credentials and preserve released read authorization (60.437708ms)\n✔ admission validates content scope limits and returns bounded contract errors before invoking backend (42.573458ms)\n✔ oversized unfinished chunked request receives 413 promptly without waiting for upload end (3.382916ms)\n✔ disabled admission preserves reads/cancel, validates returned digests and redacts backend outages (37.174917ms)\n✔ model review conclusion never treats synthetic, unconfirmed or incomplete work as clean success (1.729875ms)\n✔ renderer binds exact subject, summary and role digests and refuses credential-bearing URLs (0.605208ms)\n✔ private client configuration requires private regular files and rejects inline credentials (48.041292ms)\n✔ executable CLI transport fixture supports profiles/submit/show/cancel and never treats queued state as a verdict (2327.073958ms)\n✔ model-review transport fixture verifies identities and uses separate read/write credentials (61.787209ms)\n✔ bounded retries preserve admission bytes after a lost response and transient unavailability (1110.936ms)\n✔ client rejects forged identity, summary, extra fields and cancellation before touching the wrong subject (6.447209ms)\n✔ client redacts errors and rejects redirect, invalid UTF-8, unknown error code and oversized body (8.379ms)\n✔ client validates origins, credentials and request input before network, with bounded timeouts (27.287583ms)\n✔ complete partial exports preserve cancelled/failed evidence and queued missing roles without successful execution (10.412666ms)\n✔ no valid prefix or interrupted export can certify completion (4.119083ms)\n▶ rehashed exports reject omitted duplicate reordered and wrong-subject retained content\n  ✔ missing reviewer (1.31825ms)\n  ✔ missing finding (1.194167ms)\n  ✔ duplicate reviewer (1.175375ms)\n  ✔ duplicate finding (1.275791ms)\n  ✔ reordered content (1.62525ms)\n  ✔ duplicate header (3.994209ms)\n  ✔ wrong reviewer identity (1.417042ms)\n  ✔ wrong reviewer subject (1.252917ms)\n  ✔ wrong ingest operation (7.468875ms)\n  ✔ missing configured role marker (2.019083ms)\n  ✔ duplicate missing role marker (1.527417ms)\n  ✔ wrong retained result digest (1.6375ms)\n  ✔ incorrect manifest event count (1.081292ms)\n  ✔ incorrect end event count (1.171584ms)\n  ✔ truncated captured history (1.532625ms)\n  ✔ extra end field (1.132583ms)\n✔ rehashed exports reject omitted duplicate reordered and wrong-subject retained content (38.846708ms)\n✔ raw envelope corruption and trailing frames fail independent of semantic content (3.173083ms)\n✔ draft composed status examples retain domain identity and do not equate completion with successful coverage (1.468583ms)\n✔ cross-record corruption and false terminal evidence fail composed fixture invariants (7.710833ms)\n✔ cancelled export prefix binds missing roles and is explicitly not a complete execution or download (0.319375ms)\n✔ draft operations map real requirement IDs advertise only the implemented admission slice (15.618541ms)\n✔ stream observer receives backpressured provisional events and completion follows settlement (32.797292ms)\n✔ failure after visible output cannot silently retry or release possibly charged work (4.489417ms)\n✔ terminal followed by extra events cannot settle or return success (7.24725ms)\n✔ deadline bounds stalled iterators and stalled consumers; cancellation closes the iterator (44.143208ms)\n✔ stream capability fails before reservation and observer failures are redacted (17.490583ms)\n✔ stream binds identity and matches assembled text and final usage (10.197459ms)\n✔ stream rejects missing start/end, duplicate start/end and mismatched text (79.12925ms)\n✔ tool argument deltas assemble strictly and agree with final proposals (9.581959ms)\n✔ stream rejects excessive output and usage disagreement; usage must follow deltas (13.15725ms)\n✔ a stream stays failed after invalid output, even after a previously valid terminal (5.786833ms)\n✔ mount preflight verifies daemon-visible bytes with restricted execution and owned cleanup (10.653291ms)\n✔ native assembly refuses partial, stale, failed, duplicate and unbound platform receipts (0.744375ms)\n✔ assembled index binds both exact native manifests and rejects unexpected runtime platforms (0.177291ms)\n✔ native image identity rejects wrong architecture, source, version and repository (0.104834ms)\n✔ publication reserves evidence and cleanup time and gates tag assembly on native jobs (8.263708ms)\n✔ scan evidence must name the accepted manifest, configuration and native platform (0.203833ms)\n✔ customer initialization validates and refuses to overwrite populated repositories (24.21025ms)\n✔ App setup uses explicit repository/account configuration and rejects ambiguous origins (0.534875ms)\n✔ App installation must match one configured repository and all minimal permissions (0.276ms)\n✔ OpenAI errors separate authentication, invalid input, quota and retryable throttling (1.174666ms)\n✔ retry delay supports numeric and HTTP date values, with malformed values ignored (0.239ms)\n✔ cancellation and timeouts remain terminal; unknown failures are redacted (0.147375ms)\n✔ oversized valid server delays remain retry blockers instead of becoming missing metadata (0.183167ms)\n✔ reviewed Luna profile reserves long-context cache-write upper cost at standard service (17.006834ms)\n✔ registered OpenAI provider reserves conservative cost and invokes through official SDK (57.5175ms)\n✔ registered OpenAI stream traverses SDK, translator, core validation and accounting (108.574042ms)\n✔ model allowlist and capabilities reject unsupported requests before network access (14.057458ms)\n✔ registered profiles are detached from later caller mutation (11.438458ms)\n✔ schema rejection occurs before budget reservation or network dispatch (10.157583ms)\n✔ model aliases accept only operator-approved snapshots and preserve observed identity (94.264209ms)\n✔ SDK outage recovery reserves every attempt and retains ambiguous charges (101.440917ms)\n✔ SDK quota and excessive retry delay never trigger a hidden retry (54.859709ms)\n✔ OpenAI request preserves instruction roles, parameters, tool history and schemas (13.218375ms)\n✔ OpenAI request rejects unsupported fields instead of silently losing intent (15.086458ms)\n✔ OpenAI schema preflight rejects optional/open objects and unsupported composition without rewriting (25.641083ms)\n✔ OpenAI schema preflight preserves nullable recursive schemas and treats property names as data (7.726208ms)\n✔ OpenAI schema preflight bounds enum size before dispatch (8.6975ms)\n✔ OpenAI response preserves structured output and token usage without fabricating billed cost (16.060125ms)\n✔ OpenAI refusal and incomplete responses never produce actionable structured output (0.559083ms)\n✔ OpenAI tools remain schema-checked proposals and unfamiliar output is rejected (10.467458ms)\n✔ tool proposal may precede the requested final structured answer (4.216834ms)\n✔ schema depth counts referenced objects and arrays while allowing recursive back-edges (0.861542ms)\n✔ references resolve only local schema nodes, including escaped definition names (0.138084ms)\n✔ unsupported constructs, untyped values and fine-tuned constraints fail explicitly (0.152666ms)\n✔ OpenAI stream translates ordered text, usage and exact final response (12.2005ms)\n✔ OpenAI stream rejects gaps, wrong item identity, unexpected events and missing terminal (0.920375ms)\n✔ OpenAI tool stream requires matching argument completion and declared tool schema (22.48375ms)\n✔ OpenAI refusal and incomplete streams preserve non-actionable outcomes (0.479292ms)\n✔ official SDK transport targets fixed origin and disables storage/redirects with normalized output (17.970791ms)\n✔ official SDK cannot multiply retries, and provider error text is redacted (5.3095ms)\n✔ expired requests and cancellation fail before fetch; oversized bodies fail closed (21.21025ms)\n✔ official SDK parses incremental SSE events through the bounded transport (22.26ms)\n✔ private operator config rejects extra/read-only credentials, unsafe origins and nonprivate/symlink files (172.683625ms)\n✔ operator review queues a fresh signed exact subject and safely repeats ambiguous submission UUID against the actual API (33.141375ms)\n✔ operator review rejects closed/mismatched subjects, forged/oversized receipts and redirects without leaking provider failures (11.727166ms)\n✔ combined preflight validates all configuration before probes and stops after failed mount (1.483875ms)\n✔ readiness rejects unavailable, malformed and oversized responses without exposing errors (14.675459ms)\n✔ private CLI config rejects permissive files, symlinks, oversized data and invalid arguments (358.255791ms)\n✔ AgentCI validates its own repository (390.5305ms)\n✔ YAML parser rejects duplicate keys (0.486958ms)\n✔ missing project config fails validation (28.5345ms)\n✔ invalid requirement is reported with its file (32.528625ms)\n✔ duplicate requirement IDs fail across files (44.038708ms)\n✔ explicit Markdown front matter is validated (12.532458ms)\n✔ missing specification matches cannot pass (8.693334ms)\n✔ malformed eval YAML is not a success (16.828208ms)\n✔ project validates M2 manifests and rejects missing requirement mappings and duplicate suites (33.225ms)\n✔ include paths cannot escape the project (3.543792ms)\n✔ symlinked specification outside project is rejected (6.444625ms)\n✔ conformance runs ordinary and streaming execution through budget accounting with sanitized results (44.087ms)\n✔ failed or cancelled conformance does not proceed to another request (7.785959ms)\n✔ conformance rejects missing usage and missing tool proposals even after accounting (57.699083ms)\n✔ tool-result acceptance rejects malformed answers, new proposals and missing usage after accounting (201.738375ms)\n✔ provider preflight rejects unauthorized budgets and endpoint overrides before I/O (1.434459ms)\n✔ missing credentials block all connectivity and errors never expose private paths or contents (0.258042ms)\n✔ connectivity uses unauthenticated bounded HEAD requests and records no authentication claim (10.176334ms)\n✔ credential references require nonempty private regular files and reject symlinks (8.57775ms)\n✔ private smoke configuration requires explicit authorization and rejects unsafe credential files (13.276917ms)\n✔ download acceptance rejects wrong source, version, platform and substituted digest (0.568125ms)\n✔ review admission binds exact scoped subject, immutable profile and execution mode (1.547458ms)\n✔ admission approval cannot authorize different source, profile, request or synthetic/live mode (0.582833ms)\n✔ semantic categories cover each M1 surface including removals (12.888292ms)\n✔ structured diff distinguishes absent and null, escapes pointers, and never embeds content (1.902041ms)\n✔ production writes and secret reads produce verified findings without any model (2.223916ms)\n✔ narrowing existing explicit access does not assert a new production permission (2.024375ms)\n✔ active safety requirement removal is verified high risk; text edits remain inferred (4.412ms)\n✔ changing selectors cannot hide removal of an active safety requirement (1.212ms)\n✔ missing specifications are an input failure, not a clean advisory result (1.673417ms)\n✔ malformed data, duplicate IDs, path escapes and unsafe selectors fail rather than report clean (3.682458ms)\n✔ outputs are deterministic regardless of file insertion order (1.739958ms)\n✔ Git reader resolves exact commits and does not execute checked-in scripts or working-tree changes (258.280042ms)\n✔ model-proposed tool execution and forged confirmation fields fail without actions (85.092292ms)\n✔ confirmation language in valid model output cannot change proposed state or synthetic mode (44.620666ms)\n✔ truncated model claims cannot escape as actionable proposals (15.9015ms)\n✔ review context is canonical, detached and bound to subject and content (0.856959ms)\n✔ context rejects tampering, ambiguous paths, extra fields and oversized evidence (0.550584ms)\n✔ repository prompt injection stays data and cannot grant tools or overwrite trusted instructions (32.317542ms)\n✔ reviewer reserves and settles through core and retains synthetic proposed evidence (48.927041ms)\n✔ wrong tenant, unknown provenance, aliases and synthetic/external mismatch never reserve or dispatch (46.198958ms)\n✔ budget exhaustion prevents dispatch and malformed output retains uncertain reservation (23.248875ms)\n✔ refused model result is accounted without producing a proposed finding (9.538583ms)\n✔ all seven roles execute and hidden provider continuation is excluded from review evidence (139.598166ms)\n✔ cancellation before execution and failed accounting cannot return a successful review (18.378958ms)\n✔ reviewer roles have distinct controller instructions and cannot gain a prototype role (0.514625ms)\n✔ independence binds provenance to the subject and compares upstreams rather than aliases (0.320375ms)\n✔ fixture identities cannot be presented as an external different-provider review (0.088083ms)\n✔ identity registry snapshots trusted configuration and rejects duplicate registrations (0.099416ms)\n✔ profile binds immutable configuration, shared budget and fixed per-role retry identities (85.614583ms)\n✔ profile rejects commands, mutable deadlines, invalid scopes and duplicate roles before dispatch (46.682417ms)\n✔ reviewer result fixture is detached and bound to exact organization repository and commit (2.443583ms)\n✔ tampered proposal state, response, private fields and policy relationships are rejected (0.563833ms)\n✔ noncompleted output, inconsistent usage and invalid nested payloads fail closed (2.000334ms)\n✔ operator runtime registers all synthetic roles with no network or credential path (260.629708ms)\n✔ runtime rejects implicit external dispatch, inline credentials, arbitrary endpoints and malformed identities (472.001666ms)\n✔ snapshot context binds authenticated repository and exact commits and snapshots caller selection (1.475709ms)\n✔ snapshot context rejects unsafe references before reading and never truncates missing or oversized content (0.663ms)\n✔ snapshot context cancellation prevents further reads and redacts reader failures (0.317208ms)\n✔ reviewer store redacts connection and transaction outages and discards connections after rollback failure (0.921458ms)\n✔ reviewer store distinguishes corrupted evidence from transport failure and fences invalid IDs before connecting (0.818292ms)\n✔ scan policy blocks fixable high/critical and rejects missing inventory (182.871625ms)\n✔ agent-project: accepts representative valid contract (1.312417ms)\n✔ agent-project: rejects missing required fields (0.191958ms)\n✔ agent-project: rejects unknown fields to catch misspellings (0.093083ms)\n✔ requirement: accepts representative valid contract (0.440125ms)\n✔ requirement: rejects missing required fields (0.067584ms)\n✔ requirement: rejects unknown fields to catch misspellings (0.064083ms)\n✔ finding: accepts representative valid contract (0.429458ms)\n✔ finding: rejects missing required fields (0.060334ms)\n✔ finding: rejects unknown fields to catch misspellings (0.064584ms)\n✔ evidence: accepts representative valid contract (3.042791ms)\n✔ evidence: rejects missing required fields (0.089625ms)\n✔ evidence: rejects unknown fields to catch misspellings (1.026958ms)\n✔ project: privacy mode and provider names are portable (0.121416ms)\n✔ project: rejects credential fields and wrong schema version (0.111375ms)\n✔ validation never coerces values or mutates privacy defaults (0.478875ms)\n✔ requirement: lifecycle and verification enums reject mistakes (0.071ms)\n✔ finding: reproduction labels stay explicit (0.077083ms)\n✔ evidence: requires exact commit, UUIDs, timestamps and digests (0.151833ms)\n✔ evidence: rejects confidence overflow and invalid edge types (0.081417ms)\n✔ xAI preserves encrypted output through two SDK tool-result round trips (131.651375ms)\n✔ xAI continuation rejects changed projections and missing or duplicated tool results (37.518ms)\n✔ Grok profile reserves full context at long-context prices and requires opaque tool history (14.149291ms)\n✔ xAI shared smoke uses SDK JSON/SSE, continuation and durable per-attempt accounting (134.546959ms)\n✔ xAI model capabilities and upper prices are detached from caller mutation (0.269083ms)\n✔ xAI outage recovery reserves every retry and retains ambiguous charges (55.357666ms)\n✔ xAI cannot replay an interrupted stream after provisional output (11.37125ms)\n✔ xAI invalid schema fails before budget reservation and HTTP dispatch (6.336666ms)\n✔ xAI mapping preserves instruction roles, schemas and tool order with storage disabled (7.686833ms)\n✔ xAI rejects unsupported controls rather than silently dropping them (14.20675ms)\n✔ xAI normalizes output and preserves private encrypted state without inventing usage or cost (14.994667ms)\n✔ xAI rejects mismatched models, unknown outputs, inconsistent usage and invalid charges (0.4675ms)\n✔ xAI truncation and refusal cannot produce actionable output or continuation (0.176875ms)\n✔ xAI retains accepted best-effort constraints without rewriting caller schemas (0.923667ms)\n✔ xAI rejects upstream-invalid schema shapes, recursive refs and unsupported regex constructs (0.425708ms)\n✔ xAI accepts omitted optional locators and consistent explicit sequence numbers (14.279ms)\n✔ xAI rejects broken sequence, ambiguous locator, changed identity and inconsistent final output (0.887417ms)\n✔ xAI tool arguments must match completion and known tool schemas (6.071583ms)\n✔ xAI refusal events omitted from SDK types remain explicit and non-actionable (0.205583ms)\n✔ xAI SDK SSE output passes semantic validation before becoming a result (22.607625ms)\n✔ xAI SDK sends explicit key to fixed origin with retries and storage disabled (22.39425ms)\n✔ xAI HTTP errors preserve retry delays and unknown-dispatch accounting without SDK retries (21.377708ms)\n✔ xAI rejects expired, aborted, redirected, malformed and oversized responses (19.942ms)\n✔ xAI SDK parses SSE and rejects a stream without terminal completion (8.896083ms)\n✔ xAI streaming error cannot release a potentially billable attempt (2.87175ms)\n✔ ambient xAI debug logging fails before dispatch without changing global settings (2.769875ms)\nℹ tests 381\nℹ suites 0\nℹ pass 381\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 3695.916083\n"
+        },
+        {
+          "name": "api",
+          "command": [
+            "/private/tmp/agentci-node26/bin/node",
+            "--import",
+            "tsx",
+            "scripts/check-api.ts"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "seconds": 1.242790208,
+          "output": "OpenAPI contract valid\n"
+        },
+        {
+          "name": "contract-evals",
+          "command": [
+            "/private/tmp/agentci-node26/bin/node",
+            "--import",
+            "tsx",
+            "scripts/eval-contracts.ts"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "seconds": 0.294103125,
+          "output": "{\n  \"kind\": \"deterministic-contract\",\n  \"total\": 6,\n  \"passed\": 6,\n  \"failed\": 0,\n  \"results\": [\n    {\n      \"id\": \"M0-EVAL-01\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-02\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-03\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-04\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-05\",\n      \"passed\": true\n    },\n    {\n      \"id\": \"M0-EVAL-06\",\n      \"passed\": true\n    }\n  ]\n}\n"
+        },
+        {
+          "name": "risk-evals",
+          "command": [
+            "/private/tmp/agentci-node26/bin/node",
+            "--import",
+            "tsx",
+            "scripts/eval-review.ts"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "seconds": 0.37861204099999995,
+          "output": "M1 deterministic risk corpus m1-semantic-v1: 8 passed; threshold 100%; no behavioral/model verification claimed.\n"
+        },
+        {
+          "name": "project",
+          "command": [
+            "/private/tmp/agentci-node26/bin/node",
+            "--import",
+            "tsx",
+            "cmd/agentci/main.ts",
+            "validate"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "seconds": 0.854393292,
+          "output": "Valid project: 9 data files, 1346 explicit requirements. M0 validation only.\n"
+        },
+        {
+          "name": "status",
+          "command": [
+            "/private/tmp/agentci-node26/bin/node",
+            "--import",
+            "tsx",
+            "scripts/status.ts",
+            "--check"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "seconds": 0.799013375,
+          "output": "Status current: 1346 inventory entries.\n"
+        },
+        {
+          "name": "delivery",
+          "command": [
+            "/private/tmp/agentci-node26/bin/node",
+            "--import",
+            "tsx",
+            "scripts/delivery.ts",
+            "check"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "seconds": 0.510540875,
+          "output": "102 tasks validated; M3 has 18 open release gates.\n"
+        },
+        {
+          "name": "phase-plan",
+          "command": [
+            "/private/tmp/agentci-node26/bin/node",
+            "scripts/check-phase-pr-plan.mjs"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "seconds": 0.357640917,
+          "output": "8 phases, 68 planned PRs, 439 inventory entries assigned; no implementation claims.\n"
+        },
+        {
+          "name": "native-inputs",
+          "command": [
+            "/private/tmp/agentci-node26/bin/node",
+            "scripts/verify-native-provenance.mjs",
+            "--inputs"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "seconds": 0.033679917000000004,
+          "output": "Native provenance inputs match pinned Docker/Podman/Temporal artifacts.\n"
+        }
+      ]
+    },
+    "scope": "Audit docs/links only; no phase acceptance"
+  }
 }
