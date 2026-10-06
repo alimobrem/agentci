@@ -2315,33 +2315,31 @@
       "dependsOn": []
     },
     {
-      "id": "M3-00-provider-exception",
-      "title": "Record approved external-provider validation exception without weakening release gates",
+      "id": "M3-07c-3a",
+      "title": "Immutable reproduction approval registry and request selector",
       "requirementIds": [
-        "SPEC-13.3-002",
-        "SPEC-13.3-003",
-        "SPEC-13.3-004",
-        "SPEC-40-050",
-        "SPEC-40-051"
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3",
+        "SECTION-12.4",
+        "SECTION-12.5"
       ],
-      "status": "in-progress",
-      "startedAt": "2026-10-06T02:42:36.508Z",
-      "completedAt": null,
+      "status": "done",
+      "startedAt": "2026-10-06T03:15:15.071Z",
+      "completedAt": "2026-10-06T04:32:13.656Z",
       "acceptance": [
         {
-          "text": "Definition of done, M3 deferral/phase plans and closure evidence record the owner-approved exception only for inaccessible external-model-provider validation; preserve deferred/unverified requirement IDs and future resumption, full M0-M10 scope and every other applicable implementation/API/security/GitHub customer/packaging/download/release/demo/recovery gate. No live provider capability or release gate becomes passed by this policy; doc/delivery/phase checks pass.",
+          "text": "Controller-owned bounded immutable approval registry resolves strict caller selectors to exact current finding/version and approved queue successor, assertion inputs and runner policy. Reject unknown fields, changed digest/subject/version, duplicate registry IDs and mutated plans; detached outputs and invalid lifecycle cases remain safe. Document atomic queue/reservation/dispatch and real HTTP/PG/Temporal as dependent c3 acceptance, with no production route claim.",
           "status": "passed",
           "evidence": [
-            "delivery/acceptance/m3-provider-validation-exception-local.json"
+            "delivery/acceptance/m3-reproduction-a-merged.json"
           ]
-        },
-        {
-          "text": "Reviewed documentation is published to its intended branch; policy does not itself claim milestone closure or live validation.",
-          "status": "pending",
-          "evidence": []
         }
       ],
-      "dependsOn": []
+      "dependsOn": [
+        "M3-06c"
+      ]
     },
     {
       "id": "M3-R1-security-1",
@@ -2364,6 +2362,62 @@
       ],
       "dependsOn": [
         "M3-00"
+      ]
+    },
+    {
+      "id": "M3-07c-3b",
+      "title": "Atomic approved reproduction queue reservation and dispatch intent",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3",
+        "SECTION-12.4",
+        "SECTION-12.5"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-06T03:26:04.209Z",
+      "completedAt": "2026-10-06T04:32:14.145Z",
+      "acceptance": [
+        {
+          "text": "Real PostgreSQL proves full-selector replay, exact admitted-review membership, conflicting operation and stale-version rejection, and one atomic authorized queue event, immutable plan, operation receipt and dispatch intent. Concurrent duplicates and injected transaction failures cannot strand partial state. No production dispatcher or HTTP route is enabled; Temporal and customer transport remain original c3 acceptance.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-reproduction-b-merged.json"
+          ]
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-2"
+      ]
+    },
+    {
+      "id": "M3-ACCEPTANCE-RECONCILIATION",
+      "title": "Reconcile review addendum with full original requirement/test/evidence scope",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SECTION-46",
+        "SECTION-51"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-06T03:25:46.098Z",
+      "completedAt": "2026-10-06T03:28:34.944Z",
+      "acceptance": [
+        {
+          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "status": "passed",
+          "evidence": [
+            "docs/acceptance-reconciliation.md"
+          ]
+        },
+        {
+          "text": "Reconciliation check verifies row coverage, source identity, evidence digests and no unavailable/inconclusive pass promotion; report reviewed remaining gaps and threshold approval proposals",
+          "status": "passed",
+          "evidence": [
+            "scripts/reconcile-acceptance.mjs"
+          ]
+        }
       ]
     },
     {
@@ -2396,89 +2450,6 @@
       "dependsOn": []
     },
     {
-      "id": "M3-ACCEPTANCE-RECONCILIATION",
-      "title": "Reconcile review addendum with full original requirement/test/evidence scope",
-      "requirementIds": [
-        "SPEC-40-050",
-        "SPEC-40-051",
-        "SECTION-46",
-        "SECTION-51"
-      ],
-      "status": "done",
-      "startedAt": "2026-10-06T03:25:46.098Z",
-      "completedAt": "2026-10-06T03:28:34.944Z",
-      "acceptance": [
-        {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
-          "status": "passed",
-          "evidence": [
-            "docs/acceptance-reconciliation.md"
-          ]
-        },
-        {
-          "text": "Reconciliation check verifies row coverage, source identity, evidence digests and no unavailable/inconclusive pass promotion; report reviewed remaining gaps and threshold approval proposals",
-          "status": "passed",
-          "evidence": [
-            "scripts/reconcile-acceptance.mjs"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "M3-07c-3a",
-      "title": "Immutable reproduction approval registry and request selector",
-      "requirementIds": [
-        "SECTION-31.1",
-        "SPEC-31.2-001",
-        "SECTION-32",
-        "SECTION-12.3",
-        "SECTION-12.4",
-        "SECTION-12.5"
-      ],
-      "status": "done",
-      "startedAt": "2026-10-06T03:15:15.071Z",
-      "completedAt": "2026-10-06T04:32:13.656Z",
-      "acceptance": [
-        {
-          "text": "Controller-owned bounded immutable approval registry resolves strict caller selectors to exact current finding/version and approved queue successor, assertion inputs and runner policy. Reject unknown fields, changed digest/subject/version, duplicate registry IDs and mutated plans; detached outputs and invalid lifecycle cases remain safe. Document atomic queue/reservation/dispatch and real HTTP/PG/Temporal as dependent c3 acceptance, with no production route claim.",
-          "status": "passed",
-          "evidence": [
-            "delivery/acceptance/m3-reproduction-a-merged.json"
-          ]
-        }
-      ],
-      "dependsOn": [
-        "M3-06c"
-      ]
-    },
-    {
-      "id": "M3-07c-3b",
-      "title": "Atomic approved reproduction queue reservation and dispatch intent",
-      "requirementIds": [
-        "SECTION-31.1",
-        "SPEC-31.2-001",
-        "SECTION-32",
-        "SECTION-12.3",
-        "SECTION-12.4",
-        "SECTION-12.5"
-      ],
-      "status": "done",
-      "startedAt": "2026-10-06T03:26:04.209Z",
-      "completedAt": "2026-10-06T04:32:14.145Z",
-      "acceptance": [
-        {
-          "text": "Real PostgreSQL proves full-selector replay, exact admitted-review membership, conflicting operation and stale-version rejection, and one atomic authorized queue event, immutable plan, operation receipt and dispatch intent. Concurrent duplicates and injected transaction failures cannot strand partial state. No production dispatcher or HTTP route is enabled; Temporal and customer transport remain original c3 acceptance.",
-          "status": "passed",
-          "evidence": [
-            "delivery/acceptance/m3-reproduction-b-merged.json"
-          ]
-        }
-      ],
-      "dependsOn": [
-        "M3-07c-2"
-      ]
-    },
-    {
       "id": "M3-07c-3c",
       "title": "Admission-backed reproduction evaluator staging authority",
       "requirementIds": [
@@ -2489,21 +2460,79 @@
         "SECTION-12.4",
         "SECTION-12.5"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T03:43:23.605Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T04:46:41.309Z",
       "acceptance": [
         {
           "text": "Review an explicit additive migration and typed source decision preserving legacy M2 stage/digest/comparison/export contracts and evaluator least privilege; no fabricated legacy evidence. Real PostgreSQL admission-only staging validates immutable plan/operation/admission lineage, replay, substitution, corruption and cancellation. Existing M2 persistence/lease/checkpoint/recovery and compatibility acceptance remain passing; no HTTP or production consumer activation.",
           "status": "passed",
           "evidence": [
-            "delivery/acceptance/m3-reproduction-staging-main-local.json"
+            "delivery/acceptance/m3-reproduction-staging-merged.json"
           ]
         }
       ],
       "dependsOn": [
         "M3-07c-2"
       ]
+    },
+    {
+      "id": "M3-07c-3d-1",
+      "title": "Durable operator reproduction authority and non-execution retry proof",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3",
+        "SECTION-12.4",
+        "SECTION-12.5"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T04:35:55.677Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Explicit operator config revisions resolve exact retained finding/plan and trusted snapshots; durable apply uses CAS with revocation/expiry checks and no stale startup resurrection. Separate authenticated non-execution proof binds scope/plan/operation/version and keeps execution receipt null; never-staged cancellation can transition to unconfirmed/error and fresh authorized retry without rewriting execution evidence. Real PostgreSQL races/replay and additive history version compatibility pass; no HTTP or worker activation.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-reproduction-authority-local.json"
+          ]
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-3a",
+        "M3-07c-3b",
+        "M3-07c-3c"
+      ]
+    },
+    {
+      "id": "M3-00-provider-exception",
+      "title": "Record approved external-provider validation exception without weakening release gates",
+      "requirementIds": [
+        "SPEC-13.3-002",
+        "SPEC-13.3-003",
+        "SPEC-13.3-004",
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T02:42:36.508Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Definition of done, M3 deferral/phase plans and closure evidence record the owner-approved exception only for inaccessible external-model-provider validation; preserve deferred/unverified requirement IDs and future resumption, full M0-M10 scope and every other applicable implementation/API/security/GitHub customer/packaging/download/release/demo/recovery gate. No live provider capability or release gate becomes passed by this policy; doc/delivery/phase checks pass.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-provider-validation-exception-local.json"
+          ]
+        },
+        {
+          "text": "Reviewed documentation is published to its intended branch; policy does not itself claim milestone closure or live validation.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": []
     },
     {
       "id": "M3-07e-3",
