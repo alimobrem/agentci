@@ -1,3 +1,4 @@
+import {UnsupportedEvalSource,verifyReproductionEvalInputs} from '../evals/source.ts';
 import {Pool,type PoolClient} from 'pg';
 import {randomUUID} from 'node:crypto';
 import {canonical,digest} from '../review/engine.ts';
@@ -20,7 +21,7 @@ export interface EvalUnit {id:string;jobId:string;definition:EvalUnitDefinition;
 export class EvalLeaseLost extends Error {}
 export class ImmutableEvalConflict extends Error {}
 const uuid=(value:string)=>/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(value);
-function definition(value:EvalUnitDefinition):EvalUnitDefinition {
+export function definition(value:EvalUnitDefinition):EvalUnitDefinition {
   if(!value||Object.keys(value).some(k=>!['suite','side','assertionSide','model','runner','executionLimits'].includes(k))||!['base','head'].includes(value.side)||!['base','head'].includes(value.assertionSide))throw new Error('Invalid eval unit definition');
   const suite=validateEvalSuite(value.suite),runner=value.runner;
   if(suite.spec.models?.length&&!value.model||value.model!==undefined&&!suite.spec.models?.includes(value.model))throw new Error('Invalid unit model variant');
@@ -38,7 +39,7 @@ function definition(value:EvalUnitDefinition):EvalUnitDefinition {
   }
   return structuredClone({...value,suite});
 }
-function validateInputs(inputs:Inputs):void {
+export function validateInputs(inputs:Inputs):void {
   for(const side of ['base','head'] as const){
     snapshotInputs(inputs[side].snapshot);
     const omitted=inputs[side].omitted;
@@ -87,10 +88,13 @@ export class EvalStore {
     }catch(error){await client.query('ROLLBACK');throw error;}finally{client.release();}
   }
   async unit(id:string,connection:Pool|PoolClient=this.pool):Promise<EvalUnit|undefined> {
-    const row=(await connection.query(`SELECT u.*,j.inputs,j.plan,j.review_id,j.attempt_key,j.repository,j.pull_request,j.digest AS job_digest,j.cancel_requested FROM agentci_eval_units u JOIN agentci_eval_jobs j ON j.id=u.job_id WHERE u.id=$1 AND ${this.scope}`,[id,this.repository,this.organizationId])).rows[0];
+    const row=(await connection.query(`SELECT u.*,j.inputs,j.plan,j.review_id,to_jsonb(j)->'source' AS source,j.attempt_key,j.repository,j.pull_request,j.digest AS job_digest,j.cancel_requested FROM agentci_eval_units u JOIN agentci_eval_jobs j ON j.id=u.job_id WHERE u.id=$1 AND ${this.scope}`,[id,this.repository,this.organizationId])).rows[0];
     if(!row)return undefined;
     const def=definition(row.definition);validateInputs(row.inputs);
-    if(digest(canonical(def))!==row.digest||digest(canonical({reviewId:row.review_id,attemptKey:row.attempt_key,repository:row.repository,pullRequest:row.pull_request,inputs:row.inputs,plan:row.plan}))!==row.job_digest||!row.plan.units.some((value:unknown)=>canonical(value)===canonical(def)))throw new Error('Eval input integrity mismatch');
+    const source=row.source==null?null:verifyReproductionEvalInputs(row.source,this.organizationId,row.attempt_key,row.inputs,row.plan,def);
+    if(source&&row.review_id!==null||!source&&!row.review_id)throw Error('Eval source authority mismatch');
+    const authority=source?{source}:{reviewId:row.review_id};
+    if(digest(canonical(def))!==row.digest||digest(canonical({...authority,attemptKey:row.attempt_key,repository:row.repository,pullRequest:row.pull_request,inputs:row.inputs,plan:row.plan}))!==row.job_digest||!row.plan.units.some((value:unknown)=>canonical(value)===canonical(def)))throw new Error('Eval input integrity mismatch');
     const result=row.result?validateEvalRun(row.result):undefined;
     if(result&&digest(canonical(result))!==row.result_digest)throw new Error('Eval result integrity mismatch');
     return {id:row.id,jobId:row.job_id,definition:def,inputs:row.inputs,status:row.status,cancelRequested:row.cancel_requested,...(result?{result}:{})};
@@ -103,6 +107,7 @@ export class EvalStore {
       await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');
       const job=(await client.query(`SELECT j.* FROM agentci_eval_jobs j WHERE j.id=$1 AND ${this.scope}`,[id,this.repository,this.organizationId])).rows[0];
       if(!job){await client.query('COMMIT');return undefined;}
+      if(job.source!=null)throw new UnsupportedEvalSource();
       validateInputs(job.inputs);
       if(digest(canonical({reviewId:job.review_id,attemptKey:job.attempt_key,repository:job.repository,pullRequest:job.pull_request,inputs:job.inputs,plan:job.plan}))!==job.digest)throw new Error('Eval job integrity mismatch');
       const ids=(await client.query('SELECT id FROM agentci_eval_units WHERE job_id=$1 ORDER BY suite_id,model_key,side',[id])).rows.map(row=>row.id as string);
@@ -129,6 +134,7 @@ export class EvalStore {
       await client.query("SET LOCAL idle_in_transaction_session_timeout='30s'");
       const job=(await client.query(`SELECT j.* FROM agentci_eval_jobs j WHERE j.id=$1 AND ${this.scope}`,[id,this.repository,this.organizationId])).rows[0];
       if(!job){await client.query('COMMIT');active=false;return;}
+      if(job.source!=null)throw new UnsupportedEvalSource();
       validateInputs(job.inputs);
       if(digest(canonical({reviewId:job.review_id,attemptKey:job.attempt_key,repository:job.repository,pullRequest:job.pull_request,inputs:job.inputs,plan:job.plan}))!==job.digest)throw new Error('Eval job integrity mismatch');
       const metadata=(await client.query('SELECT id,status,digest,result_digest FROM agentci_eval_units WHERE job_id=$1 ORDER BY suite_id,model_key,side',[id])).rows;
@@ -242,7 +248,7 @@ export class EvalStore {
     }catch(error){await client.query('ROLLBACK');throw error;}finally{client.release();}
   }
   async recoveryPlan(attemptId:string):Promise<{id:string;reviewId:string;unitIds:string[];completedUnitIds:string[];subject:{repository:string;pullRequest:number;baseSha:string;headSha:string}}|undefined>{
-    const row=(await this.pool.query(`SELECT j.id,j.review_id,j.repository,j.pull_request,j.base_sha,j.head_sha FROM agentci_eval_jobs j WHERE j.attempt_key=$1 AND ${this.scope}`,[attemptId,this.repository,this.organizationId])).rows[0];
+    const row=(await this.pool.query(`SELECT j.id,j.review_id,j.repository,j.pull_request,j.base_sha,j.head_sha FROM agentci_eval_jobs j WHERE j.attempt_key=$1 AND j.review_id IS NOT NULL AND ${this.scope}`,[attemptId,this.repository,this.organizationId])).rows[0];
     if(!row)return undefined;
     const metadata=(await this.pool.query('SELECT id,status FROM agentci_eval_units WHERE job_id=$1 ORDER BY id LIMIT 10001',[row.id])).rows,ids=metadata.map(r=>r.id as string);if(ids.length>10000)throw new Error('Recovery unit limit exceeded');
     return {id:row.id,reviewId:row.review_id,unitIds:ids,completedUnitIds:metadata.filter(r=>r.status==='completed').map(r=>r.id as string),subject:{repository:row.repository,pullRequest:row.pull_request,baseSha:row.base_sha,headSha:row.head_sha}};

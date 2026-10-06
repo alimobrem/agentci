@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2325,15 +2325,15 @@
         "SECTION-12.4",
         "SECTION-12.5"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T03:15:15.071Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T04:32:13.656Z",
       "acceptance": [
         {
           "text": "Controller-owned bounded immutable approval registry resolves strict caller selectors to exact current finding/version and approved queue successor, assertion inputs and runner policy. Reject unknown fields, changed digest/subject/version, duplicate registry IDs and mutated plans; detached outputs and invalid lifecycle cases remain safe. Document atomic queue/reservation/dispatch and real HTTP/PG/Temporal as dependent c3 acceptance, with no production route claim.",
           "status": "passed",
           "evidence": [
-            "delivery/acceptance/m3-reproduction-approval-registry-local.json"
+            "delivery/acceptance/m3-reproduction-a-merged.json"
           ]
         }
       ],
@@ -2375,15 +2375,15 @@
         "SECTION-12.4",
         "SECTION-12.5"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T03:26:04.209Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T04:32:14.145Z",
       "acceptance": [
         {
           "text": "Real PostgreSQL proves full-selector replay, exact admitted-review membership, conflicting operation and stale-version rejection, and one atomic authorized queue event, immutable plan, operation receipt and dispatch intent. Concurrent duplicates and injected transaction failures cannot strand partial state. No production dispatcher or HTTP route is enabled; Temporal and customer transport remain original c3 acceptance.",
           "status": "passed",
           "evidence": [
-            "delivery/acceptance/m3-reproduction-reservations-local.json"
+            "delivery/acceptance/m3-reproduction-b-merged.json"
           ]
         }
       ],
@@ -2405,7 +2405,7 @@
       "completedAt": "2026-10-06T03:28:34.944Z",
       "acceptance": [
         {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "text": "Preserve every source inventory ID and historical evidence; map all M0–M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
           "status": "passed",
           "evidence": [
             "docs/acceptance-reconciliation.md"
@@ -2448,6 +2448,33 @@
         }
       ],
       "dependsOn": []
+    },
+    {
+      "id": "M3-07c-3c",
+      "title": "Admission-backed reproduction evaluator staging authority",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3",
+        "SECTION-12.4",
+        "SECTION-12.5"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T03:43:23.605Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Review an explicit additive migration and typed source decision preserving legacy M2 stage/digest/comparison/export contracts and evaluator least privilege; no fabricated legacy evidence. Real PostgreSQL admission-only staging validates immutable plan/operation/admission lineage, replay, substitution, corruption and cancellation. Existing M2 persistence/lease/checkpoint/recovery and compatibility acceptance remain passing; no HTTP or production consumer activation.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-reproduction-staging-main-local.json"
+          ]
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-2"
+      ]
     }
   ]
 }

@@ -241,6 +241,28 @@
         "pending reproduction version cannot be changed",
         "bounded source and version limits fail explicitly"
       ]
+    },
+    {
+      "operationId": "ReproductionEvalStore",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3",
+        "SECTION-12.4",
+        "SECTION-12.5"
+      ],
+      "tests": [
+        "tests/integration/reproduction-staging.test.ts"
+      ],
+      "scenarios": [
+        "admission-only atomic staging and typed recovery with zero legacy review rows",
+        "exact approved file digests and SQL operation/plan/admission authority",
+        "unchanged evaluator grants checkpoint recovery and receipt execution",
+        "cancellation before and during staging fences unit dispatch",
+        "legacy M2 hash/comparison/export preserved and authenticated typed 409",
+        "missing migration fails closed and checksum mismatch rejects"
+      ]
     }
   ]
 }

@@ -1,3 +1,4 @@
+import {UnsupportedEvalSource} from '../../packages/evals/source.ts';
 import {modelReviewRoutes,type ModelReviewControl} from './model-reviews.ts';
 import {equalUuid} from '../../packages/identity/uuid.ts';
 import { createServer } from 'node:http';
@@ -95,6 +96,7 @@ export function createControlApi(config: ControlConfig, store: Storage, comparis
     } catch (error) {
       if(res.headersSent){res.destroy();return;}
       if (error instanceof WebhookError) reply(error.status, { error: { code: error.code } });
+      else if (error instanceof UnsupportedEvalSource) reply(409, { error: { code: 'unsupported-eval-source' } });
       else if (error instanceof DeliveryConflict) reply(409, { error: { code: 'delivery-conflict' } });
       else reply(503, { error: { code: 'service-unavailable' } });
     }
