@@ -61,4 +61,8 @@ redacted failures and disabled admission. Real PostgreSQL/Temporal acceptance
 covers concurrent replay, one outbox row, exact-head authorization, cross-scope
 reads, queued/offline behavior, seven synthetic roles, coherent reads during
 finalization, retained restart status, revocation and cancellation without extra
-provider attempts. Packaged client/service and release gates remain additional.
+provider attempts. A separate real PostgreSQL test launches the compiled control
+entry point with a generated fixture App key, no provider keys and blocked external
+fetch. It verifies configured profiles/status, disabled legacy startup and rejection
+of missing migrations or missing/equal operator credentials before listening.
+Packaged client/service and release gates remain additional.

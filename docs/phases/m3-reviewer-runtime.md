@@ -2,7 +2,7 @@
 
 Development integration; not an M3 release. The worker now registers admitted
 review workflows when an operator sets `AGENTCI_REVIEWER_CONFIG_FILE`. Customer
-REST discovery, admission, status and cancellation now exist in development
+REST discovery, admission, status and cancellation now exist in M3-07c development
 source through [the customer API setup](m3-customer-model-review-api.md); they
 are not an M3 release. Client/CLI acceptance remains a separate slice.
 The existing signed GitHub webhook/eval path remains independently scheduled.
