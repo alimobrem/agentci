@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2287,6 +2287,28 @@
         "M3-07c",
         "M3-07d-1"
       ]
+    },
+    {
+      "id": "M3-07e-1",
+      "title": "Deterministic stream deadline accounting acceptance",
+      "requirementIds": [
+        "SECTION-13.4",
+        "SPEC-13.2-003",
+        "SPEC-13.2-006"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T01:24:36.271Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "A controlled clock proves expiry before reservation produces no charge while expiry after iterator or observer dispatch retains unknown charge, with iterator cleanup and cancellation assertions preserved; focused provider tests, frozen provider eval and fast checks pass without increasing deadlines, weakening thresholds or substituting candidate assertions for the trusted baseline. Hosted failed comparison 37398142115 remains retained for diagnosis.",
+          "status": "passed",
+          "evidence": [
+            "docs/phases/m3-stream-deadline-acceptance.md"
+          ]
+        }
+      ],
+      "dependsOn": []
     }
   ]
 }
