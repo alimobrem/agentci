@@ -2408,8 +2408,10 @@
       "acceptance": [
         {
           "text": "Review an explicit additive migration and typed source decision preserving legacy M2 stage/digest/comparison/export contracts and evaluator least privilege; no fabricated legacy evidence. Real PostgreSQL admission-only staging validates immutable plan/operation/admission lineage, replay, substitution, corruption and cancellation. Existing M2 persistence/lease/checkpoint/recovery and compatibility acceptance remain passing; no HTTP or production consumer activation.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-reproduction-staging-local.json"
+          ]
         }
       ],
       "dependsOn": [
