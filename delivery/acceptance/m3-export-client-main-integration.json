@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "scope": "Export client installed acceptance on merged security/scheduler/findings/export/client main; reproduction client and M3 release remain pending",
+  "sourceCommit": "1e0824953cfc36f7ae9822ee5625f8dd2a471daf",
+  "tree": "c76a363a97b7fe4b3f373f78e9fa70f7be49bbea",
+  "baseCommit": "ef3edac0c86f9ccd4383f8ed1140e4a15e24505f",
+  "package": {
+    "path": "/private/tmp/agentci-export-current-package/agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "e35b6d6737cdee22a9536ee78ca259d33f0fb0757291d30eba744a0ef3ec5582",
+    "published": false
+  },
+  "checks": {
+    "build": "passed",
+    "fast": "10 passed",
+    "compiledClientCliHttpPostgresTemporal": "1 umbrella passed, zero skips",
+    "productionOnlyInstalledClientCli": "1 umbrella passed, zero skips"
+  },
+  "logs": [
+    {
+      "path": "/private/tmp/agentci-export-current-build.log",
+      "sha256": "261e646d160bdfbb881537da43a24ef9a7ed2a677da3e5740a6707c70d038fc4"
+    },
+    {
+      "path": "/private/tmp/agentci-export-current-fast.log",
+      "sha256": "16dd9d14e64d0963cfb42cb51d6826a1d96ed549667cc4ac4e2de0bb28ac35af"
+    },
+    {
+      "path": "/private/tmp/agentci-export-current-real.log",
+      "sha256": "6bba6a3940ec7b11ba8a584fc01e0272b9e1d623b76ff0db1f868810da765d03"
+    },
+    {
+      "path": "/private/tmp/agentci-export-current-installed-real.log",
+      "sha256": "e4a6e9b20775d6330ef5bf785aa537c605ca5cf750294fce6581d971d083bcc5"
+    }
+  ],
+  "earlierEvidence": "delivery/acceptance/m3-export-client-clean-integration.json",
+  "nonWaived": [
+    "reproduction mutations/client",
+    "customer released demo",
+    "UI",
+    "all M3 release gates"
+  ]
+}

@@ -10,6 +10,10 @@ import {validateModelReviewFindings, validateModelFindingHistory, type ModelRevi
 import {validateFindingHistoryRecord} from '../findings/history.ts';
 import type {FindingHistoryRecord} from '../findings/history.ts';
 
+import {ModelReviewExportVerifier, MAX_MODEL_EXPORT_FRAME_BYTES, MAX_MODEL_EXPORT_BYTES, type ModelReviewExportFrame} from '../reviewers/export.ts';
+export type ModelReviewExportOutput = {type: 'record'; provisional: true; frame: ModelReviewExportFrame} |
+  {type: 'complete'; data: ReturnType<ModelReviewExportVerifier['finish']>};
+
 export interface ModelReviewReadOptions {limit?: number; signal?: AbortSignal}
 
 export interface ModelReviewClientOptions {
@@ -206,4 +210,60 @@ export class ModelReviewClient {
     }
     throw new AgentCIError('incomplete-history');
   }
+  /** Frames remain provisional until EOF and the separate completion certificate. */
+  async *modelReviewExport(expected: ReviewAdmissionRequest, options: {signal?: AbortSignal; timeoutMs?: number} = {}): AsyncGenerator<ModelReviewExportOutput> {
+    const request = this.admission(expected), timeout = options.timeoutMs ?? 120000;
+    if (!Number.isSafeInteger(timeout) || timeout < 1 || timeout > 120000) throw new AgentCIError('invalid-timeout');
+    const signal = AbortSignal.any([AbortSignal.timeout(timeout), ...(options.signal ? [options.signal] : [])]);
+    const verifier = new ModelReviewExportVerifier(request);
+    let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
+    try {
+      signal.throwIfAborted();
+      // Streaming retries could duplicate provisional output or change snapshot.
+      const response = await fetch(this.#origin + `/v1/model-reviews/${request.id}/export`, {redirect: 'error', signal,
+        headers: {authorization: `Bearer ${this.#readToken ?? this.#operatorToken}`}});
+      if (response.status !== 200) {
+        const value: any = await this.body(response, 1024);
+        if (!exact(value, ['error']) || !exact(value.error, ['code']) || !failures[response.status]?.includes(value.error.code)) throw new AgentCIError('invalid-response', response.status);
+        throw new AgentCIError(value.error.code, response.status);
+      }
+      if (!/^application\/x-ndjson(?:;|$)/i.test(response.headers.get('content-type') ?? '')) {
+        await response.body?.cancel(); throw new AgentCIError('invalid-export');
+      }
+      reader = response.body?.getReader(); if (!reader) throw new AgentCIError('invalid-export');
+      let parts: Uint8Array[] = [], bytes = 0, total = 0, ended = false;
+      for (;;) {
+        signal.throwIfAborted();
+        const {done, value} = await reader.read();
+        signal.throwIfAborted(); if (done) break;
+        total += value.byteLength; if (total > MAX_MODEL_EXPORT_BYTES) throw new AgentCIError('response-too-large');
+        let start = 0;
+        for (let i = 0; i <= value.length; i++) {
+          if (i < value.length && value[i] !== 10) continue;
+          const segment = value.subarray(start, i);
+          if (ended && (segment.byteLength || i < value.length)) throw new AgentCIError('invalid-export');
+          bytes += segment.byteLength; if (bytes + 1 > MAX_MODEL_EXPORT_FRAME_BYTES) throw new AgentCIError('response-too-large');
+          if (segment.byteLength) parts.push(segment);
+          if (parts.length > 1024) parts = [Buffer.concat(parts)];
+          start = i + 1; if (i === value.length) break;
+          signal.throwIfAborted();
+          let frame: ModelReviewExportFrame;
+          try {frame = await verifier.push(JSON.parse(new TextDecoder('utf-8', {fatal: true}).decode(Buffer.concat(parts))));}
+          catch {throw new AgentCIError('invalid-export');}
+          signal.throwIfAborted();
+          parts = []; bytes = 0; ended = frame.type === 'end';
+          yield {type: 'record', provisional: true, frame};
+        }
+      }
+      signal.throwIfAborted();
+      if (bytes) throw new AgentCIError('incomplete-export');
+      let complete: ReturnType<ModelReviewExportVerifier['finish']>;
+      try {complete = verifier.finish();} catch {throw new AgentCIError('incomplete-export');}
+      yield {type: 'complete', data: complete};
+    } catch (error) {
+      if (error instanceof AgentCIError) throw error;
+      throw new AgentCIError('transport-failure');
+    } finally {await reader?.cancel().catch(() => {});}
+  }
+
 }

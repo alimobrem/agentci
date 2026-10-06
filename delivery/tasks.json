@@ -2298,15 +2298,15 @@
         "SPEC-13.2-003",
         "SPEC-13.2-006"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T01:24:36.271Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T02:01:52.426Z",
       "acceptance": [
         {
           "text": "A controlled clock proves expiry before reservation produces no charge while expiry after iterator or observer dispatch retains unknown charge, with iterator cleanup and cancellation assertions preserved; focused provider tests, frozen provider eval and fast checks pass without increasing deadlines, weakening thresholds or substituting candidate assertions for the trusted baseline. Hosted failed comparison 37398142115 remains retained for diagnosis.",
           "status": "passed",
           "evidence": [
-            "docs/phases/m3-stream-deadline-acceptance.md"
+            "delivery/acceptance/m3-stream-deadline-merged.json"
           ]
         }
       ],
