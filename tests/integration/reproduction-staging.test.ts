@@ -1,5 +1,5 @@
 import {FindingHistoryStore} from '../../packages/storage/finding-history.ts';import {executeStoredUnit} from '../../apps/eval-worker/unit.ts';import {Pool} from 'pg';import {executeSuite} from '../../packages/evals/execution.ts';import {analyze} from '../../packages/review/engine.ts';import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';import {randomUUID} from 'node:crypto';import {once} from 'node:events';
-import {reproductionStagingFixture} from '../helpers/reproduction-staging-fixture.ts';import {Store} from '../../packages/storage/postgres.ts';import {ReproductionEvalStore} from '../../packages/storage/reproduction-evals.ts';import {EvalStore} from '../../packages/storage/evals.ts';import {FindingReproductionStore} from '../../packages/storage/finding-reproduction.ts';import {canonical,digest} from '../../packages/review/engine.ts';import {createControlApi} from '../../apps/control/server.ts';
+import {reproductionStagingFixture} from '../helpers/reproduction-staging-fixture.ts';import {Store} from '../../packages/storage/postgres.ts';import {ReproductionEvalInputLimit,ReproductionEvalStore} from '../../packages/storage/reproduction-evals.ts';import {EvalStore} from '../../packages/storage/evals.ts';import {FindingReproductionStore} from '../../packages/storage/finding-reproduction.ts';import {canonical,digest} from '../../packages/review/engine.ts';import {createControlApi} from '../../apps/control/server.ts';
 async function fixture(extraFiles?:Record<string,string>,image?:string){const f=await reproductionStagingFixture({...(extraFiles?{extraFiles}:{}),...(image?{image}:{})});try{await new Store(f.pool,f.scope.organizationId,f.scope.repository).ready();await f.pool.query(await readFile(new URL('../../deploy/migrations/015_m3_reproduction_eval_source.sql',import.meta.url),'utf8'));await f.store.reserve(f.f.initial.id,f.selector);const staging=new ReproductionEvalStore(f.pool,f.scope,f.registry),evals=new EvalStore(f.pool,f.scope.organizationId,f.scope.repository);return {...f,staging,evals};}catch(e){await f.close();throw e;}}
 test('admission-only reproduction stages once without legacy evidence and retains typed recovery',async()=>{
  const f=await fixture();try{
@@ -124,5 +124,18 @@ test('retained operation/plan corruption rejects staging and recovery; failed un
   await f.pool.query("CREATE FUNCTION reject_fixture_unit() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'fixture interrupted transaction'; END; $$");await f.pool.query('CREATE TRIGGER fixture_reject_unit BEFORE INSERT ON agentci_eval_units FOR EACH ROW EXECUTE FUNCTION reject_fixture_unit()');
   await assert.rejects(f.staging.stage(f.f.plan.id,f.f.base,f.f.head),/reproduction-eval-unavailable/);assert.equal((await f.pool.query('SELECT count(*) FROM agentci_eval_jobs')).rows[0].count,'0');assert.equal((await f.pool.query('SELECT count(*) FROM agentci_eval_units')).rows[0].count,'0');
   await f.pool.query('DROP TRIGGER fixture_reject_unit ON agentci_eval_units');assert.ok(await f.staging.stage(f.f.plan.id,f.f.base,f.f.head));
+ }finally{await f.close();}
+});
+
+test('oversized approved staging payload fails permanently before insertion without shrinking source',async()=>{
+ // Exercise the independent storage ceiling, behind the production registry's
+ // separate aggregate loading cap. Plan compilation and SQL reservation are real.
+ const files=Object.fromEntries(Array.from({length:9},(_,i)=>[`large-${i}.txt`,'x'.repeat(2*1024*1024)]));
+ const f=await reproductionStagingFixture({extraFiles:files,registryFactory:async entries=>({select(value,current){const request=value as any,plan=entries[0]!.plan;assert.equal(request.approvalId,plan.id);assert.equal(request.approvalDigest,digest(canonical(plan)));return {request,requestDigest:digest(canonical(request)),currentDigest:digest(canonical(current)),planDigest:digest(canonical(plan)),plan:structuredClone(plan)};}})});
+ try{
+  await new Store(f.pool,f.scope.organizationId,f.scope.repository).ready();await f.pool.query(await readFile(new URL('../../deploy/migrations/015_m3_reproduction_eval_source.sql',import.meta.url),'utf8'));await f.store.reserve(f.f.initial.id,f.selector);
+  const before=digest(canonical({base:f.f.base,head:f.f.head})),staging=new ReproductionEvalStore(f.pool,f.scope,f.registry);
+  await assert.rejects(staging.stage(f.f.plan.id,f.f.base,f.f.head),e=>e instanceof ReproductionEvalInputLimit&&e.message==='reproduction-eval-input-limit'&&e.retryable===false);
+  assert.equal(digest(canonical({base:f.f.base,head:f.f.head})),before);assert.equal((await f.pool.query('SELECT count(*) FROM agentci_eval_jobs')).rows[0].count,'0');assert.equal((await f.pool.query('SELECT count(*) FROM agentci_eval_units')).rows[0].count,'0');
  }finally{await f.close();}
 });

@@ -4,6 +4,8 @@ import {projectEvalInputs} from '../evals/runner.ts';import {validateReproductio
 import {compileFindingReproduction,type ReproductionPlan} from '../findings/reproduction.ts';import type {ReproductionApprovalRegistry} from '../findings/approval-registry.ts';
 import {EvalStore,definition,validateInputs} from './evals.ts';import {ReproductionReservations} from './reproduction-reservations.ts';
 const fail=():never=>{throw Error('reproduction-eval-conflict');};
+/** Permanent resource rejection; a future dispatcher must not retry this input. */
+export class ReproductionEvalInputLimit extends Error {readonly retryable=false;constructor(){super('reproduction-eval-input-limit');}}
 export interface ReproductionEvalRecovery {id:string;source:ReproductionEvalSource;unitIds:string[];completedUnitIds:string[];subject:{repository:string;pullRequest:number;baseSha:string;headSha:string}}
 /** Controller-only staging. Evaluation continues through the unchanged restricted
  * EvalStore unit/lease/trial methods; no provider or App credential enters a job. */
@@ -23,7 +25,9 @@ export class ReproductionEvalStore {
   if(canonical(compileFindingReproduction(plan.finding,plan.approval,base,head,plan.runner,plan.limits))!==canonical(plan)||reservation.planDigest!==retained.digest)fail();
   const def=definition(plan.definition),b=projectEvalInputs(base),h=projectEvalInputs(head),inputs={base:{snapshot:b.snapshot,omitted:b.omitted},head:{snapshot:h.snapshot,omitted:h.omitted}};validateInputs(inputs);
   const source:ReproductionEvalSource={schemaVersion:'v1alpha1',kind:'finding-reproduction',organizationId:this.scope.organizationId,admissionId:plan.approval.reviewId,operationId:retained.operation_id,planId:id,planDigest:retained.digest,requestDigest:retained.request_digest,inputDigests:plan.inputs,definitionDigest:digest(canonical(def))};
-  const storedPlan={units:[def],suiteChanges:[],coverageGaps:[],selectionGaps:[]},payload={source,attemptKey:id,repository:this.scope.repository,pullRequest:plan.finding.subject.pullRequest,inputs,plan:storedPlan},hash=digest(canonical(payload));
+  const storedPlan={units:[def],suiteChanges:[],coverageGaps:[],selectionGaps:[]},payload={source,attemptKey:id,repository:this.scope.repository,pullRequest:plan.finding.subject.pullRequest,inputs,plan:storedPlan},serialized=canonical(payload);
+  if(Buffer.byteLength(serialized)>32*1024*1024)throw new ReproductionEvalInputLimit();
+  const hash=digest(serialized);
   const c=await this.pool.connect();let broken=false;const lost=()=>{broken=true;};c.on('error',lost);
   try{
    await c.query('BEGIN');await c.query("SET LOCAL statement_timeout='10s'");await c.query("SET LOCAL lock_timeout='5s'");await c.query("SET LOCAL transaction_timeout='15s'");
@@ -33,7 +37,7 @@ export class ReproductionEvalStore {
    const prior=(await c.query('SELECT id,digest,source FROM agentci_eval_jobs WHERE source_organization_id=$1 AND repository=$2 AND source_operation_id=$3',[this.scope.organizationId,this.scope.repository,retained.operation_id])).rows[0];
    if(prior){if(prior.digest!==hash||canonical(prior.source)!==canonical(source))fail();}
    else{
-    const jobId=randomUUID();await c.query('INSERT INTO agentci_eval_jobs(id,review_id,attempt_key,repository,pull_request,base_sha,head_sha,digest,inputs,plan,source,source_base_canonical,source_head_canonical,source_definition_canonical,source_payload_canonical) VALUES($1,NULL,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)',[jobId,id,this.scope.repository,plan.finding.subject.pullRequest,base.sha,head.sha,hash,inputs,storedPlan,source,canonical(b.snapshot.files),canonical(h.snapshot.files),canonical(def),canonical(payload)]);
+    const jobId=randomUUID();await c.query('INSERT INTO agentci_eval_jobs(id,review_id,attempt_key,repository,pull_request,base_sha,head_sha,digest,inputs,plan,source,source_base_canonical,source_head_canonical,source_definition_canonical,source_payload_canonical) VALUES($1,NULL,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)',[jobId,id,this.scope.repository,plan.finding.subject.pullRequest,base.sha,head.sha,hash,inputs,storedPlan,source,canonical(b.snapshot.files),canonical(h.snapshot.files),canonical(def),serialized]);
     await c.query('INSERT INTO agentci_eval_units(id,job_id,suite_id,model_key,side,definition,digest) VALUES($1,$2,$3,$4,$5,$6,$7)',[randomUUID(),jobId,def.suite.metadata.id,'',def.side,def,source.definitionDigest]);
    }
    await c.query('COMMIT');

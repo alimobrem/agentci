@@ -94,7 +94,7 @@ fails closed when absent. No caller-controlled fallback to legacy authority.
 - No new HTTP reproduction route, dispatcher or production consumer is activated.
 
 Reviewed decision: the nullable source descriptor plus generated FK/authority
-trigger is used to a separate evaluator table family, which would duplicate
+trigger is used instead of a separate evaluator table family, which would duplicate
 leases/trial persistence and execution. A legacy-review bridge is rejected because
 it either fabricates evidence or unnecessarily requires running semantic review
 before an already-authorized admitted finding can reproduce.
@@ -126,3 +126,12 @@ Never fall back to a legacy review when migration015 or retained authority is ab
 Local evidence is recorded in `delivery/acceptance/m3-reproduction-staging-local.json`.
 The actual runner assertion and receipt test creates no legacy review rows; separate
 legacy regression tests retain their original fixture paths and semantics.
+
+The existing migration015 serialized staging payload cap is 32 MiB. Staging checks
+its exact canonical UTF-8 length before starting the eval insertion transaction and
+raises permanent `ReproductionEvalInputLimit` (`reproduction-eval-input-limit`,
+`retryable: false`). It does not shrink source files or classify this input as a
+transient database outage. This is the existing resource bound, not a new evaluation
+acceptance threshold. The operator registry also retains its independent 32 MiB
+aggregate loading cap. The storage-bound integration fixture supplies a trusted
+registry implementation to reach this defense independently of that earlier cap.
