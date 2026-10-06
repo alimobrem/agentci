@@ -1,3 +1,4 @@
+import {ModelReviewExportVerifier} from '../../packages/reviewers/export.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {generateKeyPairSync,randomUUID} from 'node:crypto';
@@ -49,6 +50,8 @@ test('compiled control main starts with scoped private config but no model keys,
   assert.equal((await fetch(configured.origin+'/readyz')).status,200);
   const descriptors=await fetch(configured.origin+'/v1/reviewer-profiles',{headers:{authorization:`Bearer ${evidenceToken}`}});assert.equal(descriptors.status,200);assert.deepEqual(await descriptors.json(),{schemaVersion:'v1alpha1',profiles:[{id:profile.profile.id,revision:profile.revision,mode:'synthetic',revoked:false}]});
   const status=await fetch(configured.origin+'/v1/model-reviews/'+id,{headers:{authorization:`Bearer ${operatorToken}`}});assert.equal(status.status,200);assert.equal(validateModelReviewStatus(await status.json()).execution.state,'queued');
+  const exported=await fetch(configured.origin+'/v1/model-reviews/'+id+'/export',{headers:{authorization:`Bearer ${evidenceToken}`}});assert.equal(exported.status,200);
+  const verifier=new ModelReviewExportVerifier((await admissions.get(id))!.request);for(const line of (await exported.text()).trimEnd().split('\n'))await verifier.push(JSON.parse(line));const certificate=verifier.finish();assert.equal(certificate.header.review.execution.state,'queued');assert.equal(certificate.header.missingRoleIds.length,profile.profile.reviewers.length);
   assert.equal((await fetch(configured.origin+'/v1/model-reviews/'+id+'/findings',{headers:{authorization:`Bearer ${evidenceToken}`}})).status,503,'No cursor key leaves finding reads unavailable');
   assert.equal((await fetch(configured.origin+'/v1/reviewer-profiles')).status,401);assert.ok(!configured.logs().includes('fixture-external-network-forbidden'));await stop(configured.child,configured.closed);
   const retained=(await admissions.get(id))!;

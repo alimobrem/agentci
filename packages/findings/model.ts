@@ -51,17 +51,25 @@ export function findingsFromReviewer(value:unknown,subject:ReviewSubject,documen
  const context=buildReviewContext(subject,documents),result=validateReviewerResult(value,context.subject);
  if(result.contextDigest!==context.digest)fail();
  if(result.status!=='completed')return [];
+ const findings=findingsFromRetainedReviewer(result,context.subject);
+ for(const finding of findings)for(const ref of finding.evidence){
+  const doc=context.documents.find(d=>d.side===ref.side&&d.path===ref.path&&d.kind!=='diff');
+  if(!doc||doc.digest!==ref.digest||ref.startLine>ref.endLine||ref.endLine>doc.content.split('\n').length)fail();
+ }
+ return findings;
+}
+/** Structural projection from authenticated retained results. This checks proposal
+ * identity, not the underlying source bytes. Ingestion still requires the full
+ * context checks above; export uses this only to bind retained provenance. */
+export function findingsFromRetainedReviewer(value:unknown,subject:ReviewSubject):ModelFinding[]{
+ const result=validateReviewerResult(value,subject);if(result.status!=='completed')return [];
  const output=result.proposal!.output;if(!proposalValid(output))fail();
  return (output as unknown as {findings:FindingProposal[]}).findings.map(proposal=>{
   const claim=normalizedClaim(proposal.claim);if(!claim)fail();
   const evidence=sortedReferences(proposal.evidence);
-  for(const ref of evidence){
-   const doc=context.documents.find(d=>d.side===ref.side&&d.path===ref.path&&d.kind!=='diff');
-   if(!doc||doc.digest!==ref.digest||ref.startLine>ref.endLine||ref.endLine>doc.content.split('\n').length)fail();
-  }
-  const f={schemaVersion:'v1alpha1' as const,subject:context.subject,mode:result.mode,...proposal,claim,evidence,
+  const f={schemaVersion:'v1alpha1' as const,subject:subject,mode:result.mode,...proposal,claim,evidence,
    sources:[{requestId:result.requestId,attemptId:result.attemptId,provider:result.provider,model:result.model,reviewerResultDigest:digest(canonical(result)),originalClaim:proposal.claim}],state:'proposed' as const,version:0,disposition:null};
-  return validateModelFinding({...f,id:identity(f)},context.subject);
+  return validateModelFinding({...f,id:identity(f)},subject);
  });
 }
 /** Exact duplicate aggregation only; similar prose or changed evidence stays separate. */

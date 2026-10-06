@@ -1,3 +1,5 @@
+import {modelReviewExportOpenApiSchemas} from '../packages/reviewers/export-schema.ts';
+import {ModelReviewExportVerifier} from '../packages/reviewers/export.ts';
 import {modelReviewOpenApiSchemas,findingOpenApiSchemas} from '../packages/reviewers/transport-schema.ts';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import { readFile, access } from 'node:fs/promises';
@@ -9,7 +11,7 @@ import {validateComparisonRecord} from '../packages/evals/comparison.ts';
 import {validateExportFrame} from '../packages/evals/export.ts';
 await SwaggerParser.validate(new URL('../specs/api/openapi.json', import.meta.url).pathname);
 const contract = JSON.parse(await readFile(new URL('../specs/api/openapi.json', import.meta.url), 'utf8'));
-for(const [name,schema] of Object.entries({...modelReviewOpenApiSchemas,...findingOpenApiSchemas}))deepStrictEqual(contract.components.schemas[name],schema,`API transport schema drift: ${name}`);
+for(const [name,schema] of Object.entries({...modelReviewOpenApiSchemas,...findingOpenApiSchemas,...modelReviewExportOpenApiSchemas}))deepStrictEqual(contract.components.schemas[name],schema,`API transport schema drift: ${name}`);
 const { $schema, ...analysis } = JSON.parse(await readFile(new URL('../packages/review/analysis.schema.json', import.meta.url), 'utf8'));
 deepStrictEqual(contract.components.schemas.Analysis, analysis, 'API and domain analysis schemas must not drift');
 deepStrictEqual(contract.components.schemas.EvalComparison,evalOpenApiSchema(JSON.parse(await readFile(new URL('../packages/evals/json/eval-comparison.schema.json',import.meta.url),'utf8'))),'API and domain comparison schemas must not drift');
@@ -75,3 +77,6 @@ strictEqual(findingOperations.size,0,'Every finding operation needs acceptance c
 const {validateModelFinding}=await import('../packages/findings/model.ts');
 const findingFixture=JSON.parse(await readFile(new URL('../specs/api/fixtures/model-finding.json',import.meta.url),'utf8'));
 validateModelFinding(findingFixture,findingFixture.subject);
+
+const modelFrames=(await readFile(new URL('../specs/api/fixtures/model-review-export.ndjson',import.meta.url),'utf8')).trimEnd().split('\n').map(line=>JSON.parse(line));
+const modelVerifier=new ModelReviewExportVerifier(modelFrames[0].data.review.admission.request);for(const frame of modelFrames)await modelVerifier.push(frame);modelVerifier.finish();

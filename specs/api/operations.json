@@ -294,6 +294,32 @@
         "Signed cursor binds scope and retained watermark; every page authenticates",
         "Cumulative 10s SQL budget and 4MiB response bound"
       ]
+    },
+    {
+      "operationId": "exportModelReview",
+      "method": "get",
+      "path": "/v1/model-reviews/{id}/export",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/integration/model-review-export.test.ts",
+        "tests/integration/model-review-export-adversarial.test.ts",
+        "tests/integration/model-review-control-startup.test.ts",
+        "tests/model-review-export-adversarial.test.ts"
+      ],
+      "scenarios": [
+        "failed cancelled queued exports preserve null summary and missing roles",
+        "M3-C11 interrupted export never certified",
+        "reject wrong identity reordered missing or extra frames",
+        "refused reviewer retained",
+        "concurrent lifecycle change isolated by captured version manifest",
+        "oversized snapshot fails before headers",
+        "Two active exports and 120-second whole-response deadline",
+        "Snapshot transaction and batch reads released before network backpressure",
+        "No paid provider execution or repository fetch during export"
+      ]
     }
   ]
 }
