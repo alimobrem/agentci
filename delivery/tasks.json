@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2306,6 +2306,35 @@
           "evidence": [
             "docs/phases/m3-stream-deadline-acceptance.md"
           ]
+        }
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "M3-00-provider-exception",
+      "title": "Record approved external-provider validation exception without weakening release gates",
+      "requirementIds": [
+        "SPEC-13.3-002",
+        "SPEC-13.3-003",
+        "SPEC-13.3-004",
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T02:42:36.508Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Definition of done, M3 deferral/phase plans and closure evidence record the owner-approved exception only for inaccessible external-model-provider validation; preserve deferred/unverified requirement IDs and future resumption, full M0-M10 scope and every other applicable implementation/API/security/GitHub customer/packaging/download/release/demo/recovery gate. No live provider capability or release gate becomes passed by this policy; doc/delivery/phase checks pass.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-provider-validation-exception-local.json"
+          ]
+        },
+        {
+          "text": "Reviewed documentation is published to its intended branch; policy does not itself claim milestone closure or live validation.",
+          "status": "pending",
+          "evidence": []
         }
       ],
       "dependsOn": []

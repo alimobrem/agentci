@@ -82,9 +82,11 @@ evidence must not be rewritten to imply they were already tested.
 - A failed or unrun applicable check blocks completion. Skipping is not passing.
 - Infrastructure failure is not successful behavioral verification.
 - Missing credentials, an empty remote repo, an unpublished release or unavailable
-  assets mean the milestone remains open.
+  assets mean the milestone remains open, subject only to the narrow external
+  model-provider exception below.
 - Deferred milestone exit criteria block completion. Product backlog items outside
-  the milestone do not block that milestone; list them clearly.
+  the milestone do not block that milestone; list them clearly. The approved
+  external model-provider exception below is the sole named exception here.
 - Inapplicable gates need a scope-based reason. Convenience, missing access or a
   broken environment are not inapplicability reasons.
 - Unsupported model assertions remain unconfirmed; consensus alone is not evidence.
@@ -94,6 +96,22 @@ evidence must not be rewritten to imply they were already tested.
   Publish a new version when the shipped package changes.
 - Do not start the next milestone while the current milestone is verifying,
   blocked, a release candidate, or awaiting published-artifact verification.
+
+## Approved external model-provider validation exception
+
+The [M3 owner decision](phases/m3-live-validation-deferral.md#approved-progression-exception--2026-10-06)
+permits inaccessible external model-provider validation to remain deferred/unverified
+without blocking progress only after **all other applicable gates pass**. This is
+not a generic exemption for missing credentials or deferred requirements. Preserve
+the original requirement IDs and full M0–M10 scope for future resumption. Never
+claim live provider compatibility, quality or independence passed on fixture evidence.
+
+Implementation, internal fixtures, API/security checks, GitHub customer acceptance,
+packaging, publication/download verification, release, delivered success/failure
+demo and recovery remain mandatory. Final requirement audits and closure limitations
+must identify the exact unverified portions and the approved decision. All release
+gate statuses and evidence rules remain unchanged; report qualified completion
+under the exception, never completion of the original live-provider validation.
 
 ## Completion record
 

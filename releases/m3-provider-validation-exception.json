@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "M3-EXTERNAL-PROVIDER-VALIDATION-2026-10-06",
+  "milestone": "M3",
+  "decision": "approved-narrow-progression-exception",
+  "approvedAt": "2026-10-06T02:34:57Z",
+  "authority": "Explicit project-owner approval",
+  "validationStatus": "deferred-unverified",
+  "requirementIds": [
+    "SPEC-13.3-002",
+    "SPEC-13.3-003",
+    "SPEC-13.3-004",
+    "SPEC-40-050"
+  ],
+  "affectedPortions": "Only inaccessible external model-provider compatibility/quality validation and real different-provider validation in M3-C15/M3-C16; implementation and policy enforcement remain required.",
+  "precondition": "Every other applicable gate passes with evidence before qualified closure or next-phase progression.",
+  "preservedScope": "Original requirement IDs and complete M0\u2013M10 scope remain required for future resumption.",
+  "nonWaived": [
+    "implementation",
+    "internal fixtures and evals",
+    "independence-policy enforcement",
+    "API contracts",
+    "security",
+    "GitHub customer acceptance",
+    "packaging",
+    "publication and anonymous download verification",
+    "release",
+    "delivered success/failure demo",
+    "recovery",
+    "SPEC-40-051 unsupported claims remain unconfirmed"
+  ],
+  "claimsNotEstablished": [
+    "live compatibility",
+    "live provider quality",
+    "real provider independence"
+  ],
+  "closureRequirements": [
+    "Preserve deferred/unverified validation under original IDs in the requirement audit",
+    "Cite this decision in consolidated closure limitations and requirement audit",
+    "Disclose synthetic behavior and unverified live validation in README, release notes and user demo",
+    "Retain all eighteen release gates and their evidence requirements"
+  ],
+  "resumeWhen": "Owner supplies authorized provider access and any required spend authorization; execute original acceptance and retain results.",
+  "authorizationLimits": [
+    "No credential discovery",
+    "No new accounts",
+    "No paid calls"
+  ],
+  "decisionDocument": "docs/phases/m3-live-validation-deferral.md"
+}
