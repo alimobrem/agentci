@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2405,7 +2405,7 @@
       "completedAt": "2026-10-06T03:28:34.944Z",
       "acceptance": [
         {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "text": "Preserve every source inventory ID and historical evidence; map all M0–M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
           "status": "passed",
           "evidence": [
             "docs/acceptance-reconciliation.md"
@@ -2559,6 +2559,31 @@
         }
       ],
       "dependsOn": []
+    },
+    {
+      "id": "M3-07c-3d-2b-1",
+      "title": "Composable reproduction evaluator staging transaction",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SECTION-12.4",
+        "SECTION-12.5",
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T05:02:53.296Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Real PostgreSQL proves prepared immutable admission-backed inputs stage through the caller-owned transaction: injected final rejection and lost connection leave zero jobs/units, commit/replay preserves one typed job/unit, corruption/cancellation remain fenced. Existing standalone staging and legacy M2 contracts remain unchanged. No permission implementation, Temporal dispatch or public route is enabled; full consumer/recovery and released customer acceptance remain open.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-3c"
+      ]
     }
   ]
 }
