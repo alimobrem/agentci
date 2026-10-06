@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "v1alpha1",
+  "scope": "M3-07c-4 finding read client local acceptance; not milestone closure",
+  "sourceCommit": "097adfe6ad61911b1a5076f181d814e4e7b98da5",
+  "sourceTree": "c455c4a427e6ef9d7f10ee847d0e1f2e389109d5",
+  "uncommittedTestAtExecution": {
+    "path": "tests/integration/model-review-client.test.ts",
+    "gitBlob": "525911b5b7c3879cd12add6baf691f5e85535c63"
+  },
+  "package": {
+    "name": "agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "cb5d7d1dc2e33ca85a01de0b68f8caeedf6639df932372da95479c476bfd1d2e",
+    "installation": "offline, production dependencies only",
+    "publicImport": "agentci/client from consumer context"
+  },
+  "checks": {
+    "build": "passed",
+    "focusedClientTests": 7,
+    "fastChecks": 10,
+    "compiledRealService": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "testDurationMs": 3648.265959
+    },
+    "installedRealService": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "testDurationMs": 3469.775084
+    }
+  },
+  "demonstrated": [
+    "Actual HTTP handlers, isolated PostgreSQL schema, real Temporal workflow and synthetic provider",
+    "Original summary references remain pinned after real queue lifecycle transition",
+    "Public client current/historical reads and complete paginated history",
+    "Installed CLI findings, current/historical show, and history",
+    "Initial admission, profiles, status, cancellation remain accepted"
+  ],
+  "limitations": [
+    "Control handlers run from checkout; this is installed client acceptance, not installed control-service deployment",
+    "Synthetic trusted GitHub reader and model provider; no live App/provider acceptance",
+    "No hosted combined CI or release publication claimed",
+    "Export and reproduction remain pending"
+  ]
+}
