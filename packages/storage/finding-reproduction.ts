@@ -1,3 +1,4 @@
+import type {ReproductionEvalStore} from './reproduction-evals.ts';
 import type {Pool,PoolClient} from 'pg';
 import {canonical,digest} from '../review/engine.ts';
 import type {Snapshot} from '../review/types.ts';
@@ -17,7 +18,7 @@ const fail=():never=>{throw new FindingReproductionConflict();};
 export interface ReproductionAuthorizer {approvedPlan(id:string,subject:ReviewSubject):Promise<ReproductionPlan>}
 export class FindingReproductionStore {
  private readonly scope:{organizationId:string;repository:string};
- constructor(private readonly pool:Pool,scope:{organizationId:string;repository:string},private readonly history:FindingHistoryStore,private readonly evals:EvalStore,private readonly authorizer:ReproductionAuthorizer){
+ constructor(private readonly pool:Pool,scope:{organizationId:string;repository:string},private readonly history:FindingHistoryStore,private readonly evals:EvalStore,private readonly authorizer:ReproductionAuthorizer,private readonly admittedEvals?:ReproductionEvalStore){
   if(!uuid(scope.organizationId)||scope.repository!==evals.repository||scope.organizationId!==evals.organizationId)fail();this.scope={...scope};
  }
  private subject(subject:ReviewSubject){if(subject.organizationId!==this.scope.organizationId||subject.repository!==this.scope.repository)fail();}
@@ -50,8 +51,12 @@ export class FindingReproductionStore {
    return plan!;
   });
  }
+ private async recovery(id:string){
+  if(!this.admittedEvals)return this.evals.recoveryPlan(id);
+  const r=await this.admittedEvals.recoveryPlan(id);return r?{...r,reviewId:r.source.admissionId}:undefined;
+ }
  private async staged(plan:ReproductionPlan){
-  const job=await this.evals.recoveryPlan(plan.id);if(!job||job.unitIds.length!==1||job.reviewId!==plan.approval.reviewId||canonical(job.subject)!==canonical({repository:plan.finding.subject.repository,pullRequest:plan.finding.subject.pullRequest,baseSha:plan.finding.subject.baseSha,headSha:plan.finding.subject.headSha}))fail();
+  const job=await this.recovery(plan.id);if(!job||job.unitIds.length!==1||job.reviewId!==plan.approval.reviewId||canonical(job.subject)!==canonical({repository:plan.finding.subject.repository,pullRequest:plan.finding.subject.pullRequest,baseSha:plan.finding.subject.baseSha,headSha:plan.finding.subject.headSha}))fail();
   const unit=await this.evals.unit(job!.unitIds[0]!);if(!unit||unit.jobId!==job!.id)fail();
   try{verifyReproductionUnit(plan,unit!);}catch{fail();}return {job:job!,unit:unit!};
  }
@@ -62,10 +67,11 @@ export class FindingReproductionStore {
   const plan=await this.get(id);if(!plan)fail();
   try{if(canonical(compileFindingReproduction(plan!.finding,plan!.approval,base,head,plan!.runner,plan!.limits))!==canonical(plan))fail();}catch{fail();}
   if(await this.cancelled(id))fail();
-  if(!await this.evals.recoveryPlan(id)){
+  if(!await this.recovery(id)){
    const history=await this.history.get(plan!.finding.id,plan!.finding.subject);
    if(canonical(history.at(-1)?.event.finding)!==canonical(plan!.finding))fail();
-   await this.evals.stage(plan!.approval.reviewId,id,base,head,[plan!.definition],{suiteChanges:[],coverageGaps:[],selectionGaps:[]});
+   if(this.admittedEvals)await this.admittedEvals.stage(id,base,head);
+   else await this.evals.stage(plan!.approval.reviewId,id,base,head,[plan!.definition],{suiteChanges:[],coverageGaps:[],selectionGaps:[]});
   }
   const {job,unit}=await this.staged(plan!);
   // A cancellation may commit while the immutable eval job is being staged.
@@ -93,7 +99,7 @@ export class FindingReproductionStore {
  async cancel(id:string){
   const plan=await this.get(id);if(!plan)fail();
   await this.transaction(async client=>{await client.query('INSERT INTO agentci_reproduction_cancellations(organization_id,repository,id) VALUES($1,$2,$3) ON CONFLICT DO NOTHING',[this.scope.organizationId,this.scope.repository,id]);});
-  if(!await this.evals.recoveryPlan(id))return {jobId:null,unitIds:[] as string[]};
+  if(!await this.recovery(id))return {jobId:null,unitIds:[] as string[]};
   const {job}=await this.staged(plan!);await this.evals.cancel(job.id);
   const {unit}=await this.staged(plan!);
   return {jobId:job.id,unitIds:unit.status==='cancelled'?[unit.id]:[]};

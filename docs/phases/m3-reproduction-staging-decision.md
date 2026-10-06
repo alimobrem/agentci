@@ -1,8 +1,8 @@
-# Proposed c3c evaluator source decision
+# c3c evaluator source decision
 
-Status: schema/source review before implementation. Task M3-07c-3c is active.
-No production consumer, migration, HTTP route or shared evaluator change is made
-by this document. Parent review must settle this decision before those edits.
+Status: parent-reviewed additive design, locally implemented under active task
+M3-07c-3c. Hosted acceptance and publication remain pending. No production consumer
+or HTTP reproduction route is activated.
 
 ## Existing incompatibility
 
@@ -13,7 +13,7 @@ reproduction fixtures substitute a real legacy review ID. They cannot establish
 customer-admission execution. Never create synthetic legacy review evidence solely
 to satisfy this constraint or reinterpret an admission ID as a legacy review ID.
 
-## Proposed additive schema and version boundary
+## Additive schema and version boundary
 
 Add migration015 with an immutable nullable typed `source` JSON descriptor on
 agentci_eval_jobs. Existing rows retain SQL NULL source, required non-null legacy
@@ -21,7 +21,8 @@ review_id and their exact original hash algorithm. New reproduction rows have NU
 review_id and a strict versioned descriptor:
 
     {schemaVersion:'v1alpha1',kind:'finding-reproduction',organizationId,
-     admissionId,operationId,planId,planDigest,requestDigest}
+     admissionId,operationId,planId,planDigest,requestDigest,
+     inputDigests:{base,head},definitionDigest}
 
 Exactly one source is legal. This is an internal evaluator lineage version, not an
 extension of released EvalComparison JSON. Preserve the existing review foreign
@@ -92,8 +93,36 @@ fails closed when absent. No caller-controlled fallback to legacy authority.
   checkpoint/recovery tests pass. Missing migration activation fails safely.
 - No new HTTP reproduction route, dispatcher or production consumer is activated.
 
-Open review choice: the nullable source descriptor plus generated FK/authority
-trigger is preferred to a separate evaluator table family, which would duplicate
+Reviewed decision: the nullable source descriptor plus generated FK/authority
+trigger is used to a separate evaluator table family, which would duplicate
 leases/trial persistence and execution. A legacy-review bridge is rejected because
 it either fabricates evidence or unnecessarily requires running semantic review
 before an already-authorized admitted finding can reproduce.
+
+## Canonical bytes, privileges and rollout boundary
+
+Migration015 authenticates source file bytes against the immutable approved plan's
+input digests. Controller-generated canonical text is stored alongside JSONB; SQL
+requires structural equality with stored input JSON and hashes the exact UTF-8
+canonical text. It never substitutes PostgreSQL JSONB text formatting for Node's
+canonical form. The worker independently recomputes canonical file and definition
+digests before use, preventing a recomputed job hash from authorizing new scripts.
+Source org/repository must match the singleton deployment scope and the joined
+operation/plan/admission; the plan subject must equal the admitted subject.
+
+Existing evaluator grants remain unchanged. A separate restricted PostgreSQL login
+proves claim, checkpoint retention, retry and completion while authority tables and
+job/definition writes are denied. The fixture uses the same table/column grants in
+its unique schema; it does not claim the public-schema startup privilege preflight
+was exercised there. Existing M2 acceptance separately covers that preflight.
+
+Before enabling any c3 consumer, drain old evaluator workers and require updated
+consumer/evaluator readiness with migration015. An old evaluator binary cannot
+validate new-source hashes; mixed-version processing is not supported or claimed.
+Apply migrations in order, preflight schema and registry, then activate a future
+scoped consumer. No new-source job is emitted by current production wiring.
+Never fall back to a legacy review when migration015 or retained authority is absent.
+
+Local evidence is recorded in `delivery/acceptance/m3-reproduction-staging-local.json`.
+The actual runner assertion and receipt test creates no legacy review rows; separate
+legacy regression tests retain their original fixture paths and semantics.
