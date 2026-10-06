@@ -6,6 +6,11 @@ import {
   type ModelReviewAccepted, type ModelReviewStatus, type ModelReviewCancellation, type ReviewerProfileList
 } from '../reviewers/transport.ts';
 import {AgentCIError} from './index.ts';
+import {validateModelReviewFindings, validateModelFindingHistory, type ModelReviewFindings, type ModelFindingHistory} from '../reviewers/finding-transport.ts';
+import {validateFindingHistoryRecord} from '../findings/history.ts';
+import type {FindingHistoryRecord} from '../findings/history.ts';
+
+export interface ModelReviewReadOptions {limit?: number; signal?: AbortSignal}
 
 export interface ModelReviewClientOptions {
   url: string;
@@ -65,12 +70,12 @@ export class ModelReviewClient {
       catch {throw new AgentCIError('invalid-response');}
     } finally {await reader.cancel();}
   }
-  private async request(path: string, mutation: boolean, status: number, body?: string): Promise<{value: unknown; location: string | null}> {
+  private async request(path: string, mutation: boolean, status: number, body?: string, externalSignal?: AbortSignal): Promise<{value: unknown; location: string | null}> {
     const token = mutation ? this.#operatorToken : this.#readToken ?? this.#operatorToken;
     if (!token) throw new AgentCIError('operator-token-required');
     // One overall deadline includes response bodies and backoff. Retried writes
     // keep exactly the same normalized admission ID/body or cancellation path.
-    const signal = AbortSignal.timeout(this.#timeoutMs);
+    const signal = AbortSignal.any([AbortSignal.timeout(this.#timeoutMs), ...(externalSignal ? [externalSignal] : [])]);
     for (let attempt = 1; ; attempt++) {
       try {
         const response = await fetch(this.#origin + path, {method: mutation ? 'POST' : 'GET', redirect: 'error', signal,
@@ -107,8 +112,8 @@ export class ModelReviewClient {
       throw new AgentCIError('identity-mismatch');
     return accepted;
   }
-  async show(expected: ReviewAdmissionRequest): Promise<ModelReviewStatus> {
-    const request = this.admission(expected), {value} = await this.request(`/v1/model-reviews/${request.id}`, false, 200);
+  async show(expected: ReviewAdmissionRequest, options: {signal?: AbortSignal} = {}): Promise<ModelReviewStatus> {
+    const request = this.admission(expected), {value} = await this.request(`/v1/model-reviews/${request.id}`, false, 200, undefined, options.signal);
     let record: ModelReviewStatus;
     try {record = validateModelReviewStatus(value);} catch {throw new AgentCIError('invalid-response');}
     if (canonical(record.admission.request) !== canonical(request) || record.admission.digest !== digest(canonical(request)))
@@ -125,5 +130,80 @@ export class ModelReviewClient {
     try {result = validateModelReviewCancellation(value);} catch {throw new AgentCIError('invalid-response');}
     if (result.id !== request.id) throw new AgentCIError('identity-mismatch');
     return result;
+  }
+  private findingId(id: string): string {
+    if (typeof id !== 'string' || !/^sha256:[a-f0-9]{64}$/.test(id)) throw new AgentCIError('invalid-request');
+    return id;
+  }
+  private readOptions(options: ModelReviewReadOptions) {
+    const limit = options.limit ?? 25;
+    if (!Number.isSafeInteger(limit) || limit < 1 || limit > 100) throw new AgentCIError('invalid-request');
+    return {limit, signal: AbortSignal.any([AbortSignal.timeout(120000), ...(options.signal ? [options.signal] : [])])};
+  }
+  /** Complete pinned finding references. Pages cannot substitute later dispositions. */
+  async findings(expected: ReviewAdmissionRequest, options: ModelReviewReadOptions = {}): Promise<ModelReviewFindings> {
+    const request = this.admission(expected), {limit, signal} = this.readOptions(options), status = await this.show(request, {signal});
+    if (!status.summary) throw new AgentCIError('review-not-complete', 409);
+    const manifest = [...status.summary.summary.findings].sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+    const items: ModelReviewFindings['items'] = [], cursors = new Set<string>(); let cursor: string | null = null;
+    for (let pageNumber = 0; pageNumber <= manifest.length; pageNumber++) {
+      const query = new URLSearchParams({limit: String(limit)}); if (cursor) query.set('cursor', cursor);
+      const {value} = await this.request(`/v1/model-reviews/${request.id}/findings?${query}`, false, 200, undefined, signal);
+      let page: ModelReviewFindings;
+      try {page = validateModelReviewFindings(value);} catch {throw new AgentCIError('invalid-response');}
+      if (page.reviewId !== request.id || page.summaryDigest !== status.summary.digest) throw new AgentCIError('identity-mismatch');
+      if (page.items.length > limit) throw new AgentCIError('invalid-response');
+      for (const item of page.items) {
+        const pinned = manifest[items.length];
+        if (!pinned || item.id !== pinned.id || item.digest !== pinned.digest) throw new AgentCIError('identity-mismatch');
+        items.push(item);
+      }
+      if (page.nextCursor === null) {
+        if (items.length !== manifest.length) throw new AgentCIError('incomplete-findings');
+        return {...page, items, nextCursor: null};
+      }
+      if (!page.items.length || cursors.has(page.nextCursor) || items.length >= manifest.length) throw new AgentCIError('invalid-response');
+      cursors.add(page.nextCursor); cursor = page.nextCursor;
+    }
+    throw new AgentCIError('incomplete-findings');
+  }
+  /** Current finding by default; version selects an immutable historical event. */
+  async finding(expected: ReviewAdmissionRequest, id: string, options: {version?: number} = {}): Promise<FindingHistoryRecord> {
+    const request = this.admission(expected); this.findingId(id);
+    if (options.version !== undefined && (!Number.isSafeInteger(options.version) || options.version < 1 || options.version > 10000)) throw new AgentCIError('invalid-request');
+    await this.show(request);
+    const query = new URLSearchParams({reviewId: request.id}); if (options.version !== undefined) query.set('version', String(options.version));
+    const {value} = await this.request(`/v1/findings/${id}?${query}`, false, 200);
+    let record: FindingHistoryRecord;
+    try {record = validateFindingHistoryRecord(value, request.subject);} catch {throw new AgentCIError('invalid-response');}
+    if (record.event.finding.id !== id || options.version !== undefined && record.event.finding.version !== options.version) throw new AgentCIError('identity-mismatch');
+    return record;
+  }
+  /** Verified pages of one immutable watermark. Full traversal requires iterator completion. */
+  async *findingHistory(expected: ReviewAdmissionRequest, id: string, options: ModelReviewReadOptions = {}): AsyncGenerator<ModelFindingHistory> {
+    const request = this.admission(expected); this.findingId(id);
+    const {limit, signal} = this.readOptions(options); await this.show(request, {signal});
+    let cursor: string | null = null, throughVersion: number | undefined, previous: FindingHistoryRecord | undefined, count = 0, bytes = 0;
+    const cursors = new Set<string>();
+    for (let pageNumber = 0; pageNumber < 10000; pageNumber++) {
+      const query = new URLSearchParams({reviewId: request.id, limit: String(limit)}); if (cursor) query.set('cursor', cursor);
+      const {value} = await this.request(`/v1/findings/${id}/history?${query}`, false, 200, undefined, signal);
+      let page: ModelFindingHistory;
+      try {page = await validateModelFindingHistory(value, request.subject, previous);} catch {throw new AgentCIError('invalid-response');}
+      if (page.reviewId !== request.id || page.findingId !== id || throughVersion !== undefined && page.throughVersion !== throughVersion) throw new AgentCIError('identity-mismatch');
+      throughVersion = page.throughVersion;
+      if (!page.items.length || page.items.length > limit) throw new AgentCIError('invalid-response');
+      for (const record of page.items) {
+        if (record.event.finding.id !== id || record.event.finding.version !== count + 1 || record.event.previousDigest !== (previous?.digest ?? null)) throw new AgentCIError('invalid-history');
+        bytes += Buffer.byteLength(JSON.stringify(record)); if (bytes > 32 * 1024 * 1024) throw new AgentCIError('response-too-large');
+        count++; previous = record;
+      }
+      if (count > throughVersion || page.nextCursor === null && count !== throughVersion) throw new AgentCIError('incomplete-history');
+      if (page.nextCursor !== null && (cursors.has(page.nextCursor) || count >= throughVersion)) throw new AgentCIError('invalid-history');
+      yield page;
+      if (page.nextCursor === null) return;
+      cursors.add(page.nextCursor); cursor = page.nextCursor;
+    }
+    throw new AgentCIError('incomplete-history');
   }
 }

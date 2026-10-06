@@ -33,41 +33,48 @@ export async function loadModelReviewClientConfig(path: string | undefined, env:
   return {url: value.url, readToken: await token('readTokenFile'), operatorToken: await token('operatorTokenFile'), timeoutMs: value.timeoutMs};
 }
 
+export async function loadModelReviewRequest(path: string) {
+  try {return validateReviewAdmission(JSON.parse(await file(path, 4096, false)));}
+  catch (error) {if (error instanceof AgentCIError) throw error; throw new AgentCIError('invalid-request');}
+}
+
 export async function modelReviewCommand(args: string[]): Promise<number> {
   if (args.length === 1 && ['--help', '-h'].includes(args[0]!)) {
     console.log(`Usage: agentci model-review profiles [--config PRIVATE_JSON]
        agentci model-review submit --request ADMISSION_JSON [--config PRIVATE_JSON]
        agentci model-review show --request ADMISSION_JSON [--config PRIVATE_JSON]
        agentci model-review cancel --request ADMISSION_JSON [--config PRIVATE_JSON]
+       agentci model-review findings --request ADMISSION_JSON [--limit PAGE_SIZE] [--config PRIVATE_JSON]
 
 profiles  List safe configured profile descriptors; this does not prove readiness.
 submit    Durably admit the exact request; retry ambiguous outcomes with the same file.
 show      Verify status against the original request identity and digest.
 cancel    Verify identity, then record cancellation intent; stopping/refunds are not guaranteed.
+findings  Fetch complete original-summary finding references across bounded pages.
 
-Keep the original admission JSON: submit/show/cancel require --request.
+Keep the original admission JSON: submit/show/cancel/findings require --request.
 Credentials come from private 0600 config/token files, or AGENTCI_API_URL with
 AGENTCI_EVIDENCE_TOKEN for reads and AGENTCI_OPERATOR_TOKEN for mutations.
 The operator token also permits reads. Tokens must differ; never pass tokens in argv.
 Exit 0 means the operation succeeded, not that a review passed; errors exit 2.
-Findings, export and reproduction commands are not available in this slice.`);
+Use agentci finding --help for current findings and history. Export and reproduction remain pending.`);
     return 0;
   }
   try {
     const [command, ...flags] = args;
-    if (!command || !['submit', 'show', 'cancel', 'profiles'].includes(command)) throw new AgentCIError('invalid-model-review-arguments');
+    if (!command || !['submit', 'show', 'cancel', 'profiles', 'findings'].includes(command)) throw new AgentCIError('invalid-model-review-arguments');
     const options: Record<string, string> = {};
     for (let i = 0; i < flags.length; i += 2) {
       const name = flags[i], value = flags[i + 1];
-      if (!name || !['--config', '--request'].includes(name) || !value || value.startsWith('--') || Object.hasOwn(options, name)) throw new AgentCIError('invalid-model-review-arguments');
+      if (!name || !['--config', '--request', ...(command === 'findings' ? ['--limit'] : [])].includes(name) || !value || value.startsWith('--') || Object.hasOwn(options, name)) throw new AgentCIError('invalid-model-review-arguments');
       options[name] = value;
     }
     if ((command === 'profiles') === Boolean(options['--request'])) throw new AgentCIError('invalid-model-review-arguments');
+    if (options['--limit'] !== undefined && (!/^[1-9][0-9]*$/.test(options['--limit']) || Number(options['--limit']) > 100)) throw new AgentCIError('invalid-model-review-arguments');
     const client = new ModelReviewClient(await loadModelReviewClientConfig(options['--config']));
     if (command === 'profiles') {console.log(JSON.stringify(await client.profiles())); return 0;}
-    let request;
-    try {request = validateReviewAdmission(JSON.parse(await file(options['--request']!, 4096, false)));}
-    catch (error) {if (error instanceof AgentCIError) throw error; throw new AgentCIError('invalid-request');}
+    const request = await loadModelReviewRequest(options['--request']!);
+    if (command === 'findings') {console.log(JSON.stringify(await client.findings(request, {limit: options['--limit'] ? Number(options['--limit']) : undefined}))); return 0;}
     const result = command === 'submit' ? await client.submit(request) : command === 'show' ? await client.show(request) : await client.cancel(request);
     console.log(JSON.stringify(result)); return 0;
   } catch (error) {

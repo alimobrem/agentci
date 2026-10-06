@@ -1,7 +1,7 @@
-# Model-review client and CLI: initial transport slice
+# Model-review client and CLI: admission and evidence reads
 
-Development support for profile discovery, admission, status, and cancellation.
-Findings, export, reproduction, and disposition commands remain pending later
+Development support for profile discovery, admission, status, cancellation, and
+finding evidence reads. Export, reproduction, and disposition commands remain pending later
 M3-07c slices. This document does not declare M3 released.
 
 Keep the exact admission JSON used for submission. It contains the request UUID,
@@ -87,3 +87,55 @@ export map and shared `AgentCIError` identity. This verifies the installed clien
 and executable; it does not claim a packaged control-service
 deployment, live provider acceptance, hosted combined CI, or an M3 release. Full
 package smoke and the remaining milestone gates retain their separate evidence.
+
+
+## Finding evidence reads (M3-07c-2A client)
+
+```sh
+agentci model-review findings --request /absolute/admission.json --limit 25
+agentci finding show --request /absolute/admission.json --id sha256:FINDING_HASH
+agentci finding show --request /absolute/admission.json --id sha256:FINDING_HASH --version 1
+agentci finding history --request /absolute/admission.json --id sha256:FINDING_HASH --limit 25
+```
+
+Replace `sha256:FINDING_HASH` with the lowercase SHA-256 ID returned by the service.
+All commands accept the same private `--config` option. Read routes require the
+control service's configured cursor-signing key. Page sizes are integers 1–100.
+
+`model-review findings` traverses all pages before printing one complete list. Its
+references are pinned to the original summary, even when a finding's current
+state has changed. It checks every reference against the saved summary and fails
+if a page omits, substitutes, duplicates, or reorders a reference. It returns
+`review-not-complete` until a summary exists. `finding show` reads current state;
+`--version` selects a retained historical event, including a summary's pinned
+version. Show/history can read retained findings during a partially completed
+review when the server verifies their association with that review.
+
+`finding history` emits one verified JSON page per line through a fixed version
+watermark. Pages validate event digests, exact subject, contiguous versions, and
+lifecycle transitions, including page boundaries. New events after the watermark
+belong to a later traversal. **A prefix is provisional: require exit 0 and a final
+page with `nextCursor: null` before treating history as complete.** An interrupted
+command exits 2; earlier stdout pages must not be mistaken for a complete export.
+These history pages are not a certified export format.
+
+```js
+const references = await client.findings(admission, {limit: 25});
+const pinned = references.items[0];
+if (pinned) {
+  const current = await client.finding(admission, pinned.id);
+  const original = await client.finding(admission, pinned.id, {version: pinned.version});
+  if (original.digest !== pinned.digest) throw new Error('Pinned finding mismatch');
+  for await (const page of client.findingHistory(admission, pinned.id, {limit: 25})) {
+    // Consume provisional pages; certify traversal only after the loop completes.
+  }
+}
+```
+
+Pagination uses opaque server cursors, a 120-second traversal deadline including
+the initial identity read, and an optional Node caller `signal`. Each HTTP read
+keeps its existing per-operation timeout. History is capped at 10,000 versions and
+32 MiB in total. Malformed/expired cursors, missing final pages, changed watermarks,
+and invalid transitions fail closed. The focused fixture tests exercise these
+client boundaries; real-service and installed-package read acceptance is pending
+integration with the server slice.
