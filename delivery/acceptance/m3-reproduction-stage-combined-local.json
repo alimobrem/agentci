@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3d-2b-1",
+  "integratedSource": "f1572be72cb4c8f71b975cdbccdf8d5eb8938b8d",
+  "baseDispatchMerge": "e43d35f9ff4ba0e76e6b50b58292a0ada1f1f427",
+  "installedReaderHead": "fa8f44ec53b636870097d5ff125454a0c6884805",
+  "stagingSourceCommit": "9853ec5",
+  "originalHostedAcceptance": {
+    "run": "37417577456",
+    "pr": "67",
+    "candidate": "b6f3b3c9afb665b1b81c085f9360faa105cd3619",
+    "base": "241d5a689507874706814c95c7d601c571c43bb9",
+    "testedPreview": "0de441d004be9406a984839b9ec5f07707f09b35",
+    "acceptedTree": "5786f77f42a210bee39359ff290e1336eb2d8596",
+    "artifact": {
+      "id": 11391252859,
+      "digest": "sha256:ba7e382fafaf371ca4fab8a94b9c053346d6461cff33cc9fd2d4f555e1e654fa",
+      "downloadedOnce": true
+    },
+    "hashesVerified": 10,
+    "counts": {
+      "fast": {
+        "tests": 405,
+        "pass": 405,
+        "fail": 0,
+        "skipped": 0
+      },
+      "integration": {
+        "tests": 113,
+        "pass": 113,
+        "fail": 0,
+        "skipped": 0
+      }
+    },
+    "fastChecks": 10,
+    "api": "Both immutable baselines and removal-negative checks pass",
+    "package": "Installed production package smoke pass",
+    "runtime": "Compiled containers and isolated eval worker actual Temporal execution/restart/cleanup passed linux/amd64",
+    "native": "Both Temporal artifacts match official npm hashes",
+    "scans": {
+      "eval-engines": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "fixed": null
+        }
+      ],
+      "eval-worker": [],
+      "api": [],
+      "worker": [],
+      "eval-runner": [],
+      "eval-agentci": []
+    },
+    "cache": "warm: logged cache restoration and BuildKit CACHED layers; changed inputs rebuilt",
+    "logSha256": "be4378abaf82003015f019e821722b4d8a76a5997f180ed3ff63fdc22c8ff2d6",
+    "constraints": [
+      "Exact current-main base 241d5 and head b6f3b3c acceptance for transactional reproduction staging; not a phase release.",
+      "No live provider, release publication or ARM64 runtime acceptance implied.",
+      "Earlier failed/cancelled attempts remain separate."
+    ],
+    "packagedMigrationsExactSourceSha256": {
+      "package/deploy/migrations/001_m1.sql": "2a2cae25973b77d7c0f6d4877728156bc0717271dc5c5e9c26e27804c524c1aa",
+      "package/deploy/migrations/002_m2_eval_role.sql": "91088fbbef44424d02df41e7f42cd8cbcea64d202ca5510968ae99378fa569e9",
+      "package/deploy/migrations/002_m2.sql": "164cfb3a398b225706766cde13d6ef98a0c7e35933b94e27a26b1dd17a1e2d3c",
+      "package/deploy/migrations/003_m2_review_recovery.sql": "c268d010c7f67313774494dfc69a32be29f6927c5c7dc912d7af1d420a17a43a",
+      "package/deploy/migrations/004_m3_model_budget.sql": "df15b7eb19fa5cb55fd3f370f3dd210472550d5a6300c5c0dcba8a03ff9503e3",
+      "package/deploy/migrations/005_m3_reviewer_results.sql": "b3804db49801a4a18d5fc7de7b5bd1f61032d7f5859a1df2061afa1b95b51286",
+      "package/deploy/migrations/006_m3_finding_history.sql": "b2762a4e525f86c8fae7abd3314bfbc593eadf30f46a50781478f332bc29683b",
+      "package/deploy/migrations/007_m3_reproduction.sql": "9518f6eeae24b298b855f355899f82b1ddf511e7396c016052d7902e1fed8a03",
+      "package/deploy/migrations/008_m3_review_admissions.sql": "981659a7d9aaa6fa38b5232e8aa29b2db21234ad01c67b84788b0a913277f404",
+      "package/deploy/migrations/009_m3_review_dispatch.sql": "18df64ce6be5443c639e6bc42bb9d8ebbd73645603d3ffad9c920edf1ae95eae",
+      "package/deploy/migrations/010_m3_reviewer_profiles.sql": "484de8942a0d2e716382c5709d441cffdd3f687b5eb3569203f47b75d6e5deb0",
+      "package/deploy/migrations/011_m3_review_summaries.sql": "09564336bd2d8c02210cfbfc64b319ac414b525ec0fa88a3bc419d89296054b9",
+      "package/deploy/migrations/012_m3_review_recovery.sql": "2b5577630d92bd510cfe2eacc97d69f8b2c13ac753a2fe0b807c35ebce3aaca2",
+      "package/deploy/migrations/013_model_review_publication.sql": "6c45062a3705f14cd29e02fbd51b9347ea8ff8d435b30bf7c940252fc6c7675b",
+      "package/deploy/migrations/014_m3_reproduction_reservations.sql": "9a8956b2a7d4d75751f34b2e78f52c97dae98ed5dd99ae6581edea55dcf48d0c",
+      "package/deploy/migrations/015_m3_reproduction_eval_source.sql": "e3ddc12ae2b90b22bebfa18570c736c2ef953518f8acbf6dde70cd7d4a3948cc",
+      "package/deploy/migrations/016_m3_reproduction_authority.sql": "ddae4b25a23144eea745d21c5786877a85ebcad11085ef100e43f7ab850417b4"
+    },
+    "advisoryProof": "/private/tmp/agentci-advisory-proof-37417451555.json"
+  },
+  "checks": {
+    "fast": {
+      "checks": 10,
+      "passed": true
+    },
+    "combinedPostgres": {
+      "tests": 28,
+      "passed": 28,
+      "failed": 0,
+      "skipped": 0,
+      "includes": [
+        "staging5",
+        "standalone11 with actual runner",
+        "dispatch11",
+        "compiled public reader1"
+      ],
+      "installedMode": "Separate earlier exact PR65 hosted installed result retained; this local combined invocation uses compiled public export"
+    },
+    "build": {
+      "passed": true
+    },
+    "apiCompatibility": {
+      "passed": true,
+      "baselines": [
+        "m1-0.2.1",
+        "m2-0.3.1"
+      ]
+    }
+  },
+  "logs": {
+    "fast": {
+      "path": "/private/tmp/agentci-staging-reader-combined-fast.log",
+      "sha256": "51feeeed6d72893e2554a80e51be1f3a0f6b038e71a49bdd0b0bf02bc934b2de"
+    },
+    "postgres": {
+      "path": "/private/tmp/agentci-staging-reader-combined-pg.log",
+      "sha256": "868842dabdbbaefdbcf2a3801300f04ad40bfb72df1e2fd9754e43dc03c6d043"
+    },
+    "build": {
+      "path": "/private/tmp/agentci-staging-reader-combined-build.log",
+      "sha256": "261e646d160bdfbb881537da43a24ef9a7ed2a677da3e5740a6707c70d038fc4"
+    },
+    "api": {
+      "path": "/private/tmp/agentci-staging-reader-combined-api.log",
+      "sha256": "0ac28536ceafa0163df6a786587f3db18be783732be4834c3659cf1c9a950b44"
+    }
+  },
+  "limits": [
+    "Combined-source hosted acceptance pending; earlier113 integration proof is exact241d/headb6 only",
+    "No runtime consumer, public mutation, full M3 UI/customer/demo/distribution/release acceptance claimed",
+    "Provider exception stays explicitly unverified; no numerical gate changes"
+  ]
+}
