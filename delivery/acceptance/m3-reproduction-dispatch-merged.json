@@ -1,0 +1,101 @@
+{
+  "component": "M3-07c-3d-2a reproduction dispatch persistence",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/66",
+  "mergeCommit": "e43d35f9ff4ba0e76e6b50b58292a0ada1f1f427",
+  "mergeTree": "f94d8f1b93c72d197d97ea36721b9916591ca80b",
+  "acceptedCandidate": "7f2ab9845a7c4831a3bdb37da5d212243d4b56af",
+  "acceptedPreview": "c905c692d9c564d55e38edc51d7b3471c482dbb3",
+  "treeMatchesAcceptedPreview": true,
+  "verifyAudit": {
+    "run": "37416597179",
+    "artifactId": 11391852263,
+    "artifactDigest": "sha256:bfa61d0b8191ffb425f88ce82e860564588b6f5d0502649b234c9099c64df9c9",
+    "candidate": "7f2ab9845a7c4831a3bdb37da5d212243d4b56af",
+    "preview": "c905c692d9c564d55e38edc51d7b3471c482dbb3",
+    "tree": "f94d8f1b93c72d197d97ea36721b9916591ca80b",
+    "candidateTree": "f94d8f1b93c72d197d97ea36721b9916591ca80b",
+    "previewParents": [
+      "c0f31caf7b95be29a672c74d26d8a6fc57b5647e",
+      "7f2ab9845a7c4831a3bdb37da5d212243d4b56af"
+    ],
+    "manifestSha256": "53a52fdc6be740b1766b9c308489eca0063c927c64435d1159b32ad636bfa8c4",
+    "verifiedFileHashes": 10,
+    "integration": {
+      "tests": 119,
+      "pass": 119,
+      "fail": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "cache": "warm (npm primary-key restore and Docker cached layers)",
+    "package": "Passed; dispatch storage module, migration017 body checksum, and dispatch deployment documentation verified in installed package archive.",
+    "baselines": [
+      "specs/api/baselines/m1-0.2.1-openapi.json",
+      "specs/api/baselines/m2-0.3.1-openapi.json"
+    ],
+    "containers": "passed",
+    "evalWorker": "passed",
+    "nativeImages": {
+      "worker": "sha256:23ee191e9f072af4783371b6a39e7c1b0ef24266af7444b4e81210edf4f58477",
+      "eval-worker": "sha256:5ad89aa78bc1a82ab9406bd90d87412ff0e3ee3c4f5ef8ded198c87cd9688880"
+    },
+    "highCriticalScans": {
+      "eval-engines": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "severity": "HIGH",
+          "fixedVersion": null
+        }
+      ],
+      "eval-worker": [],
+      "api": [],
+      "worker": [],
+      "eval-runner": [],
+      "eval-agentci": []
+    },
+    "releaseComplete": false,
+    "dispatchPackage": {
+      "module": true,
+      "migration017Checksum": true,
+      "deploymentDocumentation": true
+    },
+    "retarget": {
+      "base": "241d5a689507874706814c95c7d601c571c43bb9",
+      "headUnchanged": true,
+      "prospectiveTree": "f94d8f1b93c72d197d97ea36721b9916591ca80b",
+      "matchesAuditedPreview": true,
+      "authorityAncestor": "c0f31caf7b95be29a672c74d26d8a6fc57b5647e",
+      "authorityMergeAndAncestorTree": "724df766099eb485c8658a1617cbb46712bb9ef8"
+    },
+    "advisoryScope": "Historical successful comparison37416597195 is base c0f31ca, NOT current main241d5a6; current exact main advisory remains a separate gate."
+  },
+  "originalAuditProof": {
+    "path": "/private/tmp/agentci-pr66-audit-37416597179/audit-proof.json",
+    "sha256": "ff827945eb1e29e9767ac79a59eb608097170ea4f0c964c665c9678e85ff9f62",
+    "correction": "Only human-readable package description corrected in this merged record; original audit and all raw artifact hashes/source identities preserved."
+  },
+  "advisory": {
+    "run": "37416597195",
+    "artifactId": 11391337008,
+    "base": "c0f31caf7b95be29a672c74d26d8a6fc57b5647e",
+    "head": "7f2ab9845a7c4831a3bdb37da5d212243d4b56af",
+    "status": "Historical exact-base success only; current-main advisory remains unverified",
+    "proof": "/private/tmp/agentci-advisory-proof-37416597195.json",
+    "proofSha256": "b3b68f5bad485e990a63e3773c0263fcf91e498560d58e89b1f011d1ff1c2f58"
+  },
+  "boundaries": {
+    "consumerActivated": false,
+    "consumerExecutionAccepted": false,
+    "phaseComplete": false,
+    "releaseComplete": false,
+    "canonicalTaskCompletionRecorded": false
+  },
+  "remaining": [
+    "Current-main exact-subject advisory acceptance",
+    "Trusted pre-reservation operator plan catalog and exact historical finding loader",
+    "Lease-fenced prior-attempt adoption after real Temporal identity verification",
+    "Configured consumer authority, recovery, cancellation and receipt acceptance",
+    "Phase packaging/publication/deployment/release/demo gates"
+  ]
+}

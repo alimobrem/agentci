@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3d-2b-1",
+  "sourceCommit": "9853ec504ee2ac0f7cb8ca1334d29d0af2866e10",
+  "base": "c0f31caf7b95be29a672c74d26d8a6fc57b5647e",
+  "scope": "Internal composable staging prerequisite; no permission, dispatcher or public route activation",
+  "sourceFiles": {
+    "packages/storage/reproduction-evals.ts": "45e12e983972002868d82990d0a3f5ed278abb90de8d22f9f22434f05ea6e656",
+    "tests/integration/reproduction-stage-transaction.test.ts": "dde187309bb14b3e514a8ad1751328c72bdede493aa67782374186f3976adf3d",
+    "docs/phases/m3-reproduction-stage-transaction.md": "930016d9a0e79decb839debe12f780690bdecc3c926f094625bcee20935f68d6"
+  },
+  "checks": {
+    "focused": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0
+    },
+    "independent": {
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0
+    },
+    "standaloneRegression": {
+      "tests": 11,
+      "passed": 11,
+      "failed": 0,
+      "skipped": 0,
+      "actualIsolatedRunner": true,
+      "legacyM2BeforeAndAfterMigration": true
+    },
+    "fast": {
+      "checks": 10,
+      "passed": true
+    },
+    "build": {
+      "passed": true
+    },
+    "apiCompatibility": {
+      "passed": true,
+      "baselines": [
+        "m1-0.2.1",
+        "m2-0.3.1"
+      ]
+    }
+  },
+  "logs": {
+    "firstFailed": {
+      "path": "/private/tmp/agentci-stage-transaction-first.log",
+      "sha256": "f0f28c6d2e67b180f4b05ab79664affa2a60e3a7c6af8c37165eb0586a620218"
+    },
+    "second": {
+      "path": "/private/tmp/agentci-stage-transaction-second.log",
+      "sha256": "55d79a762083e29682ef0a05ea95a202495868979c3ab28b0b1603994c48a225"
+    },
+    "final": {
+      "path": "/private/tmp/agentci-stage-transaction-final.log",
+      "sha256": "e0cd35ec20936ffed916072ed27b190c2954e5a984312688fc1a8e718f68c9fe"
+    },
+    "standaloneRegression": {
+      "path": "/private/tmp/agentci-stage-transaction-regression.log",
+      "sha256": "25ab26262a89257583953fce7f4b4f977f50761ba3882fea32d33226e0171f7c"
+    },
+    "independent": {
+      "path": "/private/tmp/agentci-stage-transaction-independent-review.log",
+      "sha256": "c828c43f471dd6a2e661ae3152c56c84f81e35f925d4efe87008a6b244783733"
+    },
+    "fast": {
+      "path": "/private/tmp/agentci-stage-transaction-fast.log",
+      "sha256": "fe05c883d3e20850f2e2596dfdcfdee0aee22a774ba9de7568f9983724901b23"
+    },
+    "build": {
+      "path": "/private/tmp/agentci-stage-transaction-build.log",
+      "sha256": "261e646d160bdfbb881537da43a24ef9a7ed2a677da3e5740a6707c70d038fc4"
+    },
+    "apiCompatibility": {
+      "path": "/private/tmp/agentci-stage-transaction-api.log",
+      "sha256": "0ac28536ceafa0163df6a786587f3db18be783732be4834c3659cf1c9a950b44"
+    }
+  },
+  "retainedFailedAttempts": [
+    {
+      "kind": "typecheck",
+      "result": "failed",
+      "errors": [
+        "TS2304 b undefined",
+        "TS2304 h undefined"
+      ],
+      "disposition": "Extracted core now uses the prepared projected input fields; recorded tool output; no successful first typecheck claim."
+    },
+    {
+      "kind": "firstFocusedTests",
+      "tests": 4,
+      "passed": 2,
+      "failed": 2,
+      "skipped": 0,
+      "disposition": "Test expected inner staging-conflict at outer redacted authority boundary. Corrected test separately asserts inner conflict, outer unavailable and zero rows; no production weakening."
+    }
+  ],
+  "limits": [
+    "Hosted exact-source acceptance and packaging remain pending",
+    "Trusted caller must supply open bounded transaction; provisional IDs must not dispatch before outer commit and committed check",
+    "Full Temporal consumer/recovery, fresh permission and cancellation monitoring, installed/released acceptance, customer/UI/demo and all M3 release gates remain open",
+    "Numerical evaluation policy unchanged"
+  ]
+}

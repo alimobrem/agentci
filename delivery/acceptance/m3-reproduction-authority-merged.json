@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3d-1",
+  "mergeCommit": "241d5a689507874706814c95c7d601c571c43bb9",
+  "mergedTree": "724df766099eb485c8658a1617cbb46712bb9ef8",
+  "treeEqualsAcceptedCandidate": true,
+  "hostedAcceptance": {
+    "run": "37416464324",
+    "pr": "64",
+    "candidate": "c0f31caf7b95be29a672c74d26d8a6fc57b5647e",
+    "base": "3adee0263723a6f98d9dc6a60e046d2776ba57fc",
+    "testedPreview": "76f7a4792c410cb57e9503d58f8486bb543e5aed",
+    "acceptedTree": "724df766099eb485c8658a1617cbb46712bb9ef8",
+    "artifact": {
+      "id": 11391401498,
+      "digest": "sha256:2dd27f5863400a462fc64b0ea6caf4b453939e1bc4108d1efabd265c9b151e83",
+      "downloadedOnce": true
+    },
+    "hashesVerified": 10,
+    "counts": {
+      "fast": {
+        "tests": 405,
+        "pass": 405,
+        "fail": 0,
+        "skipped": 0
+      },
+      "integration": {
+        "tests": 108,
+        "pass": 108,
+        "fail": 0,
+        "skipped": 0
+      }
+    },
+    "fastChecks": 10,
+    "api": "Both immutable baselines and removal-negative checks pass",
+    "package": "Installed production package smoke pass",
+    "runtime": "Compiled containers and isolated eval worker actual Temporal execution/restart/cleanup passed linux/amd64",
+    "native": "Both Temporal artifacts match official npm hashes",
+    "scans": {
+      "eval-engines": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "fixed": null
+        }
+      ],
+      "eval-worker": [],
+      "api": [],
+      "worker": [],
+      "eval-runner": [],
+      "eval-agentci": []
+    },
+    "cache": "warm: logged cache restoration and BuildKit CACHED layers; changed inputs rebuilt",
+    "logSha256": "cec27703ed0a646a7d59f53bbe09c6c3c2a3bb7ba07b1894919b9cb45d8a9ddb",
+    "constraints": [
+      "CI tested stacked base3ade; retargeted mainc508 has exactly the same tree; latestadvisory separately verifies c508/headc0f",
+      "Authority-loader scope; no full reproduction API/customer-release acceptance inferred",
+      "Source-bound package/API/native/runtime linuxamd64 evidence only; no live-provider/publicdistribution/ARM64 runtime claim",
+      "Old1fe proof and cancelled/superseded attempts retained separately"
+    ],
+    "baseMigrationsPackagedExactly": {
+      "014_m3_reproduction_reservations.sql": "9a8956b2a7d4d75751f34b2e78f52c97dae98ed5dd99ae6581edea55dcf48d0c",
+      "015_m3_reproduction_eval_source.sql": "e3ddc12ae2b90b22bebfa18570c736c2ef953518f8acbf6dde70cd7d4a3948cc"
+    },
+    "retargetBase": {
+      "commit": "c508ed0ea31e7051046647fea72fb56160f29e19",
+      "treeIdenticalToTestedBase": true,
+      "tree": "a58a039b856621f45922fe44570d60cfcb1981da"
+    }
+  },
+  "advisory": {
+    "run": "37416784747",
+    "productionSeedExecuted": true,
+    "productionMetricsAvailable": true,
+    "producer": {
+      "version": "0.4.0-m3-dev.1",
+      "sourceCommit": "c508ed0ea31e7051046647fea72fb56160f29e19",
+      "repository": "alimobrem/agentci",
+      "installationId": 167655696,
+      "runId": "37416784747",
+      "runAttempt": "1",
+      "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+      "evaluatorImage": "sha256:c0ab1597d827e9b7e4d33a96a5bf1a12ac13c7080d89fc614a5ae844ce8e4b4e"
+    },
+    "artifact": {
+      "id": 11391107638,
+      "digest": "sha256:b9a7837e0a35e5fac7b4538a8e0ae744f77e2de9b185fd3afc1b7d71812c78c8",
+      "downloadedOnce": true
+    },
+    "reviews": [
+      {
+        "subject": {
+          "repository": "alimobrem/agentci",
+          "installationId": 167655696,
+          "pullRequest": 64,
+          "baseSha": "c508ed0ea31e7051046647fea72fb56160f29e19",
+          "headSha": "c0f31caf7b95be29a672c74d26d8a6fc57b5647e"
+        },
+        "status": "completed",
+        "comparison": {
+          "id": "4b62fb35-049b-4b4e-ac35-e389a3780b50",
+          "reviewId": "1a0e6141-699d-4fe4-836a-0438998895af",
+          "file": "comparison-4b62fb35-049b-4b4e-ac35-e389a3780b50.ndjson",
+          "sha256": "sha256:a95af65ba2935962e161523c432d02fc60ef5136c7126a892fe1ed38bed66e42",
+          "bytes": 25722
+        },
+        "summary": {
+          "state": "completed",
+          "outcome": "passed",
+          "executionGaps": [],
+          "unitCount": 8,
+          "comparisonCount": 4
+        },
+        "frames": 15,
+        "units": 8,
+        "scenarioObservations": 38,
+        "assertionGitShas": [
+          "c508ed0ea31e7051046647fea72fb56160f29e19"
+        ],
+        "suiteChanges": [],
+        "coverageGaps": [],
+        "selectionGaps": [],
+        "changedTests": [
+          "tests/integration/reproduction-authority.test.ts"
+        ]
+      }
+    ],
+    "files": [
+      {
+        "file": "comparison-4b62fb35-049b-4b4e-ac35-e389a3780b50.ndjson",
+        "sha256": "a95af65ba2935962e161523c432d02fc60ef5136c7126a892fe1ed38bed66e42"
+      },
+      {
+        "file": "pr-64-bd60a235-4cce-47ac-8002-ad80ff3378ea-history.json",
+        "sha256": "27edbf322942344fa79857a2938448f8d7b2d3f64da84b8dd37b2537b05f5058"
+      },
+      {
+        "file": "reviews.json",
+        "sha256": "5941d78a2cd9a04b7b1cbe3a6cb6009fe769dfbfd5eae26af08e31804367430a"
+      }
+    ],
+    "limits": [
+      "One trial per scenario, not repeated reliability evidence.",
+      "Each comparison uses its own exact PR base assertions, not producer main or candidate assertions.",
+      "Image IDs are Docker config digests, not published OCI manifests.",
+      "Prior failed/cancelled runs remain retained and are not superseded as historical evidence.",
+      "Advisory is frozen-base comparison acceptance; CI and release gates remain separate."
+    ]
+  },
+  "localEvidence": [
+    "delivery/acceptance/m3-reproduction-authority-local.json",
+    "delivery/acceptance/m3-reproduction-authority-combined-local.json"
+  ],
+  "limits": [
+    "Internal authority/non-execution change complete on published main; no consumer or mutation activation",
+    "Installed v2 public reader acceptance is separate PR65",
+    "No M3 release/demo/distribution/ARM64/live-provider completion claim; full scope and gates remain open"
+  ]
+}

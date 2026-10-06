@@ -6,10 +6,13 @@ import {EvalStore,definition,validateInputs} from './evals.ts';import {Reproduct
 const fail=():never=>{throw Error('reproduction-eval-conflict');};
 /** Permanent resource rejection; a future dispatcher must not retry this input. */
 export class ReproductionEvalInputLimit extends Error {readonly retryable=false;constructor(){super('reproduction-eval-input-limit');}}
+/** Process-local preparation handle; identity alone grants no permission. */
+export interface PreparedReproductionEval {readonly id:string;readonly planDigest:string}
 export interface ReproductionEvalRecovery {id:string;source:ReproductionEvalSource;unitIds:string[];completedUnitIds:string[];subject:{repository:string;pullRequest:number;baseSha:string;headSha:string}}
 /** Controller-only staging. Evaluation continues through the unchanged restricted
  * EvalStore unit/lease/trial methods; no provider or App credential enters a job. */
 export class ReproductionEvalStore {
+ private prepared=new WeakMap<PreparedReproductionEval,{retained:any;plan:ReproductionPlan;def:ReturnType<typeof definition>;inputs:Parameters<typeof validateInputs>[0];source:ReproductionEvalSource;storedPlan:{units:ReturnType<typeof definition>[];suiteChanges:never[];coverageGaps:never[];selectionGaps:never[]};serialized:string;hash:string;base:Snapshot;head:Snapshot}>();
  private evals:EvalStore;private reservations:ReproductionReservations;private scope:{organizationId:string;repository:string};
  constructor(private pool:Pool,scope:{organizationId:string;repository:string},registry:ReproductionApprovalRegistry){this.scope={...scope};this.evals=new EvalStore(pool,scope.organizationId,scope.repository);this.reservations=new ReproductionReservations(pool,scope,registry);}
  private key(id:string){if(!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(id))fail();return [this.scope.organizationId,this.scope.repository,id];}
@@ -18,7 +21,9 @@ export class ReproductionEvalStore {
   const r=(await c.query('SELECT p.plan,p.digest,o.operation_id,o.request,o.request_digest,o.result,o.result_digest,o.finding_id FROM agentci_reproduction_plans p JOIN agentci_reproduction_operations o ON o.organization_id=p.organization_id AND o.repository=p.repository AND o.reproduction_id=p.id WHERE p.organization_id=$1 AND p.repository=$2 AND p.id=$3',this.key(id))).rows[0];
   if(!r||r.digest!==digest(canonical(r.plan))||r.request_digest!==digest(canonical(r.request))||r.result_digest!==digest(canonical(r.result))||r.result.planDigest!==r.digest||r.result.reproductionId!==id||r.result.operationId!==r.operation_id||r.result.findingId!==r.finding_id)fail();return r!;
  }
- async stage(id:string,base:Snapshot,head:Snapshot){
+ /** Bounded detached inputs are prepared before the caller takes its authority lock. */
+ async prepare(id:string,base:Snapshot,head:Snapshot):Promise<PreparedReproductionEval>{
+  projectEvalInputs(base);projectEvalInputs(head);base=structuredClone(base);head=structuredClone(head);
   await this.ready();const retained=await this.authority(this.pool,id);
   const reservation=await this.reservations.reserve(retained.finding_id,retained.request);
   const plan=retained.plan as ReproductionPlan;
@@ -28,31 +33,50 @@ export class ReproductionEvalStore {
   const storedPlan={units:[def],suiteChanges:[],coverageGaps:[],selectionGaps:[]},payload={source,attemptKey:id,repository:this.scope.repository,pullRequest:plan.finding.subject.pullRequest,inputs,plan:storedPlan},serialized=canonical(payload);
   if(Buffer.byteLength(serialized)>32*1024*1024)throw new ReproductionEvalInputLimit();
   const hash=digest(serialized);
-  const c=await this.pool.connect();let broken=false;const lost=()=>{broken=true;};c.on('error',lost);
-  try{
-   await c.query('BEGIN');await c.query("SET LOCAL statement_timeout='10s'");await c.query("SET LOCAL lock_timeout='5s'");await c.query("SET LOCAL transaction_timeout='15s'");
+  const ticket=Object.freeze({id,planDigest:retained.digest});this.prepared.set(ticket,{retained,plan,def,inputs,source,storedPlan,serialized,hash,base,head});return ticket;
+ }
+ /** Trusted caller supplies an already-open transaction and must commit only after
+  * its final authority check. This method never begins, commits or releases it.
+  * Returned identifiers are provisional until that caller commits. */
+ async stagePrepared(c:PoolClient,ticket:PreparedReproductionEval){
+  const prepared=this.prepared.get(ticket);if(!prepared)fail();
+  const {retained,plan,def,inputs,source,storedPlan,serialized,hash,base,head}=prepared!,id=ticket.id;
    await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))',[canonical([...this.key(id),'eval-stage'])]);
    if((await c.query('SELECT 1 FROM agentci_reproduction_cancellations WHERE organization_id=$1 AND repository=$2 AND id=$3',this.key(id))).rowCount)fail();
    const again=await this.authority(c,id);if(canonical(again)!==canonical(retained))fail();
    const prior=(await c.query('SELECT id,digest,source FROM agentci_eval_jobs WHERE source_organization_id=$1 AND repository=$2 AND source_operation_id=$3',[this.scope.organizationId,this.scope.repository,retained.operation_id])).rows[0];
    if(prior){if(prior.digest!==hash||canonical(prior.source)!==canonical(source))fail();}
    else{
-    const jobId=randomUUID();await c.query('INSERT INTO agentci_eval_jobs(id,review_id,attempt_key,repository,pull_request,base_sha,head_sha,digest,inputs,plan,source,source_base_canonical,source_head_canonical,source_definition_canonical,source_payload_canonical) VALUES($1,NULL,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)',[jobId,id,this.scope.repository,plan.finding.subject.pullRequest,base.sha,head.sha,hash,inputs,storedPlan,source,canonical(b.snapshot.files),canonical(h.snapshot.files),canonical(def),serialized]);
+    const jobId=randomUUID();await c.query('INSERT INTO agentci_eval_jobs(id,review_id,attempt_key,repository,pull_request,base_sha,head_sha,digest,inputs,plan,source,source_base_canonical,source_head_canonical,source_definition_canonical,source_payload_canonical) VALUES($1,NULL,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)',[jobId,id,this.scope.repository,plan.finding.subject.pullRequest,base.sha,head.sha,hash,inputs,storedPlan,source,canonical(inputs.base.snapshot.files),canonical(inputs.head.snapshot.files),canonical(def),serialized]);
     await c.query('INSERT INTO agentci_eval_units(id,job_id,suite_id,model_key,side,definition,digest) VALUES($1,$2,$3,$4,$5,$6,$7)',[randomUUID(),jobId,def.suite.metadata.id,'',def.side,def,source.definitionDigest]);
    }
-   await c.query('COMMIT');
+  const recovery=await this.recovery(id,c);if(!recovery)fail();return {jobId:recovery!.id,unitId:recovery!.unitIds[0]!};
+ }
+ async stage(id:string,base:Snapshot,head:Snapshot){
+  const ticket=await this.prepare(id,base,head),c=await this.pool.connect();let broken=false;const lost=()=>{broken=true;};c.on('error',lost);
+  try{
+   await c.query('BEGIN');await c.query("SET LOCAL statement_timeout='10s'");await c.query("SET LOCAL lock_timeout='5s'");await c.query("SET LOCAL transaction_timeout='15s'");
+   await this.stagePrepared(c,ticket);await c.query('COMMIT');
   }catch(e){try{await c.query('ROLLBACK');}catch{broken=true;}if(e instanceof Error&&e.message==='reproduction-eval-conflict')throw e;throw Error('reproduction-eval-unavailable');}finally{c.release(broken);c.off('error',lost);}
-  const recovery=await this.recoveryPlan(id);if(!recovery)fail();
-  // Cancellation can commit while the staging transaction is still invisible.
-  if((await this.pool.query('SELECT 1 FROM agentci_reproduction_cancellations WHERE organization_id=$1 AND repository=$2 AND id=$3',this.key(id))).rowCount){await this.evals.cancel(recovery!.id);fail();}
+  return this.committed(ticket);
+ }
+ /** Call after the outer commit. Revalidate retained execution inputs and the
+  * cancellation fence before identifiers may escape to an evaluator workflow. */
+ async committed(ticket:PreparedReproductionEval){
+  const prepared=this.prepared.get(ticket);if(!prepared)fail();
+  const recovery=await this.recoveryPlan(ticket.id);if(!recovery||canonical(recovery.source)!==canonical(prepared!.source))fail();
+  if((await this.pool.query('SELECT 1 FROM agentci_reproduction_cancellations WHERE organization_id=$1 AND repository=$2 AND id=$3',this.key(ticket.id))).rowCount){await this.evals.cancel(recovery!.id);fail();}
   return {jobId:recovery!.id,unitId:recovery!.unitIds[0]!};
  }
  async recoveryPlan(id:string):Promise<ReproductionEvalRecovery|undefined>{
-  await this.ready();const authority=await this.authority(this.pool,id);
-  const row=(await this.pool.query('SELECT * FROM agentci_eval_jobs WHERE source_organization_id=$1 AND repository=$2 AND source_operation_id=$3',[this.scope.organizationId,this.scope.repository,authority.operation_id])).rows[0];if(!row)return undefined;
+  await this.ready();return this.recovery(id,this.pool);
+ }
+ private async recovery(id:string,connection:Pool|PoolClient):Promise<ReproductionEvalRecovery|undefined>{
+  const authority=await this.authority(connection,id);
+  const row=(await connection.query('SELECT * FROM agentci_eval_jobs WHERE source_organization_id=$1 AND repository=$2 AND source_operation_id=$3',[this.scope.organizationId,this.scope.repository,authority.operation_id])).rows[0];if(!row)return undefined;
   const source=validateReproductionEvalSource(row.source),plan=authority.plan as ReproductionPlan;
   if(source.planId!==id||source.admissionId!==plan.approval.reviewId||source.operationId!==authority.operation_id||source.planDigest!==authority.digest||source.requestDigest!==authority.request_digest||source.organizationId!==this.scope.organizationId||row.review_id!==null||row.attempt_key!==id||row.base_sha!==plan.finding.subject.baseSha||row.head_sha!==plan.finding.subject.headSha||row.pull_request!==plan.finding.subject.pullRequest||row.repository!==this.scope.repository||canonical(source.inputDigests)!==canonical(plan.inputs)||source.definitionDigest!==digest(canonical(plan.definition)))fail();
-  const rows=(await this.pool.query('SELECT id FROM agentci_eval_units WHERE job_id=$1',[row.id])).rows;if(rows.length!==1)fail();const unit=await this.evals.unit(rows[0].id);if(!unit||unit.jobId!==row.id||canonical(unit.definition)!==canonical(plan.definition)||canonical(compileFindingReproduction(plan.finding,plan.approval,unit.inputs.base.snapshot,unit.inputs.head.snapshot,plan.runner,plan.limits))!==canonical(plan))fail();
+  const rows=(await connection.query('SELECT id FROM agentci_eval_units WHERE job_id=$1',[row.id])).rows;if(rows.length!==1)fail();const unit=await this.evals.unit(rows[0].id,connection);if(!unit||unit.jobId!==row.id||canonical(unit.definition)!==canonical(plan.definition)||canonical(compileFindingReproduction(plan.finding,plan.approval,unit.inputs.base.snapshot,unit.inputs.head.snapshot,plan.runner,plan.limits))!==canonical(plan))fail();
   return {id:row.id,source,unitIds:[unit!.id],completedUnitIds:unit!.status==='completed'?[unit!.id]:[],subject:{repository:row.repository,pullRequest:row.pull_request,baseSha:row.base_sha,headSha:row.head_sha}};
  }
 }
