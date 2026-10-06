@@ -58,6 +58,7 @@ USER 0
 COPY --from=eval-engines-build /opt/python /opt/python
 COPY --from=eval-engines-build /opt/promptfoo /opt/promptfoo
 COPY --from=eval-engines-build /opt/agentci-patches /opt/agentci-patches
+COPY deploy/engines/licenses/mcp-server-filesystem-LICENSE /licenses/mcp-server-filesystem-LICENSE
 ENV PATH=/opt/promptfoo/node_modules/.bin:/opt/python/bin:/usr/local/bin:/usr/bin:/bin
 USER 1001
 CMD ["node", "--version"]
