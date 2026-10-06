@@ -1,0 +1,404 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-security-1",
+  "scope": "Optional Promptfoo Git dependency security fix acceptance; no release or registry-publication claim",
+  "merge": {
+    "commit": "7223516441741a67162fc45b3b391c2c66066b11",
+    "tree": "645df51ad57c37d25ed2b8d3a069d34d497dc933",
+    "parents": [
+      "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+      "8c6b03185189f754c832e1c37561412a53d64521"
+    ],
+    "acceptedPreview": "fe724f36dd25520c0924ad61132f0e87a8a5d496",
+    "candidate": "8c6b03185189f754c832e1c37561412a53d64521",
+    "treeEqualityVerified": true
+  },
+  "localEvidence": "delivery/acceptance/m3-promptfoo-security-local.json",
+  "verification": {
+    "run": "37406009732",
+    "artifactId": 11387433375,
+    "artifactDigest": "sha256:ff7d368527fed4e30178d7d7fa841f5d0c76d29f064a8aaa14288e1f968aba61",
+    "candidate": "8c6b03185189f754c832e1c37561412a53d64521",
+    "preview": "fe724f36dd25520c0924ad61132f0e87a8a5d496",
+    "tree": "645df51ad57c37d25ed2b8d3a069d34d497dc933",
+    "candidateTree": "645df51ad57c37d25ed2b8d3a069d34d497dc933",
+    "previewParents": [
+      "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+      "8c6b03185189f754c832e1c37561412a53d64521"
+    ],
+    "manifestSha256": "7eb090944721c58316f0ead576a1299d7f9508a4d87eddaa3027bd97af109272",
+    "verifiedFileHashes": 10,
+    "integration": {
+      "tests": 49,
+      "pass": 49,
+      "fail": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "cache": "warm (npm primary-key restore and Docker cached layers)",
+    "package": "passed; publication module; no scheduler migration013",
+    "baselines": [
+      "specs/api/baselines/m1-0.2.1-openapi.json",
+      "specs/api/baselines/m2-0.3.1-openapi.json"
+    ],
+    "containers": "passed",
+    "evalWorker": "passed",
+    "nativeImages": {
+      "worker": "sha256:8a93692d4892c46656e59a1b31915a75017d2921446f49ec75f0ac7641c49601",
+      "eval-worker": "sha256:4c2bb14d673725af400f353b6abef3d4c304d186c5dbeb68c1dfcd79b2e6d9bc"
+    },
+    "highCriticalScans": {
+      "eval-engines": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "severity": "HIGH",
+          "fixedVersion": null
+        }
+      ],
+      "eval-worker": [],
+      "api": [],
+      "worker": [],
+      "eval-runner": [],
+      "eval-agentci": []
+    },
+    "releaseComplete": false,
+    "unitTests": {
+      "tests": 342,
+      "pass": 342,
+      "fail": 0,
+      "skipped": 0
+    },
+    "feedbackSeconds": 21.809942145,
+    "jobs": [
+      {
+        "name": "fast-feedback",
+        "seconds": 58.0
+      },
+      {
+        "name": "contracts-and-runtime",
+        "seconds": 567.0
+      }
+    ],
+    "evalEngines": {
+      "image": "sha256:585855a2fdad38153136a85430cc4f4efe2453aac7ac3e8cf752f2974d71e74a",
+      "architecture": "amd64",
+      "versions": {
+        "@simple-git/argv-parser": "2.0.1",
+        "node-forge": "1.4.0",
+        "promptfoo": "0.124.0",
+        "simple-git": "4.0.2"
+      }
+    },
+    "licenseNoticeSha256": "0382b0057770ca05e9c350a50aa3b1c1fea84da0bc81d723bf00b9aa841be58a",
+    "remainingGaps": [
+      "Existing node-forge CVE-2026-85393 no-fixed-version advisory with tested backport retained",
+      "CI acceptance only: publication/download/release and full M3 gates not claimed",
+      "Advisory evaluation audited separately by parent/controller"
+    ]
+  },
+  "advisory": {
+    "run": "37406009787",
+    "productionSeedExecuted": false,
+    "productionMetricsAvailable": false,
+    "producer": {
+      "version": "0.4.0-m3-dev.1",
+      "sourceCommit": "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+      "repository": "alimobrem/agentci",
+      "installationId": 167655696,
+      "runId": "37406009787",
+      "runAttempt": "1",
+      "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+      "evaluatorImage": "sha256:9799fe06eb61df5abc129acab1068707f188779dbe4e8caf262f9ef6d2f20b7d"
+    },
+    "artifact": {
+      "id": 11387552564,
+      "digest": "sha256:f895a34275a5c8a78225924ddf898126f5c58df45d1f2ebc7a685d0434c7f7df",
+      "downloadedOnce": true
+    },
+    "reviews": [
+      {
+        "subject": {
+          "repository": "alimobrem/agentci",
+          "installationId": 167655696,
+          "pullRequest": 56,
+          "baseSha": "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+          "headSha": "8c6b03185189f754c832e1c37561412a53d64521"
+        },
+        "status": "completed",
+        "comparison": {
+          "id": "8b883a48-ec5d-4bef-b2dd-86f99df4bde5",
+          "reviewId": "a5efe72f-39d4-420d-a946-098d40b31dbe",
+          "file": "comparison-8b883a48-ec5d-4bef-b2dd-86f99df4bde5.ndjson",
+          "sha256": "sha256:43deec2c64072933e41bca1820f40b8a439f2fd77e7c3b3a37587ae950387db9",
+          "bytes": 25722
+        },
+        "summary": {
+          "state": "completed",
+          "outcome": "passed",
+          "executionGaps": [],
+          "unitCount": 8,
+          "comparisonCount": 4
+        },
+        "frames": 15,
+        "units": 8,
+        "scenarioObservations": 38,
+        "assertionGitShas": [
+          "8004caf94512cbce12bb3c7adcc951555b6aa0ce"
+        ],
+        "suiteChanges": [],
+        "coverageGaps": [],
+        "selectionGaps": [],
+        "changedTests": []
+      }
+    ],
+    "files": [
+      {
+        "file": "comparison-8b883a48-ec5d-4bef-b2dd-86f99df4bde5.ndjson",
+        "sha256": "43deec2c64072933e41bca1820f40b8a439f2fd77e7c3b3a37587ae950387db9"
+      },
+      {
+        "file": "pr-56-8f90d7ff-7a45-420f-968f-b9768ccc2d27-history.json",
+        "sha256": "742d113e93582fed7d939563db82447bbecaaa5f828d6e40e009de52602bd93b"
+      },
+      {
+        "file": "reviews.json",
+        "sha256": "c09c6c55919200bb58a076992552528d2edb2516cf1379b2e695767abfd9fd7d"
+      }
+    ],
+    "limits": [
+      "One trial per scenario, not repeated reliability evidence.",
+      "Each comparison uses its own exact PR base assertions, not producer main or candidate assertions.",
+      "Image IDs are Docker config digests, not published OCI manifests.",
+      "Prior failed/cancelled runs remain retained and are not superseded as historical evidence.",
+      "Trusted producer8004 predates the seed helper; candidate comparison cannot measure deployed seed savings."
+    ]
+  },
+  "proofDigests": {
+    "verificationAudit": "d4c6ee7b032e3dd4f4c400d4de98478189374896554f76243205f40fbf1da821",
+    "advisoryAudit": "04b431fbbbfafc8824263ec078f6fab2a2c025afafe057ec1193a6b119f83302"
+  },
+  "priorFailure": {
+    "run": 37404082498,
+    "conclusion": "failure",
+    "candidate": "50b5be56210b03561f77ea625c5117c8a8f399d9",
+    "preview": "163e50e67d3b4a2ea87afc13d3f6794539e27e9c",
+    "tree": "72f14389c6ef2e6e55b60f338ae994665e8beba5",
+    "previewParents": [
+      "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+      "50b5be56210b03561f77ea625c5117c8a8f399d9"
+    ],
+    "artifactId": 11386399646,
+    "artifactDigest": "sha256:df2598fea4001a8413bbc14fc48f8c462a8821b797b6138a0f72c489275e7ba6",
+    "verificationManifest": "absent: collection skipped after scan failure",
+    "fastTests": {
+      "tests": 352,
+      "pass": 352,
+      "fail": 0,
+      "skipped": 0
+    },
+    "seedTestsPassed": [
+      "real trusted Git objects match cold snapshots, miss to REST, and retain fresh identity/authorization checks",
+      "local candidates never bypass blob hash, size, binary, UTF8 or output bounds, and failures do not enter cache",
+      "raw object reads disable replacements and lazy fetch and never checkout or execute content",
+      "local reads use the same bounded cache and bounded subprocess queue",
+      "a stalled local Git subprocess is killed with a bounded redacted failure",
+      "a stalled asynchronous seed rejects by deadline and late results never populate cache",
+      "real tree and commit objects cannot masquerade as seeded blobs",
+      "seed ignores hostile Git environment and actual configured smudge and hook commands",
+      "fresh tree authorization failure stops a memory-primed snapshot before any seed callback",
+      "actual HTTP commit and tree authorization precedes local reuse and repeats on warm reads"
+    ],
+    "integration": {
+      "tests": 49,
+      "pass": 49,
+      "fail": 0,
+      "skipped": 0
+    },
+    "packageHelperPresent": true,
+    "apiCompatibilityPassed": true,
+    "runtimeAcceptance": "compiled-container/native/eval-worker skipped after scan failure",
+    "blockingFindings": [
+      {
+        "package": "@simple-git/argv-parser",
+        "installed": "1.1.1",
+        "fixed": "2.0.1",
+        "id": "CVE-2026-102829",
+        "severity": "CRITICAL"
+      },
+      {
+        "package": "simple-git",
+        "installed": "3.36.0",
+        "fixed": "4.0.1",
+        "id": "CVE-2026-102828",
+        "severity": "CRITICAL"
+      },
+      {
+        "package": "simple-git",
+        "installed": "3.36.0",
+        "fixed": "4.0.0",
+        "id": "CVE-2026-102826",
+        "severity": "HIGH"
+      },
+      {
+        "package": "simple-git",
+        "installed": "3.36.0",
+        "fixed": "4.0.0",
+        "id": "CVE-2026-102827",
+        "severity": "HIGH"
+      }
+    ],
+    "remainingNoFixFindings": [
+      {
+        "package": "node-forge",
+        "installed": "1.4.0",
+        "fixed": null,
+        "id": "CVE-2026-85393",
+        "severity": "HIGH"
+      }
+    ],
+    "cache": "warm npm primary restore and Docker cached layers",
+    "jobs": [
+      {
+        "name": "contracts-and-runtime",
+        "conclusion": "failure",
+        "seconds": 554.0
+      },
+      {
+        "name": "fast-feedback",
+        "conclusion": "success",
+        "seconds": 58.0
+      }
+    ],
+    "retainedSha256": {
+      "scan-results/eval-engines.json": "62998294cfda40064d158c8f90334e6c37cd539836f15654b93e482f20fd3fed",
+      "releases/agentci-0.4.0-m3-dev.1.tgz": "0a7c42aa1342badfea8feb0c7cbaa2c20cfdd0d7b1efa48bfcf303552980df14",
+      ".agentci/artifacts/delivery/fast-latest.json": "fa3d6a35625bd9f5d312423afb5bf3da50779086981d21f415b0cd4adf3406d3"
+    }
+  },
+  "cancelledRecordsPreserved": [
+    {
+      "path": "delivery/runs/37387797045-attempt-1.json",
+      "sha256": "820008091b03836819d7af75307c8af3a6560818ddd90d0308edaf5cb87ef798"
+    },
+    {
+      "path": "delivery/runs/37360255134-attempt-1.json",
+      "sha256": "7f1071acb2b65dff96ef88b18c371007e1c450d73aba192f91aa22485ebff681"
+    },
+    {
+      "path": "delivery/runs/37386908910-attempt-1.json",
+      "sha256": "8bca2c581716b50e414b364167d4d8ca9a4db005dbf462d65ea5f188d545d51a"
+    },
+    {
+      "path": "delivery/runs/37389539215-attempt-1.json",
+      "sha256": "9f5edcae3715f766d58456104bd2b8c9ef6828cde91add981b750347ab476caa"
+    },
+    {
+      "path": "delivery/runs/37176748913-attempt-1.json",
+      "sha256": "e12a69f849c114b1e15352f129fcb4d5c8087c68b914bb124b8c9d619659be9e"
+    },
+    {
+      "path": "delivery/runs/37390642372-attempt-1.json",
+      "sha256": "09c8adde685954a40dc6871bf1e9881a6f01ca6a4e2d8fc4d2c345f672446d36"
+    },
+    {
+      "path": "delivery/runs/37252489100-attempt-1.json",
+      "sha256": "4abbef643ee1434e8ebc67a8394267af95141008b081bbf3b226bdbe99c2a63f"
+    },
+    {
+      "path": "delivery/runs/37352205805-attempt-1.json",
+      "sha256": "a7f49e97c8b1bf4ffad901fd9f00ba6eb042f1064d3f6f2beae9ef966990efbb"
+    },
+    {
+      "path": "delivery/runs/37386007747-attempt-1.json",
+      "sha256": "48e1c6017faff475316a7c01931d3f42c04b1b3f2495634a2dbb609c8ee48c41"
+    },
+    {
+      "path": "delivery/runs/37390597694-attempt-1.json",
+      "sha256": "93c6ea6f90c0fef0801fc0e78774f37a2c8c60411dba739b40f795be32bbafd8"
+    },
+    {
+      "path": "delivery/runs/37360018391-attempt-1.json",
+      "sha256": "8238a9221a02340c9d5830e8645088797f971ad7ff4c0f174d3a23c165fa3fe0"
+    },
+    {
+      "path": "delivery/runs/37390642440-attempt-1.json",
+      "sha256": "28efd6d262da1a062df4fa983f2cf2db971c7438601411c05b3b6ca6114a0c82"
+    },
+    {
+      "path": "delivery/runs/37326326804-attempt-1.json",
+      "sha256": "21d6817b464fbe110b00828a4a382cda72500ed2611b38c36d75b34f2d394d58"
+    },
+    {
+      "path": "delivery/runs/37263928913-attempt-1.json",
+      "sha256": "676fa2234bf15f70ce4896b8454fd65084bb72965d3d32c1641ffa1723ff24c2"
+    },
+    {
+      "path": "delivery/runs/37386876562-attempt-1.json",
+      "sha256": "cd87f64054ac7e7b947c79f7ff99e71b3d6f9b2052878c79166c8c640d5a168f"
+    },
+    {
+      "path": "delivery/runs/37390597626-attempt-1.json",
+      "sha256": "33f8fa6cd7e11deaf830ac84872f02d39bcf1f77932a6c76db04845c658951cf"
+    },
+    {
+      "path": "delivery/runs/37386940254-attempt-1.json",
+      "sha256": "f7f755f97b0baffd21fdd8d19da95b54496797146f075925bcac5b67228b2002"
+    },
+    {
+      "path": "delivery/runs/37268979790-attempt-1.json",
+      "sha256": "fd9554f7d78c12b8927a2b2ef55d1eca975814d287ef368358aef5b5fa2dbc57"
+    },
+    {
+      "path": "delivery/runs/37199168696-attempt-1.json",
+      "sha256": "c044e7008ece3bcc01a9efa82e92ea0d3c7247075105bb9f492647d3951d0b90"
+    },
+    {
+      "path": "delivery/runs/37387815107-attempt-1.json",
+      "sha256": "213a9c732a60256bed6b75cb34dcc559b5980580c8397783e72edfd2e8edda52"
+    },
+    {
+      "path": "delivery/runs/37388642334-attempt-1.json",
+      "sha256": "b6bbf3678183d906f5877b50d9e7a61b0085752b34f3256a8ff93172c968078e"
+    },
+    {
+      "path": "delivery/runs/37161703061-attempt-1.json",
+      "sha256": "c8fd6a62a203ea84cb871fe71b2133fca0d4ee1226394ae14a7eff579afeb902"
+    },
+    {
+      "path": "delivery/runs/37206731892-attempt-1.json",
+      "sha256": "9a860e7f5719ea167269a2e4abf6e2590323908a553d13561715a119590db101"
+    },
+    {
+      "path": "delivery/runs/37160260654-attempt-1.json",
+      "sha256": "d3d44204da544289efbc4daa6dde714dde77da39b58b088083ec9368dcdfd5d6"
+    },
+    {
+      "path": "delivery/runs/37252376036-attempt-1.json",
+      "sha256": "a7e63a3db2c213ab8c1886014b44377b84b7f26e684c4346e0e23d42195838d9"
+    },
+    {
+      "path": "delivery/runs/37326327821-attempt-1.json",
+      "sha256": "12bcd7328f0df383b9375c87892daa0566f971fd82a0c7a2507dfcdde7ac27b1"
+    },
+    {
+      "path": "delivery/runs/37389319677-attempt-1.json",
+      "sha256": "045e39d8dd153ba51ad43cb603d681a08f53d789efd7206c09f2d2027808df24"
+    },
+    {
+      "path": "delivery/runs/37352205583-attempt-1.json",
+      "sha256": "45174b8959b54004f5b834c83f286bd5f34cf541a9eaf7191d35af0904d623d5"
+    },
+    {
+      "path": "delivery/runs/37390599212-attempt-1.json",
+      "sha256": "73a0880dc8fd0546631dc66367235404b74b3aeb82d5b6ec51a50b8e56f41aab"
+    },
+    {
+      "path": "delivery/runs/37387784993-attempt-1.json",
+      "sha256": "4d4f5665dbe8b9d664f733304e94bc6a3db69f6233bd81f77e7f70a4dccfcbf0"
+    }
+  ],
+  "PR56Attempts": "Only attempt1; no failed/cancelled prior PR56 Verify run observed",
+  "decision": "Security task local and CI criteria satisfied; existing forge exception retained. Release/platform image publication, anonymous downloads and full M3 closure remain open.",
+  "measurement": "Warm CI567s, fast-feedback job58s, inner fast21.81s; no claim of causal or overall development velocity gain."
+}
