@@ -2315,25 +2315,28 @@
       "dependsOn": []
     },
     {
-      "id": "M3-07e-3",
-      "title": "Deterministic retry-count fixture clock under scheduler load",
+      "id": "M3-00-provider-exception",
+      "title": "Record approved external-provider validation exception without weakening release gates",
       "requirementIds": [
-        "SPEC-13.2-003",
-        "SECTION-13.4"
+        "SPEC-13.3-002",
+        "SPEC-13.3-003",
+        "SPEC-13.3-004",
+        "SPEC-40-050",
+        "SPEC-40-051"
       ],
       "status": "in-progress",
-      "startedAt": "2026-10-06T02:35:21.695Z",
+      "startedAt": "2026-10-06T02:42:36.508Z",
       "completedAt": null,
       "acceptance": [
         {
-          "text": "Freeze Date only in retry-count fixture; preserve maxAttempts, accounting assertions, real retry delays and independent deadline tests. Demonstrate prior wall-clock expiry diagnosis; focused provider tests, frozen mutation verifier and fast checks pass with production unchanged.",
+          "text": "Definition of done, M3 deferral/phase plans and closure evidence record the owner-approved exception only for inaccessible external-model-provider validation; preserve deferred/unverified requirement IDs and future resumption, full M0-M10 scope and every other applicable implementation/API/security/GitHub customer/packaging/download/release/demo/recovery gate. No live provider capability or release gate becomes passed by this policy; doc/delivery/phase checks pass.",
           "status": "passed",
           "evidence": [
-            "delivery/acceptance/m3-retry-count-clock-local.json"
+            "delivery/acceptance/m3-provider-validation-exception-local.json"
           ]
         },
         {
-          "text": "Protected corpus correction receives trusted baseline promotion and exact-source hosted acceptance before task completion; preserve original failure evidence and do not claim local checks establish promotion.",
+          "text": "Reviewed documentation is published to its intended branch; policy does not itself claim milestone closure or live validation.",
           "status": "pending",
           "evidence": []
         }
@@ -2501,6 +2504,32 @@
       "dependsOn": [
         "M3-07c-2"
       ]
+    },
+    {
+      "id": "M3-07e-3",
+      "title": "Deterministic retry-count fixture clock under scheduler load",
+      "requirementIds": [
+        "SPEC-13.2-003",
+        "SECTION-13.4"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T02:35:21.695Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Freeze Date only in retry-count fixture; preserve maxAttempts, accounting assertions, real retry delays and independent deadline tests. Demonstrate prior wall-clock expiry diagnosis; focused provider tests, frozen mutation verifier and fast checks pass with production unchanged.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-retry-count-clock-local.json"
+          ]
+        },
+        {
+          "text": "Protected corpus correction receives trusted baseline promotion and exact-source hosted acceptance before task completion; preserve original failure evidence and do not claim local checks establish promotion.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": []
     }
   ]
 }

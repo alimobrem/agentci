@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "taskId": "M3-00-provider-exception",
+  "scope": "Local documentation policy validation; publication pending",
+  "baseCommit": "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+  "checks": [
+    {
+      "name": "check:delivery",
+      "result": "passed",
+      "detail": "101 tasks validated; 18 M3 gates open"
+    },
+    {
+      "name": "status -- --check",
+      "result": "passed",
+      "detail": "1346 inventory entries current"
+    },
+    {
+      "name": "check-phase-pr-plan.mjs",
+      "result": "passed",
+      "detail": "8 phases; 68 PRs; 439 inventory entries assigned"
+    },
+    {
+      "name": "preservation assertions",
+      "result": "passed",
+      "detail": "All prior task records, gate IDs/status/evidence, phase ownership/dependencies unchanged; no primary requirements or gate-validator edits"
+    },
+    {
+      "name": "release:check --milestone M3 --require-complete",
+      "result": "expected-rejection",
+      "detail": "All 18 gates remain pending; no release completion allowed"
+    }
+  ],
+  "limitations": [
+    "Documentation only; does not validate live providers or any milestone release gate",
+    "Review and publication remain pending"
+  ]
+}
