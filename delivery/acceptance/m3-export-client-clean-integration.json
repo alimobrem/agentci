@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "v1alpha1",
+  "task": "M3-07c-4",
+  "scope": "Prepared clean export client integration; unpublished and not milestone acceptance",
+  "testedSourceCommit": "19f9ad66920d6d3b5431ab7ad00478e37f92c3d3",
+  "testedSourceTree": "aa36f7a1b38574d8d15e4562a57aeae49a5711d0",
+  "reviewedOriginal": "dd4b929",
+  "unchangedCriticalProductAndTestBlobs": {
+    "cmd/agentci/model-review.ts": "568fda679b3f18d9a5b0b9500a7d952cf1f773e4",
+    "packages/client/model-review.ts": "83757e1e3f651e4a596ff46f7fbad1dfbf1f5a80",
+    "packages/reviewers/export.ts": "336c7744a52d8ca96cb58a76e03c57133ce00e59",
+    "packages/storage/model-review-export.ts": "431ea06dedcff1024b87ded830f84b74c93de5f3",
+    "tests/integration/model-review-client.test.ts": "591ffefb7cb420aefcc610c2503184c7b89f7b63",
+    "tests/model-review-export-client.test.ts": "00bc891945b0cd3ba4cbb2e62a37d623c8810a08"
+  },
+  "checks": {
+    "fast": {
+      "passed": true,
+      "checks": 10,
+      "seconds": 4.324197042,
+      "sourceCommit": "9463be90d94f0d6e034c27776a833770d4570620",
+      "laterChanges": "Merged verifier repair and delivery evidence only; no compiled product change"
+    },
+    "build": "passed",
+    "findingMutationVerifier": {
+      "baseline": "both scenarios passed",
+      "receiptIdentityMutation": "finding-lifecycle failed as required",
+      "reproductionIdentityMutation": "finding-reproduction failed as required"
+    },
+    "compiledActualService": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 4071.779833
+    },
+    "offlineInstalledActualService": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 3930.730583
+    }
+  },
+  "package": {
+    "name": "agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "fc67a59a6084f9da5537d12c9d846dfe946d867e45d0366d9e194ff3c13e8f7e",
+    "install": "offline production dependencies only",
+    "publicImport": "agentci/client from consumer context"
+  },
+  "limitations": [
+    "No hosted verification or publication for this branch",
+    "Source HTTP handlers and synthetic reader/provider; deployed control/customer live App acceptance remains pending",
+    "PR depends on both findings client and export server; publish after their accepted integration yields a scoped diff"
+  ]
+}
