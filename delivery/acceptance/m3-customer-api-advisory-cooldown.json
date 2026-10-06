@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "failedRun": 37390515545,
+  "sourceCommit": "328d69bc2232f9863b7cdb74c406d896733344c7",
+  "observation": {
+    "status": 403,
+    "category": "primary-rate-limit",
+    "remaining": 0,
+    "limit": 5000,
+    "resetEpochSeconds": 1791244967
+  },
+  "subsequentRetries": "Rejected locally by installation-client cooldown with429; no further remote request until reset.",
+  "cancelledQueuedRun": 37390642440,
+  "reason": "Known App exhaustion; do not dispatch a fresh process before reset.",
+  "advisoryAcceptance": "pending",
+  "nextAction": "After reset, verify one current subject advisory run; retain failed and cancelled attempts.",
+  "milestoneComplete": false
+}

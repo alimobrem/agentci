@@ -1,0 +1,139 @@
+{
+  "runId": 37390642440,
+  "attempt": 1,
+  "conclusion": "cancelled",
+  "cohort": "optimized",
+  "cache": "warm",
+  "collectedAt": "2026-10-05T23:55:11.160Z",
+  "sourceCommit": "3ae4de5a5423a30c807d0c6f36c769b0f4b48608",
+  "url": "https://github.com/alimobrem/agentci/actions/runs/37390642440",
+  "event": "pull_request_target",
+  "jobs": [
+    {
+      "name": "review",
+      "seconds": 100,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "seconds": 11,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci && npm run build",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 11,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build trusted self-eval dependencies",
+          "seconds": 22,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build separate trusted evaluator",
+          "seconds": 16,
+          "conclusion": "success"
+        },
+        {
+          "name": "Pin hosted execution images",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Load repository-scoped App key",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Start Temporal",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Wait for Temporal",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Review exact open PR revisions",
+          "seconds": 16,
+          "conclusion": "cancelled"
+        },
+        {
+          "name": "Retain evidence before publishing Checks",
+          "seconds": 0,
+          "conclusion": "failure"
+        },
+        {
+          "name": "Publish advisory Checks with retained evidence",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Remove ephemeral key",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build separate trusted evaluator",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Build trusted self-eval dependencies",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

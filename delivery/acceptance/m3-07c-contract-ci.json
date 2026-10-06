@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "pullRequest": 46,
+  "candidateCommit": "3ae4de5a5423a30c807d0c6f36c769b0f4b48608",
+  "previewCommit": "60d22523bc9941b80faf2b0286fe88cba6ae19ca",
+  "verifiedTree": "d3b90073fc791ce186ee999b733fbc7c8c55e9bf",
+  "verifyRun": 37390600796,
+  "artifactId": 11381371974,
+  "artifactDigest": "sha256:8835ae22b02f3ed6a15dc3c6ccbc40f62799b5e4d971c11713a1e8229faf684b",
+  "manifestSha256": "3f787b3beee5c64611f4a9555b2ce38eb9e9311e67b9b825636230daea4bd4ea",
+  "verifiedArtifactHashes": 10,
+  "integration": {
+    "passed": 45,
+    "failed": 0,
+    "skipped": 0
+  },
+  "apiCompatibility": "M1 and M2 baselines pass; removal self-tests reject breakage",
+  "package": "production-only installed CLI/client smoke passed",
+  "runtime": {
+    "result": "passed",
+    "version": "ci",
+    "platform": "x64",
+    "checks": [
+      "non-root API/worker startup",
+      "M2 schema readiness",
+      "signature rejection",
+      "evidence authentication",
+      "comparison authentication/UUID/scoped lookup",
+      "compiled comparison API/client reads actual queued database evidence",
+      "compiled snapshot export/client completion",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  },
+  "scans": {
+    "eval-engines": [
+      {
+        "id": "CVE-2026-85393",
+        "package": "node-forge",
+        "severity": "HIGH",
+        "fixedVersion": null
+      }
+    ],
+    "eval-worker": [],
+    "api": [],
+    "worker": [],
+    "eval-runner": [],
+    "eval-agentci": []
+  },
+  "securityLimitation": "Optional eval-engines retains node-forge CVE-2026-85393 HIGH without upstream FixedVersion; existing checksum-bound downstream backport/applicability evidence remains required. Gate rejects fixable HIGH/CRITICAL.",
+  "cache": "warm",
+  "advisoryAcceptance": "pending reset after observed App primary quota exhaustion",
+  "milestoneComplete": false
+}
