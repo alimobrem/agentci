@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "comparisons": [
+    {
+      "pullRequest": 47,
+      "head": "ced8eee88d4d7d2bdd280030837ced1cdd311bf7",
+      "base": "55d54b71473db3c9a29dc0ef9cfae46c094272b1",
+      "auditedVerifyRun": 37391916827,
+      "auditedTree": "63f6b9acee7710a1b32b34fb9a8308bc75c87011",
+      "retargetedTree": "bfd7f62df86c136eae651bc8a7caa33386b7805a",
+      "changedPaths": [
+        "delivery/acceptance/m3-07b-integration-ci.json",
+        "delivery/acceptance/m3-07c-contract-ci.json",
+        "delivery/acceptance/m3-customer-api-advisory-cooldown.json",
+        "delivery/runs/37389319677-attempt-1.json",
+        "delivery/runs/37389331146-attempt-1.json",
+        "delivery/runs/37389538519-attempt-1.json",
+        "delivery/runs/37389539215-attempt-1.json",
+        "delivery/runs/37390515545-attempt-1.json",
+        "delivery/runs/37390597626-attempt-1.json",
+        "delivery/runs/37390597694-attempt-1.json",
+        "delivery/runs/37390599212-attempt-1.json",
+        "delivery/runs/37390600796-attempt-1.json",
+        "delivery/runs/37390642372-attempt-1.json",
+        "delivery/runs/37390642440-attempt-1.json"
+      ],
+      "sourceCodeChanged": false,
+      "deliveryCheck": {
+        "command": "npm run delivery -- check",
+        "exitCode": 0,
+        "tasks": 99,
+        "openM3Gates": 18
+      },
+      "advisory": "pending exact retargeted base/head evidence",
+      "milestoneComplete": false
+    },
+    {
+      "pullRequest": 48,
+      "head": "1d95a9e74413c6b9aaf772cf991c80955481a946",
+      "base": "55d54b71473db3c9a29dc0ef9cfae46c094272b1",
+      "auditedVerifyRun": 37391956405,
+      "auditedTree": "6ed66325499b876c65e88372db2240fed588f1e2",
+      "retargetedTree": "abaf52ef0fce555963f25222fcace4a4b84d1cf3",
+      "changedPaths": [
+        "delivery/acceptance/m3-07b-integration-ci.json",
+        "delivery/runs/37389319677-attempt-1.json",
+        "delivery/runs/37389331146-attempt-1.json",
+        "delivery/runs/37389538519-attempt-1.json",
+        "delivery/runs/37389539215-attempt-1.json"
+      ],
+      "sourceCodeChanged": false,
+      "deliveryCheck": {
+        "command": "npm run delivery -- check",
+        "exitCode": 0,
+        "tasks": 99,
+        "openM3Gates": 18
+      },
+      "advisory": "pending exact retargeted base/head evidence",
+      "milestoneComplete": false
+    }
+  ]
+}
