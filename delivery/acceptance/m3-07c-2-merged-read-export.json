@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-2",
+  "decision": "Acceptance met for scoped real-HTTP findings/history reads, stable bounded pagination and integrity-verifiable complete retained evidence exports. Full phase and publication gates remain open.",
+  "components": [
+    {
+      "component": "scheduler",
+      "mergeCommit": "b4e08e7fbae5913dcd847471d0e58408d82549a0",
+      "mergeTree": "bf3c12aa4968bb30a1d36d42f516ecdab53ba1b3",
+      "acceptedProspectiveTreeMatches": true,
+      "localAcceptance": {
+        "sourceCommit": "60f47244ae4964fdfd1df19d21b066c8cd6bd9c6",
+        "tree": "bf3c12aa4968bb30a1d36d42f516ecdab53ba1b3",
+        "parents": [
+          "7223516441741a67162fc45b3b391c2c66066b11",
+          "a5fdf805a8c35fb7de38c47d5b2ab7fc0fb55a33"
+        ],
+        "scheduler": "a5fdf805a8c35fb7de38c47d5b2ab7fc0fb55a33",
+        "base": "7223516441741a67162fc45b3b391c2c66066b11",
+        "allSchedulerProductBlobsExact": true,
+        "securityProductBlobsExact": true,
+        "checks": {
+          "build": "passed",
+          "fast": "10 passed",
+          "realHttpPostgresProcessLossAndAmbiguousWrites": "3 passed zero skips"
+        },
+        "logs": [
+          {
+            "path": "/private/tmp/agentci-main-scheduler-build.log",
+            "sha256": "261e646d160bdfbb881537da43a24ef9a7ed2a677da3e5740a6707c70d038fc4"
+          },
+          {
+            "path": "/private/tmp/agentci-main-scheduler-fast.log",
+            "sha256": "bac6182f1a7b90d854a692dfecd4eb6a211c64b823c25e2a19035bbc25027627"
+          },
+          {
+            "path": "/private/tmp/agentci-main-scheduler-real.log",
+            "sha256": "55489c00b82a1f8e21f331f9357c8cfa6ccb083e10342eebcc8666fa2c10a5e6"
+          }
+        ],
+        "historicalCI": 37400770049,
+        "historicalCIArtifact": 11385561032,
+        "releaseComplete": false
+      },
+      "localAcceptanceSha256": "fe8bb762ec01d4b10e87df851fe52879069b844a78e435ed4ef658f73dc5350d",
+      "historicalExactHeadAudit": {
+        "run": "37400770049",
+        "artifactId": 11385561032,
+        "artifactDigest": "sha256:fe0af9563218996d8615ab339dcbc817d112c4b668855be4c9ff325f699a7962",
+        "candidate": "a5fdf805a8c35fb7de38c47d5b2ab7fc0fb55a33",
+        "preview": "13a7aefd7f2be8c1f96fbcb2a085cdc84381e6c5",
+        "tree": "00e7582a0cf99fee0235c6361c11fd4a3bd27eda",
+        "candidateTree": "00e7582a0cf99fee0235c6361c11fd4a3bd27eda",
+        "previewParents": [
+          "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+          "a5fdf805a8c35fb7de38c47d5b2ab7fc0fb55a33"
+        ],
+        "manifestSha256": "732e2f2cfe73b24f2de810e8b841909e9003db14e3b6e2c8c7768a76608497dc",
+        "verifiedFileHashes": 10,
+        "integration": {
+          "tests": 51,
+          "pass": 51,
+          "fail": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "cache": "warm (npm primary-key restore and Docker cached layers)",
+        "package": "passed; publication module; migration013 checksum and scheduler module present",
+        "baselines": [
+          "specs/api/baselines/m1-0.2.1-openapi.json",
+          "specs/api/baselines/m2-0.3.1-openapi.json"
+        ],
+        "containers": "passed",
+        "evalWorker": "passed",
+        "nativeImages": {
+          "worker": "sha256:70ed661f7aa6da3232e18ec061af09bf4bde66ff5717a28f152c1de907def280",
+          "eval-worker": "sha256:acb398b9eb48167fb56b640a179b7ae89fa15c3608ecd6b1f28766f565384f25"
+        },
+        "highCriticalScans": {
+          "eval-engines": [
+            {
+              "id": "CVE-2026-85393",
+              "package": "node-forge",
+              "severity": "HIGH",
+              "fixedVersion": null
+            }
+          ],
+          "eval-worker": [],
+          "api": [],
+          "worker": [],
+          "eval-runner": [],
+          "eval-agentci": []
+        },
+        "releaseComplete": false,
+        "fastTests": {
+          "tests": 342,
+          "pass": 342,
+          "fail": 0,
+          "skipped": 0
+        },
+        "fastSeconds": 27.473543385,
+        "jobs": [
+          {
+            "name": "fast-feedback",
+            "seconds": 38.0,
+            "conclusion": "success"
+          },
+          {
+            "name": "contracts-and-runtime",
+            "seconds": 514.0,
+            "conclusion": "success"
+          }
+        ]
+      },
+      "historicalAuditSha256": "f115c4950cc164387da020b2241e6da0a280d42d3279c7855b5f4c68630ae00a"
+    },
+    {
+      "component": "findings",
+      "mergeCommit": "d22d8b2efc97e271c7c27e39267c1b02bedf25ea",
+      "mergeTree": "628668badb321e15c0f8cfa9903f311d3b1bbc8f",
+      "acceptedProspectiveTreeMatches": true,
+      "localAcceptance": {
+        "sourceCommit": "ecf9bbe6284e05a241fcb9e8c074970d01cc1336",
+        "tree": "628668badb321e15c0f8cfa9903f311d3b1bbc8f",
+        "parents": [
+          "daefcd43e70187cb73dfaa125ad7ba941d282a7e",
+          "ec08cbc47b2855b01b1c2fe4f0d01cd825c2dc77"
+        ],
+        "candidate": "ec08cbc47b2855b01b1c2fe4f0d01cd825c2dc77",
+        "base": "b4e08e7fbae5913dcd847471d0e58408d82549a0",
+        "serverFiles": 23,
+        "mainFiles": 15,
+        "allProductBlobsExact": true,
+        "checks": {
+          "build": "passed",
+          "fast": "10 passed",
+          "httpPostgresStartupPublicationRecovery": "12 passed zero skipped",
+          "releasedApiCompatibility": "passed",
+          "twoNegativeMutations": "detected"
+        },
+        "historicalCI": 37400635161,
+        "historicalCIArtifact": 11385133142,
+        "logs": [
+          {
+            "path": "/private/tmp/agentci-main-findings-build.log",
+            "sha256": "261e646d160bdfbb881537da43a24ef9a7ed2a677da3e5740a6707c70d038fc4"
+          },
+          {
+            "path": "/private/tmp/agentci-main-findings-fast.log",
+            "sha256": "7af2b6aea59e74b0c9609447fd11b2f286eb26284e422f5005002e1578ec55c6"
+          },
+          {
+            "path": "/private/tmp/agentci-main-findings-compat.log",
+            "sha256": "0ac28536ceafa0163df6a786587f3db18be783732be4834c3659cf1c9a950b44"
+          },
+          {
+            "path": "/private/tmp/agentci-main-findings-real.log",
+            "sha256": "0f29f89304f106c38b54403d68eb8332040f3454d8afa74dda13061dcaea85ed"
+          },
+          {
+            "path": "/private/tmp/agentci-main-findings-mutation.log",
+            "sha256": "36c345cc14ff6718cea7f3f29385b320b202420ad23d37072ddff51fb52623bc"
+          }
+        ],
+        "releaseComplete": false
+      },
+      "localAcceptanceSha256": "672bbc7fe87037135176a92bc2b21eff7d01ac04d7cb11c50b212a61c5644f17",
+      "historicalExactHeadAudit": {
+        "run": "37400635161",
+        "artifactId": 11385133142,
+        "artifactDigest": "sha256:6bb4c212b3e28fc22be6fa401f0cbfbc37504cefc8a7e89dec0251cf7e3f8dc2",
+        "candidate": "ec08cbc47b2855b01b1c2fe4f0d01cd825c2dc77",
+        "preview": "3986fa5fba4eeabd73d28d6c8310188e7d69da82",
+        "tree": "e309886fb69791c7c82ea65a0061994da4bd4b32",
+        "candidateTree": "e309886fb69791c7c82ea65a0061994da4bd4b32",
+        "previewParents": [
+          "e766a64aa64ffc9cba0b0954e80c410003ba9138",
+          "ec08cbc47b2855b01b1c2fe4f0d01cd825c2dc77"
+        ],
+        "manifestSha256": "a7a584cd3ecb64c9c0f2e3165f64ed2c386f110662265c6397aea0f3d23a697f",
+        "verifiedFileHashes": 10,
+        "integration": {
+          "tests": 56,
+          "pass": 56,
+          "fail": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "cache": "warm (npm primary-key restore and Docker cached layers)",
+        "package": "passed; customer API client module; no scheduler migration013",
+        "baselines": [
+          "specs/api/baselines/m1-0.2.1-openapi.json",
+          "specs/api/baselines/m2-0.3.1-openapi.json"
+        ],
+        "containers": "passed",
+        "evalWorker": "passed",
+        "nativeImages": {
+          "worker": "sha256:87a582ad8d26c9077f73c74ad4cbe4eb3e83bd41b327ad03cd1cf3a1e0e33b75",
+          "eval-worker": "sha256:b32f23b081b264754317ef3a9c587cdbf5e51e2250f5ba1c145e2dabb545b97c"
+        },
+        "highCriticalScans": {
+          "eval-engines": [
+            {
+              "id": "CVE-2026-85393",
+              "package": "node-forge",
+              "severity": "HIGH",
+              "fixedVersion": null
+            }
+          ],
+          "eval-worker": [],
+          "api": [],
+          "worker": [],
+          "eval-runner": [],
+          "eval-agentci": []
+        },
+        "releaseComplete": false,
+        "fastTests": {
+          "tests": 352,
+          "pass": 352,
+          "fail": 0,
+          "skipped": 0
+        },
+        "fastSeconds": 37.223768533000005,
+        "jobs": [
+          {
+            "name": "fast-feedback",
+            "seconds": 56.0,
+            "conclusion": "success"
+          },
+          {
+            "name": "contracts-and-runtime",
+            "seconds": 486.0,
+            "conclusion": "success"
+          }
+        ],
+        "findingReadModulesPackaged": true
+      },
+      "historicalAuditSha256": "8e1a4b7232767455dfb50bcb3d56f89b0f53c52a50a6d1261d455e73b878614b"
+    },
+    {
+      "component": "export",
+      "mergeCommit": "ded34cb63e18ff3eae024dabaf1231ba7bf30589",
+      "mergeTree": "a323553240eca689cb15f21cb22435a5c0fad8ce",
+      "acceptedProspectiveTreeMatches": true,
+      "localAcceptance": {
+        "sourceCommit": "25a418a443c2d4391053fd4d04449856fd330565",
+        "tree": "a323553240eca689cb15f21cb22435a5c0fad8ce",
+        "parents": [
+          "7f98ed521feba82b9559e15999bd2216e2885266",
+          "6d7f530b665c23f701eba04feeaabc354ae78b55"
+        ],
+        "candidate": "6d7f530b665c23f701eba04feeaabc354ae78b55",
+        "base": "d22d8b2efc97e271c7c27e39267c1b02bedf25ea",
+        "allProductBlobsExact": true,
+        "checks": {
+          "build": "passed",
+          "fast": "10 passed",
+          "httpPostgresExportStartupPublicationRecovery": "15 passed zero skipped",
+          "releasedApiCompatibility": "passed"
+        },
+        "historicalCI": 37400726774,
+        "historicalCIArtifact": 11385555835,
+        "logs": [
+          {
+            "path": "/private/tmp/agentci-main-export-build.log",
+            "sha256": "261e646d160bdfbb881537da43a24ef9a7ed2a677da3e5740a6707c70d038fc4"
+          },
+          {
+            "path": "/private/tmp/agentci-main-export-fast.log",
+            "sha256": "3a65226d36febde6e46b4a489937f327e0428119ce24907f1dc396cd12d32ba6"
+          },
+          {
+            "path": "/private/tmp/agentci-main-export-compat.log",
+            "sha256": "0ac28536ceafa0163df6a786587f3db18be783732be4834c3659cf1c9a950b44"
+          },
+          {
+            "path": "/private/tmp/agentci-main-export-real.log",
+            "sha256": "13a6f94dadc689751d9b23804044fa470cc3e8d611bc3646c50fc0adda98b6b5"
+          }
+        ],
+        "releaseComplete": false
+      },
+      "localAcceptanceSha256": "21faa79300d36705a7a6092221b71926288eb0f5755a3823cdd2de2c87c82a80",
+      "historicalExactHeadAudit": {
+        "pr": 53,
+        "runId": 37400726774,
+        "head": "6d7f530b665c23f701eba04feeaabc354ae78b55",
+        "artifactId": 11385555835,
+        "artifactZipSha256": "badb7f12099f78e66fd68cd7f7e3bf7dbd84b1e59a38a77db32d5d46a81e5e56",
+        "preview": {
+          "parents": [
+            "ec08cbc47b2855b01b1c2fe4f0d01cd825c2dc77",
+            "6d7f530b665c23f701eba04feeaabc354ae78b55"
+          ],
+          "sha": "007c9db6385dc8505f191925207675984104a88a",
+          "tree": "9e236c468183c201ddb24c544aae4c3dbefc09de"
+        },
+        "allRecordedHashesVerified": 10,
+        "files": [
+          {
+            "path": ".agentci/artifacts/native-provenance-worker.json",
+            "sha256": "c11bab4aca89033d4fda0a71ec7a8f7982a2e0ca54837bb59e264e91fd49568e"
+          },
+          {
+            "path": ".agentci/artifacts/native-provenance-eval-worker.json",
+            "sha256": "1495f238c0c45f208a932fc24f6fb177d22bf4220eb51c55dfa5d96880ae1d59"
+          },
+          {
+            "path": ".agentci/artifacts/eval-worker-image-smoke.json",
+            "sha256": "a28d13eb3207eb3e87afec6b9e5526086a0792f2cf23bd29ab0c4e39867eeeff"
+          },
+          {
+            "path": "releases/agentci-0.4.0-m3-dev.1.tgz",
+            "sha256": "ead85a24d508a2155d72edb61b9a4a50296fceaaae746457600803b8b33e9754"
+          },
+          {
+            "path": "scan-results/api.json",
+            "sha256": "de20cb92117227a3fe5410ca153d65d741bbb87f02d7243f58d429c0fa37a019"
+          },
+          {
+            "path": "scan-results/eval-agentci.json",
+            "sha256": "14e314ebd60d57ee14add822f1f9f927d5d885b5ba24aece6ba77681772bb504"
+          },
+          {
+            "path": "scan-results/eval-engines.json",
+            "sha256": "959e0aaf297c4fc2176e256a94c32ea7f52d050fbb4a41825a4d1ff95ab1230e"
+          },
+          {
+            "path": "scan-results/eval-runner.json",
+            "sha256": "15df66f7b1e444f2846cb24eba85b28c8c1cdf40044e6ed36696ea1f5c0c9ac1"
+          },
+          {
+            "path": "scan-results/eval-worker.json",
+            "sha256": "3dfdf1c67fc1004db043fea9bfbe25c53938d08bf42049b9421c1cb58e324449"
+          },
+          {
+            "path": "scan-results/worker.json",
+            "sha256": "3b5632bbe2961e392d29c460115d2c16ceb10a6911570b7bf07c4224dd6e22c0"
+          }
+        ],
+        "unitTests": 372,
+        "integrationTests": 68,
+        "failures": 0,
+        "skips": 0,
+        "apiBaselinesPassed": [
+          "M1 0.2.1-m1",
+          "M2 0.3.1-m2"
+        ],
+        "gates": [
+          "package smoke",
+          "service image scan gate",
+          "compiled containers",
+          "native provenance",
+          "eval worker runtime"
+        ],
+        "cache": {
+          "npm": "warm primary key hits in both jobs",
+          "buildkitCachedLogEntries": 91
+        },
+        "timings": {
+          "fastReportedSeconds": [
+            39.36,
+            36.4
+          ],
+          "jobs": [
+            {
+              "name": "contracts-and-runtime",
+              "seconds": 491.0
+            },
+            {
+              "name": "fast-feedback",
+              "seconds": 55.0
+            }
+          ]
+        },
+        "scanLimitation": "Five images no HIGH/CRITICAL; optional eval-engines has raw HIGH CVE-2026-85393 node-forge1.4.0 with no FixedVersion, retained existing scoped limitation. Not zero vulnerabilities.",
+        "sourceCoverage": "Preview tree equals current candidate head; no cross-PR combined acceptance claimed.",
+        "releaseComplete": false
+      },
+      "historicalAuditSha256": "e6f32261a3ce0dc741e01cee05c5c76a2c13a45220f6a0ade7d2e31ccb3dda67"
+    }
+  ],
+  "coverage": [
+    "Exact-subject and scoped finding/history reads",
+    "Authenticated cursor continuation, expiry, tamper rejection and immutable watermark",
+    "10000-event traversal and byte-limited pagination",
+    "Complete and honest queued/failed/cancelled partial retained exports",
+    "Digest-chain verifier rejects omitted/duplicate/reordered/wrong-identity frames and incomplete ending",
+    "Real HTTP deadlines, disconnection, backpressure and concurrent export bounds",
+    "Current merged startup and publication recovery integration"
+  ],
+  "limitations": [
+    "Historical hosted CI evaluated prior exact heads/preview trees; do not claim those are the final merged tree.",
+    "Merge acceptance uses exact prospective-tree equality plus retained focused local HTTP/PostgreSQL/build/fast/API checks.",
+    "Historical image scans are not fresh vulnerability assertions; security acceptance separately records updated Promptfoo image.",
+    "No customer reproduction/disposition, CLI export integration, full M3 release, registry publication or anonymous download acceptance claimed."
+  ],
+  "securityEvidence": "delivery/acceptance/m3-promptfoo-security-hosted.json"
+}
