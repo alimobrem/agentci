@@ -1,0 +1,50 @@
+{
+  "run": "37391991814",
+  "artifactId": 11381567774,
+  "artifactDigest": "sha256:1af23f2298c605f07f0e373ee39ebc746fddc707619e63001d158b05b48a4513",
+  "candidate": "42eb3167cfaf43d9e47e9cf3ed56d70c7dda8137",
+  "preview": "d42708e05df05db5fa368968f3fd72bf182c1583",
+  "tree": "649b75870bcf377076b8d3fa28ea852576cbbf7b",
+  "candidateTree": "649b75870bcf377076b8d3fa28ea852576cbbf7b",
+  "previewParents": [
+    "1d95a9e74413c6b9aaf772cf991c80955481a946",
+    "42eb3167cfaf43d9e47e9cf3ed56d70c7dda8137"
+  ],
+  "manifestSha256": "a569dcaf54d5e92272c284c82a9c177dd9c253ed5a8113d733d25308df12d0a1",
+  "verifiedFileHashes": 10,
+  "integration": {
+    "tests": 50,
+    "pass": 50,
+    "fail": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "cache": "warm (npm primary-key restore and Docker cached layers)",
+  "package": "passed; publication module; migration013 checksum and scheduler module present",
+  "baselines": [
+    "specs/api/baselines/m1-0.2.1-openapi.json",
+    "specs/api/baselines/m2-0.3.1-openapi.json"
+  ],
+  "containers": "passed",
+  "evalWorker": "passed",
+  "nativeImages": {
+    "worker": "sha256:745131981aacd91bbc560ef9fe847fc1daff19dd4fae232b9b43399e5660a7c4",
+    "eval-worker": "sha256:54e40cd078928cef40f7c73612ed6fb634034b317c56fe13b2958230869a2cbe"
+  },
+  "highCriticalScans": {
+    "eval-engines": [
+      {
+        "id": "CVE-2026-85393",
+        "package": "node-forge",
+        "severity": "HIGH",
+        "fixedVersion": null
+      }
+    ],
+    "eval-worker": [],
+    "api": [],
+    "worker": [],
+    "eval-runner": [],
+    "eval-agentci": []
+  },
+  "releaseComplete": false
+}

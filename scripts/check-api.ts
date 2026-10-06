@@ -1,4 +1,4 @@
-import {modelReviewOpenApiSchemas} from '../packages/reviewers/transport-schema.ts';
+import {modelReviewOpenApiSchemas,findingOpenApiSchemas} from '../packages/reviewers/transport-schema.ts';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import { readFile, access } from 'node:fs/promises';
 import { parse } from 'yaml';
@@ -9,7 +9,7 @@ import {validateComparisonRecord} from '../packages/evals/comparison.ts';
 import {validateExportFrame} from '../packages/evals/export.ts';
 await SwaggerParser.validate(new URL('../specs/api/openapi.json', import.meta.url).pathname);
 const contract = JSON.parse(await readFile(new URL('../specs/api/openapi.json', import.meta.url), 'utf8'));
-for(const [name,schema] of Object.entries(modelReviewOpenApiSchemas))deepStrictEqual(contract.components.schemas[name],schema,`API transport schema drift: ${name}`);
+for(const [name,schema] of Object.entries({...modelReviewOpenApiSchemas,...findingOpenApiSchemas}))deepStrictEqual(contract.components.schemas[name],schema,`API transport schema drift: ${name}`);
 const { $schema, ...analysis } = JSON.parse(await readFile(new URL('../packages/review/analysis.schema.json', import.meta.url), 'utf8'));
 deepStrictEqual(contract.components.schemas.Analysis, analysis, 'API and domain analysis schemas must not drift');
 deepStrictEqual(contract.components.schemas.EvalComparison,evalOpenApiSchema(JSON.parse(await readFile(new URL('../packages/evals/json/eval-comparison.schema.json',import.meta.url),'utf8'))),'API and domain comparison schemas must not drift');
