@@ -6,8 +6,8 @@
   "files": {
     "packages/storage/reproduction-reservations.ts": "9ec558f0c5b96dde901e6fb8ceab8dd2b0264c76ed662744dcda216533467a65",
     "deploy/migrations/014_m3_reproduction_reservations.sql": "9a8956b2a7d4d75751f34b2e78f52c97dae98ed5dd99ae6581edea55dcf48d0c",
-    "tests/integration/reproduction-reservations.test.ts": "3dcd20d15db508b97733f5f190f9aedcc688085fcbe03108129bc8b97ba73dbd",
-    "docs/phases/m3-reproduction-reservations.md": "5802f8244f87e3c58871e90273eba962836abb01f91421ea3a8f58998f1244fc"
+    "tests/integration/reproduction-reservations.test.ts": "cd794ef67c77641ed49e3a90d7b3e181ee3263c94995d362cfecaf0d7e193648",
+    "docs/phases/m3-reproduction-reservations.md": "8cfd0d6f98330a4ecbb858dbf643310e55c331040d0167710ddecf502aec78e0"
   },
   "checks": {
     "postgres": {
@@ -54,5 +54,23 @@
     "Immutable dispatch intent is not a lease, dispatch success or completion receipt.",
     "No provider calls, hosted CI, container publication, release or milestone closure.",
     "Public API and event semantics unchanged; existing M1/M2 baselines preserved."
-  ]
+  ],
+  "integrityReviewFollowup": {
+    "reviewedSource": "514c58ea5d80b92eed9e9f6cf8b634f1a66b56a0",
+    "scope": "Tests and documentation only; production and task acceptance events unchanged",
+    "postgres": {
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 1507.488667
+    },
+    "typecheck": "passed",
+    "additionalCases": [
+      "Plan corruption with recomputed digest rejected on replay",
+      "Operation result substitution with recomputed digest rejected on replay",
+      "Changed deterministic dispatch identity rejected on replay",
+      "Identical migration reinstall preserves records; changed source or applied checksum rejected; restored checksum allows original replay"
+    ],
+    "earlierChecks": "Original fast/build/mutation evidence remains applicable to unchanged production; not rerun for test-only additions"
+  }
 }

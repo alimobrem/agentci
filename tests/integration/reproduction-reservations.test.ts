@@ -72,3 +72,41 @@ test('same operation racing two otherwise authorized approvals commits one full-
   const loser=results.find(r=>r.status==='rejected');assert.ok(loser&&loser.status==='rejected');assert.match(loser.reason.message,/idempotency-conflict/);assert.deepEqual(await f.counts(),[2,1,1,1]);
  }finally{await f.close();}
 });
+for(const target of ['plan','operation','dispatch'] as const)test(`replay rejects tampered retained ${target} even when attacker recomputes available digests`,async()=>{
+ const f=await fixture();try{
+  await f.store.reserve(f.f.initial.id,f.selector);assert.deepEqual(await f.counts(),[2,1,1,1]);
+  const tables={plan:['agentci_reproduction_plans','reproduction_plan_immutable'],operation:['agentci_reproduction_operations','reproduction_operation_immutable'],dispatch:['agentci_reproduction_dispatch_intents','reproduction_dispatch_intent_immutable']} as const;
+  const [table,trigger]=tables[target];
+  // Bypass immutability only within this test's owned schema to model corrupted
+  // retained data. The normal production writer cannot perform these updates.
+  await f.pool.query(`ALTER TABLE ${table} DISABLE TRIGGER ${trigger}`);
+  if(target==='plan'){
+   const altered={...f.f.plan,approval:{...f.f.plan.approval,reason:'Substituted operator approval'}};
+   await f.pool.query('UPDATE agentci_reproduction_plans SET plan=$1,digest=$2',[altered,digest(canonical(altered))]);
+  }else if(target==='operation'){
+   const row=(await f.pool.query('SELECT result FROM agentci_reproduction_operations')).rows[0];
+   const altered={...row.result,reviewId:randomUUID()};
+   await f.pool.query('UPDATE agentci_reproduction_operations SET result=$1,result_digest=$2',[altered,digest(canonical(altered))]);
+  }else await f.pool.query('UPDATE agentci_reproduction_dispatch_intents SET workflow_id=$1',[`agentci:reproduction:${randomUUID()}`]);
+  await f.pool.query(`ALTER TABLE ${table} ENABLE TRIGGER ${trigger}`);
+  await assert.rejects(f.store.reserve(f.f.initial.id,f.selector),/reproduction-reservation-conflict/);
+  assert.deepEqual(await f.counts(),[2,1,1,1],'integrity failure must not create another queue, plan or dispatch');
+ }finally{await f.close();}
+});
+test('migration accepts identical reinstall and rejects changed source or applied checksum without altering retained work',async()=>{
+ const f=await fixture();try{
+  const source=await readFile(new URL('../../deploy/migrations/014_m3_reproduction_reservations.sql',import.meta.url),'utf8');
+  await f.store.reserve(f.f.initial.id,f.selector);const before=await f.counts();
+  await f.pool.query(source);assert.deepEqual(await f.counts(),before);
+  const c=await f.pool.connect();try{
+   const altered=source.replace('workflow_id text NOT NULL','workflow_id text NULL');assert.notEqual(altered,source);
+   await assert.rejects(c.query(altered),/Migration source checksum mismatch/);await c.query('ROLLBACK');
+   const original=(await c.query("SELECT checksum FROM agentci_schema_migrations WHERE version='014_m3_reproduction_reservations'")).rows[0].checksum;
+   await c.query("UPDATE agentci_schema_migrations SET checksum=$1 WHERE version='014_m3_reproduction_reservations'",['0'.repeat(64)]);
+   await assert.rejects(c.query(source),/Applied migration checksum mismatch/);await c.query('ROLLBACK');
+   await c.query("UPDATE agentci_schema_migrations SET checksum=$1 WHERE version='014_m3_reproduction_reservations'",[original]);
+   await c.query(source);
+  }finally{c.release();}
+  assert.deepEqual(await f.counts(),before);await f.store.reserve(f.f.initial.id,f.selector);assert.deepEqual(await f.counts(),before);
+ }finally{await f.close();}
+});

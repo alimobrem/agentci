@@ -41,13 +41,17 @@ Errors returned to callers are bounded and omit database diagnostics.
 
 ## Acceptance and remaining work
 
-Nine real PostgreSQL scenarios cover concurrent identical requests, competing
+Thirteen real PostgreSQL scenarios cover concurrent identical requests, competing
 versions, the same operation selecting different authorized approvals, replay after
 a later disposition and reopened connection, wrong scope/admission association,
 corrupt admission evidence, and immutable records. Injected failures at each of the
 four inserts leave only the original finding. Actual termination of the owned
 transaction backend after plan insertion also rolls back everything; retry through
-a fresh connection commits once. The database service itself is not stopped.
+a fresh connection commits once. The database service itself is not stopped. Corrupted retained plans, operation
+results and dispatch identities fail replay even when the fixture recomputes their
+digests. Identical migration reinstall preserves work; changed source and applied
+checksum mismatches are rejected. Immutability bypass is confined to owned test
+schemas and is never used by the production writer.
 
 These tests use synthetic retained reviewer observations and trusted fixture
 assertions; they invoke no provider and execute no reproduction container. They do
