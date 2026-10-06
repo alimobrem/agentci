@@ -1,7 +1,9 @@
 # M3 customer model-review transport: draft 1
 
-Status: parent-reviewed draft for M3-07c-0 implementation; not shipped. No routes or client
-methods in this document are available yet. The shipped OpenAPI, operation map,
+Status: reviewed design. M3-07c-1 now implements profiles, admission, status and
+cancellation in development source; see [implemented slice](m3-customer-model-review-api.md).
+Later finding/reproduction/export operations and client methods remain planned.
+OpenAPI and the operation map advertise only implemented routes. The immutable
 M1/M2 baselines and released `agentci review` command remain unchanged. The
 [operation map](../../specs/api/drafts/model-review-transport.json) and
 [examples](../../specs/api/drafts/model-review-examples.json) are shared inputs to
@@ -223,7 +225,7 @@ clients use bounded backoff, preserving mutation IDs. Success bodies never conta
 credentials. New validators reject extra fields; compatibility policy for new
 response fields must be reviewed before changing the published schema.
 
-Safe profile discovery: `GET /v1/reviewer-profiles` (read credential) returns at
+Safe profile discovery: `GET /v1/reviewer-profiles` (read credential) returns `{schemaVersion:"v1alpha1",profiles:[...]}` with at
 most the 64 configured `{id,revision,mode,revoked}` descriptors, no budgets,
 provider keys, selected paths or full prompts. Sort by ID/revision; one bounded
 response, no pagination. Discovery is not authorization to execute.

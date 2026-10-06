@@ -1,3 +1,4 @@
+import {modelReviewRoutes,type ModelReviewControl} from './model-reviews.ts';
 import {equalUuid} from '../../packages/identity/uuid.ts';
 import { createServer } from 'node:http';
 import { timingSafeEqual, createHash } from 'node:crypto';
@@ -8,16 +9,18 @@ import { VERSION } from '../../packages/version.ts';
 import type {EvalStore} from '../../packages/storage/evals.ts';
 import {validateComparisonRecord} from '../../packages/evals/comparison.ts';
 import {frameExport,MAX_EXPORT_FRAME_BYTES,type ExportItem} from '../../packages/evals/export.ts';
-export interface ControlConfig extends WebhookConfig { evidenceToken: string }
+export interface ControlConfig extends WebhookConfig { evidenceToken: string; operatorToken?:string }
 type Storage = Pick<Store, 'ready' | 'recordDelivery' | 'evidence'>;
 const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
-export function createControlApi(config: ControlConfig, store: Storage, comparisons?:Pick<EvalStore,'comparison'|'ready'|'organizationId'|'repository'>&Partial<Pick<EvalStore,'exportComparison'>>) {
+export function createControlApi(config: ControlConfig, store: Storage, comparisons?:Pick<EvalStore,'comparison'|'ready'|'organizationId'|'repository'>&Partial<Pick<EvalStore,'exportComparison'>>, modelReviews?:ModelReviewControl) {
   if (config.secret.length < 32 || config.evidenceToken.length < 32) throw new Error('Service secrets must have at least 32 characters');
+  const handleModelReviews=modelReviewRoutes(config,modelReviews);
   let activeExports=0;
   return createServer(async (req, res) => {
     const reply = (status: number, value: unknown) => { res.writeHead(status, { 'content-type': 'application/json', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' }); res.end(JSON.stringify(value)); };
     const path = (req.url ?? '').split('?')[0];
     try {
+      if(await handleModelReviews(req,res))return;
       if (path === '/healthz' && req.method === 'GET') { reply(200, { status: 'ok', version: VERSION }); return; }
       if (path === '/readyz' && req.method === 'GET') { await store.ready(); await comparisons?.ready(); reply(200, { status: 'ready' }); return; }
       if (path === '/v1/webhooks/github') {

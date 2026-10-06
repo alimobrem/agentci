@@ -6,3 +6,16 @@ services:
       AGENTCI_REVIEWER_CONFIG_FILE: /run/agentci/reviewers.json
     volumes:
       - ${AGENTCI_REVIEWER_CONFIG_FILE:?Set absolute operator reviewer configuration path}:/run/agentci/reviewers.json:ro
+  api:
+    image: ${AGENTCI_REVIEWER_API_IMAGE:-agentci-api:0.4.0-m3-dev.1}
+    environment:
+      AGENTCI_REVIEWER_CONFIG_FILE: /run/agentci/reviewers.json
+      AGENTCI_OPERATOR_TOKEN: ${AGENTCI_OPERATOR_TOKEN:?Set a distinct scoped operator token}
+      GITHUB_PRIVATE_KEY_FILE: /run/secrets/github-app.pem
+      # The control process authorizes GitHub subjects; providers run only in worker.
+      OPENAI_API_KEY: ""
+      ANTHROPIC_API_KEY: ""
+      XAI_API_KEY: ""
+    volumes:
+      - ${AGENTCI_REVIEWER_CONFIG_FILE:?Set absolute operator reviewer configuration path}:/run/agentci/reviewers.json:ro
+      - ${GITHUB_PRIVATE_KEY_FILE:?Set GITHUB_PRIVATE_KEY_FILE}:/run/secrets/github-app.pem:ro
