@@ -22,7 +22,7 @@
     "name": "agentci-0.4.0-m3-dev.1.tgz",
     "sha256": "0af004f3d25414ebb61ade48113e0c26b4fbe3e3c7b67fa2ad74c1d0a57d27cf",
     "installation": "npm install --offline --omit=dev --no-audit --no-fund",
-    "installedAcceptance": "AGENTCI_TEST_CLIENT_PACKAGE_ROOT selects the actual installed client module and executable for the same real HTTP/PostgreSQL/Temporal test.",
+    "installedAcceptance": "Initial test selected the installed internal client module and executable; this bypassed the package export map. Supported customer import was not proved until follow-up acceptance below.",
     "fullPackageSmokeAtThisSource": "failed: runtime instructions dropped the existing required M3-07c marker; server-owned correction pending",
     "published": false
   },
@@ -41,6 +41,18 @@
     "Findings, export, reproduction and disposition client/CLI work remains pending",
     "Hosted combined CI and full milestone release gates are separate"
   ],
+  "followUpAcceptance": {
+    "sourceCommit": "d64e97cd11a618aea93877437706f5044a01e214",
+    "reason": "Expose ModelReviewClient and public types through agentci/client, verify consumer-context import and AgentCIError identity, and incorporate the server-owned runtime-doc package-smoke correction.",
+    "integrationTestGitBlob": "0764a4ec699685b18590e0f7dd7b066371836199",
+    "integrationTestSha256": "20d4adca2c54159251de474ea040c8831ecae207eaaad681183e6f9e69e9682a",
+    "compiledPublicClientRealServer": {"passed": 1, "failed": 0, "skipped": 0, "seconds": 2.921031333},
+    "installedPublicClientRealServer": {"passed": 1, "failed": 0, "skipped": 0, "seconds": 2.75534775},
+    "packageSha256": "b54ca1c3cca901aefe0cb057201ff97ca6fd84c92129d513b96d58aceaa1b976",
+    "productionOnlyOfflineInstall": "passed",
+    "fullPackageSmoke": "passed",
+    "published": false
+  },
   "taskComplete": false,
   "releaseComplete": false
 }
