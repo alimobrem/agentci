@@ -171,7 +171,11 @@ for await (const item of client.modelReviewExport(admission, {signal})) {
 if (!completion?.complete) throw new Error('Incomplete export');
 ```
 
-The export deadline defaults to 120 seconds, including response reading; Node
+The export deadline defaults to 120 seconds, including response reading and CLI
+output backpressure. If an open downstream pipe stops reading, the CLI exits 2
+and discards pending output when the deadline expires; reporting the error is
+best effort with at most 100 milliseconds for stderr to flush. Treat any partial
+output as invalid, even if earlier lines were verified. Node
 callers may set `timeoutMs` from 1–120000 or supply an abort signal. Frames are
 bounded to 4 MiB and the whole response to 128 MiB. Fatal UTF-8 decoding rejects
 malformed text. Streaming requests are never automatically retried because a

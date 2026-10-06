@@ -78,7 +78,29 @@ Use agentci finding --help for current findings and history. Reproduction remain
     if (command === 'profiles') {console.log(JSON.stringify(await client.profiles())); return 0;}
     const request = await loadModelReviewRequest(options['--request']!);
     if (command === 'export') {
-      for await (const record of client.modelReviewExport(request)) if (!process.stdout.write(JSON.stringify(record) + '\n')) await once(process.stdout, 'drain');
+      const signal = AbortSignal.timeout(120000);
+      try {
+        for await (const record of client.modelReviewExport(request, {signal})) {
+          signal.throwIfAborted();
+          if (!process.stdout.write(JSON.stringify(record) + '\n')) await once(process.stdout, 'drain', {signal});
+        }
+      } catch (error) {
+        if (signal.aborted) {
+          // An unread pipe can keep Node alive even after exitCode is set.
+          // Drop pending provisional output when the shared deadline expires.
+          process.stdout.destroy();
+          // Node's special stdout stream may retain an OS write even after
+          // destroy(). Bound stderr flushing, then terminate the CLI so a
+          // nonreading consumer cannot keep it alive past cancellation.
+          await new Promise<never>(() => {
+            const finish = () => process.exit(2);
+            setTimeout(finish, 100);
+            try {process.stderr.write(JSON.stringify({error: {code: 'transport-failure'}}) + '\n', finish);}
+            catch {finish();}
+          });
+        }
+        throw error;
+      }
       return 0;
     }
     if (command === 'findings') {console.log(JSON.stringify(await client.findings(request, {limit: options['--limit'] ? Number(options['--limit']) : undefined}))); return 0;}

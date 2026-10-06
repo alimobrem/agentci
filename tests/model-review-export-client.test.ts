@@ -5,7 +5,7 @@ import {once} from 'node:events';
 import {readFile,mkdtemp,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {execFile} from 'node:child_process';
+import {execFile,spawn} from 'node:child_process';
 import {promisify} from 'node:util';
 import {ModelReviewClient,AgentCIError,type ModelReviewExportOutput} from '../packages/client/index.ts';
 import {modelReviewExportFrame,MAX_MODEL_EXPORT_FRAME_BYTES} from '../packages/reviewers/export.ts';
@@ -80,4 +80,43 @@ test('executable export emits completion only on full stream and exits2 on a val
  const args=['--import','tsx',main,'model-review','export','--request',file];
  const result=await exec(process.execPath,args,{env});assert.equal(result.stderr,'');assert.equal(JSON.parse(result.stdout.trim().split('\n').at(-1)!).type,'complete');
  complete=false;await assert.rejects(exec(process.execPath,args,{env}),(e:any)=>{assert.equal(e.code,2);assert.equal(JSON.parse(e.stdout.trim()).type,'record');assert.deepEqual(JSON.parse(e.stderr),{error:{code:'incomplete-export'}});return true;});
+});
+
+
+test('executable export deadline terminates with a real open nonreading stdout pipe',async t=>{
+ const root=await mkdtemp(join(tmpdir(),'agentci-export-backpressure-'));t.after(()=>rm(root,{recursive:true,force:true}));
+ const requestFile=join(root,'request.json');await writeFile(requestFile,JSON.stringify(request));
+ for (const blockedStderr of [false,true]) {
+ const marker=join(root,`backpressure-${blockedStderr}`);
+ // Isolate the CLI output sink from domain verification (covered above). A large
+ // provisional record fills the actual OS pipe; stdout.write itself is not mocked.
+ const script=`
+ import {ModelReviewClient} from ${JSON.stringify(new URL('../packages/client/model-review.ts',import.meta.url).href)};
+ import {writeFileSync} from 'node:fs';
+ const deadline=new AbortController();AbortSignal.timeout=()=>deadline.signal;
+ const realWrite=process.stdout.write;
+ process.stdout.write=function(...args){
+   const accepted=realWrite.apply(this,args);
+   if(!accepted){writeFileSync(${JSON.stringify(marker)},'backpressure');if(${blockedStderr})process.stderr.write('x'.repeat(1024*1024));setTimeout(()=>deadline.abort(),20);}
+   return accepted;
+ };
+ ModelReviewClient.prototype.modelReviewExport=async function*(_request,options={}){
+   const signal=options.signal??AbortSignal.timeout(120000);
+   yield {type:'record',provisional:true,frame:{data:'x'.repeat(1024*1024)}};
+   signal.throwIfAborted();
+   yield {type:'complete',data:{complete:true}};
+ };
+ process.argv=['node','agentci','model-review','export','--request',${JSON.stringify(requestFile)}];
+ await import(${JSON.stringify(new URL('../cmd/agentci/main.ts',import.meta.url).href)});
+ `;
+ const child=spawn(process.execPath,['--import','tsx','--input-type=module','-e',script],{env:{...process.env,AGENTCI_API_URL:'https://export.fixture.invalid',AGENTCI_EVIDENCE_TOKEN:token,AGENTCI_OPERATOR_TOKEN:undefined},stdio:['ignore','pipe','pipe']});
+ let stderr='';if(!blockedStderr)child.stderr.on('data',chunk=>{stderr+=chunk;});
+ // Deliberately never attach a stdout data handler or read/resume it.
+ let expired=false;const timer=setTimeout(()=>{expired=true;child.kill('SIGKILL');},1500);
+ const [exitCode,signal]=await once(child,'exit');clearTimeout(timer);child.stdout.destroy();child.stderr.destroy();
+ assert.equal(await readFile(marker,'utf8'),'backpressure','deadline armed only after actual write returned false');
+ assert.equal(expired,false,'CLI must exit on deadline even while the OS pipe remains full');
+ assert.equal(signal,null);assert.equal(exitCode,2);
+ if(!blockedStderr)assert.deepEqual(JSON.parse(stderr.trim()),{error:{code:'transport-failure'}});
+ }
 });
