@@ -73,8 +73,11 @@ remain a later small slice with their own authenticated evidence registry.
 
 ## Prerequisite acceptance
 
-Four unit scenarios cover exact identity, detached ownership, mutation while registry
-creation is suspended, malformed selectors and invalid operator plans. One real
+Six unit scenarios cover exact identity, detached ownership, mutation while registry
+creation is suspended, malformed selectors and invalid operator plans. A valid
+unconfirmed finding receives fresh approval for a retry; old approval is rejected.
+The version boundary proves 9998 queues at 9999 and reaches terminal 10000, while
+9999 cannot begin another reproduction. One real
 PostgreSQL test proves competing expected-version queue transitions admit one winner,
 exact queue replay preserves the event, and a stale registry selection is rejected.
 It deliberately does not claim atomic plan reservation or HTTP/Temporal acceptance.

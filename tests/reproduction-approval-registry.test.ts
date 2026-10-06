@@ -1,6 +1,8 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {randomUUID} from 'node:crypto';
 import {canonical,digest} from '../packages/review/engine.ts';
 import {createReproductionApprovalRegistry} from '../packages/findings/approval-registry.ts';
+import {createFindingTransitions,type FindingReceipt} from '../packages/findings/lifecycle.ts';
+import {compileFindingReproduction} from '../packages/findings/reproduction.ts';
 import {reproductionFixture} from './fixtures/reproduction.ts';
 const entry=(f:ReturnType<typeof reproductionFixture>)=>({current:f.initial,plan:f.plan,base:f.base,head:f.head});
 const request=(f:ReturnType<typeof reproductionFixture>)=>({subject:f.initial.subject,expectedVersion:1,operationId:randomUUID(),approvalId:f.plan.id,approvalDigest:digest(canonical(f.plan))});
@@ -29,4 +31,37 @@ test('registry rejects duplicate, altered, invalid lifecycle, source and resourc
  }
  await assert.rejects(createReproductionApprovalRegistry(Array.from({length:33},()=>entry(f))),/invalid-reproduction-approval/);
  await assert.rejects(createReproductionApprovalRegistry(null as never),/invalid-reproduction-approval/);
+});
+
+function receiptFor(f:ReturnType<typeof reproductionFixture>,outcome:'error'|'reproduced'):FindingReceipt{
+ return {findingId:f.finding.id,subjectDigest:digest(canonical(f.finding.subject)),assertionDigest:f.plan.assertionDigest,evidenceDigest:digest('retained fixture observation '+outcome),actor:'reproduction',outcome,reason:'Retained fixture result'};
+}
+test('unconfirmed reproduction can select a newly approved retry without reusing prior authority',async()=>{
+ const f=reproductionFixture(),transition=createFindingTransitions(async()=>receiptFor(f,'error'));
+ const current=(await transition(f.finding,{type:'reproduce',receiptId:randomUUID()},2)).finding;
+ assert.equal(current.state,'unconfirmed');assert.equal(current.version,3);
+ const queued=(await transition(current,{type:'queue'},3)).finding;
+ const approval={...f.approval,id:randomUUID(),findingDigest:digest(canonical(queued))};
+ const plan=compileFindingReproduction(queued,approval,f.base,f.head,f.policy,f.limits);
+ const registry=await createReproductionApprovalRegistry([{current,plan,base:f.base,head:f.head}]);
+ const selector={...request(f),expectedVersion:3,approvalId:plan.id,approvalDigest:digest(canonical(plan))};
+ const selected=registry.select(selector,current);
+ assert.equal(selected.plan.finding.version,4);assert.equal(selected.plan.finding.state,'reproduction-pending');assert.equal(selected.plan.finding.disposition,null);
+ assert.equal(current.disposition?.outcome,'error','selection preserves earlier evidence');
+ assert.throws(()=>registry.select({...selector,approvalId:f.plan.id,approvalDigest:digest(canonical(f.plan))},current),/invalid-reproduction-approval/);
+ assert.throws(()=>registry.select({...selector,expectedVersion:2},current),/invalid-reproduction-approval/);
+});
+test('version 9998 preserves queue and terminal headroom; version 9999 cannot begin reproduction',async()=>{
+ const f=reproductionFixture(),transition=createFindingTransitions(async()=>receiptFor(f,'reproduced'));
+ const current={...f.initial,version:9998},queued=(await transition(current,{type:'queue'},9998)).finding;
+ const plan=compileFindingReproduction(queued,{...f.approval,findingDigest:digest(canonical(queued))},f.base,f.head,f.policy,f.limits);
+ const registry=await createReproductionApprovalRegistry([{current,plan,base:f.base,head:f.head}]);
+ const selected=registry.select({...request(f),expectedVersion:9998,approvalDigest:digest(canonical(plan))},current);
+ assert.equal(selected.plan.finding.version,9999);
+ const terminal=(await transition(selected.plan.finding,{type:'reproduce',receiptId:randomUUID()},9999)).finding;
+ assert.equal(terminal.version,10000);assert.equal(terminal.state,'confirmed');
+ const tooLate={...f.initial,version:9999},lateQueue=(await transition(tooLate,{type:'queue'},9999)).finding;
+ const latePlan=compileFindingReproduction(lateQueue,{...f.approval,findingDigest:digest(canonical(lateQueue))},f.base,f.head,f.policy,f.limits);
+ await assert.rejects(createReproductionApprovalRegistry([{current:tooLate,plan:latePlan,base:f.base,head:f.head}]),/invalid-reproduction-approval/);
+ assert.throws(()=>registry.select({...request(f),expectedVersion:9999,approvalDigest:digest(canonical(plan))},tooLate),/invalid-reproduction-approval/);
 });
