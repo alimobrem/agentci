@@ -117,6 +117,89 @@
         "bounded frames and one-group client consumption",
         "upper/lowercase UUID lookups retain identical canonical evidence and hashes; expected UUID case variants are accepted while different scoped identities are rejected"
       ]
+    },
+    {
+      "operationId": "listReviewerProfiles",
+      "method": "get",
+      "path": "/v1/reviewer-profiles",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/model-review-api.test.ts",
+        "tests/integration/model-review-api.test.ts",
+        "tests/integration/model-review-control-startup.test.ts"
+      ],
+      "scenarios": [
+        "no prompts keys budgets or paths",
+        "revoked immutable revision visible",
+        "read token required",
+        "compiled control entry point uses scoped private config without provider keys; invalid activation fails before listen"
+      ]
+    },
+    {
+      "operationId": "createModelReview",
+      "method": "post",
+      "path": "/v1/model-reviews",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/model-review-api.test.ts",
+        "tests/integration/model-review-api.test.ts",
+        "tests/integration/model-review-control-startup.test.ts"
+      ],
+      "scenarios": [
+        "exact concurrent replay one outbox row",
+        "changed reuse 409",
+        "read token cannot mutate",
+        "stale head and revoked profile denied",
+        "missing configuration no outbox",
+        "offline worker queues without false live claim",
+        "compiled control entry point uses scoped private config without provider keys; invalid activation fails before listen"
+      ]
+    },
+    {
+      "operationId": "getModelReview",
+      "method": "get",
+      "path": "/v1/model-reviews/{id}",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/model-review-api.test.ts",
+        "tests/integration/model-review-api.test.ts",
+        "tests/integration/model-review-control-startup.test.ts"
+      ],
+      "scenarios": [
+        "cross scope absent",
+        "no raw Temporal IDs or failures",
+        "retained summary before finalization",
+        "refusal is not clean coverage",
+        "summary and terminal read atomically",
+        "compiled control entry point uses scoped private config without provider keys; invalid activation fails before listen"
+      ]
+    },
+    {
+      "operationId": "cancelModelReview",
+      "method": "post",
+      "path": "/v1/model-reviews/{id}/cancellation",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001"
+      ],
+      "tests": [
+        "tests/model-review-api.test.ts",
+        "tests/integration/model-review-api.test.ts"
+      ],
+      "scenarios": [
+        "repeated and late intent preserve terminal evidence",
+        "not a remote charge refund",
+        "works while admissions disabled"
+      ]
     }
   ]
 }
