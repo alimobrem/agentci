@@ -2487,15 +2487,15 @@
         "SECTION-12.4",
         "SECTION-12.5"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T04:35:55.677Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T05:14:45.600Z",
       "acceptance": [
         {
           "text": "Explicit operator config revisions resolve exact retained finding/plan and trusted snapshots; durable apply uses CAS with revocation/expiry checks and no stale startup resurrection. Separate authenticated non-execution proof binds scope/plan/operation/version and keeps execution receipt null; never-staged cancellation can transition to unconfirmed/error and fresh authorized retry without rewriting execution evidence. Real PostgreSQL races/replay and additive history version compatibility pass; no HTTP or worker activation.",
           "status": "passed",
           "evidence": [
-            "delivery/acceptance/m3-reproduction-authority-local.json"
+            "delivery/acceptance/m3-reproduction-authority-merged.json"
           ]
         }
       ],
