@@ -1,0 +1,254 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-security-1",
+  "checkedAt": "2026-10-06T02:47:12.732922+00:00",
+  "sourceBase": "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+  "dirty": true,
+  "scope": "Local ARM64 UBI optional eval-engines security update; hosted/native publication and release gates pending",
+  "image": {
+    "id": "sha256:3a7d2ab94eac33a4825c8070449ead16103b717a4206305498661bef7e30d5cd",
+    "architecture": "arm64",
+    "engine": "Docker on Colima",
+    "ubiBase": "registry.access.redhat.com/ubi10/ubi-minimal:latest@sha256:204e1531cee54562b107fb31e0b327062fc3d5d67af7cc0d2e66b2c572b9044f"
+  },
+  "dependencies": {
+    "promptfoo": {
+      "version": "0.124.0",
+      "integrity": "sha512-z1tdf7fZlXv54M+hfNL3SapLeixnA1dld4zD1GORf4IQRG9WT/7K4k7A2mFc8jPrrWFrIA8SDcgeOZJIpeIjBw==",
+      "license": "MIT"
+    },
+    "simple-git": {
+      "version": "4.0.2",
+      "integrity": "sha512-l0sIsv9VrPwovKELFDBOj/lhmIcbMvxBk2B+hRhsMM4/VL3gKtuZvYnBNixVo+N/0HnqQx2cBdLvxnAbygHpqA==",
+      "license": "MIT"
+    },
+    "@simple-git/argv-parser": {
+      "version": "2.0.1",
+      "integrity": "sha512-M++IaVWrN+vYalilOHfwvT2IL3wYZtVEBQpmX6DLSOJLtxbZ+SUeIDE3IiPogzhPACLajwtxfa5rp+ZX1FczzQ==",
+      "license": "MIT"
+    },
+    "node-forge": {
+      "version": "1.4.0",
+      "integrity": "sha512-LarFH0+6VfriEhqMMcLX2F7SwSXeWwnEAJEsYm5QKWchiVYVvJyV9v7UDvUv+w5HO23ZpQTXDv/GxdDdMyOuoQ==",
+      "license": "(BSD-3-Clause OR GPL-2.0)"
+    }
+  },
+  "upstream": {
+    "promptfooRelease": "https://github.com/promptfoo/promptfoo/releases/tag/0.124.0",
+    "promptfooPublishedAt": "2026-10-06T01:09:20Z",
+    "simpleGitRelease": "https://github.com/steveukx/git-js/releases/tag/simple-git@4.0.2",
+    "registry": "https://registry.npmjs.org",
+    "temporaryGitOverrides": false
+  },
+  "lockChange": {
+    "removedPackageEntries": 290,
+    "addedOrChanged": [
+      {
+        "path": "node_modules/@anthropic-ai/claude-agent-sdk",
+        "version": "0.3.283",
+        "license": "SEE LICENSE IN README.md"
+      },
+      {
+        "path": "node_modules/@anthropic-ai/claude-agent-sdk-darwin-arm64",
+        "version": "0.3.283",
+        "license": "SEE LICENSE IN LICENSE.md"
+      },
+      {
+        "path": "node_modules/@anthropic-ai/claude-agent-sdk-darwin-x64",
+        "version": "0.3.283",
+        "license": "SEE LICENSE IN LICENSE.md"
+      },
+      {
+        "path": "node_modules/@anthropic-ai/claude-agent-sdk-linux-arm64",
+        "version": "0.3.283",
+        "license": "SEE LICENSE IN LICENSE.md"
+      },
+      {
+        "path": "node_modules/@anthropic-ai/claude-agent-sdk-linux-arm64-musl",
+        "version": "0.3.283",
+        "license": "SEE LICENSE IN LICENSE.md"
+      },
+      {
+        "path": "node_modules/@anthropic-ai/claude-agent-sdk-linux-x64",
+        "version": "0.3.283",
+        "license": "SEE LICENSE IN LICENSE.md"
+      },
+      {
+        "path": "node_modules/@anthropic-ai/claude-agent-sdk-linux-x64-musl",
+        "version": "0.3.283",
+        "license": "SEE LICENSE IN LICENSE.md"
+      },
+      {
+        "path": "node_modules/@anthropic-ai/claude-agent-sdk-win32-arm64",
+        "version": "0.3.283",
+        "license": "SEE LICENSE IN LICENSE.md"
+      },
+      {
+        "path": "node_modules/@anthropic-ai/claude-agent-sdk-win32-x64",
+        "version": "0.3.283",
+        "license": "SEE LICENSE IN LICENSE.md"
+      },
+      {
+        "path": "node_modules/@anthropic-ai/sdk",
+        "version": "0.128.0",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/@googleapis/sheets",
+        "version": "18.1.0",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@modelcontextprotocol/server-filesystem",
+        "version": "2026.8.31",
+        "license": "SEE LICENSE IN LICENSE"
+      },
+      {
+        "path": "node_modules/@openai/codex",
+        "version": "0.156.1",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@openai/codex-darwin-arm64",
+        "version": "0.156.1-darwin-arm64",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@openai/codex-darwin-x64",
+        "version": "0.156.1-darwin-x64",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@openai/codex-linux-arm64",
+        "version": "0.156.1-linux-arm64",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@openai/codex-linux-x64",
+        "version": "0.156.1-linux-x64",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@openai/codex-sdk",
+        "version": "0.156.1",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@openai/codex-win32-arm64",
+        "version": "0.156.1-win32-arm64",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@openai/codex-win32-x64",
+        "version": "0.156.1-win32-x64",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/@simple-git/argv-parser",
+        "version": "2.0.1",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/diff",
+        "version": "8.0.4",
+        "license": "BSD-3-Clause"
+      },
+      {
+        "path": "node_modules/googleapis-common",
+        "version": "9.1.0",
+        "license": "Apache-2.0"
+      },
+      {
+        "path": "node_modules/js-yaml",
+        "version": "5.4.2",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/promptfoo",
+        "version": "0.124.0",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/promptfoo/node_modules/@azure/msal-node",
+        "version": "7.0.1",
+        "license": "MIT"
+      },
+      {
+        "path": "node_modules/simple-git",
+        "version": "4.0.2",
+        "license": "MIT"
+      }
+    ]
+  },
+  "licenseNotice": {
+    "package": "@modelcontextprotocol/server-filesystem@2026.8.31",
+    "source": "https://github.com/modelcontextprotocol/servers/blob/a40bc270fb5ece62673f8a1196f57116d885c5eb/LICENSE",
+    "path": "deploy/engines/licenses/mcp-server-filesystem-LICENSE",
+    "installedPath": "/licenses/mcp-server-filesystem-LICENSE",
+    "sha256": "0382b0057770ca05e9c350a50aa3b1c1fea84da0bc81d723bf00b9aa841be58a",
+    "scope": "MIT/Apache-2.0 transition; documentation CC-BY-4.0. Existing optional Claude Agent SDK commercial license remains."
+  },
+  "failedCi": {
+    "run": 37404082498,
+    "artifactId": 11386399646,
+    "artifactDigest": "sha256:df2598fea4001a8413bbc14fc48f8c462a8821b797b6138a0f72c489275e7ba6",
+    "scanSha256": "62998294cfda40064d158c8f90334e6c37cd539836f15654b93e482f20fd3fed",
+    "runtimeNativeGates": "skipped after scan failure"
+  },
+  "scan": {
+    "scanner": "aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa",
+    "freshDatabase": true,
+    "reportSha256": "3b9a70c77d95f512048e5ec5fac35bd564a58f024c1fe1a650812a68b09c54c5",
+    "gate": "passed unchanged scripts/check-scan.mjs",
+    "fixedHighCriticalRemoved": [
+      "CVE-2026-102826",
+      "CVE-2026-102827",
+      "CVE-2026-102828",
+      "CVE-2026-102829"
+    ],
+    "findings": [
+      {
+        "id": "CVE-2026-85393",
+        "package": "node-forge",
+        "version": "1.4.0",
+        "severity": "HIGH",
+        "fixedVersion": null
+      }
+    ],
+    "newlyObservedFindingIds": [],
+    "comparisonLimit": "Earlier failed CI image was AMD64; this local image is ARM64. Hosted architecture acceptance remains required."
+  },
+  "integration": {
+    "command": "AGENTCI_CONTAINER_ENGINE=docker AGENTCI_TEST_ENGINES_IMAGE=<image.id> node --import tsx --test tests/integration/eval-engines.test.ts",
+    "tests": 1,
+    "pass": 1,
+    "fail": 0,
+    "skipped": 0,
+    "durationSeconds": 6.204635375,
+    "coverage": [
+      "forge malformed nested DigestAlgorithm rejection",
+      "Promptfoo pass/assertion fail/missing-provider error and normalized reports",
+      "DeepEval pass/assertion fail/import error",
+      "cancelled container cleanup"
+    ],
+    "logSha256": "0f007b614cb48dbeceb9835a69ceabd69de16dc58ec3a438b1bac38771e3b8d0",
+    "initialInvocationError": "A mutable tag was rejected by the existing pinned-image guard; corrected to immutable image ID, without code changes."
+  },
+  "fastChecks": {
+    "passed": true,
+    "checks": 10,
+    "seconds": 3.974334667,
+    "tests": {
+      "tests": 342,
+      "pass": 342,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "files": {
+    "Dockerfile": "e44dffff207140e1d4a2cfee48b9746692129f6e95d0d20a4ab37faa95485060",
+    "deploy/engines/promptfoo/package.json": "6a871e764aa20f4d8ed45bd750a0bac85f6f72ade62f052983578df36d8fbefa",
+    "deploy/engines/promptfoo/package-lock.json": "bb6ea7b98b1d4db85ce36990f5dbee642591bced37c801037ca15252d6f8a5fc"
+  },
+  "releaseComplete": false
+}
