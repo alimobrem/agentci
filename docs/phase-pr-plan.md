@@ -227,7 +227,7 @@ Use React Server Components for suitable initial server-rendered views and small
 
 ## Scope decisions and questions
 
-Recommended defaults below are proposals until recorded at the stated decision point. Missing access is a blocker, not an excuse to skip live acceptance. No new credentials, account grants or external changes are authorized by this plan.
+Recommended defaults below are proposals until recorded at the stated decision point. Missing access is a blocker except for the narrowly approved M3 external model-provider validation exception; all other live acceptance remains required. No new credentials, account grants or external changes are authorized by this plan.
 
 | Decision | Recommended starting point | Decide by / consequence |
 | --- | --- | --- |
@@ -259,7 +259,10 @@ The existing inventory assigns some product-wide requirements to early milestone
 | Independent versioning and migration (38) | Freeze API/schema baseline per release, document incompatible migration rather than resetting baselines. Version SDKs, providers, policy, traces and CRDs independently when their contracts change |
 | Dogfood and complete-product acceptance (39,44–49) | Upgrade every-PR dogfood as capabilities ship; M4 runtime traces, M8 seeded incidents, M9 replay, M10 repairs; required check enforcement reviewed before enabling. M10 audits initial-build DoD; M3 may meet MVP only after its own evidence passes |
 
-Unresolved cross-cutting gaps found in that audit become sized PRs within their rightful phase before scope freeze. Any phase-exit change or required scope deferral needs an explicit amendment; an unfinished exit criterion still blocks release completion. Optional deferred enhancements remain named backlog items, not silently dropped.
+Unresolved cross-cutting gaps found in that audit become sized PRs within their rightful phase before scope freeze. Any phase-exit change or required scope deferral needs an explicit amendment; an unfinished exit criterion still blocks release completion except for the
+[approved M3 external-provider validation exception](phases/m3-live-validation-deferral.md).
+That exception permits progression only after all other applicable gates pass, with
+original requirements retained as deferred/unverified in the audit and closure limitations. Optional deferred enhancements remain named backlog items, not silently dropped.
 
 ## Release predictability and measurement
 
