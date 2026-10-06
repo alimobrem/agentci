@@ -2164,14 +2164,16 @@
         "SECTION-32",
         "SECTION-12.3"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T00:20:28.814Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T03:24:11.672Z",
       "acceptance": [
         {
           "text": "Exact-subject finding/history reads, bounded stable pagination and integrity-verifiable complete export work over real HTTP. Wrong scope, invalid cursors and interrupted/truncated exports fail explicitly; M3-C11 export capability is retained.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-07c-2-merged-read-export.json"
+          ]
         }
       ],
       "dependsOn": [
@@ -2319,15 +2321,15 @@
         "SPEC-40-050",
         "SPEC-40-051"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T02:42:09.397Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T03:17:09.664Z",
       "acceptance": [
         {
           "text": "Official upstream and npm release evidence selects a compatible stable Promptfoo dependency update; installed dependency licenses and positive/negative/error report cases pass in the actual UBI evaluator image. Fresh image scan removes the four fixable PR55 findings without weakening scan thresholds or removing the existing forge backport and unresolved finding. Preserve failed run37404082498 artifact11386399646 and distinguish skipped runtime gates.",
           "status": "passed",
           "evidence": [
-            "delivery/acceptance/m3-promptfoo-security-local.json"
+            "delivery/acceptance/m3-promptfoo-security-hosted.json"
           ]
         }
       ],
