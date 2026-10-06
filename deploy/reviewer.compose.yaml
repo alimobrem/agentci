@@ -10,6 +10,7 @@ services:
     image: ${AGENTCI_REVIEWER_API_IMAGE:-agentci-api:0.4.0-m3-dev.1}
     environment:
       AGENTCI_REVIEWER_CONFIG_FILE: /run/agentci/reviewers.json
+      AGENTCI_CURSOR_KEY: ${AGENTCI_CURSOR_KEY:-}
       AGENTCI_OPERATOR_TOKEN: ${AGENTCI_OPERATOR_TOKEN:?Set a distinct scoped operator token}
       GITHUB_PRIVATE_KEY_FILE: /run/secrets/github-app.pem
       # The control process authorizes GitHub subjects; providers run only in worker.

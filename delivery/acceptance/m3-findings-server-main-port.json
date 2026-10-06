@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "v1alpha1",
+  "scope": "M3-07c-2A findings server main-based integration acceptance; not phase closure",
+  "base": "e766a64aa64ffc9cba0b0954e80c410003ba9138",
+  "testedSourceCommit": "7b4138ac44e24739a27f7f48c698710c0ed7b7e3",
+  "testedSourceTree": "f0b2faf6dff6e971916e585e607c54003734461c",
+  "originalReviewedServerCommit": "1b1dfc6f8f1a229f9493310677eadec03cd79121",
+  "portedCommits": {
+    "d5faa90": "815caad",
+    "7932c60": "58bd9f5",
+    "1b1dfc6": "7b4138a"
+  },
+  "dependencyAudit": {
+    "taskDependsOn": [
+      "M3-07c-1"
+    ],
+    "absentImplementation": [
+      "PR48 Check publication",
+      "PR50 Check publication scheduler"
+    ],
+    "evidence": "All24 changed non-delivery files have identical Git blobs to the original reviewed server commit; control/finding read imports use merged admission, profile, summary and finding stores, not Check publication/scheduler modules. Build and actual integrations run with those implementations absent.",
+    "unchangedProductFiles": [
+      "apps/control/main.ts",
+      "apps/control/model-reviews.ts",
+      "deploy/reviewer.compose.yaml",
+      "docs/phases/m3-customer-api-contract.md",
+      "docs/phases/m3-customer-model-review-api.md",
+      "packages/findings/history.ts",
+      "packages/findings/lifecycle.ts",
+      "packages/reviewers/finding-transport.ts",
+      "packages/reviewers/transport-schema.ts",
+      "packages/storage/finding-cursor.ts",
+      "packages/storage/finding-history.ts",
+      "packages/storage/finding-reads.ts",
+      "packages/storage/model-review-reads.ts",
+      "scripts/check-api.ts",
+      "specs/api/openapi.json",
+      "specs/api/operations.json",
+      "tests/helpers/finding-read-fixture.ts",
+      "tests/integration/model-finding-api.test.ts",
+      "tests/integration/model-finding-read-adversarial.test.ts",
+      "tests/integration/model-finding-read-bounds.test.ts",
+      "tests/integration/model-review-control-startup.test.ts",
+      "tests/model-finding-cursor-adversarial.test.ts",
+      "tests/model-finding-history-adversarial.test.ts",
+      "tests/model-review-transport-draft.test.ts"
+    ]
+  },
+  "conflictResolution": "Preserved both sides of append-only task event conflict in timestamp order. M3-07e-1 task from PR51 unchanged; no start dates reset.",
+  "checks": {
+    "build": "passed",
+    "fast": {
+      "passed": 10,
+      "seconds": 3.97
+    },
+    "apiCompatibility": [
+      "immutable released M1 0.2.1-m1 passed",
+      "immutable released M2 0.3.1-m2 passed"
+    ],
+    "affectedIntegrations": {
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 4800.092583,
+      "files": [
+        "tests/integration/model-finding-api.test.ts",
+        "tests/integration/model-finding-read-adversarial.test.ts",
+        "tests/integration/model-finding-read-bounds.test.ts",
+        "tests/integration/model-review-control-startup.test.ts"
+      ]
+    }
+  },
+  "preservedEvidence": [
+    {
+      "path": "delivery/acceptance/m3-customer-merge-progress.json",
+      "sha256": "fb3418549aed49ffaf0058fb183dd17f9abeccee08893345d6ba19a83b739273"
+    },
+    {
+      "path": "delivery/acceptance/m3-stream-deadline-advisory.json",
+      "sha256": "9157dd6bb8d4de08881e18a7e638144f5ef9538db57b2fbb4926210cb80bbffb"
+    },
+    {
+      "path": "delivery/acceptance/m3-stream-deadline-merged.json",
+      "sha256": "d479a418271b069370caf7c828623fac1eaa359903624dce3463b35100abecd7"
+    },
+    {
+      "path": "delivery/runs/37394890038-attempt-1.json",
+      "sha256": "16aa737740845d6b7bc2e46f35662708a87bc306e5f6343c9a36bd92d89733a6"
+    },
+    {
+      "path": "delivery/runs/37394161465-attempt-1.json",
+      "sha256": "4c4f3111faf294e2ae8eedba8c5bc763801c2ba5baf19770f00a1bf2a2554fff"
+    },
+    {
+      "path": "delivery/runs/37393162043-attempt-1.json",
+      "sha256": "ccf69323b9d6725fe8658c0b84bc6d0ce5a9c916bf45ecdaca138c3a98f9d844"
+    },
+    {
+      "path": "delivery/runs/37398142115-attempt-1.json",
+      "sha256": "88fc08f01eb2ea2675fe4bafce484f7d0171877b6358af69d8f25f9d2d91f2da"
+    },
+    {
+      "path": "delivery/runs/37394128571-attempt-1.json",
+      "sha256": "ffaf8efc7d992e85adfd4b544708b75ad6a6f7efe3b00b0962a713557808c07d"
+    },
+    {
+      "path": "delivery/runs/37394128752-attempt-1.json",
+      "sha256": "acdd360ef88fa7be5a18a126c0ed73f1483c849598d09ace2b8b7417b29ce89f"
+    },
+    {
+      "path": "delivery/runs/37394169128-attempt-1.json",
+      "sha256": "035fec05369f710e7b1deb157e25caba8683dc99c3d6c628acdb975e83f7d7dc"
+    },
+    {
+      "path": "delivery/runs/37394889795-attempt-1.json",
+      "sha256": "f6d0766a87bc39c47ddb1463b5b10124d9d6c001cdf118828c0b3dad320b8962"
+    }
+  ],
+  "limitations": [
+    "Copied historical PR48/50 comparisons remain historical records, not current acceptance for those PRs.",
+    "No full hosted CI, packaging/image or release claim for this main-based source.",
+    "Original branches remain unchanged."
+  ]
+}

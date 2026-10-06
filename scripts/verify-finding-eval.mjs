@@ -17,7 +17,9 @@ try{
   const baseline=await run();
   if(baseline.exitCode!==0||baseline.report.results.length!==2||baseline.report.results.some(result=>result.status!=='passed'))throw Error('Finding corpus baseline failed');
   const subject=join(root,'packages/findings/lifecycle.ts'),original=await readFile(subject,'utf8');
-  const guard="receipt.findingId!==before.id";
+  // Receipt identity moved from createFindingTransitions into the shared
+  // live-transition/retained-history validator; weaken only that same check.
+  const guard="receipt.findingId!==finding.id";
   if(original.split(guard).length!==2)throw Error('Receipt identity mutation target changed');
   await writeFile(subject,original.replace(guard,'false'));
   const mutation=await run();

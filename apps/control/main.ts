@@ -9,7 +9,7 @@ import { Store } from '../../packages/storage/postgres.ts';
 import {EvalStore} from '../../packages/storage/evals.ts';
 import { createControlApi } from './server.ts';
 const baseConfig = await runtimeConfig(false);
-const config={...baseConfig,operatorToken:process.env.AGENTCI_OPERATOR_TOKEN};
+const config={...baseConfig,operatorToken:process.env.AGENTCI_OPERATOR_TOKEN,cursorKey:process.env.AGENTCI_CURSOR_KEY||undefined};
 const pool = new Pool({ connectionString: config.databaseUrl, max: 10, connectionTimeoutMillis: 5000, query_timeout: 10_000 });
 const store = new Store(pool, config.organizationId, config.repository);
 const attempts=new ReviewAttempts(pool,config.organizationId,config.repository),scopeReady=store.ready.bind(store);

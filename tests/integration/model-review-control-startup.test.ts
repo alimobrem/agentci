@@ -39,7 +39,7 @@ test('compiled control main starts with scoped private config but no model keys,
   await writeFile(guard,"globalThis.fetch=async()=>{throw Error('fixture-external-network-forbidden')};\n",{mode:0o600});
   const evidenceToken='read-'+randomUUID(),operatorToken='write-'+randomUUID();
   const environment:NodeJS.ProcessEnv={...process.env,AGENTCI_ORGANIZATION_ID:organizationId,AGENTCI_REPOSITORY:repository,AGENTCI_PUBLIC_URL:'http://127.0.0.1',GITHUB_APP_ID:'123',GITHUB_INSTALLATION_ID:'456',GITHUB_WEBHOOK_SECRET:'webhook-fixture-'+randomUUID(),AGENTCI_EVIDENCE_TOKEN:evidenceToken,AGENTCI_OPERATOR_TOKEN:operatorToken,GITHUB_PRIVATE_KEY_FILE:keyPath,AGENTCI_REVIEWER_CONFIG_FILE:configPath,TEMPORAL_ADDRESS:'127.0.0.1:1'};
-  for(const name of ['OPENAI_API_KEY','ANTHROPIC_API_KEY','XAI_API_KEY','NODE_OPTIONS','PGOPTIONS'])delete environment[name];
+  for(const name of ['OPENAI_API_KEY','ANTHROPIC_API_KEY','XAI_API_KEY','NODE_OPTIONS','PGOPTIONS','AGENTCI_CURSOR_KEY'])delete environment[name];
   const database=async(names:string[])=>{const schema=`main_${randomUUID().replaceAll('-','')}`;schemas.push(schema);await admin.query(`CREATE SCHEMA ${schema}`);const pool=new Pool({connectionString:databaseUrl,options:`-c search_path=${schema}`});pools.push(pool);for(const name of names)await pool.query(await readFile(new URL(`../../deploy/migrations/${name}.sql`,import.meta.url),'utf8'));const url=new URL(databaseUrl!);url.searchParams.set('options',`-c search_path=${schema}`);return {pool,url:url.toString()};};
   const full=await database(migrations),scope={organizationId,repository},profiles=new ReviewerProfileStore(full.pool,scope),profile=await profiles.put(definition.profiles[0]),id=randomUUID();
   const admissions=new ReviewAdmissionStore(full.pool,scope,{approve:async request=>({requestDigest:digest(canonical(request)),policyDigest:digest('fixture-scoped-authority'),profileRevision:request.profile.revision,mode:request.mode})});
@@ -49,13 +49,21 @@ test('compiled control main starts with scoped private config but no model keys,
   assert.equal((await fetch(configured.origin+'/readyz')).status,200);
   const descriptors=await fetch(configured.origin+'/v1/reviewer-profiles',{headers:{authorization:`Bearer ${evidenceToken}`}});assert.equal(descriptors.status,200);assert.deepEqual(await descriptors.json(),{schemaVersion:'v1alpha1',profiles:[{id:profile.profile.id,revision:profile.revision,mode:'synthetic',revoked:false}]});
   const status=await fetch(configured.origin+'/v1/model-reviews/'+id,{headers:{authorization:`Bearer ${operatorToken}`}});assert.equal(status.status,200);assert.equal(validateModelReviewStatus(await status.json()).execution.state,'queued');
+  assert.equal((await fetch(configured.origin+'/v1/model-reviews/'+id+'/findings',{headers:{authorization:`Bearer ${evidenceToken}`}})).status,503,'No cursor key leaves finding reads unavailable');
   assert.equal((await fetch(configured.origin+'/v1/reviewer-profiles')).status,401);assert.ok(!configured.logs().includes('fixture-external-network-forbidden'));await stop(configured.child,configured.closed);
+  const retained=(await admissions.get(id))!;
+  const summary={schemaVersion:'v1alpha1',admissionId:id,admissionDigest:retained.digest,profileRevision:profile.revision,contextDigest:digest('fixture-empty-context'),mode:'synthetic',coverage:{selectedFiles:1,configuredRoles:1,completedRoles:1,wholeRepository:false},roles:[{requestId:randomUUID(),role:'security',digest:digest('retained-fixture-role'),status:'completed'}],findings:[]};
+  await full.pool.query('INSERT INTO agentci_review_execution_summaries(organization_id,repository,id,summary,digest) VALUES($1,$2,$3,$4,$5)',[organizationId,repository,id,summary,digest(canonical(summary))]);
+  const keyed=await start({...environment,DATABASE_URL:full.url,AGENTCI_CURSOR_KEY:'cursor-'+randomUUID()});assert.equal(keyed.listened,true,keyed.logs());
+  const findings=await fetch(keyed.origin+'/v1/model-reviews/'+id+'/findings',{headers:{authorization:`Bearer ${evidenceToken}`}});assert.equal(findings.status,200);assert.deepEqual(await findings.json(),{schemaVersion:'v1alpha1',reviewId:id,summaryDigest:digest(canonical(summary)),items:[],nextCursor:null});await stop(keyed.child,keyed.closed);
   // Released/base-only schema starts with no new config, App key or operator key.
   const legacy=await database(migrations.slice(0,3)),disabled:NodeJS.ProcessEnv={...environment,DATABASE_URL:legacy.url};delete disabled.AGENTCI_REVIEWER_CONFIG_FILE;delete disabled.GITHUB_PRIVATE_KEY_FILE;delete disabled.AGENTCI_OPERATOR_TOKEN;
   const off=await start(disabled);assert.equal(off.listened,true,off.logs());assert.equal((await fetch(off.origin+'/readyz')).status,200);assert.deepEqual(await (await fetch(off.origin+'/v1/reviewer-profiles',{headers:{authorization:`Bearer ${evidenceToken}`}})).json(),{schemaVersion:'v1alpha1',profiles:[]});await stop(off.child,off.closed);
   const missingSchema=await database(migrations.filter(name=>name!=='011_m3_review_summaries'));
   for(const [kind,env,message] of [
    ['missing migration',{...environment,DATABASE_URL:missingSchema.url},'reviewer-runtime-storage-unavailable'],
+   ['equal cursor and read token',{...environment,DATABASE_URL:full.url,AGENTCI_CURSOR_KEY:evidenceToken},'Cursor key must be independent'],
+   ['short cursor key',{...environment,DATABASE_URL:full.url,AGENTCI_CURSOR_KEY:'short'},'Invalid finding cursor key'],
    ['equal tokens',{...environment,DATABASE_URL:full.url,AGENTCI_OPERATOR_TOKEN:evidenceToken},'Invalid model review credentials'],
    ['missing operator token',{...environment,DATABASE_URL:full.url,AGENTCI_OPERATOR_TOKEN:undefined},'Model review mutation credential required'],
   ] as const){const rejected=await start(env);assert.equal(rejected.listened,false,kind);const exit=await rejected.closed;assert.notEqual(exit.code,0,kind);assert.ok(rejected.logs().includes(message),kind);for(const secret of [evidenceToken,operatorToken,key])assert.ok(!rejected.logs().includes(secret),`${kind}: private data leaked`);}
