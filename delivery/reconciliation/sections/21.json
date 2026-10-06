@@ -1,0 +1,772 @@
+{
+  "section": 21,
+  "rows": [
+    {
+      "requirementId": "SECTION-21",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21",
+        "line": 1306
+      },
+      "text": "21. Release Evidence and `AgentRelease`",
+      "sourceTextSha256": "76d54776d5c43d493322c2c844a019642b1df2623b83d30cdb775c2a51b14456",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "section-review",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-21.1",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.1",
+        "line": 1308
+      },
+      "text": "21.1 Release identity",
+      "sourceTextSha256": "ab4e544332e0c94ea36638ca94f8221d9215bad8255fdd2d38858c747a3c8efb",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "section-review",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-21.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.1",
+        "line": 1310
+      },
+      "text": "An AgentRelease MUST be immutable after verification. Changes create a new release identity.",
+      "sourceTextSha256": "8427d4be25167b610229a2b2c63483e2b159d001d8cd9a7950e222aa4c69bdc1",
+      "modality": {
+        "explicitTokens": [
+          "MUST"
+        ],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "requirement",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-21.2",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.2",
+        "line": 1312
+      },
+      "text": "21.2 Required digests",
+      "sourceTextSha256": "d5d281174ed3f6712bcd0cb08a49593caca419305d2a860cf71600c6f36ea3e4",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "section-review",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-21.2-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.2",
+        "line": 1314
+      },
+      "text": "Where applicable:",
+      "sourceTextSha256": "c4ab6c747f83722525879b58b308ea4b482bc9e773a007009c41078ae498fe66",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "requirement",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-21.2-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.2",
+        "line": 1316
+      },
+      "text": "- source SHA",
+      "sourceTextSha256": "fdff636740b27247ff3bb5b613fcf27958877eaf9c8faff16e7a89850ce2b46b",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "requirement",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-21.2-003",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.2",
+        "line": 1317
+      },
+      "text": "- build artifact digest",
+      "sourceTextSha256": "066a15bb1270df76f0db1d94baddc27b0e784f7f92ec0fecec0f6badcfb1096d",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "requirement",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-21.2-004",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.2",
+        "line": 1318
+      },
+      "text": "- spec digest",
+      "sourceTextSha256": "6bbe84def8b9e3770e1daaa2212d6d98d80bc4cae74f639be2ab5b68725c4991",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "requirement",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-21.2-005",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.2",
+        "line": 1319
+      },
+      "text": "- prompt/instructions digest",
+      "sourceTextSha256": "edf54c18d5092c0597d41370abdc7ee0c4b925ae6b92ceab88f7d08aab1207df",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "requirement",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-21.2-006",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.2",
+        "line": 1320
+      },
+      "text": "- tool-definition digest",
+      "sourceTextSha256": "5b62c78fe0f8dc6364809f6ee80bc5a59f769c5db2db6428c5e03e69bcec6754",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "requirement",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-21.2-007",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.2",
+        "line": 1321
+      },
+      "text": "- permission/policy digest",
+      "sourceTextSha256": "b1ab61ea6e7b63bb4deb7a9a7964cdcb5af2f8fead68abf5632aa7ccde2c6546",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "requirement",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-21.2-008",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.2",
+        "line": 1322
+      },
+      "text": "- model routing policy digest",
+      "sourceTextSha256": "3fcd2307f2f50b953cfc6736ad4791779d8c7c69c50b713ccaf7679611780678",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "requirement",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-21.2-009",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.2",
+        "line": 1323
+      },
+      "text": "- eval suite digest",
+      "sourceTextSha256": "ce197655c02c51cbf33904e7465efbe7368c830e06eb4a37a3576c0a6bc969a0",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "requirement",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-21.2-010",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.2",
+        "line": 1324
+      },
+      "text": "- evidence bundle digest",
+      "sourceTextSha256": "770a680aa3d260f5a2da34dd5719ddd37a83af1b6b8c43209b3793dfe6773c89",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-01",
+          "kind": "requirement",
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-21.3",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "21.3",
+        "line": 1326
+      },
+      "text": "21.3 Example evidence bundle",
+      "sourceTextSha256": "6eb6dbbc4654c1f5d1373f8bd961b2a897126fb3059543068843934d9f2b24bf",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M6",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M6",
+          "id": "M6-02",
+          "kind": "section-review",
+          "acceptance": "Content-addressed manifests, bounded evidence references, tenant authorization, retention and independent reconstruction verification."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    }
+  ]
+}

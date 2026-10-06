@@ -1,0 +1,2257 @@
+{
+  "section": 14,
+  "rows": [
+    {
+      "requirementId": "SECTION-14",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14",
+        "line": 842
+      },
+      "text": "14. Runtime Instrumentation and Tracing",
+      "sourceTextSha256": "dfd588eeccf01c3c28e09d55abfbe1fcf827b7722d83dea738e0474f532e3314",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "section-review",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-14.1",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 844
+      },
+      "text": "14.1 Principle",
+      "sourceTextSha256": "548bb8cae3f57ca948d7de2e692b8bfa3bae46ba31ddb952efa79395c2f718c5",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "section-review",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 846
+      },
+      "text": "Capture externally observable execution, not hidden chain-of-thought.",
+      "sourceTextSha256": "622bdd5b2e8eb10ffe5dd49f1ff2b6e88f24a6c70297db2537ccb49c27e13cc5",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 848
+      },
+      "text": "Record:",
+      "sourceTextSha256": "3dffc2d69c8bde7dcadb4e6d00654c52352d0696f2724f82a5321094c0e299ed",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-003",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 850
+      },
+      "text": "- agent invocation",
+      "sourceTextSha256": "43e5c672ec9ac897417601659576a8ea1ee9a282cec405e0adafd27a18723412",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-004",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 851
+      },
+      "text": "- model invocation",
+      "sourceTextSha256": "b717cf34857074fd6d9510cafff0edb3e4c5eb5d5d85b20f3f2eda1192c4af5e",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-005",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 852
+      },
+      "text": "- planning phase when explicitly exposed",
+      "sourceTextSha256": "326debb0fc8f8ae0ab517d167f573135452031b7c069ca5a427bcf729fa68a1c",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-006",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 853
+      },
+      "text": "- tool invocation",
+      "sourceTextSha256": "5f72a11d83652af03aa5228dc540c8ca4e10f595d96616fb4fbd3a93bdded691",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-007",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 854
+      },
+      "text": "- tool result metadata",
+      "sourceTextSha256": "2c7c8ad8df77f2c62bee915d0ca9264549d172f42934be991382cccc5fdbd073",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-008",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 855
+      },
+      "text": "- handoff",
+      "sourceTextSha256": "6f8fa01b50accf987942633a36587b5d63e0d5ee28a72a6a176e84940e4af779",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-009",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 856
+      },
+      "text": "- policy decision",
+      "sourceTextSha256": "61f2d19b3888b5af5375605ac9bdd66002ee084d9ea8279552a5d37f5d29ff86",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-010",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 857
+      },
+      "text": "- human approval",
+      "sourceTextSha256": "b2fe67b7e456cf957d1cc2f520ed429ec3c49a9c859865af66760a5d1bef3bf6",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-011",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 858
+      },
+      "text": "- external side effect",
+      "sourceTextSha256": "fc3e91b0fa0f9549f2861ac736dc12813d30beb9ab17d57219766f6c49b91bce",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-012",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 859
+      },
+      "text": "- eval annotation",
+      "sourceTextSha256": "49776745eec71b7fed6d1a22ae38239e08ce3ee274eb00eb9ac7e9cbb8a61b53",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-013",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 860
+      },
+      "text": "- errors",
+      "sourceTextSha256": "1dc03e418291d7d2ade5abff8e48a4122d463a43fcbc68412e1aa3f1dddcb912",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.1-014",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.1",
+        "line": 861
+      },
+      "text": "- usage/latency/cost metadata",
+      "sourceTextSha256": "b9274a642392c4b396f6b24ec04f0158c0762ffc0347ce3ae0be7be39dd8fd5b",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-06",
+          "kind": "requirement",
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-14.2",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.2",
+        "line": 863
+      },
+      "text": "14.2 OpenTelemetry",
+      "sourceTextSha256": "d9cbae8070692c7b4542090034c1191dd040699083abc1647683d86b835db83e",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-04",
+          "kind": "section-review",
+          "acceptance": "Reuse OTel collector/exporters; W3C propagation, bounded buffers, backend outage/backpressure and metadata/content boundary tests."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.2-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.2",
+        "line": 865
+      },
+      "text": "OTLP is the default transport.",
+      "sourceTextSha256": "bfeebc611922cf707f2d4bf72f7b0022b8a0654913aa2b51c4d145405f3a8d82",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-04",
+          "kind": "requirement",
+          "acceptance": "Reuse OTel collector/exporters; W3C propagation, bounded buffers, backend outage/backpressure and metadata/content boundary tests."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.2-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.2",
+        "line": 867
+      },
+      "text": "AgentCI SHOULD map to current OpenTelemetry GenAI semantic conventions when stable/applicable and maintain an AgentCI namespaced compatibility layer while those conventions are still in development.",
+      "sourceTextSha256": "a594cd97bcd2a5e124afccc0e43b57d27533b9a0f5b59098d9cd6ce7610292f0",
+      "modality": {
+        "explicitTokens": [
+          "SHOULD"
+        ],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-04",
+          "kind": "requirement",
+          "acceptance": "Reuse OTel collector/exporters; W3C propagation, bounded buffers, backend outage/backpressure and metadata/content boundary tests."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-14.3",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.3",
+        "line": 869
+      },
+      "text": "14.3 Required AgentCI attributes",
+      "sourceTextSha256": "8f7b0f1e0a9f87b5e64a101e9d935c270d6540cc01c6c2495ff91e0164a72161",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "section-review",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.3-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.3",
+        "line": 871
+      },
+      "text": "Suggested namespace:",
+      "sourceTextSha256": "d65c7e7a82ed5cc1a2a33d65558aed15b638534ac5681846a359bc63810d8619",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-14.4",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 888
+      },
+      "text": "14.4 Content capture modes",
+      "sourceTextSha256": "7337be869a93987384cafcbbdc50550b101d7e7bdbb07841b3df2cc386a1c235",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "section-review",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.4-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 890
+      },
+      "text": "- `none` - no model/tool content",
+      "sourceTextSha256": "91a30d2396cc2c9801808945a9e9b0c22583dafba59f527be03fa774abd4c2f5",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.4-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 891
+      },
+      "text": "- `metadata-only`",
+      "sourceTextSha256": "355218ce80c34dde72977626c04aef8725c4a0ef58bc9198cc88e692c321e6c5",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.4-003",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 892
+      },
+      "text": "- `redacted`",
+      "sourceTextSha256": "1921f4b3a49db126c356f9eec7482b02838ccbf614a1e8a09d92d21aed43804f",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.4-004",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 893
+      },
+      "text": "- `full-encrypted`",
+      "sourceTextSha256": "f62fbb54f3567fa11ed1340c379ebf5d61a3535c5447df7d97b795a948fc59ba",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.4-005",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 894
+      },
+      "text": "- `customer-local`",
+      "sourceTextSha256": "ce21e476904ed0568dbd8014ff17212fe61b44f4e70bb863a0049f84f3cb50ad",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.4-006",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 896
+      },
+      "text": "Content capture MUST be configurable separately for:",
+      "sourceTextSha256": "ed377f9a4a0fadfc12aed3b4261b0ba116a30a522c416ec2f607a66c8c79cb72",
+      "modality": {
+        "explicitTokens": [
+          "MUST"
+        ],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.4-007",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 898
+      },
+      "text": "- model input",
+      "sourceTextSha256": "bdff5452917ef9eaabddd1d8c75256d1f9a54022272859cef4fe8f79e4c1a71f",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.4-008",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 899
+      },
+      "text": "- model output",
+      "sourceTextSha256": "b1b2c06ac9ff54d360b03baea92e075eb74f07d1d98646824e69406c11c38fd4",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.4-009",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 900
+      },
+      "text": "- tool arguments",
+      "sourceTextSha256": "91dc24a7a9df75b8e0fabc260510694018b255b14a84f29357d11e4168b37f35",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.4-010",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 901
+      },
+      "text": "- tool output",
+      "sourceTextSha256": "c767a37db68b5f5ff982e50a816d1e342eb6867f11cd81ee9a9a5bf5e3f5be78",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.4-011",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 902
+      },
+      "text": "- retrieved context",
+      "sourceTextSha256": "39046c5f6685465bcf159bee380509d5f6f6f356aa949e559b3473633e81ac73",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.4-012",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.4",
+        "line": 903
+      },
+      "text": "- system instructions",
+      "sourceTextSha256": "b8515cee2da20b929f0186e12eaa6579919e7b440f599e600250cf37eadd40e3",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-01",
+          "kind": "requirement",
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-14.5",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.5",
+        "line": 905
+      },
+      "text": "14.5 SDKs",
+      "sourceTextSha256": "6335ea24502045389459f8c50676de4d94f00397880d3c162506c5983398255d",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-02",
+          "kind": "section-review",
+          "acceptance": "Instrument existing clients and manual spans; context propagation, errors/cancellation, opt-out and no hidden reasoning capture."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.5-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.5",
+        "line": 907
+      },
+      "text": "Initial SDKs:",
+      "sourceTextSha256": "210e9f5533fad915c64fa631a86309d632eea526c9db560ffe72ffcfdcc0bbd8",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-02",
+          "kind": "requirement",
+          "acceptance": "Instrument existing clients and manual spans; context propagation, errors/cancellation, opt-out and no hidden reasoning capture."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.5-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.5",
+        "line": 909
+      },
+      "text": "- Python",
+      "sourceTextSha256": "bcd484e466ebfecf756d6d553090f973c5448682c53b690ea746915021d5d173",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-03",
+          "kind": "requirement",
+          "acceptance": "Equivalent behavior and shared fixtures; supported Python matrix, async/manual spans and installed wheel smoke."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.5-003",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.5",
+        "line": 910
+      },
+      "text": "- TypeScript/JavaScript",
+      "sourceTextSha256": "09bab6f7e7417245ca1e61ef673c2ac8eced13a0ee23be1f0b1176a92c33ae21",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-02",
+          "kind": "requirement",
+          "acceptance": "Instrument existing clients and manual spans; context propagation, errors/cancellation, opt-out and no hidden reasoning capture."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.5-004",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.5",
+        "line": 912
+      },
+      "text": "APIs should support:",
+      "sourceTextSha256": "b1b6292661eb39581126963ba284452a597a635ea263d20ae20cebfcacbc97c2",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-02",
+          "kind": "requirement",
+          "acceptance": "Instrument existing clients and manual spans; context propagation, errors/cancellation, opt-out and no hidden reasoning capture."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.5-005",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.5",
+        "line": 918
+      },
+      "text": "and manual spans for custom agent frameworks.",
+      "sourceTextSha256": "bfa1ca3d06494233cd8cd3981b9c3403675e3c262fc287a1449a31c883f770ae",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-02",
+          "kind": "requirement",
+          "acceptance": "Instrument existing clients and manual spans; context propagation, errors/cancellation, opt-out and no hidden reasoning capture."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-14.6",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.6",
+        "line": 920
+      },
+      "text": "14.6 Trace correlation",
+      "sourceTextSha256": "45636a78945a9fe190bf1def124a98962b89edee4b005f43dda15c4f1d7284e0",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-04",
+          "kind": "section-review",
+          "acceptance": "Reuse OTel collector/exporters; W3C propagation, bounded buffers, backend outage/backpressure and metadata/content boundary tests."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.6-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.6",
+        "line": 922
+      },
+      "text": "All tool and downstream calls SHOULD propagate W3C trace context when possible.",
+      "sourceTextSha256": "1da1f3f8c2e0886378ade28d1f7a75b5bd280ecdb388dde0601b8f5d8205cd34",
+      "modality": {
+        "explicitTokens": [
+          "SHOULD"
+        ],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-04",
+          "kind": "requirement",
+          "acceptance": "Reuse OTel collector/exporters; W3C propagation, bounded buffers, backend outage/backpressure and metadata/content boundary tests."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.6-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.6",
+        "line": 924
+      },
+      "text": "For Kubernetes resources created by agent actions, optional metadata SHOULD include a safe correlation identifier, for example:",
+      "sourceTextSha256": "d0f0ee7454c3d65db22a3b41191077f476c96a5ef6287ba5d385f8001f6f5bf4",
+      "modality": {
+        "explicitTokens": [
+          "SHOULD"
+        ],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-04",
+          "kind": "requirement",
+          "acceptance": "Reuse OTel collector/exporters; W3C propagation, bounded buffers, backend outage/backpressure and metadata/content boundary tests."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-14.6-003",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "14.6",
+        "line": 933
+      },
+      "text": "Use labels/annotations only where cardinality and sensitivity policies permit.",
+      "sourceTextSha256": "884131325e08dc6aca3399cfcb6928379891de482fd3ad532ae4820bc94a95a6",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M4",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M4",
+          "id": "M4-04",
+          "kind": "requirement",
+          "acceptance": "Reuse OTel collector/exporters; W3C propagation, bounded buffers, backend outage/backpressure and metadata/content boundary tests."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    }
+  ]
+}

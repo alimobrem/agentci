@@ -1,0 +1,2262 @@
+{
+  "schemaVersion": 1,
+  "authority": "Requested audit snapshot; does not adopt review document or new numeric gates",
+  "specificationAuditBasisCommit": "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+  "snapshotInputs": {
+    "tasks": {
+      "path": "delivery/tasks.json",
+      "sha256": "f34b70638ea45216f066d2e5fce1794de62648496a37d690be95df1f8c7d400d",
+      "availability": "present",
+      "meaning": "Source/test/record reference; presence is not execution acceptance"
+    },
+    "phasePlan": {
+      "path": "delivery/phase-pr-plan.json",
+      "sha256": "42752969ac0bbd110d1996ab1b7f255b8a7a07188c0eafdaad38e4a0e4c297b5",
+      "availability": "present",
+      "meaning": "Source/test/record reference; presence is not execution acceptance"
+    },
+    "apiSchema": {
+      "path": "specs/api/openapi.json",
+      "sha256": "addd32aeb218ed995637348d23510d3240e6ea8b9dfe476cc2f24882b421fc3e",
+      "availability": "present",
+      "meaning": "Source/test/record reference; presence is not execution acceptance"
+    },
+    "apiVersion": "0.4.0-m3-dev.1"
+  },
+  "source": {
+    "spec": {
+      "path": "specs/agentci-full-spec.md",
+      "sha256": "7ced118d5ac3456e78e3096d069043c9abf3070fde63c0f02b6d56b073690e17",
+      "availability": "present",
+      "meaning": "Source/test/record reference; presence is not execution acceptance"
+    },
+    "inventory": {
+      "path": "specs/requirements.yaml",
+      "sha256": "241e6f1468dd96ab8dda0395b57f7d429b3049aaef835160117b1d854e3415f5",
+      "availability": "present",
+      "meaning": "Source/test/record reference; presence is not execution acceptance"
+    },
+    "addendumSha256": "58c9610814b784c0c306e4b7b707651add5239c2ab36ee45bb4d1fc6f40a4714"
+  },
+  "numericProposalsAdopted": false,
+  "derivedChildren": [
+    {
+      "id": "SPEC-31.1-001/-v1-projects",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1714
+      },
+      "text": "/v1/projects",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-repositories",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1715
+      },
+      "text": "/v1/repositories",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-pull-requests",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1716
+      },
+      "text": "/v1/pull-requests",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-change-analyses",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1717
+      },
+      "text": "/v1/change-analyses",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-requirements",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1718
+      },
+      "text": "/v1/requirements",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-eval-suites",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1719
+      },
+      "text": "/v1/eval-suites",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-eval-runs",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1720
+      },
+      "text": "/v1/eval-runs",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-findings",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1721
+      },
+      "text": "/v1/findings",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-traces",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1722
+      },
+      "text": "/v1/traces",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-evidence",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1723
+      },
+      "text": "/v1/evidence",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-releases",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1724
+      },
+      "text": "/v1/releases",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-deployments",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1725
+      },
+      "text": "/v1/deployments",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-incidents",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1726
+      },
+      "text": "/v1/incidents",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-regressions",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1727
+      },
+      "text": "/v1/regressions",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-repairs",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1728
+      },
+      "text": "/v1/repairs",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-policies",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1729
+      },
+      "text": "/v1/policies",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-model-routes",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1730
+      },
+      "text": "/v1/model-routes",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-31.1-001/-v1-outcomes",
+      "parentId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1731
+      },
+      "text": "/v1/outcomes",
+      "modality": "proposed-endpoint",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-32-002/agentci-init",
+      "parentId": "SPEC-32-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1764
+      },
+      "text": "agentci init",
+      "modality": "initial-command",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-32-002/agentci-validate",
+      "parentId": "SPEC-32-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1765
+      },
+      "text": "agentci validate",
+      "modality": "initial-command",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-32-002/agentci-diff-base-head",
+      "parentId": "SPEC-32-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1766
+      },
+      "text": "agentci diff [base] [head]",
+      "modality": "initial-command",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-32-002/agentci-risk",
+      "parentId": "SPEC-32-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1767
+      },
+      "text": "agentci risk",
+      "modality": "initial-command",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-32-002/agentci-eval-suite",
+      "parentId": "SPEC-32-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1768
+      },
+      "text": "agentci eval [--suite ...]",
+      "modality": "initial-command",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-32-002/agentci-review",
+      "parentId": "SPEC-32-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1769
+      },
+      "text": "agentci review",
+      "modality": "initial-command",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-32-002/agentci-trace-inspect-id",
+      "parentId": "SPEC-32-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1770
+      },
+      "text": "agentci trace inspect <id>",
+      "modality": "initial-command",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-32-002/agentci-evidence-show-id",
+      "parentId": "SPEC-32-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1771
+      },
+      "text": "agentci evidence show <id>",
+      "modality": "initial-command",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-32-002/agentci-release-build",
+      "parentId": "SPEC-32-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1772
+      },
+      "text": "agentci release build",
+      "modality": "initial-command",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-32-002/agentci-replay-incident-trace",
+      "parentId": "SPEC-32-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1773
+      },
+      "text": "agentci replay <incident|trace>",
+      "modality": "initial-command",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    },
+    {
+      "id": "SPEC-32-002/agentci-doctor",
+      "parentId": "SPEC-32-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "line": 1774
+      },
+      "text": "agentci doctor",
+      "modality": "initial-command",
+      "implementation": "not-claimed",
+      "verification": "not-run",
+      "mapping": "M0 skeleton; staged domain implementation per report",
+      "blocker": "Exact operation/CLI coverage and milestone disposition require review; not silently mandatory or waived"
+    }
+  ],
+  "historicalGateSnapshots": [
+    {
+      "milestone": "M0",
+      "record": null,
+      "note": "Use historical M0 manifest/release document; do not invent modern gate evidence"
+    },
+    {
+      "milestone": "M1",
+      "record": {
+        "path": "releases/m1-gates.json",
+        "sha256": "97d18d3b530591366e637a6ad20318d995dcf0588bd1387deda07fdb6ee582dd",
+        "availability": "present",
+        "meaning": "Source/test/record reference; presence is not execution acceptance"
+      },
+      "version": "0.2.1-m1",
+      "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+      "gates": [
+        {
+          "id": "scope",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-closure.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "51a0ec84b3d1b5529d6a3299d025c999174926cf257a1715ad5735ac014bfb6a"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "correctness",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-ci.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "74c46c10e0039047060f43b1908d69e46b572a56d35622e429b8b8b568b89583"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "api",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-ci.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "74c46c10e0039047060f43b1908d69e46b572a56d35622e429b8b8b568b89583"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "evals",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-ci.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "74c46c10e0039047060f43b1908d69e46b572a56d35622e429b8b8b568b89583"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "reproducibility",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-ci.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "74c46c10e0039047060f43b1908d69e46b572a56d35622e429b8b8b568b89583"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "runtime",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-images.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "28f556f3f29febcce6b39870c177f93e22cc9e5a912a2999188116574cbed85d"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "safety",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-images.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "28f556f3f29febcce6b39870c177f93e22cc9e5a912a2999188116574cbed85d"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "documentation",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "docs/releases/m1-onboarding.md",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "dab16a59c01a3a95548087524b9d055d6764e7c4686e06d348bd88adfd0c8d55"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "release-identity",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-distribution.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "9f5c54c863bccbbe1e12484ad4bd3fb1cfe09008493c7fa04cac833037dd9977"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "publication",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-manifest.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "07fbcc68c5ed3a1cf3cd5b39df4cf63d44b77515b89c2e6f0fb2e6a971cc221a"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "distribution",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-distribution.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "9f5c54c863bccbbe1e12484ad4bd3fb1cfe09008493c7fa04cac833037dd9977"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "demo",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-demo.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "f9169c71db05221b362b7e389d99381c2bab577ec52e7b2f8f39f71ffc45a584"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "closure",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-closure.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "51a0ec84b3d1b5529d6a3299d025c999174926cf257a1715ad5735ac014bfb6a"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "live-dogfood",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-demo.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "f9169c71db05221b362b7e389d99381c2bab577ec52e7b2f8f39f71ffc45a584"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "api-image",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-images.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "28f556f3f29febcce6b39870c177f93e22cc9e5a912a2999188116574cbed85d"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "worker-image",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-images.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "28f556f3f29febcce6b39870c177f93e22cc9e5a912a2999188116574cbed85d"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "customer-onboarding",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-distribution.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "9f5c54c863bccbbe1e12484ad4bd3fb1cfe09008493c7fa04cac833037dd9977"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "agent-api",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-distribution.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "9f5c54c863bccbbe1e12484ad4bd3fb1cfe09008493c7fa04cac833037dd9977"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        }
+      ],
+      "customerAcceptance": true
+    },
+    {
+      "milestone": "M2",
+      "record": {
+        "path": "releases/m2-gates.json",
+        "sha256": "85a5d532e449ab2dcd512b1b49e25a32639ef2a7354b22592e57f41353ca058b",
+        "availability": "present",
+        "meaning": "Source/test/record reference; presence is not execution acceptance"
+      },
+      "version": "0.3.1-m2",
+      "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+      "gates": [
+        {
+          "id": "scope",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-final-acceptance-audit.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "ad4fb59d2aab1b12374f4e53ee557e6e977f10a3f3cc575aae6261c80db0c1e8"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "correctness",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-corrected-final-source-ci.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "235df24e817daecc9cf6758d58647cc0cc3732e1248d1dadb471afbafc90aa84"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-native-published-downloads.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "api",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-corrected-final-source-ci.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "235df24e817daecc9cf6758d58647cc0cc3732e1248d1dadb471afbafc90aa84"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-released-customer-acceptance.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "evals",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-native-published-downloads.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-released-customer-acceptance.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "reproducibility",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-corrected-final-source-ci.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "235df24e817daecc9cf6758d58647cc0cc3732e1248d1dadb471afbafc90aa84"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "runtime",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-native-published-downloads.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-public-package-download.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "safety",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-published-security-disposition.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "99ceee2df02265fc84dc2ad4f7f26104cd1404e1994a46133843de9596c829aa"
+            },
+            {
+              "kind": "file",
+              "value": "docs/releases/m2-native-security.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "c75f72eb592be002d817a592c3693ab827834771650740f8e17035c9fe565595"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "documentation",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "docs/releases/m2.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "1da0d850613e1f0431fd8bc61f514d3e6f9f6c997f7c4978c3564ed55bc073ef"
+            },
+            {
+              "kind": "file",
+              "value": "docs/m2-guide.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "4e7ffd178073c29febabb7bc4cbcba0d27368a7c9834c1515fef03b04db0efb1"
+            },
+            {
+              "kind": "file",
+              "value": "docs/eval-recovery.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "df801c96c042f6243508dea2770a8233b7d05af980d36a4ef0154e8d7bcb240c"
+            },
+            {
+              "kind": "file",
+              "value": "docs/retrospectives/m2.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "f0b399097ef93b345aea584593d8de8c99f399d33d9e98447651c1e6c2c2984c"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "release-identity",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-public-package-download.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-six-role-publication.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "41a53db39c65a2edb55a6d38805d7cf562533ad4cfa1b691c51734ba77fb6839"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "publication",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-public-package-download.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-six-role-publication.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "41a53db39c65a2edb55a6d38805d7cf562533ad4cfa1b691c51734ba77fb6839"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "distribution",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-public-package-download.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-native-published-downloads.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "demo",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-released-customer-acceptance.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-closure.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "85415b52b154248f9bf85a7305bd5f3426d8ab38b334f0b83a24d49140f5e86c"
+            },
+            {
+              "kind": "file",
+              "value": "docs/releases/m2.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "1da0d850613e1f0431fd8bc61f514d3e6f9f6c997f7c4978c3564ed55bc073ef"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "closure",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-closure.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "85415b52b154248f9bf85a7305bd5f3426d8ab38b334f0b83a24d49140f5e86c"
+            },
+            {
+              "kind": "file",
+              "value": "docs/retrospectives/m2.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "f0b399097ef93b345aea584593d8de8c99f399d33d9e98447651c1e6c2c2984c"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "live-dogfood",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-hosted-release-evidence-reuse.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "dfe86436973d18c58bb5fd7267768dbea6b9b19a6f63dd9e2dcc545a3d582929"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-released-customer-acceptance.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "api-image",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-six-role-publication.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "41a53db39c65a2edb55a6d38805d7cf562533ad4cfa1b691c51734ba77fb6839"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-native-published-downloads.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "worker-image",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-six-role-publication.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "41a53db39c65a2edb55a6d38805d7cf562533ad4cfa1b691c51734ba77fb6839"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-native-published-downloads.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "customer-onboarding",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-released-customer-acceptance.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-public-package-download.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "agent-api",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-released-customer-acceptance.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        }
+      ],
+      "customerAcceptance": true
+    },
+    {
+      "milestone": "M3",
+      "record": {
+        "path": "releases/m3-gates.json",
+        "sha256": "2bdf591917c1936f7476974c7418772ba36debf38088aba312180d77192931f6",
+        "availability": "present",
+        "meaning": "Source/test/record reference; presence is not execution acceptance"
+      },
+      "version": "0.4.0-m3",
+      "sourceCommit": null,
+      "customerAcceptance": true,
+      "gates": [
+        {
+          "id": "scope",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "correctness",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "api",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "evals",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "reproducibility",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "runtime",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "safety",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "documentation",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "release-identity",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "publication",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "distribution",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "demo",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "closure",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "live-dogfood",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "api-image",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "worker-image",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "customer-onboarding",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "agent-api",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        }
+      ]
+    }
+  ],
+  "phasePlans": [
+    {
+      "id": "M3",
+      "name": "Multi-model review",
+      "exit": "Released reviewer, finding, API and authenticated dashboard workflow with explicitly synthetic success/failure/recovery demonstrations. Live provider compatibility and real different-provider demo deferred by owner decision docs/phases/m3-live-validation-deferral.md; do not claim original M3 fully complete.",
+      "prs": [
+        {
+          "id": "M3-00",
+          "title": "Scope and API design",
+          "size": "S",
+          "dependsOn": [
+            "M2 closure"
+          ],
+          "acceptance": "Audit cross-cutting requirements and schema examples; freeze provider/review/finding contracts, versioning, budget policy and acceptance corpus before implementation. Record mandatory retro dependencies, live-provider prerequisites, coding-provider identity, initial OIDC/session decision and exact release/demo scenarios; no paid calls without configured authorization and total budget.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-R1",
+          "title": "Native image publication and bounded cleanup",
+          "size": "M",
+          "dependsOn": [
+            "M3-00"
+          ],
+          "acceptance": "Build AMD64/ARM64 on native runners with pinned runtime-layer reuse, immutable digest assembly and explicit post-build timeout margin. Verify failed/partial publication retention, both platform scans/runtime gates and record matched-cache timing before claiming acceleration.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-R2",
+          "title": "Deployment and provider preflight",
+          "size": "M",
+          "dependsOn": [
+            "M3-00"
+          ],
+          "acceptance": "Read-only preflight checks actual daemon-shared migration/provider paths, credential references, endpoint connectivity, configured spend limits and service readiness before webhook or live-provider mutation. Missing/unshared files and unauthorized endpoints fail with redacted actionable errors; preserve unrelated state.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-R3",
+          "title": "Evidence reuse and delivery measurement enforcement",
+          "size": "M",
+          "dependsOn": [
+            "M3-00"
+          ],
+          "acceptance": "Record evidence by product source, artifact digest, platform and verifier revision; require invalidation reasons for repeated acceptance. Separate CI/publication/download/cycle/blocker/intervention/rework cohorts, preserve failed attempts, and make one consolidated closure record the default. Reject wrong-source/digest/coverage reuse.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-01",
+          "title": "Provider core and bounded execution",
+          "size": "M",
+          "dependsOn": [
+            "M3-00"
+          ],
+          "acceptance": "Normalized invoke/stream/capabilities/extensions and usage; cancellation, bounded retries, unsupported-feature errors and budget exhaustion tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-02",
+          "title": "OpenAI adapter",
+          "size": "M",
+          "dependsOn": [
+            "M3-01",
+            "M3-R2"
+          ],
+          "acceptance": "Official provider integration behind core; request/stream/schema conformance, redacted errors, live opt-in smoke and outage tests. Live acceptance deferred by owner decision; original criterion retained, no completion claim.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-03",
+          "title": "Anthropic adapter",
+          "size": "M",
+          "dependsOn": [
+            "M3-01",
+            "M3-R2"
+          ],
+          "acceptance": "Same conformance corpus; explicit feature translation/unsupported capabilities; live smoke without secret leakage. Live acceptance deferred by owner decision; original criterion retained, no completion claim.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-04",
+          "title": "xAI adapter",
+          "size": "M",
+          "dependsOn": [
+            "M3-01",
+            "M3-R2"
+          ],
+          "acceptance": "Same conformance corpus plus live smoke; do not assume endpoint similarity proves compatibility. Live acceptance deferred by owner decision; original criterion retained, no completion claim.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-05",
+          "title": "Independent reviewer roles",
+          "size": "M",
+          "dependsOn": [
+            "M3-01",
+            "M3-R2"
+          ],
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-06",
+          "title": "Finding lifecycle and reproduction",
+          "size": "L",
+          "dependsOn": [
+            "M3-05"
+          ],
+          "acceptance": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-07",
+          "title": "Customer/API/check integration",
+          "size": "M",
+          "dependsOn": [
+            "M3-06"
+          ],
+          "acceptance": "Review CLI and API operations with compatibility coverage, exact-head Checks, independent-provider dogfood, unsupported claims and confirmed regression demo; decide optional router/later adapters explicitly. Account-free demonstrations use explicitly synthetic provider fixtures; live-only claims remain deferred under docs/phases/m3-live-validation-deferral.md.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-07-ui-foundation",
+          "title": "Next.js UI foundation and packaging",
+          "size": "M",
+          "dependsOn": [
+            "M3-07",
+            "M3-R1"
+          ],
+          "acceptance": "Next.js App Router React/TS shell with Tailwind and reviewed shadcn/Radix source, theme/accessibility tokens, Zod UI-input contracts; production standalone UBI image startup, build/license/security checks and no server secrets in client bundles. Data views stay unavailable until authenticated routes ship.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-07-ui-session",
+          "title": "Browser session and authorized API access",
+          "size": "M",
+          "dependsOn": [
+            "M3-07-ui-foundation"
+          ],
+          "acceptance": "Server-managed secure sessions/OIDC decision, authorization on every Next.js server data route, tenant/repository scoping and contract-checked API access; no operator bearer tokens or App/provider keys in browser assets. Unauthorized, expired, CSRF and cross-tenant cases fail; sensitive data is not shared by caching.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-07-dashboard",
+          "title": "Initial web control-plane dashboard",
+          "size": "M",
+          "dependsOn": [
+            "M3-07-ui-session"
+          ],
+          "acceptance": "Read-only Next.js/React/TypeScript with Tailwind/shadcn/Radix PR dashboard shows exact head, review/eval status, risk, confirmed/unconfirmed findings, model disagreement and evidence links. Authenticated backend access, tenant isolation, accessible empty/error states and live customer walkthrough; never embed operator/App credentials in browser assets.",
+          "status": "planned"
+        },
+        {
+          "id": "M3-08",
+          "title": "Release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M3-07",
+            "M3-07-dashboard",
+            "M3-R1",
+            "M3-R2",
+            "M3-R3"
+          ],
+          "acceptance": "Publish verified CLI/service artifacts; fresh customer review, provider failure recovery and released-build success/failure demo; close all gates and retro. Account-free demonstrations use explicitly synthetic provider fixtures; live-only claims remain deferred under docs/phases/m3-live-validation-deferral.md.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M4",
+      "name": "Instrumentation",
+      "exit": "Released Python and TypeScript SDKs export correlated OTLP traces; the AgentCI control plane traces its own model/tool operations.",
+      "prs": [
+        {
+          "id": "M4-01",
+          "title": "Telemetry contracts and privacy",
+          "size": "M",
+          "dependsOn": [
+            "M3 closure"
+          ],
+          "acceptance": "Version AgentCI semantic mapping and event attributes; per-field capture modes, metadata-only defaults, redaction/encryption/local-storage policy fixtures.",
+          "status": "planned"
+        },
+        {
+          "id": "M4-02",
+          "title": "TypeScript SDK",
+          "size": "M",
+          "dependsOn": [
+            "M4-01"
+          ],
+          "acceptance": "Instrument existing clients and manual spans; context propagation, errors/cancellation, opt-out and no hidden reasoning capture.",
+          "status": "planned"
+        },
+        {
+          "id": "M4-03",
+          "title": "Python SDK",
+          "size": "M",
+          "dependsOn": [
+            "M4-01"
+          ],
+          "acceptance": "Equivalent behavior and shared fixtures; supported Python matrix, async/manual spans and installed wheel smoke.",
+          "status": "planned"
+        },
+        {
+          "id": "M4-04",
+          "title": "OTLP and backend integration",
+          "size": "M",
+          "dependsOn": [
+            "M4-02",
+            "M4-03"
+          ],
+          "acceptance": "Reuse OTel collector/exporters; W3C propagation, bounded buffers, backend outage/backpressure and metadata/content boundary tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M4-05",
+          "title": "Trace API and explorer linkage",
+          "size": "M",
+          "dependsOn": [
+            "M4-04"
+          ],
+          "acceptance": "Authorized trace references, PR→eval→trace navigation and CLI inspection; tenant isolation, retention and safe Kubernetes correlation IDs.",
+          "status": "planned"
+        },
+        {
+          "id": "M4-06",
+          "title": "Control-plane dogfood and velocity",
+          "size": "M",
+          "dependsOn": [
+            "M4-05"
+          ],
+          "acceptance": "Trace AgentCI model/tool/handoff/policy/side-effect operations; correlate task/PR/CI spans and critical-path waits; unknown cost/human effort remains unknown.",
+          "status": "planned"
+        },
+        {
+          "id": "M4-07",
+          "title": "SDK/service release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M4-06"
+          ],
+          "acceptance": "Publish npm/Python artifacts and changed UBI images, clean installed SDK examples, trace-backend outage demo, download verification and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M5",
+      "name": "MCP Gateway",
+      "exit": "Real tool discovery and invocation pass through the released gateway, with visible traces and enforced allow/deny/approval policies.",
+      "prs": [
+        {
+          "id": "M5-01",
+          "title": "Gateway contracts and transport",
+          "size": "M",
+          "dependsOn": [
+            "M4 closure"
+          ],
+          "acceptance": "Pin current MCP capabilities/transports against official spec; client/server boundary, session lifecycle, version negotiation and cancellation fixtures.",
+          "status": "planned"
+        },
+        {
+          "id": "M5-02",
+          "title": "Discovery and schema snapshots",
+          "size": "M",
+          "dependsOn": [
+            "M5-01"
+          ],
+          "acceptance": "Forward discovery, namespace collisions and immutable tool revisions; server annotations cannot define trusted policy.",
+          "status": "planned"
+        },
+        {
+          "id": "M5-03",
+          "title": "Authentication and identity",
+          "size": "M",
+          "dependsOn": [
+            "M5-02"
+          ],
+          "acceptance": "Auth integration/passthrough with scoped identity; denied tenant, token audience and credential forwarding/leak tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M5-04",
+          "title": "Policy and human approval",
+          "size": "L",
+          "dependsOn": [
+            "M5-03"
+          ],
+          "acceptance": "Structured allow/deny/approval, side-effect classification and rate budgets; approval identity/expiry, replay resistance and no unauthorized side effects.",
+          "status": "planned"
+        },
+        {
+          "id": "M5-05",
+          "title": "Tracing and redaction",
+          "size": "M",
+          "dependsOn": [
+            "M5-04"
+          ],
+          "acceptance": "Correlate invocation/result/policy evidence; redact before export/storage and preserve useful metadata during upstream failures.",
+          "status": "planned"
+        },
+        {
+          "id": "M5-06",
+          "title": "Gateway deploy and adversarial acceptance",
+          "size": "M",
+          "dependsOn": [
+            "M5-05"
+          ],
+          "acceptance": "UBI service, health/shutdown/upgrade docs and burst/outage/injection tests against real safe MCP servers; SDK/API/client example.",
+          "status": "planned"
+        },
+        {
+          "id": "M5-07",
+          "title": "Release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M5-06"
+          ],
+          "acceptance": "Publish/download gateway artifacts; demonstrate allowed, denied and approval-required tools with evidence; customer setup and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M6",
+      "name": "Release evidence",
+      "exit": "A verified release can be reconstructed to exact source, spec, evals, artifacts and model/tool/policy inputs; tampering is rejected.",
+      "prs": [
+        {
+          "id": "M6-01",
+          "title": "AgentRelease contracts and immutability",
+          "size": "M",
+          "dependsOn": [
+            "M5 closure"
+          ],
+          "acceptance": "Canonical schema, all required digests, versioned identity, API/CLI contracts and storage migration; finalized records cannot be overwritten.",
+          "status": "planned"
+        },
+        {
+          "id": "M6-02",
+          "title": "Bundle construction and storage",
+          "size": "M",
+          "dependsOn": [
+            "M6-01"
+          ],
+          "acceptance": "Content-addressed manifests, bounded evidence references, tenant authorization, retention and independent reconstruction verification.",
+          "status": "planned"
+        },
+        {
+          "id": "M6-03",
+          "title": "Signing and verification",
+          "size": "M",
+          "dependsOn": [
+            "M6-02"
+          ],
+          "acceptance": "Use existing signing/attestation standards; identity/trust policy and offline verification; altered digest, wrong signer and missing artifact rejection.",
+          "status": "planned"
+        },
+        {
+          "id": "M6-04",
+          "title": "GitHub CI integration",
+          "size": "M",
+          "dependsOn": [
+            "M6-03"
+          ],
+          "acceptance": "Build/verify/publish evidence from trusted source; idempotency and stale/cancelled CI rejection; agent-readable release API and CLI.",
+          "status": "planned"
+        },
+        {
+          "id": "M6-05",
+          "title": "Promotion decision records",
+          "size": "M",
+          "dependsOn": [
+            "M6-04"
+          ],
+          "acceptance": "Configured stage gates and actor/policy/window/evidence records; explicit fail behavior and Argo integration boundary, never replace GitOps.",
+          "status": "planned"
+        },
+        {
+          "id": "M6-06",
+          "title": "Reconstruction and velocity experiments",
+          "size": "M",
+          "dependsOn": [
+            "M6-05"
+          ],
+          "acceptance": "Fresh reconstruction plus missing/tampered evidence failures; measure safe affected-check reuse/merge-queue experiments with immutable inputs and full release checks.",
+          "status": "planned"
+        },
+        {
+          "id": "M6-07",
+          "title": "Release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M6-06"
+          ],
+          "acceptance": "Publish/download signed evidence and service/CLI artifacts; demo exact reconstruction and rejection; migration/rollback guide and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M7",
+      "name": "Tekton/OpenShift distribution",
+      "exit": "A real OpenShift sample PR executes through Tekton and produces signed AgentRelease evidence with verified operator status.",
+      "prs": [
+        {
+          "id": "M7-01",
+          "title": "Platform ADR and CRDs",
+          "size": "M",
+          "dependsOn": [
+            "M6 closure"
+          ],
+          "acceptance": "Choose supported OpenShift/OLM/operator toolchain; platform-neutral domain linkage and AgentProject/AgentRelease/AgentPolicy schemas with upgrade tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-02",
+          "title": "Tekton analysis/eval task catalog",
+          "size": "M",
+          "dependsOn": [
+            "M7-01"
+          ],
+          "acceptance": "Semantic diff, risk, eval and model-review tasks use released core; pin inputs and isolate untrusted workspace; real TaskRun fixtures.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-03",
+          "title": "Evidence/attestation tasks",
+          "size": "M",
+          "dependsOn": [
+            "M7-02"
+          ],
+          "acceptance": "Evidence publish/release attest tasks reuse M6 verifier; replay task compatibility contract explicitly awaits M9, not fake replay success.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-04",
+          "title": "Pipelines as Code and Results",
+          "size": "M",
+          "dependsOn": [
+            "M7-03"
+          ],
+          "acceptance": "Real PR pipeline, scoped App integration, durable Results links, retries/cancellation and stale-head rejection.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-05",
+          "title": "Tekton Chains verification",
+          "size": "M",
+          "dependsOn": [
+            "M7-04"
+          ],
+          "acceptance": "Signed provenance linkage binds all release digests; tampering and untrusted signer fail; avoid duplicating Chains.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-06",
+          "title": "Operator reconciliation",
+          "size": "L",
+          "dependsOn": [
+            "M7-01",
+            "M7-05"
+          ],
+          "acceptance": "Go/controller-runtime operator for CRDs, conditions and evidence reconciliation; RBAC, restart/idempotency and failed verification tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-07",
+          "title": "OpenShift packaging/integrations",
+          "size": "L",
+          "dependsOn": [
+            "M7-06"
+          ],
+          "acceptance": "OLM bundle/install/upgrade, OAuth/RBAC, OTel and GitOps configuration; restricted SCC and UBI images; dynamic console plugin decision explicit.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-08",
+          "title": "Real cluster customer acceptance",
+          "size": "M",
+          "dependsOn": [
+            "M7-07"
+          ],
+          "acceptance": "Fresh install and sample live PR→Tekton→signed Verified release; failed signature, outage/restart and upgrade/rollback demo rehearsal.",
+          "status": "planned"
+        },
+        {
+          "id": "M7-09",
+          "title": "Distribution release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M7-08"
+          ],
+          "acceptance": "Publish operator/bundle/tasks/service artifacts; verify registry downloads and clean cluster installation; live released-build demo and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M8",
+      "name": "Production feedback",
+      "exit": "A seeded production-like failure produces a correctly linked incident with confidence and evidence, visible through API and UI.",
+      "prs": [
+        {
+          "id": "M8-01",
+          "title": "Outcome/incident contracts",
+          "size": "M",
+          "dependsOn": [
+            "M7 closure"
+          ],
+          "acceptance": "Outcome taxonomy, idempotent ingestion, versioned events, tenant/retention/privacy rules and schema migrations.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-02",
+          "title": "SDK/OTLP/gateway ingestion",
+          "size": "M",
+          "dependsOn": [
+            "M8-01"
+          ],
+          "acceptance": "Normalize existing trace/gateway signals with release identity; redaction, duplicates, out-of-order data and backpressure tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-03",
+          "title": "External alert adapters",
+          "size": "M",
+          "dependsOn": [
+            "M8-02"
+          ],
+          "acceptance": "Versioned adapters for logs/metrics, Kubernetes/audit, Sentry-like and PagerDuty-like sources plus feedback/invariant signals; choose first live integrations explicitly.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-04",
+          "title": "Candidate incident engine",
+          "size": "M",
+          "dependsOn": [
+            "M8-03"
+          ],
+          "acceptance": "Deterministic triggers for error/policy/alert/anomaly/feedback/invariant/deployment; dedupe, threshold and infrastructure failure distinctions.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-05",
+          "title": "Correlation evidence",
+          "size": "M",
+          "dependsOn": [
+            "M8-04"
+          ],
+          "acceptance": "Trace/release/SHA/resource/causal references and confidence; time proximity alone never proves causality; ambiguous fixtures remain ambiguous.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-06",
+          "title": "Incident and application UI/API",
+          "size": "M",
+          "dependsOn": [
+            "M8-05"
+          ],
+          "acceptance": "Authorized timeline/evidence/application health and outcome client; accessible views, pagination, empty/error states and tenant tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-07",
+          "title": "Operational/velocity analytics",
+          "size": "M",
+          "dependsOn": [
+            "M8-06"
+          ],
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance.",
+          "status": "planned"
+        },
+        {
+          "id": "M8-08",
+          "title": "Release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M8-07"
+          ],
+          "acceptance": "Publish/download changed services/UI/SDKs; customer seeded failure and ambiguous-correlation demo, retention/recovery docs and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M9",
+      "name": "Replay and regression",
+      "exit": "A seeded incident meets a configured reproduction threshold and becomes a stable regression that fails before the fix and passes after it.",
+      "prs": [
+        {
+          "id": "M9-01",
+          "title": "Replay package contracts/privacy",
+          "size": "M",
+          "dependsOn": [
+            "M8 closure"
+          ],
+          "acceptance": "Immutable incident/release/policy/fixture identity, local-only storage and capture consent; required fixtures/expected outcomes validated.",
+          "status": "planned"
+        },
+        {
+          "id": "M9-02",
+          "title": "Recorded replay",
+          "size": "M",
+          "dependsOn": [
+            "M9-01"
+          ],
+          "acceptance": "Deterministic orchestration replay with model/tool fixtures; no uncontrolled external side effects; missing fixtures are infrastructure/inconclusive results.",
+          "status": "planned"
+        },
+        {
+          "id": "M9-03",
+          "title": "Simulated and ephemeral replay",
+          "size": "L",
+          "dependsOn": [
+            "M9-02"
+          ],
+          "acceptance": "Curated state and isolated real-tool environments, cleanup/resource limits; label replay fidelity and wire M7 replay task once implemented.",
+          "status": "planned"
+        },
+        {
+          "id": "M9-04",
+          "title": "Reproduction orchestration",
+          "size": "M",
+          "dependsOn": [
+            "M9-03"
+          ],
+          "acceptance": "Temporal cancellation/retry/restart and configured repeated-trial thresholds; never mark one convenient retry as confirmation.",
+          "status": "planned"
+        },
+        {
+          "id": "M9-05",
+          "title": "Regression generation and approval",
+          "size": "M",
+          "dependsOn": [
+            "M9-04"
+          ],
+          "acceptance": "Stable case IDs and minimized context; explicit expected behavior provenance; human approval for inferred high-impact expectations.",
+          "status": "planned"
+        },
+        {
+          "id": "M9-06",
+          "title": "Customer/API/CLI acceptance",
+          "size": "M",
+          "dependsOn": [
+            "M9-05"
+          ],
+          "acceptance": "Replay client and evidence navigation; seeded case reproduces and committed/stored regression runs in future PR checks; privacy and failure demos.",
+          "status": "planned"
+        },
+        {
+          "id": "M9-07",
+          "title": "Release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M9-06"
+          ],
+          "acceptance": "Publish/download replay tools/services/task updates; fresh install, before/after regression demonstration and replay limits, recovery docs and retro.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "M10",
+      "name": "Repair orchestration",
+      "exit": "A seeded incident produces a verified repair PR without human code authoring, preserving human merge/production authority.",
+      "prs": [
+        {
+          "id": "M10-01",
+          "title": "Repair contracts and autonomy",
+          "size": "M",
+          "dependsOn": [
+            "M9 closure"
+          ],
+          "acceptance": "Repair/approval APIs, versioned policies and separate permissions for every action; human merge/approval/production defaults, actor audit and threat model.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-02",
+          "title": "Evidence-based root-cause workflow",
+          "size": "M",
+          "dependsOn": [
+            "M10-01"
+          ],
+          "acceptance": "Eleven cause classes and validated hypotheses; confidence/provenance, ambiguity and provider outage; no unsupported root-cause certainty.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-03",
+          "title": "Isolated candidate patches",
+          "size": "L",
+          "dependsOn": [
+            "M10-02"
+          ],
+          "acceptance": "Bounded N candidates from coding adapters; workspace/credential separation, cancellation and artifact retention; cannot alter authoritative judging evidence.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-04",
+          "title": "Verification and candidate selection",
+          "size": "L",
+          "dependsOn": [
+            "M10-03"
+          ],
+          "acceptance": "New regression, affected/full suites by risk, security/policy/cost checks; choose by recorded evidence, reject empty tests/LLM preference-only selection.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-05",
+          "title": "Branch/PR automation",
+          "size": "M",
+          "dependsOn": [
+            "M10-04"
+          ],
+          "acceptance": "Repository-scoped write permissions with explicit installation decision; exact verified candidate SHA, idempotency and no unsolicited merge/deploy.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-06",
+          "title": "Repair UI/API and recovery",
+          "size": "M",
+          "dependsOn": [
+            "M10-05"
+          ],
+          "acceptance": "Human approval and incident→repair→release linkage; force-push/stale evidence, crash recovery and partial PR creation tests.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-07",
+          "title": "End-to-end customer dogfood",
+          "size": "M",
+          "dependsOn": [
+            "M10-06"
+          ],
+          "acceptance": "Seeded incident→replay→regression→candidate→verified repair PR; reject unsafe patch and forged evidence; measure elapsed cycle/cost/rework.",
+          "status": "planned"
+        },
+        {
+          "id": "M10-08",
+          "title": "Release and demo",
+          "size": "L",
+          "dependsOn": [
+            "M10-07"
+          ],
+          "acceptance": "Publish/download all changed artifacts; live repair PR and blocked unsafe candidate demo; product-wide DoD audit, security/scale acceptance and retro.",
+          "status": "planned"
+        }
+      ]
+    }
+  ],
+  "rowCount": 1346,
+  "rowFiles": [
+    {
+      "path": "delivery/reconciliation/sections/01.json",
+      "count": 12,
+      "sha256": "d6dd4fb9ffd54772db7503b40fd85deef7f8f38a879599bd4be6aad35c7ba8ab"
+    },
+    {
+      "path": "delivery/reconciliation/sections/02.json",
+      "count": 40,
+      "sha256": "9d7328d7bdd190e1fdd63ef6617d36ed75cdc6040f23497f9a1950e7d42a1187"
+    },
+    {
+      "path": "delivery/reconciliation/sections/03.json",
+      "count": 40,
+      "sha256": "5a0ae71c4f0f033a6879710bc8299cb59a2c2cf6850fd0634ae8dd7e76c801fc"
+    },
+    {
+      "path": "delivery/reconciliation/sections/04.json",
+      "count": 15,
+      "sha256": "0908f4f4ec41cc5f1154558d165a2f1f4a52eec45decb38eb89462fdfa7e1905"
+    },
+    {
+      "path": "delivery/reconciliation/sections/05.json",
+      "count": 58,
+      "sha256": "e5782bcb3b7f22864a1bee2974510981b41cac571c86ae0a59012ce57f0beac1"
+    },
+    {
+      "path": "delivery/reconciliation/sections/06.json",
+      "count": 21,
+      "sha256": "a1d685e34fb42d362ce04bb40973e7a524a04efa62bf262e2660083ce6e7b418"
+    },
+    {
+      "path": "delivery/reconciliation/sections/07.json",
+      "count": 13,
+      "sha256": "6b9b377d67e8eece4e4b462ff2d4d227da4797d2347c0e13105a3047ade40d42"
+    },
+    {
+      "path": "delivery/reconciliation/sections/08.json",
+      "count": 21,
+      "sha256": "0b2f6148654ab47663138db095f5de3382c01938d5a0b0e3a933ea5332ccc2c5"
+    },
+    {
+      "path": "delivery/reconciliation/sections/09.json",
+      "count": 56,
+      "sha256": "99f1d62d990a58089d71a26ebd110a1639caca146dc335dcf2e2ea7bd45d2da2"
+    },
+    {
+      "path": "delivery/reconciliation/sections/10.json",
+      "count": 28,
+      "sha256": "3bb7467a5c88cad32c759595777018e6b1869690234349d4fa1a13033595afe3"
+    },
+    {
+      "path": "delivery/reconciliation/sections/11.json",
+      "count": 36,
+      "sha256": "68a4609810bf79e11fa744fa5d0e64b70943dbb26263f5876f6b805e484614f0"
+    },
+    {
+      "path": "delivery/reconciliation/sections/12.json",
+      "count": 17,
+      "sha256": "f05c4db1c9e006f8f2cdfe13024f383aba3d82fbbda67b510ab63472c81d1cad"
+    },
+    {
+      "path": "delivery/reconciliation/sections/13.json",
+      "count": 37,
+      "sha256": "61243b71c7fa0b4a52e62985ed0cba77b54a680ff7cca73ceefcff3086377a20"
+    },
+    {
+      "path": "delivery/reconciliation/sections/14.json",
+      "count": 44,
+      "sha256": "ebc0e30cd5e9d2d726b683279cd03d8f2d95eb10bad30c161a9f8df5ff708d34"
+    },
+    {
+      "path": "delivery/reconciliation/sections/15.json",
+      "count": 20,
+      "sha256": "2c22e4e668864dbf84844724f74cdc4d2c6ab0674dba9722b12cedb5c319a1ff"
+    },
+    {
+      "path": "delivery/reconciliation/sections/16.json",
+      "count": 60,
+      "sha256": "5bff5e229b156e016bb4f5d908e7fc268b486551922fe1a7c9b3e8cd0a08d93a"
+    },
+    {
+      "path": "delivery/reconciliation/sections/17.json",
+      "count": 44,
+      "sha256": "9a7180506f8cdf4a46d181855c671be98ff980e6a1bd9d790535b94fe15e07dd"
+    },
+    {
+      "path": "delivery/reconciliation/sections/18.json",
+      "count": 17,
+      "sha256": "78b756b01c96f660290ddf106871aed98cb1dc8c95a9d9f51b4d756e6effab70"
+    },
+    {
+      "path": "delivery/reconciliation/sections/19.json",
+      "count": 28,
+      "sha256": "0f18a8f7e4747eff683cc21838609ad2f928cc5eef08cdb0ea0ad5b12117a28f"
+    },
+    {
+      "path": "delivery/reconciliation/sections/20.json",
+      "count": 23,
+      "sha256": "fe63ffd384b4e3fe9411518d62d57974b7ebbdf51ce25d23d98b0051629855e5"
+    },
+    {
+      "path": "delivery/reconciliation/sections/21.json",
+      "count": 15,
+      "sha256": "6b0e3d8d15cc31c326c94d686724c045540763c77ff0d134272118a410f16f6f"
+    },
+    {
+      "path": "delivery/reconciliation/sections/22.json",
+      "count": 24,
+      "sha256": "0a562f20d6ab456ece4c540d9f77e634a6fdfd00951df03b0ff0985ee25c269b"
+    },
+    {
+      "path": "delivery/reconciliation/sections/23.json",
+      "count": 27,
+      "sha256": "adfe366e6802215de4a087aba28d550e0a7aed25fa43f5486d85dc696d460acd"
+    },
+    {
+      "path": "delivery/reconciliation/sections/24.json",
+      "count": 20,
+      "sha256": "3a4568f420ac8bb43d9171b60982f2f2f967b269e8d855d2ee2615ad57b4e25d"
+    },
+    {
+      "path": "delivery/reconciliation/sections/25.json",
+      "count": 19,
+      "sha256": "91f6b963a3bcbd4bff5831f8a988d96dc62357c3408ab1b0cc815f4d6d09e425"
+    },
+    {
+      "path": "delivery/reconciliation/sections/26.json",
+      "count": 11,
+      "sha256": "c22c8553670602ffeb49e1d6507e122dd65a6229d2ceaf8cbea9f3843f452af3"
+    },
+    {
+      "path": "delivery/reconciliation/sections/27.json",
+      "count": 33,
+      "sha256": "e035de6ee41bb63c92a6bc5438e0117416994203263512e846ecf54501dbd8bb"
+    },
+    {
+      "path": "delivery/reconciliation/sections/28.json",
+      "count": 29,
+      "sha256": "d2431d3ef8910b2b617171b642093bbf2e5a13d932ebd06ba2387b634cb22b2e"
+    },
+    {
+      "path": "delivery/reconciliation/sections/29.json",
+      "count": 34,
+      "sha256": "a57805d359fc211af656d08e1ae96190ff8ad0e362d6d286f73a6f1f27ebd3b5"
+    },
+    {
+      "path": "delivery/reconciliation/sections/30.json",
+      "count": 21,
+      "sha256": "b461f3ec202bed90139719ac433404f5304bf845e3384c6514eb5516beaeced9"
+    },
+    {
+      "path": "delivery/reconciliation/sections/31.json",
+      "count": 18,
+      "sha256": "763dc16a6c94c1edc70e5f3afef1aca50682872c8a9e33922a1f45f1eb9a2cd7"
+    },
+    {
+      "path": "delivery/reconciliation/sections/32.json",
+      "count": 4,
+      "sha256": "11b1a130c5f899a4fd1429f3b91ef5871ceeed948e404155a55ee5af51505230"
+    },
+    {
+      "path": "delivery/reconciliation/sections/33.json",
+      "count": 28,
+      "sha256": "3a8f3964eba322ef023537303d095173a3608c668ec3fadaabb8a084fc86fef4"
+    },
+    {
+      "path": "delivery/reconciliation/sections/34.json",
+      "count": 26,
+      "sha256": "6e93b0365791a340845313e946250d77dd184117a9982a9ac30e19f63deedb4e"
+    },
+    {
+      "path": "delivery/reconciliation/sections/35.json",
+      "count": 8,
+      "sha256": "b04c300f0cd066dc67bc7dcd0035ab265e6d8f4fe41a747e1d11fa537acd3145"
+    },
+    {
+      "path": "delivery/reconciliation/sections/36.json",
+      "count": 6,
+      "sha256": "68fa24a9bd0bca97377d7a81b8a33eafe9df25294a21dd9f5a6310a8d2066885"
+    },
+    {
+      "path": "delivery/reconciliation/sections/37.json",
+      "count": 24,
+      "sha256": "c426996f664d42e4dac3a021c725340a9319bc3918ef71d20d0035fb34e2af57"
+    },
+    {
+      "path": "delivery/reconciliation/sections/38.json",
+      "count": 11,
+      "sha256": "561acce2356f91a4cf9ddc434080e0c91da33c6f774b4a27af090c81d149a33a"
+    },
+    {
+      "path": "delivery/reconciliation/sections/39.json",
+      "count": 51,
+      "sha256": "0a8329222906894e22a33fea3a5b0741e58e3283b20358debedc98e1c6b51169"
+    },
+    {
+      "path": "delivery/reconciliation/sections/40.json",
+      "count": 116,
+      "sha256": "16a88753aa6654353f606b22c0b4358dc9c34b0fe58a61b4e4843c59518b16f0"
+    },
+    {
+      "path": "delivery/reconciliation/sections/41.json",
+      "count": 13,
+      "sha256": "e343fd73f45d9e693f1ae92f68dcf1c3e373c196d15866d08ca23858a7dc6048"
+    },
+    {
+      "path": "delivery/reconciliation/sections/42.json",
+      "count": 1,
+      "sha256": "099fb342efa774ee10785c4ddca1eb614e6c7d904250ea4f90a4db87c988f234"
+    },
+    {
+      "path": "delivery/reconciliation/sections/43.json",
+      "count": 3,
+      "sha256": "13aeb0b686fa4154c3c28293adcbba726355742c1b0bbbced4d815de8d87bad6"
+    },
+    {
+      "path": "delivery/reconciliation/sections/44.json",
+      "count": 27,
+      "sha256": "094dc4f63eb8f808eedc8e7370f70b051dcb6ab0b275dc4a32883d2ac3e4c363"
+    },
+    {
+      "path": "delivery/reconciliation/sections/45.json",
+      "count": 24,
+      "sha256": "7b0df93bf062d4dea58ac7de1ef17daa282ea47413e80c9c7e0a35f8ac852564"
+    },
+    {
+      "path": "delivery/reconciliation/sections/46.json",
+      "count": 32,
+      "sha256": "91936aa122e77b4088bdc78f775375ab2ffb6485b04299d006f243a823503d41"
+    },
+    {
+      "path": "delivery/reconciliation/sections/47.json",
+      "count": 22,
+      "sha256": "c3749eb4303269f6b134293ec74c04f5f3d738c223b2b9044b5b4b85397512ea"
+    },
+    {
+      "path": "delivery/reconciliation/sections/48.json",
+      "count": 24,
+      "sha256": "c944ad69c042337f4374175027c117ed5c905388e6b643e74e31ca5fefdd0f61"
+    },
+    {
+      "path": "delivery/reconciliation/sections/49.json",
+      "count": 14,
+      "sha256": "2f1ac3ea37dce0f3ef842a840715065055c5086ea4864c0c951fce4d61159f20"
+    },
+    {
+      "path": "delivery/reconciliation/sections/50.json",
+      "count": 12,
+      "sha256": "c2e784f6d3b50a8723c6d03e00498f579fd23195fd6b04f3d3573dd40f6571e0"
+    },
+    {
+      "path": "delivery/reconciliation/sections/51.json",
+      "count": 19,
+      "sha256": "0be122bde904b7726cbd0e9987517bf77a473c3ca8eba3f8275b1761a8d12c91"
+    }
+  ]
+}
