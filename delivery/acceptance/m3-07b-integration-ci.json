@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "pullRequest": 45,
+  "candidateCommit": "5b81db3f153c8c7fb54cccf778cc731b5ea787bf",
+  "previewCommit": "b372b76fcda24e2afa9ef9a39e915bf5cfe40e76",
+  "mergeCommit": "328d69bc2232f9863b7cdb74c406d896733344c7",
+  "verifiedTree": "7316ccfe5933f949ced843d4f6136d1c0da2c2b1",
+  "verifyRun": 37389538519,
+  "artifactId": 11381090856,
+  "manifestSha256": "24318d6af3e116de6cad5e4727844090116e0d1d90c821320fd76dfe18147893",
+  "verifiedArtifactHashes": 10,
+  "integration": {
+    "passed": 45,
+    "failed": 0,
+    "skipped": 0
+  },
+  "cache": "warm",
+  "advisory": {
+    "run": "37389331146",
+    "artifactId": 11380402110,
+    "subject": {
+      "repository": "alimobrem/agentci",
+      "installationId": 167655696,
+      "pullRequest": 45,
+      "baseSha": "66a5998a4befdb48fafa283cba966f399bf032ce",
+      "headSha": "5b81db3f153c8c7fb54cccf778cc731b5ea787bf"
+    },
+    "producer": {
+      "version": "0.4.0-m3-dev.1",
+      "sourceCommit": "66a5998a4befdb48fafa283cba966f399bf032ce",
+      "repository": "alimobrem/agentci",
+      "installationId": 167655696,
+      "runId": "37389331146",
+      "runAttempt": "1",
+      "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+      "evaluatorImage": "sha256:13e777952b72f6e82838fd014f9ec2e6c758f4cec8a5eb8846503d3757763363"
+    },
+    "summary": {
+      "state": "completed",
+      "outcome": "passed",
+      "executionGaps": [],
+      "unitCount": 8,
+      "comparisonCount": 4
+    },
+    "regressions": 0,
+    "verified": true
+  },
+  "duplicateAdvisory": {
+    "runId": 37389539215,
+    "conclusion": "cancelled",
+    "reason": "Exact current PR base/head already covered by independently verified main sweep37389331146; full Verify completed successfully."
+  },
+  "securityLimitation": "Five images have no HIGH/CRITICAL findings. Optional eval-engines retains node-forge CVE-2026-85393 HIGH without FixedVersion; existing checksum-bound downstream backport and applicability evidence remains required. Gate only rejects fixable HIGH/CRITICAL.",
+  "milestoneComplete": false
+}
