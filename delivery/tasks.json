@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2338,6 +2338,29 @@
         }
       ],
       "dependsOn": []
+    },
+    {
+      "id": "M3-R1-security-1",
+      "title": "Patch optional Promptfoo engine Git dependency vulnerabilities",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T02:42:09.397Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Official upstream and npm release evidence selects a compatible stable Promptfoo dependency update; installed dependency licenses and positive/negative/error report cases pass in the actual UBI evaluator image. Fresh image scan removes the four fixable PR55 findings without weakening scan thresholds or removing the existing forge backport and unresolved finding. Preserve failed run37404082498 artifact11386399646 and distinguish skipped runtime gates.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-promptfoo-security-local.json"
+          ]
+        }
+      ],
+      "dependsOn": [
+        "M3-00"
+      ]
     }
   ]
 }
