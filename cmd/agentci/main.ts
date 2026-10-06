@@ -21,11 +21,20 @@ review --config PRIVATE_JSON --pr NUMBER [--request-id UUID]
 preflight --config PRIVATE_JSON  Check configured mounts, readiness and provider prerequisites.
   No model calls or webhook changes; provider authentication remains unverified.
 Future CLI commands: eval, replay, repair.
+model-review profiles [--config PRIVATE_JSON]
+model-review submit|show|cancel --request ADMISSION_JSON [--config PRIVATE_JSON]
+  Submit or inspect an exact pinned model-review admission. Cancellation records intent.
+  Credentials: private token-file config, or AGENTCI_API_URL and evidence/operator token environment.
+  Successful submission/status/cancellation is not a passing review verdict.
 `;
 
 export async function main(args: string[]): Promise<number> {
   if (!args.length || args[0] === '--help' || args[0] === 'help') { console.log(help); return 0; }
   if (args[0] === '--version') { console.log(VERSION); return 0; }
+  if (args[0] === 'model-review') {
+    const {modelReviewCommand} = await import('./model-review.ts');
+    return modelReviewCommand(args.slice(1));
+  }
   if (args[0] === 'preflight') {
     if(args.length!==3||args[1]!=='--config'||!args[2]||args[2].startsWith('--')){console.error(JSON.stringify({error:{code:'invalid-preflight-arguments'}}));return 2;}
     const {loadPreflightConfig,runPreflight}=await import('../../packages/onboarding/preflight-command.ts');

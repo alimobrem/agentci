@@ -6,6 +6,9 @@ import { canonical, digest } from '../review/engine.ts';
 import type { EvidenceRecord } from '../storage/postgres.ts';
 import {validateComparisonRecord,type ComparisonRecord} from '../evals/comparison.ts';
 import {EvalExportVerifier,ExportIdentityMismatch,MAX_EXPORT_FRAME_BYTES,type ExportItem} from '../evals/export.ts';
+export {ModelReviewClient, type ModelReviewClientOptions} from './model-review.ts';
+export type {ReviewAdmissionRequest} from '../reviewers/admission.ts';
+export type {ModelReviewAccepted, ModelReviewStatus, ModelReviewCancellation, ReviewerProfileList} from '../reviewers/transport.ts';
 const validateAnalysis = new Ajv({ strict: true }).compile(JSON.parse(readFileSync(new URL('../review/analysis.schema.json', import.meta.url), 'utf8')));
 export class AgentCIError extends Error {
   constructor(public code: string, public status?: number) { super(`AgentCI: ${code}${status ? ` (${status})` : ''}`); this.name = 'AgentCIError'; }
