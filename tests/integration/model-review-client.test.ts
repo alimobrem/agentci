@@ -17,6 +17,7 @@ import {createModelReviewControl} from '../../apps/control/model-reviews.ts';
 import {createReviewerRuntime} from '../../packages/runtime/reviewers.ts';
 import {initializeReviewerController} from '../../apps/worker/reviewer-runtime.ts';
 import {dispatchAdmittedReviews} from '../../apps/worker/reviewer-dispatch.ts';
+import type {ModelReviewExportOutput} from '../../packages/client/model-review.ts';
 import {FindingHistoryStore} from '../../packages/storage/finding-history.ts';
 import type {ReviewAdmissionRequest} from '../../packages/reviewers/admission.ts';
 
@@ -122,6 +123,20 @@ test('compiled client and CLI round-trip actual model-review HTTP, PostgreSQL an
     assert.equal(history.at(-1)!.throughVersion, pending.event.finding.version);
     assert.equal(history.flatMap(page => page.items).at(-1)!.digest, pending.digest);
 
+    const exported: ModelReviewExportOutput[] = [];
+    for await (const item of client.modelReviewExport(admission)) exported.push(item);
+    const certificate = exported.at(-1)!;
+    assert.equal(certificate.type, 'complete');
+    if (certificate.type !== 'complete') throw Error('Missing export certificate');
+    assert.equal(certificate.data.complete, true);
+    assert.deepEqual(certificate.data.header.review, cancelledLate);
+    assert.equal(certificate.data.header.reviewerCount, 7);
+    assert.equal(certificate.data.header.eventCount, pending.event.finding.version);
+    assert.deepEqual(certificate.data.header.findings, [{id: pinned.id, throughVersion: pending.event.finding.version, lastDigest: pending.digest}]);
+    const exportedEvents = exported.flatMap(item => item.type === 'record' && item.frame.type === 'finding' ? [item.frame.data] : []);
+    assert.deepEqual(exportedEvents, history.flatMap(page => page.items));
+    assert.ok(exported.slice(0, -1).every(item => item.type === 'record' && item.provisional));
+
     // Exercise the executable from the selected build or installed package too.
     const exec = promisify(execFile), env = {...process.env, AGENTCI_API_URL: url, AGENTCI_EVIDENCE_TOKEN: config.evidenceToken, AGENTCI_OPERATOR_TOKEN: config.operatorToken};
     const requestFile = resolve(files, 'admission.json'); await writeFile(requestFile, JSON.stringify(admission));
@@ -146,6 +161,10 @@ test('compiled client and CLI round-trip actual model-review HTTP, PostgreSQL an
     assert.equal(historyCli.stderr, '');
     assert.deepEqual(cliPages.flatMap(page => page.items), history.flatMap(page => page.items));
     assert.equal(cliPages.at(-1).nextCursor, null);
+    const exportCli = await cli(['model-review', 'export', '--request', requestFile]);
+    assert.equal(exportCli.stderr, '');
+    const cliExport = exportCli.stdout.trim().split('\n').map(line => JSON.parse(line));
+    assert.deepEqual(cliExport, exported, 'installed CLI and public client certify the same retained snapshot');
     assert.equal((await pool.query('SELECT count(*) FROM agentci_review_admission_outbox')).rows[0].count, '1');
   } finally {
     if (server) await new Promise<void>(resolve => {server!.closeAllConnections(); server!.close(() => resolve());});
