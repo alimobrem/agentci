@@ -77,6 +77,9 @@ try {
   const overlay=parse(await readFile(join(installedRoot,'deploy/reviewer.compose.yaml'),'utf8'));
   if(overlay.services.worker.environment.AGENTCI_REVIEWER_CONFIG_FILE!=='/run/agentci/reviewers.json'||!overlay.services.worker.volumes.some(value=>value.endsWith(':/run/agentci/reviewers.json:ro')))throw new Error('Installed operator config mount missing');
   if(!(await readFile(join(installedRoot,'docs/phases/m3-reviewer-runtime.md'),'utf8')).includes('M3-07c'))throw new Error('Installed development runtime instructions missing');
+  if(!(await readFile(join(installedRoot,'deploy/migrations/013_model_review_publication.sql'),'utf8')).includes('model_review_publication_dispatch'))throw new Error('Installed publication migration missing');
+  const {initializeModelReviewCheckScheduler}=await import(pathToFileURL(join(installedRoot,'dist/apps/worker/model-review-publication.js')).href);
+  if(await initializeModelReviewCheckScheduler({}, {}, {}, {})!==null)throw new Error('Installed publication capability must default off');
   const {validateModelFinding}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/model.js')).href);
   const findingFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-finding.json'),'utf8'));
   validateModelFinding(findingFixture,findingFixture.subject);

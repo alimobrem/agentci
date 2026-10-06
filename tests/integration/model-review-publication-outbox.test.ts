@@ -1,0 +1,41 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {randomUUID} from 'node:crypto';import {readFile} from 'node:fs/promises';import {Pool} from 'pg';
+import {ReviewAdmissionStore} from '../../packages/storage/review-admissions.ts';
+import {ReviewDispatchStore} from '../../packages/storage/review-dispatch.ts';
+import {ModelReviewPublicationOutbox,ModelReviewPublicationLeaseLost} from '../../packages/storage/model-review-publication-outbox.ts';
+import {canonical,digest} from '../../packages/review/engine.ts';
+const url=process.env.AGENTCI_TEST_DATABASE_URL;if(!url)throw Error('Publication outbox acceptance requires real PostgreSQL; never silently skip');
+test('publication migration upgrades once and durable generation leases preserve changes/cooldowns',{timeout:30000},async()=>{
+ const schema=`publication_${randomUUID().replaceAll('-','')}`,admin=new Pool({connectionString:url});await admin.query(`CREATE SCHEMA ${schema}`);const pool=new Pool({connectionString:url,options:`-c search_path=${schema}`});
+ const scope={organizationId:randomUUID(),repository:'fixture/repo'},subject={...scope,pullRequest:1,baseSha:'a'.repeat(40),headSha:'b'.repeat(40)};
+ try{
+  for(const name of ['008_m3_review_admissions','009_m3_review_dispatch','011_m3_review_summaries','012_m3_review_recovery'])await pool.query(await readFile(new URL(`../../deploy/migrations/${name}.sql`,import.meta.url),'utf8'));
+  const admissions=new ReviewAdmissionStore(pool,scope,{approve:async request=>({requestDigest:digest(canonical(request)),policyDigest:digest('policy'),profileRevision:request.profile.revision,mode:request.mode})});
+  const request={schemaVersion:'v1alpha1' as const,id:randomUUID(),subject,profile:{id:'profile',revision:digest('profile')},mode:'synthetic' as const};await admissions.admit(request);
+  const outbox=new ModelReviewPublicationOutbox(pool,scope);await assert.rejects(outbox.ready(),/storage-unavailable/);
+  const migration=await readFile(new URL('../../deploy/migrations/013_model_review_publication.sql',import.meta.url),'utf8');await pool.query(migration);await outbox.ready();
+  const row=async(id=request.id)=>(await pool.query('SELECT * FROM agentci_model_review_publications WHERE id=$1',[id])).rows[0];
+  assert.equal((await row()).generation,'1');await pool.query(migration);assert.equal((await row()).generation,'1');
+  await assert.rejects(pool.query(migration.replace('Keep an active lease','Keep a changed lease')),/checksum/);await pool.query('ROLLBACK');
+  await admissions.admit(request);assert.equal((await row()).generation,'1','exact admission replay does not enqueue');
+  const claims=await Promise.all([outbox.claim(),new ModelReviewPublicationOutbox(pool,scope).claim()]);assert.equal(claims.filter(Boolean).length,1);const claim=claims.find(Boolean)!;
+  const dispatch=new ReviewDispatchStore(pool,scope),state=(await dispatch.get(request.id))!,run=randomUUID();await dispatch.bindRun(request.id,state.workflowId,run);assert.equal((await row()).generation,'2');
+  await outbox.acknowledge(claim,'published');assert.equal((await row()).acknowledged_generation,'1','new generation is not lost by old acknowledgement');
+  const newer=(await outbox.claim())!;assert.equal(newer.generation,'2');await outbox.acknowledge(newer,'published');assert.equal(await outbox.claim(),undefined);
+  await dispatch.bindRun(request.id,state.workflowId,run);await pool.query('UPDATE agentci_review_admission_outbox SET recovery_after=clock_timestamp() WHERE id=$1',[request.id]);assert.equal(await outbox.claim(),undefined,'same dispatch/recovery lease does not republish');
+  await dispatch.requestCancellation(request.id);const cancelled=(await outbox.claim())!;await dispatch.requestCancellation(request.id);assert.equal((await row()).generation,cancelled.generation,'duplicate cancellation is a no-op');
+  await outbox.defer(cancelled,120000);const retryAfter=(await row()).retry_after;
+  await dispatch.finish(request.id,run,'terminated',digest('terminated'));assert.equal((await row()).generation,String(Number(cancelled.generation)+1));assert.equal((await row()).retry_after.getTime(),retryAfter.getTime(),'termination update preserves cooldown');
+  const next={...request,id:randomUUID()};await admissions.admit(next);assert.equal(await new ModelReviewPublicationOutbox(pool,scope).claim(),undefined,'restart and new admissions respect deployment cooldown');
+  assert.equal((await row()).last_error,'rate-limit');
+  await pool.query("UPDATE agentci_model_review_publication_cooldowns SET retry_after=clock_timestamp()-interval '1 second'");await pool.query("UPDATE agentci_model_review_publications SET retry_after=clock_timestamp()-interval '1 second'");
+  const recovered=(await outbox.claim())!;await pool.query("UPDATE agentci_model_review_publications SET lease_until=clock_timestamp()-interval '1 second' WHERE id=$1",[recovered.id]);
+  const reclaimed=(await new ModelReviewPublicationOutbox(pool,scope).claim())!;assert.equal(reclaimed.id,recovered.id);assert.notEqual(reclaimed.token,recovered.token);await assert.rejects(outbox.acknowledge(recovered,'published'),ModelReviewPublicationLeaseLost);await outbox.acknowledge(reclaimed,'superseded');
+  const other=(await outbox.claim())!;await outbox.acknowledge(other,'published');assert.equal(await outbox.claim(),undefined);
+  const summary={schemaVersion:'v1alpha1',admissionId:next.id,admissionDigest:digest(canonical(next)),profileRevision:next.profile.revision,contextDigest:digest('context'),mode:'synthetic',coverage:{selectedFiles:1,configuredRoles:1,completedRoles:1,wholeRepository:false},roles:[{requestId:randomUUID(),role:'security',digest:digest('result'),status:'completed'}],findings:[]};
+  await pool.query('INSERT INTO agentci_review_execution_summaries(organization_id,repository,id,digest,summary) VALUES($1,$2,$3,$4,$5)',[scope.organizationId,scope.repository,next.id,digest(canonical(summary)),summary]);assert.equal((await row(next.id)).generation,'2','summary insert enqueues independently of workflow lifetime');
+  await assert.rejects(pool.query('UPDATE agentci_model_review_publications SET generation=0 WHERE id=$1',[next.id]),/Immutable/);
+  await assert.rejects(pool.query('DELETE FROM agentci_model_review_publications WHERE id=$1',[next.id]),/Immutable/);
+  await pool.query('ALTER TABLE agentci_review_admission_outbox DISABLE TRIGGER model_review_publication_dispatch');await assert.rejects(outbox.ready(),/storage-unavailable/);await pool.query('ALTER TABLE agentci_review_admission_outbox ENABLE TRIGGER model_review_publication_dispatch');await outbox.ready();
+  assert.equal(await new ModelReviewPublicationOutbox(pool,{...scope,organizationId:randomUUID()}).claim(),undefined);
+ }finally{await pool.end();await admin.query(`DROP SCHEMA ${schema} CASCADE`);await admin.end();}
+});

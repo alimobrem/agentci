@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-1",
+  "claim": "Tested development slice published in PR49; not a milestone release",
+  "sourceCommit": "35f215a29b56e01b1fd0d5cf5809d7d814b423e6",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/49",
+  "evidence": [
+    "delivery/acceptance/m3-customer-pr49-ci.json",
+    "delivery/acceptance/m3-customer-initial-combined.json",
+    "delivery/acceptance/m3-customer-advisory.json"
+  ],
+  "scope": [
+    "profile discovery, exact-subject admission, coherent status and durable cancellation",
+    "separate operator/read authority and unchanged legacy auth",
+    "real HTTP/PostgreSQL/Temporal replay, scope, stale-head, revocation, cancellation and restart tests",
+    "compiled control-main startup with provider-free scoped authorization and invalid activation rejection",
+    "working additive OpenAPI and both immutable compatibility baselines",
+    "published source, updated configuration/docs, package and hosted container/native acceptance"
+  ],
+  "retarget": {
+    "newBase": "23cdbbac4206661d9b1d0a18a95fc76d56e124bf",
+    "computedMergeTree": "a2b9bd9980f7030823fab61249b029432dd2986f",
+    "matchesAuditedPreview": true,
+    "advisoryRefresh": "Existing main-push sweep37393039317; no reuse of the old subject as a new subject",
+    "merge": "pending refreshed subject advisory"
+  },
+  "remaining": "Findings/history/export, reproduction, full clients and finding lifecycle Check updates, UI, combined customer deployment and all M3 release gates",
+  "milestoneComplete": false
+}

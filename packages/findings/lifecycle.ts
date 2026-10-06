@@ -5,8 +5,17 @@ export interface FindingReceipt {
  actor:'reproduction'|'operator';outcome:'reproduced'|'not-reproduced'|'error'|'false-positive'|'resolved';reason:string;
 }
 export type FindingAction={type:'queue'}|{type:'reproduce'|'false-positive'|'resolve';receiptId:string};
-const fail=():never=>{throw new Error('invalid-finding-transition');};
+function fail():never{throw new Error('invalid-finding-transition');}
 const sha=(v:unknown)=>typeof v==='string'&&/^sha256:[a-f0-9]{64}$/.test(v);
+/** Shape and identity shared by retained event reads and live transitions. */
+export function validateFindingActionReceipt(action:FindingAction,receipt:FindingReceipt|null,finding:ModelFinding){
+ if(!action||typeof action!=='object'||!['queue','reproduce','false-positive','resolve'].includes(action.type)||Object.keys(action).sort().join(',')!==(action.type==='queue'?'type':'receiptId,type'))fail();
+ if(action.type==='queue'){if(receipt!==null)fail();return;}
+ if(typeof action.receiptId!=='string'||!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(action.receiptId))fail();
+ if(!receipt||typeof receipt!=='object'||Object.keys(receipt).sort().join(',')!=='actor,assertionDigest,evidenceDigest,findingId,outcome,reason,subjectDigest'||receipt.findingId!==finding.id||receipt.subjectDigest!==digest(canonical(finding.subject))||!sha(receipt.evidenceDigest)||typeof receipt.reason!=='string'||!receipt.reason.trim()||Buffer.byteLength(receipt.reason)>4096)fail();
+ if(action.type==='reproduce'){if(receipt.actor!=='reproduction'||!sha(receipt.assertionDigest)||!['reproduced','not-reproduced','error'].includes(receipt.outcome))fail();}
+ else if(receipt.actor!=='operator'||receipt.assertionDigest!==null||receipt.outcome!==(action.type==='resolve'?'resolved':'false-positive'))fail();
+}
 /** The reader is controller-owned: it authenticates receipt writers, policy and
  * retained execution evidence. Never bind this to a model-supplied receipt map.
  * This layer checks identity/transitions; M3-06c supplies isolated reproduction.
@@ -25,14 +34,10 @@ export function createFindingTransitions(readReceipt:(id:string)=>Promise<Findin
    const id=(action as Exclude<FindingAction,{type:'queue'}>).receiptId;
    if(typeof id!=='string'||!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(id))fail();
    let receipt:FindingReceipt;try{receipt=structuredClone(await readReceipt(id));}catch{throw new Error('finding-receipt-unavailable');}
-   if(!receipt||typeof receipt!=='object'||Object.keys(receipt).sort().join(',')!=='actor,assertionDigest,evidenceDigest,findingId,outcome,reason,subjectDigest'||
-    receipt.findingId!==before.id||receipt.subjectDigest!==digest(canonical(before.subject))||!sha(receipt.evidenceDigest)||
-    typeof receipt.reason!=='string'||!receipt.reason.trim()||Buffer.byteLength(receipt.reason)>4096)fail();
+   validateFindingActionReceipt(action,receipt,before);
    if(type==='reproduce'){
-    if(receipt.actor!=='reproduction'||!sha(receipt.assertionDigest)||!['reproduced','not-reproduced','error'].includes(receipt.outcome))fail();
     after.state=receipt.outcome==='reproduced'?'confirmed':'unconfirmed';
    }else{
-    if(receipt.actor!=='operator'||receipt.assertionDigest!==null||receipt.outcome!==(type==='resolve'?'resolved':'false-positive'))fail();
     after.state=type==='resolve'?'resolved':'false-positive';
    }
    after.disposition={kind:receipt.actor,evidenceDigest:receipt.evidenceDigest,reason:receipt.reason,outcome:receipt.outcome};

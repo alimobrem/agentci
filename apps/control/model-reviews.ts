@@ -1,3 +1,9 @@
+import {ModelReviewExports,type PreparedModelReviewExport} from '../../packages/storage/model-review-export.ts';
+import {streamModelReviewExport} from './model-review-export.ts';
+import {FindingReads,type FindingPageOptions} from '../../packages/storage/finding-reads.ts';
+import {FindingReadFailure} from '../../packages/storage/finding-cursor.ts';
+import type {ModelReviewFindings,ModelFindingHistory} from '../../packages/reviewers/finding-transport.ts';
+import type {FindingHistoryRecord} from '../../packages/findings/history.ts';
 import {canonical,digest} from '../../packages/review/engine.ts';
 import type {IncomingMessage,ServerResponse} from 'node:http';
 import {timingSafeEqual} from 'node:crypto';
@@ -13,15 +19,21 @@ import {validateModelReviewAccepted,validateModelReviewCancellation,validateMode
 export interface ModelReviewControl {
  scope:{organizationId:string;repository:string};
  profiles():Promise<ReviewerProfileList>;
+ exportReview?:(id:string)=>Promise<PreparedModelReviewExport>;
+ findings?:(id:string,options:FindingPageOptions)=>Promise<ModelReviewFindings>;
+ finding?:(reviewId:string,id:string,version?:number)=>Promise<FindingHistoryRecord>;
+ history?:(reviewId:string,id:string,options:FindingPageOptions)=>Promise<ModelFindingHistory>;
  status(id:string):Promise<ModelReviewStatus|undefined>;
  admit?:(request:ReviewAdmissionRequest)=>Promise<ModelReviewAccepted>;
  cancel(id:string):Promise<ModelReviewCancellation|undefined>;
 }
-export async function createModelReviewControl(pool:Pool,config:{organizationId:string;repository:string;installationId:number},definition:ReviewerRuntimeDefinition|null=null,github?:Octokit):Promise<ModelReviewControl>{
+export async function createModelReviewControl(pool:Pool,config:{organizationId:string;repository:string;installationId:number;cursorKey?:string;evidenceToken?:string;operatorToken?:string},definition:ReviewerRuntimeDefinition|null=null,github?:Octokit):Promise<ModelReviewControl>{
+ if(config.cursorKey!==undefined&&(config.cursorKey===config.evidenceToken||config.cursorKey===config.operatorToken))throw Error('Cursor key must be independent');
  const scope={organizationId:config.organizationId.toLowerCase(),repository:config.repository},reads=new ModelReviewReads(pool,scope),dispatch=new ReviewDispatchStore(pool,scope);
+ const findingReads=config.cursorKey?new FindingReads(pool,scope,config.cursorKey):null;
  if(definition&&!github)throw Error('model-review-authority-unavailable');
  const authority=definition?await initializeReviewerAuthority(pool,github!,config,definition):null;
- return {scope,profiles:()=>reads.profiles(authority?.definition.profiles??[]),status:id=>reads.status(id),
+ return {scope,exportReview:id=>new ModelReviewExports(pool,scope).prepare(id),...(findingReads?{findings:(id:string,options:FindingPageOptions)=>findingReads.findings(id,options),finding:(reviewId:string,id:string,version?:number)=>findingReads.finding(reviewId,id,version),history:(reviewId:string,id:string,options:FindingPageOptions)=>findingReads.history(reviewId,id,options)}:{}),profiles:()=>reads.profiles(authority?.definition.profiles??[]),status:id=>reads.status(id),
   ...(authority?{admit:async(request:ReviewAdmissionRequest)=>{const admitted=await authority.admissions.admit(request);return validateModelReviewAccepted({schemaVersion:'v1alpha1',id:admitted.request.id,requestDigest:admitted.digest});}}:{}),
   cancel:async id=>{if(!await reads.status(id))return undefined;await dispatch.requestCancellation(id);return validateModelReviewCancellation({schemaVersion:'v1alpha1',id,cancelRequested:true});},
  };
@@ -32,18 +44,24 @@ function matches(actual:string,token:string|undefined){if(!token)return false;co
 /** New resources only. Legacy endpoints retain their existing authentication. */
 export function modelReviewRoutes(config:{evidenceToken:string;operatorToken?:string},control?:ModelReviewControl){
  if(!credential(config.evidenceToken)||(config.operatorToken!==undefined&&(!credential(config.operatorToken)||config.operatorToken===config.evidenceToken)))throw Error('Invalid model review credentials');
- const tokens={...config};
+ const tokens={...config};let activeExports=0;
  return async(req:IncomingMessage,res:ServerResponse):Promise<boolean>=>{
   const rawPath=(req.url??'').split('?')[0]??'',profiles=rawPath==='/v1/reviewer-profiles',collection=rawPath==='/v1/model-reviews';
-  const match=/^\/v1\/model-reviews\/([^/]+)(\/cancellation)?$/.exec(rawPath);
-  if(!profiles&&!collection&&!match)return false;
+  const match=/^\/v1\/model-reviews\/([^/]+)(\/cancellation|\/findings|\/export)?$/.exec(rawPath);
+  const findingMatch=/^\/v1\/findings\/([^/]+)(\/history)?$/.exec(rawPath);
+  if(!profiles&&!collection&&!match&&!findingMatch)return false;
   const reply=(status:number,value:unknown)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff'});res.end(JSON.stringify(value));};
   try{
-   const mutation=collection||!!match?.[2],presented=req.headers.authorization??'';
+   const mutation=collection||match?.[2]==='/cancellation',presented=req.headers.authorization??'';
    const operator=matches(presented,tokens.operatorToken),reader=matches(presented,tokens.evidenceToken);
    if(!operator&&!reader)throw new TransportFailure(401,'unauthorized');if(mutation&&!operator)throw new TransportFailure(403,'forbidden');
    const method=mutation?'POST':'GET';if(req.method!==method){res.setHeader('allow',method);throw new TransportFailure(405,'method-not-allowed');}
-   const parsed=new URL(req.url!,'http://control.invalid');if(parsed.search)throw new TransportFailure(400,'invalid-request');
+   const parsed=new URL(req.url!,'http://control.invalid');
+   const readingFindings=match?.[2]==='/findings',allowed=readingFindings?['limit','cursor']:findingMatch?(findingMatch[2]?['reviewId','limit','cursor']:['reviewId','version']):[];
+   for(const key of parsed.searchParams.keys())if(!allowed.includes(key)||parsed.searchParams.getAll(key).length!==1)throw new TransportFailure(400,'invalid-request');
+   const integer=(key:string)=>{const v=parsed.searchParams.get(key);if(v===null)return undefined;if(!/^[1-9][0-9]{0,4}$/.test(v))throw new TransportFailure(400,'invalid-request');return Number(v);};
+   const page={limit:integer('limit'),cursor:parsed.searchParams.get('cursor')??undefined};if(page.limit!==undefined&&page.limit>100||page.cursor!==undefined&&!/^[A-Za-z0-9_-]{1,2048}$/.test(page.cursor))throw new TransportFailure(400,page.cursor!==undefined?'invalid-cursor':'invalid-request');
+
    const id=match?.[1]?.toLowerCase();if(id&&!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(id))throw new TransportFailure(400,'invalid-request');
    let body:unknown;
    if(mutation){
@@ -58,6 +76,17 @@ export function modelReviewRoutes(config:{evidenceToken:string;operatorToken?:st
    }
    if(profiles){reply(200,validateReviewerProfileList(control?await control.profiles():{schemaVersion:'v1alpha1',profiles:[]}));return true;}
    if(!control)throw new TransportFailure(503,'service-unavailable');
+   if(match?.[2]==='/export'){
+    if(!control.exportReview||activeExports>=2)throw new TransportFailure(503,'service-unavailable');activeExports++;
+    try{await streamModelReviewExport(res,()=>control.exportReview!(id!),{id:id!,...control.scope});}finally{activeExports--;}return true;
+   }
+   if(readingFindings){if(!control.findings)throw new TransportFailure(503,'service-unavailable');reply(200,await control.findings(id!,page));return true;}
+   if(findingMatch){
+    const reviewId=parsed.searchParams.get('reviewId')?.toLowerCase();let findingId:string;try{findingId=decodeURIComponent(findingMatch[1]!);}catch{throw new TransportFailure(400,'invalid-request');}
+    if(!reviewId||!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(reviewId)||!/^sha256:[a-f0-9]{64}$/.test(findingId))throw new TransportFailure(400,'invalid-request');
+    if(findingMatch[2]){if(!control.history)throw new TransportFailure(503,'service-unavailable');reply(200,await control.history(reviewId,findingId,page));}
+    else{if(!control.finding)throw new TransportFailure(503,'service-unavailable');reply(200,await control.finding(reviewId,findingId,integer('version')));}return true;
+   }
    if(collection){
     const request=validateReviewAdmission(body);
     if(request.subject.organizationId!==control.scope.organizationId||request.subject.repository!==control.scope.repository)throw new TransportFailure(404,'not-found');
@@ -70,7 +99,7 @@ export function modelReviewRoutes(config:{evidenceToken:string;operatorToken?:st
    if(['queued','dispatched'].includes(value.execution.state))res.setHeader('retry-after','1');reply(200,value);
   }catch(error){
    let status=503,code='service-unavailable';
-   if(error instanceof TransportFailure){status=error.status;code=error.code;}
+   if(error instanceof TransportFailure||error instanceof FindingReadFailure){status=error.status;code=error.code;}
    else if(error instanceof InvalidReviewAdmission){status=400;code='invalid-request';}
    else if(error instanceof ReviewAdmissionDenied){status=403;code='review-denied';}
    else if(error instanceof ReviewAdmissionConflict){status=409;code='idempotency-conflict';}

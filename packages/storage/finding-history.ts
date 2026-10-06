@@ -15,11 +15,8 @@ export interface FindingHistoryReaders {
  reviewer(requestId:string,subject:ReviewSubject):Promise<{result:unknown;documents:unknown}>;
  receipt(receiptId:string,subject:ReviewSubject):Promise<FindingReceipt>;
 }
-export interface FindingHistoryEvent {
- schemaVersion:'v1alpha1';operationId:string;inputDigest:string;previousDigest:string|null;
- action:{type:'create'}|{type:'evidence';finding:ModelFinding}|FindingAction;receipt:FindingReceipt|null;finding:ModelFinding;
-}
-export interface FindingHistoryRecord {digest:string;event:FindingHistoryEvent}
+export type {FindingHistoryEvent,FindingHistoryRecord} from '../findings/history.ts';
+import {validateFindingHistoryLink,type FindingHistoryEvent,type FindingHistoryRecord} from '../findings/history.ts';
 /** Internal, deployment-scoped persistence. Every change is an immutable event;
  * no mutable latest-state row can overwrite earlier evidence. */
 export class FindingHistoryStore {
@@ -53,30 +50,10 @@ export class FindingHistoryStore {
   if(rows.length>10000)conflict();
   const records:FindingHistoryRecord[]=[];
   for(const row of rows){
-   const event=row.event as FindingHistoryEvent;
-   if(!event||Object.keys(event).sort().join(',')!=='action,finding,inputDigest,operationId,previousDigest,receipt,schemaVersion'||event.schemaVersion!=='v1alpha1'||!uuid.test(event.operationId)||!sha.test(event.inputDigest)||row.operation_id!==event.operationId||row.digest!==digest(canonical(event)))conflict();
-   let finding:ModelFinding;try{finding=validateModelFinding(event.finding,subject);}catch{conflict();}
-   if(finding!.id!==id||Number(row.version)!==finding!.version)conflict();
-   const prior=records.at(-1);
-   const expectedInput=prior?{id,subject,action:event.action,expectedVersion:prior.event.finding.version}:{type:'create',finding:finding!};
-   if(event.inputDigest!==digest(canonical(expectedInput)))conflict();
-   if(!prior){
-    if(event.previousDigest!==null||canonical(event.action)!==canonical({type:'create'})||event.receipt!==null||finding!.state!=='deduplicated'||finding!.version!==1)conflict();
-   }else{
-    if(event.previousDigest!==prior.digest||event.action.type==='create')conflict();
-    try{
-     if(event.action.type==='evidence'){
-      if(Object.keys(event.action).sort().join(',')!=='finding,type'||event.receipt!==null)conflict();
-      if(canonical(mergeFindingEvidence(prior.event.finding,event.action.finding))!==canonical(finding!))conflict();
-     }else{
-      const action=event.action as FindingAction;
-      if(action.type==='queue'&&event.receipt!==null||action.type!=='queue'&&event.receipt===null)conflict();
-      const next=await createFindingTransitions(async()=>event.receipt!)(prior.event.finding,action,prior.event.finding.version);
-      if(canonical(next.finding)!==canonical(finding!))conflict();
-     }
-    }catch{conflict();}
-   }
-   records.push({digest:row.digest,event:structuredClone(event)});
+   let record:FindingHistoryRecord;
+   try{record=await validateFindingHistoryLink({digest:row.digest,event:row.event},subject,records.at(-1));}catch{return conflict();}
+   if(record.event.operationId!==row.operation_id||record.event.finding.id!==id||record.event.finding.version!==Number(row.version))conflict();
+   records.push(record);
   }
   return records;
  }
