@@ -55,3 +55,9 @@ The earlier local adoption records remain in
 `releases/m2-optional-engine-dependencies.json` and
 `releases/m2-optional-engines-local.json`; final publication and verification
 evidence is recorded in [the M2 release record](releases/m2.md).
+
+M3 updates the optional engine to stable Promptfoo 0.124.0, resolving simple-git
+4.0.2 and argv-parser 2.0.1 for four newly fixable Git dependency advisories.
+The existing forge backport and unresolved scanner finding remain. Upstream
+compatibility changes, installed license notices and local image evidence are
+recorded in [the M3 evaluator security assessment](phases/m3-promptfoo-security.md).

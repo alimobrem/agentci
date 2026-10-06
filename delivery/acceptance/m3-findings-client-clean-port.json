@@ -37,5 +37,70 @@
   "limitations": [
     "No new hosted CI, containers, installed-package or release claim for this clean source; existing original acceptance records remain historical."
   ],
-  "excluded": "CLI export and its later deadline fix remain on original export-client branch for subsequent combined integration."
+  "excluded": "CLI export and its later deadline fix remain on original export-client branch for subsequent combined integration.",
+  "mutationVerifierFollowUp": {
+    "baseFix": "ec08cbc47b2855b01b1c2fe4f0d01cd825c2dc77",
+    "testedMergedHead": "b8613a5b2e42cfca6299cd8f2a74afbf0ae68db3",
+    "mergeChanges": [
+      "scripts/verify-finding-eval.mjs",
+      "delivery/acceptance/m3-finding-mutation-target-repair.json",
+      "delivery/runs/37400121195-attempt-1.json"
+    ],
+    "result": {
+      "baseline": {
+        "exitCode": 0,
+        "report": {
+          "schemaVersion": "v1alpha1",
+          "results": [
+            {
+              "scenario": "finding-lifecycle",
+              "status": "passed"
+            },
+            {
+              "scenario": "finding-reproduction",
+              "status": "passed"
+            }
+          ]
+        }
+      },
+      "mutation": {
+        "exitCode": 1,
+        "report": {
+          "schemaVersion": "v1alpha1",
+          "results": [
+            {
+              "scenario": "finding-lifecycle",
+              "status": "failed"
+            },
+            {
+              "scenario": "finding-reproduction",
+              "status": "passed"
+            }
+          ]
+        }
+      },
+      "substitutedRun": {
+        "exitCode": 1,
+        "report": {
+          "schemaVersion": "v1alpha1",
+          "results": [
+            {
+              "scenario": "finding-lifecycle",
+              "status": "passed"
+            },
+            {
+              "scenario": "finding-reproduction",
+              "status": "failed"
+            }
+          ]
+        }
+      },
+      "scope": "Local frozen-harness acceptance; network isolation and hosted execution are separate gates."
+    },
+    "preservedPriorRuns": [
+      37400399149
+    ],
+    "cacheEvidence": "Failed Verify log contains primary npm cache hit; cancelled advisory cache is unknown.",
+    "productSource": "No production changes from previously tested clean port."
+  }
 }
