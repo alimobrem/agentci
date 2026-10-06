@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "v1alpha1",
+  "task": "M3-07c-4",
+  "kind": "review-triggered-rework",
+  "baseCommit": "0bc8a8b",
+  "reason": "CLI awaited stdout drain without sharing the export deadline. An open nonreading pipe retained a pending OS write and kept the executable alive after the download deadline.",
+  "regression": {
+    "path": "tests/model-review-export-client.test.ts",
+    "gitBlob": "00bc891945b0cd3ba4cbb2e62a37d623c8810a08",
+    "test": "executable export deadline terminates with a real open nonreading stdout pipe",
+    "before": "Failed: actual stdout.write returned false; original CLI remained alive until the 1500ms watchdog killed it.",
+    "after": "Passed: real write delegates to OS pipe; abort armed only after backpressure marker. CLI exits 2 without watchdog in both stdout-only and stdout-plus-stderr blocked cases.",
+    "testHarnessLimitation": "Transport generator supplies a large provisional fixture to isolate actual CLI pipe behavior; domain/export verification is covered by separate transport and real-service tests."
+  },
+  "diagnosis": [
+    "Sharing signal with drain resolved the asynchronous wait, but stdout.destroy alone did not terminate the process.",
+    "Adding stdout.unref also failed to terminate a retained pending OS write; that experiment was removed."
+  ],
+  "fix": {
+    "cliGitBlob": "568fda679b3f18d9a5b0b9500a7d952cf1f773e4",
+    "behavior": "CLI-owned120s signal shared by modelReviewExport and stdout drain. On deadline, discard pending stdout and force CLI exit2 after redacted stderr callback or100ms fallback. Public client never exits caller process."
+  },
+  "checks": {
+    "exportTests": {
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0
+    },
+    "build": "passed",
+    "fastChecks": 10,
+    "fastSeconds": 3.87,
+    "offlineInstalledActualService": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "testDurationMs": 3640.156334
+    }
+  },
+  "package": {
+    "name": "agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "09ee9120290b32b07ddb322fc123685563db697cf9e2779200aa871f0ed61649",
+    "source": "baseCommit plus cliGitBlob; pending test/docs/evidence edits do not alter built CLI",
+    "installation": "offline production-only; public agentci/client and executable tested against real HTTP/PostgreSQL/Temporal"
+  },
+  "tracking": "Task remains in-progress with original startedAt; quality event records agent-review defect, not human intervention.",
+  "limitations": [
+    "No hosted CI or phase release claim",
+    "No claim of successful output when downstream stops reading; exit2 invalidates any provisional output"
+  ]
+}

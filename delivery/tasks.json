@@ -2164,14 +2164,16 @@
         "SECTION-32",
         "SECTION-12.3"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T00:20:28.814Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T03:24:11.672Z",
       "acceptance": [
         {
           "text": "Exact-subject finding/history reads, bounded stable pagination and integrity-verifiable complete export work over real HTTP. Wrong scope, invalid cursors and interrupted/truncated exports fail explicitly; M3-C11 export capability is retained.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-07c-2-merged-read-export.json"
+          ]
         }
       ],
       "dependsOn": [
@@ -2298,15 +2300,15 @@
         "SPEC-13.2-003",
         "SPEC-13.2-006"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T01:24:36.271Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T02:01:52.426Z",
       "acceptance": [
         {
           "text": "A controlled clock proves expiry before reservation produces no charge while expiry after iterator or observer dispatch retains unknown charge, with iterator cleanup and cancellation assertions preserved; focused provider tests, frozen provider eval and fast checks pass without increasing deadlines, weakening thresholds or substituting candidate assertions for the trusted baseline. Hosted failed comparison 37398142115 remains retained for diagnosis.",
           "status": "passed",
           "evidence": [
-            "docs/phases/m3-stream-deadline-acceptance.md"
+            "delivery/acceptance/m3-stream-deadline-merged.json"
           ]
         }
       ],
@@ -2345,15 +2347,15 @@
         "SPEC-40-050",
         "SPEC-40-051"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T02:42:09.397Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T03:17:09.664Z",
       "acceptance": [
         {
           "text": "Official upstream and npm release evidence selects a compatible stable Promptfoo dependency update; installed dependency licenses and positive/negative/error report cases pass in the actual UBI evaluator image. Fresh image scan removes the four fixable PR55 findings without weakening scan thresholds or removing the existing forge backport and unresolved finding. Preserve failed run37404082498 artifact11386399646 and distinguish skipped runtime gates.",
           "status": "passed",
           "evidence": [
-            "delivery/acceptance/m3-promptfoo-security-local.json"
+            "delivery/acceptance/m3-promptfoo-security-hosted.json"
           ]
         }
       ],
@@ -2369,9 +2371,9 @@
         "SECTION-12.5",
         "SECTION-13.5"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T01:58:50.914Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T03:52:36.582Z",
       "acceptance": [
         {
           "text": "Explicit hosted-only raw Git object reuse preserves fresh repository authorization, commit/tree identity and existing bounded verified blob cache; cold/seeded snapshots match and actual Git fixtures prove no candidate checkout, replacement/hook/lazy fetch, corrupt/hash/size/UTF8/oversize acceptance or cross-repository reuse. Missing local objects fall back to REST; subprocess time/output/concurrency and cache bounds remain enforced. Redacted counters distinguish local/memory/remote byte sources and proven local cooldown rejections; fast/build/API and applicable mutation checks pass, structural request estimates remain separate from hosted measured velocity.",
@@ -2382,11 +2384,42 @@
         },
         {
           "text": "Reviewed exact-source hosted verification/advisory and packaged documentation establish publication acceptance; prior quota failures remain retained and no milestone release is claimed by local checks alone.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-hosted-git-seed-published-source.json"
+          ]
         }
       ],
       "dependsOn": []
+    },
+    {
+      "id": "M3-ACCEPTANCE-RECONCILIATION",
+      "title": "Reconcile review addendum with full original requirement/test/evidence scope",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SECTION-46",
+        "SECTION-51"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-06T03:25:46.098Z",
+      "completedAt": "2026-10-06T03:28:34.944Z",
+      "acceptance": [
+        {
+          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "status": "passed",
+          "evidence": [
+            "docs/acceptance-reconciliation.md"
+          ]
+        },
+        {
+          "text": "Reconciliation check verifies row coverage, source identity, evidence digests and no unavailable/inconclusive pass promotion; report reviewed remaining gaps and threshold approval proposals",
+          "status": "passed",
+          "evidence": [
+            "scripts/reconcile-acceptance.mjs"
+          ]
+        }
+      ]
     }
   ]
 }
