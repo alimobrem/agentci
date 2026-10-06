@@ -9,9 +9,8 @@ import {ImmutableEvalConflict,type EvalStore} from '../../packages/storage/evals
 import {evalCheckEvidence,evalPublicationKey,publishEvalCheck,publishEvalUnavailable,publishEvalProgress} from '../../packages/github/eval-check.ts';
 
 /** Fetch data only in the App controller; evaluator workflow history receives identifiers only. */
-export function createEvalReviewActivities(client:Octokit,store:Store,evals:EvalStore,config:{repository:string;installationId:number;appId?:number;publicUrl?:string},policy:EvalPlanPolicy){
+export function createEvalReviewActivities(client:Octokit,store:Store,evals:EvalStore,config:{repository:string;installationId:number;appId?:number;publicUrl?:string},policy:EvalPlanPolicy,readSnapshot=createRemoteSnapshotReader(client)){
   const scoped=(job:ReviewJob)=>job.repository===config.repository&&job.installationId===config.installationId&&evals.repository===config.repository&&store.repository===config.repository&&store.organizationId===evals.organizationId&&Number.isSafeInteger(job.pullRequest)&&job.pullRequest>0&&/^[a-f0-9]{40}$/.test(job.baseSha)&&/^[a-f0-9]{40}$/.test(job.headSha)&&job.baseSha!==job.headSha;
-  const readSnapshot=createRemoteSnapshotReader(client);
   const validAttempt=(id:string)=>/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(id);
   const canPublish=()=>Number.isSafeInteger(config.appId)&&config.appId!>0&&!!config.publicUrl;
   return {

@@ -1,0 +1,1517 @@
+{
+  "section": 34,
+  "rows": [
+    {
+      "requirementId": "SECTION-34",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34",
+        "line": 1823
+      },
+      "text": "34. Metrics and Product Analytics",
+      "sourceTextSha256": "13cfa360517a6da93ee9960240a80e7c3f339b4984c23e250fa909a41c18973c",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-01",
+          "kind": "section-review",
+          "acceptance": "Outcome taxonomy, idempotent ingestion, versioned events, tenant/retention/privacy rules and schema migrations."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-34.1",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.1",
+        "line": 1825
+      },
+      "text": "34.1 Engineering quality metrics",
+      "sourceTextSha256": "de629fd390f9366f7026819199cc749081c09cdfdc10a952d9d36ba599d23e15",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "section-review",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.1",
+        "line": 1827
+      },
+      "text": "- behavioral regression rate",
+      "sourceTextSha256": "57a76eb2ca0d1964356e952ba082a6dabf9d3415bc168a1ea74a671352c0a7b9",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.1-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.1",
+        "line": 1828
+      },
+      "text": "- escaped regression rate",
+      "sourceTextSha256": "c81b413db29cdcf22b180cd1e3aa114ac2be30aa0c257f5162850809221c918f",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.1-003",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.1",
+        "line": 1829
+      },
+      "text": "- time to reproduce",
+      "sourceTextSha256": "82fe93191f6e2d13163a1aa1f3973ae54ca4d2bb9fc4016d64ae5fefabe723c3",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.1-004",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.1",
+        "line": 1830
+      },
+      "text": "- time to confirmed root cause",
+      "sourceTextSha256": "fa393857d2434a21f17eccf0585d0916e2b11f4befc51a94f1a1ab72598082a4",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.1-005",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.1",
+        "line": 1831
+      },
+      "text": "- time to repair PR",
+      "sourceTextSha256": "7c6d6beb7f9a992dd62f07c44b321109a9ea10c901e74a21cf170a6629b07a68",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.1-006",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.1",
+        "line": 1832
+      },
+      "text": "- repeat incident rate",
+      "sourceTextSha256": "0f8a50a1705c197599bce902ba0b07d9d833cd090bb0189f653bc67b35f9a8e3",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.1-007",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.1",
+        "line": 1833
+      },
+      "text": "- false-positive review rate",
+      "sourceTextSha256": "4ab9910d80dc27af073052b4628e266bd644f49507e0823ab042facb9929cb8e",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.1-008",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.1",
+        "line": 1834
+      },
+      "text": "- human override rate",
+      "sourceTextSha256": "2a35b6816d7198da10400c99717e79882809e5c20495ff78096d028aa8f73c57",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-34.2",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.2",
+        "line": 1836
+      },
+      "text": "34.2 Delivery metrics",
+      "sourceTextSha256": "87678102a9870be19cdb4aec0d6d4d6e8c9689cfed83d7af0858fe7b65456775",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "section-review",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.2-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.2",
+        "line": 1838
+      },
+      "text": "- PR cycle time",
+      "sourceTextSha256": "133771dd17112e9bc41437fad5e2952b4b0a973e15bc8496cf20006d2239e41e",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M2-VELOCITY-PLAN",
+          "status": "done",
+          "startedAt": "2026-10-04T15:00:50.777Z",
+          "completedAt": "2026-10-04T15:00:51.249Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Inspect the original metrics/build plan and current delivery instrumentation; document gaps, acceptance scenarios, milestone integration and prospective end-to-end measurement with quality/cost guardrails. Distinguish proposed capabilities from implemented features and preserve milestone order.",
+              "status": "passed",
+              "evidence": [
+                "docs/agentic-velocity-plan.md"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/agentic-velocity-plan.md",
+          "sha256": "755858918f2a85ec637314d8312ecb667e8e41adbca2ea32707ec36b623aeeb5",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.2-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.2",
+        "line": 1839
+      },
+      "text": "- review time saved estimate",
+      "sourceTextSha256": "b2ebb39c8cff3f616e8c078a83896e7e980b1e88003d5f38f42e6b201dc53096",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.2-003",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.2",
+        "line": 1840
+      },
+      "text": "- eval runtime",
+      "sourceTextSha256": "41e1086d4ba86924e14ee03611ccec7649406bb59f20ad176727c3bdb2859e40",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M2-VELOCITY-PLAN",
+          "status": "done",
+          "startedAt": "2026-10-04T15:00:50.777Z",
+          "completedAt": "2026-10-04T15:00:51.249Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Inspect the original metrics/build plan and current delivery instrumentation; document gaps, acceptance scenarios, milestone integration and prospective end-to-end measurement with quality/cost guardrails. Distinguish proposed capabilities from implemented features and preserve milestone order.",
+              "status": "passed",
+              "evidence": [
+                "docs/agentic-velocity-plan.md"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M2-DELIVERY-DEFERRAL",
+          "status": "done",
+          "startedAt": "2026-10-04T17:01:50.371Z",
+          "completedAt": "2026-10-04T17:04:53.089Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "The delivery CLI records deferred status with an explicit reason, bounded repository evidence path and timestamp; keeps original starts and pending acceptance, emits a deferral event, and never counts deferral as completion. Resuming preserves deferral history and cannot invent historical dates. Validation rejects missing/escaped evidence, inconsistent timestamps and false completion; blocked-time accounting stops at deferral. Use the approved M2 Docker engine decision for Podman task deferrals.",
+              "status": "passed",
+              "evidence": [
+                "tests/delivery.test.ts"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M2-CACHE-RESILIENCE",
+          "status": "done",
+          "startedAt": "2026-10-04T17:52:09.149Z",
+          "completedAt": "2026-10-04T18:27:26.419Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Retain the failed hosted cache reservation attempts; use supported cache policy so read-only cache contexts do not export and cache-service failures do not invalidate successful image outputs. Preserve strict build, runtime, scan, evidence and publication checks; validate workflow configuration and actual hosted execution before closure.",
+              "status": "passed",
+              "evidence": [
+                "releases/m2-hosted-regression-ci.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M2-SNAPSHOT-REUSE",
+          "status": "done",
+          "startedAt": "2026-10-04T18:19:16.710Z",
+          "completedAt": "2026-10-05T01:13:36.770Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Repeated base/head snapshots reuse only content-hash-verified UTF-8 blobs in a byte/entry-bounded client-and-repository-scoped cache, while freshly verifying commit/tree permissions and identities each read. Tests prove reduced blob requests, tampered cached-size rejection, separate-client/repository isolation, eviction and failed-response retry; preserve exact snapshot and full hosted acceptance. Record request-count improvement separately from unproven total delivery acceleration.",
+              "status": "passed",
+              "evidence": [
+                "releases/m2-hosted-recovery-ci.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M2-PHASE-PR-PLAN",
+          "status": "done",
+          "startedAt": "2026-10-04T17:50:40.558Z",
+          "completedAt": "2026-10-04T17:50:41.058Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+              "status": "passed",
+              "evidence": [
+                "docs/phase-pr-plan.md"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M2-READINESS-EVIDENCE",
+          "status": "done",
+          "startedAt": "2026-10-04T18:12:33.335Z",
+          "completedAt": "2026-10-05T01:13:37.096Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Retain independently verified Docker/default and cache-fix source/tree/artifact CI checkpoints and CI timing attempts; update current M2 guidance to distinguish merged hosted capability, real hosted acceptance, historical fourteen versus current fifteen integration groups, distribution follow-ups and still-pending release gates. Validate links, task ledger and phase status without claiming completion.",
+              "status": "passed",
+              "evidence": [
+                "docs/releases/m2-readiness.md"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [],
+      "testReferences": [
+        "tests/delivery.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/agentic-velocity-plan.md",
+          "sha256": "755858918f2a85ec637314d8312ecb667e8e41adbca2ea32707ec36b623aeeb5",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "tests/delivery.test.ts",
+          "sha256": "18c9b061ccd4a4a8457496778d3e26461f023beea40aeb6cd607c42286eea395",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "releases/m2-hosted-regression-ci.json",
+          "sha256": "609f99e8aa6215a7a288859944ef9afa9400068ecbf64d27c0e2b69987be76b7",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "releases/m2-hosted-recovery-ci.json",
+          "sha256": "88efb069864e60fc9cd25636ffeaa5e7705fa129d136e60abf3f40ed0aadb3ec",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phase-pr-plan.md",
+          "sha256": "76f187fb819f1c4ca79f382886e8ecc6a965f1397f3df0e2f0ef91b88ec00504",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/releases/m2-readiness.md",
+          "sha256": "b50122a13240c0100aac8ffb7b914a2dbe8e1839c3f9f66fcca0ef422e0f5613",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.2-004",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.2",
+        "line": 1841
+      },
+      "text": "- cost per verified PR",
+      "sourceTextSha256": "636379971e33872873e953236fe063c21a02ceeee04840a39308bd448a0c2bed",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M2-VELOCITY-PLAN",
+          "status": "done",
+          "startedAt": "2026-10-04T15:00:50.777Z",
+          "completedAt": "2026-10-04T15:00:51.249Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Inspect the original metrics/build plan and current delivery instrumentation; document gaps, acceptance scenarios, milestone integration and prospective end-to-end measurement with quality/cost guardrails. Distinguish proposed capabilities from implemented features and preserve milestone order.",
+              "status": "passed",
+              "evidence": [
+                "docs/agentic-velocity-plan.md"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/agentic-velocity-plan.md",
+          "sha256": "755858918f2a85ec637314d8312ecb667e8e41adbca2ea32707ec36b623aeeb5",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.2-005",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.2",
+        "line": 1842
+      },
+      "text": "- percent of PRs requiring human deep review",
+      "sourceTextSha256": "685dcee88579b1666ac0a8165b422b28f45912c66d8bebcc903929a20d1645b9",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-34.3",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.3",
+        "line": 1844
+      },
+      "text": "34.3 Model/router metrics",
+      "sourceTextSha256": "86ce6d589da4ac24483ab2ddc50e9b0feb213bdd8c5e815e9a5f7f2f97d8ba22",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "section-review",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.3-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.3",
+        "line": 1846
+      },
+      "text": "By task/repo/model:",
+      "sourceTextSha256": "b7f503922ee551a8f08005377f8080dd38a9569a23e07127664251c3f9f3ff30",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.3-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.3",
+        "line": 1848
+      },
+      "text": "- first-pass success",
+      "sourceTextSha256": "d9f73543c73bbb76576951da05301157a69ef1688f7965ce13c3007210281a4e",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.3-003",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.3",
+        "line": 1849
+      },
+      "text": "- eval pass rate",
+      "sourceTextSha256": "5c13ccf8a6c42ff94e9c78356053959875d2f9aaca9903f44b51fe2a77593259",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.3-004",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.3",
+        "line": 1850
+      },
+      "text": "- confirmed finding rate",
+      "sourceTextSha256": "09343d565265312943d094639d56793e22c66b7ab2a5420246dc3564c7892bbb",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.3-005",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.3",
+        "line": 1851
+      },
+      "text": "- regression rate",
+      "sourceTextSha256": "4163b5634a7cfc9eadb32088174e8744fe1b30819743a1a288bec81acb79e5e7",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.3-006",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.3",
+        "line": 1852
+      },
+      "text": "- production incident association",
+      "sourceTextSha256": "f8300acf5f0b3015991ab096133aceba6ada70b4fbcef0a36366924226479cc6",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.3-007",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.3",
+        "line": 1853
+      },
+      "text": "- latency",
+      "sourceTextSha256": "087ca04d472d0362498b8b314f59b6847cbcf774576284ea0940938762c5489f",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.3-008",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.3",
+        "line": 1854
+      },
+      "text": "- cost",
+      "sourceTextSha256": "e3d18387d8efae55d738e3ead17abe68d4b540f10fed849d3b0210fd36d502a3",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-34.3-009",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "34.3",
+        "line": 1856
+      },
+      "text": "Do not present these as universal model rankings; they are workload-specific operational measurements.",
+      "sourceTextSha256": "c66972ee60281b92ff2d03694c17b9e2f9c0f1ae568345bca188d08495a32bf7",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M8",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M8",
+          "id": "M8-07",
+          "kind": "requirement",
+          "acceptance": "Workload-specific quality/cost/latency, PR/CI/release lead time and blocker metrics; explicit denominators/unknowns; controlled burst-load and seeded incident acceptance."
+        }
+      ],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    }
+  ]
+}
