@@ -700,6 +700,37 @@
               }
             }
           },
+          "409": {
+            "description": "Authenticated admission-backed reproduction evidence has a distinct internal source and is not a legacy review comparison; no export frames are emitted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "unsupported-eval-source"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
           "413": {
             "description": "Comparison exceeds the 4 MiB response budget",
             "content": {
@@ -745,37 +776,6 @@
                           "type": "string",
                           "enum": [
                             "service-unavailable"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "code"
-                      ],
-                      "additionalProperties": false
-                    }
-                  },
-                  "required": [
-                    "error"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Authenticated admission-backed reproduction evidence has a distinct internal source and is not a legacy review comparison; no export frames are emitted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string",
-                          "enum": [
-                            "unsupported-eval-source"
                           ]
                         }
                       },
@@ -952,6 +952,37 @@
               }
             }
           },
+          "409": {
+            "description": "Authenticated admission-backed reproduction evidence has a distinct internal source and is not a legacy review comparison; no export frames are emitted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "enum": [
+                            "unsupported-eval-source"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
           "503": {
             "description": "Storage unavailable or integrity failure",
             "content": {
@@ -988,37 +1019,6 @@
                 "schema": {
                   "type": "string",
                   "pattern": "^[0-9]+$"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Authenticated admission-backed reproduction evidence has a distinct internal source and is not a legacy review comparison; no export frames are emitted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string",
-                          "enum": [
-                            "unsupported-eval-source"
-                          ]
-                        }
-                      },
-                      "required": [
-                        "code"
-                      ],
-                      "additionalProperties": false
-                    }
-                  },
-                  "required": [
-                    "error"
-                  ],
-                  "additionalProperties": false
                 }
               }
             }
@@ -4751,170 +4751,241 @@
             "pattern": "^sha256:[a-f0-9]{64}$"
           },
           "event": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "schemaVersion": {
-                "type": "string",
-                "enum": [
-                  "v1alpha1"
-                ]
-              },
-              "operationId": {
-                "type": "string",
-                "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
-              },
-              "inputDigest": {
-                "type": "string",
-                "pattern": "^sha256:[a-f0-9]{64}$"
-              },
-              "previousDigest": {
-                "type": "string",
-                "pattern": "^sha256:[a-f0-9]{64}$",
-                "nullable": true
-              },
-              "action": {
-                "oneOf": [
-                  {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "enum": [
-                          "create"
-                        ]
-                      }
-                    },
-                    "required": [
-                      "type"
-                    ]
-                  },
-                  {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "enum": [
-                          "evidence"
-                        ]
-                      },
-                      "finding": {
-                        "$ref": "#/components/schemas/ModelFinding"
-                      }
-                    },
-                    "required": [
-                      "type",
-                      "finding"
-                    ]
-                  },
-                  {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "enum": [
-                          "queue"
-                        ]
-                      }
-                    },
-                    "required": [
-                      "type"
-                    ]
-                  },
-                  {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "enum": [
-                          "reproduce",
-                          "false-positive",
-                          "resolve"
-                        ]
-                      },
-                      "receiptId": {
-                        "type": "string",
-                        "pattern": "^[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$"
-                      }
-                    },
-                    "required": [
-                      "type",
-                      "receiptId"
-                    ]
-                  }
-                ]
-              },
-              "receipt": {
+            "oneOf": [
+              {
                 "type": "object",
                 "additionalProperties": false,
                 "properties": {
-                  "findingId": {
+                  "schemaVersion": {
+                    "type": "string",
+                    "enum": [
+                      "v1alpha1"
+                    ]
+                  },
+                  "operationId": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                  },
+                  "inputDigest": {
                     "type": "string",
                     "pattern": "^sha256:[a-f0-9]{64}$"
                   },
-                  "subjectDigest": {
-                    "type": "string",
-                    "pattern": "^sha256:[a-f0-9]{64}$"
-                  },
-                  "evidenceDigest": {
-                    "type": "string",
-                    "pattern": "^sha256:[a-f0-9]{64}$"
-                  },
-                  "assertionDigest": {
+                  "previousDigest": {
                     "type": "string",
                     "pattern": "^sha256:[a-f0-9]{64}$",
                     "nullable": true
                   },
-                  "actor": {
-                    "type": "string",
-                    "enum": [
-                      "reproduction",
-                      "operator"
+                  "action": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "create"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "evidence"
+                            ]
+                          },
+                          "finding": {
+                            "$ref": "#/components/schemas/ModelFinding"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "finding"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "queue"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "type"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "reproduce",
+                              "false-positive",
+                              "resolve"
+                            ]
+                          },
+                          "receiptId": {
+                            "type": "string",
+                            "pattern": "^[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "receiptId"
+                        ]
+                      }
                     ]
                   },
-                  "outcome": {
-                    "type": "string",
-                    "enum": [
-                      "reproduced",
-                      "not-reproduced",
-                      "error",
-                      "false-positive",
-                      "resolved"
-                    ]
+                  "receipt": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "findingId": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
+                      },
+                      "subjectDigest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
+                      },
+                      "evidenceDigest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$"
+                      },
+                      "assertionDigest": {
+                        "type": "string",
+                        "pattern": "^sha256:[a-f0-9]{64}$",
+                        "nullable": true
+                      },
+                      "actor": {
+                        "type": "string",
+                        "enum": [
+                          "reproduction",
+                          "operator"
+                        ]
+                      },
+                      "outcome": {
+                        "type": "string",
+                        "enum": [
+                          "reproduced",
+                          "not-reproduced",
+                          "error",
+                          "false-positive",
+                          "resolved"
+                        ]
+                      },
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 4096
+                      }
+                    },
+                    "required": [
+                      "findingId",
+                      "subjectDigest",
+                      "evidenceDigest",
+                      "assertionDigest",
+                      "actor",
+                      "outcome",
+                      "reason"
+                    ],
+                    "nullable": true
                   },
-                  "reason": {
-                    "type": "string",
-                    "minLength": 1,
-                    "maxLength": 4096
+                  "finding": {
+                    "$ref": "#/components/schemas/ModelFinding"
                   }
                 },
                 "required": [
-                  "findingId",
-                  "subjectDigest",
-                  "evidenceDigest",
-                  "assertionDigest",
-                  "actor",
-                  "outcome",
-                  "reason"
-                ],
-                "nullable": true
+                  "schemaVersion",
+                  "operationId",
+                  "inputDigest",
+                  "previousDigest",
+                  "action",
+                  "receipt",
+                  "finding"
+                ]
               },
-              "finding": {
-                "$ref": "#/components/schemas/ModelFinding"
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "schemaVersion": {
+                    "type": "string",
+                    "enum": [
+                      "v1alpha2"
+                    ]
+                  },
+                  "operationId": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                  },
+                  "inputDigest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  },
+                  "previousDigest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  },
+                  "action": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "unavailable"
+                        ]
+                      },
+                      "proofId": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "proofId"
+                    ]
+                  },
+                  "receipt": {
+                    "type": "object",
+                    "nullable": true,
+                    "enum": [
+                      null
+                    ]
+                  },
+                  "nonExecution": {
+                    "$ref": "#/components/schemas/ReproductionNonExecutionProof"
+                  },
+                  "finding": {
+                    "$ref": "#/components/schemas/ModelFinding"
+                  }
+                },
+                "required": [
+                  "schemaVersion",
+                  "operationId",
+                  "inputDigest",
+                  "previousDigest",
+                  "action",
+                  "receipt",
+                  "nonExecution",
+                  "finding"
+                ]
               }
-            },
-            "required": [
-              "schemaVersion",
-              "operationId",
-              "inputDigest",
-              "previousDigest",
-              "action",
-              "receipt",
-              "finding"
             ]
           }
         },
@@ -5758,6 +5829,110 @@
               "digest"
             ]
           }
+        ]
+      },
+      "ReproductionNonExecutionProof": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "type": "string",
+            "enum": [
+              "v1alpha1"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "reproduction-not-started"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "organizationId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "repository": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "findingId": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "subjectDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "queuedVersion": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 9999
+          },
+          "queuedFindingDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "planId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "planDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "reservationOperationId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "cancelled",
+              "unavailable"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "cancelled",
+              "input-limit"
+            ]
+          },
+          "executionReceipt": {
+            "type": "object",
+            "nullable": true,
+            "enum": [
+              null
+            ]
+          },
+          "verified": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "kind",
+          "id",
+          "organizationId",
+          "repository",
+          "findingId",
+          "subjectDigest",
+          "queuedVersion",
+          "queuedFindingDigest",
+          "planId",
+          "planDigest",
+          "reservationOperationId",
+          "status",
+          "reason",
+          "executionReceipt",
+          "verified"
         ]
       }
     },

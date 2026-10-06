@@ -1,3 +1,4 @@
+import {applyNonExecution,type ReproductionNonExecutionProof,type UnavailableFindingAction} from '../findings/non-execution.ts';
 import type {Pool,PoolClient} from 'pg';
 import {canonical,digest} from '../review/engine.ts';
 import {validateModelFinding,findingsFromReviewer,deduplicateFindings,mergeFindingEvidence,type ModelFinding} from '../findings/model.ts';
@@ -14,6 +15,7 @@ export interface FindingHistoryReaders {
   * Never implement these with model-supplied maps or arbitrary remote URLs. */
  reviewer(requestId:string,subject:ReviewSubject):Promise<{result:unknown;documents:unknown}>;
  receipt(receiptId:string,subject:ReviewSubject):Promise<FindingReceipt>;
+ nonExecution?(proofId:string,subject:ReviewSubject):Promise<ReproductionNonExecutionProof>;
 }
 export type {FindingHistoryEvent,FindingHistoryRecord} from '../findings/history.ts';
 import {validateFindingHistoryLink,type FindingHistoryEvent,type FindingHistoryRecord} from '../findings/history.ts';
@@ -129,6 +131,15 @@ export class FindingHistoryStore {
    const transition=createFindingTransitions(async receiptId=>{receipt=structuredClone(await this.readers.receipt(receiptId,structuredClone(subject)));return receipt;});
    let next;try{next=await transition(prior!.event.finding,selected!,expectedVersion);}catch(error){if((error as Error).message==='finding-receipt-unavailable')throw new FindingHistoryUnavailable();conflict();}
    return this.append(client,{schemaVersion:'v1alpha1',operationId,inputDigest,previousDigest:prior!.digest,action:selected!,receipt,finding:next!.finding});
+  });
+ }
+ /** Separate authenticated reader: never routes non-execution through execution receipts. */
+ async unavailable(id:string,subject:ReviewSubject,action:UnavailableFindingAction,expectedVersion:number,operationId:string):Promise<FindingHistoryRecord>{
+  subject=structuredClone(subject);action=structuredClone(action);this.subject(subject,id);if(!uuid.test(operationId)||!Number.isSafeInteger(expectedVersion)||expectedVersion<1||!this.readers.nonExecution)conflict();
+  const inputDigest=digest(canonical({id,subject,action,expectedVersion}));return this.transaction(async c=>{
+   const existing=await this.existing(c,operationId,inputDigest,id,subject);if(existing)return existing;const records=await this.history(c,id,subject),prior=records.at(-1);if(!prior||records.length>=10000)conflict();
+   const proof=await this.readers.nonExecution!(action.proofId,subject);let finding:ModelFinding;try{finding=applyNonExecution(prior!.event.finding,action,proof,expectedVersion);}catch{return conflict();}
+   return this.append(c,{schemaVersion:'v1alpha2',operationId,inputDigest,previousDigest:prior!.digest,action,receipt:null,nonExecution:proof,finding});
   });
  }
  async get(id:string,subject:ReviewSubject):Promise<FindingHistoryRecord[]>{

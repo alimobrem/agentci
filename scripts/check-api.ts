@@ -68,7 +68,7 @@ const reviewerFixture=JSON.parse(await readFile(new URL('../specs/api/fixtures/r
 validateReviewerResult(reviewerFixture,reviewerFixture.subject);
 
 const findingCoverage=JSON.parse(await readFile(new URL('../specs/api/finding-operations.json',import.meta.url),'utf8'));
-const findingOperations=new Set(['validateModelFinding','findingsFromReviewer','deduplicateFindings','createFindingTransitions','findingBlockingDecision','FindingHistoryStore','compileFindingReproduction','verifyReproductionUnit','reproductionReceipt','FindingReproductionStore','ReproductionEvalStore','createReproductionActivities','reproduceFinding','mergeFindingEvidence']);
+const findingOperations=new Set(['validateModelFinding','findingsFromReviewer','deduplicateFindings','createFindingTransitions','findingBlockingDecision','FindingHistoryStore','compileFindingReproduction','verifyReproductionUnit','reproductionReceipt','FindingReproductionStore','ReproductionEvalStore','loadReproductionConfig','ReproductionAuthorityStore','ReproductionNonExecutionStore','applyNonExecution','createReproductionActivities','reproduceFinding','mergeFindingEvidence']);
 for(const operation of findingCoverage.operations){
  if(!findingOperations.delete(operation.operationId)||!operation.requirementIds.length||!operation.tests.length||!operation.scenarios.length||operation.requirementIds.some((id:string)=>!requirementIds.has(id)))throw new Error('Incomplete finding operation coverage');
  for(const path of operation.tests)await access(new URL(`../${path}`,import.meta.url));
