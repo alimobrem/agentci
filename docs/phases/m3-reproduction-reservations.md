@@ -41,7 +41,7 @@ Errors returned to callers are bounded and omit database diagnostics.
 
 ## Acceptance and remaining work
 
-Thirteen real PostgreSQL scenarios cover concurrent identical requests, competing
+Fourteen real PostgreSQL scenarios cover concurrent identical requests, competing
 versions, the same operation selecting different authorized approvals, replay after
 a later disposition and reopened connection, wrong scope/admission association,
 corrupt admission evidence, and immutable records. Injected failures at each of the
@@ -64,3 +64,32 @@ recovery and cancellation before/during staging. Only then expose the approved
 submission/read/cancel transport with operator permission, exact subject/version,
 review membership, consumer readiness and fresh authority checks. Operator evidence
 dispositions remain a separate slice. M3 release and UI gates remain open.
+
+## Scoped workflow identity correction before publication
+
+The initial unpublished intent used the plan UUID alone. Reproduction plans are
+scoped by organization and repository, so the same operator-selected UUID can
+legitimately exist in another scope. Persisted intents now use
+`reproductionWorkflowId` from `packages/findings/workflow-identity.ts`: a versioned
+canonical scope/plan/role/unit name hashed with `nameUuid`, prefixed by a bounded
+role label. Organization and UUID case normalize; repository identity is retained
+exactly. Even a 256-character repository produces an ID under 80 characters.
+Migration SQL/body/checksum is unchanged because this corrects generated values,
+not the unpublished storage shape; no publicly dispatched identities require migration.
+
+The same helper supports parent, unit and cleanup identities. Future consumer
+activities must derive them with the full trusted scope and pass bounded IDs into
+the workflow; importing this Node crypto helper into Temporal's deterministic
+workflow sandbox is unsupported. Consumer adoption remains pending. Existing
+`reproduction-workflows.ts` still builds child and cleanup identities from plan/unit
+IDs without explicit tenant scope. Unit IDs are currently random database primary
+keys, which avoids the direct same-plan-only collision, but separate databases or
+restored/copied IDs sharing a Temporal namespace have no explicit scope protection.
+The existing M2 recovery cleanup identity likewise uses random job/unit IDs. Keep
+released workflow replay compatibility when introducing the scoped consumer rather
+than silently changing already-recorded workflow commands.
+
+The added PostgreSQL test persists and replays the same plan UUID in distinct
+organization/repository scopes, proving distinct retained parent IDs. Unit coverage
+proves role separation, scope separation for unit/cleanup, stable same-scope IDs,
+UUID normalization, bounded long-repository IDs and malformed-input rejection.

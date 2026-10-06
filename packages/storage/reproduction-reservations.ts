@@ -3,6 +3,7 @@ import {canonical,digest} from '../review/engine.ts';
 import {nameUuid} from '../evals/request-id.ts';
 import {validateFindingHistoryLink,type FindingHistoryRecord,type FindingHistoryEvent} from '../findings/history.ts';
 import type {ReproductionApprovalRegistry,ReproductionSelector} from '../findings/approval-registry.ts';
+import {reproductionWorkflowId} from '../findings/workflow-identity.ts';
 import {ModelReviewReads} from './model-review-reads.ts';
 export class ReproductionReservationConflict extends Error {constructor(readonly code='reproduction-reservation-conflict'){super(code);}}
 export interface ReproductionReservation {operationId:string;reproductionId:string;planDigest:string;findingId:string;queuedVersion:number;reviewId:string;requestDigest:string}
@@ -50,7 +51,7 @@ export class ReproductionReservations {
     const retained=(await c.query('SELECT digest,plan FROM agentci_reproduction_plans WHERE organization_id=$1 AND repository=$2 AND id=$3',[...key,plan.id])).rows[0];
     const intent=(await c.query('SELECT workflow_id FROM agentci_reproduction_dispatch_intents WHERE organization_id=$1 AND repository=$2 AND operation_id=$3',[...key,request.operationId])).rows[0];
     const queued=validated.find(r=>r.event.operationId===request.operationId);
-    if(existing.result_digest!==digest(canonical(result))||canonical(existing.result)!==canonical(result)||retained?.digest!==selected.planDigest||canonical(retained?.plan)!==canonical(plan)||intent?.workflow_id!==`agentci:reproduction:${plan.id}`||!queued||canonical(queued.event.finding)!==canonical(plan.finding))fail();
+    if(existing.result_digest!==digest(canonical(result))||canonical(existing.result)!==canonical(result)||retained?.digest!==selected.planDigest||canonical(retained?.plan)!==canonical(plan)||intent?.workflow_id!==reproductionWorkflowId(this.scope,plan.id)||!queued||canonical(queued.event.finding)!==canonical(plan.finding))fail();
     return result;
    }
    const count=Number((await c.query('SELECT count(*) AS count FROM agentci_reproduction_plans WHERE organization_id=$1 AND repository=$2 AND finding_id=$3',[...key,findingId])).rows[0].count);if(count>=plan.limits.maxAttempts)fail('attempt-limit');
@@ -61,7 +62,7 @@ export class ReproductionReservations {
    await c.query('INSERT INTO agentci_finding_events(organization_id,repository,finding_id,version,operation_id,digest,event) VALUES($1,$2,$3,$4,$5,$6,$7)',[...key,findingId,plan.finding.version,request.operationId,digest(canonical(event)),event]);
    await c.query('INSERT INTO agentci_reproduction_plans(organization_id,repository,id,finding_id,finding_version,digest,plan) VALUES($1,$2,$3,$4,$5,$6,$7)',[...key,plan.id,findingId,plan.finding.version,selected.planDigest,plan]);
    await c.query('INSERT INTO agentci_reproduction_operations(organization_id,repository,operation_id,finding_id,reproduction_id,request_digest,request,result_digest,result) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)',[...key,request.operationId,findingId,plan.id,hash,request,digest(canonical(result)),result]);
-   await c.query('INSERT INTO agentci_reproduction_dispatch_intents(organization_id,repository,operation_id,workflow_id) VALUES($1,$2,$3,$4)',[...key,request.operationId,`agentci:reproduction:${plan.id}`]);
+   await c.query('INSERT INTO agentci_reproduction_dispatch_intents(organization_id,repository,operation_id,workflow_id) VALUES($1,$2,$3,$4)',[...key,request.operationId,reproductionWorkflowId(this.scope,plan.id)]);
    return result;
   });
  }

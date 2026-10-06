@@ -4,10 +4,12 @@
   "trackingStartCommit": "2d345b2",
   "scope": "Internal atomic queue, plan, full-selector replay receipt and immutable dispatch intent; no dispatcher or HTTP activation",
   "files": {
-    "packages/storage/reproduction-reservations.ts": "9ec558f0c5b96dde901e6fb8ceab8dd2b0264c76ed662744dcda216533467a65",
+    "packages/storage/reproduction-reservations.ts": "3368d95b093505cdc8e1a23aa4e5d023200fcadb8306a668fabfacde766cd236",
     "deploy/migrations/014_m3_reproduction_reservations.sql": "9a8956b2a7d4d75751f34b2e78f52c97dae98ed5dd99ae6581edea55dcf48d0c",
-    "tests/integration/reproduction-reservations.test.ts": "cd794ef67c77641ed49e3a90d7b3e181ee3263c94995d362cfecaf0d7e193648",
-    "docs/phases/m3-reproduction-reservations.md": "8cfd0d6f98330a4ecbb858dbf643310e55c331040d0167710ddecf502aec78e0"
+    "tests/integration/reproduction-reservations.test.ts": "b5e05d942139fde8ba27674600c21a60bb98c870cae3066983d0e0366a11d697",
+    "docs/phases/m3-reproduction-reservations.md": "86ca90ce511499c9fe257e0b7c5732c3b39b7ab8c0f6f6e5026898a3da6189c8",
+    "packages/findings/workflow-identity.ts": "0608bc2b693341c74633be38c5603532a62f63d24b2a302d7925ef237c5cef78",
+    "tests/reproduction-workflow-identity.test.ts": "a92c8ac245ed1c9ae5e9081640b70c49f1b72d3133e7e39e3a370992f8ad6672"
   },
   "checks": {
     "postgres": {
@@ -72,5 +74,26 @@
       "Identical migration reinstall preserves records; changed source or applied checksum rejected; restored checksum allows original replay"
     ],
     "earlierChecks": "Original fast/build/mutation evidence remains applicable to unchanged production; not rerun for test-only additions"
+  },
+  "workflowIdentityCorrection": {
+    "reviewedSource": "3e373546ce39a257c2baddfb741d35f037201882",
+    "reason": "Plan IDs are scoped in SQL; an unscoped deterministic Temporal parent ID could collide between tenants or repositories. Correct before publication/dispatch.",
+    "implementation": "One versioned canonical scope/plan/role/unit helper using nameUuid; parent intent/replay uses helper; child/cleanup adoption remains future consumer work.",
+    "migration": "Body and checksum unchanged; storage shape unchanged and no production dispatcher activated.",
+    "postgres": {
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 1749.155875
+    },
+    "unit": "Bounded stable UUID-normalized identities, parent/unit/cleanup separation, cross-scope separation, long repository and malformed inputs pass",
+    "fast": {
+      "checks": 10,
+      "passed": true,
+      "seconds": 3.78
+    },
+    "build": "passed",
+    "findingMutationVerifier": "Baseline2 pass; receipt-identity and substituted-run mutants rejected",
+    "remaining": "Controller/activity computes identities outside Temporal sandbox; future consumer must preserve workflow replay compatibility and adopt scoped child/cleanup IDs."
   }
 }

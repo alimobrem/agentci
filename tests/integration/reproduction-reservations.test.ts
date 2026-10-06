@@ -1,12 +1,19 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {randomUUID} from 'node:crypto';import {readFile} from 'node:fs/promises';import {Pool} from 'pg';
+import {findingsFromReviewer,deduplicateFindings} from '../../packages/findings/model.ts';
+import {reproductionWorkflowId} from '../../packages/findings/workflow-identity.ts';
 import {canonical,digest} from '../../packages/review/engine.ts';import {nameUuid} from '../../packages/evals/request-id.ts';import {createReproductionApprovalRegistry} from '../../packages/findings/approval-registry.ts';import {compileFindingReproduction} from '../../packages/findings/reproduction.ts';import {FindingHistoryStore} from '../../packages/storage/finding-history.ts';import {ReviewAdmissionStore} from '../../packages/storage/review-admissions.ts';import {ReproductionReservations} from '../../packages/storage/reproduction-reservations.ts';import {reproductionFixture} from '../fixtures/reproduction.ts';
 const url=process.env.AGENTCI_TEST_DATABASE_URL;if(!url)throw Error('Reproduction reservation acceptance requires real PostgreSQL');
-async function fixture(){
+async function fixture(overrides:{organizationId?:string;repository?:string;planId?:string}={}){
  const schema=`reservation_${randomUUID().replaceAll('-','')}`,admin=new Pool({connectionString:url});await admin.query(`CREATE SCHEMA ${schema}`);const pool=new Pool({connectionString:url,options:`-c search_path=${schema}`});
  try{
   for(const name of ['001_m1','002_m2','006_m3_finding_history','007_m3_reproduction','008_m3_review_admissions','009_m3_review_dispatch','011_m3_review_summaries','012_m3_review_recovery','014_m3_reproduction_reservations'])await pool.query(await readFile(new URL(`../../deploy/migrations/${name}.sql`,import.meta.url),'utf8'));
   await pool.query(await readFile(new URL('../../deploy/migrations/014_m3_reproduction_reservations.sql',import.meta.url),'utf8'));
-  const f=reproductionFixture(),subject=f.initial.subject,scope={organizationId:subject.organizationId,repository:subject.repository};
+  const f=reproductionFixture();
+  f.reviewer.subject={...f.reviewer.subject,...(overrides.organizationId?{organizationId:overrides.organizationId}:{}),...(overrides.repository?{repository:overrides.repository}:{})};
+  const {buildReviewContext}=await import('../../packages/reviewers/context.ts');f.reviewer.contextDigest=buildReviewContext(f.reviewer.subject,f.documents).digest;
+  f.initial=deduplicateFindings(findingsFromReviewer(f.reviewer,f.reviewer.subject,f.documents),f.reviewer.subject)[0]!;f.finding={...f.initial,state:'reproduction-pending',version:2};
+  f.approval={...f.approval,id:overrides.planId??f.approval.id,findingDigest:digest(canonical(f.finding))};f.plan=compileFindingReproduction(f.finding,f.approval,f.base,f.head,f.policy,f.limits);
+  const subject=f.initial.subject,scope={organizationId:subject.organizationId,repository:subject.repository};
   const admissions=new ReviewAdmissionStore(pool,scope,{approve:async r=>({requestDigest:digest(canonical(r)),policyDigest:digest('policy'),profileRevision:r.profile.revision,mode:r.mode})});
   const request={schemaVersion:'v1alpha1' as const,id:f.approval.reviewId,subject,profile:{id:'fixture',revision:digest('fixture')},mode:'synthetic' as const};await admissions.admit(request);
   const history=new FindingHistoryStore(pool,scope,{reviewer:async()=>({result:f.reviewer,documents:f.documents}),receipt:async()=>({findingId:f.finding.id,subjectDigest:digest(canonical(subject)),assertionDigest:f.plan.assertionDigest,evidenceDigest:digest('retained-error'),actor:'reproduction',outcome:'error',reason:'Fixture execution error'})});
@@ -109,4 +116,21 @@ test('migration accepts identical reinstall and rejects changed source or applie
   }finally{c.release();}
   assert.deepEqual(await f.counts(),before);await f.store.reserve(f.f.initial.id,f.selector);assert.deepEqual(await f.counts(),before);
  }finally{await f.close();}
+});
+
+test('persisted workflow identity is stable on replay and separates the same plan ID across tenants and repositories',async()=>{
+ const planId=randomUUID(),org=randomUUID(),fixtures=[];
+ try{
+  fixtures.push(await fixture({planId,organizationId:org,repository:'owner/repo'}));
+  fixtures.push(await fixture({planId,organizationId:randomUUID(),repository:'owner/repo'}));
+  fixtures.push(await fixture({planId,organizationId:org,repository:'owner/another'}));
+  const identities=[];
+  for(const f of fixtures){
+   const first=await f.store.reserve(f.f.initial.id,f.selector);assert.equal(first.reproductionId,planId);
+   assert.deepEqual(await f.store.reserve(f.f.initial.id,f.selector),first);
+   const rows=(await f.pool.query('SELECT workflow_id FROM agentci_reproduction_dispatch_intents')).rows;assert.equal(rows.length,1);
+   assert.equal(rows[0].workflow_id,reproductionWorkflowId(f.scope,planId));identities.push(rows[0].workflow_id);
+  }
+  assert.equal(new Set(identities).size,3);
+ }finally{for(const f of fixtures)await f.close();}
 });
