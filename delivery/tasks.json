@@ -2504,6 +2504,32 @@
       "dependsOn": [
         "M3-07c-2"
       ]
+    },
+    {
+      "id": "M3-07e-3",
+      "title": "Deterministic retry-count fixture clock under scheduler load",
+      "requirementIds": [
+        "SPEC-13.2-003",
+        "SECTION-13.4"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T02:35:21.695Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Freeze Date only in retry-count fixture; preserve maxAttempts, accounting assertions, real retry delays and independent deadline tests. Demonstrate prior wall-clock expiry diagnosis; focused provider tests, frozen mutation verifier and fast checks pass with production unchanged.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-retry-count-clock-local.json"
+          ]
+        },
+        {
+          "text": "Protected corpus correction receives trusted baseline promotion and exact-source hosted acceptance before task completion; preserve original failure evidence and do not claim local checks establish promotion.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": []
     }
   ]
 }
