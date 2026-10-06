@@ -52,5 +52,26 @@
   "priorFailureHashes": {
     "/private/tmp/agentci-reproduction-dispatch-real.log": "1f6300cdcfe21744b9f68b9711509e6794dcbc6f29bc2b07e35046c4adec3a2c",
     "/private/tmp/agentci-dispatch-fast.log": "4d0494f5e397d6dd92463b644bd0502e8c0e9735fe6211f5da55a1cb0f56f4ba"
+  },
+  "mergedAuthorityBase": "c0f31caf7b95be29a672c74d26d8a6fc57b5647e",
+  "mergedChecks": {
+    "fast": {
+      "passed": 10,
+      "seconds": 4.23
+    },
+    "delivery": {
+      "tasks": 110,
+      "openM3ReleaseGates": 18
+    },
+    "logs": [
+      {
+        "path": "/private/tmp/agentci-dispatch-merged-fast.log",
+        "sha256": "60f0c8fbc1382b63eebbda87596085c1c7e7795e8b5cb4a30d07edd31d3a987b"
+      },
+      {
+        "path": "/private/tmp/agentci-dispatch-merged-delivery.log",
+        "sha256": "6ed912f77bee03126ecb83427729775b4288b915a22443be3610473648657053"
+      }
+    ]
   }
 }

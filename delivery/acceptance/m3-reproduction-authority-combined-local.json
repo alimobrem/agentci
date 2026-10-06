@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3d-1",
+  "originalHostedAcceptance": {
+    "run": "37415527477",
+    "pr": "64",
+    "candidate": "1fe6a38bf52629bb34bd3b5b25f7287b6166fd18",
+    "base": "1ac5845bc539a58cb630079b2e94247ec45134bc",
+    "testedPreview": "7b48921b2babd63058ec86cc312dbe0955ba6245",
+    "acceptedTree": "fddbe90e3b415aca36333b768bcc49537c06174b",
+    "artifact": {
+      "id": 11391495105,
+      "digest": "sha256:3dd5a9b775d229d48eaecb60d7e942b8e611b3e1f47ec05511d36b1c672f7745",
+      "downloadedOnce": true
+    },
+    "hashesVerified": 10,
+    "counts": {
+      "fast": {
+        "tests": 405,
+        "pass": 405,
+        "fail": 0,
+        "skipped": 0
+      },
+      "integration": {
+        "tests": 108,
+        "pass": 108,
+        "fail": 0,
+        "skipped": 0
+      }
+    },
+    "fastChecks": 10,
+    "api": "Both immutable baselines and removal-negative checks pass",
+    "package": "Installed production package smoke pass",
+    "runtime": "Compiled containers and isolated eval worker actual Temporal execution/restart/cleanup passed linux/amd64",
+    "native": "Both Temporal artifacts match official npm hashes",
+    "scans": {
+      "eval-engines": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "fixed": null
+        }
+      ],
+      "eval-worker": [],
+      "api": [],
+      "worker": [],
+      "eval-runner": [],
+      "eval-agentci": []
+    },
+    "cache": "warm: logged cache restoration and BuildKit CACHED layers; changed inputs rebuilt",
+    "logSha256": "6ac8925615bb90bd0bb71848b1e34fdd9b0b39a370d23b37209462a98598a5d6",
+    "constraints": [
+      "Exact PR64 authority-loader head1fe6a38 against base1ac5845, not later integrated main",
+      "All108 integration cases passed, including11 added authority cases",
+      "Base migrations014/015 present and packaged exactly",
+      "No release, live-provider, public-distribution or ARM64 runtime acceptance inferred",
+      "Earlier failed/cancelled attempts retained separately"
+    ],
+    "baseMigrationsPackagedExactly": {
+      "014_m3_reproduction_reservations.sql": "9a8956b2a7d4d75751f34b2e78f52c97dae98ed5dd99ae6581edea55dcf48d0c",
+      "015_m3_reproduction_eval_source.sql": "e3ddc12ae2b90b22bebfa18570c736c2ef953518f8acbf6dde70cd7d4a3948cc"
+    }
+  },
+  "integratedSource": "11819f9687930f2e300d58ba7be693e40d26668c",
+  "integratedProviderHead": "3adee0263723a6f98d9dc6a60e046d2776ba57fc",
+  "acceptedRetryMerge": "6df4ca2cb39639caf7a67b2261daf7033e2f9847",
+  "allAuthorityProductBlobsUnchanged": true,
+  "changedPaths": [
+    "delivery/acceptance/m3-provider-validation-exception-local.json",
+    "delivery/acceptance/m3-retry-count-clock-local.json",
+    "delivery/phase-pr-plan.json",
+    "delivery/task-events.jsonl",
+    "delivery/tasks.json",
+    "docs/definition-of-done.md",
+    "docs/phase-pr-plan.md",
+    "docs/phases/m3-live-validation-deferral.md",
+    "docs/phases/m3.md",
+    "releases/m3-gates.json",
+    "releases/m3-provider-validation-exception.json",
+    "tests/model-execute.test.ts"
+  ],
+  "checks": {
+    "fast": {
+      "passed": true,
+      "log": "/private/tmp/agentci-authority-combined-fast.log",
+      "sha256": "3761e05d0b9d27c75d36e6f4f60b400cb441b11bc4758e7adbaa82d79831420b",
+      "checks": 10
+    },
+    "postgres": {
+      "passed": 11,
+      "log": "/private/tmp/agentci-authority-combined-pg.log",
+      "sha256": "76176bc3920abf23435dd6655b785396fad166ee12567c67085e6867922732ff",
+      "tests": 11,
+      "failed": 0,
+      "skipped": 0
+    },
+    "apiCompatibility": {
+      "passed": true,
+      "log": "/private/tmp/agentci-authority-combined-api.log",
+      "sha256": "0ac28536ceafa0163df6a786587f3db18be783732be4834c3659cf1c9a950b44",
+      "baselines": [
+        "m1-0.2.1",
+        "m2-0.3.1"
+      ]
+    }
+  },
+  "limits": [
+    "Combined-source hosted acceptance pending; old hosted evidence remains exact-base1ac/head1fe only",
+    "No consumer or HTTP mutation activation; installed v2 acceptance is separately published PR65",
+    "No milestone release, distribution or demo acceptance claimed"
+  ]
+}

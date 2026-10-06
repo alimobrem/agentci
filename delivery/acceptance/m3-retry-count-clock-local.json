@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "v1alpha1",
+  "task": "M3-07e-3",
+  "scope": "Protected provider corpus timing correction; production behavior unchanged",
+  "testedBaseCommit": "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+  "testGitBlob": "d2611cf125bedb85a91e54b8e90e428d09a41f31",
+  "preservedOriginalFailure": {
+    "sourceTask": "M3-07e-2",
+    "sourceRecord": "delivery/acceptance/m3-hosted-git-seed-local.json",
+    "sourceRecordSha256": "a39892a1af670b3ae61456ed72f8da5b46e6a573b5af7f716f1600bba8c78ff5",
+    "sourceAttempt": "first final fast",
+    "sourceLog": "/private/tmp/agentci-git-seed-final-fast.log",
+    "sourceLogSha256": "6ba6e9bd3dee6e9f6e63665121fa3115fff7e544b3e06ee426c767a49f351c85",
+    "test": "retry count is bounded and missing or invalid estimates prevent reservation",
+    "durationMs": 5099.042959,
+    "expected": "ProviderFailure rate-limit after3attempts",
+    "actual": "ProviderFailure deadline",
+    "interpretation": "Production deadline enforcement was correct; fixture used wall time while asserting retry count. Failed attempt remains recorded; subsequent isolated/full passes do not erase it."
+  },
+  "change": {
+    "clock": "Node Test MockTimers Date only, scoped to retry-count case",
+    "unchanged": [
+      "5000ms request policy deadline",
+      "maxAttempts3",
+      "Retry count and reservation assertions",
+      "Real retry/backoff timers",
+      "Invalid estimate no-reservation assertions",
+      "All independent deadline/cancellation tests",
+      "Every production module and frozen harness/mutation criterion"
+    ]
+  },
+  "controlledDiagnosis": {
+    "injection": "Temporary test copy blocks real scheduler for5100ms after unchanged5000ms request deadline is created; no production mutation.",
+    "results": {
+      "before": {
+        "exitCode": 1,
+        "observedDeadlineFailure": true,
+        "passedRetryCase": false
+      },
+      "after": {
+        "exitCode": 0,
+        "observedDeadlineFailure": false,
+        "passedRetryCase": true
+      }
+    }
+  },
+  "checks": {
+    "focused": {
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 238.681125
+    },
+    "frozenProviderVerifier": {
+      "baseline": {
+        "exitCode": 0,
+        "report": {
+          "schemaVersion": "v1alpha1",
+          "results": [
+            {
+              "scenario": "request-contract",
+              "status": "passed"
+            },
+            {
+              "scenario": "response-contract",
+              "status": "passed"
+            },
+            {
+              "scenario": "stream-contract",
+              "status": "passed"
+            },
+            {
+              "scenario": "bounded-execution",
+              "status": "passed"
+            },
+            {
+              "scenario": "stream-execution",
+              "status": "passed"
+            }
+          ]
+        }
+      },
+      "mutation": {
+        "exitCode": 1,
+        "report": {
+          "schemaVersion": "v1alpha1",
+          "results": [
+            {
+              "scenario": "request-contract",
+              "status": "passed"
+            },
+            {
+              "scenario": "response-contract",
+              "status": "failed"
+            },
+            {
+              "scenario": "stream-contract",
+              "status": "passed"
+            },
+            {
+              "scenario": "bounded-execution",
+              "status": "passed"
+            },
+            {
+              "scenario": "stream-execution",
+              "status": "passed"
+            }
+          ]
+        }
+      },
+      "scope": "Local frozen-harness acceptance; network isolation and hosted execution are separate gates."
+    },
+    "fast": {
+      "passed": 10,
+      "seconds": 4.13
+    }
+  },
+  "protectedCorpusPromotion": {
+    "required": true,
+    "status": "pending",
+    "reason": "tests/model-execute.test.ts is frozen provider evidence. Local verification does not promote its baseline; trusted reviewed promotion and exact-source hosted acceptance remain required as for PR51.",
+    "noWeakening": "No minimum counts, expected failure criteria, policy durations or mutation guards were changed."
+  },
+  "limitations": [
+    "No GitHub/App queries or advisory dispatch performed",
+    "No release, hosted acceptance or task completion claim"
+  ]
+}

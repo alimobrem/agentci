@@ -40,3 +40,31 @@ Resume deferred acceptance when the user elects to configure providers and grant
 spend authorization. Preserve stable budget identities and the existing private
 configuration/preflight protections. No compatibility claim is promoted solely
 because the fixture-based release succeeds.
+
+## Approved progression exception — 2026-10-06
+
+The owner approved this narrower completion policy at **2026-10-06T02:34:57Z**:
+inaccessible external model-provider validation may remain **deferred/unverified**
+without blocking progress **only after every other applicable gate passes**.
+The structured decision is [m3-provider-validation-exception.json](../../releases/m3-provider-validation-exception.json).
+This permits qualified M3 closure and progression after those gates pass; it does
+not make the original live-provider requirements complete or remove any M0–M10 scope.
+
+The exception covers only upstream compatibility/quality validation for
+SPEC-13.3-002/003/004 and the real different-provider validation portion of
+SPEC-40-050 (the external-provider portions of M3-C15/C16). Implementations,
+internal fixtures, independence-policy enforcement, APIs, security, actual GitHub
+customer acceptance, packaging, published downloads, release, delivered success
+and failure demos, and recovery still require evidence. SPEC-40-051 remains
+mandatory: unsupported claims stay explicitly unconfirmed. Synthetic provider
+identities never establish live compatibility, quality or independence.
+
+The final requirement audit must preserve those original IDs and mark the affected
+validation deferred/unverified with this decision and its resume conditions.
+The consolidated closure record must cite the decision in its limitations and
+requirement audit; all eighteen release gates still need applicable evidence.
+The release notes, README and user demo must disclose the limitation. No gate,
+requirement or adapter task is promoted to passed by this approval. Resume the
+original live acceptance when access and any necessary spend authorization become
+available; do not discover credentials, create accounts or make paid calls under
+this exception.
