@@ -16,8 +16,24 @@ test('failure after visible output cannot silently retry or release possibly cha
 test('terminal followed by extra events cannot settle or return success',async()=>{
  const s=setup(),stream=s.provider.stream;s.provider.stream=async function*(req,ctx){yield*stream(req,ctx);yield {type:'text-delta',text:'extra'};};await assert.rejects(streamModel(s.provider,s.request,s.ledger,()=>{}),/invalid-output/);assert.deepEqual(s.events,['reserve','unknown']);
 });
-test('deadline bounds stalled iterators and stalled consumers; cancellation closes the iterator',async()=>{
- for(const stalled of ['iterator','consumer']){const s=setup();s.request.policy.deadlineAt=Date.now()+50;if(stalled==='iterator')s.provider.stream=()=>({[Symbol.asyncIterator](){return {next:()=>new Promise<IteratorResult<ModelEvent>>(()=>{}),return:()=>new Promise<IteratorResult<ModelEvent>>(()=>{})};}});await assert.rejects(streamModel(s.provider,s.request,s.ledger,()=>stalled==='consumer'?new Promise<void>(()=>{}):undefined),/deadline/);assert.deepEqual(s.events,['reserve','unknown']);}
+test('deadline bounds stalled iterators and stalled consumers; cancellation closes the iterator',async t=>{
+ // Keep the short deadline, but advance it only at an explicitly observed lifecycle boundary.
+ // Wall-clock scheduling before streamModel starts must not imply a billable dispatch.
+ t.mock.timers.enable({apis:['Date','setTimeout'],now:Date.UTC(2026,9,6)});
+ const expired=setup();expired.request.policy.deadlineAt=Date.now()+50;t.mock.timers.tick(50);
+ await assert.rejects(streamModel(expired.provider,expired.request,expired.ledger,()=>{}),error=>error instanceof ProviderFailure&&error.code==='deadline'&&error.dispatch==='not-sent');
+ assert.deepEqual(expired.events,[]);assert.equal(expired.calls(),0);
+ for(const stalled of ['iterator','consumer']){
+  const s=setup();s.request.policy.deadlineAt=Date.now()+50;
+  let entered!:()=>void,returned=false;const dispatched=new Promise<void>(resolve=>entered=resolve);
+  if(stalled==='iterator')s.provider.stream=()=>({[Symbol.asyncIterator](){return {next:()=>{entered();return new Promise<IteratorResult<ModelEvent>>(()=>{});},return:()=>{returned=true;return new Promise<IteratorResult<ModelEvent>>(()=>{});}};}});
+  const result=streamModel(s.provider,s.request,s.ledger,()=>{if(stalled==='consumer'){entered();return new Promise<void>(()=>{});}});
+  const rejected=assert.rejects(result,error=>error instanceof ProviderFailure&&error.code==='deadline'&&error.dispatch==='possibly-sent');
+  await dispatched;assert.deepEqual(s.events,['reserve']);
+  t.mock.timers.tick(49);await Promise.resolve();assert.deepEqual(s.events,['reserve']);
+  t.mock.timers.tick(1);await rejected;assert.deepEqual(s.events,['reserve','unknown']);
+  await new Promise(resolve=>setImmediate(resolve));if(stalled==='iterator')assert.equal(returned,true);
+ }
  const s=setup(),controller=new AbortController();let closed=false;const stream=s.provider.stream;s.provider.stream=async function*(req,ctx){try{yield*stream(req,ctx);}finally{closed=true;}};await assert.rejects(streamModel(s.provider,s.request,s.ledger,()=>controller.abort(),controller.signal),/cancelled/);await new Promise(resolve=>setImmediate(resolve));assert.equal(closed,true);assert.deepEqual(s.events,['reserve','unknown']);
 });
 test('stream capability fails before reservation and observer failures are redacted',async()=>{
