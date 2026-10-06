@@ -128,12 +128,14 @@
       ],
       "tests": [
         "tests/model-review-api.test.ts",
-        "tests/integration/model-review-api.test.ts"
+        "tests/integration/model-review-api.test.ts",
+        "tests/integration/model-review-control-startup.test.ts"
       ],
       "scenarios": [
         "no prompts keys budgets or paths",
         "revoked immutable revision visible",
-        "read token required"
+        "read token required",
+        "compiled control entry point uses scoped private config without provider keys; invalid activation fails before listen"
       ]
     },
     {
@@ -146,7 +148,8 @@
       ],
       "tests": [
         "tests/model-review-api.test.ts",
-        "tests/integration/model-review-api.test.ts"
+        "tests/integration/model-review-api.test.ts",
+        "tests/integration/model-review-control-startup.test.ts"
       ],
       "scenarios": [
         "exact concurrent replay one outbox row",
@@ -154,7 +157,8 @@
         "read token cannot mutate",
         "stale head and revoked profile denied",
         "missing configuration no outbox",
-        "offline worker queues without false live claim"
+        "offline worker queues without false live claim",
+        "compiled control entry point uses scoped private config without provider keys; invalid activation fails before listen"
       ]
     },
     {
@@ -167,14 +171,16 @@
       ],
       "tests": [
         "tests/model-review-api.test.ts",
-        "tests/integration/model-review-api.test.ts"
+        "tests/integration/model-review-api.test.ts",
+        "tests/integration/model-review-control-startup.test.ts"
       ],
       "scenarios": [
         "cross scope absent",
         "no raw Temporal IDs or failures",
         "retained summary before finalization",
         "refusal is not clean coverage",
-        "summary and terminal read atomically"
+        "summary and terminal read atomically",
+        "compiled control entry point uses scoped private config without provider keys; invalid activation fails before listen"
       ]
     },
     {
