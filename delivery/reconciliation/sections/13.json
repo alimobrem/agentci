@@ -783,9 +783,9 @@
         },
         {
           "id": "M3-07e-1",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-06T01:24:36.271Z",
-          "completedAt": null,
+          "completedAt": "2026-10-06T02:01:52.426Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
@@ -793,7 +793,7 @@
               "text": "A controlled clock proves expiry before reservation produces no charge while expiry after iterator or observer dispatch retains unknown charge, with iterator cleanup and cancellation assertions preserved; focused provider tests, frozen provider eval and fast checks pass without increasing deadlines, weakening thresholds or substituting candidate assertions for the trusted baseline. Hosted failed comparison 37398142115 remains retained for diagnosis.",
               "status": "passed",
               "evidence": [
-                "docs/phases/m3-stream-deadline-acceptance.md"
+                "delivery/acceptance/m3-stream-deadline-merged.json"
               ]
             }
           ]
@@ -859,8 +859,8 @@
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
-          "path": "docs/phases/m3-stream-deadline-acceptance.md",
-          "sha256": "f7b0faff6bca46bea1b479e39061bbc86fd9f2180d88a549724e7a1582ecf514",
+          "path": "delivery/acceptance/m3-stream-deadline-merged.json",
+          "sha256": "d479a418271b069370caf7c828623fac1eaa359903624dce3463b35100abecd7",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -1236,9 +1236,9 @@
         },
         {
           "id": "M3-07e-1",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-06T01:24:36.271Z",
-          "completedAt": null,
+          "completedAt": "2026-10-06T02:01:52.426Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
@@ -1246,7 +1246,7 @@
               "text": "A controlled clock proves expiry before reservation produces no charge while expiry after iterator or observer dispatch retains unknown charge, with iterator cleanup and cancellation assertions preserved; focused provider tests, frozen provider eval and fast checks pass without increasing deadlines, weakening thresholds or substituting candidate assertions for the trusted baseline. Hosted failed comparison 37398142115 remains retained for diagnosis.",
               "status": "passed",
               "evidence": [
-                "docs/phases/m3-stream-deadline-acceptance.md"
+                "delivery/acceptance/m3-stream-deadline-merged.json"
               ]
             }
           ]
@@ -1312,8 +1312,8 @@
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
-          "path": "docs/phases/m3-stream-deadline-acceptance.md",
-          "sha256": "f7b0faff6bca46bea1b479e39061bbc86fd9f2180d88a549724e7a1582ecf514",
+          "path": "delivery/acceptance/m3-stream-deadline-merged.json",
+          "sha256": "d479a418271b069370caf7c828623fac1eaa359903624dce3463b35100abecd7",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -2990,9 +2990,9 @@
         },
         {
           "id": "M3-07e-1",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-06T01:24:36.271Z",
-          "completedAt": null,
+          "completedAt": "2026-10-06T02:01:52.426Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
@@ -3000,7 +3000,7 @@
               "text": "A controlled clock proves expiry before reservation produces no charge while expiry after iterator or observer dispatch retains unknown charge, with iterator cleanup and cancellation assertions preserved; focused provider tests, frozen provider eval and fast checks pass without increasing deadlines, weakening thresholds or substituting candidate assertions for the trusted baseline. Hosted failed comparison 37398142115 remains retained for diagnosis.",
               "status": "passed",
               "evidence": [
-                "docs/phases/m3-stream-deadline-acceptance.md"
+                "delivery/acceptance/m3-stream-deadline-merged.json"
               ]
             }
           ]
@@ -3116,8 +3116,8 @@
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
-          "path": "docs/phases/m3-stream-deadline-acceptance.md",
-          "sha256": "f7b0faff6bca46bea1b479e39061bbc86fd9f2180d88a549724e7a1582ecf514",
+          "path": "delivery/acceptance/m3-stream-deadline-merged.json",
+          "sha256": "d479a418271b069370caf7c828623fac1eaa359903624dce3463b35100abecd7",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -3351,6 +3351,30 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07e-2",
+          "status": "done",
+          "startedAt": "2026-10-06T01:58:50.914Z",
+          "completedAt": "2026-10-06T03:52:36.582Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Explicit hosted-only raw Git object reuse preserves fresh repository authorization, commit/tree identity and existing bounded verified blob cache; cold/seeded snapshots match and actual Git fixtures prove no candidate checkout, replacement/hook/lazy fetch, corrupt/hash/size/UTF8/oversize acceptance or cross-repository reuse. Missing local objects fall back to REST; subprocess time/output/concurrency and cache bounds remain enforced. Redacted counters distinguish local/memory/remote byte sources and proven local cooldown rejections; fast/build/API and applicable mutation checks pass, structural request estimates remain separate from hosted measured velocity.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-hosted-git-seed-local.json"
+              ]
+            },
+            {
+              "text": "Reviewed exact-source hosted verification/advisory and packaged documentation establish publication acceptance; prior quota failures remain retained and no milestone release is claimed by local checks alone.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-hosted-git-seed-published-source.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [],
@@ -3367,6 +3391,18 @@
         {
           "path": "delivery/acceptance/m3-07b.json",
           "sha256": "3040aa7337cacc11cca17484e1df7e803e4ebd1c4c12917d3e1086f81d6e8226",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-hosted-git-seed-local.json",
+          "sha256": "a39892a1af670b3ae61456ed72f8da5b46e6a573b5af7f716f1600bba8c78ff5",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-hosted-git-seed-published-source.json",
+          "sha256": "2ea3cc8f1f441554a8135afab26966765978026d89f5c31784237c943f6a8024",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

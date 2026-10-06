@@ -2008,6 +2008,30 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07e-2",
+          "status": "done",
+          "startedAt": "2026-10-06T01:58:50.914Z",
+          "completedAt": "2026-10-06T03:52:36.582Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Explicit hosted-only raw Git object reuse preserves fresh repository authorization, commit/tree identity and existing bounded verified blob cache; cold/seeded snapshots match and actual Git fixtures prove no candidate checkout, replacement/hook/lazy fetch, corrupt/hash/size/UTF8/oversize acceptance or cross-repository reuse. Missing local objects fall back to REST; subprocess time/output/concurrency and cache bounds remain enforced. Redacted counters distinguish local/memory/remote byte sources and proven local cooldown rejections; fast/build/API and applicable mutation checks pass, structural request estimates remain separate from hosted measured velocity.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-hosted-git-seed-local.json"
+              ]
+            },
+            {
+              "text": "Reviewed exact-source hosted verification/advisory and packaged documentation establish publication acceptance; prior quota failures remain retained and no milestone release is claimed by local checks alone.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-hosted-git-seed-published-source.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -2392,6 +2416,18 @@
         {
           "path": "delivery/acceptance/m3-07c-2-merged-read-export.json",
           "sha256": "cc6c98bc93eb0be1f8fd43b2e379e4f0659a061312244f96579e702d08305af6",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-hosted-git-seed-local.json",
+          "sha256": "a39892a1af670b3ae61456ed72f8da5b46e6a573b5af7f716f1600bba8c78ff5",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-hosted-git-seed-published-source.json",
+          "sha256": "2ea3cc8f1f441554a8135afab26966765978026d89f5c31784237c943f6a8024",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -3380,6 +3416,30 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07e-2",
+          "status": "done",
+          "startedAt": "2026-10-06T01:58:50.914Z",
+          "completedAt": "2026-10-06T03:52:36.582Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Explicit hosted-only raw Git object reuse preserves fresh repository authorization, commit/tree identity and existing bounded verified blob cache; cold/seeded snapshots match and actual Git fixtures prove no candidate checkout, replacement/hook/lazy fetch, corrupt/hash/size/UTF8/oversize acceptance or cross-repository reuse. Missing local objects fall back to REST; subprocess time/output/concurrency and cache bounds remain enforced. Redacted counters distinguish local/memory/remote byte sources and proven local cooldown rejections; fast/build/API and applicable mutation checks pass, structural request estimates remain separate from hosted measured velocity.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-hosted-git-seed-local.json"
+              ]
+            },
+            {
+              "text": "Reviewed exact-source hosted verification/advisory and packaged documentation establish publication acceptance; prior quota failures remain retained and no milestone release is claimed by local checks alone.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-hosted-git-seed-published-source.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -3676,6 +3736,18 @@
         {
           "path": "delivery/acceptance/m3-06c.json",
           "sha256": "b0ccd3b1efa6bac45b904bffd01de7997adcdf1594718a619c51ea69c872aaca",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-hosted-git-seed-local.json",
+          "sha256": "a39892a1af670b3ae61456ed72f8da5b46e6a573b5af7f716f1600bba8c78ff5",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-hosted-git-seed-published-source.json",
+          "sha256": "2ea3cc8f1f441554a8135afab26966765978026d89f5c31784237c943f6a8024",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

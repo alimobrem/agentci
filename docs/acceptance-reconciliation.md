@@ -228,3 +228,10 @@ The read/export server task is complete; reproduction/client export work, UI and
 all eighteen M3 release gates remain pending. User-approved observed-rate
 calibration semantics are unchanged. Historical audit observations above remain
 identified by their original basis rather than rewritten as current certification.
+
+The export client subsequently merged in PR59 at c8d9222. The deployed Git seed
+run37409830966 (producer a6f5da0) verified current comparisons and observed909
+local Git hits versus159 remote blob fetches after memory caching:85.11% of
+1,068 memory-miss lookups avoided a remote blob fetch. This is one measured batch,
+not a total delivery acceleration claim. Evidence and prior failed attempts are
+retained in `delivery/acceptance/m3-hosted-git-seed-published-source.json`.
