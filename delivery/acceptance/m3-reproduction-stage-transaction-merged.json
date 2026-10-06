@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3d-2b-1",
+  "mergeCommit": "18da4ffbcd87f5511871bdeec24feb438e635ff4",
+  "mergedTree": "f0e3e784bda5b60d60855440ed7d705885f81e42",
+  "treeEqualsAcceptedCandidate": true,
+  "hostedAcceptance": {
+    "run": "37419224173",
+    "pr": "67",
+    "candidate": "cd317ae42b07c7659eaa8099421d8007030aaa6f",
+    "base": "fa8f44ec53b636870097d5ff125454a0c6884805",
+    "testedPreview": "e7463ec035386de48711c35ffa5f6249c34815c2",
+    "acceptedTree": "f0e3e784bda5b60d60855440ed7d705885f81e42",
+    "artifact": {
+      "id": 11392292492,
+      "digest": "sha256:66988fe8b0aa23776838df003839d1c31accc670e811a4b0c3bb3e5676b37e8c",
+      "downloadedOnce": true
+    },
+    "hashesVerified": 10,
+    "counts": {
+      "fast": {
+        "tests": 405,
+        "pass": 405,
+        "fail": 0,
+        "skipped": 0
+      },
+      "integration": {
+        "tests": 125,
+        "pass": 125,
+        "fail": 0,
+        "skipped": 0
+      }
+    },
+    "fastChecks": 10,
+    "api": "Both immutable baselines and removal-negative checks pass",
+    "package": "Installed production package smoke pass",
+    "runtime": "Compiled containers and isolated eval worker actual Temporal execution/restart/cleanup passed linux/amd64",
+    "native": "Both Temporal artifacts match official npm hashes",
+    "scans": {
+      "eval-engines": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "fixed": null
+        }
+      ],
+      "eval-worker": [],
+      "api": [],
+      "worker": [],
+      "eval-runner": [],
+      "eval-agentci": []
+    },
+    "cache": "warm: logged cache restoration and BuildKit CACHED layers; changed inputs rebuilt",
+    "logSha256": "913980dc137c2c73e65fc88874a5f692e9f04eab2d72d8ebf1126dc344bef25a",
+    "constraints": [
+      "Exact recorded base/head source-bound acceptance only; a future changed base/head is not automatically covered.",
+      "No live provider, phase release publication or ARM64 runtime acceptance implied.",
+      "Earlier failed/cancelled attempts remain separate.",
+      "PR66 retargeted advisory remains unverified; merged source does not rewrite that evidence."
+    ],
+    "packagedMigrationsExactSourceSha256": {
+      "package/deploy/migrations/001_m1.sql": "2a2cae25973b77d7c0f6d4877728156bc0717271dc5c5e9c26e27804c524c1aa",
+      "package/deploy/migrations/002_m2_eval_role.sql": "91088fbbef44424d02df41e7f42cd8cbcea64d202ca5510968ae99378fa569e9",
+      "package/deploy/migrations/002_m2.sql": "164cfb3a398b225706766cde13d6ef98a0c7e35933b94e27a26b1dd17a1e2d3c",
+      "package/deploy/migrations/003_m2_review_recovery.sql": "c268d010c7f67313774494dfc69a32be29f6927c5c7dc912d7af1d420a17a43a",
+      "package/deploy/migrations/004_m3_model_budget.sql": "df15b7eb19fa5cb55fd3f370f3dd210472550d5a6300c5c0dcba8a03ff9503e3",
+      "package/deploy/migrations/005_m3_reviewer_results.sql": "b3804db49801a4a18d5fc7de7b5bd1f61032d7f5859a1df2061afa1b95b51286",
+      "package/deploy/migrations/006_m3_finding_history.sql": "b2762a4e525f86c8fae7abd3314bfbc593eadf30f46a50781478f332bc29683b",
+      "package/deploy/migrations/007_m3_reproduction.sql": "9518f6eeae24b298b855f355899f82b1ddf511e7396c016052d7902e1fed8a03",
+      "package/deploy/migrations/008_m3_review_admissions.sql": "981659a7d9aaa6fa38b5232e8aa29b2db21234ad01c67b84788b0a913277f404",
+      "package/deploy/migrations/009_m3_review_dispatch.sql": "18df64ce6be5443c639e6bc42bb9d8ebbd73645603d3ffad9c920edf1ae95eae",
+      "package/deploy/migrations/010_m3_reviewer_profiles.sql": "484de8942a0d2e716382c5709d441cffdd3f687b5eb3569203f47b75d6e5deb0",
+      "package/deploy/migrations/011_m3_review_summaries.sql": "09564336bd2d8c02210cfbfc64b319ac414b525ec0fa88a3bc419d89296054b9",
+      "package/deploy/migrations/012_m3_review_recovery.sql": "2b5577630d92bd510cfe2eacc97d69f8b2c13ac753a2fe0b807c35ebce3aaca2",
+      "package/deploy/migrations/013_model_review_publication.sql": "6c45062a3705f14cd29e02fbd51b9347ea8ff8d435b30bf7c940252fc6c7675b",
+      "package/deploy/migrations/014_m3_reproduction_reservations.sql": "9a8956b2a7d4d75751f34b2e78f52c97dae98ed5dd99ae6581edea55dcf48d0c",
+      "package/deploy/migrations/015_m3_reproduction_eval_source.sql": "e3ddc12ae2b90b22bebfa18570c736c2ef953518f8acbf6dde70cd7d4a3948cc",
+      "package/deploy/migrations/016_m3_reproduction_authority.sql": "ddae4b25a23144eea745d21c5786877a85ebcad11085ef100e43f7ab850417b4",
+      "package/deploy/migrations/017_m3_reproduction_dispatch_state.sql": "32c08a0ef1816791e4660b5946f5e6ce01415acfba346e1011e93cf938954562"
+    },
+    "installedPostgresReader": {
+      "invocation": "node scripts/package-smoke.mjs --postgres-readers",
+      "install": "npm install --omit=dev",
+      "publicExport": "agentci/client",
+      "developmentLoaderInstalled": false,
+      "counts": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "skipped": 0
+      },
+      "stepLogSha256": "4ad6ade301c024b042fb806b40203f100e5bd1c45e7f55d2aebc5b20eebc86b5",
+      "scope": "Installed production client against source-hosted authenticated control HTTP and real PostgreSQL; not installed server deployment."
+    },
+    "cancelledSameHeadAttempt": {
+      "run": "37419223085",
+      "conclusion": "cancelled",
+      "countsAsPassed": false
+    },
+    "advisoryProof": "/private/tmp/agentci-advisory-proof-37419220560.json"
+  },
+  "scope": "Published internal change only; no full M3 completion",
+  "limits": [
+    "No consumer/customer mutation or UI activation inferred",
+    "Current provider tests remain explicitly unverified under owner exception; M3 source remains unset and all18 release gates pending",
+    "PR66 current-main advisory remains unverified; never relabel old subject"
+  ],
+  "retarget": {
+    "testedBase": "fa8f44ec53b636870097d5ff125454a0c6884805",
+    "actualBase": "2d419edb58234e2e45ae915ff26038b44cfd1341",
+    "baseTreesEqual": true,
+    "prospectiveTreeMatchesCI": true,
+    "stackedAdvisoryOnly": true
+  }
+}
