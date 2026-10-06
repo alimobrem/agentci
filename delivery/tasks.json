@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2306,6 +2306,33 @@
           "evidence": [
             "docs/phases/m3-stream-deadline-acceptance.md"
           ]
+        }
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "M3-07e-2",
+      "title": "Bounded trusted Git object reuse for hosted snapshot reads",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SECTION-12.5",
+        "SECTION-13.5"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T01:58:50.914Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Explicit hosted-only raw Git object reuse preserves fresh repository authorization, commit/tree identity and existing bounded verified blob cache; cold/seeded snapshots match and actual Git fixtures prove no candidate checkout, replacement/hook/lazy fetch, corrupt/hash/size/UTF8/oversize acceptance or cross-repository reuse. Missing local objects fall back to REST; subprocess time/output/concurrency and cache bounds remain enforced. Redacted counters distinguish local/memory/remote byte sources and proven local cooldown rejections; fast/build/API and applicable mutation checks pass, structural request estimates remain separate from hosted measured velocity.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-hosted-git-seed-local.json"
+          ]
+        },
+        {
+          "text": "Reviewed exact-source hosted verification/advisory and packaged documentation establish publication acceptance; prior quota failures remain retained and no milestone release is claimed by local checks alone.",
+          "status": "pending",
+          "evidence": []
         }
       ],
       "dependsOn": []

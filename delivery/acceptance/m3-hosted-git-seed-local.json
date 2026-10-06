@@ -1,0 +1,63 @@
+{
+  "task": "M3-07e-2",
+  "baseCommit": "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+  "scope": "Local source acceptance; hosted publication and package gates remain pending",
+  "sourceFiles": {
+    "packages/github/client.ts": "ea3876a6a1fedc7d34fba06ab346acd89d3436bb99d1d8894a6d631e6b7191cd",
+    "packages/github/git-object-seed.ts": "dc68f1a29edf25b52c4e28de70f6e31e081bff86a4ccd18cf94a3575eef4c0d3",
+    "apps/worker/eval-activities.ts": "c7091a4fbf93690664cd2e2a3a32e4291beff43cc3d640d734442b3dda117b6c",
+    "apps/worker/hosted-activities.ts": "13c521226538b047c40bb035629a34e38c943a911b68c4104bf64fe2a1ec0375",
+    "cmd/dogfood/main.ts": "d0ca88701f4239b744587f4d7e08313ab15afe1948f209475d7bb12a9e7533bf",
+    "tests/github-git-seed.test.ts": "7ee8f03f7bc638296228d064deb30011ff2aa1e00d144d034dc7e6e103b7b293",
+    "tests/github-git-seed-adversarial.test.ts": "88e21fb3a011b69f016582e60a10fd8629787cf1201b6e5eb28406c52c9acf32"
+  },
+  "focused": {
+    "passed": 10,
+    "skipped": 0,
+    "seconds": 2.631
+  },
+  "fast": {
+    "passed": true,
+    "checks": 10,
+    "tests": 352,
+    "seconds": 15.850546791000001
+  },
+  "build": "passed",
+  "apiCompatibility": "M1 0.2.1 and M2 0.3.1 immutable baselines passed; cached archive checksum verified",
+  "mutationVerifiers": [
+    "provider response identity rejected",
+    "finding receipt identity and substituted reproduction run rejected",
+    "reviewer synthetic external dispatch rejected"
+  ],
+  "integration": {
+    "realHttpPostgresStaging": "passed",
+    "realTemporalParent": "passed",
+    "parentSeconds": 34.625,
+    "runnerImage": "sha256:a60d4660840e03e5dde5b365b55aefc02518f7f23fd7a771992bfa65aaa8d143",
+    "skipped": 0
+  },
+  "preservedAttempts": [
+    {
+      "check": "initial fast",
+      "result": "sandbox EPERM binding localhost; rerun with fixture access passed"
+    },
+    {
+      "check": "initial API compatibility",
+      "result": "offline oasdiff download failed; existing pinned archive reused and checksum verified"
+    },
+    {
+      "check": "initial parent integration",
+      "result": "runner image env omitted; staging passed, parent failed before execution; configured existing immutable image and parent passed"
+    },
+    {
+      "check": "first final fast",
+      "result": "existing model-execute retry-count case reached 5-second deadline; isolated 11-test suite passed, full fast second attempt passed without threshold changes"
+    }
+  ],
+  "limits": [
+    "No live GitHub App calls for this change",
+    "Structural request savings are not measured velocity improvements",
+    "Fresh authentication/commit/tree checks remain mandatory",
+    "Cross-process cooldown persistence excluded"
+  ]
+}
