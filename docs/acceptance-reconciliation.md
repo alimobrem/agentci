@@ -160,6 +160,11 @@ acceptance on the relevant current revision when authorized access returns.
 
 ## Numerical and statistical decisions proposed for approval
 
+The owner subsequently chose **retain observed-rate policy during calibration**.
+See `delivery/reconciliation/policy-decisions.json`. Wilson intervals remain
+descriptive; confidence-bound gates and new numerical limits are not approved.
+The benchmark design remains awaiting a separate decision.
+
 **All new defaults below are proposals only.** No acceptance result changes in this
 review. Existing product-defined per-suite thresholds continue to mean what the
 released policy says until an approved version/migration changes that behavior.
