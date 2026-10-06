@@ -2,7 +2,7 @@
 
 Status: reviewed design. M3-07c-1 now implements profiles, admission, status and
 cancellation in development source; see [implemented slice](m3-customer-model-review-api.md).
-M3-07c-2A adds finding and history reads in development; profiles/submit/show/cancel client methods are implemented. Export and reproduction remain planned dependent slices.
+M3-07c-2A adds finding and history reads in development; profiles/submit/show/cancel client methods are implemented. M3-07c-2B adds retained snapshot export in development; reproduction remains a planned dependent slice.
 OpenAPI and the operation map advertise only implemented routes. The immutable
 M1/M2 baselines and released `agentci review` command remain unchanged. The
 [operation map](../../specs/api/drafts/model-review-transport.json) and
@@ -181,8 +181,7 @@ network lifetime. Header binds review identity, admission digest, optional summa
 manifest. Derive configured request IDs from the immutable admitted profile and
 admission timestamp; read retained roles even if final summary insertion failed.
 Associate findings by the admission's deterministic finding operation IDs and
-authenticated retained-role provenance, never just matching PR number. 07c-2 owns
-any additional bounded scoped reads needed to recover that association. Capture
+authenticated retained-role provenance, never just matching PR number. The export reader derives candidate identities from retained structured reviewer proposals, then requires the deterministic ingestion operation and validates its original provenance against those retained roles. Capture
 missing role IDs explicitly, not as zero-cost or clean outcomes. Records follow
 header, retained reviewer results in configured role order, then
 finding histories by finding ID and ascending version, then one end frame.
@@ -199,8 +198,7 @@ No resume token in M3: retry downloads a new whole snapshot and cannot concatena
 prefixes from different attempts. Client returns/yields provisional records until
 end verification, with a separate complete certification. The existing eval
 export remains unchanged and is not falsely reused as a model-review schema.
-07c-2 owns the executable model-review frame schema/verifier and full nonempty
-export fixture, using these frozen semantics and authoritative domain validators.
+The executable model-review frame schema/verifier and nonempty partial export fixture implement these semantics with authoritative domain validators.
 
 JSON responses max 4 MiB; export frames max 4 MiB, aggregate max 128 MiB,
 server deadline 120 seconds, two active exports per service. Exceeding planned

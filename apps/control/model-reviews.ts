@@ -1,3 +1,5 @@
+import {ModelReviewExports,type PreparedModelReviewExport} from '../../packages/storage/model-review-export.ts';
+import {streamModelReviewExport} from './model-review-export.ts';
 import {FindingReads,type FindingPageOptions} from '../../packages/storage/finding-reads.ts';
 import {FindingReadFailure} from '../../packages/storage/finding-cursor.ts';
 import type {ModelReviewFindings,ModelFindingHistory} from '../../packages/reviewers/finding-transport.ts';
@@ -17,6 +19,7 @@ import {validateModelReviewAccepted,validateModelReviewCancellation,validateMode
 export interface ModelReviewControl {
  scope:{organizationId:string;repository:string};
  profiles():Promise<ReviewerProfileList>;
+ exportReview?:(id:string)=>Promise<PreparedModelReviewExport>;
  findings?:(id:string,options:FindingPageOptions)=>Promise<ModelReviewFindings>;
  finding?:(reviewId:string,id:string,version?:number)=>Promise<FindingHistoryRecord>;
  history?:(reviewId:string,id:string,options:FindingPageOptions)=>Promise<ModelFindingHistory>;
@@ -30,7 +33,7 @@ export async function createModelReviewControl(pool:Pool,config:{organizationId:
  const findingReads=config.cursorKey?new FindingReads(pool,scope,config.cursorKey):null;
  if(definition&&!github)throw Error('model-review-authority-unavailable');
  const authority=definition?await initializeReviewerAuthority(pool,github!,config,definition):null;
- return {scope,...(findingReads?{findings:(id:string,options:FindingPageOptions)=>findingReads.findings(id,options),finding:(reviewId:string,id:string,version?:number)=>findingReads.finding(reviewId,id,version),history:(reviewId:string,id:string,options:FindingPageOptions)=>findingReads.history(reviewId,id,options)}:{}),profiles:()=>reads.profiles(authority?.definition.profiles??[]),status:id=>reads.status(id),
+ return {scope,exportReview:id=>new ModelReviewExports(pool,scope).prepare(id),...(findingReads?{findings:(id:string,options:FindingPageOptions)=>findingReads.findings(id,options),finding:(reviewId:string,id:string,version?:number)=>findingReads.finding(reviewId,id,version),history:(reviewId:string,id:string,options:FindingPageOptions)=>findingReads.history(reviewId,id,options)}:{}),profiles:()=>reads.profiles(authority?.definition.profiles??[]),status:id=>reads.status(id),
   ...(authority?{admit:async(request:ReviewAdmissionRequest)=>{const admitted=await authority.admissions.admit(request);return validateModelReviewAccepted({schemaVersion:'v1alpha1',id:admitted.request.id,requestDigest:admitted.digest});}}:{}),
   cancel:async id=>{if(!await reads.status(id))return undefined;await dispatch.requestCancellation(id);return validateModelReviewCancellation({schemaVersion:'v1alpha1',id,cancelRequested:true});},
  };
@@ -41,10 +44,10 @@ function matches(actual:string,token:string|undefined){if(!token)return false;co
 /** New resources only. Legacy endpoints retain their existing authentication. */
 export function modelReviewRoutes(config:{evidenceToken:string;operatorToken?:string},control?:ModelReviewControl){
  if(!credential(config.evidenceToken)||(config.operatorToken!==undefined&&(!credential(config.operatorToken)||config.operatorToken===config.evidenceToken)))throw Error('Invalid model review credentials');
- const tokens={...config};
+ const tokens={...config};let activeExports=0;
  return async(req:IncomingMessage,res:ServerResponse):Promise<boolean>=>{
   const rawPath=(req.url??'').split('?')[0]??'',profiles=rawPath==='/v1/reviewer-profiles',collection=rawPath==='/v1/model-reviews';
-  const match=/^\/v1\/model-reviews\/([^/]+)(\/cancellation|\/findings)?$/.exec(rawPath);
+  const match=/^\/v1\/model-reviews\/([^/]+)(\/cancellation|\/findings|\/export)?$/.exec(rawPath);
   const findingMatch=/^\/v1\/findings\/([^/]+)(\/history)?$/.exec(rawPath);
   if(!profiles&&!collection&&!match&&!findingMatch)return false;
   const reply=(status:number,value:unknown)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff'});res.end(JSON.stringify(value));};
@@ -73,6 +76,10 @@ export function modelReviewRoutes(config:{evidenceToken:string;operatorToken?:st
    }
    if(profiles){reply(200,validateReviewerProfileList(control?await control.profiles():{schemaVersion:'v1alpha1',profiles:[]}));return true;}
    if(!control)throw new TransportFailure(503,'service-unavailable');
+   if(match?.[2]==='/export'){
+    if(!control.exportReview||activeExports>=2)throw new TransportFailure(503,'service-unavailable');activeExports++;
+    try{await streamModelReviewExport(res,()=>control.exportReview!(id!),{id:id!,...control.scope});}finally{activeExports--;}return true;
+   }
    if(readingFindings){if(!control.findings)throw new TransportFailure(503,'service-unavailable');reply(200,await control.findings(id!,page));return true;}
    if(findingMatch){
     const reviewId=parsed.searchParams.get('reviewId')?.toLowerCase();let findingId:string;try{findingId=decodeURIComponent(findingMatch[1]!);}catch{throw new TransportFailure(400,'invalid-request');}

@@ -1599,6 +1599,103 @@
           }
         }
       }
+    },
+    "/v1/model-reviews/{id}/export": {
+      "get": {
+        "operationId": "exportModelReview",
+        "summary": "Export a bounded retained model-review snapshot",
+        "security": [
+          {
+            "ModelReviewRead": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bounded NDJSON frames; mandatory end and EOF certify captured retained snapshot, not successful execution. Every line is a ModelReviewExportFrame; 4MiB/frame, 128MiB aggregate,120s deadline.",
+            "content": {
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "string"
+                },
+                "x-frame-schema": {
+                  "$ref": "#/components/schemas/ModelReviewExportFrame"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed UUID or query parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReadError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid read/operator bearer credential",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReadError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown or other-scope review",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReadError"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Wrong method; Allow GET",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReadError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Captured snapshot exceeds frame or aggregate bounds; no stream sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReadError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Storage unavailable, preparation deadline, or two concurrent exports already active; Retry-After 1",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReadError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -4899,6 +4996,706 @@
         },
         "required": [
           "error"
+        ]
+      },
+      "RetainedReviewerResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "enum": [
+              "v1alpha1"
+            ]
+          },
+          "mode": {
+            "enum": [
+              "synthetic",
+              "external"
+            ]
+          },
+          "subject": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "organizationId": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+                "maxLength": 256
+              },
+              "pullRequest": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "baseSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              },
+              "headSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              }
+            },
+            "required": [
+              "organizationId",
+              "repository",
+              "pullRequest",
+              "baseSha",
+              "headSha"
+            ]
+          },
+          "role": {
+            "enum": [
+              "specification-compliance",
+              "code-correctness",
+              "architecture",
+              "security",
+              "adversarial",
+              "test-eval-completeness",
+              "operational-reliability"
+            ]
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "attemptId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "provider": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "refused",
+              "incomplete"
+            ]
+          },
+          "independence": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mode": {
+                "enum": [
+                  "synthetic",
+                  "external"
+                ]
+              },
+              "differentProvider": {
+                "type": "boolean"
+              },
+              "outcome": {
+                "enum": [
+                  "distinct-upstreams",
+                  "not-required"
+                ]
+              },
+              "reviewerUpstream": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+              },
+              "codingUpstream": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+                  },
+                  {
+                    "nullable": true,
+                    "enum": [
+                      null
+                    ]
+                  }
+                ]
+              },
+              "provenanceDigest": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  },
+                  {
+                    "nullable": true,
+                    "enum": [
+                      null
+                    ]
+                  }
+                ]
+              }
+            },
+            "required": [
+              "mode",
+              "differentProvider",
+              "outcome",
+              "reviewerUpstream",
+              "codingUpstream",
+              "provenanceDigest"
+            ]
+          },
+          "coding": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "providerId": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+                  },
+                  "model": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "headSha": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{40}$"
+                  },
+                  "evidenceDigest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "providerId",
+                  "model",
+                  "headSha",
+                  "evidenceDigest"
+                ]
+              },
+              {
+                "nullable": true,
+                "enum": [
+                  null
+                ]
+              }
+            ]
+          },
+          "authorizationDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "configDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "promptDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "contextDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "requestDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "responseDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "response": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "status": {
+                "enum": [
+                  "completed",
+                  "refused",
+                  "incomplete"
+                ]
+              },
+              "text": {
+                "type": "string",
+                "maxLength": 524288
+              },
+              "structuredOutput": {},
+              "usage": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "inputTokens": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      {
+                        "nullable": true,
+                        "enum": [
+                          null
+                        ]
+                      }
+                    ]
+                  },
+                  "outputTokens": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      {
+                        "nullable": true,
+                        "enum": [
+                          null
+                        ]
+                      }
+                    ]
+                  },
+                  "costUsdMicros": {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      {
+                        "nullable": true,
+                        "enum": [
+                          null
+                        ]
+                      }
+                    ]
+                  },
+                  "costKind": {
+                    "enum": [
+                      "reported",
+                      "estimated",
+                      "unknown"
+                    ]
+                  },
+                  "pricingRevision": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                      },
+                      {
+                        "nullable": true,
+                        "enum": [
+                          null
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "inputTokens",
+                  "outputTokens",
+                  "costUsdMicros",
+                  "costKind",
+                  "pricingRevision"
+                ]
+              },
+              "observedModel": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  {
+                    "nullable": true,
+                    "enum": [
+                      null
+                    ]
+                  }
+                ]
+              },
+              "providerRequestId": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 512
+                  },
+                  {
+                    "nullable": true,
+                    "enum": [
+                      null
+                    ]
+                  }
+                ]
+              }
+            },
+            "required": [
+              "status",
+              "text",
+              "structuredOutput",
+              "usage",
+              "observedModel",
+              "providerRequestId"
+            ]
+          },
+          "proposal": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "verification": {
+                    "enum": [
+                      "proposed"
+                    ]
+                  },
+                  "output": {}
+                },
+                "required": [
+                  "verification",
+                  "output"
+                ]
+              },
+              {
+                "nullable": true,
+                "enum": [
+                  null
+                ]
+              }
+            ]
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "mode",
+          "subject",
+          "role",
+          "requestId",
+          "attemptId",
+          "provider",
+          "model",
+          "status",
+          "independence",
+          "coding",
+          "authorizationDigest",
+          "configDigest",
+          "promptDigest",
+          "contextDigest",
+          "requestDigest",
+          "responseDigest",
+          "response",
+          "proposal"
+        ]
+      },
+      "ModelReviewExportHeader": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "type": "string",
+            "enum": [
+              "v1alpha1"
+            ]
+          },
+          "review": {
+            "$ref": "#/components/schemas/ModelReviewStatus"
+          },
+          "configuredRoles": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 7,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "requestId": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                },
+                "role": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "requestId",
+                "role"
+              ]
+            }
+          },
+          "retainedRoles": {
+            "type": "array",
+            "maxItems": 7,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "requestId": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+                },
+                "digest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "requestId",
+                "digest"
+              ]
+            }
+          },
+          "missingRoleIds": {
+            "type": "array",
+            "maxItems": 7,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+            }
+          },
+          "findings": {
+            "type": "array",
+            "maxItems": 64,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "throughVersion": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10000
+                },
+                "lastDigest": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                }
+              },
+              "required": [
+                "id",
+                "throughVersion",
+                "lastDigest"
+              ]
+            }
+          },
+          "reviewerCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 7
+          },
+          "eventCount": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 640000
+          },
+          "snapshotDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "review",
+          "configuredRoles",
+          "retainedRoles",
+          "missingRoleIds",
+          "findings",
+          "reviewerCount",
+          "eventCount",
+          "snapshotDigest"
+        ]
+      },
+      "ModelReviewExportFrame": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "header"
+                ]
+              },
+              "data": {
+                "$ref": "#/components/schemas/ModelReviewExportHeader"
+              },
+              "sequence": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 640008
+              },
+              "previousDigest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "type",
+              "data",
+              "sequence",
+              "previousDigest",
+              "digest"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "reviewer"
+                ]
+              },
+              "data": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "result": {
+                    "$ref": "#/components/schemas/RetainedReviewerResult"
+                  },
+                  "digest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "result",
+                  "digest"
+                ]
+              },
+              "sequence": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 640008
+              },
+              "previousDigest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "type",
+              "data",
+              "sequence",
+              "previousDigest",
+              "digest"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "finding"
+                ]
+              },
+              "data": {
+                "$ref": "#/components/schemas/FindingHistoryRecord"
+              },
+              "sequence": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 640008
+              },
+              "previousDigest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "type",
+              "data",
+              "sequence",
+              "previousDigest",
+              "digest"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "end"
+                ]
+              },
+              "data": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "snapshotDigest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  },
+                  "reviewerCount": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 7
+                  },
+                  "eventCount": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 640000
+                  },
+                  "lastContentDigest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  }
+                },
+                "required": [
+                  "snapshotDigest",
+                  "reviewerCount",
+                  "eventCount",
+                  "lastContentDigest"
+                ]
+              },
+              "sequence": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 640008
+              },
+              "previousDigest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "type",
+              "data",
+              "sequence",
+              "previousDigest",
+              "digest"
+            ]
+          }
         ]
       }
     },
