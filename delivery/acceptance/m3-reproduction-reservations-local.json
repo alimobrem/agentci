@@ -1,0 +1,58 @@
+{
+  "task": "M3-07c-3b",
+  "sourceBase": "6bed94a",
+  "trackingStartCommit": "2d345b2",
+  "scope": "Internal atomic queue, plan, full-selector replay receipt and immutable dispatch intent; no dispatcher or HTTP activation",
+  "files": {
+    "packages/storage/reproduction-reservations.ts": "9ec558f0c5b96dde901e6fb8ceab8dd2b0264c76ed662744dcda216533467a65",
+    "deploy/migrations/014_m3_reproduction_reservations.sql": "9a8956b2a7d4d75751f34b2e78f52c97dae98ed5dd99ae6581edea55dcf48d0c",
+    "tests/integration/reproduction-reservations.test.ts": "3dcd20d15db508b97733f5f190f9aedcc688085fcbe03108129bc8b97ba73dbd",
+    "docs/phases/m3-reproduction-reservations.md": "5802f8244f87e3c58871e90273eba962836abb01f91421ea3a8f58998f1244fc"
+  },
+  "checks": {
+    "postgres": {
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 1075.096084,
+      "cases": [
+        "Concurrent identical retries commit one outcome",
+        "Different operation IDs race one finding version",
+        "Each of four SQL insert failures rolls back every mutation",
+        "Wrong scope, exact admitted review membership and corrupted admission integrity fail closed",
+        "Owned PostgreSQL backend death after plan insertion rolls back and retry commits once",
+        "Same operation ID with two independently valid approvals has one winner and one idempotency conflict",
+        "Replay retains original outcome after later finding disposition and connection restart"
+      ]
+    },
+    "fast": {
+      "checks": 10,
+      "passed": true,
+      "seconds": 3.71
+    },
+    "build": "passed",
+    "findingMutationVerifier": {
+      "baseline": "2 scenarios pass",
+      "receiptIdentity": "mutant rejected",
+      "substitutedRun": "mutant rejected"
+    }
+  },
+  "preservedAttempts": [
+    {
+      "check": "Initial migration fixture",
+      "result": "New migration template accidentally retained source-template SQL after body extraction; seven setup failures before execution. Corrected assembly; repeated migration and full acceptance pass."
+    },
+    {
+      "check": "Backend death regression before fix",
+      "result": "8 passed, 1 failed: unhandled checked-out pg client error during rollback after owned backend termination. Scoped client error listener marks broken; pool discards connection; same test now passes.",
+      "logSha256": "60f224dfeb977bf55824343170df2564d5844fcb536c712ea159e1e2bbba01e7"
+    }
+  ],
+  "limits": [
+    "No real HTTP/Temporal dispatch or evaluator execution claimed; parent c3 acceptance still pending.",
+    "Registry approval lifetime and revocation must be rechecked by future consumer; no live side effects enabled.",
+    "Immutable dispatch intent is not a lease, dispatch success or completion receipt.",
+    "No provider calls, hosted CI, container publication, release or milestone closure.",
+    "Public API and event semantics unchanged; existing M1/M2 baselines preserved."
+  ]
+}

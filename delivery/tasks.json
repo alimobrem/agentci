@@ -2381,8 +2381,10 @@
       "acceptance": [
         {
           "text": "Real PostgreSQL proves full-selector replay, exact admitted-review membership, conflicting operation and stale-version rejection, and one atomic authorized queue event, immutable plan, operation receipt and dispatch intent. Concurrent duplicates and injected transaction failures cannot strand partial state. No production dispatcher or HTTP route is enabled; Temporal and customer transport remain original c3 acceptance.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-reproduction-reservations-local.json"
+          ]
         }
       ],
       "dependsOn": [
