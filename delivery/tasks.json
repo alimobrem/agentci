@@ -2475,6 +2475,32 @@
       "dependsOn": [
         "M3-07c-2"
       ]
+    },
+    {
+      "id": "M3-07c-3d-1",
+      "title": "Durable operator reproduction authority and non-execution retry proof",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3",
+        "SECTION-12.4",
+        "SECTION-12.5"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T04:35:55.677Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Explicit operator config revisions resolve exact retained finding/plan and trusted snapshots; durable apply uses CAS with revocation/expiry checks and no stale startup resurrection. Separate authenticated non-execution proof binds scope/plan/operation/version and keeps execution receipt null; never-staged cancellation can transition to unconfirmed/error and fresh authorized retry without rewriting execution evidence. Real PostgreSQL races/replay and additive history version compatibility pass; no HTTP or worker activation.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-3a",
+        "M3-07c-3b"
+      ]
     }
   ]
 }
