@@ -2164,14 +2164,16 @@
         "SECTION-32",
         "SECTION-12.3"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T00:20:28.814Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T03:24:11.672Z",
       "acceptance": [
         {
           "text": "Exact-subject finding/history reads, bounded stable pagination and integrity-verifiable complete export work over real HTTP. Wrong scope, invalid cursors and interrupted/truncated exports fail explicitly; M3-C11 export capability is retained.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-07c-2-merged-read-export.json"
+          ]
         }
       ],
       "dependsOn": [
