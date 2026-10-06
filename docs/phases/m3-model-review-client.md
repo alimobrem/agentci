@@ -49,10 +49,11 @@ transport, and invalid-evidence failures print `{error:{code}}` to stderr and
 exit 2. This initial slice does not implement an outcome-evaluation command or
 use exit 1. Existing `agentci review` behavior is unchanged.
 
-Node consumers import `ModelReviewClient` from
-`agentci/dist/packages/client/model-review.js`:
+Node consumers use the supported `agentci/client` package export:
 
 ```js
+import {ModelReviewClient} from 'agentci/client';
+
 const client = new ModelReviewClient({
   url: process.env.AGENTCI_API_URL,
   operatorToken: process.env.AGENTCI_OPERATOR_TOKEN
@@ -80,7 +81,9 @@ and late cancellation preserving terminal evidence. All four CLI commands passed
 through that real HTTP service.
 
 The same integration test passed with `AGENTCI_TEST_CLIENT_PACKAGE_ROOT` pointing
-to a production-only offline installation of the packed application. This verifies
-the installed client and executable; it does not claim a packaged control-service
+to a production-only offline installation of the packed application. The test
+resolves `agentci/client` from that consumer installation, enforcing the package
+export map and shared `AgentCIError` identity. This verifies the installed client
+and executable; it does not claim a packaged control-service
 deployment, live provider acceptance, hosted combined CI, or an M3 release. Full
 package smoke and the remaining milestone gates retain their separate evidence.

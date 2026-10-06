@@ -24,7 +24,15 @@ if (!databaseUrl || !address) throw Error('Model-review client acceptance requir
 // Default CI exercises built modules. Package acceptance reruns the same test
 // against an actual production-only installation, without changing the server.
 const clientRoot = process.env.AGENTCI_TEST_CLIENT_PACKAGE_ROOT ?? new URL('../../', import.meta.url).pathname;
-const {ModelReviewClient} = await import(pathToFileURL(resolve(clientRoot, 'dist/packages/client/model-review.js')).href);
+// Resolve the supported public export from the consumer's package context;
+// internal absolute-file imports would bypass the package export map.
+async function publicClient() {
+  if (!process.env.AGENTCI_TEST_CLIENT_PACKAGE_ROOT) {const specifier: string = 'agentci/client'; return import(specifier);}
+  const probe = resolve(clientRoot, '../../', `agentci-client-probe-${randomUUID()}.mjs`);
+  await writeFile(probe, "export {ModelReviewClient, AgentCIError} from 'agentci/client';\n");
+  try {return await import(pathToFileURL(probe).href);} finally {await rm(probe);}
+}
+const {ModelReviewClient, AgentCIError} = await publicClient();
 
 test('compiled client and CLI round-trip actual model-review HTTP, PostgreSQL and Temporal', {timeout: 60000}, async () => {
   const schema = `client_${randomUUID().replaceAll('-', '')}`, admin = new Pool({connectionString: databaseUrl});
@@ -74,7 +82,7 @@ test('compiled client and CLI round-trip actual model-review HTTP, PostgreSQL an
     assert.deepEqual(await client.submit(admission), accepted, 'exact replay remains valid after head changes');
     await assert.rejects(client.submit({...admission, id: randomUUID()}), (error: any) => error.code === 'review-denied');
     currentHead = headSha;
-    await assert.rejects(client.show({...admission, subject: {...admission.subject, repository: 'other/repo'}}), (error: any) => error.code === 'identity-mismatch');
+    await assert.rejects(client.show({...admission, subject: {...admission.subject, repository: 'other/repo'}}), (error: any) => error instanceof AgentCIError && error.code === 'identity-mismatch');
     const taskQueue = `client-${randomUUID()}`, workflowsPath = new URL('../../dist/apps/worker/workflows.js', import.meta.url).pathname;
     worker = await Worker.create({connection: native, taskQueue, workflowsPath, activities: controller.activities}); running = worker.run();
     await dispatchAdmittedReviews(controller.dispatch, temporal, {taskQueue, timeoutMs: 45000});
