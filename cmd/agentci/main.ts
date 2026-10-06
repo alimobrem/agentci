@@ -26,6 +26,10 @@ model-review submit|show|cancel --request ADMISSION_JSON [--config PRIVATE_JSON]
   Submit or inspect an exact pinned model-review admission. Cancellation records intent.
   Credentials: private token-file config, or AGENTCI_API_URL and evidence/operator token environment.
   Successful submission/status/cancellation is not a passing review verdict.
+model-review findings --request ADMISSION_JSON [--limit PAGE_SIZE] [--config PRIVATE_JSON]
+  Retrieve original-summary finding references, preserving pinned versions.
+finding show|history --request ADMISSION_JSON --id SHA256_ID [--config PRIVATE_JSON]
+  Read current/historical findings or verified history; see finding --help.
 `;
 
 export async function main(args: string[]): Promise<number> {
@@ -34,6 +38,10 @@ export async function main(args: string[]): Promise<number> {
   if (args[0] === 'model-review') {
     const {modelReviewCommand} = await import('./model-review.ts');
     return modelReviewCommand(args.slice(1));
+  }
+  if (args[0] === 'finding') {
+    const {findingCommand} = await import('./finding.ts');
+    return findingCommand(args.slice(1));
   }
   if (args[0] === 'preflight') {
     if(args.length!==3||args[1]!=='--config'||!args[2]||args[2].startsWith('--')){console.error(JSON.stringify({error:{code:'invalid-preflight-arguments'}}));return 2;}

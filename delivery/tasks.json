@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2139,14 +2139,16 @@
         "SPEC-31.2-001",
         "SECTION-32"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-05T23:46:27.340Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T00:20:28.586Z",
       "acceptance": [
         {
           "text": "Real HTTP/PostgreSQL/Temporal verifies durable admission, exact authenticated retries, conflicting identities, stale heads/profiles, disabled consumer rejection, cancellation/restart and bounded redacted failures. Publish only working OpenAPI operations and preserve both released compatibility baselines.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-07c-1.json"
+          ]
         }
       ],
       "dependsOn": [
@@ -2162,8 +2164,8 @@
         "SECTION-32",
         "SECTION-12.3"
       ],
-      "status": "not-started",
-      "startedAt": null,
+      "status": "in-progress",
+      "startedAt": "2026-10-06T00:20:28.814Z",
       "completedAt": null,
       "acceptance": [
         {
@@ -2311,6 +2313,29 @@
       "dependsOn": []
     },
     {
+      "id": "M3-R1-security-1",
+      "title": "Patch optional Promptfoo engine Git dependency vulnerabilities",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T02:42:09.397Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Official upstream and npm release evidence selects a compatible stable Promptfoo dependency update; installed dependency licenses and positive/negative/error report cases pass in the actual UBI evaluator image. Fresh image scan removes the four fixable PR55 findings without weakening scan thresholds or removing the existing forge backport and unresolved finding. Preserve failed run37404082498 artifact11386399646 and distinguish skipped runtime gates.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-promptfoo-security-local.json"
+          ]
+        }
+      ],
+      "dependsOn": [
+        "M3-00"
+      ]
+    },
+    {
       "id": "M3-ACCEPTANCE-RECONCILIATION",
       "title": "Reconcile review addendum with full original requirement/test/evidence scope",
       "requirementIds": [
@@ -2324,7 +2349,7 @@
       "completedAt": "2026-10-06T03:28:34.944Z",
       "acceptance": [
         {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0–M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
           "status": "passed",
           "evidence": [
             "docs/acceptance-reconciliation.md"

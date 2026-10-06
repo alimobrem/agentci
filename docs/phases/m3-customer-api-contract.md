@@ -2,7 +2,7 @@
 
 Status: reviewed design. M3-07c-1 now implements profiles, admission, status and
 cancellation in development source; see [implemented slice](m3-customer-model-review-api.md).
-Later finding/reproduction/export operations and client methods remain planned.
+M3-07c-2A adds finding and history reads in development; profiles/submit/show/cancel client methods are implemented. M3-07c-2B adds retained snapshot export in development; reproduction remains a planned dependent slice.
 OpenAPI and the operation map advertise only implemented routes. The immutable
 M1/M2 baselines and released `agentci review` command remain unchanged. The
 [operation map](../../specs/api/drafts/model-review-transport.json) and
@@ -42,9 +42,7 @@ may leave admitted work queued: configuration/profile presence is not proof of a
 live worker or provider readiness. Missing/disabled review runtime returns 503
 `service-unavailable` on admission without creating an outbox row; the service
 readiness response must not advertise model-review availability from profiles
-alone. Current control startup uses `runtimeConfig(false)` and cannot verify
-GitHub subjects yet: 07c-1 must supply the approved repository-scoped App reader
-through an explicit control-side authorization dependency. Do not bypass that
+alone. Control startup uses `runtimeConfig(false)` and supplies the approved repository-scoped App reader through an explicit control-side authorization dependency whenever reviewer admission is enabled. Do not bypass that
 check or broaden the App installation. Credentials belong in private
 environment/file configuration,
 not request bodies, URLs, CLI arguments, cursors or evidence. Authenticate every
@@ -123,12 +121,12 @@ must preserve continuation without omission/duplication. Cursor is opaque bounde
 base64url (max 2048 characters), authenticated by an operator-owned signing key
 independent of bearer credentials, bound to route, scope, review ID, finding ID
 where applicable, immutable summary digest/high watermark, next position and
-expiry. Lifetime 15 minutes; expired/invalid/changed-filter cursor returns 400
+expiry. History continuations also bind the previously authenticated event digest; the server loads that immutable predecessor, verifies its digest, and continues transition validation without rescanning the prefix. Lifetime 15 minutes; expired/invalid/changed-filter cursor returns 400
 `invalid-cursor`. No cursor is authorization; every page authenticates again.
 Only `limit`, `cursor`, and each route's specified query parameters are accepted;
 reject unknown/repeated parameters. Review-finding pages use the immutable summary
 manifest; history pages use existing immutable versions, requiring no new mutable
-pagination snapshot store. Client verifies identities/digests on every page.
+pagination snapshot store. Client verifies identities/digests on every page. Full-history traversal requires version 1 first, adjacent versions and predecessor hashes across pages, a stable watermark, and a final version equal to that watermark. Standalone later-page validation does not certify the omitted prefix.
 
 Mutation requests use exact `subject`, `expectedVersion` (1..10000), and
 `operationId` UUID. Reusing the same operation/body returns its original outcome,
@@ -183,8 +181,7 @@ network lifetime. Header binds review identity, admission digest, optional summa
 manifest. Derive configured request IDs from the immutable admitted profile and
 admission timestamp; read retained roles even if final summary insertion failed.
 Associate findings by the admission's deterministic finding operation IDs and
-authenticated retained-role provenance, never just matching PR number. 07c-2 owns
-any additional bounded scoped reads needed to recover that association. Capture
+authenticated retained-role provenance, never just matching PR number. The export reader derives candidate identities from retained structured reviewer proposals, then requires the deterministic ingestion operation and validates its original provenance against those retained roles. Capture
 missing role IDs explicitly, not as zero-cost or clean outcomes. Records follow
 header, retained reviewer results in configured role order, then
 finding histories by finding ID and ascending version, then one end frame.
@@ -201,8 +198,7 @@ No resume token in M3: retry downloads a new whole snapshot and cannot concatena
 prefixes from different attempts. Client returns/yields provisional records until
 end verification, with a separate complete certification. The existing eval
 export remains unchanged and is not falsely reused as a model-review schema.
-07c-2 owns the executable model-review frame schema/verifier and full nonempty
-export fixture, using these frozen semantics and authoritative domain validators.
+The executable model-review frame schema/verifier and nonempty partial export fixture implement these semantics with authoritative domain validators.
 
 JSON responses max 4 MiB; export frames max 4 MiB, aggregate max 128 MiB,
 server deadline 120 seconds, two active exports per service. Exceeding planned

@@ -1,0 +1,109 @@
+{
+  "pullRequest": 51,
+  "head": "e5b1ee777d54abf857f58156125a1c80ce9371be",
+  "mergeCommit": "e766a64aa64ffc9cba0b0954e80c410003ba9138",
+  "mergeTree": "cbb35d899d8fe76a185bac5a624cd3a9fc945577",
+  "treeMatchesAuditedCandidateAndPreview": true,
+  "ci": {
+    "run": "37399175921",
+    "artifactId": 11385065225,
+    "artifactDigest": "sha256:1c93a61b7b5efafe3d31c6746fb92c2bbcd6237bbeb128b035e9593fdd893275",
+    "candidate": "e5b1ee777d54abf857f58156125a1c80ce9371be",
+    "preview": "a00effbe513e2c0bf17dcafbd0a93f6dcf03846f",
+    "tree": "cbb35d899d8fe76a185bac5a624cd3a9fc945577",
+    "candidateTree": "cbb35d899d8fe76a185bac5a624cd3a9fc945577",
+    "previewParents": [
+      "f08fd043e4bd3c29d6dfa277d7d86e3c9afd8618",
+      "e5b1ee777d54abf857f58156125a1c80ce9371be"
+    ],
+    "manifestSha256": "ba354553818d3c494bc6caff7c78a0d850b89313f2e606f235bd9340baaf2a4b",
+    "verifiedFileHashes": 10,
+    "integration": {
+      "tests": 48,
+      "pass": 48,
+      "fail": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "cache": "warm (npm primary-key restore and Docker cached layers)",
+    "package": "passed; customer API client module; no scheduler migration013",
+    "baselines": [
+      "specs/api/baselines/m1-0.2.1-openapi.json",
+      "specs/api/baselines/m2-0.3.1-openapi.json"
+    ],
+    "containers": "passed",
+    "evalWorker": "passed",
+    "nativeImages": {
+      "worker": "sha256:69458dbec27bd99dc4464ca89c201027da0f7d467e29d26a462257923349eeb9",
+      "eval-worker": "sha256:2ec9c2edc6c9d0656e6f70ed9fb363d1ca35459411e224e4af22682ca28bac26"
+    },
+    "highCriticalScans": {
+      "eval-engines": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "severity": "HIGH",
+          "fixedVersion": null
+        }
+      ],
+      "eval-worker": [],
+      "api": [],
+      "worker": [],
+      "eval-runner": [],
+      "eval-agentci": []
+    },
+    "releaseComplete": false,
+    "jobs": [
+      {
+        "name": "contracts-and-runtime",
+        "seconds": 372.0,
+        "conclusion": "success"
+      },
+      {
+        "name": "fast-feedback",
+        "seconds": 49.0,
+        "conclusion": "success"
+      }
+    ],
+    "fastTests": [
+      {
+        "job": "fast-feedback",
+        "count": [],
+        "feedbackSeconds": [
+          "27.22"
+        ]
+      },
+      {
+        "job": "contracts-and-runtime",
+        "count": [],
+        "feedbackSeconds": [
+          "22.24"
+        ]
+      }
+    ],
+    "corpusMutationSteps": [
+      {
+        "name": "Verify frozen provider eval detects regressions",
+        "conclusion": "success"
+      },
+      {
+        "name": "Verify reviewer eval rejects external dispatch from synthetic mode",
+        "conclusion": "success"
+      },
+      {
+        "name": "Verify finding eval rejects wrong reproduction identity",
+        "conclusion": "success"
+      }
+    ],
+    "retainedFastTests": {
+      "tests": 340,
+      "pass": 340,
+      "fail": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "advisoryEvidence": "delivery/acceptance/m3-stream-deadline-advisory.json",
+  "milestoneComplete": false,
+  "downstream": "PR48 exact-head guarded branch update requested; new subject acceptance pending. Prior failed comparison preserved."
+}

@@ -17,6 +17,7 @@ import {createModelReviewControl} from '../../apps/control/model-reviews.ts';
 import {createReviewerRuntime} from '../../packages/runtime/reviewers.ts';
 import {initializeReviewerController} from '../../apps/worker/reviewer-runtime.ts';
 import {dispatchAdmittedReviews} from '../../apps/worker/reviewer-dispatch.ts';
+import {FindingHistoryStore} from '../../packages/storage/finding-history.ts';
 import type {ReviewAdmissionRequest} from '../../packages/reviewers/admission.ts';
 
 const databaseUrl = process.env.AGENTCI_TEST_DATABASE_URL, address = process.env.AGENTCI_TEST_TEMPORAL_ADDRESS;
@@ -47,9 +48,10 @@ test('compiled client and CLI round-trip actual model-review HTTP, PostgreSQL an
     for (const name of ['004_m3_model_budget', '005_m3_reviewer_results', '006_m3_finding_history', '008_m3_review_admissions', '009_m3_review_dispatch', '010_m3_reviewer_profiles', '011_m3_review_summaries', '012_m3_review_recovery'])
       await pool.query(await readFile(new URL(`../../deploy/migrations/${name}.sql`, import.meta.url), 'utf8'));
     const config = {organizationId: randomUUID(), repository: 'owner/repo', installationId: 123,
-      secret: 'owned-webhook-fixture-'.repeat(3), evidenceToken: 'owned-read-fixture-'.repeat(3), operatorToken: 'owned-operator-fixture-'.repeat(3)};
+      secret: 'owned-webhook-fixture-'.repeat(3), evidenceToken: 'owned-read-fixture-'.repeat(3), operatorToken: 'owned-operator-fixture-'.repeat(3), cursorKey: 'owned-cursor-fixture-'.repeat(3)};
     const definition = JSON.parse(await readFile(new URL('../../deploy/reviewers.synthetic.example.json', import.meta.url), 'utf8'));
     definition.profiles[0].budget.id = randomUUID();
+    definition.providers[0].scenario = 'proposed-defect';
     const baseSha = 'a'.repeat(40), headSha = 'b'.repeat(40), treeSha = 'c'.repeat(40), content = 'Synthetic client acceptance\n';
     const blobSha = createHash('sha1').update(`blob ${Buffer.byteLength(content)}\0${content}`).digest('hex');
     let currentHead = headSha;
@@ -98,6 +100,28 @@ test('compiled client and CLI round-trip actual model-review HTTP, PostgreSQL an
     assert.deepEqual(cancelledLate.summary, completed.summary);
     assert.equal((await pool.query('SELECT count(*) FROM agentci_model_attempts')).rows[0].count, '7');
 
+    // Evidence reads must preserve original-summary references after disposition
+    // changes; this uses the real history store and shared lifecycle transition.
+    const references = await client.findings(admission, {limit: 1});
+    assert.equal(references.items.length, 1);
+    const pinned = references.items[0]!;
+    const original = await client.finding(admission, pinned.id, {version: pinned.version});
+    assert.equal(original.digest, pinned.digest);
+    assert.equal(original.event.finding.state, 'deduplicated');
+    const historyStore = new FindingHistoryStore(pool, config, {
+      reviewer: async () => {throw Error('Queue must not read reviewer');},
+      receipt: async () => {throw Error('Queue must not require receipt');}
+    });
+    const pending = await historyStore.transition(pinned.id, admission.subject, {type: 'queue'}, pinned.version, randomUUID());
+    assert.equal((await client.finding(admission, pinned.id)).digest, pending.digest);
+    assert.equal((await client.finding(admission, pinned.id)).event.finding.state, 'reproduction-pending');
+    assert.deepEqual(await client.findings(admission, {limit: 1}), references);
+    assert.deepEqual(await client.finding(admission, pinned.id, {version: pinned.version}), original);
+    const history = []; for await (const page of client.findingHistory(admission, pinned.id, {limit: 1})) history.push(page);
+    assert.equal(history.at(-1)!.nextCursor, null);
+    assert.equal(history.at(-1)!.throughVersion, pending.event.finding.version);
+    assert.equal(history.flatMap(page => page.items).at(-1)!.digest, pending.digest);
+
     // Exercise the executable from the selected build or installed package too.
     const exec = promisify(execFile), env = {...process.env, AGENTCI_API_URL: url, AGENTCI_EVIDENCE_TOKEN: config.evidenceToken, AGENTCI_OPERATOR_TOKEN: config.operatorToken};
     const requestFile = resolve(files, 'admission.json'); await writeFile(requestFile, JSON.stringify(admission));
@@ -110,6 +134,18 @@ test('compiled client and CLI round-trip actual model-review HTTP, PostgreSQL an
       if (command === 'show') assert.deepEqual(value, cancelledLate);
       if (command === 'cancel') assert.equal(value.cancelRequested, true);
     }
+    const cli = (args: string[]) => exec(process.execPath, [resolve(clientRoot, 'dist/cmd/agentci/main.js'), ...args], {env});
+    const refsCli = await cli(['model-review', 'findings', '--request', requestFile, '--limit', '1']);
+    assert.deepEqual(JSON.parse(refsCli.stdout), references); assert.equal(refsCli.stderr, '');
+    for (const version of [undefined, pinned.version]) {
+      const found = await cli(['finding', 'show', '--request', requestFile, '--id', pinned.id, ...(version ? ['--version', String(version)] : [])]);
+      assert.deepEqual(JSON.parse(found.stdout), version ? original : pending); assert.equal(found.stderr, '');
+    }
+    const historyCli = await cli(['finding', 'history', '--request', requestFile, '--id', pinned.id, '--limit', '1']);
+    const cliPages = historyCli.stdout.trim().split('\n').map(line => JSON.parse(line));
+    assert.equal(historyCli.stderr, '');
+    assert.deepEqual(cliPages.flatMap(page => page.items), history.flatMap(page => page.items));
+    assert.equal(cliPages.at(-1).nextCursor, null);
     assert.equal((await pool.query('SELECT count(*) FROM agentci_review_admission_outbox')).rows[0].count, '1');
   } finally {
     if (server) await new Promise<void>(resolve => {server!.closeAllConnections(); server!.close(() => resolve());});
