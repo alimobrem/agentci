@@ -2577,8 +2577,10 @@
       "acceptance": [
         {
           "text": "Real PostgreSQL proves prepared immutable admission-backed inputs stage through the caller-owned transaction: injected final rejection and lost connection leave zero jobs/units, commit/replay preserves one typed job/unit, corruption/cancellation remain fenced. Existing standalone staging and legacy M2 contracts remain unchanged. No permission implementation, Temporal dispatch or public route is enabled; full consumer/recovery and released customer acceptance remain open.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-reproduction-stage-transaction-local.json"
+          ]
         }
       ],
       "dependsOn": [
