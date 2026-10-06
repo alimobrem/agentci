@@ -1,0 +1,355 @@
+{
+  "section": 32,
+  "rows": [
+    {
+      "requirementId": "SECTION-32",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "32",
+        "line": 1757
+      },
+      "text": "32. CLI",
+      "sourceTextSha256": "8f8a83cc6b3fa0d252faca3c21e12d9fed87de40708780b06037ba6668e58daa",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-07c",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real authenticated transport and executable client/CLI round trips; separate write authority, exact subject/version/idempotency, bounded pagination, approved reproduction dispatch and released M1/M2 compatibility.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-0",
+          "status": "done",
+          "startedAt": "2026-10-05T23:35:54.299Z",
+          "completedAt": "2026-10-05T23:46:27.124Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Record resource naming, auth matrix, exact identity/idempotency/status/errors, finding versions, reproduction approval, pagination/export integrity and CLI compatibility; synchronize internal draft transport fixtures and scenario mapping without advertising unimplemented public endpoints. One contract owner approves shared fixtures before parallel client/Checks development.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-customer-api-contract.md"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-1",
+          "status": "in-progress",
+          "startedAt": "2026-10-05T23:46:27.340Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real HTTP/PostgreSQL/Temporal verifies durable admission, exact authenticated retries, conflicting identities, stale heads/profiles, disabled consumer rejection, cancellation/restart and bounded redacted failures. Publish only working OpenAPI operations and preserve both released compatibility baselines.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-2",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Exact-subject finding/history reads, bounded stable pagination and integrity-verifiable complete export work over real HTTP. Wrong scope, invalid cursors and interrupted/truncated exports fail explicitly; M3-C11 export capability is retained.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Operator-authorized mutations enforce expected versions, operation IDs and immutable approved plans with configured consumers. Reject request-supplied commands/images/budgets; verify cancellation before/during staging, termination cleanup and retained receipts; never-staged cancellation stays unverified.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-4",
+          "status": "in-progress",
+          "startedAt": "2026-10-05T23:46:27.552Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Typed client and executable CLI consume shared fixtures and pass real-server review/finding/reproduction/export round trips after routes are implemented. Verify identity/digests, bounded reads, auth/cancellation/errors/exit codes, no credential logging and preservation of released agentci review behavior. Parallel development does not replace final real transport acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        }
+      ],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-customer-api-contract.md",
+          "sha256": "9ab1e8edf9beb4a159d9cd932807cb761e856bb2826eb0ba8ac37b8aff645a08",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-32-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "32",
+        "line": 1759
+      },
+      "text": "Binary: `agentci`",
+      "sourceTextSha256": "f91f5782e9cda6e0d59807ffd5682c247e410ace3d929e69ef09c6e1d9cd6963",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-32-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "32",
+        "line": 1761
+      },
+      "text": "Initial commands:",
+      "sourceTextSha256": "689176802c8c289712598f10bde8a27423275564661ea589c09865cae1ef4f02",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M2-OPERATOR-RETRY",
+          "status": "done",
+          "startedAt": "2026-10-04T12:11:25.227Z",
+          "completedAt": "2026-10-04T12:34:04.711Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Installed agentci review reads only a private strict operator config and existing scoped App/webhook credentials, fetches current open PR identity from GitHub, submits an HMAC-signed request to the existing route with a fresh UUID, validates queued/duplicate response and emits only receipt metadata. Supplied UUID safely repeats ambiguous transport submission without rewriting cancelled evidence. Tests reject unsafe config/permissions/origin, closed/mismatched PRs, redirects, forged/oversized replies, secret leakage and read-only evidence-token scheduling; native controller and real customer acceptance prove a new review without close/reopen. Docs, operation/scenario mapping, packaging and exact-source full CI pass before completion.",
+              "status": "passed",
+              "evidence": [
+                "releases/m2-operator-review-ci.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M2-RECOVERY-GUIDANCE",
+          "status": "done",
+          "startedAt": "2026-10-04T13:44:43.294Z",
+          "completedAt": "2026-10-04T13:57:32.614Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Cancelled/unavailable Checks instruct an operator to request a fresh immutable attempt rather than redeliver the failed UUID. When a scoped staged comparison exists, the exact Check exposes authenticated retained comparison evidence and its review/attempt identity without credentials; pre-stage failures remain honest. Native and installed customer verification prove correct links, immutable earlier evidence and unchanged exact-head reconciliation; docs, API/scenario mapping, packaging and exact-source CI pass.",
+              "status": "passed",
+              "evidence": [
+                "releases/m2-recovery-guidance-ci.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "requestOperatorReview",
+          "map": "specs/api/operator-review-operations.json",
+          "mapDigest": "dc6bfbc332f5ff86faf91791cbd77680416f1fec88ea70551e469220a30dbaef",
+          "tests": [
+            "tests/operator-review.test.ts",
+            "tests/integration/eval-pr-controller.test.ts",
+            "scripts/package-smoke.mjs"
+          ],
+          "scenarios": [
+            "private bounded regular credential files and strict config keys",
+            "HTTPS or loopback origin with no URL credentials/query/hash/path",
+            "GitHub current open PR scope and exact commit identity",
+            "fresh UUID for a new cancelled/failed review attempt",
+            "same UUID and stable subject for ambiguous transport retry",
+            "HMAC authorization distinct from read-only evidence credentials",
+            "no redirect forwarding",
+            "bounded validated receipt",
+            "generic credential-free GitHub and transport failures",
+            "native durable outbox and behavioral workflow acceptance",
+            "compiled installed CLI argument/config failures"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/operator-review.test.ts",
+        "tests/integration/eval-pr-controller.test.ts",
+        "scripts/package-smoke.mjs"
+      ],
+      "plannedPRs": [],
+      "evidence": [
+        {
+          "path": "releases/m2-operator-review-ci.json",
+          "sha256": "5d3d37141e01973c7b1c79160d3f174b80cac068017cc40edb0cb379a74f7b75",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "releases/m2-recovery-guidance-ci.json",
+          "sha256": "114eb0c9813d5be471d2946b83d77ed3a1454663b37b4b6f604f91285b8714ff",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-32-003",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "32",
+        "line": 1777
+      },
+      "text": "The CLI MUST be usable locally and in CI without the SaaS control plane for core validation where possible.",
+      "sourceTextSha256": "1fdd6b0ebe9701f2d5a14076969176bb06c5874f57cbc1497946c9deefe7c302",
+      "modality": {
+        "explicitTokens": [
+          "MUST"
+        ],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    }
+  ]
+}

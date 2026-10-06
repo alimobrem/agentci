@@ -56,9 +56,16 @@ const ledgers=['M0','M1','M2','M3'].map(m=>{
  const p=`releases/${m.toLowerCase()}-gates.json`;return fs.existsSync(p)?{milestone:m,record:ref(p),...JSON.parse(fs.readFileSync(p))}:{milestone:m,record:null,note:'Use historical M0 manifest/release document; do not invent modern gate evidence'};
 });
 const d={schemaVersion:1,authority:'Requested audit snapshot; does not adopt review document or new numeric gates',basisCommit:'8004caf94512cbce12bb3c7adcc951555b6aa0ce',source:{spec:ref('specs/agentci-full-spec.md'),inventory:ref('specs/requirements.yaml'),addendumSha256:'58c9610814b784c0c306e4b7b707651add5239c2ab36ee45bb4d1fc6f40a4714'},numericProposalsAdopted:false,rows,derivedChildren:children,historicalGateSnapshots:ledgers,phasePlans:plan};
-const rendered=JSON.stringify(d,null,2)+'\n';const dest=root+'requirement-test-evidence.json';
+const sections=Array.from({length:51},(_,i)=>i+1).map(n=>{
+ const values=rows.filter(r=>Number(r.source.section.split('.')[0])===n),file=root+'sections/'+String(n).padStart(2,'0')+'.json',text=JSON.stringify({section:n,rows:values},null,2)+'\n';
+ return {file,text,count:values.length,sha256:crypto.createHash('sha256').update(text).digest('hex')};
+});
+const {rows:embeddedRows,...metadata}=d;
+const rendered=JSON.stringify({...metadata,rowCount:rows.length,rowFiles:sections.map(({file,count,sha256})=>({path:file,count,sha256}))},null,2)+'\n';const dest=root+'requirement-test-evidence.json';
 if(process.argv.includes('--check')){
  if(fs.readFileSync(dest,'utf8')!==rendered)throw Error('Reconciliation snapshot stale');
+ for(const section of sections)if(fs.readFileSync(section.file,'utf8')!==section.text)throw Error('Reconciliation section stale '+section.file);
+ for(const artifact of [{file:dest,text:rendered},...sections])if(Buffer.byteLength(artifact.text)>2*1024*1024)throw Error('Artifact exceeds AgentCI per-file review limit '+artifact.file);
  if(new Set(rows.map(r=>r.requirementId)).size!==inventory.length)throw Error('Lost or duplicate IDs');
  for(let n=1;n<=51;n++)if(!rows.some(r=>r.requirementId===`SECTION-${n}`))throw Error('Lost section '+n);
  for(let n=0;n<=10;n++)if(!rows.some(r=>r.source.section==='40'&&r.mapping.firstImplementation===`M${n}`))throw Error('Lost phase '+n);
@@ -66,4 +73,4 @@ if(process.argv.includes('--check')){
  for(const t of tasks.filter(t=>t.deferral))for(const id of t.requirementIds)if(!rows.find(r=>r.requirementId===id)?.implementationTasks.some(x=>x.id===t.id&&JSON.stringify(x.deferral)===JSON.stringify(t.deferral)))throw Error('Lost deferral '+t.id);
  if(rows.some(r=>r.verification.currentCandidate!=='not-run'))throw Error('Unexpected pass promotion');
  console.log(`${rows.length} source IDs, ${children.length} fenced command/resource children, M0–M10 preserved; no current acceptance inferred.`);
-}else{fs.mkdirSync(root,{recursive:true});fs.writeFileSync(dest,rendered);console.log(`Snapshot ${rows.length} IDs; open gaps remain explicit.`);}
+}else{fs.mkdirSync(root+'sections',{recursive:true});for(const section of sections)fs.writeFileSync(section.file,section.text);fs.writeFileSync(dest,rendered);console.log(`Snapshot ${rows.length} IDs; open gaps remain explicit.`);}

@@ -1,0 +1,1495 @@
+{
+  "section": 31,
+  "rows": [
+    {
+      "requirementId": "SECTION-31",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31",
+        "line": 1707
+      },
+      "text": "31. API Surface",
+      "sourceTextSha256": "54137d4172753f1cee7e9c5d9744282bfc1b506fd76a9a946e61bf2ab2002783",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-31.1",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.1",
+        "line": 1709
+      },
+      "text": "31.1 Core REST resources",
+      "sourceTextSha256": "f5f4e83e3ab299775f42f9856190d9276d7c4737c21870047984e53e0bb1e2b1",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-07a",
+          "status": "done",
+          "startedAt": "2026-10-05T22:10:47.348Z",
+          "completedAt": "2026-10-05T22:27:54.311Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Strict exact-subject/profile contracts; durable scoped admission; duplicate/conflict and bounded-error acceptance; restart recovery; no inactive public route advertised.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-07a.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real authenticated transport and executable client/CLI round trips; separate write authority, exact subject/version/idempotency, bounded pagination, approved reproduction dispatch and released M1/M2 compatibility.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-0",
+          "status": "done",
+          "startedAt": "2026-10-05T23:35:54.299Z",
+          "completedAt": "2026-10-05T23:46:27.124Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Record resource naming, auth matrix, exact identity/idempotency/status/errors, finding versions, reproduction approval, pagination/export integrity and CLI compatibility; synchronize internal draft transport fixtures and scenario mapping without advertising unimplemented public endpoints. One contract owner approves shared fixtures before parallel client/Checks development.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-customer-api-contract.md"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-1",
+          "status": "in-progress",
+          "startedAt": "2026-10-05T23:46:27.340Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real HTTP/PostgreSQL/Temporal verifies durable admission, exact authenticated retries, conflicting identities, stale heads/profiles, disabled consumer rejection, cancellation/restart and bounded redacted failures. Publish only working OpenAPI operations and preserve both released compatibility baselines.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-2",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Exact-subject finding/history reads, bounded stable pagination and integrity-verifiable complete export work over real HTTP. Wrong scope, invalid cursors and interrupted/truncated exports fail explicitly; M3-C11 export capability is retained.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Operator-authorized mutations enforce expected versions, operation IDs and immutable approved plans with configured consumers. Reject request-supplied commands/images/budgets; verify cancellation before/during staging, termination cleanup and retained receipts; never-staged cancellation stays unverified.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-4",
+          "status": "in-progress",
+          "startedAt": "2026-10-05T23:46:27.552Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Typed client and executable CLI consume shared fixtures and pass real-server review/finding/reproduction/export round trips after routes are implemented. Verify identity/digests, bounded reads, auth/cancellation/errors/exit codes, no credential logging and preservation of released agentci review behavior. Parallel development does not replace final real transport acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "listReviewerProfiles",
+          "path": "/v1/reviewer-profiles",
+          "map": "specs/api/operations.json",
+          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "tests": [
+            "tests/model-review-api.test.ts",
+            "tests/integration/model-review-api.test.ts",
+            "tests/integration/model-review-control-startup.test.ts"
+          ],
+          "scenarios": [
+            "no prompts keys budgets or paths",
+            "revoked immutable revision visible",
+            "read token required",
+            "compiled control entry point uses scoped private config without provider keys; invalid activation fails before listen"
+          ]
+        },
+        {
+          "operationId": "createModelReview",
+          "path": "/v1/model-reviews",
+          "map": "specs/api/operations.json",
+          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "tests": [
+            "tests/model-review-api.test.ts",
+            "tests/integration/model-review-api.test.ts",
+            "tests/integration/model-review-control-startup.test.ts"
+          ],
+          "scenarios": [
+            "exact concurrent replay one outbox row",
+            "changed reuse 409",
+            "read token cannot mutate",
+            "stale head and revoked profile denied",
+            "missing configuration no outbox",
+            "offline worker queues without false live claim",
+            "compiled control entry point uses scoped private config without provider keys; invalid activation fails before listen"
+          ]
+        },
+        {
+          "operationId": "getModelReview",
+          "path": "/v1/model-reviews/{id}",
+          "map": "specs/api/operations.json",
+          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "tests": [
+            "tests/model-review-api.test.ts",
+            "tests/integration/model-review-api.test.ts",
+            "tests/integration/model-review-control-startup.test.ts"
+          ],
+          "scenarios": [
+            "cross scope absent",
+            "no raw Temporal IDs or failures",
+            "retained summary before finalization",
+            "refusal is not clean coverage",
+            "summary and terminal read atomically",
+            "compiled control entry point uses scoped private config without provider keys; invalid activation fails before listen"
+          ]
+        },
+        {
+          "operationId": "cancelModelReview",
+          "path": "/v1/model-reviews/{id}/cancellation",
+          "map": "specs/api/operations.json",
+          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "tests": [
+            "tests/model-review-api.test.ts",
+            "tests/integration/model-review-api.test.ts"
+          ],
+          "scenarios": [
+            "repeated and late intent preserve terminal evidence",
+            "not a remote charge refund",
+            "works while admissions disabled"
+          ]
+        },
+        {
+          "operationId": "validateReviewAdmission",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/review-admission.test.ts"
+          ],
+          "scenarios": [
+            "strict exact subject and immutable profile revision",
+            "synthetic versus live binding",
+            "UUID normalization and detached caller data"
+          ]
+        },
+        {
+          "operationId": "validateReviewAdmissionApproval",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/review-admission.test.ts"
+          ],
+          "scenarios": [
+            "trusted approval binds normalized request and policy",
+            "wrong subject profile request or mode rejected"
+          ]
+        },
+        {
+          "operationId": "ReviewAdmissionStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/review-admissions.test.ts"
+          ],
+          "scenarios": [
+            "concurrent duplicate admission creates one outbox row",
+            "conflicting idempotency identity rejected",
+            "authorization and unavailable errors redacted",
+            "cross-tenant isolation and restart recovery",
+            "outbox failure rolls back admission",
+            "immutable request update and deletion rejection"
+          ]
+        },
+        {
+          "operationId": "ReviewDispatchStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/review-dispatch.test.ts"
+          ],
+          "scenarios": [
+            "concurrent dispatch claims and expired lease takeover",
+            "terminal completion before dispatch acknowledgement",
+            "durable cancellation before workflow creation and after completion",
+            "immutable execution identity and terminal evidence",
+            "tenant isolation restart and bounded outage errors"
+          ]
+        },
+        {
+          "operationId": "dispatchAdmittedReviews",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-dispatch-temporal.test.ts"
+          ],
+          "scenarios": [
+            "real Temporal start with lost acknowledgement",
+            "deterministic identity reuse and single execution",
+            "wrong queue cannot acknowledge existing workflow"
+          ]
+        },
+        {
+          "operationId": "reviewAdmittedRequest",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-dispatch-temporal.test.ts"
+          ],
+          "scenarios": [
+            "ID and digest only workflow orchestration",
+            "finalization retry after committed terminal evidence",
+            "real workflow history replay"
+          ]
+        },
+        {
+          "operationId": "validateReviewExecutionSummary",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "strict bounded identity-only summary",
+            "coverage counts agree with retained role statuses"
+          ]
+        },
+        {
+          "operationId": "ReviewSummaryStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "first write rejects omitted roles findings and wrong context",
+            "exact profile role and finding evidence reconstruction",
+            "summary-write failure recovery without redispatch",
+            "immutable tenant-scoped restart reads and redacted outages"
+          ]
+        },
+        {
+          "operationId": "createAdmittedReviewActivities",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-activities.test.ts",
+            "tests/integration/review-dispatch.test.ts"
+          ],
+          "scenarios": [
+            "actual Temporal identity binds before provider execution",
+            "lost summary response retries retained evidence without provider charge",
+            "durable cancellation before dispatch and during provider invocation",
+            "possibly-sent cancellation preserves budget exposure",
+            "private source output and diagnostic sentinels absent from workflow history",
+            "success and cancellation workflow replay"
+          ]
+        },
+        {
+          "operationId": "reconcileAdmittedReviews",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-activities.test.ts",
+            "tests/integration/review-dispatch.test.ts"
+          ],
+          "scenarios": [
+            "independent reconciliation after real workflow termination",
+            "possibly-sent charges retained after provider termination",
+            "summary committed before termination remains completed evidence",
+            "exclusive recovery leases and stale worker rejection",
+            "running reviews use bounded polling delay"
+          ]
+        },
+        {
+          "operationId": "validateReviewerRuntime",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-runtime.test.ts"
+          ],
+          "scenarios": [
+            "strict operator-owned profiles and provider identities"
+          ]
+        },
+        {
+          "operationId": "createReviewerRuntime",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-runtime.test.ts"
+          ],
+          "scenarios": [
+            "seven no-network fixture roles",
+            "fixed environment credential references and no secret policy serialization"
+          ]
+        },
+        {
+          "operationId": "loadReviewerRuntime",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-runtime.test.ts"
+          ],
+          "scenarios": [
+            "explicit absolute config path or disabled runtime"
+          ]
+        },
+        {
+          "operationId": "initializeReviewerController",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-runtime.test.ts"
+          ],
+          "scenarios": [
+            "production workflow exports execute seven roles",
+            "exact GitHub subject and blob identities",
+            "stale subject and revoked profile denial",
+            "restart retains evidence"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/model-review-api.test.ts",
+        "tests/integration/model-review-api.test.ts",
+        "tests/integration/model-review-control-startup.test.ts",
+        "tests/review-admission.test.ts",
+        "tests/integration/review-admissions.test.ts",
+        "tests/integration/review-dispatch.test.ts",
+        "tests/integration/reviewer-dispatch-temporal.test.ts",
+        "tests/integration/admitted-review-execution.test.ts",
+        "tests/integration/admitted-review-activities.test.ts",
+        "tests/reviewer-runtime.test.ts",
+        "tests/integration/reviewer-runtime.test.ts"
+      ],
+      "plannedPRs": [],
+      "evidence": [
+        {
+          "path": "delivery/acceptance/m3-07a.json",
+          "sha256": "031dc5d5557f4c8dc495426d5be130c7be3f3a043cd36210b5dc198376c1f226",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-customer-api-contract.md",
+          "sha256": "9ab1e8edf9beb4a159d9cd932807cb761e856bb2826eb0ba8ac37b8aff645a08",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.1",
+        "line": 1711
+      },
+      "text": "Proposed endpoints:",
+      "sourceTextSha256": "17e70ae6ab701b1fd1a705a73d7d9e9b1453eb93bfc07b86239c8ede121366fe",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SECTION-31.2",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.2",
+        "line": 1734
+      },
+      "text": "31.2 Idempotency",
+      "sourceTextSha256": "f6ff6314a8a443c22b2ec8280047c781d594e3940d35d7cc6b37e461d8f27833",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.2-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.2",
+        "line": 1736
+      },
+      "text": "Mutation APIs triggered by webhooks MUST support idempotency keys.",
+      "sourceTextSha256": "57e01a5ad462a1e6421b20ff2b3ec3835bd12c7e0fe7226b089f45a1cb3fadaf",
+      "modality": {
+        "explicitTokens": [
+          "MUST"
+        ],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-07a",
+          "status": "done",
+          "startedAt": "2026-10-05T22:10:47.348Z",
+          "completedAt": "2026-10-05T22:27:54.311Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Strict exact-subject/profile contracts; durable scoped admission; duplicate/conflict and bounded-error acceptance; restart recovery; no inactive public route advertised.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-07a.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real authenticated transport and executable client/CLI round trips; separate write authority, exact subject/version/idempotency, bounded pagination, approved reproduction dispatch and released M1/M2 compatibility.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-0",
+          "status": "done",
+          "startedAt": "2026-10-05T23:35:54.299Z",
+          "completedAt": "2026-10-05T23:46:27.124Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Record resource naming, auth matrix, exact identity/idempotency/status/errors, finding versions, reproduction approval, pagination/export integrity and CLI compatibility; synchronize internal draft transport fixtures and scenario mapping without advertising unimplemented public endpoints. One contract owner approves shared fixtures before parallel client/Checks development.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-customer-api-contract.md"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-1",
+          "status": "in-progress",
+          "startedAt": "2026-10-05T23:46:27.340Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real HTTP/PostgreSQL/Temporal verifies durable admission, exact authenticated retries, conflicting identities, stale heads/profiles, disabled consumer rejection, cancellation/restart and bounded redacted failures. Publish only working OpenAPI operations and preserve both released compatibility baselines.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-2",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Exact-subject finding/history reads, bounded stable pagination and integrity-verifiable complete export work over real HTTP. Wrong scope, invalid cursors and interrupted/truncated exports fail explicitly; M3-C11 export capability is retained.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Operator-authorized mutations enforce expected versions, operation IDs and immutable approved plans with configured consumers. Reject request-supplied commands/images/budgets; verify cancellation before/during staging, termination cleanup and retained receipts; never-staged cancellation stays unverified.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-4",
+          "status": "in-progress",
+          "startedAt": "2026-10-05T23:46:27.552Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Typed client and executable CLI consume shared fixtures and pass real-server review/finding/reproduction/export round trips after routes are implemented. Verify identity/digests, bounded reads, auth/cancellation/errors/exit codes, no credential logging and preservation of released agentci review behavior. Parallel development does not replace final real transport acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "listReviewerProfiles",
+          "path": "/v1/reviewer-profiles",
+          "map": "specs/api/operations.json",
+          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "tests": [
+            "tests/model-review-api.test.ts",
+            "tests/integration/model-review-api.test.ts",
+            "tests/integration/model-review-control-startup.test.ts"
+          ],
+          "scenarios": [
+            "no prompts keys budgets or paths",
+            "revoked immutable revision visible",
+            "read token required",
+            "compiled control entry point uses scoped private config without provider keys; invalid activation fails before listen"
+          ]
+        },
+        {
+          "operationId": "createModelReview",
+          "path": "/v1/model-reviews",
+          "map": "specs/api/operations.json",
+          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "tests": [
+            "tests/model-review-api.test.ts",
+            "tests/integration/model-review-api.test.ts",
+            "tests/integration/model-review-control-startup.test.ts"
+          ],
+          "scenarios": [
+            "exact concurrent replay one outbox row",
+            "changed reuse 409",
+            "read token cannot mutate",
+            "stale head and revoked profile denied",
+            "missing configuration no outbox",
+            "offline worker queues without false live claim",
+            "compiled control entry point uses scoped private config without provider keys; invalid activation fails before listen"
+          ]
+        },
+        {
+          "operationId": "getModelReview",
+          "path": "/v1/model-reviews/{id}",
+          "map": "specs/api/operations.json",
+          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "tests": [
+            "tests/model-review-api.test.ts",
+            "tests/integration/model-review-api.test.ts",
+            "tests/integration/model-review-control-startup.test.ts"
+          ],
+          "scenarios": [
+            "cross scope absent",
+            "no raw Temporal IDs or failures",
+            "retained summary before finalization",
+            "refusal is not clean coverage",
+            "summary and terminal read atomically",
+            "compiled control entry point uses scoped private config without provider keys; invalid activation fails before listen"
+          ]
+        },
+        {
+          "operationId": "cancelModelReview",
+          "path": "/v1/model-reviews/{id}/cancellation",
+          "map": "specs/api/operations.json",
+          "mapDigest": "e0674c3390f109ec8055ef66219990894957157798324c02ef2460a2ba907dd1",
+          "tests": [
+            "tests/model-review-api.test.ts",
+            "tests/integration/model-review-api.test.ts"
+          ],
+          "scenarios": [
+            "repeated and late intent preserve terminal evidence",
+            "not a remote charge refund",
+            "works while admissions disabled"
+          ]
+        },
+        {
+          "operationId": "validateReviewAdmission",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/review-admission.test.ts"
+          ],
+          "scenarios": [
+            "strict exact subject and immutable profile revision",
+            "synthetic versus live binding",
+            "UUID normalization and detached caller data"
+          ]
+        },
+        {
+          "operationId": "validateReviewAdmissionApproval",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/review-admission.test.ts"
+          ],
+          "scenarios": [
+            "trusted approval binds normalized request and policy",
+            "wrong subject profile request or mode rejected"
+          ]
+        },
+        {
+          "operationId": "ReviewAdmissionStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/review-admissions.test.ts"
+          ],
+          "scenarios": [
+            "concurrent duplicate admission creates one outbox row",
+            "conflicting idempotency identity rejected",
+            "authorization and unavailable errors redacted",
+            "cross-tenant isolation and restart recovery",
+            "outbox failure rolls back admission",
+            "immutable request update and deletion rejection"
+          ]
+        },
+        {
+          "operationId": "ReviewDispatchStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/review-dispatch.test.ts"
+          ],
+          "scenarios": [
+            "concurrent dispatch claims and expired lease takeover",
+            "terminal completion before dispatch acknowledgement",
+            "durable cancellation before workflow creation and after completion",
+            "immutable execution identity and terminal evidence",
+            "tenant isolation restart and bounded outage errors"
+          ]
+        },
+        {
+          "operationId": "dispatchAdmittedReviews",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-dispatch-temporal.test.ts"
+          ],
+          "scenarios": [
+            "real Temporal start with lost acknowledgement",
+            "deterministic identity reuse and single execution",
+            "wrong queue cannot acknowledge existing workflow"
+          ]
+        },
+        {
+          "operationId": "reviewAdmittedRequest",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-dispatch-temporal.test.ts"
+          ],
+          "scenarios": [
+            "ID and digest only workflow orchestration",
+            "finalization retry after committed terminal evidence",
+            "real workflow history replay"
+          ]
+        },
+        {
+          "operationId": "reconcileAdmittedReviews",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-activities.test.ts",
+            "tests/integration/review-dispatch.test.ts"
+          ],
+          "scenarios": [
+            "independent reconciliation after real workflow termination",
+            "possibly-sent charges retained after provider termination",
+            "summary committed before termination remains completed evidence",
+            "exclusive recovery leases and stale worker rejection",
+            "running reviews use bounded polling delay"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/model-review-api.test.ts",
+        "tests/integration/model-review-api.test.ts",
+        "tests/integration/model-review-control-startup.test.ts",
+        "tests/review-admission.test.ts",
+        "tests/integration/review-admissions.test.ts",
+        "tests/integration/review-dispatch.test.ts",
+        "tests/integration/reviewer-dispatch-temporal.test.ts",
+        "tests/integration/admitted-review-activities.test.ts"
+      ],
+      "plannedPRs": [],
+      "evidence": [
+        {
+          "path": "delivery/acceptance/m3-07a.json",
+          "sha256": "031dc5d5557f4c8dc495426d5be130c7be3f3a043cd36210b5dc198376c1f226",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-customer-api-contract.md",
+          "sha256": "9ab1e8edf9beb4a159d9cd932807cb761e856bb2826eb0ba8ac37b8aff645a08",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SECTION-31.3",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1738
+      },
+      "text": "31.3 Event bus",
+      "sourceTextSha256": "c044ad2a6a73db9d75e3fa18ba87abb28652eb42f654bed112f3f984ad63c75b",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.3-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1740
+      },
+      "text": "Internal events SHOULD use versioned schemas. Example event types:",
+      "sourceTextSha256": "46a24f252715a3e5f2e3a0e64498784519fb3e045671b9d1916ad33023dfce67",
+      "modality": {
+        "explicitTokens": [
+          "SHOULD"
+        ],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.3-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1742
+      },
+      "text": "- `pr.analysis.requested`",
+      "sourceTextSha256": "8afa33f7b3246b62ec9053163a469657dc6bef8c955500cb614d8601e6c00cb8",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.3-003",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1743
+      },
+      "text": "- `pr.analysis.completed`",
+      "sourceTextSha256": "cd3cb9075574520aa75298995d6b4713f3925d9390fe5799781799199452822e",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.3-004",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1744
+      },
+      "text": "- `eval.run.requested`",
+      "sourceTextSha256": "a030e63d748ebe797853059472c437201b1443fd8de4fc88711c209230480eb5",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.3-005",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1745
+      },
+      "text": "- `eval.run.completed`",
+      "sourceTextSha256": "eadec004cb5621e886b9cdbf858e033d0ec3fca4baf6b92d55252d1b89c042e3",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.3-006",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1746
+      },
+      "text": "- `finding.confirmed`",
+      "sourceTextSha256": "48dde667e547d6954e3cffd1cde7cda50c937f307bd21f2508d6639f9ce70c0b",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.3-007",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1747
+      },
+      "text": "- `release.verified`",
+      "sourceTextSha256": "251f86b98404a1ba9861af33ed1e4c73945df06239f62e73cbadd732acba17f9",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.3-008",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1748
+      },
+      "text": "- `incident.candidate.created`",
+      "sourceTextSha256": "5143b127521a425c01901847cc057dc63513b44472102e82632deaeeee93fa52",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.3-009",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1749
+      },
+      "text": "- `incident.reproduced`",
+      "sourceTextSha256": "e34808d1ea7a4784b8a3b1e7ca978f4dec96af80315b1e186e7f46e36e608983",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.3-010",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1750
+      },
+      "text": "- `regression.created`",
+      "sourceTextSha256": "cbd78f06c02c8ee7884808af969bfb02457ad4e77ea77da7d1dc3808c350c788",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.3-011",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1751
+      },
+      "text": "- `repair.pr.opened`",
+      "sourceTextSha256": "5790e5bbc4b2fa53232673e113afca110172c5bf7f99d1ef3a9988f42133df1f",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    },
+    {
+      "requirementId": "SPEC-31.3-012",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "31.3",
+        "line": 1753
+      },
+      "text": "Implementation may initially use a durable queue; avoid requiring Kafka in V1.",
+      "sourceTextSha256": "f44a3165898a1db422b3fa98e110f481eeb9ce4a0a2f48481c2b05213e59d9d2",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M0",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [],
+      "evidence": [],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review",
+        "no-row-evidence",
+        "no-task-or-operation-link"
+      ]
+    }
+  ]
+}

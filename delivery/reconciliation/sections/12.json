@@ -1,0 +1,3734 @@
+{
+  "section": 12,
+  "rows": [
+    {
+      "requirementId": "SECTION-12",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12",
+        "line": 722
+      },
+      "text": "12. Multi-Model Review",
+      "sourceTextSha256": "0bb83a0a1f647cb0dfdd8ae51c10a380a5caed3889e25556d5b0402589aa8bc3",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "not-started",
+        "milestone": "M3",
+        "evidence": []
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-00",
+          "status": "done",
+          "startedAt": "2026-10-05T04:00:56.003Z",
+          "completedAt": "2026-10-05T04:25:37.884Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Audit cross-cutting requirements and schema examples; freeze provider/review/finding contracts, versioning, budget policy and acceptance corpus before implementation. Record mandatory retro dependencies, live-provider prerequisites, coding-provider identity, initial OIDC/session decision and exact release/demo scenarios; no paid calls without configured authorization and total budget. Validate dependency graphs and reject task start/completion when prerequisite acceptance is incomplete. Preserve both released M1 and M2 API baselines and prove removal of an M2-only endpoint fails compatibility.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-00.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [],
+      "testReferences": [],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-00",
+          "kind": "section-review",
+          "acceptance": "Audit cross-cutting requirements and schema examples; freeze provider/review/finding contracts, versioning, budget policy and acceptance corpus before implementation. Record mandatory retro dependencies, live-provider prerequisites, coding-provider identity, initial OIDC/session decision and exact release/demo scenarios; no paid calls without configured authorization and total budget."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "delivery/acceptance/m3-00.json",
+          "sha256": "db504bfab8903c5a7eb12dc27519cd09a471092d98290c449b071442cd42d41a",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SECTION-12.1",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.1",
+        "line": 724
+      },
+      "text": "12.1 Reviewer roles",
+      "sourceTextSha256": "d11438233fe5b5090ba7d66bae0a9d156c1f52ce0432a09cbb7ffba01e5bb930",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-reviewer-roles.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-05",
+          "status": "done",
+          "startedAt": "2026-10-05T16:13:54.212Z",
+          "completedAt": "2026-10-05T17:47:40.683Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-05-frozen-reviewers.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "reviewerInstructions",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-policy.test.ts"
+          ],
+          "scenarios": [
+            "seven distinct roles",
+            "unknown and prototype roles rejected",
+            "immutable role inventory"
+          ]
+        },
+        {
+          "operationId": "buildReviewContext",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-context.test.ts"
+          ],
+          "scenarios": [
+            "canonical subject and document hashes",
+            "tampered and duplicate evidence rejected",
+            "unsafe paths and byte limits rejected"
+          ]
+        },
+        {
+          "operationId": "prepareReviewerRequest",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-context.test.ts"
+          ],
+          "scenarios": [
+            "repository instruction text confined to user data",
+            "no tool grants",
+            "config prompt context and request digests change only with corresponding inputs"
+          ]
+        },
+        {
+          "operationId": "createReviewerExecutor",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-execute.test.ts"
+          ],
+          "scenarios": [
+            "all seven roles through budgeted core",
+            "policy and tenant rejection before reservation",
+            "synthetic mode rejects external dispatch",
+            "malformed output and accounting failure",
+            "refusal has no proposal",
+            "cancellation",
+            "private continuation omitted"
+          ]
+        },
+        {
+          "operationId": "validateReviewerResult",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-result.test.ts",
+            "tests/reviewer-execute.test.ts"
+          ],
+          "scenarios": [
+            "exact subject and tenant binding",
+            "proposed state cannot promote to confirmed",
+            "response and authorization hash integrity",
+            "private fields rejected",
+            "bounded JSON and usage semantics"
+          ]
+        },
+        {
+          "operationId": "ReviewerResultStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-results.test.ts",
+            "tests/reviewer-storage-failure.test.ts"
+          ],
+          "scenarios": [
+            "concurrent immutable save and reconstructed store retrieval",
+            "tenant and commit isolation",
+            "exact budget request and settled cost binding",
+            "unknown cost reservation retained",
+            "SQL update rejected",
+            "connection and transaction failures are redacted unavailable errors",
+            "rollback failure discards connection",
+            "corrupt evidence remains a distinct conflict"
+          ]
+        },
+        {
+          "operationId": "createPersistentReviewer",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-results.test.ts"
+          ],
+          "scenarios": [
+            "same request recovers stored result without dispatch",
+            "concurrent replay dispatches at most once",
+            "different request bytes conflict",
+            "save failure after accounting cannot redispatch",
+            "authorized input detached before storage await"
+          ]
+        },
+        {
+          "operationId": "createSnapshotReviewContext",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-snapshot.test.ts"
+          ],
+          "scenarios": [
+            "authorized repository and exact commit selection",
+            "caller mutation during snapshot read",
+            "invalid paths and missing or oversized evidence fail closed",
+            "cancellation and redacted reader failures"
+          ]
+        },
+        {
+          "operationId": "validateReviewerProfile",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-profile.test.ts"
+          ],
+          "scenarios": [
+            "strict operator configuration and bounded selection",
+            "duplicate roles and absolute deadlines rejected",
+            "normalized revision binds budget timeout provider and evidence selection"
+          ]
+        },
+        {
+          "operationId": "bindReviewerProfile",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-profile.test.ts"
+          ],
+          "scenarios": [
+            "exact admitted profile revision and mode required",
+            "stable per-role request identity across retries",
+            "persisted admission time fixes deadlines",
+            "fresh reviews retain shared operator budget"
+          ]
+        },
+        {
+          "operationId": "ReviewerProfileStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-profiles.test.ts"
+          ],
+          "scenarios": [
+            "concurrent registration retains one immutable revision",
+            "changed configuration preserves old revisions",
+            "revocation denies execution and cannot be undone by config reload",
+            "tenant isolation restart and redacted outage errors"
+          ]
+        },
+        {
+          "operationId": "createAdmittedReviewExecution",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "exact admitted profile and selected snapshot execution",
+            "two role results retained across finding write failure",
+            "retry reuses results without additional model charge",
+            "synthetic findings retain contributing reviewer evidence",
+            "cancellation authorization revocation and execution-mode dispatch fences"
+          ]
+        },
+        {
+          "operationId": "validateReviewExecutionSummary",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "strict bounded identity-only summary",
+            "coverage counts agree with retained role statuses"
+          ]
+        },
+        {
+          "operationId": "ReviewSummaryStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "first write rejects omitted roles findings and wrong context",
+            "exact profile role and finding evidence reconstruction",
+            "summary-write failure recovery without redispatch",
+            "immutable tenant-scoped restart reads and redacted outages"
+          ]
+        },
+        {
+          "operationId": "createAdmittedReviewActivities",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-activities.test.ts",
+            "tests/integration/review-dispatch.test.ts"
+          ],
+          "scenarios": [
+            "actual Temporal identity binds before provider execution",
+            "lost summary response retries retained evidence without provider charge",
+            "durable cancellation before dispatch and during provider invocation",
+            "possibly-sent cancellation preserves budget exposure",
+            "private source output and diagnostic sentinels absent from workflow history",
+            "success and cancellation workflow replay"
+          ]
+        },
+        {
+          "operationId": "validateReviewerRuntime",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-runtime.test.ts"
+          ],
+          "scenarios": [
+            "strict operator-owned profiles and provider identities"
+          ]
+        },
+        {
+          "operationId": "createReviewerRuntime",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-runtime.test.ts"
+          ],
+          "scenarios": [
+            "seven no-network fixture roles",
+            "fixed environment credential references and no secret policy serialization"
+          ]
+        },
+        {
+          "operationId": "loadReviewerRuntime",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-runtime.test.ts"
+          ],
+          "scenarios": [
+            "explicit absolute config path or disabled runtime"
+          ]
+        },
+        {
+          "operationId": "initializeReviewerController",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-runtime.test.ts"
+          ],
+          "scenarios": [
+            "production workflow exports execute seven roles",
+            "exact GitHub subject and blob identities",
+            "stale subject and revoked profile denial",
+            "restart retains evidence"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/reviewer-policy.test.ts",
+        "tests/reviewer-context.test.ts",
+        "tests/reviewer-execute.test.ts",
+        "tests/reviewer-result.test.ts",
+        "tests/integration/reviewer-results.test.ts",
+        "tests/reviewer-storage-failure.test.ts",
+        "tests/reviewer-snapshot.test.ts",
+        "tests/reviewer-profile.test.ts",
+        "tests/integration/reviewer-profiles.test.ts",
+        "tests/integration/admitted-review-execution.test.ts",
+        "tests/integration/admitted-review-activities.test.ts",
+        "tests/integration/review-dispatch.test.ts",
+        "tests/reviewer-runtime.test.ts",
+        "tests/integration/reviewer-runtime.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-05",
+          "kind": "section-review",
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-reviewer-roles.md",
+          "sha256": "4ff87fbb9a4afd1915893e510b610b0ede909c78a28a4878d215da3171b505de",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-05-frozen-reviewers.json",
+          "sha256": "5529c6ea217d27ce59a61b0a4767ad77293ece8bdbf9e94b57ae38ca31e0abd0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-12.1-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.1",
+        "line": 726
+      },
+      "text": "Configure independent roles such as:",
+      "sourceTextSha256": "ff5da16199f87fbb061cafddcc34f971cb765974142837757051af656672dcaa",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-reviewer-roles.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-05",
+          "status": "done",
+          "startedAt": "2026-10-05T16:13:54.212Z",
+          "completedAt": "2026-10-05T17:47:40.683Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-05-frozen-reviewers.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "reviewerInstructions",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-policy.test.ts"
+          ],
+          "scenarios": [
+            "seven distinct roles",
+            "unknown and prototype roles rejected",
+            "immutable role inventory"
+          ]
+        },
+        {
+          "operationId": "buildReviewContext",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-context.test.ts"
+          ],
+          "scenarios": [
+            "canonical subject and document hashes",
+            "tampered and duplicate evidence rejected",
+            "unsafe paths and byte limits rejected"
+          ]
+        },
+        {
+          "operationId": "prepareReviewerRequest",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-context.test.ts"
+          ],
+          "scenarios": [
+            "repository instruction text confined to user data",
+            "no tool grants",
+            "config prompt context and request digests change only with corresponding inputs"
+          ]
+        },
+        {
+          "operationId": "createReviewerExecutor",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-execute.test.ts"
+          ],
+          "scenarios": [
+            "all seven roles through budgeted core",
+            "policy and tenant rejection before reservation",
+            "synthetic mode rejects external dispatch",
+            "malformed output and accounting failure",
+            "refusal has no proposal",
+            "cancellation",
+            "private continuation omitted"
+          ]
+        },
+        {
+          "operationId": "validateReviewerResult",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-result.test.ts",
+            "tests/reviewer-execute.test.ts"
+          ],
+          "scenarios": [
+            "exact subject and tenant binding",
+            "proposed state cannot promote to confirmed",
+            "response and authorization hash integrity",
+            "private fields rejected",
+            "bounded JSON and usage semantics"
+          ]
+        },
+        {
+          "operationId": "ReviewerResultStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-results.test.ts",
+            "tests/reviewer-storage-failure.test.ts"
+          ],
+          "scenarios": [
+            "concurrent immutable save and reconstructed store retrieval",
+            "tenant and commit isolation",
+            "exact budget request and settled cost binding",
+            "unknown cost reservation retained",
+            "SQL update rejected",
+            "connection and transaction failures are redacted unavailable errors",
+            "rollback failure discards connection",
+            "corrupt evidence remains a distinct conflict"
+          ]
+        },
+        {
+          "operationId": "createPersistentReviewer",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-results.test.ts"
+          ],
+          "scenarios": [
+            "same request recovers stored result without dispatch",
+            "concurrent replay dispatches at most once",
+            "different request bytes conflict",
+            "save failure after accounting cannot redispatch",
+            "authorized input detached before storage await"
+          ]
+        },
+        {
+          "operationId": "createSnapshotReviewContext",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-snapshot.test.ts"
+          ],
+          "scenarios": [
+            "authorized repository and exact commit selection",
+            "caller mutation during snapshot read",
+            "invalid paths and missing or oversized evidence fail closed",
+            "cancellation and redacted reader failures"
+          ]
+        },
+        {
+          "operationId": "validateReviewerProfile",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-profile.test.ts"
+          ],
+          "scenarios": [
+            "strict operator configuration and bounded selection",
+            "duplicate roles and absolute deadlines rejected",
+            "normalized revision binds budget timeout provider and evidence selection"
+          ]
+        },
+        {
+          "operationId": "bindReviewerProfile",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-profile.test.ts"
+          ],
+          "scenarios": [
+            "exact admitted profile revision and mode required",
+            "stable per-role request identity across retries",
+            "persisted admission time fixes deadlines",
+            "fresh reviews retain shared operator budget"
+          ]
+        },
+        {
+          "operationId": "ReviewerProfileStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-profiles.test.ts"
+          ],
+          "scenarios": [
+            "concurrent registration retains one immutable revision",
+            "changed configuration preserves old revisions",
+            "revocation denies execution and cannot be undone by config reload",
+            "tenant isolation restart and redacted outage errors"
+          ]
+        },
+        {
+          "operationId": "createAdmittedReviewExecution",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "exact admitted profile and selected snapshot execution",
+            "two role results retained across finding write failure",
+            "retry reuses results without additional model charge",
+            "synthetic findings retain contributing reviewer evidence",
+            "cancellation authorization revocation and execution-mode dispatch fences"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/reviewer-policy.test.ts",
+        "tests/reviewer-context.test.ts",
+        "tests/reviewer-execute.test.ts",
+        "tests/reviewer-result.test.ts",
+        "tests/integration/reviewer-results.test.ts",
+        "tests/reviewer-storage-failure.test.ts",
+        "tests/reviewer-snapshot.test.ts",
+        "tests/reviewer-profile.test.ts",
+        "tests/integration/reviewer-profiles.test.ts",
+        "tests/integration/admitted-review-execution.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-05",
+          "kind": "requirement",
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-reviewer-roles.md",
+          "sha256": "4ff87fbb9a4afd1915893e510b610b0ede909c78a28a4878d215da3171b505de",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-05-frozen-reviewers.json",
+          "sha256": "5529c6ea217d27ce59a61b0a4767ad77293ece8bdbf9e94b57ae38ca31e0abd0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-12.1-002",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.1",
+        "line": 728
+      },
+      "text": "- specification compliance",
+      "sourceTextSha256": "ab618486ffac78d829fd5e397e54f60e987902f825c4a0a7386b315f7e7cd044",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-reviewer-roles.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-05",
+          "status": "done",
+          "startedAt": "2026-10-05T16:13:54.212Z",
+          "completedAt": "2026-10-05T17:47:40.683Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-05-frozen-reviewers.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "reviewerInstructions",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-policy.test.ts"
+          ],
+          "scenarios": [
+            "seven distinct roles",
+            "unknown and prototype roles rejected",
+            "immutable role inventory"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/reviewer-policy.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-05",
+          "kind": "requirement",
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-reviewer-roles.md",
+          "sha256": "4ff87fbb9a4afd1915893e510b610b0ede909c78a28a4878d215da3171b505de",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-05-frozen-reviewers.json",
+          "sha256": "5529c6ea217d27ce59a61b0a4767ad77293ece8bdbf9e94b57ae38ca31e0abd0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-12.1-003",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.1",
+        "line": 729
+      },
+      "text": "- code correctness",
+      "sourceTextSha256": "2e65c3ea2f9b6cd62f5d91930f2089ac93b8ecc56cf5e3cd71e8d0b924fec7a0",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-reviewer-roles.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-05",
+          "status": "done",
+          "startedAt": "2026-10-05T16:13:54.212Z",
+          "completedAt": "2026-10-05T17:47:40.683Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-05-frozen-reviewers.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "reviewerInstructions",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-policy.test.ts"
+          ],
+          "scenarios": [
+            "seven distinct roles",
+            "unknown and prototype roles rejected",
+            "immutable role inventory"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/reviewer-policy.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-05",
+          "kind": "requirement",
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-reviewer-roles.md",
+          "sha256": "4ff87fbb9a4afd1915893e510b610b0ede909c78a28a4878d215da3171b505de",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-05-frozen-reviewers.json",
+          "sha256": "5529c6ea217d27ce59a61b0a4767ad77293ece8bdbf9e94b57ae38ca31e0abd0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-12.1-004",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.1",
+        "line": 730
+      },
+      "text": "- architecture",
+      "sourceTextSha256": "6ea59d55c10123f0aa685efea487a893488cd31b5a73b928e56c66edf1726a3b",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-reviewer-roles.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-05",
+          "status": "done",
+          "startedAt": "2026-10-05T16:13:54.212Z",
+          "completedAt": "2026-10-05T17:47:40.683Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-05-frozen-reviewers.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "reviewerInstructions",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-policy.test.ts"
+          ],
+          "scenarios": [
+            "seven distinct roles",
+            "unknown and prototype roles rejected",
+            "immutable role inventory"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/reviewer-policy.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-05",
+          "kind": "requirement",
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-reviewer-roles.md",
+          "sha256": "4ff87fbb9a4afd1915893e510b610b0ede909c78a28a4878d215da3171b505de",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-05-frozen-reviewers.json",
+          "sha256": "5529c6ea217d27ce59a61b0a4767ad77293ece8bdbf9e94b57ae38ca31e0abd0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-12.1-005",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.1",
+        "line": 731
+      },
+      "text": "- security",
+      "sourceTextSha256": "454dc740e3034ee8bf653de0d0178881165b6660e34c2f9b0b18d52610867348",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-reviewer-roles.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-05",
+          "status": "done",
+          "startedAt": "2026-10-05T16:13:54.212Z",
+          "completedAt": "2026-10-05T17:47:40.683Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-05-frozen-reviewers.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "reviewerInstructions",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-policy.test.ts"
+          ],
+          "scenarios": [
+            "seven distinct roles",
+            "unknown and prototype roles rejected",
+            "immutable role inventory"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/reviewer-policy.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-05",
+          "kind": "requirement",
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-reviewer-roles.md",
+          "sha256": "4ff87fbb9a4afd1915893e510b610b0ede909c78a28a4878d215da3171b505de",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-05-frozen-reviewers.json",
+          "sha256": "5529c6ea217d27ce59a61b0a4767ad77293ece8bdbf9e94b57ae38ca31e0abd0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-12.1-006",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.1",
+        "line": 732
+      },
+      "text": "- adversarial/breaker",
+      "sourceTextSha256": "fea78b249c21fbe30b17c22ce87aab934456cb39dfaf467c933f95fc2173659f",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-reviewer-roles.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-05",
+          "status": "done",
+          "startedAt": "2026-10-05T16:13:54.212Z",
+          "completedAt": "2026-10-05T17:47:40.683Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-05-frozen-reviewers.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "reviewerInstructions",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-policy.test.ts"
+          ],
+          "scenarios": [
+            "seven distinct roles",
+            "unknown and prototype roles rejected",
+            "immutable role inventory"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/reviewer-policy.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-05",
+          "kind": "requirement",
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-reviewer-roles.md",
+          "sha256": "4ff87fbb9a4afd1915893e510b610b0ede909c78a28a4878d215da3171b505de",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-05-frozen-reviewers.json",
+          "sha256": "5529c6ea217d27ce59a61b0a4767ad77293ece8bdbf9e94b57ae38ca31e0abd0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-12.1-007",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.1",
+        "line": 733
+      },
+      "text": "- test/eval completeness",
+      "sourceTextSha256": "f7294253a8e2b21171370bbaf898fff9ea748aa5e1be105c228e78b78e8394be",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-reviewer-roles.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-05",
+          "status": "done",
+          "startedAt": "2026-10-05T16:13:54.212Z",
+          "completedAt": "2026-10-05T17:47:40.683Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-05-frozen-reviewers.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "reviewerInstructions",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-policy.test.ts"
+          ],
+          "scenarios": [
+            "seven distinct roles",
+            "unknown and prototype roles rejected",
+            "immutable role inventory"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/reviewer-policy.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-05",
+          "kind": "requirement",
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-reviewer-roles.md",
+          "sha256": "4ff87fbb9a4afd1915893e510b610b0ede909c78a28a4878d215da3171b505de",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-05-frozen-reviewers.json",
+          "sha256": "5529c6ea217d27ce59a61b0a4767ad77293ece8bdbf9e94b57ae38ca31e0abd0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-12.1-008",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.1",
+        "line": 734
+      },
+      "text": "- operational reliability",
+      "sourceTextSha256": "ec602ac012b696ce5a80ad387983bf564d8eaf6afba648668fdda94a68dff58e",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-reviewer-roles.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-05",
+          "status": "done",
+          "startedAt": "2026-10-05T16:13:54.212Z",
+          "completedAt": "2026-10-05T17:47:40.683Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-05-frozen-reviewers.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "reviewerInstructions",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-policy.test.ts"
+          ],
+          "scenarios": [
+            "seven distinct roles",
+            "unknown and prototype roles rejected",
+            "immutable role inventory"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/reviewer-policy.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-05",
+          "kind": "requirement",
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-reviewer-roles.md",
+          "sha256": "4ff87fbb9a4afd1915893e510b610b0ede909c78a28a4878d215da3171b505de",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-05-frozen-reviewers.json",
+          "sha256": "5529c6ea217d27ce59a61b0a4767ad77293ece8bdbf9e94b57ae38ca31e0abd0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SECTION-12.2",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.2",
+        "line": 736
+      },
+      "text": "12.2 Independence rule",
+      "sourceTextSha256": "e9cd90b10a596d89d98ee58288e72caac5edddc85f40a9cc26e6f82bb9c11534",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-reviewer-roles.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-05",
+          "status": "done",
+          "startedAt": "2026-10-05T16:13:54.212Z",
+          "completedAt": "2026-10-05T17:47:40.683Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-05-frozen-reviewers.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "createIndependencePolicy",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-policy.test.ts"
+          ],
+          "scenarios": [
+            "same upstream aliases rejected",
+            "missing and wrong-subject provenance rejected",
+            "synthetic identity cannot satisfy external mode",
+            "trusted identity snapshot resists mutation"
+          ]
+        },
+        {
+          "operationId": "buildReviewContext",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-context.test.ts"
+          ],
+          "scenarios": [
+            "canonical subject and document hashes",
+            "tampered and duplicate evidence rejected",
+            "unsafe paths and byte limits rejected"
+          ]
+        },
+        {
+          "operationId": "prepareReviewerRequest",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-context.test.ts"
+          ],
+          "scenarios": [
+            "repository instruction text confined to user data",
+            "no tool grants",
+            "config prompt context and request digests change only with corresponding inputs"
+          ]
+        },
+        {
+          "operationId": "createSnapshotReviewContext",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-snapshot.test.ts"
+          ],
+          "scenarios": [
+            "authorized repository and exact commit selection",
+            "caller mutation during snapshot read",
+            "invalid paths and missing or oversized evidence fail closed",
+            "cancellation and redacted reader failures"
+          ]
+        },
+        {
+          "operationId": "validateReviewerProfile",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-profile.test.ts"
+          ],
+          "scenarios": [
+            "strict operator configuration and bounded selection",
+            "duplicate roles and absolute deadlines rejected",
+            "normalized revision binds budget timeout provider and evidence selection"
+          ]
+        },
+        {
+          "operationId": "bindReviewerProfile",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-profile.test.ts"
+          ],
+          "scenarios": [
+            "exact admitted profile revision and mode required",
+            "stable per-role request identity across retries",
+            "persisted admission time fixes deadlines",
+            "fresh reviews retain shared operator budget"
+          ]
+        },
+        {
+          "operationId": "ReviewerProfileStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-profiles.test.ts"
+          ],
+          "scenarios": [
+            "concurrent registration retains one immutable revision",
+            "changed configuration preserves old revisions",
+            "revocation denies execution and cannot be undone by config reload",
+            "tenant isolation restart and redacted outage errors"
+          ]
+        },
+        {
+          "operationId": "createAdmittedReviewExecution",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "exact admitted profile and selected snapshot execution",
+            "two role results retained across finding write failure",
+            "retry reuses results without additional model charge",
+            "synthetic findings retain contributing reviewer evidence",
+            "cancellation authorization revocation and execution-mode dispatch fences"
+          ]
+        },
+        {
+          "operationId": "validateReviewerRuntime",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-runtime.test.ts"
+          ],
+          "scenarios": [
+            "strict operator-owned profiles and provider identities"
+          ]
+        },
+        {
+          "operationId": "createReviewerRuntime",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-runtime.test.ts"
+          ],
+          "scenarios": [
+            "seven no-network fixture roles",
+            "fixed environment credential references and no secret policy serialization"
+          ]
+        },
+        {
+          "operationId": "loadReviewerRuntime",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-runtime.test.ts"
+          ],
+          "scenarios": [
+            "explicit absolute config path or disabled runtime"
+          ]
+        },
+        {
+          "operationId": "initializeReviewerController",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-runtime.test.ts"
+          ],
+          "scenarios": [
+            "production workflow exports execute seven roles",
+            "exact GitHub subject and blob identities",
+            "stale subject and revoked profile denial",
+            "restart retains evidence"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/reviewer-policy.test.ts",
+        "tests/reviewer-context.test.ts",
+        "tests/reviewer-snapshot.test.ts",
+        "tests/reviewer-profile.test.ts",
+        "tests/integration/reviewer-profiles.test.ts",
+        "tests/integration/admitted-review-execution.test.ts",
+        "tests/reviewer-runtime.test.ts",
+        "tests/integration/reviewer-runtime.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-05",
+          "kind": "section-review",
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-reviewer-roles.md",
+          "sha256": "4ff87fbb9a4afd1915893e510b610b0ede909c78a28a4878d215da3171b505de",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-05-frozen-reviewers.json",
+          "sha256": "5529c6ea217d27ce59a61b0a4767ad77293ece8bdbf9e94b57ae38ca31e0abd0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-12.2-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.2",
+        "line": 738
+      },
+      "text": "The implementation model SHOULD NOT be the sole required reviewer. Policies SHOULD allow `differentProvider: true` for designated reviews.",
+      "sourceTextSha256": "c0bce7a89cabc4d68581e08b08f81520d984a34c5670fe3a4ad790bc4f60b338",
+      "modality": {
+        "explicitTokens": [
+          "SHOULD"
+        ],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-reviewer-roles.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-05",
+          "status": "done",
+          "startedAt": "2026-10-05T16:13:54.212Z",
+          "completedAt": "2026-10-05T17:47:40.683Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-05-frozen-reviewers.json"
+              ]
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "createIndependencePolicy",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-policy.test.ts"
+          ],
+          "scenarios": [
+            "same upstream aliases rejected",
+            "missing and wrong-subject provenance rejected",
+            "synthetic identity cannot satisfy external mode",
+            "trusted identity snapshot resists mutation"
+          ]
+        },
+        {
+          "operationId": "createReviewerExecutor",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-execute.test.ts"
+          ],
+          "scenarios": [
+            "all seven roles through budgeted core",
+            "policy and tenant rejection before reservation",
+            "synthetic mode rejects external dispatch",
+            "malformed output and accounting failure",
+            "refusal has no proposal",
+            "cancellation",
+            "private continuation omitted"
+          ]
+        },
+        {
+          "operationId": "validateReviewerResult",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/reviewer-result.test.ts",
+            "tests/reviewer-execute.test.ts"
+          ],
+          "scenarios": [
+            "exact subject and tenant binding",
+            "proposed state cannot promote to confirmed",
+            "response and authorization hash integrity",
+            "private fields rejected",
+            "bounded JSON and usage semantics"
+          ]
+        },
+        {
+          "operationId": "ReviewerResultStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-results.test.ts",
+            "tests/reviewer-storage-failure.test.ts"
+          ],
+          "scenarios": [
+            "concurrent immutable save and reconstructed store retrieval",
+            "tenant and commit isolation",
+            "exact budget request and settled cost binding",
+            "unknown cost reservation retained",
+            "SQL update rejected",
+            "connection and transaction failures are redacted unavailable errors",
+            "rollback failure discards connection",
+            "corrupt evidence remains a distinct conflict"
+          ]
+        },
+        {
+          "operationId": "createPersistentReviewer",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/reviewer-results.test.ts"
+          ],
+          "scenarios": [
+            "same request recovers stored result without dispatch",
+            "concurrent replay dispatches at most once",
+            "different request bytes conflict",
+            "save failure after accounting cannot redispatch",
+            "authorized input detached before storage await"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/reviewer-policy.test.ts",
+        "tests/reviewer-execute.test.ts",
+        "tests/reviewer-result.test.ts",
+        "tests/integration/reviewer-results.test.ts",
+        "tests/reviewer-storage-failure.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-05",
+          "kind": "requirement",
+          "acceptance": "Seven configured roles, different-provider policy, trusted context and prompt-injection evals; record model/config/context digests."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-reviewer-roles.md",
+          "sha256": "4ff87fbb9a4afd1915893e510b610b0ede909c78a28a4878d215da3171b505de",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-05-frozen-reviewers.json",
+          "sha256": "5529c6ea217d27ce59a61b0a4767ad77293ece8bdbf9e94b57ae38ca31e0abd0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SECTION-12.3",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.3",
+        "line": 740
+      },
+      "text": "12.3 Finding lifecycle",
+      "sourceTextSha256": "2baa2944a90127198fefd34fb4663369c2c1e17fd33893968996e7f5c9afe4eb",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-finding-history.md",
+          "docs/phases/m3-finding-reproduction.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-06",
+          "status": "done",
+          "startedAt": "2026-10-05T17:48:08.387Z",
+          "completedAt": "2026-10-05T22:09:33.587Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06a",
+          "status": "done",
+          "startedAt": "2026-10-05T17:48:08.625Z",
+          "completedAt": "2026-10-05T18:59:22.265Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Versioned schema and fixture, exact-subject evidence normalization, deterministic duplicate identity, all legal lifecycle transitions; forged confirmation and unsupported default blocking rejected.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06a.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06b",
+          "status": "done",
+          "startedAt": "2026-10-05T18:59:22.485Z",
+          "completedAt": "2026-10-05T19:17:39.614Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Tenant-scoped immutable event history, idempotency and optimistic concurrency; real PostgreSQL restart, conflict and isolation acceptance; shipped migration and schema.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06b.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06c",
+          "status": "done",
+          "startedAt": "2026-10-05T19:17:40.744Z",
+          "completedAt": "2026-10-05T22:09:33.117Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Controller-approved M2-isolated reproduction, exact claim/assertion evidence, positive/negative/crash/cancellation/escape acceptance, frozen adversarial corpus and success/failure fixture demo.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06c.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real authenticated transport and executable client/CLI round trips; separate write authority, exact subject/version/idempotency, bounded pagination, approved reproduction dispatch and released M1/M2 compatibility.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-0",
+          "status": "done",
+          "startedAt": "2026-10-05T23:35:54.299Z",
+          "completedAt": "2026-10-05T23:46:27.124Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Record resource naming, auth matrix, exact identity/idempotency/status/errors, finding versions, reproduction approval, pagination/export integrity and CLI compatibility; synchronize internal draft transport fixtures and scenario mapping without advertising unimplemented public endpoints. One contract owner approves shared fixtures before parallel client/Checks development.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-customer-api-contract.md"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-2",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Exact-subject finding/history reads, bounded stable pagination and integrity-verifiable complete export work over real HTTP. Wrong scope, invalid cursors and interrupted/truncated exports fail explicitly; M3-C11 export capability is retained.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Operator-authorized mutations enforce expected versions, operation IDs and immutable approved plans with configured consumers. Reject request-supplied commands/images/budgets; verify cancellation before/during staging, termination cleanup and retained receipts; never-staged cancellation stays unverified.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-4",
+          "status": "in-progress",
+          "startedAt": "2026-10-05T23:46:27.552Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Typed client and executable CLI consume shared fixtures and pass real-server review/finding/reproduction/export round trips after routes are implemented. Verify identity/digests, bounded reads, auth/cancellation/errors/exit codes, no credential logging and preservation of released agentci review behavior. Parallel development does not replace final real transport acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07d-1",
+          "status": "in-progress",
+          "startedAt": "2026-10-05T23:46:27.766Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Renderer and actual publication keep synthetic/unconfirmed claims advisory, bind exact subject/version/evidence, escape bounded output, reject stale heads and prevent retries overwriting newer results. Develop against frozen contracts; accept only when integrated status and evidence URLs work.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "validateModelFinding",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "strict shape and exact subject",
+            "stable identity and legal state evidence"
+          ]
+        },
+        {
+          "operationId": "findingsFromReviewer",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "exact selected evidence and bounded ranges",
+            "model lifecycle fields rejected"
+          ]
+        },
+        {
+          "operationId": "deduplicateFindings",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "order independent exact duplicate identity",
+            "distinct evidence remains separate",
+            "consensus cannot confirm"
+          ]
+        },
+        {
+          "operationId": "createFindingTransitions",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "all lifecycle paths",
+            "stale versions and wrong receipts rejected",
+            "redacted receipt outage"
+          ]
+        },
+        {
+          "operationId": "findingBlockingDecision",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "default unconfirmed is nonblocking",
+            "explicit customer override preserves verification state",
+            "synthetic evidence never blocks"
+          ]
+        },
+        {
+          "operationId": "FindingHistoryStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-history.test.ts",
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "authenticated initial evidence reconstruction",
+            "concurrent version fencing and operation idempotency",
+            "tenant-scoped restart reconstruction",
+            "immutable event update and deletion rejection",
+            "receipt failure rollback",
+            "authenticated ingest of new evidence for existing finding",
+            "incoming evidence idempotency across later history versions"
+          ]
+        },
+        {
+          "operationId": "compileFindingReproduction",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts"
+          ],
+          "scenarios": [
+            "exact finding and source evidence binding",
+            "immutable baseline assertion selection",
+            "bounded structured local execution only"
+          ]
+        },
+        {
+          "operationId": "verifyReproductionUnit",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts"
+          ],
+          "scenarios": [
+            "recompile immutable execution definition and projected inputs"
+          ]
+        },
+        {
+          "operationId": "reproductionReceipt",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts",
+            "tests/integration/finding-reproduction.test.ts",
+            "tests/integration/finding-frozen-eval.test.ts"
+          ],
+          "scenarios": [
+            "exact terminal execution identity",
+            "positive negative crashed and missing observations",
+            "frozen isolated assertions reject substituted execution despite weakened candidate tests"
+          ]
+        },
+        {
+          "operationId": "FindingReproductionStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-storage.test.ts"
+          ],
+          "scenarios": [
+            "controller approval rejects altered plans",
+            "concurrent reservation and stage retries",
+            "resource enforcement before lease acquisition",
+            "live cancellation and container cleanup",
+            "report symlink escape fails closed",
+            "restart receipt verification and immutable history",
+            "pre-staging cancellation survives retries",
+            "concurrent staging cancellation fences dispatch",
+            "requeue preserves the finding attempt cap",
+            "late cancellation preserves terminal receipts"
+          ]
+        },
+        {
+          "operationId": "createReproductionActivities",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-storage.test.ts"
+          ],
+          "scenarios": [
+            "exact revision staging and terminal disposition"
+          ]
+        },
+        {
+          "operationId": "reproduceFinding",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-temporal.test.ts"
+          ],
+          "scenarios": [
+            "ambiguous stage and finalize retry",
+            "cancellation during staging waits for cleanup",
+            "Temporal history replay"
+          ]
+        },
+        {
+          "operationId": "mergeFindingEvidence",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-evidence.test.ts",
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "same-subject reviewer evidence extends immutable history",
+            "prior disposition and exact identity retained",
+            "pending reproduction version cannot be changed",
+            "bounded source and version limits fail explicitly"
+          ]
+        },
+        {
+          "operationId": "createAdmittedReviewExecution",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "exact admitted profile and selected snapshot execution",
+            "two role results retained across finding write failure",
+            "retry reuses results without additional model charge",
+            "synthetic findings retain contributing reviewer evidence",
+            "cancellation authorization revocation and execution-mode dispatch fences"
+          ]
+        },
+        {
+          "operationId": "validateReviewExecutionSummary",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "strict bounded identity-only summary",
+            "coverage counts agree with retained role statuses"
+          ]
+        },
+        {
+          "operationId": "ReviewSummaryStore",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "first write rejects omitted roles findings and wrong context",
+            "exact profile role and finding evidence reconstruction",
+            "summary-write failure recovery without redispatch",
+            "immutable tenant-scoped restart reads and redacted outages"
+          ]
+        },
+        {
+          "operationId": "createAdmittedReviewActivities",
+          "map": "specs/api/reviewer-operations.json",
+          "mapDigest": "639e767f0215e62c42b7d59001d79edea1777d270863eb668e50e585eb840404",
+          "tests": [
+            "tests/integration/admitted-review-activities.test.ts",
+            "tests/integration/review-dispatch.test.ts"
+          ],
+          "scenarios": [
+            "actual Temporal identity binds before provider execution",
+            "lost summary response retries retained evidence without provider charge",
+            "durable cancellation before dispatch and during provider invocation",
+            "possibly-sent cancellation preserves budget exposure",
+            "private source output and diagnostic sentinels absent from workflow history",
+            "success and cancellation workflow replay"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/findings.test.ts",
+        "tests/integration/finding-history.test.ts",
+        "tests/integration/admitted-review-execution.test.ts",
+        "tests/finding-reproduction.test.ts",
+        "tests/integration/finding-reproduction.test.ts",
+        "tests/integration/finding-frozen-eval.test.ts",
+        "tests/integration/finding-reproduction-storage.test.ts",
+        "tests/integration/finding-reproduction-temporal.test.ts",
+        "tests/finding-evidence.test.ts",
+        "tests/integration/admitted-review-activities.test.ts",
+        "tests/integration/review-dispatch.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-06",
+          "kind": "section-review",
+          "acceptance": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-finding-history.md",
+          "sha256": "ff03506694537ec7e6b0d0ef2aac6c72ed0935114674f406b0dce57ad5e3535a",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-finding-reproduction.md",
+          "sha256": "044c3dd704bf7e3ada85d10683a4c849e0f3aaf26976e5e8aa0aa50f36c9d765",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06.json",
+          "sha256": "b2fab1978cf9d613dccb894ba35123b349ad99b2616c50b7f6e7805b23847ddc",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06a.json",
+          "sha256": "768c54df170c87ae7de7c5a6dde82da0a76333f717b2aca885c883923c6726c0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06b.json",
+          "sha256": "3007f2abfec6c999bf87f40498f3ec624950abbf8ffad6df81bf3168b11600f7",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06c.json",
+          "sha256": "b0ccd3b1efa6bac45b904bffd01de7997adcdf1594718a619c51ea69c872aaca",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-customer-api-contract.md",
+          "sha256": "9ab1e8edf9beb4a159d9cd932807cb761e856bb2826eb0ba8ac37b8aff645a08",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-12.3-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.3",
+        "line": 742
+      },
+      "text": "`proposed -> deduplicated -> reproduction-pending -> confirmed | unconfirmed | false-positive -> resolved`",
+      "sourceTextSha256": "28d1c1dfe5beee1a40cf52815236af817240124bc6447c5e95dc4ad1691a6d61",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-finding-history.md",
+          "docs/phases/m3-finding-reproduction.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-06",
+          "status": "done",
+          "startedAt": "2026-10-05T17:48:08.387Z",
+          "completedAt": "2026-10-05T22:09:33.587Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06a",
+          "status": "done",
+          "startedAt": "2026-10-05T17:48:08.625Z",
+          "completedAt": "2026-10-05T18:59:22.265Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Versioned schema and fixture, exact-subject evidence normalization, deterministic duplicate identity, all legal lifecycle transitions; forged confirmation and unsupported default blocking rejected.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06a.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06b",
+          "status": "done",
+          "startedAt": "2026-10-05T18:59:22.485Z",
+          "completedAt": "2026-10-05T19:17:39.614Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Tenant-scoped immutable event history, idempotency and optimistic concurrency; real PostgreSQL restart, conflict and isolation acceptance; shipped migration and schema.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06b.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06c",
+          "status": "done",
+          "startedAt": "2026-10-05T19:17:40.744Z",
+          "completedAt": "2026-10-05T22:09:33.117Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Controller-approved M2-isolated reproduction, exact claim/assertion evidence, positive/negative/crash/cancellation/escape acceptance, frozen adversarial corpus and success/failure fixture demo.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06c.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07d-1",
+          "status": "in-progress",
+          "startedAt": "2026-10-05T23:46:27.766Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Renderer and actual publication keep synthetic/unconfirmed claims advisory, bind exact subject/version/evidence, escape bounded output, reject stale heads and prevent retries overwriting newer results. Develop against frozen contracts; accept only when integrated status and evidence URLs work.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "validateModelFinding",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "strict shape and exact subject",
+            "stable identity and legal state evidence"
+          ]
+        },
+        {
+          "operationId": "findingsFromReviewer",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "exact selected evidence and bounded ranges",
+            "model lifecycle fields rejected"
+          ]
+        },
+        {
+          "operationId": "deduplicateFindings",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "order independent exact duplicate identity",
+            "distinct evidence remains separate",
+            "consensus cannot confirm"
+          ]
+        },
+        {
+          "operationId": "createFindingTransitions",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "all lifecycle paths",
+            "stale versions and wrong receipts rejected",
+            "redacted receipt outage"
+          ]
+        },
+        {
+          "operationId": "findingBlockingDecision",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "default unconfirmed is nonblocking",
+            "explicit customer override preserves verification state",
+            "synthetic evidence never blocks"
+          ]
+        },
+        {
+          "operationId": "FindingHistoryStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-history.test.ts",
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "authenticated initial evidence reconstruction",
+            "concurrent version fencing and operation idempotency",
+            "tenant-scoped restart reconstruction",
+            "immutable event update and deletion rejection",
+            "receipt failure rollback",
+            "authenticated ingest of new evidence for existing finding",
+            "incoming evidence idempotency across later history versions"
+          ]
+        },
+        {
+          "operationId": "compileFindingReproduction",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts"
+          ],
+          "scenarios": [
+            "exact finding and source evidence binding",
+            "immutable baseline assertion selection",
+            "bounded structured local execution only"
+          ]
+        },
+        {
+          "operationId": "verifyReproductionUnit",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts"
+          ],
+          "scenarios": [
+            "recompile immutable execution definition and projected inputs"
+          ]
+        },
+        {
+          "operationId": "reproductionReceipt",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts",
+            "tests/integration/finding-reproduction.test.ts",
+            "tests/integration/finding-frozen-eval.test.ts"
+          ],
+          "scenarios": [
+            "exact terminal execution identity",
+            "positive negative crashed and missing observations",
+            "frozen isolated assertions reject substituted execution despite weakened candidate tests"
+          ]
+        },
+        {
+          "operationId": "FindingReproductionStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-storage.test.ts"
+          ],
+          "scenarios": [
+            "controller approval rejects altered plans",
+            "concurrent reservation and stage retries",
+            "resource enforcement before lease acquisition",
+            "live cancellation and container cleanup",
+            "report symlink escape fails closed",
+            "restart receipt verification and immutable history",
+            "pre-staging cancellation survives retries",
+            "concurrent staging cancellation fences dispatch",
+            "requeue preserves the finding attempt cap",
+            "late cancellation preserves terminal receipts"
+          ]
+        },
+        {
+          "operationId": "createReproductionActivities",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-storage.test.ts"
+          ],
+          "scenarios": [
+            "exact revision staging and terminal disposition"
+          ]
+        },
+        {
+          "operationId": "reproduceFinding",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-temporal.test.ts"
+          ],
+          "scenarios": [
+            "ambiguous stage and finalize retry",
+            "cancellation during staging waits for cleanup",
+            "Temporal history replay"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/findings.test.ts",
+        "tests/integration/finding-history.test.ts",
+        "tests/integration/admitted-review-execution.test.ts",
+        "tests/finding-reproduction.test.ts",
+        "tests/integration/finding-reproduction.test.ts",
+        "tests/integration/finding-frozen-eval.test.ts",
+        "tests/integration/finding-reproduction-storage.test.ts",
+        "tests/integration/finding-reproduction-temporal.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-06",
+          "kind": "requirement",
+          "acceptance": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-finding-history.md",
+          "sha256": "ff03506694537ec7e6b0d0ef2aac6c72ed0935114674f406b0dce57ad5e3535a",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-finding-reproduction.md",
+          "sha256": "044c3dd704bf7e3ada85d10683a4c849e0f3aaf26976e5e8aa0aa50f36c9d765",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06.json",
+          "sha256": "b2fab1978cf9d613dccb894ba35123b349ad99b2616c50b7f6e7805b23847ddc",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06a.json",
+          "sha256": "768c54df170c87ae7de7c5a6dde82da0a76333f717b2aca885c883923c6726c0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06b.json",
+          "sha256": "3007f2abfec6c999bf87f40498f3ec624950abbf8ffad6df81bf3168b11600f7",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06c.json",
+          "sha256": "b0ccd3b1efa6bac45b904bffd01de7997adcdf1594718a619c51ea69c872aaca",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SECTION-12.4",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.4",
+        "line": 744
+      },
+      "text": "12.4 Finding schema",
+      "sourceTextSha256": "d642ab391dec1bccb92ff8c0ca9f8bd626eb6670381f9e48c24ea9e96b7b7121",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-finding-history.md",
+          "docs/phases/m3-finding-reproduction.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-06",
+          "status": "done",
+          "startedAt": "2026-10-05T17:48:08.387Z",
+          "completedAt": "2026-10-05T22:09:33.587Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06a",
+          "status": "done",
+          "startedAt": "2026-10-05T17:48:08.625Z",
+          "completedAt": "2026-10-05T18:59:22.265Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Versioned schema and fixture, exact-subject evidence normalization, deterministic duplicate identity, all legal lifecycle transitions; forged confirmation and unsupported default blocking rejected.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06a.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06b",
+          "status": "done",
+          "startedAt": "2026-10-05T18:59:22.485Z",
+          "completedAt": "2026-10-05T19:17:39.614Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Tenant-scoped immutable event history, idempotency and optimistic concurrency; real PostgreSQL restart, conflict and isolation acceptance; shipped migration and schema.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06b.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06c",
+          "status": "done",
+          "startedAt": "2026-10-05T19:17:40.744Z",
+          "completedAt": "2026-10-05T22:09:33.117Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Controller-approved M2-isolated reproduction, exact claim/assertion evidence, positive/negative/crash/cancellation/escape acceptance, frozen adversarial corpus and success/failure fixture demo.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06c.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Operator-authorized mutations enforce expected versions, operation IDs and immutable approved plans with configured consumers. Reject request-supplied commands/images/budgets; verify cancellation before/during staging, termination cleanup and retained receipts; never-staged cancellation stays unverified.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "validateModelFinding",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "strict shape and exact subject",
+            "stable identity and legal state evidence"
+          ]
+        },
+        {
+          "operationId": "findingsFromReviewer",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "exact selected evidence and bounded ranges",
+            "model lifecycle fields rejected"
+          ]
+        },
+        {
+          "operationId": "deduplicateFindings",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "order independent exact duplicate identity",
+            "distinct evidence remains separate",
+            "consensus cannot confirm"
+          ]
+        },
+        {
+          "operationId": "createFindingTransitions",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "all lifecycle paths",
+            "stale versions and wrong receipts rejected",
+            "redacted receipt outage"
+          ]
+        },
+        {
+          "operationId": "findingBlockingDecision",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "default unconfirmed is nonblocking",
+            "explicit customer override preserves verification state",
+            "synthetic evidence never blocks"
+          ]
+        },
+        {
+          "operationId": "FindingHistoryStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-history.test.ts",
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "authenticated initial evidence reconstruction",
+            "concurrent version fencing and operation idempotency",
+            "tenant-scoped restart reconstruction",
+            "immutable event update and deletion rejection",
+            "receipt failure rollback",
+            "authenticated ingest of new evidence for existing finding",
+            "incoming evidence idempotency across later history versions"
+          ]
+        },
+        {
+          "operationId": "compileFindingReproduction",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts"
+          ],
+          "scenarios": [
+            "exact finding and source evidence binding",
+            "immutable baseline assertion selection",
+            "bounded structured local execution only"
+          ]
+        },
+        {
+          "operationId": "verifyReproductionUnit",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts"
+          ],
+          "scenarios": [
+            "recompile immutable execution definition and projected inputs"
+          ]
+        },
+        {
+          "operationId": "reproductionReceipt",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts",
+            "tests/integration/finding-reproduction.test.ts",
+            "tests/integration/finding-frozen-eval.test.ts"
+          ],
+          "scenarios": [
+            "exact terminal execution identity",
+            "positive negative crashed and missing observations",
+            "frozen isolated assertions reject substituted execution despite weakened candidate tests"
+          ]
+        },
+        {
+          "operationId": "FindingReproductionStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-storage.test.ts"
+          ],
+          "scenarios": [
+            "controller approval rejects altered plans",
+            "concurrent reservation and stage retries",
+            "resource enforcement before lease acquisition",
+            "live cancellation and container cleanup",
+            "report symlink escape fails closed",
+            "restart receipt verification and immutable history",
+            "pre-staging cancellation survives retries",
+            "concurrent staging cancellation fences dispatch",
+            "requeue preserves the finding attempt cap",
+            "late cancellation preserves terminal receipts"
+          ]
+        },
+        {
+          "operationId": "createReproductionActivities",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-storage.test.ts"
+          ],
+          "scenarios": [
+            "exact revision staging and terminal disposition"
+          ]
+        },
+        {
+          "operationId": "reproduceFinding",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-temporal.test.ts"
+          ],
+          "scenarios": [
+            "ambiguous stage and finalize retry",
+            "cancellation during staging waits for cleanup",
+            "Temporal history replay"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/findings.test.ts",
+        "tests/integration/finding-history.test.ts",
+        "tests/integration/admitted-review-execution.test.ts",
+        "tests/finding-reproduction.test.ts",
+        "tests/integration/finding-reproduction.test.ts",
+        "tests/integration/finding-frozen-eval.test.ts",
+        "tests/integration/finding-reproduction-storage.test.ts",
+        "tests/integration/finding-reproduction-temporal.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-06",
+          "kind": "section-review",
+          "acceptance": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-finding-history.md",
+          "sha256": "ff03506694537ec7e6b0d0ef2aac6c72ed0935114674f406b0dce57ad5e3535a",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-finding-reproduction.md",
+          "sha256": "044c3dd704bf7e3ada85d10683a4c849e0f3aaf26976e5e8aa0aa50f36c9d765",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06.json",
+          "sha256": "b2fab1978cf9d613dccb894ba35123b349ad99b2616c50b7f6e7805b23847ddc",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06a.json",
+          "sha256": "768c54df170c87ae7de7c5a6dde82da0a76333f717b2aca885c883923c6726c0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06b.json",
+          "sha256": "3007f2abfec6c999bf87f40498f3ec624950abbf8ffad6df81bf3168b11600f7",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06c.json",
+          "sha256": "b0ccd3b1efa6bac45b904bffd01de7997adcdf1594718a619c51ea69c872aaca",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SECTION-12.5",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.5",
+        "line": 764
+      },
+      "text": "12.5 Majority vote prohibited as sole blocking mechanism",
+      "sourceTextSha256": "f9b3a8708089f560a6f7a5120d74a65c3397f9f9b799df481ec0b80b980c1f79",
+      "modality": {
+        "explicitTokens": [],
+        "classification": "section-marker",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-finding-history.md",
+          "docs/phases/m3-finding-reproduction.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-06",
+          "status": "done",
+          "startedAt": "2026-10-05T17:48:08.387Z",
+          "completedAt": "2026-10-05T22:09:33.587Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06a",
+          "status": "done",
+          "startedAt": "2026-10-05T17:48:08.625Z",
+          "completedAt": "2026-10-05T18:59:22.265Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Versioned schema and fixture, exact-subject evidence normalization, deterministic duplicate identity, all legal lifecycle transitions; forged confirmation and unsupported default blocking rejected.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06a.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06b",
+          "status": "done",
+          "startedAt": "2026-10-05T18:59:22.485Z",
+          "completedAt": "2026-10-05T19:17:39.614Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Tenant-scoped immutable event history, idempotency and optimistic concurrency; real PostgreSQL restart, conflict and isolation acceptance; shipped migration and schema.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06b.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06c",
+          "status": "done",
+          "startedAt": "2026-10-05T19:17:40.744Z",
+          "completedAt": "2026-10-05T22:09:33.117Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Controller-approved M2-isolated reproduction, exact claim/assertion evidence, positive/negative/crash/cancellation/escape acceptance, frozen adversarial corpus and success/failure fixture demo.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06c.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3",
+          "status": "not-started",
+          "startedAt": null,
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Operator-authorized mutations enforce expected versions, operation IDs and immutable approved plans with configured consumers. Reject request-supplied commands/images/budgets; verify cancellation before/during staging, termination cleanup and retained receipts; never-staged cancellation stays unverified.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07d-1",
+          "status": "in-progress",
+          "startedAt": "2026-10-05T23:46:27.766Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Renderer and actual publication keep synthetic/unconfirmed claims advisory, bind exact subject/version/evidence, escape bounded output, reject stale heads and prevent retries overwriting newer results. Develop against frozen contracts; accept only when integrated status and evidence URLs work.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "validateModelFinding",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "strict shape and exact subject",
+            "stable identity and legal state evidence"
+          ]
+        },
+        {
+          "operationId": "findingsFromReviewer",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "exact selected evidence and bounded ranges",
+            "model lifecycle fields rejected"
+          ]
+        },
+        {
+          "operationId": "deduplicateFindings",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "order independent exact duplicate identity",
+            "distinct evidence remains separate",
+            "consensus cannot confirm"
+          ]
+        },
+        {
+          "operationId": "createFindingTransitions",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "all lifecycle paths",
+            "stale versions and wrong receipts rejected",
+            "redacted receipt outage"
+          ]
+        },
+        {
+          "operationId": "findingBlockingDecision",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "default unconfirmed is nonblocking",
+            "explicit customer override preserves verification state",
+            "synthetic evidence never blocks"
+          ]
+        },
+        {
+          "operationId": "FindingHistoryStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-history.test.ts",
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "authenticated initial evidence reconstruction",
+            "concurrent version fencing and operation idempotency",
+            "tenant-scoped restart reconstruction",
+            "immutable event update and deletion rejection",
+            "receipt failure rollback",
+            "authenticated ingest of new evidence for existing finding",
+            "incoming evidence idempotency across later history versions"
+          ]
+        },
+        {
+          "operationId": "compileFindingReproduction",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts"
+          ],
+          "scenarios": [
+            "exact finding and source evidence binding",
+            "immutable baseline assertion selection",
+            "bounded structured local execution only"
+          ]
+        },
+        {
+          "operationId": "verifyReproductionUnit",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts"
+          ],
+          "scenarios": [
+            "recompile immutable execution definition and projected inputs"
+          ]
+        },
+        {
+          "operationId": "reproductionReceipt",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts",
+            "tests/integration/finding-reproduction.test.ts",
+            "tests/integration/finding-frozen-eval.test.ts"
+          ],
+          "scenarios": [
+            "exact terminal execution identity",
+            "positive negative crashed and missing observations",
+            "frozen isolated assertions reject substituted execution despite weakened candidate tests"
+          ]
+        },
+        {
+          "operationId": "FindingReproductionStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-storage.test.ts"
+          ],
+          "scenarios": [
+            "controller approval rejects altered plans",
+            "concurrent reservation and stage retries",
+            "resource enforcement before lease acquisition",
+            "live cancellation and container cleanup",
+            "report symlink escape fails closed",
+            "restart receipt verification and immutable history",
+            "pre-staging cancellation survives retries",
+            "concurrent staging cancellation fences dispatch",
+            "requeue preserves the finding attempt cap",
+            "late cancellation preserves terminal receipts"
+          ]
+        },
+        {
+          "operationId": "createReproductionActivities",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-storage.test.ts"
+          ],
+          "scenarios": [
+            "exact revision staging and terminal disposition"
+          ]
+        },
+        {
+          "operationId": "reproduceFinding",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-temporal.test.ts"
+          ],
+          "scenarios": [
+            "ambiguous stage and finalize retry",
+            "cancellation during staging waits for cleanup",
+            "Temporal history replay"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/findings.test.ts",
+        "tests/integration/finding-history.test.ts",
+        "tests/integration/admitted-review-execution.test.ts",
+        "tests/finding-reproduction.test.ts",
+        "tests/integration/finding-reproduction.test.ts",
+        "tests/integration/finding-frozen-eval.test.ts",
+        "tests/integration/finding-reproduction-storage.test.ts",
+        "tests/integration/finding-reproduction-temporal.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-06",
+          "kind": "section-review",
+          "acceptance": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-finding-history.md",
+          "sha256": "ff03506694537ec7e6b0d0ef2aac6c72ed0935114674f406b0dce57ad5e3535a",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-finding-reproduction.md",
+          "sha256": "044c3dd704bf7e3ada85d10683a4c849e0f3aaf26976e5e8aa0aa50f36c9d765",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06.json",
+          "sha256": "b2fab1978cf9d613dccb894ba35123b349ad99b2616c50b7f6e7805b23847ddc",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06a.json",
+          "sha256": "768c54df170c87ae7de7c5a6dde82da0a76333f717b2aca885c883923c6726c0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06b.json",
+          "sha256": "3007f2abfec6c999bf87f40498f3ec624950abbf8ffad6df81bf3168b11600f7",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06c.json",
+          "sha256": "b0ccd3b1efa6bac45b904bffd01de7997adcdf1594718a619c51ea69c872aaca",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    },
+    {
+      "requirementId": "SPEC-12.5-001",
+      "source": {
+        "path": "specs/agentci-full-spec.md",
+        "section": "12.5",
+        "line": 766
+      },
+      "text": "Consensus MAY increase priority, but three models making the same unsupported claim MUST NOT automatically block a PR unless configured by the customer.",
+      "sourceTextSha256": "3851513e404555284b675136cb77069f287c008bdcb072e2b13c9e78f3560cf5",
+      "modality": {
+        "explicitTokens": [
+          "MAY",
+          "MUST"
+        ],
+        "classification": "needs-clause-review",
+        "note": "Examples, recommendations, proposed resources and headings are not converted to MUST by trace IDs"
+      },
+      "originalImplementation": {
+        "status": "in-progress",
+        "milestone": "M3",
+        "evidence": [
+          "docs/phases/m3-finding-history.md",
+          "docs/phases/m3-finding-reproduction.md"
+        ]
+      },
+      "mapping": {
+        "firstImplementation": null,
+        "laterValidation": [],
+        "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
+      },
+      "mappingAuthority": "provisional-needs-review",
+      "implementationTasks": [
+        {
+          "id": "M3-06",
+          "status": "done",
+          "startedAt": "2026-10-05T17:48:08.387Z",
+          "completedAt": "2026-10-05T22:09:33.587Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06a",
+          "status": "done",
+          "startedAt": "2026-10-05T17:48:08.625Z",
+          "completedAt": "2026-10-05T18:59:22.265Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Versioned schema and fixture, exact-subject evidence normalization, deterministic duplicate identity, all legal lifecycle transitions; forged confirmation and unsupported default blocking rejected.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06a.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06b",
+          "status": "done",
+          "startedAt": "2026-10-05T18:59:22.485Z",
+          "completedAt": "2026-10-05T19:17:39.614Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Tenant-scoped immutable event history, idempotency and optimistic concurrency; real PostgreSQL restart, conflict and isolation acceptance; shipped migration and schema.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06b.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-06c",
+          "status": "done",
+          "startedAt": "2026-10-05T19:17:40.744Z",
+          "completedAt": "2026-10-05T22:09:33.117Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Controller-approved M2-isolated reproduction, exact claim/assertion evidence, positive/negative/crash/cancellation/escape acceptance, frozen adversarial corpus and success/failure fixture demo.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-06c.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07d-1",
+          "status": "in-progress",
+          "startedAt": "2026-10-05T23:46:27.766Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Renderer and actual publication keep synthetic/unconfirmed claims advisory, bind exact subject/version/evidence, escape bounded output, reject stale heads and prevent retries overwriting newer results. Develop against frozen contracts; accept only when integrated status and evidence URLs work.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        }
+      ],
+      "api": [
+        {
+          "operationId": "validateModelFinding",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "strict shape and exact subject",
+            "stable identity and legal state evidence"
+          ]
+        },
+        {
+          "operationId": "findingsFromReviewer",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "exact selected evidence and bounded ranges",
+            "model lifecycle fields rejected"
+          ]
+        },
+        {
+          "operationId": "deduplicateFindings",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "order independent exact duplicate identity",
+            "distinct evidence remains separate",
+            "consensus cannot confirm"
+          ]
+        },
+        {
+          "operationId": "createFindingTransitions",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "all lifecycle paths",
+            "stale versions and wrong receipts rejected",
+            "redacted receipt outage"
+          ]
+        },
+        {
+          "operationId": "findingBlockingDecision",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/findings.test.ts"
+          ],
+          "scenarios": [
+            "default unconfirmed is nonblocking",
+            "explicit customer override preserves verification state",
+            "synthetic evidence never blocks"
+          ]
+        },
+        {
+          "operationId": "FindingHistoryStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-history.test.ts",
+            "tests/integration/admitted-review-execution.test.ts"
+          ],
+          "scenarios": [
+            "authenticated initial evidence reconstruction",
+            "concurrent version fencing and operation idempotency",
+            "tenant-scoped restart reconstruction",
+            "immutable event update and deletion rejection",
+            "receipt failure rollback",
+            "authenticated ingest of new evidence for existing finding",
+            "incoming evidence idempotency across later history versions"
+          ]
+        },
+        {
+          "operationId": "compileFindingReproduction",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts"
+          ],
+          "scenarios": [
+            "exact finding and source evidence binding",
+            "immutable baseline assertion selection",
+            "bounded structured local execution only"
+          ]
+        },
+        {
+          "operationId": "verifyReproductionUnit",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts"
+          ],
+          "scenarios": [
+            "recompile immutable execution definition and projected inputs"
+          ]
+        },
+        {
+          "operationId": "reproductionReceipt",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/finding-reproduction.test.ts",
+            "tests/integration/finding-reproduction.test.ts",
+            "tests/integration/finding-frozen-eval.test.ts"
+          ],
+          "scenarios": [
+            "exact terminal execution identity",
+            "positive negative crashed and missing observations",
+            "frozen isolated assertions reject substituted execution despite weakened candidate tests"
+          ]
+        },
+        {
+          "operationId": "FindingReproductionStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-storage.test.ts"
+          ],
+          "scenarios": [
+            "controller approval rejects altered plans",
+            "concurrent reservation and stage retries",
+            "resource enforcement before lease acquisition",
+            "live cancellation and container cleanup",
+            "report symlink escape fails closed",
+            "restart receipt verification and immutable history",
+            "pre-staging cancellation survives retries",
+            "concurrent staging cancellation fences dispatch",
+            "requeue preserves the finding attempt cap",
+            "late cancellation preserves terminal receipts"
+          ]
+        },
+        {
+          "operationId": "createReproductionActivities",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-storage.test.ts"
+          ],
+          "scenarios": [
+            "exact revision staging and terminal disposition"
+          ]
+        },
+        {
+          "operationId": "reproduceFinding",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "5d57edf7a9b1194d76dd216ebc7668a28bc81539302bcd6f5481b5e69366b51e",
+          "tests": [
+            "tests/integration/finding-reproduction-temporal.test.ts"
+          ],
+          "scenarios": [
+            "ambiguous stage and finalize retry",
+            "cancellation during staging waits for cleanup",
+            "Temporal history replay"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/findings.test.ts",
+        "tests/integration/finding-history.test.ts",
+        "tests/integration/admitted-review-execution.test.ts",
+        "tests/finding-reproduction.test.ts",
+        "tests/integration/finding-reproduction.test.ts",
+        "tests/integration/finding-frozen-eval.test.ts",
+        "tests/integration/finding-reproduction-storage.test.ts",
+        "tests/integration/finding-reproduction-temporal.test.ts"
+      ],
+      "plannedPRs": [
+        {
+          "milestone": "M3",
+          "id": "M3-06",
+          "kind": "requirement",
+          "acceptance": "Deterministic dedupe, evidence links and all lifecycle transitions; isolated reproduction hooks; consensus alone cannot establish confirmation."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-finding-history.md",
+          "sha256": "ff03506694537ec7e6b0d0ef2aac6c72ed0935114674f406b0dce57ad5e3535a",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-finding-reproduction.md",
+          "sha256": "044c3dd704bf7e3ada85d10683a4c849e0f3aaf26976e5e8aa0aa50f36c9d765",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06.json",
+          "sha256": "b2fab1978cf9d613dccb894ba35123b349ad99b2616c50b7f6e7805b23847ddc",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06a.json",
+          "sha256": "768c54df170c87ae7de7c5a6dde82da0a76333f717b2aca885c883923c6726c0",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06b.json",
+          "sha256": "3007f2abfec6c999bf87f40498f3ec624950abbf8ffad6df81bf3168b11600f7",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-06c.json",
+          "sha256": "b0ccd3b1efa6bac45b904bffd01de7997adcdf1594718a619c51ea69c872aaca",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
+      "verification": {
+        "currentCandidate": "not-run",
+        "historicalClaim": "no-tested-claim",
+        "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
+      },
+      "owner": "AgentCI maintainers",
+      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
+      "reconciliationGaps": [
+        "modality-and-multi-phase-mapping-review"
+      ]
+    }
+  ]
+}

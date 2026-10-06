@@ -15,13 +15,16 @@ acceptance policy is adopted. No unavailable or inconclusive outcome is passed.
 ## Auditable checklist
 
 [Requirement/test/evidence register](../delivery/reconciliation/requirement-test-evidence.json)
-preserves all **1,346 original inventory IDs**, their text/source identity,
+indexes 51 section files and preserves all **1,346 original inventory IDs**, their text/source identity,
 implementation status and evidence. It adds staged ownership corrections,
 task acceptance links, API operation/scenario/test links, evidence-file SHA-256s,
 owner, blocker and rerun trigger. All 439 existing planned-owner links resolve to
 their PR acceptance, and all five recorded task deferrals retain their provenance. It preserves the M0–M3 historical gate records
 and the existing M3–M10 PR plan. It also exposes **29 fenced REST/CLI entries**
 under their original parent IDs; proposed endpoints retain their proposed modality.
+
+Section files are individually digested and kept below AgentCI’s per-file
+review limit so the platform can review its own audit. No source row is dropped.
 
 Regenerate with `node scripts/reconcile-acceptance.mjs`; verify with
 `node scripts/reconcile-acceptance.mjs --check`. Use the project-supported Node
