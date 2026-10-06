@@ -1,0 +1,47 @@
+{
+  "task": "M3-07c-3a",
+  "sourceBase": "8004caf94512cbce12bb3c7adcc951555b6aa0ce",
+  "trackingStartCommit": "c577511",
+  "scope": "Internal operator-approved immutable registry and strict request selector; no customer route or dispatch acceptance",
+  "files": {
+    "packages/findings/approval-registry.ts": "dddd0eb6fe8e6d8f08b3ec49f975cd13937b3870bf1e9f13168dcb935e767918",
+    "tests/reproduction-approval-registry.test.ts": "022f20191f9e3c94c1d9627aca8a58da140f11b4cce007ed40836bdc8e11db72",
+    "tests/integration/reproduction-approval-registry.test.ts": "3973fc69e2622dbad9a60496d2281de030237ef2ac3c15d2aeea223b56074463",
+    "docs/phases/m3-reproduction-approval-registry.md": "2effb438bfe6f34e075dd0881376773cdd460ebd8c14cca7c1e6f99a2ee81096"
+  },
+  "checks": {
+    "unit": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0
+    },
+    "postgres": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "scenario": "Concurrent independently selected requests queue one expected-version winner; exact operation replay and stale-selection rejection"
+    },
+    "fast": {
+      "checks": 10,
+      "passed": true,
+      "seconds": 4.04
+    },
+    "build": "passed",
+    "frozenFindingEval": {
+      "baseline": "2/2 passed",
+      "receiptIdentityMutation": "rejected by lifecycle scenario",
+      "substitutedRunMutation": "rejected by reproduction scenario"
+    }
+  },
+  "diagnosis": [
+    "Initial focused test mistakenly left a rejected promise unawaited; corrected test awaits rejection, then all cases pass.",
+    "Initial typecheck reported possibly undefined Map selection after validation; explicit non-null use follows fail-closed check; typecheck/build pass."
+  ],
+  "limits": [
+    "No HTTP routes, production configuration loader, provider calls, Temporal dispatch, publication or customer acceptance claimed.",
+    "Registry selection is not a durable reservation/replay ledger; current history queue fingerprint excludes approval digest.",
+    "Queue plus plan reservation plus dispatch outbox require a future atomic transaction and crash/replay acceptance.",
+    "Registry lifetime/revocation, response contracts, worker consumer readiness and authorized evidence disposition remain dependent c3 work.",
+    "M3-07c-3 keeps M3-07c-2 dependency; task and all M3 release gates remain open."
+  ]
+}
