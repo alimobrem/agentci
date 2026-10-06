@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "v1alpha1",
+  "scope": "Clean stacked port on PR52 findings server; local acceptance only",
+  "baseCommit": "00ffed6dad87e172032148eec7492d147d62fd4c",
+  "testedSourceCommit": "ab4a2d3deb19c77cca752652e08f883c5ce9e250",
+  "testedSourceTree": "303db4a5a091d033ef2d06af53ba4c0b9203b871",
+  "reviewedOriginalCommit": "c7d3c39c94baa18cce78cf3fe552beb09fe43a52",
+  "unchangedProductFiles": [
+    "apps/control/model-review-export.ts",
+    "apps/control/model-reviews.ts",
+    "docs/phases/m3-customer-api-contract.md",
+    "docs/phases/m3-customer-model-review-api.md",
+    "packages/findings/model.ts",
+    "packages/reviewers/export-schema.ts",
+    "packages/reviewers/export.ts",
+    "packages/storage/model-review-export.ts",
+    "scripts/check-api.ts",
+    "specs/api/fixtures/model-review-export.ndjson",
+    "specs/api/openapi.json",
+    "specs/api/operations.json",
+    "tests/helpers/model-review-export-fixture.ts",
+    "tests/helpers/model-review-export-storage.ts",
+    "tests/integration/model-review-control-startup.test.ts",
+    "tests/integration/model-review-export-adversarial.test.ts",
+    "tests/integration/model-review-export.test.ts",
+    "tests/model-review-export-adversarial.test.ts",
+    "tests/model-review-transport-draft.test.ts"
+  ],
+  "checks": {
+    "build": "passed",
+    "fast": {
+      "passed": 10,
+      "seconds": 6.61
+    },
+    "actualService": {
+      "files": [
+        "tests/integration/model-review-export.test.ts",
+        "tests/integration/model-review-export-adversarial.test.ts",
+        "tests/integration/model-review-control-startup.test.ts"
+      ],
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "suiteDurationMs": 3241.522125
+    },
+    "apiCompatibility": [
+      "M1 0.2.1-m1 passed",
+      "M2 0.3.1-m2 passed"
+    ]
+  },
+  "taskTracking": "Unchanged from base; existing M3-07c-2 and M3-07c-4 task events preserved.",
+  "dependencyAudit": "No Check publication or Check scheduler implementation is inherited; product files match reviewed originals exactly.",
+  "limitations": [
+    "No new hosted CI, containers, installed-package or release claim for this clean source; existing original acceptance records remain historical."
+  ],
+  "mutationVerifierFollowUp": {
+    "baseFix": "ec08cbc47b2855b01b1c2fe4f0d01cd825c2dc77",
+    "testedMergedHead": "a0bea3e08c544ab9f61ac649c4335b98a28c55d6",
+    "mergeChanges": [
+      "scripts/verify-finding-eval.mjs",
+      "delivery/acceptance/m3-finding-mutation-target-repair.json",
+      "delivery/runs/37400121195-attempt-1.json"
+    ],
+    "result": {
+      "baseline": {
+        "exitCode": 0,
+        "report": {
+          "schemaVersion": "v1alpha1",
+          "results": [
+            {
+              "scenario": "finding-lifecycle",
+              "status": "passed"
+            },
+            {
+              "scenario": "finding-reproduction",
+              "status": "passed"
+            }
+          ]
+        }
+      },
+      "mutation": {
+        "exitCode": 1,
+        "report": {
+          "schemaVersion": "v1alpha1",
+          "results": [
+            {
+              "scenario": "finding-lifecycle",
+              "status": "failed"
+            },
+            {
+              "scenario": "finding-reproduction",
+              "status": "passed"
+            }
+          ]
+        }
+      },
+      "substitutedRun": {
+        "exitCode": 1,
+        "report": {
+          "schemaVersion": "v1alpha1",
+          "results": [
+            {
+              "scenario": "finding-lifecycle",
+              "status": "passed"
+            },
+            {
+              "scenario": "finding-reproduction",
+              "status": "failed"
+            }
+          ]
+        }
+      },
+      "scope": "Local frozen-harness acceptance; network isolation and hosted execution are separate gates."
+    },
+    "preservedPriorRuns": [
+      37400357143,
+      37400357121
+    ],
+    "cacheEvidence": "Failed Verify log contains primary npm cache hit; cancelled advisory cache is unknown.",
+    "productSource": "No production changes from previously tested clean port."
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "producer": {
+    "version": "0.4.0-m3-dev.1",
+    "sourceCommit": "23cdbbac4206661d9b1d0a18a95fc76d56e124bf",
+    "repository": "alimobrem/agentci",
+    "installationId": 167655696,
+    "runId": "37393039317",
+    "runAttempt": "1",
+    "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+    "evaluatorImage": "sha256:13e777952b72f6e82838fd014f9ec2e6c758f4cec8a5eb8846503d3757763363"
+  },
+  "artifactId": 11382242466,
+  "allComparisonsValidated": 5,
+  "pr49": {
+    "job": {
+      "repository": "alimobrem/agentci",
+      "installationId": 167655696,
+      "pullRequest": 49,
+      "baseSha": "23cdbbac4206661d9b1d0a18a95fc76d56e124bf",
+      "headSha": "35f215a29b56e01b1fd0d5cf5809d7d814b423e6"
+    },
+    "status": "completed",
+    "descriptor": {
+      "id": "c4af7c39-ed48-47da-8eea-0ed43e5a34a2",
+      "reviewId": "d386b5b6-987f-4240-b1a8-535f6ba0ec68",
+      "file": "comparison-c4af7c39-ed48-47da-8eea-0ed43e5a34a2.ndjson",
+      "sha256": "sha256:959a3251c547aca630fd1fa5c2bc97e9ec84beeeeae5826221a5b66828d69ae4",
+      "bytes": 25722
+    },
+    "header": {
+      "id": "c4af7c39-ed48-47da-8eea-0ed43e5a34a2",
+      "reviewId": "d386b5b6-987f-4240-b1a8-535f6ba0ec68",
+      "attemptId": "4068fd8c-ea1c-45f3-9eea-4e4d1b10bc12",
+      "organizationId": "00000000-0000-4000-8000-000000000001",
+      "subject": {
+        "repository": "alimobrem/agentci",
+        "pullRequest": 49,
+        "baseSha": "23cdbbac4206661d9b1d0a18a95fc76d56e124bf",
+        "headSha": "35f215a29b56e01b1fd0d5cf5809d7d814b423e6"
+      },
+      "cancelRequested": false,
+      "unitCount": 8,
+      "snapshotDigest": "sha256:70953140d187c6aec9a8e4a1f645281bf8161c1246a15e553bcc28c9006e8c3d",
+      "suiteChanges": [],
+      "coverageGaps": [],
+      "selectionGaps": []
+    },
+    "evidence": {
+      "comparisonId": "c4af7c39-ed48-47da-8eea-0ed43e5a34a2",
+      "reviewId": "d386b5b6-987f-4240-b1a8-535f6ba0ec68",
+      "attemptId": "4068fd8c-ea1c-45f3-9eea-4e4d1b10bc12",
+      "identity": {
+        "organizationId": "00000000-0000-4000-8000-000000000001",
+        "reviewId": "d386b5b6-987f-4240-b1a8-535f6ba0ec68",
+        "attemptId": "4068fd8c-ea1c-45f3-9eea-4e4d1b10bc12",
+        "repository": "alimobrem/agentci",
+        "pullRequest": 49,
+        "baseSha": "23cdbbac4206661d9b1d0a18a95fc76d56e124bf",
+        "headSha": "35f215a29b56e01b1fd0d5cf5809d7d814b423e6"
+      },
+      "snapshotDigest": "sha256:70953140d187c6aec9a8e4a1f645281bf8161c1246a15e553bcc28c9006e8c3d",
+      "endDigest": "sha256:c5924efc036cdac7f58f504b86da4575e6f01cdb5d3cbf68a74d1fbcb0cabdcc",
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 8,
+        "comparisonCount": 4
+      },
+      "abbreviated": false,
+      "coverageGaps": 0,
+      "selectionGaps": 0,
+      "suiteChanges": 0,
+      "regressions": 0
+    }
+  },
+  "merge": {
+    "pullRequest": 49,
+    "commit": "55d54b71473db3c9a29dc0ef9cfae46c094272b1",
+    "tree": "a2b9bd9980f7030823fab61249b029432dd2986f",
+    "matchesAuditedVerifyRun": 37391960770,
+    "milestoneComplete": false
+  }
+}

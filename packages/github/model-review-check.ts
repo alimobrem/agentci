@@ -4,6 +4,23 @@ import {validateReviewAdmission,type ReviewAdmissionRequest} from '../reviewers/
 import {validateModelReviewStatus,type ModelReviewStatus} from '../reviewers/transport.ts';
 import type {ReviewSubject} from '../reviewers/context.ts';
 import {currentPullRequest} from './client.ts';
+import {githubFailureDiagnostic} from './failure-diagnostics.ts';
+
+/** Only allowlisted timing metadata crosses the SDK boundary; no cause/body/URL. */
+export class ModelReviewCheckUnavailable extends Error {
+ constructor(readonly retryAfterMs?:number){super('model-review-publication-unavailable');}
+}
+function publicationFailure(error:unknown){
+ const d=githubFailureDiagnostic(error),now=Date.now();
+ if((d.status===403||d.status===429)&&(d.remaining===0||d.retryAfterSeconds!==null||d.status===429)){
+  // GitHub reset/retry metadata outside a generous seven-day window is not
+  // actionable scheduling input. Ignore it instead of creating a decades-long stall.
+  const bound=7*24*60*60*1000,retry=d.retryAfterSeconds===null?0:d.retryAfterSeconds*1000,reset=d.remaining===0&&d.resetEpochSeconds!==null?d.resetEpochSeconds*1000-now:0;
+  const delay=Math.max(60000,retry>0&&retry<=bound?retry:0,reset>0&&reset<=bound?reset:0);
+  return new ModelReviewCheckUnavailable(delay);
+ }
+ return new ModelReviewCheckUnavailable();
+}
 
 export interface ModelReviewCheckSource {
  withPublicationLock<T>(key:string,operation:()=>Promise<T>):Promise<T>;
@@ -62,7 +79,7 @@ export function createModelReviewPublisher(client:Octokit,source:ModelReviewChec
    // create whose response was lost. Oversized histories fail for operator action.
    const runs=[];
    for(let page=1;page<=10;page++){
-    const {data}=await client.checks.listForRef({owner:owner!,repo:repo!,ref:subject.headSha,check_name:name,filter:'all',per_page:100,page});
+    const {data}=await client.checks.listForRef({owner:owner!,repo:repo!,ref:subject.headSha,check_name:name,filter:'all',per_page:100,page,request:{timeout:5000}});
     runs.push(...data.check_runs);if(runs.length>=data.total_count)break;if(page===10)throw Error('model-review-check-inventory-limit');
    }
    const owned=runs.filter(run=>run.name===name&&run.app?.id===config.appId&&run.head_sha===subject.headSha&&run.external_id?.startsWith(prefix));
@@ -78,14 +95,14 @@ export function createModelReviewPublisher(client:Octokit,source:ModelReviewChec
    if(!await currentPullRequest(client,{...subject,installationId:config.installationId}))return 'superseded';
    // Partial cleanup is safe to retry; it never alters a completed result or the
    // selected/newer admission. Bound each pass to avoid monopolizing the lock.
-   for(const run of obsolete.slice(0,20))await client.checks.update({owner:owner!,repo:repo!,check_run_id:run.id,status:'completed',conclusion:'neutral',output:{title:'AgentCI model review: superseded',summary:`This admission was superseded by review ${selected.id}. No completed result or clean review is claimed. Base: ${subject.baseSha}; head: ${subject.headSha}.`} });
+   for(const run of obsolete.slice(0,20))await client.checks.update({owner:owner!,repo:repo!,check_run_id:run.id,status:'completed',conclusion:'neutral',request:{timeout:5000},output:{title:'AgentCI model review: superseded',summary:`This admission was superseded by review ${selected.id}. No completed result or clean review is claimed. Base: ${subject.baseSha}; head: ${subject.headSha}.`} });
    if(obsolete.length>20)throw Error('model-review-check-cleanup-pending');
    if(superseded)return 'superseded';
    const rendered=modelReviewCheckOutput(snapshot,subject,config.publicUrl);
    if(!await currentPullRequest(client,{...subject,installationId:config.installationId}))return 'superseded';
-   const params={owner:owner!,repo:repo!,name,head_sha:subject.headSha,external_id:externalId,status:rendered.status,...(rendered.conclusion?{conclusion:rendered.conclusion}:{}),output:rendered.output,details_url:rendered.detailsUrl};
+   const params={owner:owner!,repo:repo!,name,head_sha:subject.headSha,external_id:externalId,status:rendered.status,...(rendered.conclusion?{conclusion:rendered.conclusion}:{}),output:rendered.output,details_url:rendered.detailsUrl,request:{timeout:5000}};
    if(existing)await client.checks.update({...params,check_run_id:existing.id});else await client.checks.create(params);
    return 'published';
-  });}catch{throw Error('model-review-publication-unavailable');}
+  });}catch(error){throw publicationFailure(error);}
  };
 }

@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-06T01:17:37.239540+00:00",
+  "milestoneComplete": false,
+  "clientMerge": {
+    "pullRequest": 47,
+    "head": "ced8eee88d4d7d2bdd280030837ced1cdd311bf7",
+    "commit": "f08fd043e4bd3c29d6dfa277d7d86e3c9afd8618",
+    "advisory": {
+      "producer": {
+        "version": "0.4.0-m3-dev.1",
+        "sourceCommit": "55d54b71473db3c9a29dc0ef9cfae46c094272b1",
+        "repository": "alimobrem/agentci",
+        "installationId": 167655696,
+        "runId": "37394128571",
+        "runAttempt": "1",
+        "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+        "evaluatorImage": "sha256:b2413df1425d39870ecce44e4f5b72648f725eb0db5ae97bbed7e507f51487e0"
+      },
+      "artifactId": 11383270520,
+      "artifactDigest": "sha256:05794744d4fd1e67e332104b321461fc149da56b68896f57b38679f5039f4e63",
+      "buildKitImagesMatched": true,
+      "proofs": [
+        {
+          "job": {
+            "repository": "alimobrem/agentci",
+            "installationId": 167655696,
+            "pullRequest": 47,
+            "baseSha": "55d54b71473db3c9a29dc0ef9cfae46c094272b1",
+            "headSha": "ced8eee88d4d7d2bdd280030837ced1cdd311bf7"
+          },
+          "descriptor": {
+            "id": "52714994-9160-4b34-8cbc-e4aa16c33a5b",
+            "reviewId": "36a2c13c-be12-4372-b859-4a5b0cf8ccc9",
+            "file": "comparison-52714994-9160-4b34-8cbc-e4aa16c33a5b.ndjson",
+            "sha256": "sha256:aec60de03b73656782ab802c7dba974a86e54c6bbfb10252ab01e7c77cfe56ed",
+            "bytes": 25722
+          },
+          "evidence": {
+            "comparisonId": "52714994-9160-4b34-8cbc-e4aa16c33a5b",
+            "reviewId": "36a2c13c-be12-4372-b859-4a5b0cf8ccc9",
+            "attemptId": "7e6670ff-8446-4fe3-a1ae-407dc42e6500",
+            "identity": {
+              "organizationId": "00000000-0000-4000-8000-000000000001",
+              "reviewId": "36a2c13c-be12-4372-b859-4a5b0cf8ccc9",
+              "attemptId": "7e6670ff-8446-4fe3-a1ae-407dc42e6500",
+              "repository": "alimobrem/agentci",
+              "pullRequest": 47,
+              "baseSha": "55d54b71473db3c9a29dc0ef9cfae46c094272b1",
+              "headSha": "ced8eee88d4d7d2bdd280030837ced1cdd311bf7"
+            },
+            "snapshotDigest": "sha256:98cc9930a1e9fc70fd570552a61427fe3b4b0c898652ab082d09b8c850a635d4",
+            "endDigest": "sha256:68bc6b404bb97860e59580eda1112f200db7101482ff5903f70a4b272cb4081f",
+            "summary": {
+              "state": "completed",
+              "outcome": "passed",
+              "executionGaps": [],
+              "unitCount": 8,
+              "comparisonCount": 4
+            },
+            "abbreviated": false,
+            "coverageGaps": 0,
+            "selectionGaps": 0,
+            "suiteChanges": 0,
+            "regressions": 0
+          },
+          "githubState": "CLEAN"
+        },
+        {
+          "job": {
+            "repository": "alimobrem/agentci",
+            "installationId": 167655696,
+            "pullRequest": 48,
+            "baseSha": "55d54b71473db3c9a29dc0ef9cfae46c094272b1",
+            "headSha": "1d95a9e74413c6b9aaf772cf991c80955481a946"
+          },
+          "descriptor": {
+            "id": "bcc67ed5-6d04-492f-9aac-426bd823c198",
+            "reviewId": "217ca001-a9a9-4393-bf17-1682c471b89c",
+            "file": "comparison-bcc67ed5-6d04-492f-9aac-426bd823c198.ndjson",
+            "sha256": "sha256:789cbae8c09d68e9dc1be93e4b618f024e6c05397d0880284b74b33e45fdead6",
+            "bytes": 25722
+          },
+          "evidence": {
+            "comparisonId": "bcc67ed5-6d04-492f-9aac-426bd823c198",
+            "reviewId": "217ca001-a9a9-4393-bf17-1682c471b89c",
+            "attemptId": "a4b4c9d8-463c-44a1-8330-18f9f63169d0",
+            "identity": {
+              "organizationId": "00000000-0000-4000-8000-000000000001",
+              "reviewId": "217ca001-a9a9-4393-bf17-1682c471b89c",
+              "attemptId": "a4b4c9d8-463c-44a1-8330-18f9f63169d0",
+              "repository": "alimobrem/agentci",
+              "pullRequest": 48,
+              "baseSha": "55d54b71473db3c9a29dc0ef9cfae46c094272b1",
+              "headSha": "1d95a9e74413c6b9aaf772cf991c80955481a946"
+            },
+            "snapshotDigest": "sha256:7af20c5b4cdc850c7d290e452bc38e376d2d8c6933b0241a153a99290f0cdbca",
+            "endDigest": "sha256:42556289286120c04b8bc90848605749beea7328a6ea67d14d3ff4789e7216a5",
+            "summary": {
+              "state": "completed",
+              "outcome": "passed",
+              "executionGaps": [],
+              "unitCount": 8,
+              "comparisonCount": 4
+            },
+            "abbreviated": false,
+            "coverageGaps": 0,
+            "selectionGaps": 0,
+            "suiteChanges": 0,
+            "regressions": 0
+          },
+          "githubState": "UNSTABLE"
+        }
+      ]
+    }
+  },
+  "prospectiveChecksMerge": {
+    "pullRequest": 48,
+    "head": "1d95a9e74413c6b9aaf772cf991c80955481a946",
+    "parent": "f08fd043e4bd3c29d6dfa277d7d86e3c9afd8618",
+    "localCommit": "a0e8b38437eb9e84ac2212897d77a56f18958393",
+    "tree": "dc73fd5cc2c0f464fc18df638a72c4f9249afa13",
+    "build": "passed",
+    "integration": {
+      "command": "node --import tsx --test tests/integration/model-review-*.test.ts",
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 5.872086584
+    },
+    "fast": {
+      "passed": true,
+      "checks": 10,
+      "seconds": 3.759252042,
+      "sourceCommit": "a0e8b38437eb9e84ac2212897d77a56f18958393",
+      "note": "Only untracked node_modules dependency link; source tree unchanged."
+    },
+    "mergeAcceptance": "held: latest verified comparison has one regression; deterministic deadline assertion reproduction under investigation"
+  },
+  "failedAttempts": [
+    {
+      "runId": 37394169128,
+      "category": "GitHub App primary rate limit",
+      "remaining": 0,
+      "limit": 5000,
+      "resetEpochSeconds": 1791248679
+    },
+    {
+      "runId": 37394889795,
+      "category": "GitHub App primary rate limit",
+      "remaining": 0,
+      "limit": 5000,
+      "resetEpochSeconds": 1791248679
+    }
+  ],
+  "localEnvironmentFailure": {
+    "firstAttempt": "archive had no Git metadata and sandbox denied local HTTP listeners",
+    "retry": "normal approval initially unavailable due account usage limit; not executed",
+    "resolution": "usage tool reported ordinary usage allowed; normal approval succeeded and retry passed"
+  },
+  "recoverySweep": {
+    "runId": 37398142115,
+    "producer": "f08fd043e4bd3c29d6dfa277d7d86e3c9afd8618",
+    "status": "completed",
+    "startedAfterCooldown": true,
+    "workflowConclusion": "success",
+    "comparisonAcceptance": "PR48 failed one stream-execution scenario; PR50 passed",
+    "proof": {
+      "producer": {
+        "version": "0.4.0-m3-dev.1",
+        "sourceCommit": "f08fd043e4bd3c29d6dfa277d7d86e3c9afd8618",
+        "repository": "alimobrem/agentci",
+        "installationId": 167655696,
+        "runId": "37398142115",
+        "runAttempt": "1",
+        "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+        "evaluatorImage": "sha256:08a74e03d2a0a6ae71116430f010f906fd6f4535e2bb285a23b4ffdddd9b75c5"
+      },
+      "artifactId": 11383867144,
+      "artifactDigest": "sha256:1a8e4f511dada56ebf39a393af93297fc58cd4d0f9ac4adcd79e96a3abd9f012",
+      "buildKitImagesMatched": true,
+      "proofs": [
+        {
+          "job": {
+            "repository": "alimobrem/agentci",
+            "installationId": 167655696,
+            "pullRequest": 48,
+            "baseSha": "55d54b71473db3c9a29dc0ef9cfae46c094272b1",
+            "headSha": "1d95a9e74413c6b9aaf772cf991c80955481a946"
+          },
+          "descriptor": {
+            "id": "6a07ddd8-1613-493b-b962-fa6fc6821f43",
+            "reviewId": "85c0ebda-bff4-4db2-acbb-f1af0832947f",
+            "file": "comparison-6a07ddd8-1613-493b-b962-fa6fc6821f43.ndjson",
+            "sha256": "sha256:41265d56d080bc266ed7687545666ae6fa2a902abaab6ced6c0d89fab3147ae7",
+            "bytes": 25739
+          },
+          "evidence": {
+            "comparisonId": "6a07ddd8-1613-493b-b962-fa6fc6821f43",
+            "reviewId": "85c0ebda-bff4-4db2-acbb-f1af0832947f",
+            "attemptId": "47398cf3-d2b8-4ce9-b32b-54e461f85c0c",
+            "identity": {
+              "organizationId": "00000000-0000-4000-8000-000000000001",
+              "reviewId": "85c0ebda-bff4-4db2-acbb-f1af0832947f",
+              "attemptId": "47398cf3-d2b8-4ce9-b32b-54e461f85c0c",
+              "repository": "alimobrem/agentci",
+              "pullRequest": 48,
+              "baseSha": "55d54b71473db3c9a29dc0ef9cfae46c094272b1",
+              "headSha": "1d95a9e74413c6b9aaf772cf991c80955481a946"
+            },
+            "snapshotDigest": "sha256:0621991688b97ea000474bfa5e481cd1a038661e71f87b21c74a5d96fc4beda0",
+            "endDigest": "sha256:328ad34c26cd61c7a39247c373d3dd5b97fd15ae6b228ad864c9c8b804dd7fa8",
+            "summary": {
+              "state": "completed",
+              "outcome": "failed",
+              "executionGaps": [],
+              "unitCount": 8,
+              "comparisonCount": 4
+            },
+            "abbreviated": false,
+            "coverageGaps": 0,
+            "selectionGaps": 0,
+            "suiteChanges": 0,
+            "regressions": 1
+          },
+          "githubState": "UNSTABLE"
+        },
+        {
+          "job": {
+            "repository": "alimobrem/agentci",
+            "installationId": 167655696,
+            "pullRequest": 50,
+            "baseSha": "1d95a9e74413c6b9aaf772cf991c80955481a946",
+            "headSha": "42eb3167cfaf43d9e47e9cf3ed56d70c7dda8137"
+          },
+          "descriptor": {
+            "id": "28f21930-3c45-4f20-ad79-891018b04062",
+            "reviewId": "d84ba82e-b4df-4540-8221-ae43d4bd664d",
+            "file": "comparison-28f21930-3c45-4f20-ad79-891018b04062.ndjson",
+            "sha256": "sha256:85387e15ee6ec87f6a972217a8f686b23d2fafef2775f3422263e75fae1c6d6b",
+            "bytes": 25722
+          },
+          "evidence": {
+            "comparisonId": "28f21930-3c45-4f20-ad79-891018b04062",
+            "reviewId": "d84ba82e-b4df-4540-8221-ae43d4bd664d",
+            "attemptId": "b40f0d9f-a541-48ca-94f4-ae590cdb6667",
+            "identity": {
+              "organizationId": "00000000-0000-4000-8000-000000000001",
+              "reviewId": "d84ba82e-b4df-4540-8221-ae43d4bd664d",
+              "attemptId": "b40f0d9f-a541-48ca-94f4-ae590cdb6667",
+              "repository": "alimobrem/agentci",
+              "pullRequest": 50,
+              "baseSha": "1d95a9e74413c6b9aaf772cf991c80955481a946",
+              "headSha": "42eb3167cfaf43d9e47e9cf3ed56d70c7dda8137"
+            },
+            "snapshotDigest": "sha256:2b1b12c580e765d2c99f86b43d13d333ea2428cba47067bed9f5c14a94a1c33e",
+            "endDigest": "sha256:25c1a442690938615c4639af546541fb4a69d8e399db9b0bdcfb0e6887c08490",
+            "summary": {
+              "state": "completed",
+              "outcome": "passed",
+              "executionGaps": [],
+              "unitCount": 8,
+              "comparisonCount": 4
+            },
+            "abbreviated": false,
+            "coverageGaps": 0,
+            "selectionGaps": 0,
+            "suiteChanges": 0,
+            "regressions": 0
+          },
+          "githubState": "CLEAN"
+        }
+      ]
+    },
+    "diagnosis": {
+      "observed": "Provider source and stream-execution test identical at PR48 base and head. A controlled 60ms delay before a 50ms deadline reproduces an assertion expecting reservation after the request has already expired.",
+      "limitation": "Hosted harness retained scenario status but no subtest TAP; exact hosted failing assertion is unproven.",
+      "action": "Preserve failure; implement separately tracked deterministic deadline coverage before new hosted acceptance."
+    }
+  }
+}
