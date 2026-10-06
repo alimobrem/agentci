@@ -23,8 +23,8 @@ try {
   // Exercise installed provider modules and their runtime schema assets, not source imports.
   const installedRoot=join(root,'node_modules/agentci');
   if(postgresReaders){
-    const installedTree=JSON.parse(execFileSync('npm',['ls','--prefix',root,'--omit=dev','--depth=0','--json'],{encoding:'utf8'}));
-    if(installedTree.dependencies?.agentci?.version!==expectedVersion)throw new Error('Installed package dependency identity mismatch');
+    const installedManifest=JSON.parse(await readFile(join(installedRoot,'package.json'),'utf8'));
+    if(installedManifest.name!=='agentci'||installedManifest.version!==expectedVersion)throw new Error('Installed package dependency identity mismatch');
     try{await readFile(join(root,'node_modules/tsx/package.json'));throw new Error('Development test loader entered production installation');}catch(error){if(error.code!=='ENOENT')throw error;}
     console.log(JSON.stringify({acceptance:'installed-v2-reader',version:expectedVersion,install:'npm install --omit=dev',offline,developmentLoaderInstalled:false,publicExport:'agentci/client'}));
     execFileSync(process.execPath,['--import','tsx','--test',resolve('tests/integration/reproduction-installed-reader.test.ts')],{env:{...process.env,AGENTCI_TEST_CLIENT_PACKAGE_ROOT:installedRoot},stdio:'inherit',timeout:60000});
