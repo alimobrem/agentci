@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3c",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/63",
+  "mergeCommit": "1ac5845bc539a58cb630079b2e94247ec45134bc",
+  "acceptedTree": "4d96225eeecb182d1768d49448d7aa6ee38e1b74",
+  "verification": {
+    "run": "37414181555",
+    "pr": "63",
+    "candidate": "0f79f87da146ca3f0ffd19a0959f49dd73bdf279",
+    "base": "c5acdd7235f3b6fb4be9bbba825784123f42a197",
+    "testedPreview": "49a818fe0e82179cb7bc170662a4407aadf3ac24",
+    "acceptedTree": "4d96225eeecb182d1768d49448d7aa6ee38e1b74",
+    "artifact": {
+      "id": 11390413291,
+      "digest": "sha256:2492745f0c411dbe944a52b430cbe211dc67949093da1d6438555c94b03de3aa",
+      "downloadedOnce": true
+    },
+    "hashesVerified": 10,
+    "counts": {
+      "fast": {
+        "tests": 405,
+        "pass": 405,
+        "fail": 0,
+        "skipped": 0
+      },
+      "integration": {
+        "tests": 97,
+        "pass": 97,
+        "fail": 0,
+        "skipped": 0
+      }
+    },
+    "fastChecks": 10,
+    "api": "Both immutable baselines and removal-negative checks pass",
+    "package": "Installed production package smoke pass",
+    "migration014ExactPackagedSourceSha256": "9a8956b2a7d4d75751f34b2e78f52c97dae98ed5dd99ae6581edea55dcf48d0c",
+    "migration015Absent": false,
+    "runtime": "Compiled containers and isolated eval worker actual Temporal execution/restart/cleanup passed linux/amd64",
+    "native": "Both Temporal artifacts match official npm hashes",
+    "scans": {
+      "eval-engines": [
+        {
+          "id": "CVE-2026-85393",
+          "package": "node-forge",
+          "fixed": null
+        }
+      ],
+      "eval-worker": [],
+      "api": [],
+      "worker": [],
+      "eval-runner": [],
+      "eval-agentci": []
+    },
+    "cache": "warm: logged cache restoration and BuildKit CACHED layers; changed inputs rebuilt",
+    "logSha256": "da9c88c52d1a8b6e9c0593bdf667a420d9dbc05264f42d3e9b83c95eaeca15b7",
+    "constraints": [
+      "Exact PR63 base/head acceptance; not later integrated main acceptance",
+      "Consumer and migration015 included; REST/client reproduction surface remains separate work",
+      "No phase release/publication/live-provider/ARM64 runtime acceptance inferred",
+      "Earlier attempts retained separately"
+    ],
+    "migration015ExactPackagedSourceSha256": "e3ddc12ae2b90b22bebfa18570c736c2ef953518f8acbf6dde70cd7d4a3948cc",
+    "githubChecks": [
+      {
+        "name": "agentci/evals",
+        "conclusion": "neutral",
+        "detailsUrl": "https://github.com/alimobrem/agentci/actions/runs/37414180099/artifacts/11390722024"
+      },
+      {
+        "name": "agentci/review",
+        "conclusion": "neutral",
+        "detailsUrl": "https://github.com/alimobrem/agentci/actions/runs/37414180099/artifacts/11390722024"
+      },
+      {
+        "name": "contracts-and-runtime",
+        "conclusion": "success",
+        "detailsUrl": "https://github.com/alimobrem/agentci/actions/runs/37414181555/job/112109088251"
+      },
+      {
+        "name": "fast-feedback",
+        "conclusion": "success",
+        "detailsUrl": "https://github.com/alimobrem/agentci/actions/runs/37414181555/job/112109088080"
+      },
+      {
+        "name": "review",
+        "conclusion": "success",
+        "detailsUrl": "https://github.com/alimobrem/agentci/actions/runs/37414180099/job/112109026349"
+      }
+    ]
+  },
+  "advisory": {
+    "run": "37414180099",
+    "productionSeedExecuted": true,
+    "productionMetricsAvailable": true,
+    "producer": {
+      "version": "0.4.0-m3-dev.1",
+      "sourceCommit": "c5acdd7235f3b6fb4be9bbba825784123f42a197",
+      "repository": "alimobrem/agentci",
+      "installationId": 167655696,
+      "runId": "37414180099",
+      "runAttempt": "1",
+      "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+      "evaluatorImage": "sha256:eec5f33e1054a2b7c192405d078c9ab2c85be6365436629d8fb7e124598379aa"
+    },
+    "artifact": {
+      "id": 11390722024,
+      "digest": "sha256:5f91c5cfdfee9d733a8d94a5fecf3c7ca0c582cf6a4fdfdd8ee98a57d81291ab",
+      "downloadedOnce": true
+    },
+    "reviews": [
+      {
+        "subject": {
+          "repository": "alimobrem/agentci",
+          "installationId": 167655696,
+          "pullRequest": 63,
+          "baseSha": "c5acdd7235f3b6fb4be9bbba825784123f42a197",
+          "headSha": "0f79f87da146ca3f0ffd19a0959f49dd73bdf279"
+        },
+        "status": "completed",
+        "comparison": {
+          "id": "2f23e5e0-96ef-4ad3-946a-bb870bf051ad",
+          "reviewId": "5b4a221f-a020-4791-9631-ad74a95aa089",
+          "file": "comparison-2f23e5e0-96ef-4ad3-946a-bb870bf051ad.ndjson",
+          "sha256": "sha256:957cb4ac567b1be49256ac298ead3389e08f02b606912b2e509c57ff825dd3db",
+          "bytes": 25722
+        },
+        "summary": {
+          "state": "completed",
+          "outcome": "passed",
+          "executionGaps": [],
+          "unitCount": 8,
+          "comparisonCount": 4
+        },
+        "frames": 15,
+        "units": 8,
+        "scenarioObservations": 38,
+        "assertionGitShas": [
+          "c5acdd7235f3b6fb4be9bbba825784123f42a197"
+        ],
+        "suiteChanges": [],
+        "coverageGaps": [],
+        "selectionGaps": [],
+        "changedTests": [
+          "tests/helpers/reproduction-staging-fixture.ts",
+          "tests/integration/reproduction-staging.test.ts"
+        ]
+      }
+    ],
+    "files": [
+      {
+        "file": "comparison-2f23e5e0-96ef-4ad3-946a-bb870bf051ad.ndjson",
+        "sha256": "957cb4ac567b1be49256ac298ead3389e08f02b606912b2e509c57ff825dd3db"
+      },
+      {
+        "file": "pr-63-46b9176e-9a3e-46d0-8ca3-71c26b98ea23-history.json",
+        "sha256": "44f0abecafeb5eecc0a2b7b7dfb89406ef5a26eae1ee4b9dc0e31bfc5853aaec"
+      },
+      {
+        "file": "reviews.json",
+        "sha256": "feebfc256ca7d4852cceb486a1d8c23d272bf82a565729a001f3420e2056bb9f"
+      }
+    ],
+    "limits": [
+      "One trial per scenario, not repeated reliability evidence.",
+      "Each comparison uses its own exact PR base assertions, not producer main or candidate assertions.",
+      "Image IDs are Docker config digests, not published OCI manifests.",
+      "Prior failed/cancelled runs remain retained and are not superseded as historical evidence.",
+      "Advisory is frozen-base comparison acceptance; CI and release gates remain separate.",
+      "Underlying frozen comparison passed; published advisory checks are neutral and do not establish required-check enforcement."
+    ],
+    "snapshotReadMetrics": {
+      "event": "hosted-snapshot-reads",
+      "commitAttempts": 2,
+      "treeAttempts": 2,
+      "memoryHits": 995,
+      "localHits": 995,
+      "localMisses": 18,
+      "remoteBlobAttempts": 18,
+      "remoteHits": 18,
+      "requestFailures": 0,
+      "localCooldownBlocks": 0,
+      "localReadFailures": 0,
+      "verificationFailures": 0
+    },
+    "logSha256": "c6d50be38bfc16be2f6b1bffe50e0fe4acac21e1f2984192fe64bb312b96f66b",
+    "publishedCheckConclusions": {
+      "agentci/review": "neutral",
+      "agentci/evals": "neutral"
+    }
+  },
+  "ciAttempts": [
+    "delivery/runs/37414181555-attempt-1.json",
+    "delivery/runs/37413885732-attempt-1.json"
+  ],
+  "cacheClassification": "unknown; no inferred cache hit state",
+  "priorLocalEvidence": [
+    "delivery/acceptance/m3-reproduction-staging-local.json",
+    "delivery/acceptance/m3-reproduction-staging-main-local.json"
+  ],
+  "scope": "Merged staging prerequisite acceptance only. No customer reproduction mutation/consumer activation or M3 release completion."
+}
