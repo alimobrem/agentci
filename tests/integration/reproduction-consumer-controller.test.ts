@@ -67,14 +67,14 @@ test('actual controller authority checks fresh installation and exact open PR, p
  const f=await fixture();try{
   const c=await f.start(),entry=await bind(f,c),check=()=>c.activities.checkAdmittedReproduction(entry.operationId,entry.attempt!.token);
   assert.deepEqual(await check(),{allowed:true});assert.equal(f.calls.length,4);assert.ok(f.calls.every(x=>x.signal));
-  for(const mode of ['stale','closed','repository','installation','suspended']){f.setMode(mode);await assert.rejects(check(),/reproduction-authority-conflict/);}
+  for(const mode of ['stale','closed','repository','installation','suspended']){f.setMode(mode);assert.deepEqual(await check(),{allowed:false});}
   f.setMode('outage');await assert.rejects(check(),/reproduction-authority-unavailable/);
   assert.equal((await c.dispatch.get(entry.operationId))!.cancellation,null);assert.equal((await f.pool.query('SELECT count(*) FROM agentci_reproduction_non_execution')).rows[0].count,'0');
   f.setMode('live');assert.deepEqual(await check(),{allowed:true});
  }finally{await f.close();}
 });
 test('expired applied approval fails actual controller permission boundary without producing execution or proof',async()=>{
- const f=await fixture(true);try{const c=await f.start(),entry=await bind(f,c);assert.deepEqual(await c.activities.checkAdmittedReproduction(entry.operationId,entry.attempt!.token),{allowed:false});assert.equal(f.calls.length,0);assert.equal((await f.pool.query('SELECT count(*) FROM agentci_eval_jobs')).rows[0].count,'0');assert.equal((await f.pool.query('SELECT count(*) FROM agentci_reproduction_non_execution')).rows[0].count,'0');}finally{await f.close();}
+ const f=await fixture(true);try{const c=await f.start(),entry=await bind(f,c);assert.deepEqual(await c.activities.checkAdmittedReproduction(entry.operationId,entry.attempt!.token),{allowed:false});assert.equal(f.calls.length,0);assert.equal((await f.pool.query('SELECT count(*) FROM agentci_eval_jobs')).rows[0].count,'0');assert.equal((await f.pool.query('SELECT count(*) FROM agentci_reproduction_non_execution')).rows[0].count,'0');assert.deepEqual(await c.activities.stageAdmittedReproduction(entry.operationId,entry.attempt!.token),{kind:'not-started'});assert.equal(f.calls.length,0);assert.equal((await c.dispatch.get(entry.operationId))!.cancellation!.cause,'expired');assert.equal((await f.pool.query('SELECT proof FROM agentci_reproduction_non_execution')).rows[0].proof.verified,false);}finally{await f.close();}
 });
 
 test('actual controller stages from exact Git blobs and historical finding without fabricating a legacy review',async()=>{

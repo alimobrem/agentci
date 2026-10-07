@@ -51,7 +51,7 @@ Only retained operation and attempt identifiers enter the parent workflow. The e
 
 A database terminal unit is insufficient evidence of physical cleanup. Settlement requires verified terminal parent/unit observations, completion of the exact owned cleanup workflow, and authenticated retained receipt or non-execution proof linked to finding history. Receipt-before-history crashes remain recoverable. An operator supersession preserves actual evidence rather than replacing it. Unavailable execution never becomes a passed result.
 
-Cleanup uses retained execution identity and does not depend on fresh approval being available. Failed cleanup can retry only the exact owned type, queue and memo. Original and retry run identities remain evidence. Cancellation, denial and infrastructure unavailability retain distinct causes.
+Cleanup uses retained execution identity and does not depend on fresh approval being available. Failed cleanup can retry only the exact owned type, queue and memo. Original and retry run identities remain evidence. Cancellation, confirmed permission denial, approval expiry/revocation and infrastructure unavailability retain distinct causes. A completed trusted permission read returning false stops execution; a timeout or transport error remains unavailable. Failed permission checks roll back provisional evaluator rows before any identifiers escape. Expired approval stops before remote source reads and produces an explicitly unverified non-execution record.
 
 ## Evidence boundary
 
