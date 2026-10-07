@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "scope": "Local permission classification correction; source-only acceptance, not phase closure",
+  "sourceFiles": [
+    {
+      "path": "packages/storage/reproduction-authority.ts",
+      "digest": "sha256:299787fb62eb36daf52d4a9323884f37c6648450b1068de670933cb9c610f05d"
+    },
+    {
+      "path": "apps/worker/reproduction-consumer-runtime.ts",
+      "digest": "sha256:c58fd869ae0c09c61d0a41f9609176fdb6b6ddc5ccb3d3b3118673e45579abac"
+    },
+    {
+      "path": "tests/integration/reproduction-consumer-controller.test.ts",
+      "digest": "sha256:00f54f5b5042717bb4a651f5ade0dbc3a75d11ccb9f94d7511cc5b296ea5e81d"
+    },
+    {
+      "path": "tests/integration/reproduction-consumer-runtime.test.ts",
+      "digest": "sha256:baaadfaedea61d2a7a2a21e5e8dd41fac268d12d1f9ddcd22e8aad43a200e6cf"
+    },
+    {
+      "path": "tests/integration/reproduction-consumer-isolated.test.ts",
+      "digest": "sha256:fbd19fa01b2fe8f770357ec8608e83451ff1ca0853bd13ff52423e488affa0df"
+    }
+  ],
+  "checks": [
+    {
+      "name": "authority/controller/runtime",
+      "status": "local-passed",
+      "passed": 23,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-reproduction-permission-classification-authorized.log",
+      "digest": "sha256:cfeb66d7ec61095b38d97b3d651de581503479f1520de27249a6916b86f203e7"
+    },
+    {
+      "name": "real physical consumer plus Temporal orchestration",
+      "status": "local-passed",
+      "passed": 14,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-reproduction-permission-physical.log",
+      "digest": "sha256:f6656013c75cafc72067943c08e20815508dad9dcdc0cfcd1bd8984d0a772193"
+    },
+    {
+      "name": "stage outage without fabricated denial or evidence",
+      "status": "local-passed",
+      "passed": 1,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-reproduction-stage-outage.log",
+      "digest": "sha256:d075ff00c4813176d9e6dca0ceaa62ef647d981184dc42b62dc5b28d09f2ae5b"
+    }
+  ],
+  "fast": {
+    "status": "local-passed",
+    "path": "/private/tmp/agentci-reproduction-permission-fast.log",
+    "digest": "sha256:babce84ef103a000e57f5666976800b3425454330accf5a98ab0d84195f8bf7a"
+  },
+  "failedAttempts": [
+    {
+      "path": "/private/tmp/agentci-reproduction-permission-classification.log",
+      "digest": "sha256:f04c90ea257e37194e6d88b18e0811abf49347f4face615857c9f485e2a98c30",
+      "reason": "Mandatory immutable runner image environment omitted; acceptance failure preserved. Correctly configured rerun passed."
+    },
+    {
+      "path": "/private/tmp/agentci-reproduction-permission-classification-final.log",
+      "digest": "sha256:3713bae8c9ab3e81a30325e480f558f2946b805586fa860c3f213b15c5ec9aa1",
+      "reason": "Mandatory immutable runner image environment omitted; acceptance failure preserved. Correctly configured rerun passed."
+    }
+  ],
+  "limits": [
+    "14-test set includes eight Temporal tests with evaluator doubles and six real isolated consumer tests; do not conflate their evidence scopes",
+    "Confirmed permission loss was tested with an actual running owned container and retained permission-denied cancellation cause",
+    "Previously completed hosted source af4fe01 does not cover this correction",
+    "Current exact-head hosted CI/advisory and full M3 release/customer/UI gates remain open"
+  ]
+}

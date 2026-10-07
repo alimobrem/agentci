@@ -22,13 +22,20 @@ try {
   if (version !== expectedVersion) throw new Error('Unexpected packaged version');
   // Exercise installed provider modules and their runtime schema assets, not source imports.
   const installedRoot=join(root,'node_modules/agentci');
+  const reproductionOperator=join(installedRoot,'dist/cmd/reproduction-operator/main.js');
+  if(!execFileSync(process.execPath,[reproductionOperator,'--help'],{encoding:'utf8',env:{PATH:process.env.PATH}}).includes('--expected initial|REVISION:sha256:HASH'))throw new Error('Installed reproduction operator help missing');
+  try{execFileSync(process.execPath,[reproductionOperator,'apply'],{encoding:'utf8',stdio:'pipe',env:{PATH:process.env.PATH}});throw new Error('Installed reproduction operator accepted unpinned setup');}catch(error){if(error.status!==2||JSON.parse(error.stderr).error.code!=='invalid-reproduction-operator-arguments')throw error;}
+  const {loadReproductionRuntime}=await import(pathToFileURL(join(installedRoot,'dist/packages/runtime/reproductions.js')).href);
+  if(await loadReproductionRuntime({organizationId:'00000000-0000-4000-8000-000000000001',repository:'owner/repo'}, {})!==null)throw new Error('Installed reproduction consumer must default off');
+  if(!(await readFile(join(installedRoot,'deploy/migrations/018_m3_reproduction_dispatch_settlement.sql'),'utf8')).includes('settlement'))throw new Error('Installed reproduction settlement migration missing');
+
   if(postgresReaders){
     const installedManifest=JSON.parse(await readFile(join(installedRoot,'package.json'),'utf8'));
     if(installedManifest.name!=='agentci'||installedManifest.version!==expectedVersion)throw new Error('Installed package dependency identity mismatch');
     try{await readFile(join(root,'node_modules/tsx/package.json'));throw new Error('Development test loader entered production installation');}catch(error){if(error.code!=='ENOENT')throw error;}
     console.log(JSON.stringify({acceptance:'installed-v2-reader',version:expectedVersion,install:'npm install --omit=dev',offline,developmentLoaderInstalled:false,publicExport:'agentci/client'}));
-    execFileSync(process.execPath,['--import','tsx','--test',resolve('tests/integration/reproduction-installed-reader.test.ts')],{env:{...process.env,AGENTCI_TEST_CLIENT_PACKAGE_ROOT:installedRoot},stdio:'inherit',timeout:60000});
-    console.log('Installed public v2 reader passed against authenticated control HTTP and real PostgreSQL; no Temporal or provider credentials.');
+    execFileSync(process.execPath,['--import','tsx','--test',resolve('tests/integration/reproduction-installed-reader.test.ts'),resolve('tests/integration/reproduction-operator.test.ts'),resolve('tests/integration/reproduction-deployment.test.ts')],{env:{...process.env,AGENTCI_TEST_CLIENT_PACKAGE_ROOT:installedRoot},stdio:'inherit',timeout:60000});
+    console.log('Installed public v2 reader and deployment-operator apply/CAS/revocation passed against real PostgreSQL, plus real Compose rendering of installed opt-in files; reader HTTP authenticated, no Temporal or provider credentials.');
   }
   const {validateModelRequest}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/request.js')).href);
   const {validateModelResponse}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/response.js')).href);
@@ -215,5 +222,5 @@ text: Packaged CLI validates a fresh project.
     execFileSync(cli, ['validate', '--root', join(root, 'project')], { stdio: 'pipe' });
     throw new Error('Invalid project unexpectedly passed');
   } catch (error) { if (error.status !== 1) throw error; }
-  console.log('Packaged CLI/client passed: production-only install, version, fresh init, overwrite rejection, client entry point, installed provider schemas/migration and OpenAI/Anthropic/xAI SDK invocation, seven-role no-network reviewer runtime and read-only configuration overlay, MIT license, installed App setup/state rejection, validation and invalid input.');
+  console.log('Packaged CLI/client passed: production-only install, version, pinned reproduction-operator argument rejection and default-off consumer, fresh init, overwrite rejection, client entry point, installed provider schemas/migration and OpenAI/Anthropic/xAI SDK invocation, seven-role no-network reviewer runtime and read-only configuration overlay, MIT license, installed App setup/state rejection, validation and invalid input.');
 } finally { await rm(root, { recursive: true, force: true }); }

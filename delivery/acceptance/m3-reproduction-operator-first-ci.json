@@ -1,0 +1,162 @@
+{
+  "runId": "37636611897",
+  "artifactId": 11490397107,
+  "candidate": "af4fe01780eaffd5047c41c9a0249d4dff9ab27e",
+  "testedPreview": "8176e8de33690ba6d3433ab3d8f876eda8d56b9b",
+  "hashesVerified": 10,
+  "counts": {
+    "fast": {
+      "tests": 407,
+      "pass": 407,
+      "fail": 0,
+      "skipped": 0
+    },
+    "integration": {
+      "tests": 168,
+      "pass": 168,
+      "fail": 0,
+      "skipped": 0
+    },
+    "installed": {
+      "tests": 4,
+      "pass": 4,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "api": [
+    {
+      "baseline": "specs/api/baselines/m1-0.2.1-openapi.json",
+      "baselineSha256": "28c56cc252b460ca0a496f8459b59792ceea16affb2d60c7b22a8f8a35f9174d",
+      "exitCode": 0,
+      "changes": "[]\n",
+      "diagnostics": ""
+    },
+    {
+      "baseline": "specs/api/baselines/m2-0.3.1-openapi.json",
+      "baselineSha256": "d9515b059d4240bb92b2b34c4a34e85981bfbe54141a8511d2adfbd49dadf16f",
+      "exitCode": 0,
+      "changes": "[]\n",
+      "diagnostics": ""
+    }
+  ],
+  "negativeControls": [
+    {
+      "baseline": "m1-0.2.1",
+      "endpoint": "/v1/evidence/{id}",
+      "result": "endpoint-removal rejected"
+    },
+    {
+      "baseline": "m2-0.3.1",
+      "endpoint": "/v1/eval-comparisons/{id}",
+      "result": "endpoint-removal rejected"
+    }
+  ],
+  "runtime": {
+    "result": "passed",
+    "version": "ci",
+    "platform": "x64",
+    "checks": [
+      "non-root API/worker startup",
+      "M2 schema readiness",
+      "signature rejection",
+      "evidence authentication",
+      "comparison authentication/UUID/scoped lookup",
+      "compiled comparison API/client reads actual queued database evidence",
+      "compiled snapshot export/client completion",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  },
+  "evalWorkerRuntime": {
+    "result": "passed",
+    "deployment": "native-CLI",
+    "engine": "docker",
+    "platform": "linux/amd64",
+    "workerImage": "sha256:42a6acb867de09b2ab969de06f8351478ca41a395484d25abff81f4f1624450f",
+    "runnerImage": "sha256:6fc4dd04b769fd9e8d1b88d5d4041f564ee598bed05ab00c9142dcc782b39842",
+    "uid": 1001,
+    "node": "v26.10.0",
+    "cli": "Docker version 29.8.2, build 7fc2dff",
+    "license": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+    "checks": [
+      "UBI non-root read-only runtime",
+      "only selected engine client; no package installers/App keys",
+      "mismatched engine rejected before database/Temporal connection",
+      "official pinned docker CLI execution",
+      "separately authenticated restricted database login",
+      "real Temporal workflow and isolated child execution",
+      "child has no database/App/socket credentials",
+      "behavioral failure preserved",
+      "worker graceful shutdown/restart",
+      "all owned children removed"
+    ],
+    "github": "no live GitHub publication claimed"
+  },
+  "scans": {
+    "scan-results/api.json": [],
+    "scan-results/eval-agentci.json": [],
+    "scan-results/eval-engines.json": [
+      {
+        "id": "CVE-2026-85393",
+        "package": "node-forge",
+        "fixed": null
+      }
+    ],
+    "scan-results/eval-runner.json": [],
+    "scan-results/eval-worker.json": [],
+    "scan-results/worker.json": []
+  },
+  "advisory": {
+    "runId": "37636670140",
+    "artifactId": 11490956193,
+    "producer": {
+      "version": "0.4.0-m3-dev.1",
+      "sourceCommit": "18da4ffbcd87f5511871bdeec24feb438e635ff4",
+      "repository": "alimobrem/agentci",
+      "installationId": 167655696,
+      "runId": "37636670140",
+      "runAttempt": "1",
+      "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+      "evaluatorImage": "sha256:4f43c963280665e27e5c4708b3d04106c162047793c19cf036fbc02cb9757795"
+    },
+    "job": {
+      "repository": "alimobrem/agentci",
+      "installationId": 167655696,
+      "pullRequest": 68,
+      "baseSha": "18da4ffbcd87f5511871bdeec24feb438e635ff4",
+      "headSha": "af4fe01780eaffd5047c41c9a0249d4dff9ab27e"
+    },
+    "digest": "sha256:e0d1e94c15dd5a934992fc69f1e781e2dd98e3c7f32d7c7bc6aa2c8b70f89cc4",
+    "header": {
+      "id": "a6b93d69-4860-4cb6-8bf7-bebfef634531",
+      "reviewId": "c6132e80-98f4-43de-b232-6c77380314cd",
+      "attemptId": "a7a5ed4a-e41f-439e-82ec-977344694dca",
+      "organizationId": "00000000-0000-4000-8000-000000000001",
+      "subject": {
+        "repository": "alimobrem/agentci",
+        "pullRequest": 68,
+        "baseSha": "18da4ffbcd87f5511871bdeec24feb438e635ff4",
+        "headSha": "af4fe01780eaffd5047c41c9a0249d4dff9ab27e"
+      },
+      "cancelRequested": false,
+      "unitCount": 8,
+      "snapshotDigest": "sha256:1feaa9b90dc9f4978599b3cda0be5bb38d29b2892b6b5e4a9ac1c78718c930f7",
+      "suiteChanges": [],
+      "coverageGaps": [],
+      "selectionGaps": []
+    },
+    "summary": {
+      "state": "completed",
+      "outcome": "passed",
+      "executionGaps": [],
+      "unitCount": 8,
+      "comparisonCount": 4
+    },
+    "endDigest": "sha256:de9625f197f3e8e99846de181489e71319dc25ac615664992ec63ab2c9c023d5"
+  },
+  "scope": "Historical operator-source candidate; later permission classification changes require exact-head CI",
+  "releaseComplete": false
+}

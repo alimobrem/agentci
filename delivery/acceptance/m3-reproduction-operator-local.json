@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "scope": "M3 local deployment-operator setup and installed artifact verification; no milestone completion",
+  "sourceFiles": [
+    {
+      "path": "packages/operator/reproduction.ts",
+      "digest": "sha256:441ad356722d0a0c036cd4485131b4cf1941d74859bf907fa691f79dc31e7614"
+    },
+    {
+      "path": "cmd/reproduction-operator/main.ts",
+      "digest": "sha256:9f060ef03693f0c0d9e6f2d1c175a27561d1ff2675e7efc546e223a592a942e1"
+    },
+    {
+      "path": "deploy/reproduction.compose.yaml",
+      "digest": "sha256:74ea637070a86da9477ea4baedb9835e0660dd3097621b23cfadd7155f70abb7"
+    },
+    {
+      "path": "scripts/package-smoke.mjs",
+      "digest": "sha256:99615fb758c658df9cd3f823d7c2c3297264902dc1c843893e630e2977a7d667"
+    },
+    {
+      "path": "tests/integration/reproduction-operator.test.ts",
+      "digest": "sha256:118856418ba709a79e1983cf8478dcd105fc0fa01f1ac34d4d1446fba11372b5"
+    },
+    {
+      "path": "tests/integration/reproduction-deployment.test.ts",
+      "digest": "sha256:98da2474c67aa42590a94d6a3de62aaa576e23e3f1a84b74576b257f75c2f877"
+    }
+  ],
+  "checks": [
+    {
+      "name": "operator PostgreSQL",
+      "status": "local-passed",
+      "passed": 2,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-reproduction-operator-first.log",
+      "digest": "sha256:e1c7295ece489c885d785bf0474cbf4266d178ccae92e5f6f67852369852ebf4"
+    },
+    {
+      "name": "installed production package including PostgreSQL and Compose",
+      "status": "local-passed",
+      "passed": 4,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-reproduction-operator-installed-final.log",
+      "digest": "sha256:1d6b91d2c1ee4a7338b696240b5b1f4ecd747de1399f68e994899ae48f1d5a9a"
+    },
+    {
+      "name": "Compose render",
+      "status": "local-passed",
+      "passed": 1,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-reproduction-deployment-verified.log",
+      "digest": "sha256:6974605ae0b7bbe7fcf826d9629d38d757ff8235add35be56511adf0bbd1e222"
+    }
+  ],
+  "package": {
+    "path": "/private/tmp/agentci-reproduction-operator-package/agentci-0.4.0-m3-dev.1.tgz",
+    "digest": "sha256:8a0642dfbd4fcd224be88eef5c94838efc30434e89952ea199e25a2dbfff5db5",
+    "install": "npm install --offline --omit=dev",
+    "published": false
+  },
+  "compose": {
+    "version": "v5.6.0",
+    "officialRelease": "https://github.com/docker/compose/releases/tag/v5.6.0",
+    "assetDigest": "sha256:bd714a42b46e51757fc1121085b3096b9064e3f80d3ca5a991e33f44df4f43c9",
+    "installed": false,
+    "scope": "temporary local rendering tool; runtime execution acceptance remains separate"
+  },
+  "failures": [
+    {
+      "path": "/private/tmp/agentci-reproduction-deployment-first.log",
+      "digest": "sha256:02d1162d6a537e9c595677b3025d2789358219e8f48a1595bec2eece0e36dd15",
+      "reason": "Docker Compose unavailable locally; failed attempt retained. Real checksum-verified temporary renderer subsequently passed."
+    }
+  ],
+  "limitations": [
+    "Application tests use real PostgreSQL with explicit fixture snapshot readers, not live GitHub or provider acceptance",
+    "Public mutations, full customer onboarding, UI and M3 release acceptance remain open",
+    "First CI evidence covers fbbdeed only; these operator additions require exact-head hosted checks"
+  ]
+}

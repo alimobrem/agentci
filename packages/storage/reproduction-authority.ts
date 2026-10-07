@@ -1,6 +1,8 @@
 import type {Pool,PoolClient} from 'pg';import {canonical,digest} from '../review/engine.ts';
 import {loadReproductionConfig,validateReproductionConfig,type ReproductionConfigIdentity,type ReproductionConfigReaders,type ReproductionConfigReference} from '../findings/reproduction-config.ts';
 export class ReproductionAuthorityConflict extends Error {constructor(){super('reproduction-authority-conflict');}}
+/** A completed trusted permission read returned false. Timeouts/outages never use this type. */
+export class ReproductionPermissionDenied extends ReproductionAuthorityConflict {}
 const fail=():never=>{throw new ReproductionAuthorityConflict();};
 /** Explicit operator writes are separate from startup reads. Callers must use
  * withApproval for a bounded SQL side effect, not cache detached permission. */
@@ -46,7 +48,7 @@ export class ReproductionAuthorityStore {
  async withApproval<T>(expected:ReproductionConfigIdentity,planId:string,sideEffect:(c:PoolClient,reference:ReproductionConfigReference)=>Promise<T>):Promise<T>{
   expected=structuredClone(expected);return this.transaction(async c=>{const row=await this.current(c,true);if(!row||canonical({revision:Number(row.revision),digest:row.digest})!==canonical(expected))fail();const ref=validateReproductionConfig(row.config).approvals.find(r=>r.planId===planId);
    if(!ref||!ref.enabled||(await c.query('SELECT 1 FROM agentci_reproduction_revocations WHERE organization_id=$1 AND repository=$2 AND plan_id=$3',[...this.key(),planId])).rowCount)fail();
-   const live=async()=>{if(!await this.permitted(ref!)||!(await c.query('SELECT clock_timestamp() < $1::timestamptz AS live',[ref!.expiresAt])).rows[0].live)fail();};
+   const live=async()=>{if(!await this.permitted(ref!))throw new ReproductionPermissionDenied();if(!(await c.query('SELECT clock_timestamp() < $1::timestamptz AS live',[ref!.expiresAt])).rows[0].live)fail();};
    await live();const result=await sideEffect(c,structuredClone(ref!));await live();return result;
   });
  }

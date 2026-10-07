@@ -1,0 +1,13 @@
+# Opt-in M3 development consumer. Apply the pinned authority config explicitly
+# before starting; the released M2 base deployment remains disabled by default.
+services:
+  worker:
+    image: ${AGENTCI_REPRODUCTION_WORKER_IMAGE:-agentci-worker:0.4.0-m3-dev.1}
+    environment:
+      AGENTCI_REPRODUCTION_CATALOG_FILE: /run/agentci/reproduction-catalog.json
+      AGENTCI_REPRODUCTION_CATALOG_DIGEST: ${AGENTCI_REPRODUCTION_CATALOG_DIGEST:?Set canonical operator catalog digest}
+      AGENTCI_REPRODUCTION_CONFIG_REVISION: ${AGENTCI_REPRODUCTION_CONFIG_REVISION:?Set expected applied config revision}
+      AGENTCI_REPRODUCTION_CONFIG_DIGEST: ${AGENTCI_REPRODUCTION_CONFIG_DIGEST:?Set expected applied config digest}
+      AGENTCI_CURSOR_KEY: ${AGENTCI_CURSOR_KEY:?Set an independent cursor signing key}
+    volumes:
+      - ${AGENTCI_REPRODUCTION_CATALOG_FILE:?Set absolute operator catalog path}:/run/agentci/reproduction-catalog.json:ro

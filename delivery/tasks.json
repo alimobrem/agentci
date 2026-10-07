@@ -2571,15 +2571,15 @@
         "SPEC-31.2-001",
         "SECTION-32"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T05:02:53.296Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T06:00:53.954Z",
       "acceptance": [
         {
           "text": "Real PostgreSQL proves prepared immutable admission-backed inputs stage through the caller-owned transaction: injected final rejection and lost connection leave zero jobs/units, commit/replay preserves one typed job/unit, corruption/cancellation remain fenced. Existing standalone staging and legacy M2 contracts remain unchanged. No permission implementation, Temporal dispatch or public route is enabled; full consumer/recovery and released customer acceptance remain open.",
           "status": "passed",
           "evidence": [
-            "delivery/acceptance/m3-reproduction-stage-transaction-local.json"
+            "delivery/acceptance/m3-reproduction-stage-transaction-merged.json"
           ]
         }
       ],
@@ -2623,20 +2623,49 @@
         "SECTION-32",
         "SECTION-12.5"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T04:51:08.174Z",
-      "completedAt": null,
+      "completedAt": "2026-10-06T06:00:53.499Z",
       "acceptance": [
         {
           "text": "Real PostgreSQL trusted retention of never-staged cancellation produces receipt:null v2 evidence; authenticated real control HTTP and public agentci/client import from compiled and production-only installed package verify finding and paginated mixed v1/v2 history, auth/scope/future-version/substituted-proof rejection. Packaging CI runs installed acceptance while preserving legacy CLI/client/export smoke; no product activation.",
           "status": "passed",
           "evidence": [
-            "delivery/acceptance/m3-installed-history-reader-local.json"
+            "delivery/acceptance/m3-installed-reader-merged.json"
           ]
         }
       ],
       "dependsOn": [
         "M3-07c-3c"
+      ]
+    },
+    {
+      "id": "M3-07c-3d-2b",
+      "title": "Configured admitted reproduction consumer and independent recovery",
+      "requirementIds": [
+        "SPEC-12.3-001",
+        "SECTION-12.4",
+        "SPEC-12.5-001",
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SPEC-40-048"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-06T06:00:54.215Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Explicit operator-owned catalog/config setup avoids bootstrap cycles; startup only reads an expected applied identity. Real PostgreSQL, Temporal and isolated evaluator prove admission-only positive/negative/error execution, exact historical approval with fresh permission/current queued-state fencing, one logical run across duplicate/ambiguous stale starts and prior-attempt adoption, cancellation/revocation/expiry/outages, worker/parent crashes and independent owned-child cleanup. Verified terminal execution and owned cleanup plus retained receipt/finding evidence settle lifecycle; completed evidence is never replaced, unavailable outcomes remain unverified, legacy workflows/API stay compatible and disabled startup preserves behavior. No public mutation routes or full customer/UI/release completion inferred; their original gates stay open.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-3d-1",
+        "M3-07c-3d-1b",
+        "M3-07c-3d-2a",
+        "M3-07c-3d-2b-1"
       ]
     }
   ]
