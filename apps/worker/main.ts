@@ -1,3 +1,7 @@
+import {loadReproductionRuntime} from '../../packages/runtime/reproductions.ts';
+import {initializeReproductionController} from './reproduction-consumer-controller.ts';
+import {dispatchAdmittedReproductions} from './reproduction-consumer-dispatch.ts';
+import {reconcileAdmittedReproductions} from './reproduction-consumer-recovery.ts';
 import {initializeModelReviewCheckScheduler} from './model-review-publication.ts';
 import {loadReviewerRuntime} from '../../packages/runtime/reviewers.ts';
 import {initializeReviewerController} from './reviewer-runtime.ts';
@@ -31,9 +35,11 @@ const github = installationClient(config.appId, config.installationId, config.pr
 const modelReviewChecks=await initializeModelReviewCheckScheduler(pool,github,config);
 const reviewerRuntime=await loadReviewerRuntime();
 const reviewers=reviewerRuntime?await initializeReviewerController(pool,github,config,reviewerRuntime):null;
+const reproductionRuntime=await loadReproductionRuntime(config);
+const reproductions=reproductionRuntime?await initializeReproductionController(pool,github,{...config,cursorKey:process.env.AGENTCI_CURSOR_KEY,operatorToken:process.env.AGENTCI_OPERATOR_TOKEN},reproductionRuntime):null;
 const evalActivities=createEvalReviewActivities(github,store,evals,config,evalPolicy);
 const worker = await Worker.create({ connection: native, namespace: config.namespace, taskQueue: config.taskQueue,
-  workflowsPath: fileURLToPath(new URL('./workflows.js', import.meta.url)), activities: {...createActivities(github, store, config),...evalActivities,...reviewers?.activities} });
+  workflowsPath: fileURLToPath(new URL('./workflows.js', import.meta.url)), activities: {...createActivities(github, store, config),...evalActivities,...reviewers?.activities,...reproductions?.activities} });
 let stopped = false;
 let dispatching = false;
 let dispatchOperation:Promise<void>|undefined;
@@ -49,6 +55,12 @@ async function dispatch() {
         reconcileAdmittedReviews(reviewers.dispatch,reviewers.summaries,client,{taskQueue:config.taskQueue,shouldStop:()=>stopped}),
       ]);if(operations.some(result=>result.status==='rejected'))throw Error('Admitted review dispatch/recovery unavailable');
     })());
+    if(reproductions&&reproductionRuntime){
+      // Resolve dispatch authority inside its own pipeline. A stale/unavailable
+      // config or failed start must never prevent independent owned cleanup.
+      pipelines.push((async()=>{await reproductions.dispatch.backfill();const identity=await reproductions.configIdentity();await dispatchAdmittedReproductions(reproductions.dispatch,client,{taskQueue:config.taskQueue,evalTaskQueue:reproductionRuntime.evalTaskQueue,config:identity,timeoutMs:86400000,shouldStop:()=>stopped});})());
+      pipelines.push(reconcileAdmittedReproductions(reproductions.dispatch,client,reproductions.activities,{settle:reproductions.settle,markRuntimeQuiescent:reproductions.markRuntimeQuiescent,shouldStop:()=>stopped}));
+    }
     if(modelReviewChecks)pipelines.push(modelReviewChecks.tick(()=>stopped).then(()=>{}));
     const results=await Promise.allSettled(pipelines);if(results.some(result=>result.status==='rejected'))throw Error('Review dispatch/recovery unavailable');
   } catch { console.error('Review dispatch/recovery unavailable; retained work will retry'); }

@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "scope": "M3 reproduction consumer local acceptance; no milestone closure",
+  "sourceCommit": null,
+  "sourceFiles": [
+    {
+      "path": "apps/worker/reproduction-consumer-runtime.ts",
+      "digest": "sha256:d4e80d029d534c81c31275098791f397bb6ca4a8a290cd5a9feeb89a8e430f67"
+    },
+    {
+      "path": "apps/worker/reproduction-consumer-controller.ts",
+      "digest": "sha256:e741d58e1a016bd8c19456575619777084cd0cccd828594bc13b40fee1c51981"
+    },
+    {
+      "path": "apps/worker/reproduction-consumer-dispatch.ts",
+      "digest": "sha256:c3d21d595c58ec3e10216003259a4467cd9cab7663e1939d30b823f336ade619"
+    },
+    {
+      "path": "apps/worker/reproduction-consumer-recovery.ts",
+      "digest": "sha256:c6ab0b348decb1a0646778bf71aa4b8bc1c028f0a36ea5d31f468d91937dbc01"
+    },
+    {
+      "path": "apps/worker/admitted-reproduction-workflows.ts",
+      "digest": "sha256:22e33903e1e9ecb89de89e76d9065c8e0579d4c4b70b71d4853249d7031238e7"
+    },
+    {
+      "path": "apps/worker/main.ts",
+      "digest": "sha256:3c7d8b0c30364c909c08aa9bd9291731fb88ae0dbb0ce0fc2a262837216592ab"
+    },
+    {
+      "path": "apps/worker/workflows.ts",
+      "digest": "sha256:76a7f12983330144f11315be48e36db3b98a6ad07c171208815c0cc297bf13ad"
+    },
+    {
+      "path": "packages/storage/reproduction-dispatch.ts",
+      "digest": "sha256:469b79a3a55c0539d95acb96ae3c1d23f700bfe4951f7b22af4284db67e8879c"
+    },
+    {
+      "path": "deploy/migrations/018_m3_reproduction_dispatch_settlement.sql",
+      "digest": "sha256:b57369641dde87c3f7880f364a51e42d134f8c12f29a0fb8c61f394f5b67ec7c"
+    },
+    {
+      "path": "tests/integration/reproduction-consumer-controller.test.ts",
+      "digest": "sha256:a96df83a065a713ce4f72ebcf662e824865de9dcc7590dcac2eaa6d050ed06c7"
+    },
+    {
+      "path": "tests/integration/reproduction-consumer-isolated.test.ts",
+      "digest": "sha256:0eb229e3ab9a65185ade376656b17685b2b8b239749778db38f7426cb6663d3c"
+    }
+  ],
+  "checks": [
+    {
+      "name": "targeted-consumer",
+      "status": "local-passed",
+      "passed": 50,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-consumer-root-targeted.log",
+      "digest": "sha256:64f43a21605372496e2bfda204aa875a363cddbdca5fcb26a0333df54ca6f9aa"
+    },
+    {
+      "name": "controller-exact-source-roundtrip",
+      "status": "local-passed",
+      "passed": 5,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-consumer-controller-source-roundtrip-final.log",
+      "digest": "sha256:3bb9e087badd27c55c642ef26ba08d3de6b716a58643621d69523f833a8b0a74"
+    },
+    {
+      "name": "controller-runtime",
+      "status": "local-passed",
+      "passed": 11,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-consumer-controller-runtime-root.log",
+      "digest": "sha256:9623acefb82caf895ed7499fee5d2669fd2e20425e10cca0dbed400dfa54df45"
+    },
+    {
+      "name": "real-parent-termination",
+      "status": "local-passed",
+      "passed": 1,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-consumer-physical-parent-termination.log",
+      "digest": "sha256:4257f662250bd3ecca9cfec9934d95661d3317b99bce13314366bcadba857900"
+    },
+    {
+      "name": "real-evaluator-sigkill",
+      "status": "local-passed",
+      "passed": 1,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-consumer-isolated-restart.log",
+      "digest": "sha256:5be4dd31cc22630e42e4d561e18395d046247c7541e6e65eeca7baa7644814e6"
+    },
+    {
+      "name": "operator-loader",
+      "status": "local-passed",
+      "passed": 2,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-reproduction-runtime-loader.log",
+      "digest": "sha256:94c9125dc6f14969e1d5acd79f8dd3a780fcb28f0593b4245feea0fdcf80bc07"
+    }
+  ],
+  "fast": {
+    "status": "local-passed",
+    "checks": 10,
+    "seconds": 4.29,
+    "path": "/private/tmp/agentci-consumer-first-fast-authorized.log",
+    "digest": "sha256:942e4a653240d076700361ccb3e9e1cf8cbbca328a0eeb2fc2e7318a64599974",
+    "scope": "Earlier source feedback; not full integration or release acceptance"
+  },
+  "failures": [
+    {
+      "path": "/private/tmp/agentci-consumer-first-fast.log",
+      "reason": "Sandbox denied loopback fixtures; preserved, authorized rerun passed",
+      "digest": "sha256:38dbdca66e6aa3f1e5de9c8f9f640e84fb3d36838ee6ae387f53b1e344b97e31"
+    }
+  ],
+  "limitations": [
+    "Local fixture snapshots/permissions are explicit injections; no live GitHub customer acceptance implied",
+    "Controller source roundtrip uses mocked HTTP with exact blob identity validation",
+    "SIGKILL fixture pauses after actual durable trial checkpoint; no evaluator or settlement double",
+    "Current required checks/evals/packaging/container scans/publication are pending",
+    "Operator apply/setup command remains pending",
+    "Full customer mutations/CLI, UI, phase demos, release and reconciliation remain open"
+  ],
+  "policy": "Observed-rate calibration retained; no new numerical acceptance thresholds approved"
+}
