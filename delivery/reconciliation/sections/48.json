@@ -26,7 +26,23 @@
         "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
       },
       "mappingAuthority": "provisional-needs-review",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-RECONCILE-HISTORY",
+          "status": "in-progress",
+          "startedAt": "2026-10-07T23:42:00.145Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0–M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
@@ -41,8 +57,7 @@
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
       "reconciliationGaps": [
         "modality-and-multi-phase-mapping-review",
-        "no-row-evidence",
-        "no-task-or-operation-link"
+        "no-row-evidence"
       ]
     },
     {

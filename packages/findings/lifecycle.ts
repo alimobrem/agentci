@@ -8,7 +8,7 @@ export type FindingAction={type:'queue'}|{type:'reproduce'|'false-positive'|'res
 function fail():never{throw new Error('invalid-finding-transition');}
 const sha=(v:unknown)=>typeof v==='string'&&/^sha256:[a-f0-9]{64}$/.test(v);
 /** Shape and identity shared by retained event reads and live transitions. */
-export function validateFindingActionReceipt(action:FindingAction,receipt:FindingReceipt|null,finding:ModelFinding){
+export function validateFindingActionReceipt(action:FindingAction,receipt:FindingReceipt|null,finding:Pick<ModelFinding,'id'|'subject'>){
  if(!action||typeof action!=='object'||!['queue','reproduce','false-positive','resolve'].includes(action.type)||Object.keys(action).sort().join(',')!==(action.type==='queue'?'type':'receiptId,type'))fail();
  if(action.type==='queue'){if(receipt!==null)fail();return;}
  if(typeof action.receiptId!=='string'||!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(action.receiptId))fail();

@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import {parse} from 'yaml';
+import {capturedGateHistory} from './lib/reconciliation-history.mjs';
 const digest=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 const inventory=parse(fs.readFileSync('specs/requirements.yaml','utf8')).requirements;
 const tasks=JSON.parse(fs.readFileSync('delivery/tasks.json')).tasks;
@@ -55,7 +56,7 @@ for(const [parent,start,end] of [['SPEC-31.1-001',1713,1732],['SPEC-32-002',1763
 const ledgers=['M0','M1','M2','M3'].map(m=>{
  const p=`releases/${m.toLowerCase()}-gates.json`;return fs.existsSync(p)?{milestone:m,record:ref(p),...JSON.parse(fs.readFileSync(p))}:{milestone:m,record:null,note:'Use historical M0 manifest/release document; do not invent modern gate evidence'};
 });
-const d={schemaVersion:1,authority:'Requested audit snapshot; does not adopt review document or new numeric gates',specificationAuditBasisCommit:'8004caf94512cbce12bb3c7adcc951555b6aa0ce',snapshotInputs:{tasks:ref('delivery/tasks.json'),phasePlan:ref('delivery/phase-pr-plan.json'),apiSchema:ref('specs/api/openapi.json'),apiVersion:JSON.parse(fs.readFileSync('specs/api/openapi.json')).info.version},source:{spec:ref('specs/agentci-full-spec.md'),inventory:ref('specs/requirements.yaml'),addendumSha256:'58c9610814b784c0c306e4b7b707651add5239c2ab36ee45bb4d1fc6f40a4714'},numericProposalsAdopted:false,rows,derivedChildren:children,historicalGateSnapshots:ledgers,phasePlans:plan};
+const d={schemaVersion:1,authority:'Requested audit snapshot; does not adopt review document or new numeric gates',specificationAuditBasisCommit:'8004caf94512cbce12bb3c7adcc951555b6aa0ce',snapshotInputs:{tasks:ref('delivery/tasks.json'),phasePlan:ref('delivery/phase-pr-plan.json'),apiSchema:ref('specs/api/openapi.json'),apiVersion:JSON.parse(fs.readFileSync('specs/api/openapi.json')).info.version},source:{spec:ref('specs/agentci-full-spec.md'),inventory:ref('specs/requirements.yaml'),addendumSha256:'58c9610814b784c0c306e4b7b707651add5239c2ab36ee45bb4d1fc6f40a4714'},numericProposalsAdopted:false,rows,derivedChildren:children,historicalGateSnapshots:capturedGateHistory(fs.readFileSync(root+'captured-gate-history.json')),currentGateSnapshots:ledgers,phasePlans:plan};
 const sections=Array.from({length:51},(_,i)=>i+1).map(n=>{
  const values=rows.filter(r=>Number(r.source.section.split('.')[0])===n),file=root+'sections/'+String(n).padStart(2,'0')+'.json',text=JSON.stringify({section:n,rows:values},null,2)+'\n';
  return {file,text,count:values.length,sha256:crypto.createHash('sha256').update(text).digest('hex')};

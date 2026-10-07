@@ -153,12 +153,48 @@ The existing finding event bound of 2 MiB remains; mutation bodies are at most
 - `POST /v1/finding-reproductions/{id}/cancellation`: empty body, monotonic durable
   cancellation, same acknowledgment semantics as review cancellation.
 
-07c-3 must finalize the reproduction status fields with real configured dispatch
-and recovery, plus the operator evidence/approval registry configuration. The
+PR #68 implements configured dispatch/recovery and explicit operator approval setup.
+The following response shape is frozen by 07c-3e-1 for the dependent transport
+slices; shared validators and fixed examples do not implement public routes. The
 selection/authority boundary above is fixed now; no public reproduction route or
 client method ships until that remaining response contract and consumer pass
 acceptance. Never-staged cancelled work has null receipt and remains unverified.
 These are explicit later-slice decisions, not missing user accounts or permissions.
+
+## Frozen reproduction response semantics
+
+Shared types/validators live in `packages/findings/reproduction-transport.ts`;
+fixed, explicitly non-executing examples are in
+`specs/api/drafts/finding-reproduction-examples.json`. All three responses use
+`schemaVersion: v1alpha1`. Mutation authentication and writer/evidence authority
+remain server responsibilities; a valid response hash alone grants neither.
+
+Admission returns `id` (server-owned reproduction UUID), `operationId`,
+`reviewId`, exact `subject`, `planDigest`, `requestDigest`, and
+`finding: {id, queuedVersion, digest}`. The finding digest hashes the canonical
+**queued ModelFinding**, not its history event. This is durable admission/intent,
+not a claim that a workflow, container or model has run. Cancellation returns
+only `{schemaVersion, id, cancelRequested: true}` after recording intent.
+
+Status adds these fields to the admission reference:
+
+| Field | Meaning |
+| --- | --- |
+| `dispatch.state` | `queued` without a retained binding; `bound` with a binding but no acknowledged run; `dispatched` with an acknowledged run; `settled` only with retained terminal/cleanup/evidence settlement. No workflow terminal status is invented from these states. |
+| `dispatch.cancelRequested` | Durable cancellation intent. A late request does not change completed observations. |
+| `dispatch.cancellationCause` | Retained user/revoked/expired/permission-denied/superseded/unavailable cause, or null when no cause is retained. Null never invents a user action. |
+| `receipt` | Null or `{value: FindingReceipt, digest}` for the actual retained reproduction receipt. `reproduced`, `not-reproduced` and `error` remain different outcomes. A receipt may be retained before settlement. |
+| `nonExecution` | Null or `{value: ReproductionNonExecutionProof, digest}`. Every such proof has `executionReceipt: null` and `verified: false`; plan, operation, subject and queued finding references must agree. It cannot coexist with an execution receipt. |
+| `settlement` | Null before settlement; otherwise kind, retained receipt/proof digests, immutable finding version/history digest and evidence digest. `receipt-retained`, `never-staged` and `superseded` describe retained evidence, not a successful assertion. |
+
+A settled negative result or execution error remains unconfirmed. A settled
+operator supersession may have neither receipt nor proof; it does not manufacture
+execution. Queued pre-start cancellation may already have a non-execution proof.
+The queued finding reference never claims to be the latest finding version;
+retrieve current finding/history separately. Bounded validators reject unknown
+fields/states, inconsistent settlement/result combinations and reference/digest
+substitution. Domain receipt/proof checks reuse their identity inputs without
+fabricating a complete ModelFinding to satisfy a type signature.
 
 ## Export and read bounds
 

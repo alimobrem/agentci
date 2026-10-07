@@ -235,3 +235,20 @@ local Git hits versus159 remote blob fetches after memory caching:85.11% of
 1,068 memory-miss lookups avoided a remote blob fetch. This is one measured batch,
 not a total delivery acceleration claim. Evidence and prior failed attempts are
 retained in `delivery/acceptance/m3-hosted-git-seed-published-source.json`.
+
+## Maintaining source links without rewriting history
+
+After changing tracked tasks, phase ownership, API contracts or referenced evidence,
+run `node scripts/reconcile-acceptance.mjs`, then
+`node scripts/reconcile-acceptance.mjs --check`. CI now requires the check. Generation
+updates source links and `currentGateSnapshots`; it never promotes current
+candidate verification from `not-run` to passed.
+
+The captured M0–M3 audit observations are retained separately in
+`delivery/reconciliation/captured-gate-history.json` with an exact checksum guard.
+These include the earlier incomplete M3 snapshot. Regeneration must not replace
+that observation with newer scope, exceptions, criteria or results. Current ledgers
+remain visible separately, and new evidence retains its own source identity.
+Original requirement IDs, M0–M10 ownership, three adapter scope, phase demos and
+approved inaccessible-provider exceptions remain intact. Numerical proposals still
+require owner approval before becoming acceptance gates.

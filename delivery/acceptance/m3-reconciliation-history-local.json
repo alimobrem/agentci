@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "scope": "Audit regeneration integrity only, not new milestone acceptance",
+  "historicalGateSnapshotsUnchanged": true,
+  "capturedHistory": "sha256:cbb84e4480d8c30ebb208f21e6323fedaf024ca23c032c929a1e4937f4ea4663",
+  "sourceIds": 1346,
+  "phases": "M0–M10 preserved",
+  "tests": {
+    "passed": 2,
+    "skipped": 0,
+    "path": "/private/tmp/agentci-reconciliation-history-tests.log",
+    "digest": "sha256:4e89e97934a3ae5be7fa959419d555f2dfa19b0f98435a1171651548b5e585e5"
+  },
+  "failure": {
+    "path": "/private/tmp/agentci-reconciliation-pre-refresh.log",
+    "digest": "sha256:d26368e1a9abfbfb3ef734c995625d63aa0dac469349e2a6586bd98e9c709df6",
+    "reason": "Stale task/plan/API snapshot detected; regenerated current links separately from preserved capture"
+  },
+  "currentCandidate": "not-run",
+  "numericGatesAdopted": false
+}

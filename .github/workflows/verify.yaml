@@ -45,6 +45,8 @@ jobs:
       - run: npm ci
       - run: npm run check:fast
       - run: npm run check:api:compat
+      - name: Verify requirement reconciliation and captured history
+        run: node scripts/reconcile-acceptance.mjs --check
       - name: Verify frozen provider eval detects regressions
         run: mkdir -p releases && node scripts/verify-provider-eval.mjs > releases/provider-contract-eval.json
       - name: Verify reviewer eval rejects external dispatch from synthetic mode

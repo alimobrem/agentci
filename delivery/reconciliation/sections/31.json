@@ -156,8 +156,8 @@
         },
         {
           "id": "M3-07c-3",
-          "status": "not-started",
-          "startedAt": null,
+          "status": "in-progress",
+          "startedAt": "2026-10-06T03:26:03.947Z",
           "completedAt": null,
           "blockedReason": null,
           "deferral": null,
@@ -183,9 +183,227 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07c-3a",
+          "status": "done",
+          "startedAt": "2026-10-06T03:15:15.071Z",
+          "completedAt": "2026-10-06T04:32:13.656Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Controller-owned bounded immutable approval registry resolves strict caller selectors to exact current finding/version and approved queue successor, assertion inputs and runner policy. Reject unknown fields, changed digest/subject/version, duplicate registry IDs and mutated plans; detached outputs and invalid lifecycle cases remain safe. Document atomic queue/reservation/dispatch and real HTTP/PG/Temporal as dependent c3 acceptance, with no production route claim.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-a-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3b",
+          "status": "done",
+          "startedAt": "2026-10-06T03:26:04.209Z",
+          "completedAt": "2026-10-06T04:32:14.145Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real PostgreSQL proves full-selector replay, exact admitted-review membership, conflicting operation and stale-version rejection, and one atomic authorized queue event, immutable plan, operation receipt and dispatch intent. Concurrent duplicates and injected transaction failures cannot strand partial state. No production dispatcher or HTTP route is enabled; Temporal and customer transport remain original c3 acceptance.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-b-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3c",
+          "status": "done",
+          "startedAt": "2026-10-06T03:43:23.605Z",
+          "completedAt": "2026-10-06T04:46:41.309Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Review an explicit additive migration and typed source decision preserving legacy M2 stage/digest/comparison/export contracts and evaluator least privilege; no fabricated legacy evidence. Real PostgreSQL admission-only staging validates immutable plan/operation/admission lineage, replay, substitution, corruption and cancellation. Existing M2 persistence/lease/checkpoint/recovery and compatibility acceptance remain passing; no HTTP or production consumer activation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-staging-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3d-1",
+          "status": "done",
+          "startedAt": "2026-10-06T04:35:55.677Z",
+          "completedAt": "2026-10-06T05:14:45.600Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Explicit operator config revisions resolve exact retained finding/plan and trusted snapshots; durable apply uses CAS with revocation/expiry checks and no stale startup resurrection. Separate authenticated non-execution proof binds scope/plan/operation/version and keeps execution receipt null; never-staged cancellation can transition to unconfirmed/error and fresh authorized retry without rewriting execution evidence. Real PostgreSQL races/replay and additive history version compatibility pass; no HTTP or worker activation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-authority-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3d-2b-1",
+          "status": "done",
+          "startedAt": "2026-10-06T05:02:53.296Z",
+          "completedAt": "2026-10-06T06:00:53.954Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real PostgreSQL proves prepared immutable admission-backed inputs stage through the caller-owned transaction: injected final rejection and lost connection leave zero jobs/units, commit/replay preserves one typed job/unit, corruption/cancellation remain fenced. Existing standalone staging and legacy M2 contracts remain unchanged. No permission implementation, Temporal dispatch or public route is enabled; full consumer/recovery and released customer acceptance remain open.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-stage-transaction-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3d-2a",
+          "status": "done",
+          "startedAt": "2026-10-06T04:49:27.506Z",
+          "completedAt": "2026-10-06T05:34:30.333Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Scoped mutable dispatch state references immutable reproduction intents and binds immutable workflow/queue/subject/plan/operation identity with versioned authority snapshots per dispatch attempt. Real PostgreSQL verifies idempotent backfill, concurrent lease claims, expiry fencing, exact acknowledgement replay, conflicting run/identity rejection, durable cancellation causes, rollback and corrupted lineage rejection. Persistence only: no consumer, HTTP or Temporal activation; full c3 runtime/recovery acceptance remains open.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-dispatch-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3d-1b",
+          "status": "done",
+          "startedAt": "2026-10-06T04:51:08.174Z",
+          "completedAt": "2026-10-06T06:00:53.499Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real PostgreSQL trusted retention of never-staged cancellation produces receipt:null v2 evidence; authenticated real control HTTP and public agentci/client import from compiled and production-only installed package verify finding and paginated mixed v1/v2 history, auth/scope/future-version/substituted-proof rejection. Packaging CI runs installed acceptance while preserving legacy CLI/client/export smoke; no product activation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-installed-reader-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3d-2b",
+          "status": "done",
+          "startedAt": "2026-10-06T06:00:54.215Z",
+          "completedAt": "2026-10-07T15:01:55.535Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Explicit operator-owned catalog/config setup avoids bootstrap cycles; startup only reads an expected applied identity. Real PostgreSQL, Temporal and isolated evaluator prove admission-only positive/negative/error execution, exact historical approval with fresh permission/current queued-state fencing, one logical run across duplicate/ambiguous stale starts and prior-attempt adoption, cancellation/revocation/expiry/outages, worker/parent crashes and independent owned-child cleanup. Verified terminal execution and owned cleanup plus retained receipt/finding evidence settle lifecycle; completed evidence is never replaced, unavailable outcomes remain unverified, legacy workflows/API stay compatible and disabled startup preserves behavior. No public mutation routes or full customer/UI/release completion inferred; their original gates stay open.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-consumer-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3e-1",
+          "status": "in-progress",
+          "startedAt": "2026-10-07T15:04:17.398Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Shared typed admission/status/cancellation validators and fixed examples bind exact subject, review, operation, plan and queued-finding references. Acknowledgement is never execution success; settled cleanup does not imply a reproduced defect; never-staged proof stays verified:false with null receipt. Reuse domain receipt/proof validation without inventing findings, reject contradictory states, unknown fields and mismatched digests, and preserve immutable API baselines. This contract-only slice advertises no public route or completed customer/demo/release gate.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
+        {
+          "operationId": "ReproductionEvalStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "3ebaee1accc3c57f3c5561f32a2f014f19da8d58fb6c506ba83f7814abd83453",
+          "tests": [
+            "tests/integration/reproduction-staging.test.ts"
+          ],
+          "scenarios": [
+            "admission-only atomic staging and typed recovery with zero legacy review rows",
+            "exact approved file digests and SQL operation/plan/admission authority",
+            "unchanged evaluator grants checkpoint recovery and receipt execution",
+            "cancellation before and during staging fences unit dispatch",
+            "legacy M2 hash/comparison/export preserved and authenticated typed 409",
+            "missing migration fails closed and checksum mismatch rejects"
+          ]
+        },
+        {
+          "operationId": "loadReproductionConfig",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "3ebaee1accc3c57f3c5561f32a2f014f19da8d58fb6c506ba83f7814abd83453",
+          "tests": [
+            "tests/integration/reproduction-authority.test.ts"
+          ],
+          "scenarios": [
+            "exact immutable plan/finding/snapshot references",
+            "no caller executable configuration"
+          ]
+        },
+        {
+          "operationId": "ReproductionAuthorityStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "3ebaee1accc3c57f3c5561f32a2f014f19da8d58fb6c506ba83f7814abd83453",
+          "tests": [
+            "tests/integration/reproduction-authority.test.ts"
+          ],
+          "scenarios": [
+            "explicit CAS revision apply and immutable revocation",
+            "read-only startup matching expected identity",
+            "bounded permission and final database expiry fence"
+          ]
+        },
+        {
+          "operationId": "ReproductionNonExecutionStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "3ebaee1accc3c57f3c5561f32a2f014f19da8d58fb6c506ba83f7814abd83453",
+          "tests": [
+            "tests/integration/reproduction-authority.test.ts"
+          ],
+          "scenarios": [
+            "controller-only non-execution proof without staged job or execution receipt",
+            "serialized proof-versus-stage race",
+            "tampered authority rejection and completed receipt preservation"
+          ]
+        },
+        {
+          "operationId": "applyNonExecution",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "3ebaee1accc3c57f3c5561f32a2f014f19da8d58fb6c506ba83f7814abd83453",
+          "tests": [
+            "tests/integration/reproduction-authority.test.ts"
+          ],
+          "scenarios": [
+            "v1alpha2 unavailable action with receipt null",
+            "unconfirmed error disposition permits fresh approved retry",
+            "unknown future versions and mixed v1/v2 history checks"
+          ]
+        },
         {
           "operationId": "listReviewerProfiles",
           "path": "/v1/reviewer-profiles",
@@ -541,6 +759,8 @@
         }
       ],
       "testReferences": [
+        "tests/integration/reproduction-staging.test.ts",
+        "tests/integration/reproduction-authority.test.ts",
         "tests/model-review-api.test.ts",
         "tests/integration/model-review-api.test.ts",
         "tests/integration/model-review-control-startup.test.ts",
@@ -571,7 +791,7 @@
         },
         {
           "path": "docs/phases/m3-customer-api-contract.md",
-          "sha256": "1c61b3f35d5cbb812bd7addde31a77a055a7e35e8ec85e69cf6ea9dab49541be",
+          "sha256": "798ed208fdd286cd15eecf5aaf23a2410bd7884a22bd172c4465c8361e21deb4",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -584,6 +804,54 @@
         {
           "path": "delivery/acceptance/m3-07c-2-merged-read-export.json",
           "sha256": "cc6c98bc93eb0be1f8fd43b2e379e4f0659a061312244f96579e702d08305af6",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-a-merged.json",
+          "sha256": "9dae3e142e5741d726a76858fea8b112f5d51a4c9617db5a35396f3018c58a97",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-b-merged.json",
+          "sha256": "5f9eee96ed9be2499df6abfe87110a995ff3fc7d4655fce4d4dacb5283863176",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-staging-merged.json",
+          "sha256": "b223f15ff659033bd21fe89a921c62756190902f7b0790fe083489ae099e7529",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-authority-merged.json",
+          "sha256": "6a024e00e9142c8e3e526fb91c12bc5259c6fa8231e47bc8e39561ba86c19bcf",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-stage-transaction-merged.json",
+          "sha256": "ec1ad1e8aff93f094a7ce15096882bcefad1c7c50f4bcf360c0f00d8e725ae8d",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-dispatch-merged.json",
+          "sha256": "b57c13d1fa82225f777658bbc7ec3180f9dfc86599a4660293b98fe0fba89955",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-installed-reader-merged.json",
+          "sha256": "4b0535915b42f6a3190256ca6e4fbf7836f3e42222956956384aa60591ae0e15",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-consumer-merged.json",
+          "sha256": "04f16dae1b8fda828d7ec2cc459c517291c36f968f01101191e3111edfcfb1b9",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -801,8 +1069,8 @@
         },
         {
           "id": "M3-07c-3",
-          "status": "not-started",
-          "startedAt": null,
+          "status": "in-progress",
+          "startedAt": "2026-10-06T03:26:03.947Z",
           "completedAt": null,
           "blockedReason": null,
           "deferral": null,
@@ -828,9 +1096,227 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07c-3a",
+          "status": "done",
+          "startedAt": "2026-10-06T03:15:15.071Z",
+          "completedAt": "2026-10-06T04:32:13.656Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Controller-owned bounded immutable approval registry resolves strict caller selectors to exact current finding/version and approved queue successor, assertion inputs and runner policy. Reject unknown fields, changed digest/subject/version, duplicate registry IDs and mutated plans; detached outputs and invalid lifecycle cases remain safe. Document atomic queue/reservation/dispatch and real HTTP/PG/Temporal as dependent c3 acceptance, with no production route claim.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-a-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3b",
+          "status": "done",
+          "startedAt": "2026-10-06T03:26:04.209Z",
+          "completedAt": "2026-10-06T04:32:14.145Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real PostgreSQL proves full-selector replay, exact admitted-review membership, conflicting operation and stale-version rejection, and one atomic authorized queue event, immutable plan, operation receipt and dispatch intent. Concurrent duplicates and injected transaction failures cannot strand partial state. No production dispatcher or HTTP route is enabled; Temporal and customer transport remain original c3 acceptance.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-b-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3c",
+          "status": "done",
+          "startedAt": "2026-10-06T03:43:23.605Z",
+          "completedAt": "2026-10-06T04:46:41.309Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Review an explicit additive migration and typed source decision preserving legacy M2 stage/digest/comparison/export contracts and evaluator least privilege; no fabricated legacy evidence. Real PostgreSQL admission-only staging validates immutable plan/operation/admission lineage, replay, substitution, corruption and cancellation. Existing M2 persistence/lease/checkpoint/recovery and compatibility acceptance remain passing; no HTTP or production consumer activation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-staging-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3d-1",
+          "status": "done",
+          "startedAt": "2026-10-06T04:35:55.677Z",
+          "completedAt": "2026-10-06T05:14:45.600Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Explicit operator config revisions resolve exact retained finding/plan and trusted snapshots; durable apply uses CAS with revocation/expiry checks and no stale startup resurrection. Separate authenticated non-execution proof binds scope/plan/operation/version and keeps execution receipt null; never-staged cancellation can transition to unconfirmed/error and fresh authorized retry without rewriting execution evidence. Real PostgreSQL races/replay and additive history version compatibility pass; no HTTP or worker activation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-authority-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3d-2b-1",
+          "status": "done",
+          "startedAt": "2026-10-06T05:02:53.296Z",
+          "completedAt": "2026-10-06T06:00:53.954Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real PostgreSQL proves prepared immutable admission-backed inputs stage through the caller-owned transaction: injected final rejection and lost connection leave zero jobs/units, commit/replay preserves one typed job/unit, corruption/cancellation remain fenced. Existing standalone staging and legacy M2 contracts remain unchanged. No permission implementation, Temporal dispatch or public route is enabled; full consumer/recovery and released customer acceptance remain open.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-stage-transaction-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3d-2a",
+          "status": "done",
+          "startedAt": "2026-10-06T04:49:27.506Z",
+          "completedAt": "2026-10-06T05:34:30.333Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Scoped mutable dispatch state references immutable reproduction intents and binds immutable workflow/queue/subject/plan/operation identity with versioned authority snapshots per dispatch attempt. Real PostgreSQL verifies idempotent backfill, concurrent lease claims, expiry fencing, exact acknowledgement replay, conflicting run/identity rejection, durable cancellation causes, rollback and corrupted lineage rejection. Persistence only: no consumer, HTTP or Temporal activation; full c3 runtime/recovery acceptance remains open.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-dispatch-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3d-1b",
+          "status": "done",
+          "startedAt": "2026-10-06T04:51:08.174Z",
+          "completedAt": "2026-10-06T06:00:53.499Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real PostgreSQL trusted retention of never-staged cancellation produces receipt:null v2 evidence; authenticated real control HTTP and public agentci/client import from compiled and production-only installed package verify finding and paginated mixed v1/v2 history, auth/scope/future-version/substituted-proof rejection. Packaging CI runs installed acceptance while preserving legacy CLI/client/export smoke; no product activation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-installed-reader-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3d-2b",
+          "status": "done",
+          "startedAt": "2026-10-06T06:00:54.215Z",
+          "completedAt": "2026-10-07T15:01:55.535Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Explicit operator-owned catalog/config setup avoids bootstrap cycles; startup only reads an expected applied identity. Real PostgreSQL, Temporal and isolated evaluator prove admission-only positive/negative/error execution, exact historical approval with fresh permission/current queued-state fencing, one logical run across duplicate/ambiguous stale starts and prior-attempt adoption, cancellation/revocation/expiry/outages, worker/parent crashes and independent owned-child cleanup. Verified terminal execution and owned cleanup plus retained receipt/finding evidence settle lifecycle; completed evidence is never replaced, unavailable outcomes remain unverified, legacy workflows/API stay compatible and disabled startup preserves behavior. No public mutation routes or full customer/UI/release completion inferred; their original gates stay open.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-consumer-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3e-1",
+          "status": "in-progress",
+          "startedAt": "2026-10-07T15:04:17.398Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Shared typed admission/status/cancellation validators and fixed examples bind exact subject, review, operation, plan and queued-finding references. Acknowledgement is never execution success; settled cleanup does not imply a reproduced defect; never-staged proof stays verified:false with null receipt. Reuse domain receipt/proof validation without inventing findings, reject contradictory states, unknown fields and mismatched digests, and preserve immutable API baselines. This contract-only slice advertises no public route or completed customer/demo/release gate.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
+        {
+          "operationId": "ReproductionEvalStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "3ebaee1accc3c57f3c5561f32a2f014f19da8d58fb6c506ba83f7814abd83453",
+          "tests": [
+            "tests/integration/reproduction-staging.test.ts"
+          ],
+          "scenarios": [
+            "admission-only atomic staging and typed recovery with zero legacy review rows",
+            "exact approved file digests and SQL operation/plan/admission authority",
+            "unchanged evaluator grants checkpoint recovery and receipt execution",
+            "cancellation before and during staging fences unit dispatch",
+            "legacy M2 hash/comparison/export preserved and authenticated typed 409",
+            "missing migration fails closed and checksum mismatch rejects"
+          ]
+        },
+        {
+          "operationId": "loadReproductionConfig",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "3ebaee1accc3c57f3c5561f32a2f014f19da8d58fb6c506ba83f7814abd83453",
+          "tests": [
+            "tests/integration/reproduction-authority.test.ts"
+          ],
+          "scenarios": [
+            "exact immutable plan/finding/snapshot references",
+            "no caller executable configuration"
+          ]
+        },
+        {
+          "operationId": "ReproductionAuthorityStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "3ebaee1accc3c57f3c5561f32a2f014f19da8d58fb6c506ba83f7814abd83453",
+          "tests": [
+            "tests/integration/reproduction-authority.test.ts"
+          ],
+          "scenarios": [
+            "explicit CAS revision apply and immutable revocation",
+            "read-only startup matching expected identity",
+            "bounded permission and final database expiry fence"
+          ]
+        },
+        {
+          "operationId": "ReproductionNonExecutionStore",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "3ebaee1accc3c57f3c5561f32a2f014f19da8d58fb6c506ba83f7814abd83453",
+          "tests": [
+            "tests/integration/reproduction-authority.test.ts"
+          ],
+          "scenarios": [
+            "controller-only non-execution proof without staged job or execution receipt",
+            "serialized proof-versus-stage race",
+            "tampered authority rejection and completed receipt preservation"
+          ]
+        },
+        {
+          "operationId": "applyNonExecution",
+          "map": "specs/api/finding-operations.json",
+          "mapDigest": "3ebaee1accc3c57f3c5561f32a2f014f19da8d58fb6c506ba83f7814abd83453",
+          "tests": [
+            "tests/integration/reproduction-authority.test.ts"
+          ],
+          "scenarios": [
+            "v1alpha2 unavailable action with receipt null",
+            "unconfirmed error disposition permits fresh approved retry",
+            "unknown future versions and mixed v1/v2 history checks"
+          ]
+        },
         {
           "operationId": "listReviewerProfiles",
           "path": "/v1/reviewer-profiles",
@@ -1095,6 +1581,8 @@
         }
       ],
       "testReferences": [
+        "tests/integration/reproduction-staging.test.ts",
+        "tests/integration/reproduction-authority.test.ts",
         "tests/model-review-api.test.ts",
         "tests/integration/model-review-api.test.ts",
         "tests/integration/model-review-control-startup.test.ts",
@@ -1122,7 +1610,7 @@
         },
         {
           "path": "docs/phases/m3-customer-api-contract.md",
-          "sha256": "1c61b3f35d5cbb812bd7addde31a77a055a7e35e8ec85e69cf6ea9dab49541be",
+          "sha256": "798ed208fdd286cd15eecf5aaf23a2410bd7884a22bd172c4465c8361e21deb4",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -1135,6 +1623,54 @@
         {
           "path": "delivery/acceptance/m3-07c-2-merged-read-export.json",
           "sha256": "cc6c98bc93eb0be1f8fd43b2e379e4f0659a061312244f96579e702d08305af6",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-a-merged.json",
+          "sha256": "9dae3e142e5741d726a76858fea8b112f5d51a4c9617db5a35396f3018c58a97",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-b-merged.json",
+          "sha256": "5f9eee96ed9be2499df6abfe87110a995ff3fc7d4655fce4d4dacb5283863176",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-staging-merged.json",
+          "sha256": "b223f15ff659033bd21fe89a921c62756190902f7b0790fe083489ae099e7529",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-authority-merged.json",
+          "sha256": "6a024e00e9142c8e3e526fb91c12bc5259c6fa8231e47bc8e39561ba86c19bcf",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-stage-transaction-merged.json",
+          "sha256": "ec1ad1e8aff93f094a7ce15096882bcefad1c7c50f4bcf360c0f00d8e725ae8d",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-dispatch-merged.json",
+          "sha256": "b57c13d1fa82225f777658bbc7ec3180f9dfc86599a4660293b98fe0fba89955",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-installed-reader-merged.json",
+          "sha256": "4b0535915b42f6a3190256ca6e4fbf7836f3e42222956956384aa60591ae0e15",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-reproduction-consumer-merged.json",
+          "sha256": "04f16dae1b8fda828d7ec2cc459c517291c36f968f01101191e3111edfcfb1b9",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
