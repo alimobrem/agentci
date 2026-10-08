@@ -1,7 +1,7 @@
 # Model-review client and CLI: admission and evidence reads
 
 Development support for profile discovery, admission, status, cancellation, and
-finding evidence reads and certified export downloads. Reproduction and disposition commands remain pending later
+finding evidence reads and certified export downloads. Retained reproduction status/cancellation are available in development; reservation and disposition commands remain pending later
 M3-07c slices. This document does not declare M3 released.
 
 Keep the exact admission JSON used for submission. It contains the request UUID,
@@ -192,3 +192,18 @@ seven-reviewer snapshot and full finding history after a queue transition. See
 `delivery/acceptance/m3-07c-client-export.json` for the exact tested source and
 package. This does not claim packaged control deployment, live providers, hosted
 combined CI, or completion of M3.
+
+## Retained reproduction status and cancellation (M3-07c-4a development slice)
+
+These commands operate on an already-reserved reproduction; public reservation and disposition commands remain unfinished. Keep the original review admission and the complete captured reproduction reference supplied by the operator. The reference must contain exactly `schemaVersion`, `id`, `operationId`, `reviewId`, `subject`, `finding` (id, queuedVersion, digest), `planDigest` and `requestDigest`, matching the shared reproduction response contract. A status response includes additional state/evidence fields and is not itself a reference file. No client-generated commands, images, credentials or execution budgets belong in this file.
+
+```sh
+agentci finding reproduction-status --request admission.json --reproduction reference.json --config private-client.json
+agentci finding cancel-reproduction --request admission.json --reproduction reference.json --config private-client.json
+```
+
+The CLI bounds reference files to 8 KiB, rejects symlinks and validates their full shape and admission association. Existing private 0600 configuration/token file rules apply. Never put tokens in argv or the reference. Reads accept the reader or operator credential; cancellation requires the operator credential before any HTTP request. Exit 0 means a verified status read or a retained cancellation acknowledgement, not an assertion pass, verified cleanup or a guarantee execution has stopped. Errors exit 2 with a stable redacted code.
+
+The public `ModelReviewClient.reproductionStatus(admission, reference, {signal})` verifies the original admission then the complete response identity and retained evidence digests. `cancelReproduction(admission, reference, {signal})` preflights that status before posting an empty cancellation request. Both use one overall configured deadline across preflight, response bodies and retries; cancellation retries retain exactly the same ID and empty body. If a write has an ambiguous transport failure, use the same captured reference when retrying and inspect retained status. Caller abort cannot guarantee the server did not already retain cancellation. Late cancellation preserves actual observations; never-staged outcomes keep null execution receipt and unverified non-execution evidence.
+
+The real HTTP/PostgreSQL test uses compiled public exports and a compiled CLI. `scripts/reproduction-client-package-smoke.mjs` repeats it from a fresh production-only package install without a shipped development loader. These checks establish this development slice only. Reviewed prerequisite branches are still unmerged; full M3 customer, reservation/disposition, UI, release, publication/download and demo gates remain open.

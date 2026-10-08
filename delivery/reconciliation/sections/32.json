@@ -288,6 +288,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07c-4a",
+          "status": "blocked",
+          "startedAt": "2026-10-08T01:13:36.051Z",
+          "completedAt": null,
+          "blockedReason": "Local client/CLI HTTP/PostgreSQL and production-installed checks pass; exact published-source hosted CI and independent review remain pending. Evidence: delivery/acceptance/m3-reproduction-client-cli-cloud.json",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Typed public client and executable CLI pin original admission and complete reproduction reference before status/cancellation; verify authentic status/digests, bounded reads/retries/deadlines, operator preflight, redacted errors and exit codes. Real PostgreSQL/HTTP plus production-installed client and CLI cover pre-controller cancellation/restart/recovery. Preserve reviewed contracts/storage, no public reservation/disposition claim, no milestone acceptance inferred.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -362,10 +377,12 @@
           "operationId": "getFindingReproduction",
           "path": "/v1/finding-reproductions/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
-            "tests/reproduction-transport.test.ts"
+            "tests/reproduction-transport.test.ts",
+            "tests/model-reproduction-client.test.ts",
+            "tests/integration/model-reproduction-client.test.ts"
           ],
           "scenarios": [
             "Exact scoped review/plan/operation/queued-finding association",
@@ -373,17 +390,20 @@
             "Distinct queued, bound, acknowledged and verified settlement states",
             "Reader cannot cancel; operator cancellation is monotonic and survives restart/revocation",
             "Late cancellation preserves negative/error receipt and operator supersession",
-            "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors"
+            "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors",
+            "Production-installed public client and executable CLI pin entire reference, operator preflight and overall deadline; fresh-reservation cancellation/restart/non-execution recovery without controller backfill"
           ]
         },
         {
           "operationId": "cancelFindingReproduction",
           "path": "/v1/finding-reproductions/{id}/cancellation",
           "map": "specs/api/operations.json",
-          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
-            "tests/reproduction-transport.test.ts"
+            "tests/reproduction-transport.test.ts",
+            "tests/model-reproduction-client.test.ts",
+            "tests/integration/model-reproduction-client.test.ts"
           ],
           "scenarios": [
             "Exact scoped review/plan/operation/queued-finding association",
@@ -391,7 +411,8 @@
             "Distinct queued, bound, acknowledged and verified settlement states",
             "Reader cannot cancel; operator cancellation is monotonic and survives restart/revocation",
             "Late cancellation preserves negative/error receipt and operator supersession",
-            "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors"
+            "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors",
+            "Production-installed public client and executable CLI pin entire reference, operator preflight and overall deadline; fresh-reservation cancellation/restart/non-execution recovery without controller backfill"
           ]
         }
       ],
@@ -399,7 +420,9 @@
         "tests/integration/reproduction-staging.test.ts",
         "tests/integration/reproduction-authority.test.ts",
         "tests/integration/reproduction-http.test.ts",
-        "tests/reproduction-transport.test.ts"
+        "tests/reproduction-transport.test.ts",
+        "tests/model-reproduction-client.test.ts",
+        "tests/integration/model-reproduction-client.test.ts"
       ],
       "plannedPRs": [],
       "evidence": [
@@ -480,6 +503,11 @@
         {
           "task": "M3-07c-3e-2",
           "reason": "Pinned UBI registry returns Forbidden; applicable container verification, hosted exact-source CI and independent review remain pending. Local evidence: delivery/acceptance/m3-reproduction-http-cloud-local.json",
+          "deferral": null
+        },
+        {
+          "task": "M3-07c-4a",
+          "reason": "Local client/CLI HTTP/PostgreSQL and production-installed checks pass; exact published-source hosted CI and independent review remain pending. Evidence: delivery/acceptance/m3-reproduction-client-cli-cloud.json",
           "deferral": null
         }
       ],

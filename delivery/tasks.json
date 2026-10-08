@@ -2738,6 +2738,30 @@
         "M3-07c-3d-2b"
       ],
       "blockedReason": "Pinned UBI registry returns Forbidden; applicable container verification, hosted exact-source CI and independent review remain pending. Local evidence: delivery/acceptance/m3-reproduction-http-cloud-local.json"
+    },
+    {
+      "id": "M3-07c-4a",
+      "title": "Typed reproduction status and cancellation client/CLI",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3"
+      ],
+      "status": "blocked",
+      "startedAt": "2026-10-08T01:13:36.051Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Typed public client and executable CLI pin original admission and complete reproduction reference before status/cancellation; verify authentic status/digests, bounded reads/retries/deadlines, operator preflight, redacted errors and exit codes. Real PostgreSQL/HTTP plus production-installed client and CLI cover pre-controller cancellation/restart/recovery. Preserve reviewed contracts/storage, no public reservation/disposition claim, no milestone acceptance inferred.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-0"
+      ],
+      "blockedReason": "Local client/CLI HTTP/PostgreSQL and production-installed checks pass; exact published-source hosted CI and independent review remain pending. Evidence: delivery/acceptance/m3-reproduction-client-cli-cloud.json"
     }
   ]
 }

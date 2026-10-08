@@ -31,6 +31,8 @@ model-review findings --request ADMISSION_JSON [--limit PAGE_SIZE] [--config PRI
   Retrieve original-summary finding references, preserving pinned versions.
 finding show|history --request ADMISSION_JSON --id SHA256_ID [--config PRIVATE_JSON]
   Read current/historical findings or verified history; see finding --help.
+finding reproduction-status|cancel-reproduction --request ADMISSION_JSON --reproduction REFERENCE_JSON [--config PRIVATE_JSON]
+  Verify retained reproduction status or request operator cancellation.
 `;
 
 export async function main(args: string[]): Promise<number> {

@@ -113,7 +113,7 @@ jobs:
           PGPASSWORD: agentci-ci-only
           AGENTCI_TEST_TEMPORAL_ADDRESS: 127.0.0.1:7233
       - name: Package smoke and installed PostgreSQL readers
-        run: mkdir -p releases && npm pack --pack-destination releases && node scripts/package-smoke.mjs --postgres-readers
+        run: mkdir -p releases && npm pack --pack-destination releases && node scripts/package-smoke.mjs --postgres-readers && node scripts/reproduction-client-package-smoke.mjs
         env:
           AGENTCI_TEST_DATABASE_URL: postgresql://127.0.0.1:5432/agentci
           PGUSER: postgres
