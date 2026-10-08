@@ -334,7 +334,9 @@
       ],
       "tests": [
         "tests/integration/reproduction-http.test.ts",
-        "tests/reproduction-transport.test.ts"
+        "tests/reproduction-transport.test.ts",
+        "tests/model-reproduction-client.test.ts",
+        "tests/integration/model-reproduction-client.test.ts"
       ],
       "scenarios": [
         "Exact scoped review/plan/operation/queued-finding association",
@@ -342,7 +344,8 @@
         "Distinct queued, bound, acknowledged and verified settlement states",
         "Reader cannot cancel; operator cancellation is monotonic and survives restart/revocation",
         "Late cancellation preserves negative/error receipt and operator supersession",
-        "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors"
+        "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors",
+        "Production-installed public client and executable CLI pin entire reference, operator preflight and overall deadline; fresh-reservation cancellation/restart/non-execution recovery without controller backfill"
       ]
     },
     {
@@ -358,7 +361,9 @@
       ],
       "tests": [
         "tests/integration/reproduction-http.test.ts",
-        "tests/reproduction-transport.test.ts"
+        "tests/reproduction-transport.test.ts",
+        "tests/model-reproduction-client.test.ts",
+        "tests/integration/model-reproduction-client.test.ts"
       ],
       "scenarios": [
         "Exact scoped review/plan/operation/queued-finding association",
@@ -366,7 +371,8 @@
         "Distinct queued, bound, acknowledged and verified settlement states",
         "Reader cannot cancel; operator cancellation is monotonic and survives restart/revocation",
         "Late cancellation preserves negative/error receipt and operator supersession",
-        "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors"
+        "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors",
+        "Production-installed public client and executable CLI pin entire reference, operator preflight and overall deadline; fresh-reservation cancellation/restart/non-execution recovery without controller backfill"
       ]
     }
   ]

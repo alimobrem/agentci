@@ -1,3 +1,4 @@
+import {validateFindingReproductionAccepted,validateFindingReproductionStatus,validateFindingReproductionCancellation,type ReproductionReference,type FindingReproductionStatus,type FindingReproductionCancellation} from '../findings/reproduction-transport.ts';
 import {setTimeout as delay} from 'node:timers/promises';
 import {canonical, digest} from '../review/engine.ts';
 import {validateReviewAdmission, type ReviewAdmissionRequest} from '../reviewers/admission.ts';
@@ -134,6 +135,30 @@ export class ModelReviewClient {
     try {result = validateModelReviewCancellation(value);} catch {throw new AgentCIError('invalid-response');}
     if (result.id !== request.id) throw new AgentCIError('identity-mismatch');
     return result;
+  }
+  private reproductionReference(request:ReviewAdmissionRequest,value:ReproductionReference):ReproductionReference {
+    try {return validateFindingReproductionAccepted(value,{id:value.id,reviewId:request.id,subject:request.subject});}
+    catch {throw new AgentCIError('invalid-reproduction-reference');}
+  }
+  /** Verify retained status against the original admission and entire captured reference. */
+  async reproductionStatus(expected:ReviewAdmissionRequest,reference:ReproductionReference,options:{signal?:AbortSignal}={}):Promise<FindingReproductionStatus> {
+    const request=this.admission(expected),pin=this.reproductionReference(request,reference);
+    const signal=AbortSignal.any([AbortSignal.timeout(this.#timeoutMs),...(options.signal?[options.signal]:[])]);
+    await this.show(request,{signal});
+    const query=new URLSearchParams({reviewId:request.id});
+    const {value}=await this.request(`/v1/finding-reproductions/${pin.id}?${query}`,false,200,undefined,signal);
+    try {return validateFindingReproductionStatus(value,{...pin,findingId:pin.finding.id,queuedVersion:pin.finding.queuedVersion,queuedFindingDigest:pin.finding.digest});}
+    catch {throw new AgentCIError('invalid-response');}
+  }
+  /** Operator-only durable intent; no promise of stopping execution or passing the assertion. */
+  async cancelReproduction(expected:ReviewAdmissionRequest,reference:ReproductionReference,options:{signal?:AbortSignal}={}):Promise<FindingReproductionCancellation> {
+    if(!this.#operatorToken)throw new AgentCIError('operator-token-required');
+    const request=this.admission(expected),pin=this.reproductionReference(request,reference);
+    const signal=AbortSignal.any([AbortSignal.timeout(this.#timeoutMs),...(options.signal?[options.signal]:[])]);
+    await this.reproductionStatus(request,pin,{signal});
+    const {value}=await this.request(`/v1/finding-reproductions/${pin.id}/cancellation`,true,202,undefined,signal);
+    try {return validateFindingReproductionCancellation(value,pin.id);}
+    catch {throw new AgentCIError('invalid-response');}
   }
   private findingId(id: string): string {
     if (typeof id !== 'string' || !/^sha256:[a-f0-9]{64}$/.test(id)) throw new AgentCIError('invalid-request');

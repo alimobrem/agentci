@@ -449,7 +449,7 @@
       "evidence": [
         {
           "path": "cmd/agentci/main.ts",
-          "sha256": "6cd3f70a98a9cc806b552278896834009c38ad5e03436381f34c2e886193f00c",
+          "sha256": "54309a7b81dc415de809519c8dcd38e5fd6704d62f74784da41b95d844dda3a8",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -947,7 +947,7 @@
           "operationId": "healthz",
           "path": "/healthz",
           "map": "specs/api/operations.json",
-          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
           "tests": [
             "tests/control-api.test.ts"
           ],
@@ -959,7 +959,7 @@
           "operationId": "readyz",
           "path": "/readyz",
           "map": "specs/api/operations.json",
-          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
           "tests": [
             "tests/control-api.test.ts",
             "tests/client.test.ts"
@@ -974,7 +974,7 @@
           "operationId": "ingestGitHubWebhook",
           "path": "/v1/webhooks/github",
           "map": "specs/api/operations.json",
-          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
           "tests": [
             "tests/control-api.test.ts",
             "tests/integration/m1.test.ts"
@@ -1641,7 +1641,7 @@
           "operationId": "getEvidence",
           "path": "/v1/evidence/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
           "tests": [
             "tests/control-api.test.ts",
             "tests/integration/m1.test.ts",
@@ -3520,7 +3520,7 @@
           "operationId": "getEvalComparison",
           "path": "/v1/eval-comparisons/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/integration/eval-storage.test.ts"
@@ -3540,7 +3540,7 @@
           "operationId": "exportEvalComparison",
           "path": "/v1/eval-comparisons/{id}/export",
           "map": "specs/api/operations.json",
-          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/eval-export.test.ts",
@@ -5066,7 +5066,7 @@
           "operationId": "getEvalComparison",
           "path": "/v1/eval-comparisons/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/integration/eval-storage.test.ts"
@@ -5086,7 +5086,7 @@
           "operationId": "exportEvalComparison",
           "path": "/v1/eval-comparisons/{id}/export",
           "map": "specs/api/operations.json",
-          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/eval-export.test.ts",
@@ -5910,10 +5910,12 @@
           "operationId": "getFindingReproduction",
           "path": "/v1/finding-reproductions/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
-            "tests/reproduction-transport.test.ts"
+            "tests/reproduction-transport.test.ts",
+            "tests/model-reproduction-client.test.ts",
+            "tests/integration/model-reproduction-client.test.ts"
           ],
           "scenarios": [
             "Exact scoped review/plan/operation/queued-finding association",
@@ -5921,17 +5923,20 @@
             "Distinct queued, bound, acknowledged and verified settlement states",
             "Reader cannot cancel; operator cancellation is monotonic and survives restart/revocation",
             "Late cancellation preserves negative/error receipt and operator supersession",
-            "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors"
+            "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors",
+            "Production-installed public client and executable CLI pin entire reference, operator preflight and overall deadline; fresh-reservation cancellation/restart/non-execution recovery without controller backfill"
           ]
         },
         {
           "operationId": "cancelFindingReproduction",
           "path": "/v1/finding-reproductions/{id}/cancellation",
           "map": "specs/api/operations.json",
-          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
-            "tests/reproduction-transport.test.ts"
+            "tests/reproduction-transport.test.ts",
+            "tests/model-reproduction-client.test.ts",
+            "tests/integration/model-reproduction-client.test.ts"
           ],
           "scenarios": [
             "Exact scoped review/plan/operation/queued-finding association",
@@ -5939,13 +5944,16 @@
             "Distinct queued, bound, acknowledged and verified settlement states",
             "Reader cannot cancel; operator cancellation is monotonic and survives restart/revocation",
             "Late cancellation preserves negative/error receipt and operator supersession",
-            "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors"
+            "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors",
+            "Production-installed public client and executable CLI pin entire reference, operator preflight and overall deadline; fresh-reservation cancellation/restart/non-execution recovery without controller backfill"
           ]
         }
       ],
       "testReferences": [
         "tests/integration/reproduction-http.test.ts",
-        "tests/reproduction-transport.test.ts"
+        "tests/reproduction-transport.test.ts",
+        "tests/model-reproduction-client.test.ts",
+        "tests/integration/model-reproduction-client.test.ts"
       ],
       "plannedPRs": [
         {
@@ -9657,7 +9665,7 @@
       "evidence": [
         {
           "path": "cmd/agentci/main.ts",
-          "sha256": "6cd3f70a98a9cc806b552278896834009c38ad5e03436381f34c2e886193f00c",
+          "sha256": "54309a7b81dc415de809519c8dcd38e5fd6704d62f74784da41b95d844dda3a8",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

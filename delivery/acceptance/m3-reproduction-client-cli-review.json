@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-4a",
+  "recordedAt": "2026-10-08T01:39:36.934150+00:00",
+  "reviewedOriginalHead": "5695e7c1fa8128ac2af9dd8fd895fd219507b4b3",
+  "fixedSourceCommit": "23ece14c9cbc87e17ddfd54e8510f52fb8fa054f",
+  "fixedSourceTree": "18f86ecc4f6975ac0503e03d86154b1176d6018a",
+  "independentReview": {
+    "reviewerContext": "/root/client_review",
+    "finding": "P2: reproduction reference FIFO blocks O_RDONLY open before fstat, preventing documented CLI error/deadline",
+    "fix": "O_NONBLOCK before descriptor regular-file validation",
+    "closed": true,
+    "remainingBlockingFindings": 0,
+    "scope": "Actual patch/source/tests/public declarations and independent production-installed runtime; not author self-validation"
+  },
+  "validation": {
+    "fastChecks": 10,
+    "productionInstalledRealPostgres": {
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0,
+      "checks": [
+        "Both commands reject FIFO without writer with exit2, structured invalid-reproduction-reference-file, empty stdout, no cancellation mutation",
+        "No installed development loader; public compiled export/CLI"
+      ]
+    },
+    "logs": [
+      {
+        "path": "/workspace/scratch/client-review-fifo-20261008.log",
+        "sha256": "0793e45986779024a9348a1fc5cff0601291c7a4afe2ac0c4a483a48d43ea4ab"
+      },
+      {
+        "path": "/workspace/scratch/client-review-unit-20261008.log",
+        "sha256": "a3366e2f70f58fbc81aabefd80026b8bfa96d20f41a8e0a13aeacd284e1158a3"
+      },
+      {
+        "path": "/workspace/scratch/client-review-package-20261008.log",
+        "sha256": "180d020aad9c0f964be530eb41575c9668f74d3b33d18ef0c688b35edd97b12d"
+      },
+      {
+        "path": "/workspace/scratch/client-fifo-fast.log",
+        "sha256": "6075f70998cb66ff6993984b941fa6546239c6a00511c18a850e29c53846aad3"
+      },
+      {
+        "path": "/workspace/scratch/client-fifo-installed.log",
+        "sha256": "c4d40b042f36ed16375a631f8f70a9a992e9fb51a939872ecad534bdfb6da9ea"
+      },
+      {
+        "path": "/workspace/scratch/client-review-fifo-fixed-package-20261008.log",
+        "sha256": "0c8580b148e69f69836b227a7c282ad46002abed57c585733d7b2cdf1db68e85"
+      }
+    ]
+  },
+  "coverageLimits": [
+    "Queued/settled non-execution states installed; other frozen states unit fixtures",
+    "No newly established cross-tenant PostgreSQL isolation or running-execution cancellation acceptance",
+    "Live external model providers not exercised"
+  ],
+  "state": "blocked-publication-approval-and-hosted-ci-pending",
+  "publication": {
+    "remoteCommitOrBranchOrPRCreated": false,
+    "automaticApprovalRejectedAction": "github_create_blob delivery/task-events.jsonl",
+    "reason": "No trusted user publication authorization overriding prior prohibition; parent requested bundled approval, actual response pending",
+    "retriesAfterRejection": 0
+  },
+  "phaseAcceptance": "No task/phase/release acceptance promoted; original M0-M10 and three adapters preserved"
+}

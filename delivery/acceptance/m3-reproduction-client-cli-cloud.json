@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-4a",
+  "state": "blocked-hosted-ci-and-independent-review-pending",
+  "recordedAt": "2026-10-08T01:20:18.258604+00:00",
+  "sourceCommit": "93be921d09b98bb00f96ff13c5c86701301d389b",
+  "sourceTree": "f1d1b302d55ce398812472da52c4abe81ce8c6d5",
+  "stackedPrerequisite": "0035c5bc6b9f174416ff081e729629535c231cae",
+  "scope": "Typed public reproductionStatus/cancelReproduction and executable finding reproduction-status/cancel-reproduction require original admission plus complete captured reference; operator-before-I/O, identity preflight, overall deadline, bounds, exact empty-body retries and truthful acknowledgement. Shared validators/server/storage remain unchanged.",
+  "fileDigests": [
+    {
+      "path": ".github/workflows/verify.yaml",
+      "sha256": "7d456993603c2143e33c958a0ae74fe27decba023a10bb6f0b0a9606cd09d1d2"
+    },
+    {
+      "path": "cmd/agentci/finding.ts",
+      "sha256": "dbb4535f250a7046d5a01b99c5fdc61627f3948140097818ebd822a9f91e39b6"
+    },
+    {
+      "path": "cmd/agentci/main.ts",
+      "sha256": "54309a7b81dc415de809519c8dcd38e5fd6704d62f74784da41b95d844dda3a8"
+    },
+    {
+      "path": "cmd/agentci/model-review.ts",
+      "sha256": "064a48c2b30a8f75a96ce499e6af172b41a94ffb84af1e997bcc2a3106a61503"
+    },
+    {
+      "path": "delivery/reconciliation/requirement-test-evidence.json",
+      "sha256": "388e8f0ab3a7a208edb9f32c991dca4b911d0e405e7c4412fa7ab263f2d504d9"
+    },
+    {
+      "path": "delivery/reconciliation/sections/12.json",
+      "sha256": "2d222a8a8640d3c31de3158e22ceefac7860d4f91e343440bb79b3965c90c57a"
+    },
+    {
+      "path": "delivery/reconciliation/sections/31.json",
+      "sha256": "033ef4ee394389fa38f30c03f3246e875baeff9bdd424be10778044fdb0bdb26"
+    },
+    {
+      "path": "delivery/reconciliation/sections/32.json",
+      "sha256": "d86f7587693b1302fede7c3543ee6dca3d1a2a49c8e2ef16d51570bc1c3eac78"
+    },
+    {
+      "path": "delivery/reconciliation/sections/40.json",
+      "sha256": "0be2ad3a59ea0262fc1237c9ac3a3d0693e25930f78f378725305bb8f0a4e472"
+    },
+    {
+      "path": "delivery/task-events.jsonl",
+      "sha256": "19a641120e1226f1a6db19e2598f7c47b5ea24bb9e8e2e9455a2fe0c3bf3ddf4"
+    },
+    {
+      "path": "delivery/tasks.json",
+      "sha256": "8d112950845810a1916fad69a0fa4ea992e97bf69f21e30325fc26f33d7e29d0"
+    },
+    {
+      "path": "docs/phases/m3-model-review-client.md",
+      "sha256": "bb52ce4885fde4d3c63e9cc0c806f9ff188e3b57192851af61cea195b76dd714"
+    },
+    {
+      "path": "packages/client/index.ts",
+      "sha256": "f15350426bb7835fa731635429c9d6f6d1ee82065bebeb9c87b41dc1667b2401"
+    },
+    {
+      "path": "packages/client/model-review.ts",
+      "sha256": "01dd0038725b29fb260bc7188b590b3d1e6a852f5f4ad41894dfa4a2dae8fc08"
+    },
+    {
+      "path": "scripts/reproduction-client-package-smoke.mjs",
+      "sha256": "24c0a1d1c380e71a3860a207443d56b365db19a4c8b2c975949ae145b3f06517"
+    },
+    {
+      "path": "specs/api/operations.json",
+      "sha256": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1"
+    },
+    {
+      "path": "tests/integration/model-reproduction-client.test.ts",
+      "sha256": "95e1f6bbf513c1a4d9e1e38503f3d5390568e9aac5ce9d42d1522958877077ac"
+    },
+    {
+      "path": "tests/model-reproduction-client.test.ts",
+      "sha256": "8850dcfa1ae3196c899e9447c5525b71543a5daee1b41ad6748578c79a858c76"
+    }
+  ],
+  "verification": {
+    "fastChecks": 10,
+    "unitTests": 421,
+    "realHttpPostgresChecks": 12,
+    "newCompiledClientCliChecks": 1,
+    "newProductionInstalledClientCliChecks": 1,
+    "existingProductionInstalledChecks": 14,
+    "skipped": 0,
+    "failed": 0,
+    "apiCompatibility": "released M1/M2 baselines and negative endpoint removals passed",
+    "workflow": "actionlint plus context negatives passed",
+    "reconciliation": "1346 originalIDs29fencedchildrenM0-M10preserved"
+  },
+  "logs": [
+    {
+      "path": "/workspace/scratch/client-focused.log",
+      "sha256": "ceda23e8b3d6354baadc1c2ec2a880d250f54fcc4f8d82708ebd248d1d6c1c4c"
+    },
+    {
+      "path": "/workspace/scratch/client-roundtrip.log",
+      "sha256": "3f869f6c8d53f509a36c07af958d1e03f11e233eb3a326b9c0b137c068ef6609"
+    },
+    {
+      "path": "/workspace/scratch/client-package.log",
+      "sha256": "cdd48d53909dfd0faf99e99bb99444c61a6c31c1ac617cd0232cedf66179fb6e"
+    },
+    {
+      "path": "/workspace/scratch/client-package-regression.log",
+      "sha256": "dd3fbc7ec507fd1afbe6951b8f5c3c930cb8ea9497758c8ae47491388f6fc9f9"
+    },
+    {
+      "path": "/workspace/scratch/client-integration.log",
+      "sha256": "d39acbacc910f035d03e44417b2595dc51f5edd09f560aeb7e1e4d8a37f71268"
+    },
+    {
+      "path": "/workspace/scratch/client-clean-fast.log",
+      "sha256": "86a0fc180421a024f2875f96c47ab126b5d4ea434854ce037dd3aae200562e1a"
+    },
+    {
+      "path": "/workspace/scratch/client-api.log",
+      "sha256": "00b31dc07f335770bb136ab4c853f2bc4bb608c9cdb6d4c94ae42663181f40cf"
+    },
+    {
+      "path": "/workspace/scratch/client-workflows.log",
+      "sha256": "cbb6627c6fbc680c66ab4c6145487e3ca5caebc34c37941cdeb736e70e4b2284"
+    },
+    {
+      "path": "/workspace/scratch/client-reconciliation.log",
+      "sha256": "3c655087d3e415beeae76d42e7aa0390cb2b1f5f8e30976b0de71ba65d44fc1b"
+    }
+  ],
+  "failedAttemptsRetained": [
+    "Initial typecheck detected two CLI narrowing errors after adding command variants; fixed non-null assertions after validated argument gate. No production assertion was removed."
+  ],
+  "independentReview": "Required, not author self-validation",
+  "artifactAccess": "Previous PR69/70 ZIP download403 is file-reference transfer, not GitHub download API denial. Exact request, artifact names/IDs/digests, applicable clauses and supported user upload handoff retained in /workspace/scratch/agentci-artifact-access-handoff.json. No alternative route/credential attempted.",
+  "phaseLimits": [
+    "Reviewed prerequisite branches remain unmerged",
+    "No public reservation/disposition client or route claimed",
+    "Full M3 customer/UI/download/release/demo/recovery gates remain pending",
+    "Threeadapters and original M0-M10 order retained",
+    "Only inaccessible external-model-provider validation may be deferred under approved exception",
+    "No merge/deploy/access expansion/paid service authorized"
+  ]
+}

@@ -60,7 +60,7 @@ Credentials come from private 0600 config/token files, or AGENTCI_API_URL with
 AGENTCI_EVIDENCE_TOKEN for reads and AGENTCI_OPERATOR_TOKEN for mutations.
 The operator token also permits reads. Tokens must differ; never pass tokens in argv.
 Exit 0 means the operation succeeded, not that a review passed; errors exit 2.
-Use agentci finding --help for current findings and history. Reproduction remains pending.`);
+Use agentci finding --help for current findings and history. Use finding reproduction-status/cancel-reproduction for retained work. New reservation remains pending.`);
     return 0;
   }
   try {

@@ -9,6 +9,7 @@ import {EvalExportVerifier,ExportIdentityMismatch,MAX_EXPORT_FRAME_BYTES,type Ex
 export {ModelReviewClient, type ModelReviewClientOptions, type ModelReviewReadOptions, type ModelReviewExportOutput} from './model-review.ts';
 export type {ModelReviewFindings, ModelFindingHistory} from '../reviewers/finding-transport.ts';
 export type {ModelReviewExportHeader, ModelReviewExportFrame} from '../reviewers/export.ts';
+export type {ReproductionReference,FindingReproductionStatus,FindingReproductionCancellation} from '../findings/reproduction-transport.ts';
 export type {FindingHistoryRecord} from '../findings/history.ts';
 export type {ReviewAdmissionRequest} from '../reviewers/admission.ts';
 export type {ModelReviewAccepted, ModelReviewStatus, ModelReviewCancellation, ReviewerProfileList} from '../reviewers/transport.ts';
