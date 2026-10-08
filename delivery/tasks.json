@@ -2800,7 +2800,7 @@
         "SECTION-12.4",
         "SECTION-12.5"
       ],
-      "status": "in-progress",
+      "status": "blocked",
       "startedAt": "2026-10-08T02:33:35.525Z",
       "completedAt": null,
       "acceptance": [
@@ -2812,7 +2812,8 @@
       ],
       "dependsOn": [
         "M3-07c-2"
-      ]
+      ],
+      "blockedReason": "Local immutable receipt/disposition route, client and CLI, PostgreSQL failure/recovery and nine production-installed tests plus independent review pass. Exact-source hosted CI/physical isolation remain pending; local immutable UBI runner unavailable. No publication or aggregate phase acceptance claimed."
     }
   ]
 }
