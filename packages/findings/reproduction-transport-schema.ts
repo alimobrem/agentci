@@ -6,6 +6,8 @@ const reference={schemaVersion:{type:'string',enum:['v1alpha1']},id:uuid,operati
 // receipt actor, exact subject and all cross-field integrity constraints.
 const historyEvent=(findingOpenApiSchemas.FindingHistoryRecord.properties.event as {oneOf:{properties:{receipt:Record<string,unknown>}}[]}).oneOf[0]!;
 export const reproductionOpenApiSchemas={
+ FindingDispositionRequest:object({schemaVersion:reference.schemaVersion,reviewId:uuid,subject:reference.subject,expectedVersion:{type:'integer',minimum:1,maximum:9999},operationId:uuid,disposition:{type:'string',enum:['false-positive','resolved']},reason:{type:'string',minLength:1,maxLength:4096},evidenceDigest:hash}),
+ FindingDispositionError:object({error:object({code:{type:'string',enum:['invalid-request','unauthorized','forbidden','not-found','method-not-allowed','idempotency-conflict','version-conflict','invalid-transition','body-too-large','unsupported-media-type','unsupported-content-encoding','service-unavailable']}})}),
  FindingReproductionError:object({error:object({code:{type:'string',enum:['invalid-request','unauthorized','forbidden','reproduction-denied','not-found','method-not-allowed','idempotency-conflict','version-conflict','approval-conflict','body-too-large','unsupported-media-type','unsupported-content-encoding','service-unavailable']}})}),
  FindingReproductionAccepted:object(reference),
  FindingReproductionRequest:object({schemaVersion:reference.schemaVersion,reviewId:uuid,subject:reference.subject,expectedVersion:{type:'integer',minimum:1,maximum:9998},operationId:uuid,approvalId:uuid,approvalDigest:hash}),

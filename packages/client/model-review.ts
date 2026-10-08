@@ -1,3 +1,4 @@
+import {validateFindingDispositionRequest,operatorDispositionReceipt,operatorDispositionReceiptId,type FindingDispositionRequest} from '../findings/disposition-transport.ts';
 import {validateFindingReproductionRequest,type FindingReproductionRequest,validateFindingReproductionAccepted,validateFindingReproductionStatus,validateFindingReproductionCancellation,type ReproductionReference,type FindingReproductionStatus,type FindingReproductionCancellation} from '../findings/reproduction-transport.ts';
 import {setTimeout as delay} from 'node:timers/promises';
 import {canonical, digest} from '../review/engine.ts';
@@ -135,6 +136,16 @@ export class ModelReviewClient {
     try {result = validateModelReviewCancellation(value);} catch {throw new AgentCIError('invalid-response');}
     if (result.id !== request.id) throw new AgentCIError('identity-mismatch');
     return result;
+  }
+  async setFindingDisposition(expected:ReviewAdmissionRequest,findingId:string,input:FindingDispositionRequest,options:{signal?:AbortSignal}={}):Promise<FindingHistoryRecord> {
+    if(!this.#operatorToken)throw new AgentCIError('operator-token-required');
+    const admission=this.admission(expected);this.findingId(findingId);let request:FindingDispositionRequest;
+    try{request=validateFindingDispositionRequest(input);if(request.reviewId!==admission.id||canonical(request.subject)!==canonical(admission.subject))throw Error();}catch{throw new AgentCIError('invalid-request');}
+    const signal=AbortSignal.any([AbortSignal.timeout(this.#timeoutMs),...(options.signal?[options.signal]:[])]);await this.show(admission,{signal});
+    const {value}=await this.request(`/v1/findings/${encodeURIComponent(findingId)}/dispositions`,true,200,JSON.stringify(request),signal);
+    try{const result=validateFindingHistoryRecord(value,request.subject),action={type:request.disposition==='resolved'?'resolve':'false-positive',receiptId:operatorDispositionReceiptId(request.operationId)};
+      if(result.event.finding.id!==findingId||result.event.finding.version!==request.expectedVersion+1||result.event.operationId!==request.operationId||canonical(result.event.action)!==canonical(action)||canonical(result.event.receipt)!==canonical(operatorDispositionReceipt(request,findingId))||result.event.inputDigest!==digest(canonical({id:findingId,subject:request.subject,action,expectedVersion:request.expectedVersion})))throw Error();return result;
+    }catch{throw new AgentCIError('invalid-response');}
   }
   async reserveReproduction(expected:ReviewAdmissionRequest,findingId:string,input:FindingReproductionRequest,options:{signal?:AbortSignal}={}):Promise<ReproductionReference> {
     if(!this.#operatorToken)throw new AgentCIError('operator-token-required');

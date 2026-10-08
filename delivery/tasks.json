@@ -2788,6 +2788,31 @@
         "M3-07c-3d-2b"
       ],
       "blockedReason": "Local reservation/client/CLI, 33 PostgreSQL checks, 5 production-installed tests, compatibility and independent review pass. Exact-new-source hosted CI/physical isolation remain pending; local immutable UBI runner unavailable. No new publication/phase acceptance claimed."
+    },
+    {
+      "id": "M3-07c-3g",
+      "title": "Authenticated retained operator receipts and disposition transport/client",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3",
+        "SECTION-12.4",
+        "SECTION-12.5"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-08T02:33:35.525Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Operator-only disposition produces authenticated immutable receipt from validated operator input, binds original review/subject/finding/version/operation, and retains receipt plus lifecycle event in one transaction. Trusted reader rejects substituted/corrupt/cross-scope receipts; concurrent exact replay preserves original outcome after later history; invalid transitions/conflicts and transaction failures leave no partial mutation. Typed client and CLI plus real PostgreSQL/HTTP and production-installed tests verify bounded/auth/identity/error/recovery behavior. Original M1/M2 contracts and no consensus-only confirmation remain intact. Hosted CI/isolation and aggregate M3 transport/phase gates remain separate.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-2"
+      ]
     }
   ]
 }

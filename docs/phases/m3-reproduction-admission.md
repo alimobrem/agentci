@@ -37,9 +37,8 @@ Private no-store responses expose bounded stable errors only. FIFO/symlink or
 oversized input files fail with structured exit-2 errors. Existing read/status/
 cancellation commands and immutable M1/M2 compatibility baselines remain intact.
 
-This slice does not expose disposition mutations. Those require a production
-controller-owned authenticated operator-receipt store/reader before lifecycle
-transitions can be served. Installed package, hosted physical isolation, exact-
+The reservation slice is followed by [operator dispositions](m3-finding-dispositions.md),
+which retain authenticated operator receipts and lifecycle transitions atomically. Installed package, hosted physical isolation, exact-
 source CI, independent evidence acceptance, customer flows, UI and all M3 release
 gates remain distinct requirements. Live external-provider validation alone may
 remain explicitly deferred under the approved exception.

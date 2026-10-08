@@ -2060,6 +2060,141 @@
           }
         }
       }
+    },
+    "/v1/findings/{id}/dispositions": {
+      "post": {
+        "operationId": "setFindingDisposition",
+        "summary": "Retain an authenticated operator disposition",
+        "description": "Operator-only bounded false-positive/resolved attestation against the original review and exact finding version. Immutable operator receipt and lifecycle event commit together. Exact replay preserves original outcome after later history; digest alone grants no authority. Confirmation cannot be requested.",
+        "security": [
+          {
+            "ModelReviewOperator": []
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingDispositionError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingDispositionError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingDispositionError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingDispositionError"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingDispositionError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingDispositionError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingDispositionError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingDispositionError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingDispositionError"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Original immutable disposition event, including on exact replay",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingHistoryRecord"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindingDispositionRequest"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -6737,6 +6872,127 @@
                   "idempotency-conflict",
                   "version-conflict",
                   "approval-conflict",
+                  "body-too-large",
+                  "unsupported-media-type",
+                  "unsupported-content-encoding",
+                  "service-unavailable"
+                ]
+              }
+            },
+            "required": [
+              "code"
+            ]
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "FindingDispositionRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "type": "string",
+            "enum": [
+              "v1alpha1"
+            ]
+          },
+          "reviewId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "subject": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "organizationId": {
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$"
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+                "maxLength": 256
+              },
+              "pullRequest": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "baseSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              },
+              "headSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              }
+            },
+            "required": [
+              "organizationId",
+              "repository",
+              "pullRequest",
+              "baseSha",
+              "headSha"
+            ]
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9999
+          },
+          "operationId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "false-positive",
+              "resolved"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "evidenceDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "reviewId",
+          "subject",
+          "expectedVersion",
+          "operationId",
+          "disposition",
+          "reason",
+          "evidenceDigest"
+        ]
+      },
+      "FindingDispositionError": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string",
+                "enum": [
+                  "invalid-request",
+                  "unauthorized",
+                  "forbidden",
+                  "not-found",
+                  "method-not-allowed",
+                  "idempotency-conflict",
+                  "version-conflict",
+                  "invalid-transition",
                   "body-too-large",
                   "unsupported-media-type",
                   "unsupported-content-encoding",
