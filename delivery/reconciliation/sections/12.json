@@ -2370,7 +2370,7 @@
           "operationId": "listReviewFindings",
           "path": "/v1/model-reviews/{id}/findings",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -2394,7 +2394,7 @@
           "operationId": "getFinding",
           "path": "/v1/findings/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -2417,7 +2417,7 @@
           "operationId": "getFindingHistory",
           "path": "/v1/findings/{id}/history",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -2563,7 +2563,7 @@
         },
         {
           "path": "docs/phases/m3-customer-api-contract.md",
-          "sha256": "798ed208fdd286cd15eecf5aaf23a2410bd7884a22bd172c4465c8361e21deb4",
+          "sha256": "7ba0998710d79846eef6b4c7185f4feb2690b41f3708587fa9a58202b977311e",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -2944,7 +2944,7 @@
           "operationId": "listReviewFindings",
           "path": "/v1/model-reviews/{id}/findings",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -2968,7 +2968,7 @@
           "operationId": "getFinding",
           "path": "/v1/findings/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -2991,7 +2991,7 @@
           "operationId": "getFindingHistory",
           "path": "/v1/findings/{id}/history",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -3342,6 +3342,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07c-3e-2",
+          "status": "blocked",
+          "startedAt": "2026-10-08T00:16:55.647Z",
+          "completedAt": null,
+          "blockedReason": "Pinned UBI registry returns Forbidden; applicable container verification, hosted exact-source CI and independent review remain pending. Local evidence: delivery/acceptance/m3-reproduction-http-cloud-local.json",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real HTTP and PostgreSQL expose coherent scoped status for already-reserved reproduction IDs with exact review association, immutable plan/operation/finding references, retained receipt or never-staged proof and verified settlement. Reader credentials cannot mutate; operator cancellation durably reaches independent recovery, remains idempotent after restart and preserves late completed evidence. Reject corrupt/substituted references, unknown/repeated queries and bodies with bounded redacted errors; maintain released API baselines and production package startup. This transport slice cannot create reservations; admission/client/customer/UI/release acceptance remain open.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -3580,7 +3595,7 @@
           "operationId": "listReviewFindings",
           "path": "/v1/model-reviews/{id}/findings",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -3604,7 +3619,7 @@
           "operationId": "getFinding",
           "path": "/v1/findings/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -3627,7 +3642,7 @@
           "operationId": "getFindingHistory",
           "path": "/v1/findings/{id}/history",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -3644,6 +3659,42 @@
             "Immutable summary version differs explicitly from current finding",
             "Signed cursor binds scope and retained watermark; every page authenticates",
             "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "getFindingReproduction",
+          "path": "/v1/finding-reproductions/{id}",
+          "map": "specs/api/operations.json",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "tests": [
+            "tests/integration/reproduction-http.test.ts",
+            "tests/reproduction-transport.test.ts"
+          ],
+          "scenarios": [
+            "Exact scoped review/plan/operation/queued-finding association",
+            "Coherent PostgreSQL snapshot with authenticated retained history and receipt/proof",
+            "Distinct queued, bound, acknowledged and verified settlement states",
+            "Reader cannot cancel; operator cancellation is monotonic and survives restart/revocation",
+            "Late cancellation preserves negative/error receipt and operator supersession",
+            "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors"
+          ]
+        },
+        {
+          "operationId": "cancelFindingReproduction",
+          "path": "/v1/finding-reproductions/{id}/cancellation",
+          "map": "specs/api/operations.json",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "tests": [
+            "tests/integration/reproduction-http.test.ts",
+            "tests/reproduction-transport.test.ts"
+          ],
+          "scenarios": [
+            "Exact scoped review/plan/operation/queued-finding association",
+            "Coherent PostgreSQL snapshot with authenticated retained history and receipt/proof",
+            "Distinct queued, bound, acknowledged and verified settlement states",
+            "Reader cannot cancel; operator cancellation is monotonic and survives restart/revocation",
+            "Late cancellation preserves negative/error receipt and operator supersession",
+            "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors"
           ]
         }
       ],
@@ -3663,7 +3714,9 @@
         "tests/integration/model-finding-read-bounds.test.ts",
         "tests/integration/model-review-control-startup.test.ts",
         "tests/model-finding-history-adversarial.test.ts",
-        "tests/model-finding-cursor-adversarial.test.ts"
+        "tests/model-finding-cursor-adversarial.test.ts",
+        "tests/integration/reproduction-http.test.ts",
+        "tests/reproduction-transport.test.ts"
       ],
       "plannedPRs": [
         {
@@ -3759,7 +3812,13 @@
         "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
       },
       "owner": "AgentCI maintainers",
-      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "blocker": [
+        {
+          "task": "M3-07c-3e-2",
+          "reason": "Pinned UBI registry returns Forbidden; applicable container verification, hosted exact-source CI and independent review remain pending. Local evidence: delivery/acceptance/m3-reproduction-http-cloud-local.json",
+          "deferral": null
+        }
+      ],
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
       "reconciliationGaps": [
         "modality-and-multi-phase-mapping-review"
@@ -4255,7 +4314,7 @@
           "operationId": "listReviewFindings",
           "path": "/v1/model-reviews/{id}/findings",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -4279,7 +4338,7 @@
           "operationId": "getFinding",
           "path": "/v1/findings/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -4302,7 +4361,7 @@
           "operationId": "getFindingHistory",
           "path": "/v1/findings/{id}/history",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -4765,7 +4824,7 @@
           "operationId": "listReviewFindings",
           "path": "/v1/model-reviews/{id}/findings",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -4789,7 +4848,7 @@
           "operationId": "getFinding",
           "path": "/v1/findings/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -4812,7 +4871,7 @@
           "operationId": "getFindingHistory",
           "path": "/v1/findings/{id}/history",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",

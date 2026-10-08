@@ -27,6 +27,7 @@ try {
   try{execFileSync(process.execPath,[reproductionOperator,'apply'],{encoding:'utf8',stdio:'pipe',env:{PATH:process.env.PATH}});throw new Error('Installed reproduction operator accepted unpinned setup');}catch(error){if(error.status!==2||JSON.parse(error.stderr).error.code!=='invalid-reproduction-operator-arguments')throw error;}
   const {loadReproductionRuntime}=await import(pathToFileURL(join(installedRoot,'dist/packages/runtime/reproductions.js')).href);
   if(await loadReproductionRuntime({organizationId:'00000000-0000-4000-8000-000000000001',repository:'owner/repo'}, {})!==null)throw new Error('Installed reproduction consumer must default off');
+  if(!(await readFile(join(installedRoot,'deploy/migrations/019_m3_reproduction_dispatch_initialization.sql'),'utf8')).includes('reproduction_dispatch_initialize'))throw new Error('Installed atomic reproduction dispatch initialization migration missing');
   if(!(await readFile(join(installedRoot,'deploy/migrations/018_m3_reproduction_dispatch_settlement.sql'),'utf8')).includes('settlement'))throw new Error('Installed reproduction settlement migration missing');
 
   if(postgresReaders){
@@ -34,7 +35,7 @@ try {
     if(installedManifest.name!=='agentci'||installedManifest.version!==expectedVersion)throw new Error('Installed package dependency identity mismatch');
     try{await readFile(join(root,'node_modules/tsx/package.json'));throw new Error('Development test loader entered production installation');}catch(error){if(error.code!=='ENOENT')throw error;}
     console.log(JSON.stringify({acceptance:'installed-v2-reader',version:expectedVersion,install:'npm install --omit=dev',offline,developmentLoaderInstalled:false,publicExport:'agentci/client'}));
-    execFileSync(process.execPath,['--import','tsx','--test',resolve('tests/integration/reproduction-installed-reader.test.ts'),resolve('tests/integration/reproduction-operator.test.ts'),resolve('tests/integration/reproduction-deployment.test.ts')],{env:{...process.env,AGENTCI_TEST_CLIENT_PACKAGE_ROOT:installedRoot},stdio:'inherit',timeout:60000});
+    execFileSync(process.execPath,['--import','tsx','--test',resolve('tests/integration/reproduction-installed-reader.test.ts'),resolve('tests/integration/reproduction-http.test.ts'),resolve('tests/integration/reproduction-operator.test.ts'),resolve('tests/integration/reproduction-deployment.test.ts')],{env:{...process.env,AGENTCI_TEST_CLIENT_PACKAGE_ROOT:installedRoot},stdio:'inherit',timeout:60000});
     console.log('Installed public v2 reader and deployment-operator apply/CAS/revocation passed against real PostgreSQL, plus real Compose rendering of installed opt-in files; reader HTTP authenticated, no Temporal or provider credentials.');
   }
   const {validateModelRequest}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/request.js')).href);

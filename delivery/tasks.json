@@ -2713,6 +2713,31 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M3-07c-3e-2",
+      "title": "Authenticated reproduction status and durable cancellation transport",
+      "requirementIds": [
+        "SECTION-12.4",
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SPEC-40-048"
+      ],
+      "status": "blocked",
+      "startedAt": "2026-10-08T00:16:55.647Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Real HTTP and PostgreSQL expose coherent scoped status for already-reserved reproduction IDs with exact review association, immutable plan/operation/finding references, retained receipt or never-staged proof and verified settlement. Reader credentials cannot mutate; operator cancellation durably reaches independent recovery, remains idempotent after restart and preserves late completed evidence. Reject corrupt/substituted references, unknown/repeated queries and bodies with bounded redacted errors; maintain released API baselines and production package startup. This transport slice cannot create reservations; admission/client/customer/UI/release acceptance remain open.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-3d-2b"
+      ],
+      "blockedReason": "Pinned UBI registry returns Forbidden; applicable container verification, hosted exact-source CI and independent review remain pending. Local evidence: delivery/acceptance/m3-reproduction-http-cloud-local.json"
     }
   ]
 }

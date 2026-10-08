@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "kind": "M3 cloud reproduction status/cancellation local verification",
+  "task": "M3-07c-3e-2",
+  "state": "blocked-applicable-gates-pending",
+  "recordedAt": "2026-10-08T00:28:17.197321+00:00",
+  "sourceCommit": "c7ca57254d1fbdfd533d4bbe5ce30ead6be82023",
+  "basePrerequisiteCommit": "96ee675180551d990151e1823c34899629bb8eae",
+  "implementationCommits": [
+    "c20a3d44c09fc64c09932565a5b76d9b1a3b2202",
+    "c7ca57254d1fbdfd533d4bbe5ce30ead6be82023"
+  ],
+  "changedFileDigests": [
+    {
+      "path": "apps/control/model-reviews.ts",
+      "sha256": "77bf0ba8b6a1f17f00ffd213a69cf4170ecc61b9e709f155204a3f724b460a14"
+    },
+    {
+      "path": "delivery/reconciliation/requirement-test-evidence.json",
+      "sha256": "7b342f1c1cb1ccf08a91f4499d0e7c3d647dda4cbbc58188ef02e5598870aca2"
+    },
+    {
+      "path": "delivery/reconciliation/sections/12.json",
+      "sha256": "4942b0f30eb6be9dfc01752096af306adc630b6e5ba3b8e6e113eaf8332f5e36"
+    },
+    {
+      "path": "delivery/reconciliation/sections/31.json",
+      "sha256": "83433a405f5ccb791184697cf70ae4213e830670ed3329ac50f2796b794635ec"
+    },
+    {
+      "path": "delivery/reconciliation/sections/32.json",
+      "sha256": "7783debd1eb73bf2d24c91ecbbe0efa76ecd7d98e31e50a3e930b357508039b3"
+    },
+    {
+      "path": "delivery/reconciliation/sections/40.json",
+      "sha256": "1cf44b6f24e36cbfe7b9217c025d817e9aaf8a016357ecb7bf9506aa779a6a11"
+    },
+    {
+      "path": "delivery/task-events.jsonl",
+      "sha256": "7893991975b966fea33300a5a2b3bc8aa38f1737bfbc90bfb4b443ff25424988"
+    },
+    {
+      "path": "delivery/tasks.json",
+      "sha256": "a4c77accab08cdef4a0d014136002cec50bf7c74a8225600872266767c68b1a1"
+    },
+    {
+      "path": "docs/phases/m3-customer-api-contract.md",
+      "sha256": "7ba0998710d79846eef6b4c7185f4feb2690b41f3708587fa9a58202b977311e"
+    },
+    {
+      "path": "docs/phases/m3-reproduction-consumer.md",
+      "sha256": "c140f0e3e7c31e12f077a1826c7d27a0e8c159e8e47f3b04593a3c26b01a9852"
+    },
+    {
+      "path": "docs/phases/m3-reproduction-http.md",
+      "sha256": "f18a6133f990a45beead8ad246ddf7e8c0d4c506d40c96ea24029e8a601b6d87"
+    },
+    {
+      "path": "packages/findings/reproduction-transport-schema.ts",
+      "sha256": "9145b678eef194b7ebc152846b0cb092e246aeec1fb2a9ae72774e6f44097535"
+    },
+    {
+      "path": "packages/findings/reproduction-transport.ts",
+      "sha256": "8823213af0d160a60f1f8b77e275e0b13208fb79668dabb64c074161d81d8ecd"
+    },
+    {
+      "path": "packages/storage/reproduction-dispatch.ts",
+      "sha256": "7bdc428e60cf9a668abfc48b105f9b0ca0c8be72878450a45a03590430dc368c"
+    },
+    {
+      "path": "packages/storage/reproduction-reads.ts",
+      "sha256": "2b5d7ea1e186bc808004fd0dbf86969615d326dba74c4ae563b1655251116717"
+    },
+    {
+      "path": "scripts/check-api.ts",
+      "sha256": "78df704820bcc9178ccbf070a8a8131387351606032e0f1b78cc75a10e2c10b4"
+    },
+    {
+      "path": "scripts/package-smoke.mjs",
+      "sha256": "b22f22433bec5d6fbd385b1d6a850126ad850f89bfac173ff81e0ba703869b2b"
+    },
+    {
+      "path": "specs/api/drafts/finding-reproduction-examples.json",
+      "sha256": "20622eec68d75271f38fa60e01e2d724e0e3577f627c1d0f4f78e7585ffeb010"
+    },
+    {
+      "path": "specs/api/drafts/model-review-transport.json",
+      "sha256": "efd5b420246b635f109826de66780c35ee18c0e381234f80bd5447b52d8ea22d"
+    },
+    {
+      "path": "specs/api/openapi.json",
+      "sha256": "50814f62d2b59231ed68165981d63ae4ae93b33633a2858b9a369b88c84121a0"
+    },
+    {
+      "path": "specs/api/operations.json",
+      "sha256": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b"
+    },
+    {
+      "path": "tests/integration/reproduction-http.test.ts",
+      "sha256": "dc8059e869e05dcb32cabcc61ba42120ec3d5be32124dae01b54f01b5fb311f6"
+    },
+    {
+      "path": "tests/model-review-transport-draft.test.ts",
+      "sha256": "1c09b54b1beec254b6db3dbdcd27a27f466468c9b1872beca3b66010088f0d71"
+    }
+  ],
+  "toolchain": {
+    "node": "26.10.0",
+    "nodeArchiveSha256": "ca70e9e349de048b9522abb3adc05b3bd6f43c5ffd3ec57916c7da292f59f022",
+    "npm": "12.2.0",
+    "docker": "28.4.0",
+    "compose": "2.40.3",
+    "postgresImage": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+    "temporalImage": "temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e",
+    "temporalBinding": "host network with loopback-only 127.0.0.1; same pinned image recovered from original wildcard startup crash"
+  },
+  "fast": {
+    "passed": true,
+    "dirty": false,
+    "sourceCommit": "c7ca57254d1fbdfd533d4bbe5ce30ead6be82023",
+    "checks": 10,
+    "tests": 414,
+    "seconds": 21.439893539
+  },
+  "checks": {
+    "fast": {
+      "path": "/workspace/scratch/agentci-cloud-fast-final-2.log",
+      "sha256": "2cc681b2a4ae5c26867d35efc2efaaf5dd3828affbbd5132a3eaed5bd8682cc8",
+      "observed": "passed"
+    },
+    "integration": {
+      "path": "/workspace/scratch/agentci-cloud-integration-final-2.log",
+      "sha256": "565414c8cb69ac399164a36883d8762d0ea433dd5b48f5d712b9f43e7d7145a5",
+      "observed": "passed",
+      "tests": 45,
+      "pass": 45,
+      "fail": 0,
+      "skipped": 0
+    },
+    "productionPackage": {
+      "path": "/workspace/scratch/agentci-cloud-package-final-2.log",
+      "sha256": "1ed4eeb602cd0a99900c35b7613a96d1f615a6d13a967dee21e6da679d179cb2",
+      "observed": "passed",
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "skipped": 0
+    },
+    "apiCompatibility": {
+      "path": "/workspace/scratch/agentci-cloud-api-final-2.log",
+      "sha256": "0ac28536ceafa0163df6a786587f3db18be783732be4834c3659cf1c9a950b44",
+      "observed": "passed"
+    },
+    "workflowContexts": {
+      "path": "/workspace/scratch/agentci-cloud-workflows-final-2.log",
+      "sha256": "cbb6627c6fbc680c66ab4c6145487e3ca5caebc34c37941cdeb736e70e4b2284",
+      "observed": "passed"
+    },
+    "reconciliation": {
+      "path": "/workspace/scratch/agentci-cloud-reconciliation-final-2.log",
+      "sha256": "3c655087d3e415beeae76d42e7aa0390cb2b1f5f8e30976b0de71ba65d44fc1b",
+      "observed": "passed"
+    }
+  },
+  "apiCompatibility": {
+    "tool": "oasdiff",
+    "version": "1.33.0",
+    "sourceCommit": "c7ca57254d1fbdfd533d4bbe5ce30ead6be82023",
+    "baseline": "specs/api/baselines/m2-0.3.1-openapi.json",
+    "baselineSha256": "d9515b059d4240bb92b2b34c4a34e85981bfbe54141a8511d2adfbd49dadf16f",
+    "exitCode": 0,
+    "changes": "[]\n",
+    "diagnostics": "",
+    "currentSha256": "50814f62d2b59231ed68165981d63ae4ae93b33633a2858b9a369b88c84121a0",
+    "selfTest": "endpoint-removal rejected",
+    "selfTests": [
+      {
+        "baseline": "m1-0.2.1",
+        "endpoint": "/v1/evidence/{id}",
+        "result": "endpoint-removal rejected"
+      },
+      {
+        "baseline": "m2-0.3.1",
+        "endpoint": "/v1/eval-comparisons/{id}",
+        "result": "endpoint-removal rejected"
+      }
+    ],
+    "baselines": [
+      {
+        "baseline": "specs/api/baselines/m1-0.2.1-openapi.json",
+        "baselineSha256": "28c56cc252b460ca0a496f8459b59792ceea16affb2d60c7b22a8f8a35f9174d",
+        "exitCode": 0,
+        "changes": "[]\n",
+        "diagnostics": ""
+      },
+      {
+        "baseline": "specs/api/baselines/m2-0.3.1-openapi.json",
+        "baselineSha256": "d9515b059d4240bb92b2b34c4a34e85981bfbe54141a8511d2adfbd49dadf16f",
+        "exitCode": 0,
+        "changes": "[]\n",
+        "diagnostics": ""
+      }
+    ]
+  },
+  "dependencyAudit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "package": {
+    "path": "/workspace/scratch/agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "4f0579c862b08f5ad9045c3f212f86fadee2e01e023dc4f837918f2892685c69",
+    "installation": "production-only npm installation; installed control modules used by HTTP tests; source harness does not establish a container gate"
+  },
+  "retainedFailures": [
+    {
+      "kind": "npm install setup",
+      "cause": "Default home cache is read-only; retried using workspace cache with same pinned versions."
+    },
+    {
+      "kind": "tool download",
+      "cause": "Node direct fetch had DNS EAI_AGAIN; official archives downloaded with curl and verified by unchanged pinned checker checksums."
+    },
+    {
+      "kind": "Temporal startup",
+      "cause": "Pinned image crashed with SDK client/scanner panic under wildcard binding; initial five test failures and interrupted run retained. Same digest started successfully with host loopback binding; final 16 Temporal/runtime tests passed."
+    },
+    {
+      "kind": "fast feedback",
+      "sourceCommit": "c20a3d44c09fc64c09932565a5b76d9b1a3b2202",
+      "cause": "Existing draft-only test rejected newly implemented status/cancellation paths; updated only implemented-operation map while keeping admission/disposition draft-only assertions."
+    },
+    {
+      "kind": "container build",
+      "cause": "Daemon cannot read pinned public Red Hat UBI registry: Forbidden; escalation ran but received same registry error. No image replacement or passing gate inferred."
+    }
+  ],
+  "remainingBlockers": [
+    "UBI container build/isolation/startup gates unrun due registry Forbidden",
+    "Hosted verification on final intended branch/source pending",
+    "Independent reviewer validation pending; author checks are not independent review"
+  ],
+  "preservedScope": {
+    "milestones": "M0\u2013M10 in order",
+    "m3ReleaseGates": 18,
+    "adapters": [
+      "OpenAI",
+      "Anthropic",
+      "xAI"
+    ],
+    "modelException": "Only inaccessible external-model-provider validation may stay deferred/unverified after every other applicable gate passes",
+    "statistics": "Owner-approved observed-rate calibration; Wilson descriptive; no new thresholds",
+    "remainingM3": [
+      "Public reproduction admission and disposition mutations",
+      "Executable reproduction client/CLI round trips",
+      "Packaged real GitHub customer flow and success/failure/recovery demo",
+      "Authenticated Next.js dashboard",
+      "Final exact-source release integration, native images/scans, publication, anonymous downloads, released demo and closure"
+    ]
+  },
+  "handover": {
+    "confirmed": "Parent relayed owner statement: I paused the goal",
+    "originalLocalGoal": "01a10362-b55c-7d42-96d4-5c31ab6ace66",
+    "unpublishedMacFiles": "Not transferred; unknown; no inference or Mac access"
+  },
+  "authorization": {
+    "merged": false,
+    "deployed": false,
+    "newAccounts": false,
+    "paidProviders": false,
+    "expandedPersistentAccess": false
+  }
+}

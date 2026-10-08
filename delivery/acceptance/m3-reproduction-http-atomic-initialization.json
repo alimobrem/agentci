@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3e-2",
+  "state": "blocked-applicable-gates-pending",
+  "recordedAt": "2026-10-08T00:46:28.275923+00:00",
+  "sourceCommit": "ac6337d6cb7a1044ed253ca9ad1228686ff08493",
+  "sourceTree": "ad9180248d400d9e228c619f215151fc402a86c6",
+  "fix": "Migration 019 initializes dispatch state atomically with every intent insert and backfills legacy intents; immutable migrations 014/017/018 unchanged. HTTP fixture never runs controller backfill before requests.",
+  "regressions": [
+    "Fresh reservation GET and operator cancellation without a controller",
+    "Control restart, no dispatch claim or eval jobs, recovery retains authentic unverified non-execution proof",
+    "Initialization failure rolls back reservation/event/plan/operation/intent/state",
+    "Identical migration replay preserves cancellation and changed migration bytes fail closed",
+    "Legacy intent upgrades from status/cancel 503 to inspectable/cancellable without changing identity"
+  ],
+  "fileDigests": [
+    {
+      "path": "deploy/migrations/019_m3_reproduction_dispatch_initialization.sql",
+      "sha256": "251e1a314b3e553f078bc30cc5745b7d624a695e1a46b93a45d2a534b857b654"
+    },
+    {
+      "path": "docs/phases/m3-reproduction-http.md",
+      "sha256": "9806bc3e13aca85d5d59f6695e36154e0109f042bbe54348ac5957cbcaae28f1"
+    },
+    {
+      "path": "scripts/package-smoke.mjs",
+      "sha256": "5880ee33b88823af7aac5e3603d6c8bb01e224eedd7e765874c0fbfd4dcbc501"
+    },
+    {
+      "path": "tests/integration/reproduction-http.test.ts",
+      "sha256": "aac610c9721842ce21171b97a74e7b61d1992a141ec975cc937c5033d3fc5ba8"
+    }
+  ],
+  "localVerification": {
+    "fastChecks": 10,
+    "unitTests": 414,
+    "applicablePostgresTemporalTests": 67,
+    "installedPackageTests": 14,
+    "skipped": 0,
+    "failed": 0
+  },
+  "attemptsPreserved": [
+    {
+      "path": "/workspace/scratch/reproduction-fresh-before.log",
+      "sha256": "264f149622b9e067ec8f702c4c42bf2970f8ccb77e8ef85091264699940f2b83"
+    },
+    {
+      "path": "/workspace/scratch/reproduction-fresh-after.log",
+      "sha256": "4cd268053aa1562bc124e80a96bfea629f42ef60818b401582a4ffa71227de59"
+    },
+    {
+      "path": "/workspace/scratch/reproduction-fix-fast.log",
+      "sha256": "8f786f0e5e8ff329dde7e4fb8242b6cdd144e5d9f28771a4b0b0f5853c6a48e7"
+    },
+    {
+      "path": "/workspace/scratch/reproduction-fix-integration-final.log",
+      "sha256": "7c140b0625cf52748d02bf6b59d464ef74a7351db7c027e86da43a184cdee9cd"
+    },
+    {
+      "path": "/workspace/scratch/reproduction-fix-applicable-final.log",
+      "sha256": "fb6b4acfd3d86b1684debada8259bb7db62c9d75e8fcd37f2cc6b4d023832723"
+    },
+    {
+      "path": "/workspace/scratch/reproduction-fix-package.log",
+      "sha256": "561e8fbfefa2adc569668c12ff8825475919f29450bc35389dce22c99555d989"
+    },
+    {
+      "path": "/workspace/scratch/reproduction-ci-collect.log",
+      "sha256": "5c89f8d5eff03d339c702f61fcd7fbc2ca805422aa098aae3553452ab5e35a80"
+    },
+    {
+      "path": "/workspace/scratch/ci37708459369-runtime.log",
+      "sha256": "4ad0dd5f60c80ddfd7fdca52321bb3f3ae1bc6023947e9ff769ea0aa8aa9ec00"
+    }
+  ],
+  "failedAttempts": [
+    "Fresh reservation regression returned HTTP503 before fix",
+    "Broad local suite selected mandatory isolated test: no immutable runner image, 67 passed / 1 setup failure; physical isolation remains mandatory hosted gate",
+    "Delivery collect-ci failed: shell gh API Forbidden",
+    "Hosted artifact connector returned ZIP reference, but cloud curl download returned403; raw completed job logs inspected instead"
+  ],
+  "priorHostedCI": {
+    "runId": 37708459369,
+    "sourceCommit": "e1511ecf2829cfc8044a6533c40298c0643b701a",
+    "result": "success",
+    "integrationTests": 177,
+    "installedPackageTests": 11,
+    "containerChecks": [
+      "UBI runner and optional Promptfoo/DeepEval physical tests",
+      "service image vulnerability scan",
+      "compiled containers",
+      "worker/eval-worker native provenance",
+      "isolated eval-worker runtime"
+    ],
+    "npmCache": "warm (explicit setup-node primary-key hit in job log)",
+    "artifactId": 11520683978,
+    "artifactDigest": "sha256:ab79ed65f1debe208dda532964750024d04905d846d98bb11798e78719a63ecb",
+    "scope": "Prior source only; does not accept new migration"
+  },
+  "remaining": [
+    "Exact new published SHA hosted CI/container acceptance",
+    "Independent review of new migration and PR69/70 interaction",
+    "PR69 alone retains receipt digest mismatch corrected in PR70; prerequisite cannot be accepted independently as-is",
+    "Local pinned UBI registry Forbidden; no bypass",
+    "M3 remaining phase release gates remain pending; no merge/deploy authorized"
+  ]
+}

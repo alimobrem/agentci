@@ -2,7 +2,7 @@
 
 Status: reviewed design. M3-07c-1 now implements profiles, admission, status and
 cancellation in development source; see [implemented slice](m3-customer-model-review-api.md).
-M3-07c-2A adds finding and history reads in development; profiles/submit/show/cancel client methods are implemented. M3-07c-2B adds retained snapshot export in development; reproduction remains a planned dependent slice.
+M3-07c-2A adds finding and history reads in development; profiles/submit/show/cancel client methods are implemented. M3-07c-2B adds retained snapshot export in development; reproduction admission remains a planned dependent slice. Development status/cancellation routes for already-reserved operations are described in [the HTTP slice](m3-reproduction-http.md).
 OpenAPI and the operation map advertise only implemented routes. The immutable
 M1/M2 baselines and released `agentci review` command remain unchanged. The
 [operation map](../../specs/api/drafts/model-review-transport.json) and
@@ -156,9 +156,9 @@ The existing finding event bound of 2 MiB remains; mutation bodies are at most
 PR #68 implements configured dispatch/recovery and explicit operator approval setup.
 The following response shape is frozen by 07c-3e-1 for the dependent transport
 slices; shared validators and fixed examples do not implement public routes. The
-selection/authority boundary above is fixed now; no public reproduction route or
-client method ships until that remaining response contract and consumer pass
-acceptance. Never-staged cancelled work has null receipt and remains unverified.
+selection/authority boundary above is fixed now; Public admission and executable reproduction clients remain pending. Status and
+cancellation for already-reserved operations are implemented in development by
+M3-07c-3e-2; their container, hosted and independent-review gates remain pending. Never-staged cancelled work has null receipt and remains unverified.
 These are explicit later-slice decisions, not missing user accounts or permissions.
 
 ## Frozen reproduction response semantics

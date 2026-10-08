@@ -1,6 +1,6 @@
 # M3 admitted reproduction consumer — implementation in progress
 
-This consumer connects an already-reserved, explicitly approved finding reproduction to Temporal and the isolated evaluation worker. It does not complete M3 or enable public reproduction/disposition actions. The released customer demo and release gates remain open.
+This consumer connects an already-reserved, explicitly approved finding reproduction to Temporal and the isolated evaluation worker. It does not complete M3 or enable public admission/disposition actions. Development status/cancellation for already-reserved operations follows in [M3-07c-3e-2](m3-reproduction-http.md). The released customer demo and release gates remain open.
 
 ## Operator ownership and startup
 
