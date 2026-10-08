@@ -1,0 +1,132 @@
+{
+  "task": "M3-07c-INTEGRITY-1",
+  "state": "local-reviewed-unpublished-hosted-unverified",
+  "recordedAt": "2026-10-08T04:05:59.735854+00:00",
+  "sourceCommit": "1c3a3d1eba800140be0670326628e3e91cfbd87d",
+  "sourceTree": "ade928211f227426228d24f5973714cc1c39c248",
+  "publishedBase": "fe6ef14a841884d1be54e31e47dda651b6ba1942",
+  "preservedApprovedLocalCandidate": "8219f45d81f4ba5e0dda1fea2a2dec47a26fa26e",
+  "pureReconciliationCorrectionCommit": "9ce88aeeebe64eee470ca39bff253c7f5c7c90e0",
+  "confirmedBeforeFix": {
+    "testsPassed": 2,
+    "testsFailed": 3,
+    "results": [
+      "public reserve caller mutation during delayed pool acquisition changed request",
+      "public transition caller mutation during delayed pool acquisition changed action/subject",
+      "raw HTTP disposition replay returned200 after coherently rehashed history reason substitution",
+      "existing shared transaction methods correctly snapped inputs before first async read"
+    ]
+  },
+  "fixes": [
+    "Public reserve and transition synchronously detach mutable input before acquisition",
+    "Disposition exact replay authenticates retained receipt/history via OperatorReceipts.read in same locked transaction"
+  ],
+  "validation": {
+    "unitTests": 424,
+    "fastChecks": 10,
+    "fastSeconds": 26.29,
+    "postgreSqlTests": 23,
+    "productionInstalledTests": 10,
+    "contractEvalsPassed": 6,
+    "compatibility": "immutable M1/M2 baselines and negative controls passed",
+    "buildAndPack": "passed",
+    "reconciliation": "1346 IDs,29 children,M0-M10 preserved; all18M3gatespending",
+    "independentReview": "/root/client_review;23PG/10installed;all367compiledfiles+complete dist manifest exact; sourcehashes verified"
+  },
+  "reviewedSourceFiles": [
+    {
+      "path": "apps/control/finding-dispositions.ts",
+      "sha256": "7876e00b5d33b850faca544f6e82360057d5c2d96f19ae74c4e1f7bf222a6c47"
+    },
+    {
+      "path": "packages/storage/finding-history.ts",
+      "sha256": "aa60c0c76e5e141801a2d7f9815d792c74761764f0a3ab4dd3a04d2c5839949b"
+    },
+    {
+      "path": "packages/storage/reproduction-reservations.ts",
+      "sha256": "82a314fa3e26b3cfb1fcf87a9637beabbc58a64b6401e6614f7b9b43a4024261"
+    },
+    {
+      "path": "tests/integration/finding-disposition-http.test.ts",
+      "sha256": "d365e09a1716cea864ac2b2356695dba0ee26b787fe8ca4c46b29a6d8de4bd25"
+    },
+    {
+      "path": "tests/integration/reproduction-reservations.test.ts",
+      "sha256": "6825e887958152f9182049583d5a3ffc4d89be32d31c025c78c0dc24a76acc93"
+    }
+  ],
+  "archive": {
+    "path": "/workspace/scratch/agentci-pr72-integrity-1c3a3d1.tgz",
+    "sha256": "324b4b0bdf0703c2456e40641dee52d941742da61df725b934ac2f790451b51b"
+  },
+  "failedHostedRun": {
+    "id": 37724855758,
+    "attempt": 1,
+    "head": "fe6ef14a841884d1be54e31e47dda651b6ba1942",
+    "conclusion": "failure",
+    "step": "Verify requirement reconciliation and captured history",
+    "error": "Reconciliation snapshot stale",
+    "url": "https://github.com/alimobrem/agentci/actions/runs/37724855758",
+    "log": {
+      "path": "/workspace/scratch/agentci-pr72-verify-failure.log",
+      "sha256": "44ff43c69d29c9528cbd6244eb7c63ac1e3689c8d5ed69c4ddf758b83320b1ab"
+    }
+  },
+  "logs": [
+    {
+      "path": "/workspace/scratch/pr72-integrity-pre-fix.log",
+      "sha256": "966221f7d02c37fa287b555971f2a07744d7a2cfff261db8d40f72e13de8009c"
+    },
+    {
+      "path": "/workspace/scratch/pr72-integrity-postgres.log",
+      "sha256": "4a41943220b2c0cc71112a592870a7a77f52666a3d2116ef6081180f1fa0da8b"
+    },
+    {
+      "path": "/workspace/scratch/pr72-integrity-fast.log",
+      "sha256": "1e4e5d0384d751332641df35e6072be5f89468e93d3a30fc38799fde94dbc3a7"
+    },
+    {
+      "path": "/workspace/scratch/pr72-integrity-compat.log",
+      "sha256": "2dc9078e5f7431ed5c1cc28a8224df977405fd478f183f2aa930888b4b7a1212"
+    },
+    {
+      "path": "/workspace/scratch/pr72-integrity-contracts.log",
+      "sha256": "456e9a831e525f6669ab63470bb477416c4f083973a744c888af0985a22c3da7"
+    },
+    {
+      "path": "/workspace/scratch/pr72-integrity-independent-postgres-20261008.log",
+      "sha256": "9fbe179de7b8b489718f0c4ead42cc36de5a1f391a8ab948a9936e4c47bf5115"
+    },
+    {
+      "path": "/workspace/scratch/pr72-integrity-independent-installed-20261008.log",
+      "sha256": "edbd63e157fec3a18ba89917c5ba3869fd706ed70f0c73741b1065316a44d22d"
+    },
+    {
+      "path": "/workspace/scratch/pr72-integrity-independent-archive-equivalence-20261008.log",
+      "sha256": "5dbc85e61e85fab8d072e5a837e2107e673d38c860cf1452f1309aeb9242e0c5"
+    },
+    {
+      "path": "/workspace/scratch/pr72-integrity-independent-source-manifest-20261008.log",
+      "sha256": "4f5fb0256ab48c5be8d24ca7e6aaa5f3d0521325391299f2be0dd71cd6805555"
+    },
+    {
+      "path": "/workspace/scratch/pr72-refresh-independent-structure-20261008.log",
+      "sha256": "42be8c605471538887e8e7a9024d6cf6e34f2f5d5bd587311f36a1a5b5842e87"
+    },
+    {
+      "path": "/workspace/scratch/pr72-refresh-independent-check-20261008.log",
+      "sha256": "3c655087d3e415beeae76d42e7aa0390cb2b1f5f8e30976b0de71ba65d44fc1b"
+    },
+    {
+      "path": "/workspace/scratch/pr72-refresh-independent-history-20261008.log",
+      "sha256": "8855717496a70a7fe18c9cf4ca2259aeebcd6d505bf6dc6d5ed4173fe276cc15"
+    }
+  ],
+  "limits": [
+    "No changed remote publication or hosted rerun authorized or attempted",
+    "Final hosted runtime/physical isolation remains unverified",
+    "No milestone/gate promotion or UI/M4 implementation",
+    "Corruption test detects retained receipt/history mismatch; does not prevent malicious database administrator edits",
+    "Originalapproved8219 candidate/source/evidence retained; Checks/customerprep/docs supplements untouched"
+  ]
+}

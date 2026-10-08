@@ -118,12 +118,18 @@ export class FindingHistoryStore {
   });
  }
  async transition(id:string,subject:ReviewSubject,action:FindingAction,expectedVersion:number,operationId:string):Promise<FindingHistoryRecord>{
+  // Pool acquisition is asynchronous; snapshot at the public call boundary.
+  subject=structuredClone(subject);let selected:FindingAction;try{selected=structuredClone(action);}catch{conflict();}
+  return this.transaction(c=>this.transitionInTransaction(c,id,subject,selected!,expectedVersion,operationId));
+ }
+ /** External controller transaction owns both authenticated receipt and event. */
+ async transitionInTransaction(client:PoolClient,id:string,subject:ReviewSubject,action:FindingAction,expectedVersion:number,operationId:string):Promise<FindingHistoryRecord>{
   subject=structuredClone(subject);
   this.subject(subject,id);if(!uuid.test(operationId)||!Number.isSafeInteger(expectedVersion)||expectedVersion<1)conflict();
   // Snapshot caller-owned input before any asynchronous reads.
   let selected:FindingAction;try{selected=structuredClone(action);}catch{conflict();}
   const inputDigest=digest(canonical({id,subject,action:selected!,expectedVersion}));
-  return this.transaction(async client=>{
+  return (async()=>{
    const existing=await this.existing(client,operationId,inputDigest,id,subject);if(existing)return existing;
    const records=await this.history(client,id,subject),prior=records.at(-1);
    if(!prior||records.length>=10000||prior.event.finding.version!==expectedVersion)conflict();
@@ -131,7 +137,7 @@ export class FindingHistoryStore {
    const transition=createFindingTransitions(async receiptId=>{receipt=structuredClone(await this.readers.receipt(receiptId,structuredClone(subject)));return receipt;});
    let next;try{next=await transition(prior!.event.finding,selected!,expectedVersion);}catch(error){if((error as Error).message==='finding-receipt-unavailable')throw new FindingHistoryUnavailable();conflict();}
    return this.append(client,{schemaVersion:'v1alpha1',operationId,inputDigest,previousDigest:prior!.digest,action:selected!,receipt,finding:next!.finding});
-  });
+  })();
  }
  /** Separate authenticated reader: never routes non-execution through execution receipts. */
  async unavailable(id:string,subject:ReviewSubject,action:UnavailableFindingAction,expectedVersion:number,operationId:string):Promise<FindingHistoryRecord>{
@@ -142,6 +148,7 @@ export class FindingHistoryStore {
    return this.append(c,{schemaVersion:'v1alpha2',operationId,inputDigest,previousDigest:prior!.digest,action,receipt:null,nonExecution:proof,finding});
   });
  }
+ async getInTransaction(c:PoolClient,id:string,subject:ReviewSubject){subject=structuredClone(subject);this.subject(subject,id);return this.history(c,id,subject);}
  async get(id:string,subject:ReviewSubject):Promise<FindingHistoryRecord[]>{
   subject=structuredClone(subject);
   this.subject(subject,id);return this.transaction(client=>this.history(client,id,subject));

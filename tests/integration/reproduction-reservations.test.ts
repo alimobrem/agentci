@@ -134,3 +134,20 @@ test('persisted workflow identity is stable on replay and separates the same pla
   assert.equal(new Set(identities).size,3);
  }finally{for(const f of fixtures)await f.close();}
 });
+
+for(const shared of [false,true]) for(const kind of ['reservation','transition']) test(`${kind} snapshots mutable inputs before ${shared?'shared transaction reads':'pool acquisition'}`,async()=>{
+ const f=await fixture();let c:import('pg').PoolClient|undefined;
+ let release!:()=>void,entered!:()=>void;const gate=new Promise<void>(r=>release=r),ready=new Promise<void>(r=>entered=r);
+ try{
+  const selector=structuredClone(f.selector),subject=structuredClone(f.f.initial.subject),action={type:'queue' as const},original=structuredClone(selector);
+  let pool=f.pool,client:import('pg').PoolClient|undefined;
+  if(shared){c=await f.pool.connect();await c.query('BEGIN');let first=true;client=new Proxy(c,{get(target,key){if(key==='query')return async(...args:any[])=>{if(first){first=false;entered();await gate;}return (target.query as any)(...args);};const value=Reflect.get(target,key);return typeof value==='function'?value.bind(target):value;}});}
+  else pool={connect:async()=>{entered();await gate;return f.pool.connect();}} as Pool;
+  const reservations=new ReproductionReservations(pool,f.scope,f.registry),history=new FindingHistoryStore(pool,f.scope,{reviewer:async()=>({result:f.f.reviewer,documents:f.f.documents}),receipt:async()=>{throw Error('Queue transition reads no receipt');}});
+  const pending=kind==='reservation'?(shared?reservations.reserveInTransaction(client!,f.f.initial.id,selector):reservations.reserve(f.f.initial.id,selector)):(shared?history.transitionInTransaction(client!,f.f.initial.id,subject,action,1,original.operationId):history.transition(f.f.initial.id,subject,action,1,original.operationId));
+  await ready;selector.approvalDigest=digest('caller replacement');selector.subject.headSha='f'.repeat(40);selector.expectedVersion=999;subject.headSha='f'.repeat(40);(action as any).type='false-positive';(action as any).receiptId=randomUUID();release();
+  const result=await pending;if(shared)await c!.query('COMMIT');
+  if(kind==='reservation'){assert.equal((result as any).operationId,original.operationId);assert.equal((result as any).requestDigest,digest(canonical(original)));}
+  const records=await f.history.get(f.f.initial.id,f.f.initial.subject);assert.equal(records.at(-1)!.event.action.type,'queue');assert.deepEqual(records.at(-1)!.event.finding.subject,f.f.initial.subject);assert.equal(records.at(-1)!.event.operationId,original.operationId);
+ }finally{release();if(c){await c.query('ROLLBACK');c.release();}await f.close();}
+});

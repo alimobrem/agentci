@@ -24,12 +24,18 @@ export class ReproductionReservations {
   finally{c.release(broken);c.off('error',connectionFailed);}
  }
  async reserve(findingId:string,value:unknown):Promise<ReproductionReservation>{
+  // Detach caller input before pool acquisition can yield to caller mutation.
+  let selected:unknown;try{if(Buffer.byteLength(canonical(value))>8192)fail();selected=structuredClone(value);}catch{return fail('invalid-request');}
+  return this.tx(c=>this.reserveInTransaction(c,findingId,selected));
+ }
+ /** Caller owns the authority transaction; this method never commits independently. */
+ async reserveInTransaction(c:PoolClient,findingId:string,value:unknown):Promise<ReproductionReservation>{
   let request:ReproductionSelector;
   try{if(Buffer.byteLength(canonical(value))>8192)fail();request=structuredClone(value) as ReproductionSelector;
    if(!/^sha256:[a-f0-9]{64}$/.test(findingId)||!uuid(request?.operationId)||!uuid(request?.approvalId)||!Number.isSafeInteger(request?.expectedVersion)||request.expectedVersion<1||request.expectedVersion>9998||request.subject?.organizationId!==this.scope.organizationId||request.subject.repository!==this.scope.repository)fail();
   }catch{return fail('invalid-request');}
   const key=[this.scope.organizationId,this.scope.repository],hash=digest(canonical(request));
-  return this.tx(async c=>{
+  return (async()=>{
    await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))',[canonical([...key,'reproduction-operation',request.operationId])]);
    await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))',[canonical([...key,findingId])]);
    const existing=(await c.query('SELECT * FROM agentci_reproduction_operations WHERE organization_id=$1 AND repository=$2 AND operation_id=$3',[...key,request.operationId])).rows[0];
@@ -64,6 +70,6 @@ export class ReproductionReservations {
    await c.query('INSERT INTO agentci_reproduction_operations(organization_id,repository,operation_id,finding_id,reproduction_id,request_digest,request,result_digest,result) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)',[...key,request.operationId,findingId,plan.id,hash,request,digest(canonical(result)),result]);
    await c.query('INSERT INTO agentci_reproduction_dispatch_intents(organization_id,repository,operation_id,workflow_id) VALUES($1,$2,$3,$4)',[...key,request.operationId,reproductionWorkflowId(this.scope,plan.id)]);
    return result;
-  });
+  })();
  }
 }

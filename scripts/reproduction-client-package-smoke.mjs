@@ -7,6 +7,6 @@ try{
  const installed=join(root,'node_modules/agentci'),manifest=JSON.parse(await readFile(join(installed,'package.json'),'utf8'));if(manifest.name!=='agentci'||manifest.version!==version)throw Error('Installed package identity mismatch');
  try{await readFile(join(root,'node_modules/tsx/package.json'));throw Error('Development loader installed in production package');}catch(e){if(e.code!=='ENOENT')throw e;}
  const cli=join(installed,'dist/cmd/agentci/main.js');if(execFileSync(process.execPath,[cli,'--version'],{encoding:'utf8'}).trim()!==version)throw Error('Installed CLI version mismatch');
- execFileSync(process.execPath,['--import','tsx','--test',resolve('tests/integration/model-reproduction-client.test.ts')],{env:{...process.env,AGENTCI_TEST_CLIENT_PACKAGE_ROOT:installed},stdio:'inherit',timeout:60000});
+ execFileSync(process.execPath,['--import','tsx','--test',resolve('tests/integration/model-reproduction-client.test.ts'),resolve('tests/integration/reproduction-admission-http.test.ts'),resolve('tests/integration/finding-disposition-http.test.ts')],{env:{...process.env,AGENTCI_TEST_CLIENT_PACKAGE_ROOT:installed},stdio:'inherit',timeout:60000});
  console.log(JSON.stringify({acceptance:'production-installed-reproduction-client-cli',version,installation:'npm install --omit=dev',developmentLoaderInstalled:false,publicExport:'agentci/client',result:'passed',liveProviders:false}));
 }finally{await rm(root,{recursive:true,force:true});}

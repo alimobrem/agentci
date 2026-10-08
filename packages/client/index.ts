@@ -102,3 +102,7 @@ export class AgentCIClient {
     finally{await reader?.cancel();}
   }
 }
+
+export type {FindingReproductionRequest,FindingReproductionAccepted} from '../findings/reproduction-transport.ts';
+
+export type {FindingDispositionRequest} from '../findings/disposition-transport.ts';

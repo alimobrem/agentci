@@ -303,6 +303,36 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07c-3f",
+          "status": "blocked",
+          "startedAt": "2026-10-08T02:15:44.399Z",
+          "completedAt": null,
+          "blockedReason": "Local reservation/client/CLI, 33 PostgreSQL checks, 5 production-installed tests, compatibility and independent review pass. Exact-new-source hosted CI/physical isolation remain pending; local immutable UBI runner unavailable. No new publication/phase acceptance claimed.",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Authenticated operator reservation uses pinned applied approval and fresh permission checks with reservation/event/intent/state committed in the same authority transaction; typed client and executable CLI preserve original admission, exact request identity, bounded retry/deadline, version/idempotency conflicts and redacted errors. Actual PostgreSQL/HTTP and installed package regressions cover denied/stale/revoked permissions, rollback, concurrent retries, immediate status/cancellation and no implicit execution. No disposition or full phase closure claimed.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3g",
+          "status": "blocked",
+          "startedAt": "2026-10-08T02:33:35.525Z",
+          "completedAt": null,
+          "blockedReason": "Local immutable receipt/disposition route, client and CLI, PostgreSQL failure/recovery and nine production-installed tests plus independent review pass. Exact-source hosted CI/physical isolation remain pending; local immutable UBI runner unavailable. No publication or aggregate phase acceptance claimed.",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Operator-only disposition produces authenticated immutable receipt from validated operator input, binds original review/subject/finding/version/operation, and retains receipt plus lifecycle event in one transaction. Trusted reader rejects substituted/corrupt/cross-scope receipts; concurrent exact replay preserves original outcome after later history; invalid transitions/conflicts and transaction failures leave no partial mutation. Typed client and CLI plus real PostgreSQL/HTTP and production-installed tests verify bounded/auth/identity/error/recovery behavior. Original M1/M2 contracts and no consensus-only confirmation remain intact. Hosted CI/isolation and aggregate M3 transport/phase gates remain separate.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -377,7 +407,7 @@
           "operationId": "getFindingReproduction",
           "path": "/v1/finding-reproductions/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
             "tests/reproduction-transport.test.ts",
@@ -398,7 +428,7 @@
           "operationId": "cancelFindingReproduction",
           "path": "/v1/finding-reproductions/{id}/cancellation",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
             "tests/reproduction-transport.test.ts",
@@ -414,6 +444,36 @@
             "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors",
             "Production-installed public client and executable CLI pin entire reference, operator preflight and overall deadline; fresh-reservation cancellation/restart/non-execution recovery without controller backfill"
           ]
+        },
+        {
+          "operationId": "requestFindingReproduction",
+          "path": "/v1/findings/{id}/reproductions",
+          "map": "specs/api/operations.json",
+          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
+          "tests": [
+            "tests/integration/reproduction-admission-http.test.ts"
+          ],
+          "scenarios": [
+            "Operator-only pinned immutable-plan selection; permission and intent atomic",
+            "Concurrent exact retries; conflicting operation/version; denied/stale/revoked permission rolls back",
+            "Production-installed public client and executable CLI; immediate status/cancel without execution"
+          ]
+        },
+        {
+          "operationId": "setFindingDisposition",
+          "path": "/v1/findings/{id}/dispositions",
+          "map": "specs/api/operations.json",
+          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
+          "tests": [
+            "tests/integration/finding-disposition-http.test.ts",
+            "tests/finding-disposition-transport.test.ts"
+          ],
+          "scenarios": [
+            "Operator authentication, original admission/subject/finding/version binding; no submitted receipt or confirmation",
+            "Immutable authenticated receipt and history atomic rollback/replay/concurrency",
+            "Exact replay after later history; trusted reader rejects tampered/cross-scope receipts",
+            "Compiled public client/CLI and production-installed failure/recovery flow"
+          ]
         }
       ],
       "testReferences": [
@@ -422,7 +482,10 @@
         "tests/integration/reproduction-http.test.ts",
         "tests/reproduction-transport.test.ts",
         "tests/model-reproduction-client.test.ts",
-        "tests/integration/model-reproduction-client.test.ts"
+        "tests/integration/model-reproduction-client.test.ts",
+        "tests/integration/reproduction-admission-http.test.ts",
+        "tests/integration/finding-disposition-http.test.ts",
+        "tests/finding-disposition-transport.test.ts"
       ],
       "plannedPRs": [],
       "evidence": [
@@ -508,6 +571,16 @@
         {
           "task": "M3-07c-4a",
           "reason": "Local client/CLI HTTP/PostgreSQL and production-installed checks pass; exact published-source hosted CI and independent review remain pending. Evidence: delivery/acceptance/m3-reproduction-client-cli-cloud.json",
+          "deferral": null
+        },
+        {
+          "task": "M3-07c-3f",
+          "reason": "Local reservation/client/CLI, 33 PostgreSQL checks, 5 production-installed tests, compatibility and independent review pass. Exact-new-source hosted CI/physical isolation remain pending; local immutable UBI runner unavailable. No new publication/phase acceptance claimed.",
+          "deferral": null
+        },
+        {
+          "task": "M3-07c-3g",
+          "reason": "Local immutable receipt/disposition route, client and CLI, PostgreSQL failure/recovery and nine production-installed tests plus independent review pass. Exact-source hosted CI/physical isolation remain pending; local immutable UBI runner unavailable. No publication or aggregate phase acceptance claimed.",
           "deferral": null
         }
       ],

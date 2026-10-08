@@ -247,8 +247,8 @@
       "path": "/v1/findings/{id}/dispositions",
       "owner": "07c-3",
       "authority": "mutation",
-      "input": "operationId subject expectedVersion disposition reason evidenceDigest",
-      "output": "200 immutable FindingHistoryRecord",
+      "input": "FindingDispositionRequest: schemaVersion reviewId operationId subject expectedVersion disposition reason evidenceDigest",
+      "output": "200 immutable FindingHistoryRecord with server-retained operator attestation in development",
       "requirementIds": [
         "SECTION-31.1",
         "SPEC-31.2-001",
@@ -271,8 +271,8 @@
       "path": "/v1/findings/{id}/reproductions",
       "owner": "07c-3",
       "authority": "mutation",
-      "input": "operationId subject expectedVersion approvalId approvalDigest",
-      "output": "202 operation/reproduction/plan digest; final schema before shipping",
+      "input": "FindingReproductionRequest: schemaVersion reviewId subject expectedVersion operationId approvalId approvalDigest",
+      "output": "202 FindingReproductionAccepted durable intent in development; no execution/confirmation claim",
       "requirementIds": [
         "SECTION-31.1",
         "SPEC-31.2-001",
