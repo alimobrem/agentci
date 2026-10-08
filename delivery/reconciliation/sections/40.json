@@ -26,7 +26,23 @@
         "note": "Original section 40 build-plan ownership"
       },
       "mappingAuthority": "original-build-plan",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-RECONCILE-HISTORY",
+          "status": "in-progress",
+          "startedAt": "2026-10-07T23:42:00.145Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0–M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
@@ -40,8 +56,7 @@
       "blocker": null,
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
       "reconciliationGaps": [
-        "no-row-evidence",
-        "no-task-or-operation-link"
+        "no-row-evidence"
       ]
     },
     {
@@ -983,7 +998,7 @@
       "evidence": [
         {
           "path": "apps/control/server.ts",
-          "sha256": "4d52108c39bd8b756c444c3c2deceedffa6d051faccd692aac8cb73482757f53",
+          "sha256": "5f5db7ac40485b0d378f7cacfd91154deb367fbb5c2b83dad6172139bf34c1e5",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -5841,6 +5856,38 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07c-3d-2b",
+          "status": "done",
+          "startedAt": "2026-10-06T06:00:54.215Z",
+          "completedAt": "2026-10-07T15:01:55.535Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Explicit operator-owned catalog/config setup avoids bootstrap cycles; startup only reads an expected applied identity. Real PostgreSQL, Temporal and isolated evaluator prove admission-only positive/negative/error execution, exact historical approval with fresh permission/current queued-state fencing, one logical run across duplicate/ambiguous stale starts and prior-attempt adoption, cancellation/revocation/expiry/outages, worker/parent crashes and independent owned-child cleanup. Verified terminal execution and owned cleanup plus retained receipt/finding evidence settle lifecycle; completed evidence is never replaced, unavailable outcomes remain unverified, legacy workflows/API stay compatible and disabled startup preserves behavior. No public mutation routes or full customer/UI/release completion inferred; their original gates stay open.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-reproduction-consumer-merged.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07c-3e-1",
+          "status": "in-progress",
+          "startedAt": "2026-10-07T15:04:17.398Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Shared typed admission/status/cancellation validators and fixed examples bind exact subject, review, operation, plan and queued-finding references. Acknowledgement is never execution success; settled cleanup does not imply a reproduced defect; never-staged proof stays verified:false with null receipt. Reuse domain receipt/proof validation without inventing findings, reject contradictory states, unknown fields and mismatched digests, and preserve immutable API baselines. This contract-only slice advertises no public route or completed customer/demo/release gate.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [],
@@ -5853,7 +5900,14 @@
           "acceptance": "Publish verified CLI/service artifacts; fresh customer review, provider failure recovery and released-build success/failure demo; close all gates and retro. Account-free demonstrations use explicitly synthetic provider fixtures; live-only claims remain deferred under docs/phases/m3-live-validation-deferral.md."
         }
       ],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "delivery/acceptance/m3-reproduction-consumer-merged.json",
+          "sha256": "04f16dae1b8fda828d7ec2cc459c517291c36f968f01101191e3111edfcfb1b9",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -5862,9 +5916,7 @@
       "owner": "AgentCI maintainers",
       "blocker": null,
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
-      "reconciliationGaps": [
-        "no-row-evidence"
-      ]
+      "reconciliationGaps": []
     },
     {
       "requirementId": "SPEC-40-049",
@@ -6106,6 +6158,28 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-00-provider-exception",
+          "status": "in-progress",
+          "startedAt": "2026-10-06T02:42:36.508Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Definition of done, M3 deferral/phase plans and closure evidence record the owner-approved exception only for inaccessible external-model-provider validation; preserve deferred/unverified requirement IDs and future resumption, full M0-M10 scope and every other applicable implementation/API/security/GitHub customer/packaging/download/release/demo/recovery gate. No live provider capability or release gate becomes passed by this policy; doc/delivery/phase checks pass.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-provider-validation-exception-local.json"
+              ]
+            },
+            {
+              "text": "Reviewed documentation is published to its intended branch; policy does not itself claim milestone closure or live validation.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -6165,13 +6239,19 @@
         },
         {
           "path": "docs/acceptance-reconciliation.md",
-          "sha256": "f5a5ee65c608b6a2e4010630875ecc25a1f323eefda1b6d2288f4c9ad5398ccc",
+          "sha256": "7250cf82655651c3cdc3e9eeb8df551b337019fa263d416ec1e39c884518c380",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
           "path": "scripts/reconcile-acceptance.mjs",
-          "sha256": "4caa474710a8cf2322aa2db98e49cb502dc8ce48ffe3cb2f56f9ba8d12c57540",
+          "sha256": "305cbd217f32a99d00623dce8733c63c828544a4cf6be8508a11402433879f0d",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-provider-validation-exception-local.json",
+          "sha256": "a7f455bbd6acce7a9a8b52ba466d5a4b28242d5bafa0e8d3a144e95b2f5a3008",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -6361,6 +6441,28 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-00-provider-exception",
+          "status": "in-progress",
+          "startedAt": "2026-10-06T02:42:36.508Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Definition of done, M3 deferral/phase plans and closure evidence record the owner-approved exception only for inaccessible external-model-provider validation; preserve deferred/unverified requirement IDs and future resumption, full M0-M10 scope and every other applicable implementation/API/security/GitHub customer/packaging/download/release/demo/recovery gate. No live provider capability or release gate becomes passed by this policy; doc/delivery/phase checks pass.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-provider-validation-exception-local.json"
+              ]
+            },
+            {
+              "text": "Reviewed documentation is published to its intended branch; policy does not itself claim milestone closure or live validation.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -6420,13 +6522,19 @@
         },
         {
           "path": "docs/acceptance-reconciliation.md",
-          "sha256": "f5a5ee65c608b6a2e4010630875ecc25a1f323eefda1b6d2288f4c9ad5398ccc",
+          "sha256": "7250cf82655651c3cdc3e9eeb8df551b337019fa263d416ec1e39c884518c380",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
           "path": "scripts/reconcile-acceptance.mjs",
-          "sha256": "4caa474710a8cf2322aa2db98e49cb502dc8ce48ffe3cb2f56f9ba8d12c57540",
+          "sha256": "305cbd217f32a99d00623dce8733c63c828544a4cf6be8508a11402433879f0d",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-provider-validation-exception-local.json",
+          "sha256": "a7f455bbd6acce7a9a8b52ba466d5a4b28242d5bafa0e8d3a144e95b2f5a3008",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

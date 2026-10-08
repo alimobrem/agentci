@@ -1,0 +1,611 @@
+{
+  "schemaVersion": "v1alpha1",
+  "scope": "Contract fixtures only; not execution evidence",
+  "queuedFinding": {
+    "schemaVersion": "v1alpha1",
+    "subject": {
+      "organizationId": "00000000-0000-4000-8000-000000000001",
+      "repository": "owner/repo",
+      "pullRequest": 1,
+      "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "mode": "synthetic",
+    "category": "security",
+    "severity": "high",
+    "claim": "Namespace validation can be bypassed",
+    "evidence": [
+      {
+        "side": "head",
+        "path": "app.mjs",
+        "digest": "sha256:e010847838be98c8bda2c3876a2cc38d9d693711f3352b528968b5ccb56d1937",
+        "startLine": 1,
+        "endLine": 1
+      }
+    ],
+    "sources": [
+      {
+        "requestId": "f2dfba22-7e91-4155-a8ec-4858b025d14e",
+        "attemptId": "96940bc1-f821-41a0-a68e-224b795a2785",
+        "provider": "fixture",
+        "model": "fixture-model",
+        "reviewerResultDigest": "sha256:1ac663a8aa2485b4610c6325155d823dd620a155bd902aa55f03f5e4395e7922",
+        "originalClaim": "Namespace validation can be bypassed"
+      }
+    ],
+    "state": "reproduction-pending",
+    "version": 2,
+    "disposition": null,
+    "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98"
+  },
+  "accepted": {
+    "schemaVersion": "v1alpha1",
+    "id": "93956795-dee3-4596-a50e-49b608a12892",
+    "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+    "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+    "subject": {
+      "organizationId": "00000000-0000-4000-8000-000000000001",
+      "repository": "owner/repo",
+      "pullRequest": 1,
+      "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    },
+    "finding": {
+      "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+      "queuedVersion": 2,
+      "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+    },
+    "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+    "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7"
+  },
+  "cancellation": {
+    "schemaVersion": "v1alpha1",
+    "id": "93956795-dee3-4596-a50e-49b608a12892",
+    "cancelRequested": true
+  },
+  "states": [
+    {
+      "name": "queued",
+      "value": {
+        "schemaVersion": "v1alpha1",
+        "id": "93956795-dee3-4596-a50e-49b608a12892",
+        "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+        "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+        "subject": {
+          "organizationId": "00000000-0000-4000-8000-000000000001",
+          "repository": "owner/repo",
+          "pullRequest": 1,
+          "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "finding": {
+          "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+          "queuedVersion": 2,
+          "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+        },
+        "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+        "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7",
+        "dispatch": {
+          "state": "queued",
+          "cancelRequested": false,
+          "cancellationCause": null
+        },
+        "receipt": null,
+        "nonExecution": null,
+        "settlement": null
+      }
+    },
+    {
+      "name": "bound-only",
+      "value": {
+        "schemaVersion": "v1alpha1",
+        "id": "93956795-dee3-4596-a50e-49b608a12892",
+        "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+        "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+        "subject": {
+          "organizationId": "00000000-0000-4000-8000-000000000001",
+          "repository": "owner/repo",
+          "pullRequest": 1,
+          "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "finding": {
+          "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+          "queuedVersion": 2,
+          "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+        },
+        "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+        "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7",
+        "dispatch": {
+          "state": "bound",
+          "cancelRequested": false,
+          "cancellationCause": null
+        },
+        "receipt": null,
+        "nonExecution": null,
+        "settlement": null
+      }
+    },
+    {
+      "name": "acknowledged-dispatch",
+      "value": {
+        "schemaVersion": "v1alpha1",
+        "id": "93956795-dee3-4596-a50e-49b608a12892",
+        "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+        "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+        "subject": {
+          "organizationId": "00000000-0000-4000-8000-000000000001",
+          "repository": "owner/repo",
+          "pullRequest": 1,
+          "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "finding": {
+          "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+          "queuedVersion": 2,
+          "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+        },
+        "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+        "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7",
+        "dispatch": {
+          "state": "dispatched",
+          "cancelRequested": false,
+          "cancellationCause": null
+        },
+        "receipt": null,
+        "nonExecution": null,
+        "settlement": null
+      }
+    },
+    {
+      "name": "settled-reproduced",
+      "value": {
+        "schemaVersion": "v1alpha1",
+        "id": "93956795-dee3-4596-a50e-49b608a12892",
+        "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+        "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+        "subject": {
+          "organizationId": "00000000-0000-4000-8000-000000000001",
+          "repository": "owner/repo",
+          "pullRequest": 1,
+          "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "finding": {
+          "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+          "queuedVersion": 2,
+          "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+        },
+        "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+        "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7",
+        "dispatch": {
+          "state": "settled",
+          "cancelRequested": false,
+          "cancellationCause": null
+        },
+        "receipt": {
+          "value": {
+            "findingId": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+            "subjectDigest": "sha256:dfb975a9b2a059fb476726a10af18bea3a35b66845d303b67f03675a47948190",
+            "assertionDigest": "sha256:2f0725d87592b807f59c8b61bfb343b9cb04947ae20277e553fa637897b8f8bb",
+            "evidenceDigest": "sha256:d8d1f95ba2486af8d64c855c4043cd9924d77955e6120f1613ec593717cebba6",
+            "actor": "reproduction",
+            "outcome": "reproduced",
+            "reason": "Contract fixture only: reproduced"
+          },
+          "digest": "sha256:369a2ac5b2af5818b6e9f8a71c0e16d7f344490cfbb83d1607100d2fd3704548"
+        },
+        "nonExecution": null,
+        "settlement": {
+          "kind": "receipt-retained",
+          "findingVersion": 3,
+          "historyDigest": "sha256:37bbb9639c85f69ca42901c2376c0152ac0a26750e6dcfcebc97d092f7a1651a",
+          "evidenceDigest": "sha256:369a2ac5b2af5818b6e9f8a71c0e16d7f344490cfbb83d1607100d2fd3704548",
+          "retainedReceiptDigest": "sha256:369a2ac5b2af5818b6e9f8a71c0e16d7f344490cfbb83d1607100d2fd3704548",
+          "retainedProofDigest": null
+        }
+      }
+    },
+    {
+      "name": "receipt-before-settlement",
+      "value": {
+        "schemaVersion": "v1alpha1",
+        "id": "93956795-dee3-4596-a50e-49b608a12892",
+        "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+        "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+        "subject": {
+          "organizationId": "00000000-0000-4000-8000-000000000001",
+          "repository": "owner/repo",
+          "pullRequest": 1,
+          "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "finding": {
+          "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+          "queuedVersion": 2,
+          "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+        },
+        "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+        "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7",
+        "dispatch": {
+          "state": "dispatched",
+          "cancelRequested": false,
+          "cancellationCause": null
+        },
+        "receipt": {
+          "value": {
+            "findingId": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+            "subjectDigest": "sha256:dfb975a9b2a059fb476726a10af18bea3a35b66845d303b67f03675a47948190",
+            "assertionDigest": "sha256:2f0725d87592b807f59c8b61bfb343b9cb04947ae20277e553fa637897b8f8bb",
+            "evidenceDigest": "sha256:d8d1f95ba2486af8d64c855c4043cd9924d77955e6120f1613ec593717cebba6",
+            "actor": "reproduction",
+            "outcome": "reproduced",
+            "reason": "Contract fixture only: reproduced"
+          },
+          "digest": "sha256:369a2ac5b2af5818b6e9f8a71c0e16d7f344490cfbb83d1607100d2fd3704548"
+        },
+        "nonExecution": null,
+        "settlement": null
+      }
+    },
+    {
+      "name": "settled-not-reproduced",
+      "value": {
+        "schemaVersion": "v1alpha1",
+        "id": "93956795-dee3-4596-a50e-49b608a12892",
+        "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+        "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+        "subject": {
+          "organizationId": "00000000-0000-4000-8000-000000000001",
+          "repository": "owner/repo",
+          "pullRequest": 1,
+          "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "finding": {
+          "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+          "queuedVersion": 2,
+          "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+        },
+        "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+        "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7",
+        "dispatch": {
+          "state": "settled",
+          "cancelRequested": false,
+          "cancellationCause": null
+        },
+        "receipt": {
+          "value": {
+            "findingId": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+            "subjectDigest": "sha256:dfb975a9b2a059fb476726a10af18bea3a35b66845d303b67f03675a47948190",
+            "assertionDigest": "sha256:2f0725d87592b807f59c8b61bfb343b9cb04947ae20277e553fa637897b8f8bb",
+            "evidenceDigest": "sha256:ba02b92ea97555a9f66acb1205273ce89c0e32ea9e71adcb39580b670518c912",
+            "actor": "reproduction",
+            "outcome": "not-reproduced",
+            "reason": "Contract fixture only: not-reproduced"
+          },
+          "digest": "sha256:900fb88fa2f3cbedfaf77b0db81d7d5b6b87ddd720be1235dc2bf6c5e25b30fc"
+        },
+        "nonExecution": null,
+        "settlement": {
+          "kind": "receipt-retained",
+          "findingVersion": 3,
+          "historyDigest": "sha256:3170d26946c6173ab909831c7d486f09d49c1186722ca889f234019ee6a9d8c2",
+          "evidenceDigest": "sha256:900fb88fa2f3cbedfaf77b0db81d7d5b6b87ddd720be1235dc2bf6c5e25b30fc",
+          "retainedReceiptDigest": "sha256:900fb88fa2f3cbedfaf77b0db81d7d5b6b87ddd720be1235dc2bf6c5e25b30fc",
+          "retainedProofDigest": null
+        }
+      }
+    },
+    {
+      "name": "settled-error",
+      "value": {
+        "schemaVersion": "v1alpha1",
+        "id": "93956795-dee3-4596-a50e-49b608a12892",
+        "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+        "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+        "subject": {
+          "organizationId": "00000000-0000-4000-8000-000000000001",
+          "repository": "owner/repo",
+          "pullRequest": 1,
+          "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "finding": {
+          "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+          "queuedVersion": 2,
+          "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+        },
+        "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+        "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7",
+        "dispatch": {
+          "state": "settled",
+          "cancelRequested": false,
+          "cancellationCause": null
+        },
+        "receipt": {
+          "value": {
+            "findingId": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+            "subjectDigest": "sha256:dfb975a9b2a059fb476726a10af18bea3a35b66845d303b67f03675a47948190",
+            "assertionDigest": "sha256:2f0725d87592b807f59c8b61bfb343b9cb04947ae20277e553fa637897b8f8bb",
+            "evidenceDigest": "sha256:d9737027e8301aaa5e632e9c8f27e1ca50b37c24afe8135bfaf42a6d49800e05",
+            "actor": "reproduction",
+            "outcome": "error",
+            "reason": "Contract fixture only: error"
+          },
+          "digest": "sha256:2eab33fdc8ec63e9e057a4f0492f4757a656aba03e8b586825063c7bc93fc0ed"
+        },
+        "nonExecution": null,
+        "settlement": {
+          "kind": "receipt-retained",
+          "findingVersion": 3,
+          "historyDigest": "sha256:ea59396040c6a79830ed5e5a5e37568f594bd01b7a9c9d085043b45c390de38e",
+          "evidenceDigest": "sha256:2eab33fdc8ec63e9e057a4f0492f4757a656aba03e8b586825063c7bc93fc0ed",
+          "retainedReceiptDigest": "sha256:2eab33fdc8ec63e9e057a4f0492f4757a656aba03e8b586825063c7bc93fc0ed",
+          "retainedProofDigest": null
+        }
+      }
+    },
+    {
+      "name": "never-staged-cancelled",
+      "value": {
+        "schemaVersion": "v1alpha1",
+        "id": "93956795-dee3-4596-a50e-49b608a12892",
+        "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+        "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+        "subject": {
+          "organizationId": "00000000-0000-4000-8000-000000000001",
+          "repository": "owner/repo",
+          "pullRequest": 1,
+          "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "finding": {
+          "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+          "queuedVersion": 2,
+          "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+        },
+        "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+        "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7",
+        "dispatch": {
+          "state": "settled",
+          "cancelRequested": true,
+          "cancellationCause": "user"
+        },
+        "receipt": null,
+        "nonExecution": {
+          "value": {
+            "schemaVersion": "v1alpha1",
+            "kind": "reproduction-not-started",
+            "id": "9a6cb0bb-6c8a-867b-90b1-f5327bd711ad",
+            "organizationId": "00000000-0000-4000-8000-000000000001",
+            "repository": "owner/repo",
+            "findingId": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+            "subjectDigest": "sha256:dfb975a9b2a059fb476726a10af18bea3a35b66845d303b67f03675a47948190",
+            "queuedVersion": 2,
+            "queuedFindingDigest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c",
+            "planId": "93956795-dee3-4596-a50e-49b608a12892",
+            "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+            "reservationOperationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+            "status": "cancelled",
+            "reason": "cancelled",
+            "executionReceipt": null,
+            "verified": false
+          },
+          "digest": "sha256:c7fdda76a5879d113f7f3fd4b42047df38097d3502d35353d56c7303e597ecb2"
+        },
+        "settlement": {
+          "kind": "never-staged",
+          "findingVersion": 3,
+          "historyDigest": "sha256:08734c106fd29c35998ff09eb2088581e1b58f2c605d203c85dab7d48fe51ce4",
+          "evidenceDigest": "sha256:c7fdda76a5879d113f7f3fd4b42047df38097d3502d35353d56c7303e597ecb2",
+          "retainedReceiptDigest": null,
+          "retainedProofDigest": "sha256:c7fdda76a5879d113f7f3fd4b42047df38097d3502d35353d56c7303e597ecb2"
+        }
+      }
+    },
+    {
+      "name": "never-staged-input-limit",
+      "value": {
+        "schemaVersion": "v1alpha1",
+        "id": "93956795-dee3-4596-a50e-49b608a12892",
+        "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+        "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+        "subject": {
+          "organizationId": "00000000-0000-4000-8000-000000000001",
+          "repository": "owner/repo",
+          "pullRequest": 1,
+          "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "finding": {
+          "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+          "queuedVersion": 2,
+          "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+        },
+        "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+        "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7",
+        "dispatch": {
+          "state": "settled",
+          "cancelRequested": false,
+          "cancellationCause": null
+        },
+        "receipt": null,
+        "nonExecution": {
+          "value": {
+            "schemaVersion": "v1alpha1",
+            "kind": "reproduction-not-started",
+            "id": "9a6cb0bb-6c8a-867b-90b1-f5327bd711ad",
+            "organizationId": "00000000-0000-4000-8000-000000000001",
+            "repository": "owner/repo",
+            "findingId": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+            "subjectDigest": "sha256:dfb975a9b2a059fb476726a10af18bea3a35b66845d303b67f03675a47948190",
+            "queuedVersion": 2,
+            "queuedFindingDigest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c",
+            "planId": "93956795-dee3-4596-a50e-49b608a12892",
+            "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+            "reservationOperationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+            "status": "unavailable",
+            "reason": "input-limit",
+            "executionReceipt": null,
+            "verified": false
+          },
+          "digest": "sha256:8f5f52301a77bb77192eb6859e52246bb3e75fbef36c09e3590432412ec51480"
+        },
+        "settlement": {
+          "kind": "never-staged",
+          "findingVersion": 3,
+          "historyDigest": "sha256:fa6d0446e468a366717e08ca36df4835d76b79aba5a65916876ae43ba9a1c9fd",
+          "evidenceDigest": "sha256:8f5f52301a77bb77192eb6859e52246bb3e75fbef36c09e3590432412ec51480",
+          "retainedReceiptDigest": null,
+          "retainedProofDigest": "sha256:8f5f52301a77bb77192eb6859e52246bb3e75fbef36c09e3590432412ec51480"
+        }
+      }
+    },
+    {
+      "name": "superseded-without-execution",
+      "value": {
+        "schemaVersion": "v1alpha1",
+        "id": "93956795-dee3-4596-a50e-49b608a12892",
+        "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+        "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+        "subject": {
+          "organizationId": "00000000-0000-4000-8000-000000000001",
+          "repository": "owner/repo",
+          "pullRequest": 1,
+          "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "finding": {
+          "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+          "queuedVersion": 2,
+          "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+        },
+        "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+        "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7",
+        "dispatch": {
+          "state": "settled",
+          "cancelRequested": true,
+          "cancellationCause": "superseded"
+        },
+        "receipt": null,
+        "nonExecution": null,
+        "settlement": {
+          "kind": "superseded",
+          "findingVersion": 3,
+          "historyDigest": "sha256:81316ce61f659193b16ecc5f1d2f0d8c6a5bff15759f14a56f8d141f4303edbe",
+          "evidenceDigest": "sha256:663183b87a8096d5ed56f18592700cee6738ef51d5fc0cd60bfb3d35b78beb9f",
+          "retainedReceiptDigest": null,
+          "retainedProofDigest": null
+        }
+      }
+    },
+    {
+      "name": "superseded-retaining-receipt",
+      "value": {
+        "schemaVersion": "v1alpha1",
+        "id": "93956795-dee3-4596-a50e-49b608a12892",
+        "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+        "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+        "subject": {
+          "organizationId": "00000000-0000-4000-8000-000000000001",
+          "repository": "owner/repo",
+          "pullRequest": 1,
+          "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "finding": {
+          "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+          "queuedVersion": 2,
+          "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+        },
+        "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+        "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7",
+        "dispatch": {
+          "state": "settled",
+          "cancelRequested": true,
+          "cancellationCause": "superseded"
+        },
+        "receipt": {
+          "value": {
+            "findingId": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+            "subjectDigest": "sha256:dfb975a9b2a059fb476726a10af18bea3a35b66845d303b67f03675a47948190",
+            "assertionDigest": "sha256:2f0725d87592b807f59c8b61bfb343b9cb04947ae20277e553fa637897b8f8bb",
+            "evidenceDigest": "sha256:d8d1f95ba2486af8d64c855c4043cd9924d77955e6120f1613ec593717cebba6",
+            "actor": "reproduction",
+            "outcome": "reproduced",
+            "reason": "Contract fixture only: reproduced"
+          },
+          "digest": "sha256:369a2ac5b2af5818b6e9f8a71c0e16d7f344490cfbb83d1607100d2fd3704548"
+        },
+        "nonExecution": null,
+        "settlement": {
+          "kind": "superseded",
+          "findingVersion": 4,
+          "historyDigest": "sha256:ce846afdbba046b8132f51dfa78b198e137d8923d509f2af8c0f27b81f49ddc6",
+          "evidenceDigest": "sha256:557b8288f09a9ae9d8b6ae10f63039bc51bf287f48c5c2a3e103c512efbe6acb",
+          "retainedReceiptDigest": "sha256:369a2ac5b2af5818b6e9f8a71c0e16d7f344490cfbb83d1607100d2fd3704548",
+          "retainedProofDigest": null
+        }
+      }
+    },
+    {
+      "name": "superseded-retaining-proof",
+      "value": {
+        "schemaVersion": "v1alpha1",
+        "id": "93956795-dee3-4596-a50e-49b608a12892",
+        "operationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+        "reviewId": "d9d35d7c-0789-4382-a0c2-d5c660cc465b",
+        "subject": {
+          "organizationId": "00000000-0000-4000-8000-000000000001",
+          "repository": "owner/repo",
+          "pullRequest": 1,
+          "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "finding": {
+          "id": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+          "queuedVersion": 2,
+          "digest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c"
+        },
+        "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+        "requestDigest": "sha256:5c8f93176046f2a3cc3de2af4d27b3251ed77989217491f7d40c07d31856d9e7",
+        "dispatch": {
+          "state": "settled",
+          "cancelRequested": true,
+          "cancellationCause": "superseded"
+        },
+        "receipt": null,
+        "nonExecution": {
+          "value": {
+            "schemaVersion": "v1alpha1",
+            "kind": "reproduction-not-started",
+            "id": "9a6cb0bb-6c8a-867b-90b1-f5327bd711ad",
+            "organizationId": "00000000-0000-4000-8000-000000000001",
+            "repository": "owner/repo",
+            "findingId": "sha256:5f5e033cca0d0b61087a549d39c1a432497333a7c31c0d05b6007abd82017c98",
+            "subjectDigest": "sha256:dfb975a9b2a059fb476726a10af18bea3a35b66845d303b67f03675a47948190",
+            "queuedVersion": 2,
+            "queuedFindingDigest": "sha256:b4c3ed4176aca91345d0e190af965b6de86344111547ebd1c11769aac8f89e7c",
+            "planId": "93956795-dee3-4596-a50e-49b608a12892",
+            "planDigest": "sha256:4d0a9276cb9229dca9bf5923bfba57b086f6cf1634181d6a1e702f826af133a8",
+            "reservationOperationId": "cf915d7c-88b4-4d02-92ec-ee0f3ca047d9",
+            "status": "unavailable",
+            "reason": "input-limit",
+            "executionReceipt": null,
+            "verified": false
+          },
+          "digest": "sha256:8f5f52301a77bb77192eb6859e52246bb3e75fbef36c09e3590432412ec51480"
+        },
+        "settlement": {
+          "kind": "superseded",
+          "findingVersion": 4,
+          "historyDigest": "sha256:2fba6b51de96115d8beaafc01ff8632ee9749a2d241aaf15c25074b80b1b5095",
+          "evidenceDigest": "sha256:4ebfb6ee7f41395fed25c4132f248da277f1caf18fd01dd4eb2b66711df680e7",
+          "retainedReceiptDigest": null,
+          "retainedProofDigest": "sha256:8f5f52301a77bb77192eb6859e52246bb3e75fbef36c09e3590432412ec51480"
+        }
+      }
+    }
+  ]
+}

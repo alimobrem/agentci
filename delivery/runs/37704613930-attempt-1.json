@@ -1,0 +1,265 @@
+{
+  "runId": 37704613930,
+  "attempt": 1,
+  "conclusion": "failure",
+  "cohort": "optimized",
+  "cache": "unknown",
+  "collectedAt": "2026-10-08T00:00:46.283Z",
+  "sourceCommit": "dc5fe5de9c10cbdbe8ce484baccc0e93fd12cbd1",
+  "url": "https://github.com/alimobrem/agentci/actions/runs/37704613930",
+  "event": "pull_request",
+  "jobs": [
+    {
+      "name": "contracts-and-runtime",
+      "seconds": 80,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "seconds": 12,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:fast",
+          "seconds": 46,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:api:compat",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify requirement reconciliation and captured history",
+          "seconds": 1,
+          "conclusion": "failure"
+        },
+        {
+          "name": "Verify frozen provider eval detects regressions",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Verify reviewer eval rejects external dispatch from synthetic mode",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Verify finding eval rejects wrong reproduction identity",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run npm run check:workflows",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Verify evaluator deployment boundary",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run npm run build",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run npm audit --audit-level=high",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Start isolated Temporal",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Wait for Temporal",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Build isolated eval runner",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Build trusted-dependency self-eval runner",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Build optional eval engines",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Integration tests with mandatory real eval isolation",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Package smoke and installed PostgreSQL readers",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Build API image",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Build worker image",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Build isolated eval worker image",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Scan service images",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Verify compiled containers",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Verify native artifact provenance",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Verify isolated eval worker runtime",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Collect verification evidence",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "fast-feedback",
+      "seconds": 43,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm run check:fast",
+          "seconds": 27,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

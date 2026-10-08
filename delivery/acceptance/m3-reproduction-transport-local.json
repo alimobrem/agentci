@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "scope": "Local contract-only implementation; no public route or phase/customer demo acceptance",
+  "sourceFiles": [
+    {
+      "path": "packages/findings/reproduction-transport.ts",
+      "digest": "sha256:cfa810f8e69e072afbbd490bb73536f7a703675519bcfd3f545c6646aea30240"
+    },
+    {
+      "path": "packages/findings/lifecycle.ts",
+      "digest": "sha256:4fbf3067c484c82fa7c6a3941ad0a263a8130773f407384de681a0c534bbcf15"
+    },
+    {
+      "path": "packages/findings/non-execution.ts",
+      "digest": "sha256:6e74cfdbed4d80c030831050369e1dd3297a60a02f400cdba91554f76fad3878"
+    },
+    {
+      "path": "packages/storage/reproduction-dispatch.ts",
+      "digest": "sha256:1d17c50696060f7a4be5694aea3f4e5beb2952c93270e687610a6868edee0811"
+    },
+    {
+      "path": "specs/api/drafts/finding-reproduction-examples.json",
+      "digest": "sha256:106d1ce504c4cf268663f72fd9c6075e03b3dce5055eca8fc7ead3bc04ee0117"
+    },
+    {
+      "path": "tests/reproduction-transport.test.ts",
+      "digest": "sha256:8edac40e66bbf2be611618f2da8ded41321860e9ac418ba907cf916d269df8d8"
+    },
+    {
+      "path": "scripts/package-smoke.mjs",
+      "digest": "sha256:70f349d686f27c5e982eefa567cb803439559803841735219f79a17634341a8c"
+    }
+  ],
+  "checks": [
+    {
+      "name": "contract fixed examples/adversarial checks",
+      "status": "local-passed",
+      "passed": 5,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-reproduction-transport-fixtures-final.log",
+      "digest": "sha256:387350d7ff263e2b90ac29b003ce5509e06b727719b5a39862c6fad37f495a06"
+    },
+    {
+      "name": "PostgreSQL runtime/authenticated reader compatibility",
+      "status": "local-passed",
+      "passed": 9,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-reproduction-transport-domain-pg.log",
+      "digest": "sha256:8b48768884849abcabb7690ffbfa96f447f469eb7eae0b842b29233cc884c077"
+    },
+    {
+      "name": "production-only installed package",
+      "status": "local-passed",
+      "passed": 4,
+      "skipped": 0,
+      "path": "/private/tmp/agentci-reproduction-transport-installed.log",
+      "digest": "sha256:75499c3f6837058f870fcdef5732dbe11974f5bca86f4c7e85bc46c32af862e1"
+    }
+  ],
+  "reconciliation": {
+    "sourceIds": 1346,
+    "sections": 51,
+    "derivedChildren": 29,
+    "historicalGateSnapshotsUnchanged": true,
+    "currentCandidate": "not-run",
+    "newNumericGatesAdopted": false
+  },
+  "limits": [
+    "Fixed examples are contract data, not execution evidence",
+    "No public reproduction HTTP route or new client method advertised",
+    "Applicable hosted checks and final real-server mutation/client/customer acceptance remain pending"
+  ]
+}

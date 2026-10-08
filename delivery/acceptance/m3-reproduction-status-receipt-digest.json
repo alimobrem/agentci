@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3e-1",
+  "state": "blocked-hosted-validation-and-review-pending",
+  "recordedAt": "2026-10-08T00:54:52.759185+00:00",
+  "sourceCommit": "24c123d19d41591d8d2dbeb7f8998d7206931793",
+  "sourceTree": "f73452079053f93cc493dc7e4476e8d38021f878",
+  "scope": "Standalone PR69 correction: receipt-retained settlement evidenceDigest is the persisted canonical receipt digest, not its inner execution evidence digest. Retained consumer/storage unchanged. Shared fixture settled states synchronized. Real PostgreSQL regression accepts retained settlement and rejects inner digest substitution.",
+  "fileDigests": [
+    {
+      "path": "packages/findings/reproduction-transport.ts",
+      "sha256": "8823213af0d160a60f1f8b77e275e0b13208fb79668dabb64c074161d81d8ecd"
+    },
+    {
+      "path": "specs/api/drafts/finding-reproduction-examples.json",
+      "sha256": "20622eec68d75271f38fa60e01e2d724e0e3577f627c1d0f4f78e7585ffeb010"
+    },
+    {
+      "path": "tests/integration/reproduction-dispatch-recovery.test.ts",
+      "sha256": "9f170e87fca7137410b0f3de6241f3786efc887ff71f18391550f84d71a41790"
+    }
+  ],
+  "validation": {
+    "fastChecks": 10,
+    "unitTests": 414,
+    "dispatchRecoveryPostgresTests": 11,
+    "installedProductionPackageTests": 4,
+    "failed": 0,
+    "skipped": 0,
+    "releasedApiCompatibility": "passed",
+    "workflowValidation": "passed"
+  },
+  "preservedBeforeFix": "Real PostgreSQL receipt-retained status rejected by original PR69 validator with invalid-finding-reproduction-transport.",
+  "logs": [
+    {
+      "path": "/workspace/scratch/pr69-digest-before.log",
+      "sha256": "d878db5cd91737bf8fdfddba0d90aa5a4eb39f27781c2dd568511a0654fd12af"
+    },
+    {
+      "path": "/workspace/scratch/pr69-digest-after.log",
+      "sha256": "85209f3ff1f0985308f0ba198c6c0ebfc8d064b0587a46897f03018dd599008e"
+    },
+    {
+      "path": "/workspace/scratch/pr69-fix-fast.log",
+      "sha256": "0dd2cac8ac1a13d224e94ebe07be305883e71aa8001b0aee1e45b5d164a1c3ae"
+    },
+    {
+      "path": "/workspace/scratch/pr69-fix-package.log",
+      "sha256": "b1c8fb2f6b628765308333691b3a2f240c18f308cfb2420610024b4caea779bb"
+    },
+    {
+      "path": "/workspace/scratch/pr69-fix-api.log",
+      "sha256": "00b31dc07f335770bb136ab4c853f2bc4bb608c9cdb6d4c94ae42663181f40cf"
+    },
+    {
+      "path": "/workspace/scratch/pr69-fix-workflows.log",
+      "sha256": "cbb6627c6fbc680c66ab4c6145487e3ca5caebc34c37941cdeb736e70e4b2284"
+    }
+  ],
+  "remaining": [
+    "Exact published-source hosted CI including mandatory isolated/container gates",
+    "Independent review of prerequisite correction",
+    "Safe additive merge into PR70 and verification of final dependent head",
+    "All18M3releasegatesremainpending"
+  ],
+  "noMergeOrDeploy": true
+}

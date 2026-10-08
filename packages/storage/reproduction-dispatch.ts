@@ -11,7 +11,8 @@ import {validateReproductionConfig,type ReproductionConfigIdentity} from '../fin
 import type {ReviewSubject} from '../reviewers/context.ts';
 export class ReproductionDispatchConflict extends Error {constructor(){super('reproduction-dispatch-conflict');}}
 export class ReproductionDispatchLeaseLost extends Error {constructor(){super('reproduction-dispatch-lease-lost');}}
-export type ReproductionCancellationCause='user'|'revoked'|'expired'|'permission-denied'|'superseded'|'unavailable';
+import type {ReproductionCancellationCause} from '../findings/reproduction-transport.ts';
+export type {ReproductionCancellationCause} from '../findings/reproduction-transport.ts';
 export interface ReproductionDispatchBinding {schemaVersion:'v1alpha1';workflowType:'reproduceAdmittedFinding';workflowId:string;taskQueue:string;evalTaskQueue:string;operationId:string;planId:string;planDigest:string;requestDigest:string;subject:ReviewSubject}
 export interface ReproductionDispatchRecord {operationId:string;planId:string;workflowId:string;binding:ReproductionDispatchBinding|null;attempt:{token:string;config:ReproductionConfigIdentity}|null;runId:string|null;acknowledged:boolean;settlement:{retainedReceiptDigest:string|null;retainedProofDigest:string|null;kind:DispatchSettlementEvidence['kind'];findingId:string;findingVersion:number;historyDigest:string;evidenceDigest:string}|null;cancellation:{cause:ReproductionCancellationCause;requestedAt:string}|null}
 export interface ReproductionDispatchClaim extends ReproductionDispatchRecord {token:string}

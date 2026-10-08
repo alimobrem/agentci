@@ -2651,14 +2651,16 @@
         "SECTION-32",
         "SPEC-40-048"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-06T06:00:54.215Z",
-      "completedAt": null,
+      "completedAt": "2026-10-07T15:01:55.535Z",
       "acceptance": [
         {
           "text": "Explicit operator-owned catalog/config setup avoids bootstrap cycles; startup only reads an expected applied identity. Real PostgreSQL, Temporal and isolated evaluator prove admission-only positive/negative/error execution, exact historical approval with fresh permission/current queued-state fencing, one logical run across duplicate/ambiguous stale starts and prior-attempt adoption, cancellation/revocation/expiry/outages, worker/parent crashes and independent owned-child cleanup. Verified terminal execution and owned cleanup plus retained receipt/finding evidence settle lifecycle; completed evidence is never replaced, unavailable outcomes remain unverified, legacy workflows/API stay compatible and disabled startup preserves behavior. No public mutation routes or full customer/UI/release completion inferred; their original gates stay open.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-reproduction-consumer-merged.json"
+          ]
         }
       ],
       "dependsOn": [
@@ -2666,6 +2668,50 @@
         "M3-07c-3d-1b",
         "M3-07c-3d-2a",
         "M3-07c-3d-2b-1"
+      ]
+    },
+    {
+      "id": "M3-07c-3e-1",
+      "title": "Freeze truthful finding reproduction response contracts",
+      "requirementIds": [
+        "SECTION-12.4",
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SPEC-40-048"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-07T15:04:17.398Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Shared typed admission/status/cancellation validators and fixed examples bind exact subject, review, operation, plan and queued-finding references. Acknowledgement is never execution success; settled cleanup does not imply a reproduced defect; never-staged proof stays verified:false with null receipt. Reuse domain receipt/proof validation without inventing findings, reject contradictory states, unknown fields and mismatched digests, and preserve immutable API baselines. This contract-only slice advertises no public route or completed customer/demo/release gate.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-3d-2b"
+      ]
+    },
+    {
+      "id": "M3-RECONCILE-HISTORY",
+      "title": "Preserve captured gate evidence while refreshing current reconciliation",
+      "requirementIds": [
+        "SECTION-40",
+        "SECTION-44",
+        "SECTION-48",
+        "SECTION-49"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-07T23:42:00.145Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0–M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
+          "status": "pending",
+          "evidence": []
+        }
       ]
     }
   ]

@@ -98,6 +98,13 @@ try {
   const {initializeModelReviewCheckScheduler}=await import(pathToFileURL(join(installedRoot,'dist/apps/worker/model-review-publication.js')).href);
   if(await initializeModelReviewCheckScheduler({}, {}, {}, {})!==null)throw new Error('Installed publication capability must default off');
   const {validateModelFinding}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/model.js')).href);
+  const reproductionExamples=JSON.parse(await readFile(join(installedRoot,'specs/api/drafts/finding-reproduction-examples.json'),'utf8'));
+  const {validateFindingReproductionAccepted,validateFindingReproductionStatus,validateFindingReproductionCancellation}=await import(pathToFileURL(join(installedRoot,'dist/packages/findings/reproduction-transport.js')).href);
+  const reproductionIdentity={id:reproductionExamples.accepted.id,reviewId:reproductionExamples.accepted.reviewId,subject:reproductionExamples.accepted.subject,operationId:reproductionExamples.accepted.operationId,findingId:reproductionExamples.accepted.finding.id,planDigest:reproductionExamples.accepted.planDigest,requestDigest:reproductionExamples.accepted.requestDigest,queuedVersion:reproductionExamples.accepted.finding.queuedVersion,queuedFindingDigest:reproductionExamples.accepted.finding.digest};
+  validateFindingReproductionAccepted(reproductionExamples.accepted,reproductionIdentity);
+  validateFindingReproductionCancellation(reproductionExamples.cancellation,reproductionIdentity.id);
+  for(const example of reproductionExamples.states)validateFindingReproductionStatus(example.value,reproductionIdentity);
+
   const findingFixture=JSON.parse(await readFile(join(installedRoot,'specs/api/fixtures/model-finding.json'),'utf8'));
   validateModelFinding(findingFixture,findingFixture.subject);
   const {createSnapshotReviewContext}=await import(pathToFileURL(join(installedRoot,'dist/packages/reviewers/snapshot-context.js')).href);

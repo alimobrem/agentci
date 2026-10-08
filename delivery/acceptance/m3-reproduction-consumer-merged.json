@@ -1,0 +1,211 @@
+{
+  "runId": "37638625845",
+  "artifactId": 11491332714,
+  "candidate": "2a795d509f77a1bc27d3979c3511aee2ff043db7",
+  "testedPreview": "b729d397ad76a0114d7fac86b84c4207153b0822",
+  "hashesVerified": 10,
+  "counts": {
+    "fast": {
+      "tests": 407,
+      "pass": 407,
+      "fail": 0,
+      "skipped": 0
+    },
+    "integration": {
+      "tests": 170,
+      "pass": 170,
+      "fail": 0,
+      "skipped": 0
+    },
+    "installed": {
+      "tests": 4,
+      "pass": 4,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "api": [
+    {
+      "baseline": "specs/api/baselines/m1-0.2.1-openapi.json",
+      "baselineSha256": "28c56cc252b460ca0a496f8459b59792ceea16affb2d60c7b22a8f8a35f9174d",
+      "exitCode": 0,
+      "changes": "[]\n",
+      "diagnostics": ""
+    },
+    {
+      "baseline": "specs/api/baselines/m2-0.3.1-openapi.json",
+      "baselineSha256": "d9515b059d4240bb92b2b34c4a34e85981bfbe54141a8511d2adfbd49dadf16f",
+      "exitCode": 0,
+      "changes": "[]\n",
+      "diagnostics": ""
+    }
+  ],
+  "negativeControls": [
+    {
+      "baseline": "m1-0.2.1",
+      "endpoint": "/v1/evidence/{id}",
+      "result": "endpoint-removal rejected"
+    },
+    {
+      "baseline": "m2-0.3.1",
+      "endpoint": "/v1/eval-comparisons/{id}",
+      "result": "endpoint-removal rejected"
+    }
+  ],
+  "runtime": {
+    "result": "passed",
+    "version": "ci",
+    "platform": "x64",
+    "checks": [
+      "non-root API/worker startup",
+      "M2 schema readiness",
+      "signature rejection",
+      "evidence authentication",
+      "comparison authentication/UUID/scoped lookup",
+      "compiled comparison API/client reads actual queued database evidence",
+      "compiled snapshot export/client completion",
+      "signed closed delivery",
+      "non-root persistent Temporal database startup/restart",
+      "graceful shutdown"
+    ],
+    "github": "synthetic credentials; no live GitHub review claimed"
+  },
+  "evalWorkerRuntime": {
+    "result": "passed",
+    "deployment": "native-CLI",
+    "engine": "docker",
+    "platform": "linux/amd64",
+    "workerImage": "sha256:51956e37897cab00c32c3ecd3a8e2aec4dcdf29231e02885172ff8d938ea7b4c",
+    "runnerImage": "sha256:6fc4dd04b769fd9e8d1b88d5d4041f564ee598bed05ab00c9142dcc782b39842",
+    "uid": 1001,
+    "node": "v26.10.0",
+    "cli": "Docker version 29.8.2, build 7fc2dff",
+    "license": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+    "checks": [
+      "UBI non-root read-only runtime",
+      "only selected engine client; no package installers/App keys",
+      "mismatched engine rejected before database/Temporal connection",
+      "official pinned docker CLI execution",
+      "separately authenticated restricted database login",
+      "real Temporal workflow and isolated child execution",
+      "child has no database/App/socket credentials",
+      "behavioral failure preserved",
+      "worker graceful shutdown/restart",
+      "all owned children removed"
+    ],
+    "github": "no live GitHub publication claimed"
+  },
+  "nativeProvenance": {
+    "worker": {
+      "image": "sha256:26618aacb4c597d1347d57533611f2928abb742254e86fcc87d8a043c6eddb99",
+      "engine": "docker",
+      "platform": "linux/amd64",
+      "temporalNativeArtifacts": "matched official npm artifact",
+      "files": {
+        "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+        "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+        "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+        "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+      },
+      "coverage": "Podman compiled module metadata is bound to exact official binary hashes; its source manifest includes additional modules. Cargo and Docker vendor manifests are upstream source inventories, not proofs of exact compiled dependency graphs."
+    },
+    "eval-worker": {
+      "image": "sha256:51956e37897cab00c32c3ecd3a8e2aec4dcdf29231e02885172ff8d938ea7b4c",
+      "engine": "docker",
+      "platform": "linux/amd64",
+      "temporalNativeArtifacts": "matched official npm artifact",
+      "files": {
+        "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
+        "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
+        "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
+        "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+      },
+      "dockerCli": {
+        "Version": "29.8.2",
+        "ApiVersion": "1.56",
+        "DefaultAPIVersion": "1.56",
+        "GitCommit": "7fc2dff",
+        "GoVersion": "go1.26.8",
+        "Os": "linux",
+        "Arch": "amd64",
+        "BuildTime": "Wed Sep 30 19:31:45 2026",
+        "Context": "default",
+        "sha256": "6f7a95d27f98fc8c5f6b220898988bf8f61dd9b040936797917cbdc72c6cabe6",
+        "vendorManifestSha256": "0836699fe2ae28a136aabd51f932b825e0653c48ae200613b72f07a74f2a3868"
+      },
+      "coverage": "Podman compiled module metadata is bound to exact official binary hashes; its source manifest includes additional modules. Cargo and Docker vendor manifests are upstream source inventories, not proofs of exact compiled dependency graphs."
+    }
+  },
+  "scans": {
+    "scan-results/api.json": [],
+    "scan-results/eval-agentci.json": [],
+    "scan-results/eval-engines.json": [
+      {
+        "id": "CVE-2026-85393",
+        "package": "node-forge",
+        "fixed": null
+      }
+    ],
+    "scan-results/eval-runner.json": [],
+    "scan-results/eval-worker.json": [],
+    "scan-results/worker.json": []
+  },
+  "advisory": {
+    "runId": "37638620380",
+    "artifactId": 11491835034,
+    "producer": {
+      "version": "0.4.0-m3-dev.1",
+      "sourceCommit": "18da4ffbcd87f5511871bdeec24feb438e635ff4",
+      "repository": "alimobrem/agentci",
+      "installationId": 167655696,
+      "runId": "37638620380",
+      "runAttempt": "1",
+      "runnerImage": "sha256:50fc7d9dd91ca9b32653fc3efa5e93a17d44593c5dd7ec2434ffcde22f2ccf57",
+      "evaluatorImage": "sha256:4f43c963280665e27e5c4708b3d04106c162047793c19cf036fbc02cb9757795"
+    },
+    "job": {
+      "repository": "alimobrem/agentci",
+      "installationId": 167655696,
+      "pullRequest": 68,
+      "baseSha": "18da4ffbcd87f5511871bdeec24feb438e635ff4",
+      "headSha": "2a795d509f77a1bc27d3979c3511aee2ff043db7"
+    },
+    "digest": "sha256:944caf4b129b79953f68a1b46c2248b57dfae2c6fb05094e1dd00835a195c90d",
+    "header": {
+      "id": "6212656f-b29e-49f0-b89e-808d2b232cc4",
+      "reviewId": "df0232e1-1d39-42b4-8355-ad3d1ac596fa",
+      "attemptId": "6ada4630-5347-4f6f-a933-057e20b0a623",
+      "organizationId": "00000000-0000-4000-8000-000000000001",
+      "subject": {
+        "repository": "alimobrem/agentci",
+        "pullRequest": 68,
+        "baseSha": "18da4ffbcd87f5511871bdeec24feb438e635ff4",
+        "headSha": "2a795d509f77a1bc27d3979c3511aee2ff043db7"
+      },
+      "cancelRequested": false,
+      "unitCount": 8,
+      "snapshotDigest": "sha256:7fb760e921484c445922d708b9d95b20943b10beaf7acc56808c272f255c25e8",
+      "suiteChanges": [],
+      "coverageGaps": [],
+      "selectionGaps": []
+    },
+    "summary": {
+      "state": "completed",
+      "outcome": "passed",
+      "executionGaps": [],
+      "unitCount": 8,
+      "comparisonCount": 4
+    },
+    "endDigest": "sha256:b18fef7c4e5616b388a29b4f2b0861bac067d4fcba1cb23bf9fa90a541ca5e4f"
+  },
+  "cache": "warm — explicit CACHED layers in inspected logs",
+  "scope": "Consumer source acceptance only; M3 customer routes/UI/publication/demo/release gates remain open",
+  "releaseComplete": false,
+  "merge": {
+    "pullRequest": "https://github.com/alimobrem/agentci/pull/68",
+    "commit": "4ec737245c581a9d670cf80b3e3cd75e44491fa6",
+    "tree": "4ab0e3ce7696c2bdb3ebf81e27bc10b3ae3a4a72",
+    "testedPreviewTree": "4ab0e3ce7696c2bdb3ebf81e27bc10b3ae3a4a72",
+    "scope": "Verified merge tree equality; no milestone completion"
+  }
+}

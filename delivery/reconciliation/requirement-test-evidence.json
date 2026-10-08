@@ -5,19 +5,19 @@
   "snapshotInputs": {
     "tasks": {
       "path": "delivery/tasks.json",
-      "sha256": "f34b70638ea45216f066d2e5fce1794de62648496a37d690be95df1f8c7d400d",
+      "sha256": "847a744705be5b02f05054d1734d2804ab46f830754760037334a48a1859dfcb",
       "availability": "present",
       "meaning": "Source/test/record reference; presence is not execution acceptance"
     },
     "phasePlan": {
       "path": "delivery/phase-pr-plan.json",
-      "sha256": "42752969ac0bbd110d1996ab1b7f255b8a7a07188c0eafdaad38e4a0e4c297b5",
+      "sha256": "b68c8ba63d3a53aac483b70232cc47a829247b63412b049954147d620c172c24",
       "availability": "present",
       "meaning": "Source/test/record reference; presence is not execution acceptance"
     },
     "apiSchema": {
       "path": "specs/api/openapi.json",
-      "sha256": "addd32aeb218ed995637348d23510d3240e6ea8b9dfe476cc2f24882b421fc3e",
+      "sha256": "04f34b8081101ca61a56227358afebe94ecfb291f6772316b66d8e676fe70ac6",
       "availability": "present",
       "meaning": "Source/test/record reference; presence is not execution acceptance"
     },
@@ -1252,11 +1252,816 @@
       ]
     }
   ],
+  "currentGateSnapshots": [
+    {
+      "milestone": "M0",
+      "record": null,
+      "note": "Use historical M0 manifest/release document; do not invent modern gate evidence"
+    },
+    {
+      "milestone": "M1",
+      "record": {
+        "path": "releases/m1-gates.json",
+        "sha256": "97d18d3b530591366e637a6ad20318d995dcf0588bd1387deda07fdb6ee582dd",
+        "availability": "present",
+        "meaning": "Source/test/record reference; presence is not execution acceptance"
+      },
+      "version": "0.2.1-m1",
+      "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+      "gates": [
+        {
+          "id": "scope",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-closure.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "51a0ec84b3d1b5529d6a3299d025c999174926cf257a1715ad5735ac014bfb6a"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "correctness",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-ci.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "74c46c10e0039047060f43b1908d69e46b572a56d35622e429b8b8b568b89583"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "api",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-ci.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "74c46c10e0039047060f43b1908d69e46b572a56d35622e429b8b8b568b89583"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "evals",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-ci.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "74c46c10e0039047060f43b1908d69e46b572a56d35622e429b8b8b568b89583"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "reproducibility",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-ci.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "74c46c10e0039047060f43b1908d69e46b572a56d35622e429b8b8b568b89583"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "runtime",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-images.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "28f556f3f29febcce6b39870c177f93e22cc9e5a912a2999188116574cbed85d"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "safety",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-images.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "28f556f3f29febcce6b39870c177f93e22cc9e5a912a2999188116574cbed85d"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "documentation",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "docs/releases/m1-onboarding.md",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "dab16a59c01a3a95548087524b9d055d6764e7c4686e06d348bd88adfd0c8d55"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "release-identity",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-distribution.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "9f5c54c863bccbbe1e12484ad4bd3fb1cfe09008493c7fa04cac833037dd9977"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "publication",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-manifest.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "07fbcc68c5ed3a1cf3cd5b39df4cf63d44b77515b89c2e6f0fb2e6a971cc221a"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "distribution",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-distribution.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "9f5c54c863bccbbe1e12484ad4bd3fb1cfe09008493c7fa04cac833037dd9977"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "demo",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-demo.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "f9169c71db05221b362b7e389d99381c2bab577ec52e7b2f8f39f71ffc45a584"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "closure",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-closure.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "51a0ec84b3d1b5529d6a3299d025c999174926cf257a1715ad5735ac014bfb6a"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "live-dogfood",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-demo.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "f9169c71db05221b362b7e389d99381c2bab577ec52e7b2f8f39f71ffc45a584"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "api-image",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-images.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "28f556f3f29febcce6b39870c177f93e22cc9e5a912a2999188116574cbed85d"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "worker-image",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-images.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "28f556f3f29febcce6b39870c177f93e22cc9e5a912a2999188116574cbed85d"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "customer-onboarding",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-distribution.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "9f5c54c863bccbbe1e12484ad4bd3fb1cfe09008493c7fa04cac833037dd9977"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        },
+        {
+          "id": "agent-api",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m1-onboarding-distribution.json",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6",
+              "sha256": "9f5c54c863bccbbe1e12484ad4bd3fb1cfe09008493c7fa04cac833037dd9977"
+            },
+            {
+              "kind": "url",
+              "value": "https://github.com/alimobrem/agentci/releases/tag/v0.2.1-m1",
+              "sourceCommit": "b25931cb4fc484e5f55139e01bd8825432191fd6"
+            }
+          ]
+        }
+      ],
+      "customerAcceptance": true
+    },
+    {
+      "milestone": "M2",
+      "record": {
+        "path": "releases/m2-gates.json",
+        "sha256": "85a5d532e449ab2dcd512b1b49e25a32639ef2a7354b22592e57f41353ca058b",
+        "availability": "present",
+        "meaning": "Source/test/record reference; presence is not execution acceptance"
+      },
+      "version": "0.3.1-m2",
+      "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+      "gates": [
+        {
+          "id": "scope",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-final-acceptance-audit.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "ad4fb59d2aab1b12374f4e53ee557e6e977f10a3f3cc575aae6261c80db0c1e8"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "correctness",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-corrected-final-source-ci.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "235df24e817daecc9cf6758d58647cc0cc3732e1248d1dadb471afbafc90aa84"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-native-published-downloads.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "api",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-corrected-final-source-ci.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "235df24e817daecc9cf6758d58647cc0cc3732e1248d1dadb471afbafc90aa84"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-released-customer-acceptance.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "evals",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-native-published-downloads.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-released-customer-acceptance.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "reproducibility",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-corrected-final-source-ci.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "235df24e817daecc9cf6758d58647cc0cc3732e1248d1dadb471afbafc90aa84"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "runtime",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-native-published-downloads.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-public-package-download.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "safety",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-published-security-disposition.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "99ceee2df02265fc84dc2ad4f7f26104cd1404e1994a46133843de9596c829aa"
+            },
+            {
+              "kind": "file",
+              "value": "docs/releases/m2-native-security.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "c75f72eb592be002d817a592c3693ab827834771650740f8e17035c9fe565595"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "documentation",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "docs/releases/m2.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "1da0d850613e1f0431fd8bc61f514d3e6f9f6c997f7c4978c3564ed55bc073ef"
+            },
+            {
+              "kind": "file",
+              "value": "docs/m2-guide.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "4e7ffd178073c29febabb7bc4cbcba0d27368a7c9834c1515fef03b04db0efb1"
+            },
+            {
+              "kind": "file",
+              "value": "docs/eval-recovery.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "df801c96c042f6243508dea2770a8233b7d05af980d36a4ef0154e8d7bcb240c"
+            },
+            {
+              "kind": "file",
+              "value": "docs/retrospectives/m2.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "f0b399097ef93b345aea584593d8de8c99f399d33d9e98447651c1e6c2c2984c"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "release-identity",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-public-package-download.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-six-role-publication.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "41a53db39c65a2edb55a6d38805d7cf562533ad4cfa1b691c51734ba77fb6839"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "publication",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-public-package-download.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-six-role-publication.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "41a53db39c65a2edb55a6d38805d7cf562533ad4cfa1b691c51734ba77fb6839"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "distribution",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-public-package-download.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-native-published-downloads.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "demo",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-released-customer-acceptance.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-closure.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "85415b52b154248f9bf85a7305bd5f3426d8ab38b334f0b83a24d49140f5e86c"
+            },
+            {
+              "kind": "file",
+              "value": "docs/releases/m2.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "1da0d850613e1f0431fd8bc61f514d3e6f9f6c997f7c4978c3564ed55bc073ef"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "closure",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-closure.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "85415b52b154248f9bf85a7305bd5f3426d8ab38b334f0b83a24d49140f5e86c"
+            },
+            {
+              "kind": "file",
+              "value": "docs/retrospectives/m2.md",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "f0b399097ef93b345aea584593d8de8c99f399d33d9e98447651c1e6c2c2984c"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "live-dogfood",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-hosted-release-evidence-reuse.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "dfe86436973d18c58bb5fd7267768dbea6b9b19a6f63dd9e2dcc545a3d582929"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-released-customer-acceptance.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "api-image",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-six-role-publication.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "41a53db39c65a2edb55a6d38805d7cf562533ad4cfa1b691c51734ba77fb6839"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-native-published-downloads.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "worker-image",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-six-role-publication.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "41a53db39c65a2edb55a6d38805d7cf562533ad4cfa1b691c51734ba77fb6839"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-native-published-downloads.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "be5765eab8fa43a909c3e4506609b544adb2a42b2321080e59943b3b69a8a873"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "customer-onboarding",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-released-customer-acceptance.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+            },
+            {
+              "kind": "file",
+              "value": "releases/m2-public-package-download.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "143c29aebf04b4be11009578e10dd45fb52e3f83804e746bfa9c6dbabc1f84e7"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        },
+        {
+          "id": "agent-api",
+          "status": "passed",
+          "evidence": [
+            {
+              "kind": "file",
+              "value": "releases/m2-released-customer-acceptance.json",
+              "sourceCommit": "9bcff7d57c40536c9ddec126e998aa97bd045f03",
+              "sha256": "a27f47479acb2486cd7623826d458c29e5bf83b77812057d294283e10d67d50b"
+            }
+          ],
+          "reason": "Verified frozen product-source evidence; final closure becomes effective after the closure change passes and merges."
+        }
+      ],
+      "customerAcceptance": true
+    },
+    {
+      "milestone": "M3",
+      "record": {
+        "path": "releases/m3-gates.json",
+        "sha256": "5922b1a7ddc2cdec873026b8329d35ddb39f5b4a556bfecc2d7accecc45b02c0",
+        "availability": "present",
+        "meaning": "Source/test/record reference; presence is not execution acceptance"
+      },
+      "version": "0.4.0-m3",
+      "sourceCommit": null,
+      "customerAcceptance": true,
+      "gates": [
+        {
+          "id": "scope",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "correctness",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "api",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "evals",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "reproducibility",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "runtime",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "safety",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "documentation",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "release-identity",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "publication",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "distribution",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "demo",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "closure",
+          "status": "pending",
+          "evidence": [],
+          "reason": "Pending consolidated closure evidence. Requirement audit and closure limitations must cite releases/m3-provider-validation-exception.json for any deferred/unverified external-provider validation; all other applicable gates must pass. This decision passes no gate."
+        },
+        {
+          "id": "live-dogfood",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "api-image",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "worker-image",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "customer-onboarding",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        },
+        {
+          "id": "agent-api",
+          "status": "pending",
+          "evidence": [],
+          "reason": "M3 scope/API planning started; implementation and release acceptance have not passed."
+        }
+      ]
+    }
+  ],
   "phasePlans": [
     {
       "id": "M3",
       "name": "Multi-model review",
-      "exit": "Released reviewer, finding, API and authenticated dashboard workflow with explicitly synthetic success/failure/recovery demonstrations. Live provider compatibility and real different-provider demo deferred by owner decision docs/phases/m3-live-validation-deferral.md; do not claim original M3 fully complete.",
+      "exit": "Released reviewer, finding, API and authenticated dashboard workflow with explicitly synthetic success/failure/recovery demonstrations and real GitHub customer acceptance. Inaccessible external model-provider validation may remain deferred/unverified only after all other applicable gates pass, under releases/m3-provider-validation-exception.json. Preserve original requirements and full M0–M10 scope; qualified closure does not establish live compatibility, quality or independence.",
       "prs": [
         {
           "id": "M3-00",
@@ -2061,12 +2866,12 @@
     {
       "path": "delivery/reconciliation/sections/12.json",
       "count": 17,
-      "sha256": "f05c4db1c9e006f8f2cdfe13024f383aba3d82fbbda67b510ab63472c81d1cad"
+      "sha256": "b0c62cf300b58df8de73cd185df2e1a239fe782a5e46d4625c4579bd9a538aec"
     },
     {
       "path": "delivery/reconciliation/sections/13.json",
       "count": 37,
-      "sha256": "61243b71c7fa0b4a52e62985ed0cba77b54a680ff7cca73ceefcff3086377a20"
+      "sha256": "13dd398cfbaddbcd90782e23b4a26f9782968f919dd4090088566ab00143c424"
     },
     {
       "path": "delivery/reconciliation/sections/14.json",
@@ -2156,12 +2961,12 @@
     {
       "path": "delivery/reconciliation/sections/31.json",
       "count": 18,
-      "sha256": "763dc16a6c94c1edc70e5f3afef1aca50682872c8a9e33922a1f45f1eb9a2cd7"
+      "sha256": "7b55ed94d7bae9d223b03807732af8aa732e6e7100deca4bae4c2a496238101e"
     },
     {
       "path": "delivery/reconciliation/sections/32.json",
       "count": 4,
-      "sha256": "11b1a130c5f899a4fd1429f3b91ef5871ceeed948e404155a55ee5af51505230"
+      "sha256": "34101ce6f1b991de1c0ff63e27159c7a23e4d0c2c837b171fc18f2d3cf0a0ea6"
     },
     {
       "path": "delivery/reconciliation/sections/33.json",
@@ -2171,7 +2976,7 @@
     {
       "path": "delivery/reconciliation/sections/34.json",
       "count": 26,
-      "sha256": "6e93b0365791a340845313e946250d77dd184117a9982a9ac30e19f63deedb4e"
+      "sha256": "03dcaa109161d2cc6b886d91085f2ab031fa98fb34494c8058524d48ea84af40"
     },
     {
       "path": "delivery/reconciliation/sections/35.json",
@@ -2201,7 +3006,7 @@
     {
       "path": "delivery/reconciliation/sections/40.json",
       "count": 116,
-      "sha256": "16a88753aa6654353f606b22c0b4358dc9c34b0fe58a61b4e4843c59518b16f0"
+      "sha256": "fb0990dfcc1fe8d7cd58eb109d2a6216456157ad6695ffbde67adaf8c7b06ab2"
     },
     {
       "path": "delivery/reconciliation/sections/41.json",
@@ -2221,7 +3026,7 @@
     {
       "path": "delivery/reconciliation/sections/44.json",
       "count": 27,
-      "sha256": "094dc4f63eb8f808eedc8e7370f70b051dcb6ab0b275dc4a32883d2ac3e4c363"
+      "sha256": "349b47c127e2b7f0306e15ea9a529886657a852ace8662896711f286494c355e"
     },
     {
       "path": "delivery/reconciliation/sections/45.json",
@@ -2231,7 +3036,7 @@
     {
       "path": "delivery/reconciliation/sections/46.json",
       "count": 32,
-      "sha256": "91936aa122e77b4088bdc78f775375ab2ffb6485b04299d006f243a823503d41"
+      "sha256": "f437d62a91674a057e0facfd8607819cb50e9fc640c48892c52a1b1570a5e834"
     },
     {
       "path": "delivery/reconciliation/sections/47.json",
@@ -2241,12 +3046,12 @@
     {
       "path": "delivery/reconciliation/sections/48.json",
       "count": 24,
-      "sha256": "c944ad69c042337f4374175027c117ed5c905388e6b643e74e31ca5fefdd0f61"
+      "sha256": "45a5a2b05672cb8db11ea12979aba96f55f3acea81cbb1a8a8640890fa2be39e"
     },
     {
       "path": "delivery/reconciliation/sections/49.json",
       "count": 14,
-      "sha256": "2f1ac3ea37dce0f3ef842a840715065055c5086ea4864c0c951fce4d61159f20"
+      "sha256": "21be2f0f78935ceeeed067b205a4612e61fe6eeefc1a00f86126ccb1e2e5bd7b"
     },
     {
       "path": "delivery/reconciliation/sections/50.json",
@@ -2256,7 +3061,7 @@
     {
       "path": "delivery/reconciliation/sections/51.json",
       "count": 19,
-      "sha256": "0be122bde904b7726cbd0e9987517bf77a473c3ca8eba3f8275b1761a8d12c91"
+      "sha256": "aa12c531d5dab16131998bd50e06b27b8781905ea2194b0d49106be56959c8bb"
     }
   ]
 }
