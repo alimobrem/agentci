@@ -59,3 +59,5 @@ Existing consumer tests retain Temporal and physical-isolation acceptance; fixtu
 settlement readers in the HTTP tests do not substitute for those gates. Container,
 hosted exact-source verification and independent review must be recorded before
 claiming slice acceptance.
+
+Apply migration `019_m3_reproduction_dispatch_initialization.sql` before serving these routes. Its intent-insert trigger creates dispatch state atomically inside the reservation transaction and backfills older intents without changing retained state. A newly committed reservation can therefore be inspected and cancelled while all controllers are stopped. Cancellation excludes it from dispatch claims; recovery must still retain authentic non-execution evidence before reporting settlement. The HTTP acceptance fixture never invokes controller backfill before status or cancellation, and checks control restart, no dispatch attempt/eval job, and genuine never-staged recovery.

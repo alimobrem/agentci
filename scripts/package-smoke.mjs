@@ -27,6 +27,7 @@ try {
   try{execFileSync(process.execPath,[reproductionOperator,'apply'],{encoding:'utf8',stdio:'pipe',env:{PATH:process.env.PATH}});throw new Error('Installed reproduction operator accepted unpinned setup');}catch(error){if(error.status!==2||JSON.parse(error.stderr).error.code!=='invalid-reproduction-operator-arguments')throw error;}
   const {loadReproductionRuntime}=await import(pathToFileURL(join(installedRoot,'dist/packages/runtime/reproductions.js')).href);
   if(await loadReproductionRuntime({organizationId:'00000000-0000-4000-8000-000000000001',repository:'owner/repo'}, {})!==null)throw new Error('Installed reproduction consumer must default off');
+  if(!(await readFile(join(installedRoot,'deploy/migrations/019_m3_reproduction_dispatch_initialization.sql'),'utf8')).includes('reproduction_dispatch_initialize'))throw new Error('Installed atomic reproduction dispatch initialization migration missing');
   if(!(await readFile(join(installedRoot,'deploy/migrations/018_m3_reproduction_dispatch_settlement.sql'),'utf8')).includes('settlement'))throw new Error('Installed reproduction settlement migration missing');
 
   if(postgresReaders){

@@ -14,11 +14,12 @@ const packageRoot=process.env.AGENTCI_TEST_CLIENT_PACKAGE_ROOT;
 const apiFactory=packageRoot?(await import(pathToFileURL(resolve(packageRoot,'dist/apps/control/server.js')).href)).createControlApi:createControlApi;
 const controlFactory=packageRoot?(await import(pathToFileURL(resolve(packageRoot,'dist/apps/control/model-reviews.js')).href)).createModelReviewControl:createModelReviewControl;
 
-async function fixture(){const f=await reproductionStagingFixture();try{
- await new Store(f.pool,f.scope.organizationId,f.scope.repository).ready();for(const n of ['015_m3_reproduction_eval_source','016_m3_reproduction_authority','017_m3_reproduction_dispatch_state','018_m3_reproduction_dispatch_settlement'])await f.pool.query(await readFile(new URL(`../../deploy/migrations/${n}.sql`,import.meta.url),'utf8'));
+async function fixture(beforeReserve?:(f:Awaited<ReturnType<typeof reproductionStagingFixture>>)=>Promise<void>,initialize=true){const f=await reproductionStagingFixture();try{
+ await new Store(f.pool,f.scope.organizationId,f.scope.repository).ready();for(const n of ['015_m3_reproduction_eval_source','016_m3_reproduction_authority','017_m3_reproduction_dispatch_state','018_m3_reproduction_dispatch_settlement',...(initialize?['019_m3_reproduction_dispatch_initialization']:[])])await f.pool.query(await readFile(new URL(`../../deploy/migrations/${n}.sql`,import.meta.url),'utf8'));
  const authority=new ReproductionAuthorityStore(f.pool,f.scope,{finding:async()=>f.f.initial,plan:async()=>f.f.plan,snapshot:async(_s:unknown,side:'base'|'head')=>f.f[side]},async()=>true);
  const identity=await authority.apply({schemaVersion:'v1alpha1',...f.scope,revision:1,approvals:[{planId:f.f.plan.id,planDigest:digest(canonical(f.f.plan)),findingId:f.f.initial.id,findingVersion:1,findingDigest:digest(canonical(f.f.initial)),enabled:true,expiresAt:'2100-01-01T00:00:00.000Z'}]},null);
- await f.store.reserve(f.f.initial.id,f.selector);const dispatch=new ReproductionDispatchStore(f.pool,f.scope);await dispatch.backfill();
+ if(beforeReserve)await beforeReserve(f);
+ await f.store.reserve(f.f.initial.id,f.selector);const dispatch=new ReproductionDispatchStore(f.pool,f.scope);
  const config={...f.scope,installationId:1,secret:'s'.repeat(32),evidenceToken:'r'.repeat(32),operatorToken:'o'.repeat(32)},servers:ReturnType<typeof createControlApi>[]=[];
  const start=async()=>{const control=await controlFactory(f.pool,config),server=apiFactory(config,{ready:async()=>{},recordDelivery:async()=>{throw Error();},evidence:async()=>undefined},undefined,control);server.listen(0,'127.0.0.1');await once(server,'listening');servers.push(server);return `http://127.0.0.1:${(server.address() as {port:number}).port}`;};
  const origin=await start(),path=`/v1/finding-reproductions/${f.f.plan.id}`,query=`?reviewId=${f.request.id}`;
@@ -61,4 +62,32 @@ test('concurrent proof/history/settlement commitment cannot stitch contradictory
 test('rehashing a retained receipt cannot substitute a verdict inconsistent with its evaluator result',async()=>{const f=await fixture();try{await execution(f);await f.pool.query('ALTER TABLE agentci_reproduction_receipts DISABLE TRIGGER ALL');
  const row=(await f.pool.query('SELECT receipt FROM agentci_reproduction_receipts')).rows[0],receipt={...row.receipt,outcome:'reproduced'};await f.pool.query('UPDATE agentci_reproduction_receipts SET receipt=$1,digest=$2',[receipt,digest(canonical(receipt))]);await f.pool.query('ALTER TABLE agentci_reproduction_receipts ENABLE TRIGGER ALL');
  const r=await f.call();assert.equal(r.status,503);assert.deepEqual(await r.json(),{error:{code:'service-unavailable'}});
+ }finally{await f.dispose();}});
+
+test('fresh reservation is inspectable and durably cancellable before any controller starts',async()=>{const f=await fixture();try{
+ const initial=await f.call();assert.equal(initial.status,200);const queued=await initial.json();assert.equal(queued.dispatch.state,'queued');assert.equal(queued.dispatch.cancelRequested,false);
+ assert.equal((await f.call('/cancellation',f.config.evidenceToken,{method:'POST'})).status,403);
+ assert.equal((await f.call('/cancellation',f.config.operatorToken,{method:'POST'})).status,202);
+ const restarted=await f.start(),dispatch=new ReproductionDispatchStore(f.pool,f.scope);
+ assert.equal(await dispatch.claim(),undefined);assert.equal(await dispatch.backfill(),0);
+ const status=await f.call(f.query,f.config.evidenceToken,{},restarted);assert.equal(status.status,200);const v=await status.json();assert.equal(v.dispatch.cancelRequested,true);assert.equal(v.dispatch.cancellationCause,'user');assert.equal(v.receipt,null);assert.equal(v.nonExecution,null);assert.equal(v.settlement,null);
+ assert.equal((await f.pool.query('SELECT count(*) FROM agentci_reproduction_dispatch_attempts')).rows[0].count,'0');assert.equal((await f.pool.query('SELECT count(*) FROM agentci_eval_jobs')).rows[0].count,'0');
+ const evidence=await neverStaged(f),settled=await (await f.call(f.query,f.config.evidenceToken,{},restarted)).json();assert.equal(settled.dispatch.state,'settled');assert.equal(settled.receipt,null);assert.deepEqual(settled.nonExecution.value,evidence.proof);assert.equal(settled.nonExecution.value.verified,false);
+ assert.equal((await f.call('/cancellation',f.config.operatorToken,{method:'POST'},restarted)).status,202);
+ }finally{await f.dispose();}});
+
+test('atomic initialization failure rolls back reservation and migration replay preserves cancellation',async()=>{const f=await fixture(async f=>{
+ await f.pool.query("CREATE FUNCTION fixture_state_failure() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'fixture state failure'; END $$; CREATE TRIGGER fixture_state_failure BEFORE INSERT ON agentci_reproduction_dispatch_state FOR EACH ROW EXECUTE FUNCTION fixture_state_failure()");
+ await assert.rejects(f.store.reserve(f.f.initial.id,f.selector),/^Error: reproduction-reservation-unavailable$/);assert.deepEqual(await f.counts(),[1,0,0,0]);assert.equal((await f.pool.query('SELECT count(*) FROM agentci_reproduction_dispatch_state')).rows[0].count,'0');
+ await f.pool.query('DROP TRIGGER fixture_state_failure ON agentci_reproduction_dispatch_state');
+ });try{
+ assert.equal((await f.call('/cancellation',f.config.operatorToken,{method:'POST'})).status,202);const before=await f.reads.status(f.f.plan.id,f.request.id);
+ const migration=await readFile(new URL('../../deploy/migrations/019_m3_reproduction_dispatch_initialization.sql',import.meta.url),'utf8');await f.pool.query(migration);assert.deepEqual(await f.reads.status(f.f.plan.id,f.request.id),before);
+ await assert.rejects(f.pool.query(migration.replace('RETURN NEW;','RETURN NULL;')),/Migration source checksum mismatch/);await f.pool.query('ROLLBACK');assert.deepEqual(await f.reads.status(f.f.plan.id,f.request.id),before);assert.equal(await f.dispatch.claim(),undefined);
+ }finally{await f.dispose();}});
+
+test('initialization migration upgrades retained pre-controller intents without changing reservation identity',async()=>{const f=await fixture(undefined,false);try{
+ assert.equal((await f.call()).status,503);assert.equal((await f.call('/cancellation',f.config.operatorToken,{method:'POST'})).status,503);
+ const before=await f.counts();await f.pool.query(await readFile(new URL('../../deploy/migrations/019_m3_reproduction_dispatch_initialization.sql',import.meta.url),'utf8'));assert.deepEqual(await f.counts(),before);
+ assert.equal((await f.call()).status,200);assert.equal((await f.call('/cancellation',f.config.operatorToken,{method:'POST'})).status,202);assert.equal(await f.dispatch.claim(),undefined);assert.ok(await f.dispatch.claim('recovery'));
  }finally{await f.dispose();}});
