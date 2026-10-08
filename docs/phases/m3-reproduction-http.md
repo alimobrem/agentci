@@ -7,7 +7,7 @@ separate unfinished work. The consumer/configuration introduced in PR #68 and th
 response contracts in PR #69 are prerequisites; no milestone gate is passed by
 this slice.
 
-Apply migrations through 018 before using these operations. The existing control
+Apply migrations through 019 before using these operations. The existing control
 service constructs the scoped reader independently of new-admission configuration.
 An absent migration or unavailable/corrupt retained dependency returns a bounded
 503; it does not become an empty successful result. No App or provider access is
