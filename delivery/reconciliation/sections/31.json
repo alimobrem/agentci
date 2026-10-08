@@ -364,6 +364,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07c-3f",
+          "status": "blocked",
+          "startedAt": "2026-10-08T02:15:44.399Z",
+          "completedAt": null,
+          "blockedReason": "Local reservation/client/CLI, PostgreSQL and production-installed acceptance pass; independent review and exact-new-source hosted CI/physical isolation still required. No new publication or phase acceptance claimed.",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Authenticated operator reservation uses pinned applied approval and fresh permission checks with reservation/event/intent/state committed in the same authority transaction; typed client and executable CLI preserve original admission, exact request identity, bounded retry/deadline, version/idempotency conflicts and redacted errors. Actual PostgreSQL/HTTP and installed package regressions cover denied/stale/revoked permissions, rollback, concurrent retries, immediate status/cancellation and no implicit execution. No disposition or full phase closure claimed.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -438,7 +453,7 @@
           "operationId": "listReviewerProfiles",
           "path": "/v1/reviewer-profiles",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts",
@@ -455,7 +470,7 @@
           "operationId": "createModelReview",
           "path": "/v1/model-reviews",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts",
@@ -475,7 +490,7 @@
           "operationId": "getModelReview",
           "path": "/v1/model-reviews/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts",
@@ -494,7 +509,7 @@
           "operationId": "cancelModelReview",
           "path": "/v1/model-reviews/{id}/cancellation",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts"
@@ -509,7 +524,7 @@
           "operationId": "listReviewFindings",
           "path": "/v1/model-reviews/{id}/findings",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -533,7 +548,7 @@
           "operationId": "getFinding",
           "path": "/v1/findings/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -556,7 +571,7 @@
           "operationId": "getFindingHistory",
           "path": "/v1/findings/{id}/history",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -579,7 +594,7 @@
           "operationId": "exportModelReview",
           "path": "/v1/model-reviews/{id}/export",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-review-export.test.ts",
             "tests/integration/model-review-export-adversarial.test.ts",
@@ -602,7 +617,7 @@
           "operationId": "getFindingReproduction",
           "path": "/v1/finding-reproductions/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
             "tests/reproduction-transport.test.ts",
@@ -623,7 +638,7 @@
           "operationId": "cancelFindingReproduction",
           "path": "/v1/finding-reproductions/{id}/cancellation",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
             "tests/reproduction-transport.test.ts",
@@ -638,6 +653,20 @@
             "Late cancellation preserves negative/error receipt and operator supersession",
             "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors",
             "Production-installed public client and executable CLI pin entire reference, operator preflight and overall deadline; fresh-reservation cancellation/restart/non-execution recovery without controller backfill"
+          ]
+        },
+        {
+          "operationId": "requestFindingReproduction",
+          "path": "/v1/findings/{id}/reproductions",
+          "map": "specs/api/operations.json",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
+          "tests": [
+            "tests/integration/reproduction-admission-http.test.ts"
+          ],
+          "scenarios": [
+            "Operator-only pinned immutable-plan selection; permission and intent atomic",
+            "Concurrent exact retries; conflicting operation/version; denied/stale/revoked permission rolls back",
+            "Production-installed public client and executable CLI; immediate status/cancel without execution"
           ]
         },
         {
@@ -848,6 +877,7 @@
         "tests/reproduction-transport.test.ts",
         "tests/model-reproduction-client.test.ts",
         "tests/integration/model-reproduction-client.test.ts",
+        "tests/integration/reproduction-admission-http.test.ts",
         "tests/review-admission.test.ts",
         "tests/integration/review-admissions.test.ts",
         "tests/integration/review-dispatch.test.ts",
@@ -947,6 +977,11 @@
         {
           "task": "M3-07c-4a",
           "reason": "Local client/CLI HTTP/PostgreSQL and production-installed checks pass; exact published-source hosted CI and independent review remain pending. Evidence: delivery/acceptance/m3-reproduction-client-cli-cloud.json",
+          "deferral": null
+        },
+        {
+          "task": "M3-07c-3f",
+          "reason": "Local reservation/client/CLI, PostgreSQL and production-installed acceptance pass; independent review and exact-new-source hosted CI/physical isolation still required. No new publication or phase acceptance claimed.",
           "deferral": null
         }
       ],
@@ -1364,6 +1399,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07c-3f",
+          "status": "blocked",
+          "startedAt": "2026-10-08T02:15:44.399Z",
+          "completedAt": null,
+          "blockedReason": "Local reservation/client/CLI, PostgreSQL and production-installed acceptance pass; independent review and exact-new-source hosted CI/physical isolation still required. No new publication or phase acceptance claimed.",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Authenticated operator reservation uses pinned applied approval and fresh permission checks with reservation/event/intent/state committed in the same authority transaction; typed client and executable CLI preserve original admission, exact request identity, bounded retry/deadline, version/idempotency conflicts and redacted errors. Actual PostgreSQL/HTTP and installed package regressions cover denied/stale/revoked permissions, rollback, concurrent retries, immediate status/cancellation and no implicit execution. No disposition or full phase closure claimed.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -1438,7 +1488,7 @@
           "operationId": "listReviewerProfiles",
           "path": "/v1/reviewer-profiles",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts",
@@ -1455,7 +1505,7 @@
           "operationId": "createModelReview",
           "path": "/v1/model-reviews",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts",
@@ -1475,7 +1525,7 @@
           "operationId": "getModelReview",
           "path": "/v1/model-reviews/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts",
@@ -1494,7 +1544,7 @@
           "operationId": "cancelModelReview",
           "path": "/v1/model-reviews/{id}/cancellation",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/model-review-api.test.ts",
             "tests/integration/model-review-api.test.ts"
@@ -1509,7 +1559,7 @@
           "operationId": "listReviewFindings",
           "path": "/v1/model-reviews/{id}/findings",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -1533,7 +1583,7 @@
           "operationId": "getFinding",
           "path": "/v1/findings/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -1556,7 +1606,7 @@
           "operationId": "getFindingHistory",
           "path": "/v1/findings/{id}/history",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -1579,7 +1629,7 @@
           "operationId": "exportModelReview",
           "path": "/v1/model-reviews/{id}/export",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-review-export.test.ts",
             "tests/integration/model-review-export-adversarial.test.ts",
@@ -1602,7 +1652,7 @@
           "operationId": "getFindingReproduction",
           "path": "/v1/finding-reproductions/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
             "tests/reproduction-transport.test.ts",
@@ -1623,7 +1673,7 @@
           "operationId": "cancelFindingReproduction",
           "path": "/v1/finding-reproductions/{id}/cancellation",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
             "tests/reproduction-transport.test.ts",
@@ -1638,6 +1688,20 @@
             "Late cancellation preserves negative/error receipt and operator supersession",
             "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors",
             "Production-installed public client and executable CLI pin entire reference, operator preflight and overall deadline; fresh-reservation cancellation/restart/non-execution recovery without controller backfill"
+          ]
+        },
+        {
+          "operationId": "requestFindingReproduction",
+          "path": "/v1/findings/{id}/reproductions",
+          "map": "specs/api/operations.json",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
+          "tests": [
+            "tests/integration/reproduction-admission-http.test.ts"
+          ],
+          "scenarios": [
+            "Operator-only pinned immutable-plan selection; permission and intent atomic",
+            "Concurrent exact retries; conflicting operation/version; denied/stale/revoked permission rolls back",
+            "Production-installed public client and executable CLI; immediate status/cancel without execution"
           ]
         },
         {
@@ -1757,6 +1821,7 @@
         "tests/reproduction-transport.test.ts",
         "tests/model-reproduction-client.test.ts",
         "tests/integration/model-reproduction-client.test.ts",
+        "tests/integration/reproduction-admission-http.test.ts",
         "tests/review-admission.test.ts",
         "tests/integration/review-admissions.test.ts",
         "tests/integration/review-dispatch.test.ts",
@@ -1853,6 +1918,11 @@
         {
           "task": "M3-07c-4a",
           "reason": "Local client/CLI HTTP/PostgreSQL and production-installed checks pass; exact published-source hosted CI and independent review remain pending. Evidence: delivery/acceptance/m3-reproduction-client-cli-cloud.json",
+          "deferral": null
+        },
+        {
+          "task": "M3-07c-3f",
+          "reason": "Local reservation/client/CLI, PostgreSQL and production-installed acceptance pass; independent review and exact-new-source hosted CI/physical isolation still required. No new publication or phase acceptance claimed.",
           "deferral": null
         }
       ],

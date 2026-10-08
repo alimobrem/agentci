@@ -1,4 +1,6 @@
 import {canonical,digest} from '../review/engine.ts';
+import {validateReviewAdmission} from '../reviewers/admission.ts';
+import type {ReproductionSelector} from './approval-registry.ts';
 import type {ReviewSubject} from '../reviewers/context.ts';
 import {validateFindingActionReceipt,type FindingReceipt} from './lifecycle.ts';
 import {validateNonExecutionProof,type ReproductionNonExecutionProof} from './non-execution.ts';
@@ -47,5 +49,15 @@ export function validateFindingReproductionStatus(value:unknown,expected:Expecte
   if((d.state==='settled')!==(v.settlement!==null))fail();
   if(v.settlement!==null){const s=v.settlement;if(!exact(s,['kind','findingVersion','historyDigest','evidenceDigest','retainedReceiptDigest','retainedProofDigest'])||!['receipt-retained','never-staged','superseded'].includes(s.kind)||!integer(s.findingVersion,v.finding.queuedVersion+1,10000)||![s.historyDigest,s.evidenceDigest].every(hash)||s.retainedReceiptDigest!==(v.receipt?.digest??null)||s.retainedProofDigest!==(v.nonExecution?.digest??null)||s.kind==='receipt-retained'&&!v.receipt||s.kind==='never-staged'&&!v.nonExecution)fail();if(s.kind==='receipt-retained'&&s.evidenceDigest!==v.receipt!.digest||s.kind==='never-staged'&&s.evidenceDigest!==v.nonExecution!.digest)fail();}
   return structuredClone(v);
+ }catch{return fail();}
+}
+
+export interface FindingReproductionRequest extends ReproductionSelector {schemaVersion:'v1alpha1';reviewId:string}
+/** Public selection only; execution details remain in operator-owned approved plans. */
+export function validateFindingReproductionRequest(value:unknown):FindingReproductionRequest {
+ try {bounded(value);if(!exact(value,['schemaVersion','reviewId','subject','expectedVersion','operationId','approvalId','approvalDigest']))fail();
+ const v=value as FindingReproductionRequest;if(v.schemaVersion!=='v1alpha1'||![v.reviewId,v.operationId,v.approvalId].every(uuid)||!hash(v.approvalDigest)||!integer(v.expectedVersion,1,9998))fail();
+ validateReviewAdmission({schemaVersion:'v1alpha1',id:v.reviewId,subject:v.subject,profile:{id:'subject-validation',revision:v.approvalDigest},mode:'synthetic'});
+ if(Buffer.byteLength(canonical(value))>4096)fail();return structuredClone(v);
  }catch{return fail();}
 }

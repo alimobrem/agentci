@@ -805,7 +805,7 @@
       "evidence": [
         {
           "path": "packages/github/client.ts",
-          "sha256": "ea3876a6a1fedc7d34fba06ab346acd89d3436bb99d1d8894a6d631e6b7191cd",
+          "sha256": "bc70479e2d2f2e37029b68726d4176f75f14aff3b6a15e57d45d724cfa03cd7b",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -947,7 +947,7 @@
           "operationId": "healthz",
           "path": "/healthz",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/control-api.test.ts"
           ],
@@ -959,7 +959,7 @@
           "operationId": "readyz",
           "path": "/readyz",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/control-api.test.ts",
             "tests/client.test.ts"
@@ -974,7 +974,7 @@
           "operationId": "ingestGitHubWebhook",
           "path": "/v1/webhooks/github",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/control-api.test.ts",
             "tests/integration/m1.test.ts"
@@ -1108,7 +1108,7 @@
         },
         {
           "path": "packages/github/client.ts",
-          "sha256": "ea3876a6a1fedc7d34fba06ab346acd89d3436bb99d1d8894a6d631e6b7191cd",
+          "sha256": "bc70479e2d2f2e37029b68726d4176f75f14aff3b6a15e57d45d724cfa03cd7b",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -1451,7 +1451,7 @@
       "evidence": [
         {
           "path": "packages/github/client.ts",
-          "sha256": "ea3876a6a1fedc7d34fba06ab346acd89d3436bb99d1d8894a6d631e6b7191cd",
+          "sha256": "bc70479e2d2f2e37029b68726d4176f75f14aff3b6a15e57d45d724cfa03cd7b",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -1641,7 +1641,7 @@
           "operationId": "getEvidence",
           "path": "/v1/evidence/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/control-api.test.ts",
             "tests/integration/m1.test.ts",
@@ -3520,7 +3520,7 @@
           "operationId": "getEvalComparison",
           "path": "/v1/eval-comparisons/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/integration/eval-storage.test.ts"
@@ -3540,7 +3540,7 @@
           "operationId": "exportEvalComparison",
           "path": "/v1/eval-comparisons/{id}/export",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/eval-export.test.ts",
@@ -5066,7 +5066,7 @@
           "operationId": "getEvalComparison",
           "path": "/v1/eval-comparisons/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/integration/eval-storage.test.ts"
@@ -5086,7 +5086,7 @@
           "operationId": "exportEvalComparison",
           "path": "/v1/eval-comparisons/{id}/export",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/eval-export.test.ts",
@@ -5910,7 +5910,7 @@
           "operationId": "getFindingReproduction",
           "path": "/v1/finding-reproductions/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
             "tests/reproduction-transport.test.ts",
@@ -5931,7 +5931,7 @@
           "operationId": "cancelFindingReproduction",
           "path": "/v1/finding-reproductions/{id}/cancellation",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
             "tests/reproduction-transport.test.ts",

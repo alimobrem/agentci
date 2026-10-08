@@ -1908,6 +1908,158 @@
           }
         ]
       }
+    },
+    "/v1/findings/{id}/reproductions": {
+      "post": {
+        "operationId": "requestFindingReproduction",
+        "summary": "Reserve an existing operator-approved finding reproduction",
+        "description": "Operator-only bounded selection of an existing immutable approved plan. No query parameters or execution details accepted. Applied authority and fresh repository/PR permissions must remain valid before and after SQL writes in one transaction. Exact operation retries retain one intent; acknowledgement does not prove execution, cleanup or confirmation.",
+        "security": [
+          {
+            "ModelReviewOperator": []
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Durable reservation intent; does not prove execution or confirmation",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReproductionAccepted"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReproductionError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReproductionError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReproductionError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReproductionError"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReproductionError"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReproductionError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReproductionError"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReproductionError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Bounded authenticated mutation error; no private details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReproductionError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindingReproductionRequest"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -6385,6 +6537,220 @@
           "schemaVersion",
           "id",
           "cancelRequested"
+        ]
+      },
+      "FindingReproductionAccepted": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "type": "string",
+            "enum": [
+              "v1alpha1"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "operationId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "reviewId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "subject": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "organizationId": {
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$"
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+                "maxLength": 256
+              },
+              "pullRequest": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "baseSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              },
+              "headSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              }
+            },
+            "required": [
+              "organizationId",
+              "repository",
+              "pullRequest",
+              "baseSha",
+              "headSha"
+            ]
+          },
+          "finding": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "queuedVersion": {
+                "type": "integer",
+                "minimum": 2,
+                "maximum": 9999
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "queuedVersion",
+              "digest"
+            ]
+          },
+          "planDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "requestDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "id",
+          "operationId",
+          "reviewId",
+          "subject",
+          "finding",
+          "planDigest",
+          "requestDigest"
+        ]
+      },
+      "FindingReproductionRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "type": "string",
+            "enum": [
+              "v1alpha1"
+            ]
+          },
+          "reviewId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "subject": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "organizationId": {
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$"
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+                "maxLength": 256
+              },
+              "pullRequest": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "baseSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              },
+              "headSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              }
+            },
+            "required": [
+              "organizationId",
+              "repository",
+              "pullRequest",
+              "baseSha",
+              "headSha"
+            ]
+          },
+          "expectedVersion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9998
+          },
+          "operationId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "approvalId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "approvalDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "reviewId",
+          "subject",
+          "expectedVersion",
+          "operationId",
+          "approvalId",
+          "approvalDigest"
+        ]
+      },
+      "FindingReproductionError": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string",
+                "enum": [
+                  "invalid-request",
+                  "unauthorized",
+                  "forbidden",
+                  "reproduction-denied",
+                  "not-found",
+                  "method-not-allowed",
+                  "idempotency-conflict",
+                  "version-conflict",
+                  "approval-conflict",
+                  "body-too-large",
+                  "unsupported-media-type",
+                  "unsupported-content-encoding",
+                  "service-unavailable"
+                ]
+              }
+            },
+            "required": [
+              "code"
+            ]
+          }
+        },
+        "required": [
+          "error"
         ]
       }
     },

@@ -374,6 +374,25 @@
         "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors",
         "Production-installed public client and executable CLI pin entire reference, operator preflight and overall deadline; fresh-reservation cancellation/restart/non-execution recovery without controller backfill"
       ]
+    },
+    {
+      "operationId": "requestFindingReproduction",
+      "method": "post",
+      "path": "/v1/findings/{id}/reproductions",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3"
+      ],
+      "tests": [
+        "tests/integration/reproduction-admission-http.test.ts"
+      ],
+      "scenarios": [
+        "Operator-only pinned immutable-plan selection; permission and intent atomic",
+        "Concurrent exact retries; conflicting operation/version; denied/stale/revoked permission rolls back",
+        "Production-installed public client and executable CLI; immediate status/cancel without execution"
+      ]
     }
   ]
 }

@@ -2132,6 +2132,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07c-3f",
+          "status": "blocked",
+          "startedAt": "2026-10-08T02:15:44.399Z",
+          "completedAt": null,
+          "blockedReason": "Local reservation/client/CLI, PostgreSQL and production-installed acceptance pass; independent review and exact-new-source hosted CI/physical isolation still required. No new publication or phase acceptance claimed.",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Authenticated operator reservation uses pinned applied approval and fresh permission checks with reservation/event/intent/state committed in the same authority transaction; typed client and executable CLI preserve original admission, exact request identity, bounded retry/deadline, version/idempotency conflicts and redacted errors. Actual PostgreSQL/HTTP and installed package regressions cover denied/stale/revoked permissions, rollback, concurrent retries, immediate status/cancellation and no implicit execution. No disposition or full phase closure claimed.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -2385,7 +2400,7 @@
           "operationId": "listReviewFindings",
           "path": "/v1/model-reviews/{id}/findings",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -2409,7 +2424,7 @@
           "operationId": "getFinding",
           "path": "/v1/findings/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -2432,7 +2447,7 @@
           "operationId": "getFindingHistory",
           "path": "/v1/findings/{id}/history",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -2449,6 +2464,20 @@
             "Immutable summary version differs explicitly from current finding",
             "Signed cursor binds scope and retained watermark; every page authenticates",
             "Cumulative 10s SQL budget and 4MiB response bound"
+          ]
+        },
+        {
+          "operationId": "requestFindingReproduction",
+          "path": "/v1/findings/{id}/reproductions",
+          "map": "specs/api/operations.json",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
+          "tests": [
+            "tests/integration/reproduction-admission-http.test.ts"
+          ],
+          "scenarios": [
+            "Operator-only pinned immutable-plan selection; permission and intent atomic",
+            "Concurrent exact retries; conflicting operation/version; denied/stale/revoked permission rolls back",
+            "Production-installed public client and executable CLI; immediate status/cancel without execution"
           ]
         },
         {
@@ -2528,6 +2557,7 @@
         "tests/integration/model-review-control-startup.test.ts",
         "tests/model-finding-history-adversarial.test.ts",
         "tests/model-finding-cursor-adversarial.test.ts",
+        "tests/integration/reproduction-admission-http.test.ts",
         "tests/integration/admitted-review-activities.test.ts",
         "tests/integration/review-dispatch.test.ts"
       ],
@@ -2641,6 +2671,11 @@
         {
           "task": "M3-07c-4a",
           "reason": "Local client/CLI HTTP/PostgreSQL and production-installed checks pass; exact published-source hosted CI and independent review remain pending. Evidence: delivery/acceptance/m3-reproduction-client-cli-cloud.json",
+          "deferral": null
+        },
+        {
+          "task": "M3-07c-3f",
+          "reason": "Local reservation/client/CLI, PostgreSQL and production-installed acceptance pass; independent review and exact-new-source hosted CI/physical isolation still required. No new publication or phase acceptance claimed.",
           "deferral": null
         }
       ],
@@ -2965,7 +3000,7 @@
           "operationId": "listReviewFindings",
           "path": "/v1/model-reviews/{id}/findings",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -2989,7 +3024,7 @@
           "operationId": "getFinding",
           "path": "/v1/findings/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -3012,7 +3047,7 @@
           "operationId": "getFindingHistory",
           "path": "/v1/findings/{id}/history",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -3378,6 +3413,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07c-3f",
+          "status": "blocked",
+          "startedAt": "2026-10-08T02:15:44.399Z",
+          "completedAt": null,
+          "blockedReason": "Local reservation/client/CLI, PostgreSQL and production-installed acceptance pass; independent review and exact-new-source hosted CI/physical isolation still required. No new publication or phase acceptance claimed.",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Authenticated operator reservation uses pinned applied approval and fresh permission checks with reservation/event/intent/state committed in the same authority transaction; typed client and executable CLI preserve original admission, exact request identity, bounded retry/deadline, version/idempotency conflicts and redacted errors. Actual PostgreSQL/HTTP and installed package regressions cover denied/stale/revoked permissions, rollback, concurrent retries, immediate status/cancellation and no implicit execution. No disposition or full phase closure claimed.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -3616,7 +3666,7 @@
           "operationId": "listReviewFindings",
           "path": "/v1/model-reviews/{id}/findings",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -3640,7 +3690,7 @@
           "operationId": "getFinding",
           "path": "/v1/findings/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -3663,7 +3713,7 @@
           "operationId": "getFindingHistory",
           "path": "/v1/findings/{id}/history",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -3686,7 +3736,7 @@
           "operationId": "getFindingReproduction",
           "path": "/v1/finding-reproductions/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
             "tests/reproduction-transport.test.ts",
@@ -3707,7 +3757,7 @@
           "operationId": "cancelFindingReproduction",
           "path": "/v1/finding-reproductions/{id}/cancellation",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
             "tests/reproduction-transport.test.ts",
@@ -3845,6 +3895,11 @@
         {
           "task": "M3-07c-3e-2",
           "reason": "Pinned UBI registry returns Forbidden; applicable container verification, hosted exact-source CI and independent review remain pending. Local evidence: delivery/acceptance/m3-reproduction-http-cloud-local.json",
+          "deferral": null
+        },
+        {
+          "task": "M3-07c-3f",
+          "reason": "Local reservation/client/CLI, PostgreSQL and production-installed acceptance pass; independent review and exact-new-source hosted CI/physical isolation still required. No new publication or phase acceptance claimed.",
           "deferral": null
         }
       ],
@@ -4105,6 +4160,21 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-07c-3f",
+          "status": "blocked",
+          "startedAt": "2026-10-08T02:15:44.399Z",
+          "completedAt": null,
+          "blockedReason": "Local reservation/client/CLI, PostgreSQL and production-installed acceptance pass; independent review and exact-new-source hosted CI/physical isolation still required. No new publication or phase acceptance claimed.",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Authenticated operator reservation uses pinned applied approval and fresh permission checks with reservation/event/intent/state committed in the same authority transaction; typed client and executable CLI preserve original admission, exact request identity, bounded retry/deadline, version/idempotency conflicts and redacted errors. Actual PostgreSQL/HTTP and installed package regressions cover denied/stale/revoked permissions, rollback, concurrent retries, immediate status/cancellation and no implicit execution. No disposition or full phase closure claimed.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -4343,7 +4413,7 @@
           "operationId": "listReviewFindings",
           "path": "/v1/model-reviews/{id}/findings",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -4367,7 +4437,7 @@
           "operationId": "getFinding",
           "path": "/v1/findings/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -4390,7 +4460,7 @@
           "operationId": "getFindingHistory",
           "path": "/v1/findings/{id}/history",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -4528,7 +4598,13 @@
         "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
       },
       "owner": "AgentCI maintainers",
-      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "blocker": [
+        {
+          "task": "M3-07c-3f",
+          "reason": "Local reservation/client/CLI, PostgreSQL and production-installed acceptance pass; independent review and exact-new-source hosted CI/physical isolation still required. No new publication or phase acceptance claimed.",
+          "deferral": null
+        }
+      ],
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
       "reconciliationGaps": [
         "modality-and-multi-phase-mapping-review"
@@ -4853,7 +4929,7 @@
           "operationId": "listReviewFindings",
           "path": "/v1/model-reviews/{id}/findings",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -4877,7 +4953,7 @@
           "operationId": "getFinding",
           "path": "/v1/findings/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",
@@ -4900,7 +4976,7 @@
           "operationId": "getFindingHistory",
           "path": "/v1/findings/{id}/history",
           "map": "specs/api/operations.json",
-          "mapDigest": "7352b1adad62d880ea0341f88cc8d86230df5df7f92b288c14c7f977eac163e1",
+          "mapDigest": "a078637d309fad2aad686a6389d462837eca234a683a2fd5e46595eaec2204b9",
           "tests": [
             "tests/integration/model-finding-api.test.ts",
             "tests/integration/model-finding-read-adversarial.test.ts",

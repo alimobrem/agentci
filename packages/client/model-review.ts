@@ -1,4 +1,4 @@
-import {validateFindingReproductionAccepted,validateFindingReproductionStatus,validateFindingReproductionCancellation,type ReproductionReference,type FindingReproductionStatus,type FindingReproductionCancellation} from '../findings/reproduction-transport.ts';
+import {validateFindingReproductionRequest,type FindingReproductionRequest,validateFindingReproductionAccepted,validateFindingReproductionStatus,validateFindingReproductionCancellation,type ReproductionReference,type FindingReproductionStatus,type FindingReproductionCancellation} from '../findings/reproduction-transport.ts';
 import {setTimeout as delay} from 'node:timers/promises';
 import {canonical, digest} from '../review/engine.ts';
 import {validateReviewAdmission, type ReviewAdmissionRequest} from '../reviewers/admission.ts';
@@ -25,7 +25,7 @@ export interface ModelReviewClientOptions {
   maxAttempts?: number;
 }
 const failures: Record<number, readonly string[]> = {
-  400: ['invalid-request', 'invalid-cursor'], 401: ['unauthorized'], 403: ['forbidden', 'review-denied'],
+  400: ['invalid-request', 'invalid-cursor'], 401: ['unauthorized'], 403: ['forbidden', 'review-denied','reproduction-denied'],
   404: ['not-found'], 405: ['method-not-allowed'],
   409: ['idempotency-conflict', 'version-conflict', 'review-not-complete', 'invalid-transition', 'approval-conflict'],
   413: ['body-too-large', 'response-too-large'], 415: ['unsupported-media-type', 'unsupported-content-encoding'],
@@ -135,6 +135,16 @@ export class ModelReviewClient {
     try {result = validateModelReviewCancellation(value);} catch {throw new AgentCIError('invalid-response');}
     if (result.id !== request.id) throw new AgentCIError('identity-mismatch');
     return result;
+  }
+  async reserveReproduction(expected:ReviewAdmissionRequest,findingId:string,input:FindingReproductionRequest,options:{signal?:AbortSignal}={}):Promise<ReproductionReference> {
+    if(!this.#operatorToken)throw new AgentCIError('operator-token-required');
+    const admission=this.admission(expected);this.findingId(findingId);let request:FindingReproductionRequest;
+    try{request=validateFindingReproductionRequest(input);if(request.reviewId!==admission.id||canonical(request.subject)!==canonical(admission.subject))throw Error();}catch{throw new AgentCIError('invalid-request');}
+    const signal=AbortSignal.any([AbortSignal.timeout(this.#timeoutMs),...(options.signal?[options.signal]:[])]);
+    await this.show(admission,{signal});
+    const {value,location}=await this.request(`/v1/findings/${encodeURIComponent(findingId)}/reproductions`,true,202,JSON.stringify(request),signal);
+    const {schemaVersion,reviewId,...selector}=request;
+    try{const result=validateFindingReproductionAccepted(value,{id:request.approvalId,reviewId,subject:request.subject,operationId:request.operationId,findingId,queuedVersion:request.expectedVersion+1,planDigest:request.approvalDigest,requestDigest:digest(canonical(selector))});if(location!==`/v1/finding-reproductions/${result.id}?reviewId=${reviewId}`)throw Error();return result;}catch{throw new AgentCIError('invalid-response');}
   }
   private reproductionReference(request:ReviewAdmissionRequest,value:ReproductionReference):ReproductionReference {
     try {return validateFindingReproductionAccepted(value,{id:value.id,reviewId:request.id,subject:request.subject});}
