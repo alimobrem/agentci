@@ -2787,7 +2787,7 @@
       "dependsOn": [
         "M3-07c-3d-2b"
       ],
-      "blockedReason": "Local reservation/client/CLI, PostgreSQL and production-installed acceptance pass; independent review and exact-new-source hosted CI/physical isolation still required. No new publication or phase acceptance claimed."
+      "blockedReason": "Local reservation/client/CLI, 33 PostgreSQL checks, 5 production-installed tests, compatibility and independent review pass. Exact-new-source hosted CI/physical isolation remain pending; local immutable UBI runner unavailable. No new publication/phase acceptance claimed."
     }
   ]
 }

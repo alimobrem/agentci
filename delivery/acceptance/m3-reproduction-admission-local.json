@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3f",
+  "state": "locally-verified-hosted-ci-physical-isolation-pending",
+  "recordedAt": "2026-10-08T02:29:36.193097+00:00",
+  "sourceCommit": "0f8497c897741062d005638109d775cf19bbb263",
+  "sourceTree": "addc40884da94caa6c3835be795aaa203d52648a",
+  "base": "3cb889e5921bc78232bf478de94a3e6b74802c26",
+  "scope": "Existing approved-plan selection via operator HTTP request, typed client and executable CLI; applied authority and reservation writes in one transaction, no HTTP workflow/job start, no request commands/images/receipts. Dispositions not exposed.",
+  "validation": {
+    "fastChecks": 10,
+    "unitTests": 423,
+    "focusedPostgres": 33,
+    "productionInstalled": 5,
+    "focusedFailed": 0,
+    "focusedSkipped": 0,
+    "installedFailed": 0,
+    "installedSkipped": 0,
+    "compatibility": "M1/M2 immutable released baselines and negative removals passed",
+    "workflows": "actionlint/context negatives passed",
+    "independentReview": "/root/client_review: no blockers; installed5passed and361compiled archive files match local build",
+    "scenarios": [
+      "operator before network I/O; reader denied with no GitHub contact",
+      "strict selector/body/query/content type and tenant scope rejection",
+      "fresh and post-write permission loss rolls back event/plan/operation/intent/state",
+      "concurrent exact requests commit one intent; idempotency/version conflicts",
+      "actual applied expiry prevents intent",
+      "post-write response loss retries byte-identical selector; one complete retained operation",
+      "compiled public export/executable CLI; prompt FIFO rejection; immediate status/cancellation; no implicit execution",
+      "snapshot abort forwards signal and stops before further Git reads"
+    ]
+  },
+  "archive": {
+    "path": "/workspace/scratch/mutations-final-package/agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "46c7e0c415448f68f41454568a5f1969f0ac13923155ef84f1e49332f1190983"
+  },
+  "logs": [
+    {
+      "path": "/workspace/scratch/mutations-final-fast.log",
+      "sha256": "40143a58ab7551f68dcd72536ef3ca587844b26d51cd05d0e0586dca20cc4586"
+    },
+    {
+      "path": "/workspace/scratch/mutations-final-compat.log",
+      "sha256": "00b31dc07f335770bb136ab4c853f2bc4bb608c9cdb6d4c94ae42663181f40cf"
+    },
+    {
+      "path": "/workspace/scratch/mutations-final-workflows.log",
+      "sha256": "cbb6627c6fbc680c66ab4c6145487e3ca5caebc34c37941cdeb736e70e4b2284"
+    },
+    {
+      "path": "/workspace/scratch/mutations-focused2.log",
+      "sha256": "8dcb9eecf2bf8506caf3d47501c5ce03ce65ffbd4cf8b8a513d5a40189228288"
+    },
+    {
+      "path": "/workspace/scratch/mutations-final-installed.log",
+      "sha256": "e1f34db6b99b790dc4327a9ba62660d6de4d6bde27fafa5ec3bcc6ff622feaa9"
+    },
+    {
+      "path": "/workspace/scratch/reservation-independent-integration-20261008.log",
+      "sha256": "7c4bfab8a29bd90130fccb442caacc480394a9bc9c520cc7a1e8685712af397a"
+    },
+    {
+      "path": "/workspace/scratch/reservation-independent-unit-20261008.log",
+      "sha256": "bbc8534286caf0d9fd7f4024b543341ff2a583e0c360a89220a80a3b210033ba"
+    },
+    {
+      "path": "/workspace/scratch/reservation-independent-installed-final-20261008.log",
+      "sha256": "8768ce275a1a7964d9dfaa1a357ef010f577589b092d908de73b5132c422f7fd"
+    },
+    {
+      "path": "/workspace/scratch/reservation-independent-archive-equivalence-20261008.log",
+      "sha256": "d66171a3b1cb42f13908200333c742591ebebd5273caf254b15cae4a4dcf3b4d"
+    },
+    {
+      "path": "/workspace/scratch/mutations-focused.log",
+      "sha256": "63215bc13991817d74918a95ef589a2f8f4a5517368c8a260bcc6ec3f32deee4"
+    },
+    {
+      "path": "/workspace/scratch/mutations-fast.log",
+      "sha256": "651d1419c854a8c491fc542260c149555dbea5491caf3d51f0621981d19f1867"
+    },
+    {
+      "path": "/workspace/scratch/mutations-fast3.log",
+      "sha256": "1ba59b08f4e209ab1a5ad024faa3a82228c4de509c2f6815d532276f32134b88"
+    },
+    {
+      "path": "/workspace/scratch/mutations-compat2.log",
+      "sha256": "500c11dd8974d844e7fbdd8d7e306ab4a6e88b3833620eb5aa61fb124c5f6fc8"
+    },
+    {
+      "path": "/workspace/scratch/mutations-workflows.log",
+      "sha256": "5187d63332fda9cf39fa971c1a4d7014f6e3ee2ffb0be7b9ede11df037d5ab72"
+    }
+  ],
+  "failedAttempts": [
+    "Old draft-only route assertion failed after additive admission implementation; updated to original requestFindingReproduction ID with operator/JSON contract assertions, retained disposition-unavailable guard",
+    "Copied cancellation OpenAPI description corrected after review; no contract misstatement retained",
+    "Broader PostgreSQL selection:41pass/1setupfailure, missing immutable isolated runner image; not behavioral acceptance and not waived",
+    "Initial tool fetch DNS failed; reused existing official checksum-verified oasdiff/actionlint archive cache, compatibility/context negatives then passed"
+  ],
+  "limits": [
+    "New source has not been published or hosted-verified; mandatory physical isolation remains a gate",
+    "GitHub permission/source behavior uses faithful HTTP fixtures; actual customer GitHub walkthrough remains required",
+    "Only inaccessible external-model-provider validation may remain deferred after every other applicable gate passes",
+    "PR71 remains draft/unmerged; no deployment/release/access changes",
+    "Original M0-M10 order, three adapters, observed-rate calibration/Wilson descriptive retained"
+  ],
+  "next": "Implement authenticated retained operator-receipt store/reader before disposition routes/client/CLI; then aggregate transport acceptance. R1 failure controls reviewed, warm publication reuse still pending."
+}
