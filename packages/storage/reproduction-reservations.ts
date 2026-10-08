@@ -24,7 +24,9 @@ export class ReproductionReservations {
   finally{c.release(broken);c.off('error',connectionFailed);}
  }
  async reserve(findingId:string,value:unknown):Promise<ReproductionReservation>{
-  return this.tx(c=>this.reserveInTransaction(c,findingId,value));
+  // Detach caller input before pool acquisition can yield to caller mutation.
+  let selected:unknown;try{if(Buffer.byteLength(canonical(value))>8192)fail();selected=structuredClone(value);}catch{return fail('invalid-request');}
+  return this.tx(c=>this.reserveInTransaction(c,findingId,selected));
  }
  /** Caller owns the authority transaction; this method never commits independently. */
  async reserveInTransaction(c:PoolClient,findingId:string,value:unknown):Promise<ReproductionReservation>{

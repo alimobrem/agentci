@@ -41,3 +41,16 @@ test('history insert failure rolls back receipt, redacts database details and or
 test('lost disposition response retries exact operator input with one receipt/event and no implicit evaluator execution',async()=>{const f=await fixture(true);try{
  const admission=f.admission,client=new ModelReviewClient({url:f.url,operatorToken:f.config.operatorToken,maxAttempts:2});const result=await client.setFindingDisposition(admission,f.f.initial.id,f.request);assert.equal(result.event.finding.state,'false-positive');assert.equal(f.bodies.length,2);assert.equal(f.bodies[0],f.bodies[1]);assert.deepEqual(await f.counts(),[1,3]);for(const table of ['agentci_eval_jobs','agentci_eval_units','agentci_reproduction_dispatch_attempts'])assert.equal((await f.pool.query(`SELECT count(*) FROM ${table}`)).rows[0].count,'0');
 }finally{await f.closeAll();}});
+
+test('raw disposition replay rejects coherently rehashed history reason substitution and recovers after restoration',async()=>{
+ const f=await fixture();try{
+  const endpoint=`${f.url}/v1/findings/${encodeURIComponent(f.f.initial.id)}/dispositions`,post=()=>fetch(endpoint,{method:'POST',headers:{authorization:`Bearer ${f.config.operatorToken}`,'content-type':'application/json'},body:JSON.stringify(f.request)});
+  const originalResponse=await post();assert.equal(originalResponse.status,200);const originalResult=await originalResponse.json();
+  const row=(await f.pool.query('SELECT event,digest FROM agentci_finding_events WHERE operation_id=$1',[f.request.operationId])).rows[0],event=structuredClone(row.event);event.receipt.reason='coherent substituted history';event.finding.disposition.reason=event.receipt.reason;
+  await f.pool.query('ALTER TABLE agentci_finding_events DISABLE TRIGGER finding_event_immutable');try{
+   await f.pool.query('UPDATE agentci_finding_events SET event=$1,digest=$2 WHERE operation_id=$3',[event,digest(canonical(event)),f.request.operationId]);
+   const replay=await post();assert.equal(replay.status,503);assert.deepEqual(await replay.json(),{error:{code:'service-unavailable'}});assert.deepEqual(await f.counts(),[1,3]);
+  }finally{await f.pool.query('UPDATE agentci_finding_events SET event=$1,digest=$2 WHERE operation_id=$3',[row.event,row.digest,f.request.operationId]);await f.pool.query('ALTER TABLE agentci_finding_events ENABLE TRIGGER finding_event_immutable');}
+  const recovered=await post();assert.equal(recovered.status,200);assert.deepEqual(await recovered.json(),originalResult);assert.deepEqual(await f.counts(),[1,3]);
+ }finally{await f.closeAll();}
+});

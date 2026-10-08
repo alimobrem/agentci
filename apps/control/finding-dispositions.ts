@@ -29,6 +29,8 @@ export function createFindingDispositions(pool:Pool,scope:{organizationId:string
    if(existing&&(existing.event.action.type!==action.type||!('receiptId' in existing.event.action)||existing.event.action.receiptId!==action.receiptId))fail(409,'idempotency-conflict');
    if(!existing&&records.at(-1)?.event.finding.version!==request.expectedVersion)fail(409,'version-conflict');
    await receipts.retain(bounded,findingId,request);
+   // Exact replay must authenticate history against its retained trusted receipt.
+   if(existing)await receipts.read(bounded,action.receiptId,request.subject,request);
    const result=await history.transitionInTransaction(bounded,findingId,request.subject,action,request.expectedVersion,request.operationId);
    if(Date.now()>deadline)fail(503,'service-unavailable');await c.query('COMMIT');return result;
   }catch(error){

@@ -43,6 +43,37 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-07c-INTEGRITY-1",
+          "status": "blocked",
+          "startedAt": "2026-10-08T03:59:45.813Z",
+          "completedAt": null,
+          "blockedReason": "Local integrity and reconciliation fixes independently pass; changed publication requires explicit approval, and exact-source hosted runtime/physical isolation remain unverified.",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Delayed acquisition and transaction-query tests bind original caller subject/selector/action for both public storage wrappers and shared transaction methods",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-pr72-integrity-local.json"
+              ]
+            },
+            {
+              "text": "Raw HTTP exact replay authenticates retained receipt/event agreement, rejects coherent rehashed reason substitution and preserves valid idempotent replay/recovery",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-pr72-integrity-local.json"
+              ]
+            },
+            {
+              "text": "Independent exact-source review and applicable local fast/PostgreSQL/installed/contract/reconciliation checks pass; hosted runtime remains explicitly unverified",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-pr72-integrity-local.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -87,6 +118,12 @@
           "sha256": "db504bfab8903c5a7eb12dc27519cd09a471092d98290c449b071442cd42d41a",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-pr72-integrity-local.json",
+          "sha256": "6d9295173921b80248669dc305474eedd7a5de9c3dc9e4b1d45d9ea8b69bb1b9",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
       ],
       "verification": {
@@ -95,7 +132,13 @@
         "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
       },
       "owner": "AgentCI maintainers",
-      "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
+      "blocker": [
+        {
+          "task": "M3-07c-INTEGRITY-1",
+          "reason": "Local integrity and reconciliation fixes independently pass; changed publication requires explicit approval, and exact-source hosted runtime/physical isolation remain unverified.",
+          "deferral": null
+        }
+      ],
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
       "reconciliationGaps": [
         "modality-and-multi-phase-mapping-review"

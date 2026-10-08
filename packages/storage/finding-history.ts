@@ -118,7 +118,9 @@ export class FindingHistoryStore {
   });
  }
  async transition(id:string,subject:ReviewSubject,action:FindingAction,expectedVersion:number,operationId:string):Promise<FindingHistoryRecord>{
-  return this.transaction(c=>this.transitionInTransaction(c,id,subject,action,expectedVersion,operationId));
+  // Pool acquisition is asynchronous; snapshot at the public call boundary.
+  subject=structuredClone(subject);let selected:FindingAction;try{selected=structuredClone(action);}catch{conflict();}
+  return this.transaction(c=>this.transitionInTransaction(c,id,subject,selected!,expectedVersion,operationId));
  }
  /** External controller transaction owns both authenticated receipt and event. */
  async transitionInTransaction(client:PoolClient,id:string,subject:ReviewSubject,action:FindingAction,expectedVersion:number,operationId:string):Promise<FindingHistoryRecord>{
