@@ -296,7 +296,7 @@
       "owner": "07c-3",
       "authority": "read",
       "input": "required reviewId",
-      "output": "200 status and receipt|null; final schema before shipping",
+      "output": "200 FindingReproductionStatus in development; admission remains pending",
       "requirementIds": [
         "SECTION-31.1",
         "SPEC-31.2-001",
@@ -319,7 +319,7 @@
       "owner": "07c-3",
       "authority": "mutation",
       "input": "empty body; reproduction id is monotonic operation key",
-      "output": "202 cancellation acknowledgment",
+      "output": "202 FindingReproductionCancellation in development; no physical-stop claim",
       "requirementIds": [
         "SECTION-31.1",
         "SPEC-31.2-001",

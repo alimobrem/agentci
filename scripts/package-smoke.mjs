@@ -34,7 +34,7 @@ try {
     if(installedManifest.name!=='agentci'||installedManifest.version!==expectedVersion)throw new Error('Installed package dependency identity mismatch');
     try{await readFile(join(root,'node_modules/tsx/package.json'));throw new Error('Development test loader entered production installation');}catch(error){if(error.code!=='ENOENT')throw error;}
     console.log(JSON.stringify({acceptance:'installed-v2-reader',version:expectedVersion,install:'npm install --omit=dev',offline,developmentLoaderInstalled:false,publicExport:'agentci/client'}));
-    execFileSync(process.execPath,['--import','tsx','--test',resolve('tests/integration/reproduction-installed-reader.test.ts'),resolve('tests/integration/reproduction-operator.test.ts'),resolve('tests/integration/reproduction-deployment.test.ts')],{env:{...process.env,AGENTCI_TEST_CLIENT_PACKAGE_ROOT:installedRoot},stdio:'inherit',timeout:60000});
+    execFileSync(process.execPath,['--import','tsx','--test',resolve('tests/integration/reproduction-installed-reader.test.ts'),resolve('tests/integration/reproduction-http.test.ts'),resolve('tests/integration/reproduction-operator.test.ts'),resolve('tests/integration/reproduction-deployment.test.ts')],{env:{...process.env,AGENTCI_TEST_CLIENT_PACKAGE_ROOT:installedRoot},stdio:'inherit',timeout:60000});
     console.log('Installed public v2 reader and deployment-operator apply/CAS/revocation passed against real PostgreSQL, plus real Compose rendering of installed opt-in files; reader HTTP authenticated, no Temporal or provider credentials.');
   }
   const {validateModelRequest}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/request.js')).href);

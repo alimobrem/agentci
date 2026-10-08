@@ -1758,6 +1758,156 @@
           }
         }
       }
+    },
+    "/v1/finding-reproductions/{id}": {
+      "get": {
+        "operationId": "getFindingReproduction",
+        "summary": "Read coherent retained reproduction status",
+        "description": "Required exact review association. Queued, bound, dispatched and settled are retained states, not execution success. Receipts and never-staged proofs retain their authentic meanings; no executable plan or internal workflow identifiers exposed. Private no-store response bounded to 4 MiB; cumulative database snapshot budget 10 seconds.",
+        "security": [
+          {
+            "ModelReviewRead": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Scoped evidence",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Retry-After": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReproductionStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          },
+          "405": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          },
+          "503": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$"
+            }
+          },
+          {
+            "name": "reviewId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/finding-reproductions/{id}/cancellation": {
+      "post": {
+        "operationId": "cancelFindingReproduction",
+        "summary": "Durably request cancellation of reserved reproduction",
+        "description": "Operator only, empty body and no query parameters. Monotonic intent remains available without new-admission authority. Repeated and late cancellation preserve retained receipts and settlement; acknowledgment does not prove physical cleanup.",
+        "security": [
+          {
+            "ModelReviewOperator": []
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Durably acknowledged, not execution success",
+            "headers": {
+              "Cache-Control": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FindingReproductionCancellation"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          },
+          "401": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          },
+          "403": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          },
+          "404": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          },
+          "405": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          },
+          "413": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          },
+          "415": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          },
+          "503": {
+            "$ref": "#/components/responses/ModelReviewErrorResponse"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$"
+            }
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -5933,6 +6083,308 @@
           "reason",
           "executionReceipt",
           "verified"
+        ]
+      },
+      "FindingReproductionStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "type": "string",
+            "enum": [
+              "v1alpha1"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "operationId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "reviewId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "subject": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "organizationId": {
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$"
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$",
+                "maxLength": 256
+              },
+              "pullRequest": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "baseSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              },
+              "headSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              }
+            },
+            "required": [
+              "organizationId",
+              "repository",
+              "pullRequest",
+              "baseSha",
+              "headSha"
+            ]
+          },
+          "finding": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "queuedVersion": {
+                "type": "integer",
+                "minimum": 2,
+                "maximum": 9999
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "queuedVersion",
+              "digest"
+            ]
+          },
+          "planDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "requestDigest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          },
+          "dispatch": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "state": {
+                "type": "string",
+                "enum": [
+                  "queued",
+                  "bound",
+                  "dispatched",
+                  "settled"
+                ]
+              },
+              "cancelRequested": {
+                "type": "boolean"
+              },
+              "cancellationCause": {
+                "type": "string",
+                "nullable": true,
+                "enum": [
+                  "user",
+                  "revoked",
+                  "expired",
+                  "permission-denied",
+                  "superseded",
+                  "unavailable",
+                  null
+                ]
+              }
+            },
+            "required": [
+              "state",
+              "cancelRequested",
+              "cancellationCause"
+            ]
+          },
+          "receipt": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "findingId": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  },
+                  "subjectDigest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  },
+                  "evidenceDigest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$"
+                  },
+                  "assertionDigest": {
+                    "type": "string",
+                    "pattern": "^sha256:[a-f0-9]{64}$",
+                    "nullable": true
+                  },
+                  "actor": {
+                    "type": "string",
+                    "enum": [
+                      "reproduction",
+                      "operator"
+                    ]
+                  },
+                  "outcome": {
+                    "type": "string",
+                    "enum": [
+                      "reproduced",
+                      "not-reproduced",
+                      "error",
+                      "false-positive",
+                      "resolved"
+                    ]
+                  },
+                  "reason": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 4096
+                  }
+                },
+                "required": [
+                  "findingId",
+                  "subjectDigest",
+                  "evidenceDigest",
+                  "assertionDigest",
+                  "actor",
+                  "outcome",
+                  "reason"
+                ],
+                "nullable": false
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "value",
+              "digest"
+            ],
+            "nullable": true
+          },
+          "nonExecution": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "$ref": "#/components/schemas/ReproductionNonExecutionProof"
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "value",
+              "digest"
+            ],
+            "nullable": true
+          },
+          "settlement": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "receipt-retained",
+                  "never-staged",
+                  "superseded"
+                ]
+              },
+              "findingVersion": {
+                "type": "integer",
+                "minimum": 3,
+                "maximum": 10000
+              },
+              "historyDigest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "evidenceDigest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "retainedReceiptDigest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$",
+                "nullable": true
+              },
+              "retainedProofDigest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$",
+                "nullable": true
+              }
+            },
+            "required": [
+              "kind",
+              "findingVersion",
+              "historyDigest",
+              "evidenceDigest",
+              "retainedReceiptDigest",
+              "retainedProofDigest"
+            ],
+            "nullable": true
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "id",
+          "operationId",
+          "reviewId",
+          "subject",
+          "finding",
+          "planDigest",
+          "requestDigest",
+          "dispatch",
+          "receipt",
+          "nonExecution",
+          "settlement"
+        ]
+      },
+      "FindingReproductionCancellation": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "schemaVersion": {
+            "type": "string",
+            "enum": [
+              "v1alpha1"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "cancelRequested": {
+            "type": "boolean",
+            "enum": [
+              true
+            ]
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "id",
+          "cancelRequested"
         ]
       }
     },

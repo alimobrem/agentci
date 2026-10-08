@@ -947,7 +947,7 @@
           "operationId": "healthz",
           "path": "/healthz",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/control-api.test.ts"
           ],
@@ -959,7 +959,7 @@
           "operationId": "readyz",
           "path": "/readyz",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/control-api.test.ts",
             "tests/client.test.ts"
@@ -974,7 +974,7 @@
           "operationId": "ingestGitHubWebhook",
           "path": "/v1/webhooks/github",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/control-api.test.ts",
             "tests/integration/m1.test.ts"
@@ -1641,7 +1641,7 @@
           "operationId": "getEvidence",
           "path": "/v1/evidence/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/control-api.test.ts",
             "tests/integration/m1.test.ts",
@@ -3520,7 +3520,7 @@
           "operationId": "getEvalComparison",
           "path": "/v1/eval-comparisons/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/integration/eval-storage.test.ts"
@@ -3540,7 +3540,7 @@
           "operationId": "exportEvalComparison",
           "path": "/v1/eval-comparisons/{id}/export",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/eval-export.test.ts",
@@ -5066,7 +5066,7 @@
           "operationId": "getEvalComparison",
           "path": "/v1/eval-comparisons/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/integration/eval-storage.test.ts"
@@ -5086,7 +5086,7 @@
           "operationId": "exportEvalComparison",
           "path": "/v1/eval-comparisons/{id}/export",
           "map": "specs/api/operations.json",
-          "mapDigest": "ee0cda6c1df5586f5e23830825ae463c184cf70e9a0b879fe42be0afd1a87097",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/eval-export.test.ts",
@@ -5888,10 +5888,65 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07c-3e-2",
+          "status": "blocked",
+          "startedAt": "2026-10-08T00:16:55.647Z",
+          "completedAt": null,
+          "blockedReason": "Pinned UBI registry returns Forbidden; applicable container verification, hosted exact-source CI and independent review remain pending. Local evidence: delivery/acceptance/m3-reproduction-http-cloud-local.json",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Real HTTP and PostgreSQL expose coherent scoped status for already-reserved reproduction IDs with exact review association, immutable plan/operation/finding references, retained receipt or never-staged proof and verified settlement. Reader credentials cannot mutate; operator cancellation durably reaches independent recovery, remains idempotent after restart and preserves late completed evidence. Reject corrupt/substituted references, unknown/repeated queries and bodies with bounded redacted errors; maintain released API baselines and production package startup. This transport slice cannot create reservations; admission/client/customer/UI/release acceptance remain open.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
-      "api": [],
-      "testReferences": [],
+      "api": [
+        {
+          "operationId": "getFindingReproduction",
+          "path": "/v1/finding-reproductions/{id}",
+          "map": "specs/api/operations.json",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "tests": [
+            "tests/integration/reproduction-http.test.ts",
+            "tests/reproduction-transport.test.ts"
+          ],
+          "scenarios": [
+            "Exact scoped review/plan/operation/queued-finding association",
+            "Coherent PostgreSQL snapshot with authenticated retained history and receipt/proof",
+            "Distinct queued, bound, acknowledged and verified settlement states",
+            "Reader cannot cancel; operator cancellation is monotonic and survives restart/revocation",
+            "Late cancellation preserves negative/error receipt and operator supersession",
+            "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors"
+          ]
+        },
+        {
+          "operationId": "cancelFindingReproduction",
+          "path": "/v1/finding-reproductions/{id}/cancellation",
+          "map": "specs/api/operations.json",
+          "mapDigest": "edb3e7accd77c91e82a3c50aa65260c00b9291af51fe2964c51c2e39ad65a34b",
+          "tests": [
+            "tests/integration/reproduction-http.test.ts",
+            "tests/reproduction-transport.test.ts"
+          ],
+          "scenarios": [
+            "Exact scoped review/plan/operation/queued-finding association",
+            "Coherent PostgreSQL snapshot with authenticated retained history and receipt/proof",
+            "Distinct queued, bound, acknowledged and verified settlement states",
+            "Reader cannot cancel; operator cancellation is monotonic and survives restart/revocation",
+            "Late cancellation preserves negative/error receipt and operator supersession",
+            "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/integration/reproduction-http.test.ts",
+        "tests/reproduction-transport.test.ts"
+      ],
       "plannedPRs": [
         {
           "milestone": "M3",
@@ -5914,7 +5969,13 @@
         "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
       },
       "owner": "AgentCI maintainers",
-      "blocker": null,
+      "blocker": [
+        {
+          "task": "M3-07c-3e-2",
+          "reason": "Pinned UBI registry returns Forbidden; applicable container verification, hosted exact-source CI and independent review remain pending. Local evidence: delivery/acceptance/m3-reproduction-http-cloud-local.json",
+          "deferral": null
+        }
+      ],
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
       "reconciliationGaps": []
     },

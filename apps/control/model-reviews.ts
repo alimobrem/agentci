@@ -1,3 +1,5 @@
+import {ReproductionReads} from '../../packages/storage/reproduction-reads.ts';
+import {validateFindingReproductionStatus,validateFindingReproductionCancellation,type FindingReproductionStatus,type FindingReproductionCancellation} from '../../packages/findings/reproduction-transport.ts';
 import {ModelReviewExports,type PreparedModelReviewExport} from '../../packages/storage/model-review-export.ts';
 import {streamModelReviewExport} from './model-review-export.ts';
 import {FindingReads,type FindingPageOptions} from '../../packages/storage/finding-reads.ts';
@@ -23,6 +25,8 @@ export interface ModelReviewControl {
  findings?:(id:string,options:FindingPageOptions)=>Promise<ModelReviewFindings>;
  finding?:(reviewId:string,id:string,version?:number)=>Promise<FindingHistoryRecord>;
  history?:(reviewId:string,id:string,options:FindingPageOptions)=>Promise<ModelFindingHistory>;
+ reproductionStatus?:(id:string,reviewId:string)=>Promise<FindingReproductionStatus|undefined>;
+ cancelReproduction?:(id:string)=>Promise<FindingReproductionCancellation|undefined>;
  status(id:string):Promise<ModelReviewStatus|undefined>;
  admit?:(request:ReviewAdmissionRequest)=>Promise<ModelReviewAccepted>;
  cancel(id:string):Promise<ModelReviewCancellation|undefined>;
@@ -30,10 +34,11 @@ export interface ModelReviewControl {
 export async function createModelReviewControl(pool:Pool,config:{organizationId:string;repository:string;installationId:number;cursorKey?:string;evidenceToken?:string;operatorToken?:string},definition:ReviewerRuntimeDefinition|null=null,github?:Octokit):Promise<ModelReviewControl>{
  if(config.cursorKey!==undefined&&(config.cursorKey===config.evidenceToken||config.cursorKey===config.operatorToken))throw Error('Cursor key must be independent');
  const scope={organizationId:config.organizationId.toLowerCase(),repository:config.repository},reads=new ModelReviewReads(pool,scope),dispatch=new ReviewDispatchStore(pool,scope);
+ const reproductions=new ReproductionReads(pool,scope);
  const findingReads=config.cursorKey?new FindingReads(pool,scope,config.cursorKey):null;
  if(definition&&!github)throw Error('model-review-authority-unavailable');
  const authority=definition?await initializeReviewerAuthority(pool,github!,config,definition):null;
- return {scope,exportReview:id=>new ModelReviewExports(pool,scope).prepare(id),...(findingReads?{findings:(id:string,options:FindingPageOptions)=>findingReads.findings(id,options),finding:(reviewId:string,id:string,version?:number)=>findingReads.finding(reviewId,id,version),history:(reviewId:string,id:string,options:FindingPageOptions)=>findingReads.history(reviewId,id,options)}:{}),profiles:()=>reads.profiles(authority?.definition.profiles??[]),status:id=>reads.status(id),
+ return {scope,reproductionStatus:(id,reviewId)=>reproductions.status(id,reviewId),cancelReproduction:id=>reproductions.cancel(id),exportReview:id=>new ModelReviewExports(pool,scope).prepare(id),...(findingReads?{findings:(id:string,options:FindingPageOptions)=>findingReads.findings(id,options),finding:(reviewId:string,id:string,version?:number)=>findingReads.finding(reviewId,id,version),history:(reviewId:string,id:string,options:FindingPageOptions)=>findingReads.history(reviewId,id,options)}:{}),profiles:()=>reads.profiles(authority?.definition.profiles??[]),status:id=>reads.status(id),
   ...(authority?{admit:async(request:ReviewAdmissionRequest)=>{const admitted=await authority.admissions.admit(request);return validateModelReviewAccepted({schemaVersion:'v1alpha1',id:admitted.request.id,requestDigest:admitted.digest});}}:{}),
   cancel:async id=>{if(!await reads.status(id))return undefined;await dispatch.requestCancellation(id);return validateModelReviewCancellation({schemaVersion:'v1alpha1',id,cancelRequested:true});},
  };
@@ -49,20 +54,21 @@ export function modelReviewRoutes(config:{evidenceToken:string;operatorToken?:st
   const rawPath=(req.url??'').split('?')[0]??'',profiles=rawPath==='/v1/reviewer-profiles',collection=rawPath==='/v1/model-reviews';
   const match=/^\/v1\/model-reviews\/([^/]+)(\/cancellation|\/findings|\/export)?$/.exec(rawPath);
   const findingMatch=/^\/v1\/findings\/([^/]+)(\/history)?$/.exec(rawPath);
-  if(!profiles&&!collection&&!match&&!findingMatch)return false;
+  const reproductionMatch=/^\/v1\/finding-reproductions\/([^/]+)(\/cancellation)?$/.exec(rawPath);
+  if(!profiles&&!collection&&!match&&!findingMatch&&!reproductionMatch)return false;
   const reply=(status:number,value:unknown)=>{res.writeHead(status,{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff'});res.end(JSON.stringify(value));};
   try{
-   const mutation=collection||match?.[2]==='/cancellation',presented=req.headers.authorization??'';
+   const mutation=collection||match?.[2]==='/cancellation'||reproductionMatch?.[2]==='/cancellation',presented=req.headers.authorization??'';
    const operator=matches(presented,tokens.operatorToken),reader=matches(presented,tokens.evidenceToken);
    if(!operator&&!reader)throw new TransportFailure(401,'unauthorized');if(mutation&&!operator)throw new TransportFailure(403,'forbidden');
    const method=mutation?'POST':'GET';if(req.method!==method){res.setHeader('allow',method);throw new TransportFailure(405,'method-not-allowed');}
    const parsed=new URL(req.url!,'http://control.invalid');
-   const readingFindings=match?.[2]==='/findings',allowed=readingFindings?['limit','cursor']:findingMatch?(findingMatch[2]?['reviewId','limit','cursor']:['reviewId','version']):[];
+   const readingFindings=match?.[2]==='/findings',allowed=reproductionMatch?(reproductionMatch[2]?[]:['reviewId']):readingFindings?['limit','cursor']:findingMatch?(findingMatch[2]?['reviewId','limit','cursor']:['reviewId','version']):[];
    for(const key of parsed.searchParams.keys())if(!allowed.includes(key)||parsed.searchParams.getAll(key).length!==1)throw new TransportFailure(400,'invalid-request');
    const integer=(key:string)=>{const v=parsed.searchParams.get(key);if(v===null)return undefined;if(!/^[1-9][0-9]{0,4}$/.test(v))throw new TransportFailure(400,'invalid-request');return Number(v);};
    const page={limit:integer('limit'),cursor:parsed.searchParams.get('cursor')??undefined};if(page.limit!==undefined&&page.limit>100||page.cursor!==undefined&&!/^[A-Za-z0-9_-]{1,2048}$/.test(page.cursor))throw new TransportFailure(400,page.cursor!==undefined?'invalid-cursor':'invalid-request');
 
-   const id=match?.[1]?.toLowerCase();if(id&&!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(id))throw new TransportFailure(400,'invalid-request');
+   const id=(match?.[1]??reproductionMatch?.[1])?.toLowerCase();if(id&&!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(id))throw new TransportFailure(400,'invalid-request');
    let body:unknown;
    if(mutation){
     if(req.headers['content-encoding']!==undefined)throw new TransportFailure(415,'unsupported-content-encoding');
@@ -76,6 +82,20 @@ export function modelReviewRoutes(config:{evidenceToken:string;operatorToken?:st
    }
    if(profiles){reply(200,validateReviewerProfileList(control?await control.profiles():{schemaVersion:'v1alpha1',profiles:[]}));return true;}
    if(!control)throw new TransportFailure(503,'service-unavailable');
+   if(reproductionMatch){
+    if(reproductionMatch[2]){
+     if(!control.cancelReproduction)throw new TransportFailure(503,'service-unavailable');
+     const result=await control.cancelReproduction(id!);if(!result)throw new TransportFailure(404,'not-found');
+     reply(202,validateFindingReproductionCancellation(result,id!));return true;
+    }
+    const reviewId=parsed.searchParams.get('reviewId')?.toLowerCase();
+    if(!reviewId||!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(reviewId))throw new TransportFailure(400,'invalid-request');
+    if(!control.reproductionStatus)throw new TransportFailure(503,'service-unavailable');
+    const result=await control.reproductionStatus(id!,reviewId);if(!result)throw new TransportFailure(404,'not-found');
+    const value=validateFindingReproductionStatus(result,{id:id!,reviewId,subject:result.subject});
+    if(value.subject.organizationId!==control.scope.organizationId||value.subject.repository!==control.scope.repository)throw Error();
+    if(value.dispatch.state!=='settled')res.setHeader('retry-after','1');reply(200,value);return true;
+   }
    if(match?.[2]==='/export'){
     if(!control.exportReview||activeExports>=2)throw new TransportFailure(503,'service-unavailable');activeExports++;
     try{await streamModelReviewExport(res,()=>control.exportReview!(id!),{id:id!,...control.scope});}finally{activeExports--;}return true;

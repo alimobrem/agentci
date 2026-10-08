@@ -62,11 +62,11 @@ test('cancelled export prefix binds missing roles and is explicitly not a comple
  const altered=structuredClone(frame);altered.data.review.execution.state='completed';assert.notEqual(digest(canonical(altered)),frameDigest);
  assert.match(examples.notice,/incomplete stream prefix/);
 });
-test('draft operations map real requirement IDs advertise only the implemented admission slice',()=>{
+test('draft operations map real requirement IDs and advertise only implemented transport slices',()=>{
  const requirements=readFileSync(new URL('../specs/requirements.yaml',import.meta.url),'utf8');
  const published=read('../specs/api/openapi.json');
  assert.equal(draft.state,'draft-not-shipped');assert.equal(new Set(draft.operations.map((o:any)=>o.operationId)).size,draft.operations.length);
- for(const op of draft.operations){assert.ok(op.scenarios.length);assert.ok(op.requirementIds.length);for(const id of op.requirementIds)assert.ok(requirements.includes(`id: ${id}\n`),id);if(!['listReviewFindings','getFinding','getFindingHistory','exportModelReview'].includes(op.operationId)&&op.owner!=='07c-1')assert.equal(published.paths[op.path],undefined,`${op.path} is draft only`);else assert.equal(published.paths[op.path]?.[op.method.toLowerCase()]?.operationId,op.operationId);}
+ for(const op of draft.operations){assert.ok(op.scenarios.length);assert.ok(op.requirementIds.length);for(const id of op.requirementIds)assert.ok(requirements.includes(`id: ${id}\n`),id);if(!['listReviewFindings','getFinding','getFindingHistory','exportModelReview','getFindingReproduction','cancelFindingReproduction'].includes(op.operationId)&&op.owner!=='07c-1')assert.equal(published.paths[op.path],undefined,`${op.path} is draft only`);else assert.equal(published.paths[op.path]?.[op.method.toLowerCase()]?.operationId,op.operationId);}
  assert.deepEqual(draft.authority.mutation,['AGENTCI_OPERATOR_TOKEN']);assert.ok(draft.authority.read.includes('AGENTCI_EVIDENCE_TOKEN'));
  assert.ok(draft.operations.find((o:any)=>o.operationId==='exportModelReview').scenarios.some((s:string)=>s.includes('M3-C11')));
 });

@@ -320,6 +320,54 @@
         "Snapshot transaction and batch reads released before network backpressure",
         "No paid provider execution or repository fetch during export"
       ]
+    },
+    {
+      "operationId": "getFindingReproduction",
+      "method": "get",
+      "path": "/v1/finding-reproductions/{id}",
+      "requirementIds": [
+        "SECTION-12.4",
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SPEC-40-048"
+      ],
+      "tests": [
+        "tests/integration/reproduction-http.test.ts",
+        "tests/reproduction-transport.test.ts"
+      ],
+      "scenarios": [
+        "Exact scoped review/plan/operation/queued-finding association",
+        "Coherent PostgreSQL snapshot with authenticated retained history and receipt/proof",
+        "Distinct queued, bound, acknowledged and verified settlement states",
+        "Reader cannot cancel; operator cancellation is monotonic and survives restart/revocation",
+        "Late cancellation preserves negative/error receipt and operator supersession",
+        "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors"
+      ]
+    },
+    {
+      "operationId": "cancelFindingReproduction",
+      "method": "post",
+      "path": "/v1/finding-reproductions/{id}/cancellation",
+      "requirementIds": [
+        "SECTION-12.4",
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SPEC-40-048"
+      ],
+      "tests": [
+        "tests/integration/reproduction-http.test.ts",
+        "tests/reproduction-transport.test.ts"
+      ],
+      "scenarios": [
+        "Exact scoped review/plan/operation/queued-finding association",
+        "Coherent PostgreSQL snapshot with authenticated retained history and receipt/proof",
+        "Distinct queued, bound, acknowledged and verified settlement states",
+        "Reader cannot cancel; operator cancellation is monotonic and survives restart/revocation",
+        "Late cancellation preserves negative/error receipt and operator supersession",
+        "Unknown/repeated query, nonempty/oversized body and corrupt lineage reject with redacted errors"
+      ]
     }
   ]
 }
