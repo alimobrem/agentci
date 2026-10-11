@@ -70,7 +70,7 @@ configuration, restricted login provisioning and temporary local demo wiring.
 ## UBI image checkpoint
 
 The `eval-worker` Dockerfile target runs on UBI 10 with Node 26.10.0 and the
-locked production dependencies. It copies Docker CLI 29.8.2 from the pinned
+locked production dependencies. It copies Docker CLI 29.9.0 from the pinned
 official multi-platform image, together with its upstream license. No Alpine
 filesystem or Docker daemon is shipped. npm/npx and RPM installer tooling are
 removed through the package resolver. The service runs as UID 1001; the real image

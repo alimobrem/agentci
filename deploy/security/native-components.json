@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
   "dockerCli": {
-    "image": "docker:29.8.2-cli@sha256:b1805116a6a86cc591b5d5f60a910a0715cdcc9d18d866ad68b1457ead25c35c",
-    "version": "29.8.2",
-    "sourceCommit": "7fc2dff9bceb96b266a3b2c3117c0955a0d9e616",
-    "goVersion": "go1.26.8",
+    "image": "docker:29.9.0-cli@sha256:1a4c7cb63513f349bdad01fcc6e0f3f2f67d37b9da86f14dc0d4a0942eecda00",
+    "version": "29.9.0",
+    "sourceCommit": "f415da838bed6a0e12ca6cb86ba198fdac6beb9c",
+    "goVersion": "go1.26.9",
     "binarySha256": {
-      "arm64": "37a53fed3445028a49443fd6f9338ccedeeeda9776de5d7fd4d7e7c936b789cc",
-      "amd64": "6f7a95d27f98fc8c5f6b220898988bf8f61dd9b040936797917cbdc72c6cabe6"
+      "amd64": "a1ce7baaa61f45f51b1e3c0148f60f884df14096620f2755bfd53e8cc8bbbf77",
+      "arm64": "6b6cf853300e741aa1bfe2b1ec029ca9c3cefca0e542132fae45b730467ee683"
     },
     "vendorManifest": {
-      "upstreamUrl": "https://raw.githubusercontent.com/docker/cli/7fc2dff9bceb96b266a3b2c3117c0955a0d9e616/vendor.mod",
-      "sha256": "0836699fe2ae28a136aabd51f932b825e0653c48ae200613b72f07a74f2a3868",
+      "upstreamUrl": "https://raw.githubusercontent.com/docker/cli/f415da838bed6a0e12ca6cb86ba198fdac6beb9c/vendor.mod",
+      "sha256": "5920be5f3d516844e1d4152d0ae7bbfaeaca576ef6b63fab64bda5b463f234f3",
       "runtimePath": "/licenses/docker-cli/go.mod",
       "coverage": "Upstream source inventory, including tooling; not an exact compiled dependency graph."
     },
-    "vendorModulesSha256": "b244202796e49f7cbca23ebbaae6cc5d286cd1735bffbfb620b86b7a82a2750b"
+    "vendorModulesSha256": "8a11f7b00b8dcf864265a19f4f153aed2ff75303c1c203cb14845ab82b74c617"
   },
   "temporalBridge": {
     "package": "@temporalio/core-bridge",

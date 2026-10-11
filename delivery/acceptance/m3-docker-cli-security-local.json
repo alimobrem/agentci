@@ -1,0 +1,147 @@
+{
+  "task": "M3-DOCKER-CLI-SECURITY-1",
+  "sourceCommit": "4e2a8392d9c6c23ab663f14642e826a94fd6bc60",
+  "sourceTree": "71431c8f3e8183fea90412aaef2950fb61c0f22b",
+  "recordedAt": "2026-10-11T17:14:00.104371+00:00",
+  "state": "independently-reviewed-local-official-image-adoption-hosted-CI-pending",
+  "ownerAuthorization": "Parent transcript user yes October11 17:06UTC for patchedofficialDockerCLI/imagepin/provenance updates acrossaffected draftPRs fullCI withunchangedthresholds",
+  "priorFailures": {
+    "PR73": 38152270508,
+    "PR74": 38152408797,
+    "PR75": 38152634491,
+    "component": "eval-worker/usr/local/bin/docker Go1.26.8",
+    "highCVEs": [
+      "CVE-2026-78667",
+      "CVE-2026-78669",
+      "CVE-2026-97031"
+    ]
+  },
+  "adoption": {
+    "image": "docker:29.9.0-cli@sha256:1a4c7cb63513f349bdad01fcc6e0f3f2f67d37b9da86f14dc0d4a0942eecda00",
+    "version": "29.9.0",
+    "sourceCommit": "f415da838bed6a0e12ca6cb86ba198fdac6beb9c",
+    "goVersion": "go1.26.9",
+    "binarySha256": {
+      "amd64": "a1ce7baaa61f45f51b1e3c0148f60f884df14096620f2755bfd53e8cc8bbbf77",
+      "arm64": "6b6cf853300e741aa1bfe2b1ec029ca9c3cefca0e542132fae45b730467ee683"
+    },
+    "vendorManifest": {
+      "upstreamUrl": "https://raw.githubusercontent.com/docker/cli/f415da838bed6a0e12ca6cb86ba198fdac6beb9c/vendor.mod",
+      "sha256": "5920be5f3d516844e1d4152d0ae7bbfaeaca576ef6b63fab64bda5b463f234f3",
+      "runtimePath": "/licenses/docker-cli/go.mod",
+      "coverage": "Upstream source inventory, including tooling; not an exact compiled dependency graph."
+    },
+    "vendorModulesSha256": "8a11f7b00b8dcf864265a19f4f153aed2ff75303c1c203cb14845ab82b74c617"
+  },
+  "imageProvenance": {
+    "upstream": "https://raw.githubusercontent.com/docker-library/official-images/master/library/docker",
+    "officialImagesDockerSource": "623f4fd9a5abae2e72bda5c5d983bf9ff04a5a62",
+    "sourceDockerfile": "https://raw.githubusercontent.com/docker-library/docker/623f4fd9a5abae2e72bda5c5d983bf9ff04a5a62/29/cli/Dockerfile",
+    "rawIndexSha256": "1a4c7cb63513f349bdad01fcc6e0f3f2f67d37b9da86f14dc0d4a0942eecda00",
+    "platforms": {
+      "amd64": {
+        "manifestDigest": "sha256:4caa52207e95c68c3087006eefb3a5f6ca48ad1c0ba3aa3e6843549a0720b7bb",
+        "binarySha256": "a1ce7baaa61f45f51b1e3c0148f60f884df14096620f2755bfd53e8cc8bbbf77",
+        "goMetadata": "/workspace/scratch/docker299-binaries/amd64: go1.26.9\n\tpath\tgithub.com/docker/cli/cmd/docker\n\tbuild\t-buildmode=pie\n\tbuild\t-compiler=gc\n\tbuild\t-ldflags=\" -X \\\"github.com/docker/cli/cli/version.GitCommit=f415da8\\\" -X \\\"github.com/docker/cli/cli/version.BuildTime=2026-10-08T20:36:58Z\\\" -X \\\"github.com/docker/cli/cli/version.Version=29.9.0\\\" -linkmode external -extldflags -static\"\n\tbuild\t-tags=grpcnotrace,osusergo,netgo\n\tbuild\tDefaultGODEBUG=asynctimerchan=1,containermaxprocs=0,cryptocustomrand=1,decoratemappings=0,gotestjsonbuildtext=1,gotypesalias=0,httpcookiemaxnum=0,httplaxcontentlength=1,httpmuxgo121=1,httpservecontentkeepheaders=1,httpservecontentmaxranges=1,multipathtcp=0,netedns0=0,panicnil=1,randseednop=0,rsa1024min=0,tls10server=1,tls3des=1,tlsmlkem=0,tlsrsakex=1,tlssecpmlkem=0,tlssha1=1,tlsunsafeekm=1,updatemaxprocs=0,urlmaxqueryparams=0,urlstrictcolons=0,winreadlinkvolume=0,winsymlink=0,x509keypairleaf=0,x509negativeserial=1,x509rsacrt=0,x509sha256skid=0,x509usepolicies=0\n\tbuild\tCGO_ENABLED=1\n\tbuild\tCGO_CFLAGS=\n\tbuild\tCGO_CPPFLAGS=\n\tbuild\tCGO_CXXFLAGS=\n\tbuild\tCGO_LDFLAGS=\n\tbuild\tGOARCH=amd64\n\tbuild\tGOOS=linux\n\tbuild\tGOAMD64=v1\n",
+        "embeddedModuleEntries": 0
+      },
+      "arm64": {
+        "manifestDigest": "sha256:b840c948ec2a78bf90a99e713f7ad711c0dea887a86723fba3d47703dfe43506",
+        "binarySha256": "6b6cf853300e741aa1bfe2b1ec029ca9c3cefca0e542132fae45b730467ee683",
+        "goMetadata": "/workspace/scratch/docker299-binaries/arm64: go1.26.9\n\tpath\tgithub.com/docker/cli/cmd/docker\n\tbuild\t-buildmode=pie\n\tbuild\t-compiler=gc\n\tbuild\t-ldflags=\" -X \\\"github.com/docker/cli/cli/version.GitCommit=f415da8\\\" -X \\\"github.com/docker/cli/cli/version.BuildTime=2026-10-08T20:36:51Z\\\" -X \\\"github.com/docker/cli/cli/version.Version=29.9.0\\\" -linkmode external -extldflags -static\"\n\tbuild\t-tags=grpcnotrace,osusergo,netgo\n\tbuild\tDefaultGODEBUG=asynctimerchan=1,containermaxprocs=0,cryptocustomrand=1,decoratemappings=0,gotestjsonbuildtext=1,gotypesalias=0,httpcookiemaxnum=0,httplaxcontentlength=1,httpmuxgo121=1,httpservecontentkeepheaders=1,httpservecontentmaxranges=1,multipathtcp=0,netedns0=0,panicnil=1,randseednop=0,rsa1024min=0,tls10server=1,tls3des=1,tlsmlkem=0,tlsrsakex=1,tlssecpmlkem=0,tlssha1=1,tlsunsafeekm=1,updatemaxprocs=0,urlmaxqueryparams=0,urlstrictcolons=0,winreadlinkvolume=0,winsymlink=0,x509keypairleaf=0,x509negativeserial=1,x509rsacrt=0,x509sha256skid=0,x509usepolicies=0\n\tbuild\tCGO_ENABLED=1\n\tbuild\tCGO_CFLAGS=\n\tbuild\tCGO_CPPFLAGS=\n\tbuild\tCGO_CXXFLAGS=\n\tbuild\tCGO_LDFLAGS=\n\tbuild\tGOARCH=arm64\n\tbuild\tGOOS=linux\n\tbuild\tGOARM64=v8.0\n",
+        "embeddedModuleEntries": 0
+      }
+    },
+    "staticArchives": "Both directdownload.docker.com archarchive requests returned403; no archive hash/crosscopyclaim; officialOCI-derivedbinaryprovenance"
+  },
+  "validation": {
+    "localFastChecks": 10,
+    "localFastSeconds": 25.247929364000004,
+    "apiCompatibility": "immutableM1/M2baselines andnegativefixturespassedusingunchangedchecksumverifiedcachedoasdiff1.33; first networkEAI_AGAIN failedattemptretained",
+    "clientCompatibility": {
+      "client": "Docker29.9.0/Go1.26.9",
+      "engine": "localDocker28.4.0",
+      "negotiatedAPI": "1.51",
+      "serverAPI": "1.51",
+      "operations": "readonlyversion negotiation; no service/clouddeployment"
+    },
+    "nativeInputs": "unchangedstrictnativeverifier passed new officialpins; sourceinventorydisclaimer preserved",
+    "independentReview": "/root/client_review independent officialOCI/source/binaries/filehashes; no blocking findings",
+    "hostedCI": "Pending exactpublished-source scans/integration/package/container/native/evaluatorruntime onall3drafts;18M3gatespending"
+  },
+  "sourceFiles": [
+    {
+      "path": "Dockerfile",
+      "sha256": "6fa5202eee77233d8d07c77e9a4ddd083a1c4e77db00e59d756196d8703dbfdc"
+    },
+    {
+      "path": "deploy/security/native-components.json",
+      "sha256": "c5bfd90a3f1c8255ab3e65a8de633d6510c17c75043a7895db637f8bdd86b1ed"
+    },
+    {
+      "path": "deploy/security/docker-cli-vendor.mod",
+      "sha256": "5920be5f3d516844e1d4152d0ae7bbfaeaca576ef6b63fab64bda5b463f234f3"
+    },
+    {
+      "path": "scripts/eval-worker-image-smoke.mjs",
+      "sha256": "f835d2d75037fd54a95e67b2f5ee656fe2ec0f264d81a3ea66ef98b35c42ebf0"
+    },
+    {
+      "path": "docs/eval-worker.md",
+      "sha256": "cafbea0d3dd38924759503b36933ebadcca6328d96b34cf8d19cb05fe04539ae"
+    },
+    {
+      "path": "docs/phases/m3-docker-cli-security.md",
+      "sha256": "d963de61c1b0e89cd633cafe4f733f0894871174a922016936bd0fa54284e3b1"
+    }
+  ],
+  "evidenceFiles": [
+    {
+      "path": "/workspace/scratch/docker299-official-Dockerfile",
+      "sha256": "27b1b7b11fe424021ea0d4daaeebcf90b5e8c40f4bbdde5345462bae1497ea41"
+    },
+    {
+      "path": "/workspace/scratch/docker299-index.json",
+      "sha256": "1a4c7cb63513f349bdad01fcc6e0f3f2f67d37b9da86f14dc0d4a0942eecda00"
+    },
+    {
+      "path": "/workspace/scratch/docker299-local-engine-compat.json",
+      "sha256": "589a5e2dce088cb3251bd4ce3483241dfbe5c7196f52de4b85526aa6a4137c4c"
+    },
+    {
+      "path": "/workspace/scratch/docker299-vendor.mod",
+      "sha256": "5920be5f3d516844e1d4152d0ae7bbfaeaca576ef6b63fab64bda5b463f234f3"
+    },
+    {
+      "path": "/workspace/scratch/docker299-vendor-modules.txt",
+      "sha256": "8a11f7b00b8dcf864265a19f4f153aed2ff75303c1c203cb14845ab82b74c617"
+    },
+    {
+      "path": "/workspace/scratch/docker-security-checks-fast.log",
+      "sha256": "972aed262f00e6b29c57900fd6dcb4a22afaf61432de9cdf3b21c40f48a91518"
+    },
+    {
+      "path": "/workspace/scratch/docker-security-api-compat.log",
+      "sha256": "3764e0473501260ab768266e6af2ee71de256d42b734fe7486673099b59eb6f6"
+    },
+    {
+      "path": "/workspace/scratch/docker-security-api-compat-cached.log",
+      "sha256": "00b31dc07f335770bb136ab4c853f2bc4bb608c9cdb6d4c94ae42663181f40cf"
+    },
+    {
+      "path": "/workspace/scratch/docker299-independent-identity-20261011.log",
+      "sha256": "886bc05ac65e676bf8dbbdcce3921e194008dda40370c3f75beddc88286d9c24"
+    },
+    {
+      "path": "/workspace/scratch/docker299-independent-final-source-20261011.log",
+      "sha256": "03942a290f8ea221479f7e46c4d09d7c29a29ab8c350e9fb0438ca2b1b7f4406"
+    }
+  ],
+  "limitations": [
+    "Go metadata confirmscompiler/buildflags/platform, no embeddedmod/depgraph; vendor sourceinventorycoverage unchanged",
+    "arm64binarymetadata/imagehashverified; nativearm64serviceexecutionunverified",
+    "No vulnerability findings waived; freshfullimage scans stillrequired",
+    "Actualdownload-smokeworkflow/customercases/M3closure remainpending",
+    "No merge/deploy/customercredentials/mutations/releases orsynthetickeycandidates"
+  ]
+}
