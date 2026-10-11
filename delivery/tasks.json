@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2405,7 +2405,7 @@
       "completedAt": "2026-10-06T03:28:34.944Z",
       "acceptance": [
         {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "text": "Preserve every source inventory ID and historical evidence; map all M0–M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
           "status": "passed",
           "evidence": [
             "docs/acceptance-reconciliation.md"
@@ -2708,7 +2708,7 @@
       "completedAt": null,
       "acceptance": [
         {
-          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0\u2013M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
+          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0–M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
           "status": "pending",
           "evidence": []
         }
@@ -2931,6 +2931,40 @@
       ],
       "dependsOn": [
         "M3-07c-0"
+      ]
+    },
+    {
+      "id": "M3-DOCS-DOWNLOAD-1",
+      "title": "Reconcile released onboarding and source-bound download acceptance",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-11T18:21:47.044Z",
+      "completedAt": "2026-10-11T18:25:23.835Z",
+      "acceptance": [
+        {
+          "text": "Released M2 instructions consistently bind package, source, migrations and evaluator runner; current M3 limitations stay explicit",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-release-docs-integration-local.json"
+          ]
+        },
+        {
+          "text": "Downloaded integration acceptance covers every exact-source suite and rejects incomplete skipped cancelled or failed runs",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-release-docs-integration-local.json"
+          ]
+        },
+        {
+          "text": "Independent review and applicable local checks pass; hosted runtime gates remain explicit",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-release-docs-integration-local.json"
+          ]
+        }
       ]
     }
   ]

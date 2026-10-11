@@ -2,8 +2,11 @@
 
 Development acceptance for M3-07d-1. This slice supplies the renderer, PostgreSQL
 publication source, and authenticated GitHub Checks client calls. The [durable scheduler](m3-model-review-publication-scheduler.md) registers the optional
-background publisher. Status, findings, history and export links now have local
-authenticated HTTP acceptance; deployed GitHub/customer and hosted acceptance remain pending.
+background publisher. PR #73 merges status, findings, history and export links
+with authenticated HTTP/installed-client acceptance; exact-source hosted Verify
+`38159199274` passed. They are bearer-authenticated API URLs, not implemented
+dashboard deep links. Deployed GitHub/customer and current combined-tree
+acceptance remain separate requirements.
 
 The separate `agentci/model-review` Check binds organization, repository, PR,
 base/head SHAs, admission ID/digest, profile revision, retained summary digest,
@@ -79,4 +82,6 @@ credential-bearing origin rejection. Compiled local status/findings/history/expo
 admission/summary references and authenticated access before and after an
 operator disposition. Queued export coverage remains incomplete and stale heads
 receive no link rewrite. Existing scheduler restart/recovery evidence is retained.
-Live deployed GitHub/customer and exact-source hosted acceptance remain outstanding. No live provider or GitHub mutation is claimed.
+Live deployed GitHub/customer acceptance remains outstanding. The current combined
+tree needs its own hosted verification; the PR #73 result does not transfer to a
+changed tree. HTTP fixtures do not claim live provider or customer GitHub execution.

@@ -1,9 +1,13 @@
 # M3 reproduction status and cancellation transport
 
 Development slice M3-07c-3e-2 exposes retained status and durable cancellation for
-already-reserved finding reproductions. Public admission, disposition mutation,
-executable reproduction clients, customer demonstrations and M3 release remain
-separate unfinished work. The consumer/configuration introduced in PR #68 and the
+already-reserved finding reproductions. Executable status/cancellation client and
+CLI support merged in PR #71; hosted Verify run `37715859131` passed against
+source `3cb889e5921bc78232bf478de94a3e6b74802c26`. PR #72 subsequently merges public
+reservation and operator disposition development support. A reservation records
+durable intent, and a disposition is an operator attestation; neither certifies
+successful reproduction. Actual customer demonstrations and M3 release remain
+unfinished. The consumer/configuration introduced in PR #68 and the
 response contracts in PR #69 are prerequisites; no milestone gate is passed by
 this slice.
 

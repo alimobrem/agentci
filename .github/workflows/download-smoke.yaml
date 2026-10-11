@@ -41,6 +41,7 @@ jobs:
     env:
       AGENTCI_CONTAINER_ENGINE: docker
       RELEASE_SOURCE: ${{ inputs.source_commit }}
+      ACCEPTANCE_SOURCE: ${{ github.workflow_sha }}
       RELEASE_VERSION: ${{ inputs.version }}
       RELEASE_ARCH: ${{ matrix.arch }}
       API_IMAGE: ${{ inputs.api_image }}
@@ -69,6 +70,14 @@ jobs:
           if(!/^[a-f0-9]{40}$/.test(process.env.RELEASE_SOURCE)||execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()!==process.env.RELEASE_SOURCE)throw new Error('Full matching source SHA required');
           if(JSON.parse(readFileSync('package.json')).version!==process.env.RELEASE_VERSION)throw new Error('Version mismatch');
           JS
+      - name: Bind acceptance reporter to the workflow revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: .acceptance-harness
+          sparse-checkout: scripts/download-integration-reporter.mjs
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
       - name: Anonymously download and bind all six role digests
         run: node scripts/published-downloads.mjs
       - name: Verify downstream RSA remediation inside the native downloaded engine
@@ -118,12 +127,8 @@ jobs:
           PGPASSWORD: agentci-ci-only
           AGENTCI_TEST_TEMPORAL_ADDRESS: 127.0.0.1:7233
         run: |
-          npm run test:integration > downloaded-integration.log 2>&1 || { cat downloaded-integration.log; exit 1; }
+          node --import tsx --test --test-reporter=spec --test-reporter-destination=stdout --test-reporter=./.acceptance-harness/scripts/download-integration-reporter.mjs --test-reporter-destination=downloaded-integration.json tests/integration/*.test.ts > downloaded-integration.log 2>&1 || { cat downloaded-integration.log; exit 1; }
           cat downloaded-integration.log
-          node --input-type=module - <<'JS'
-          import {readFileSync} from 'node:fs'; const log=readFileSync('downloaded-integration.log','utf8');
-          if(!/ℹ tests 15\b/.test(log)||!/ℹ skipped 0\b/.test(log)||!/ℹ fail 0\b/.test(log))throw new Error('All fifteen native integration groups must run without skips');
-          JS
       - name: Verify downloaded API and worker runtime
         run: node scripts/image-smoke.mjs downloaded > downloaded-image-smoke.json
       - name: Verify downloaded evaluator isolation and recovery

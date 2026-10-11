@@ -1,8 +1,10 @@
 # Model-review client and CLI: admission and evidence reads
 
 Development support for profile discovery, admission, status, cancellation, and
-finding evidence reads and certified export downloads. Retained reproduction status/cancellation are available in development; reservation and disposition commands remain pending later
-M3-07c slices. This document does not declare M3 released.
+finding evidence reads and certified export downloads. Reproduction reservation,
+status/cancellation and operator disposition commands are available in development
+through merged PR #72. This document does not declare M3 released or real customer
+acceptance complete.
 
 Keep the exact admission JSON used for submission. It contains the request UUID,
 organization/repository/PR/base/head, immutable profile ID/revision, and review
@@ -195,7 +197,7 @@ combined CI, or completion of M3.
 
 ## Retained reproduction status and cancellation (M3-07c-4a development slice)
 
-These commands operate on an already-reserved reproduction; public reservation and disposition commands remain unfinished. Keep the original review admission and the complete captured reproduction reference supplied by the operator. The reference must contain exactly `schemaVersion`, `id`, `operationId`, `reviewId`, `subject`, `finding` (id, queuedVersion, digest), `planDigest` and `requestDigest`, matching the shared reproduction response contract. A status response includes additional state/evidence fields and is not itself a reference file. No client-generated commands, images, credentials or execution budgets belong in this file.
+These status/cancellation commands operate on an already-reserved reproduction; use the development reservation command below to obtain its reference. Keep the original review admission and the complete captured reproduction reference. The reference must contain exactly `schemaVersion`, `id`, `operationId`, `reviewId`, `subject`, `finding` (id, queuedVersion, digest), `planDigest` and `requestDigest`, matching the shared reproduction response contract. A status response includes additional state/evidence fields and is not itself a reference file. No client-generated commands, images, credentials or execution budgets belong in this file.
 
 ```sh
 agentci finding reproduction-status --request admission.json --reproduction reference.json --config private-client.json
@@ -206,7 +208,9 @@ The CLI bounds reference files to 8 KiB, rejects symlinks and validates their fu
 
 The public `ModelReviewClient.reproductionStatus(admission, reference, {signal})` verifies the original admission then the complete response identity and retained evidence digests. `cancelReproduction(admission, reference, {signal})` preflights that status before posting an empty cancellation request. Both use one overall configured deadline across preflight, response bodies and retries; cancellation retries retain exactly the same ID and empty body. If a write has an ambiguous transport failure, use the same captured reference when retrying and inspect retained status. Caller abort cannot guarantee the server did not already retain cancellation. Late cancellation preserves actual observations; never-staged outcomes keep null execution receipt and unverified non-execution evidence.
 
-The real HTTP/PostgreSQL test uses compiled public exports and a compiled CLI. `scripts/reproduction-client-package-smoke.mjs` repeats it from a fresh production-only package install without a shipped development loader. These checks establish this development slice only. Reviewed prerequisites were merged in PRs #69 and #70; full M3 customer, reservation/disposition, UI, release, publication/download and demo gates remain open.
+The real HTTP/PostgreSQL test uses compiled public exports and a compiled CLI. `scripts/reproduction-client-package-smoke.mjs` repeats it from a fresh production-only package install without a shipped development loader. These checks establish development support only. Reviewed prerequisites were merged in PRs #69 and #70; reservation/disposition development support merged in PR #72. Actual M3 customer/GitHub, physical reproduction, UI, release, publication/download and demo acceptance remain open.
 
 
-`agentci finding reserve-reproduction --request ADMISSION_JSON --id SHA256_ID --reservation RESERVATION_JSON` selects a preconfigured operator approval. The typed `reserveReproduction(admission, findingId, request)` method requires the same original admission, operator token, expected finding version, operation ID, approval ID and approved-plan digest. The JSON request contains schemaVersion, reviewId, subject, expectedVersion, operationId, approvalId and approvalDigest only; commands, images, limits and receipts are rejected. Preserve the complete returned reference for status/cancellation. Exact retries retain one intent; changed operation inputs conflict. A 202 is reservation intent, not execution or confirmation. Disposition commands remain unavailable in this slice.
+`agentci finding reserve-reproduction --request ADMISSION_JSON --id SHA256_ID --reservation RESERVATION_JSON` selects a preconfigured operator approval. The typed `reserveReproduction(admission, findingId, request)` method requires the same original admission, operator token, expected finding version, operation ID, approval ID and approved-plan digest. The JSON request contains schemaVersion, reviewId, subject, expectedVersion, operationId, approvalId and approvalDigest only; commands, images, limits and receipts are rejected. Preserve the complete returned reference for status/cancellation. Exact retries retain one intent; changed operation inputs conflict. A 202 is reservation intent, not execution or confirmation.
+
+`agentci finding disposition --request ADMISSION_JSON --id SHA256_ID --disposition DISPOSITION_JSON` and `client.setFindingDisposition(admission, findingId, request)` record an authenticated operator `false-positive` or `resolved` attestation. Preserve the operation ID and original request on retry. The receipt has `assertionDigest:null`; its evidence digest is an attestation reference, not independent reproduction proof or a guarantee that artifact bytes can be fetched. Preserve the original finding and history, and label the result operator-marked rather than verified fixed. See [disposition authority and request fields](m3-finding-dispositions.md).

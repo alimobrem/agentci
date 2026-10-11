@@ -1,6 +1,7 @@
 # Abrupt review recovery
 
-M2 candidate recovery passed component acceptance. Ordinary
+Released M2 recovery passed component, downloaded-runtime and customer acceptance
+(see [release evidence](releases/m2.md)). Ordinary
 workflow cancellation waits for live evaluator cleanup. Forceful Temporal
 termination bypasses parent cleanup; see [Temporal cancellation and termination](https://github.com/temporalio/documentation/blob/main/docs/encyclopedia/workflow/cancellation-and-termination.mdx).
 The controller now reconciles tracked terminal attempts independently.

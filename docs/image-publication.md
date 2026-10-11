@@ -29,8 +29,9 @@ inventories pull each platform by its distinct child manifest digest, avoiding
 classic Docker image-store collisions under a shared index reference. Resolution
 rejects missing, duplicate, malformed and unsupported platform descriptors. Native
 inventories are checked against pinned upstream artifacts and the requested
-platform. Arm64 inventory execution on the publisher uses QEMU; it proves artifact
-identity, not native-arm64 runtime/integration acceptance.
+platform. The current publisher uses separate native AMD64 and ARM64 runners;
+QEMU is not an accepted substitute. See [native publication](m3-native-publication.md).
+Inventory identity alone does not prove runtime/integration acceptance.
 
 Before a release is complete, independently download each public image anonymously
 by its recorded digest, validate source/version/platform identity, and execute the
@@ -39,7 +40,8 @@ claimed platform. Retain the actual engine, host architecture and any emulation.
 The expanded download-smoke workflow accepts all six role digests and runs on
 native amd64/arm64 GitHub hosts. It starts with an empty Docker credential
 configuration, validates repository/digest/source/version/platform identity, and
-runs all fifteen integration groups without skips using the downloaded execution
+runs every integration test file from the exact source, with complete successful
+per-file and aggregate summaries and zero skips, cancellations or failures, using the downloaded execution
 images, plus API/worker and eval-worker isolation/recovery smoke checks. It retains
 per-platform identities, integration logs and runtime/native reports even on
 failure. Configuring this workflow is not proof it passed: actual runs against
