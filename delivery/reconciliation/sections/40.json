@@ -6295,6 +6295,37 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-DOCS-DOWNLOAD-1",
+          "status": "done",
+          "startedAt": "2026-10-11T18:21:47.044Z",
+          "completedAt": "2026-10-11T18:25:23.835Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Released M2 instructions consistently bind package, source, migrations and evaluator runner; current M3 limitations stay explicit",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-release-docs-integration-local.json"
+              ]
+            },
+            {
+              "text": "Downloaded integration acceptance covers every exact-source suite and rejects incomplete skipped cancelled or failed runs",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-release-docs-integration-local.json"
+              ]
+            },
+            {
+              "text": "Independent review and applicable local checks pass; hosted runtime gates remain explicit",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-release-docs-integration-local.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6379,6 +6410,12 @@
         {
           "path": "delivery/acceptance/m3-customer-preparation-local.json",
           "sha256": "111665109795a77f0ac111406a97ce33bfa32ffa4793dfafaf97f6231b8ef2f8",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-release-docs-integration-local.json",
+          "sha256": "2aca68b18f8168b4d8a1c4cd0bfbf2a97a4ac725f06d18e6b39502a32c912472",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -6642,6 +6679,37 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-DOCS-DOWNLOAD-1",
+          "status": "done",
+          "startedAt": "2026-10-11T18:21:47.044Z",
+          "completedAt": "2026-10-11T18:25:23.835Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Released M2 instructions consistently bind package, source, migrations and evaluator runner; current M3 limitations stay explicit",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-release-docs-integration-local.json"
+              ]
+            },
+            {
+              "text": "Downloaded integration acceptance covers every exact-source suite and rejects incomplete skipped cancelled or failed runs",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-release-docs-integration-local.json"
+              ]
+            },
+            {
+              "text": "Independent review and applicable local checks pass; hosted runtime gates remain explicit",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-release-docs-integration-local.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6726,6 +6794,12 @@
         {
           "path": "delivery/acceptance/m3-customer-preparation-local.json",
           "sha256": "111665109795a77f0ac111406a97ce33bfa32ffa4793dfafaf97f6231b8ef2f8",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-release-docs-integration-local.json",
+          "sha256": "2aca68b18f8168b4d8a1c4cd0bfbf2a97a4ac725f06d18e6b39502a32c912472",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

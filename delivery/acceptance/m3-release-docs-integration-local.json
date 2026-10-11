@@ -1,0 +1,78 @@
+{
+  "task": "M3-DOCS-DOWNLOAD-1",
+  "kind": "Rework: factual documentation reconciliation with merged PR72-74; no backend or milestone acceptance",
+  "checkedAt": "2026-10-11T18:25:03.546244+00:00",
+  "sourceCommit": "7450e5e50487f9912b5def21695f17922e582619",
+  "sourceTree": "7cc1135a13f32b84d4433fb4ed333562be698196",
+  "integratedMain": "a74e783de569b43d99aed81cee0384fcf287060b",
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/download-smoke.yaml",
+      "sha256": "c78941f3642cf76eaef8dba88d142fdd1ac3dbc40cc505f1c6ec47230515d99f"
+    },
+    {
+      "path": "scripts/download-integration-reporter.mjs",
+      "sha256": "ba9cd415dadbcea511d91023de4a9414cf66ab5925d32890b8fa29cfd13b65ef"
+    },
+    {
+      "path": "tests/download-integration.test.ts",
+      "sha256": "a12424aa6df732951a5b4948356633a8a989b25650dd9e0e7bacee1a9430306e"
+    },
+    {
+      "path": "docs/phases/m3-customer-api-contract.md",
+      "sha256": "1eacc9b1d10abe9a09011ea840bd367dd53ec731d100a1edfa24ded27a210c3c"
+    },
+    {
+      "path": "docs/phases/m3.md",
+      "sha256": "4d085dd75fef5ce1e625b91939d8acb7e5d4d579360974694b64b595b52f0a17"
+    },
+    {
+      "path": "docs/phases/m3-reproduction-http.md",
+      "sha256": "afde5fd225d7b9b00b7a466ca3631ddb022e2465b554cb1b66f95a6a8f2cbe29"
+    },
+    {
+      "path": "docs/phases/m3-model-review-client.md",
+      "sha256": "ee4d6c8700f159249d661ab9e8dda91c16d62a099976de847ab296d7713dfc91"
+    },
+    {
+      "path": "docs/phases/m3-model-review-checks.md",
+      "sha256": "f0e46bf1e10f5ebc84621e6fe5df8846bbe03612bcaef987931e66ed4bf78201"
+    },
+    {
+      "path": "docs/phases/m3-publication-candidate.md",
+      "sha256": "b76a20553793aadcb8f621b6c9c187d07d231c2f267fb25cf12b4aa86263f248"
+    }
+  ],
+  "priorAcceptance": {
+    "path": "delivery/acceptance/m3-release-docs-local.json",
+    "sha256": "db54b4e231da7669c0f7ea1d6ba71c4bae42b09d3fa6c302ba491110b2fdfceb",
+    "meaning": "Historical released onboarding/download reporter validation retained, not retested release publication"
+  },
+  "corrections": [
+    "Development reservation/disposition/check links merged through PR72-74, not unpublished",
+    "Reservation202 retains intent, not acknowledged dispatch or successful assertion",
+    "Disposition is authenticated operator attestation with assertionDigestnull; evidenceDigest reference not independent proof or guaranteed downloadable bytes; original history retained",
+    "Implemented client commands and route-specific version limits match source",
+    "Check links are authenticated API URLs, not existing dashboard deep links",
+    "PR23 initial version metadata change is a historical checkpoint"
+  ],
+  "localFast": {
+    "sourceCommit": "5615044ea5c496a09130ff33a386d1c35baf39e8",
+    "checksPassed": 10,
+    "log": "/workspace/scratch/integrated-docs-factual-fast-20261011.log",
+    "sha256": "552ebe036ecea66864ef1c2391da09ab8990dc82a1ff0c583f0639f4dc030d23",
+    "laterChange": "7450e5e only corrects documentation version bounds and regenerates reconciliation; code/workflow/test blobs unchanged"
+  },
+  "independentReview": {
+    "agent": "/root/client_review",
+    "scope": "Exact inherited source/task/events plus six authorized factual doc corrections against actual validators/receipt/CLI code",
+    "finalProof": "Source-grounded review passed7450e5e/tree7cc1135a:626executable/spec/release blobs unchanged, route bounds/attestation/intent/API links match source; dated originalrecords preserved; metadata binding verified separately before publication."
+  },
+  "limits": [
+    "Full combined-tree hosted Verify required before merge",
+    "Original receipt/history never promoted to verified fixed by operator attestation",
+    "No live-mode/customer/GitHub/physical reproduction acceptance from local preparation",
+    "All18M3gates remainpending, M0-M10 and threeadapters preserved",
+    "No deploy/release/credentials/customer mutations"
+  ]
+}

@@ -1,8 +1,9 @@
-# Deploy the M2 evaluator candidate
+# Deploy the released M2 evaluator
 
-M2 is in development. These source-checkout instructions prepare a separate
-self-hosted evaluator; published M2 image/download and live customer acceptance
-remain release gates. Use the released M1 instructions until M2 is published.
+Use the `v0.3.1-m2` checkout, release package and digest manifest described in
+[customer onboarding](customer-onboarding.md). M2 publication, native download
+acceptance and customer acceptance passed; a new installation still requires its
+own startup, isolation and recovery verification.
 
 The controller runs `deploy/compose.yaml`. The evaluator uses
 `deploy/eval-worker.compose.yaml` on dedicated evaluation infrastructure with its

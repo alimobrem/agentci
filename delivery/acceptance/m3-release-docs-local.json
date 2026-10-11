@@ -1,0 +1,184 @@
+{
+  "task": "M3-DOCS-DOWNLOAD-1",
+  "kind": "Local documentation and download acceptance fixes; no phase closure",
+  "checkedAt": "2026-10-08T03:39:55.391540+00:00",
+  "sourceCommit": "910423f23ce99779012719e1ca7cd6f980ff98cd",
+  "sourceTree": "64ef5068fd37495f0918e83537b865078765830b",
+  "baseCommit": "9255fc54181546157a38d8b6a1623fb905bd0296",
+  "changedSourceFiles": [
+    {
+      "path": ".github/workflows/download-smoke.yaml",
+      "sha256": "c78941f3642cf76eaef8dba88d142fdd1ac3dbc40cc505f1c6ec47230515d99f"
+    },
+    {
+      "path": "STATUS.md",
+      "sha256": "3274c3be42d4dc0b9ddeaeda6abcd6f2a9157b5f6cf9f07c87897434aedb8a2b"
+    },
+    {
+      "path": "delivery/task-events.jsonl",
+      "sha256": "633dd585d33abf809ebe219f473f8695b8ce324163efabeffc6e743d058b76fa"
+    },
+    {
+      "path": "delivery/tasks.json",
+      "sha256": "ceac12e68681b2fbc83f720b3b4044d2d329aac2e43919283ea38527d58892a5"
+    },
+    {
+      "path": "docs/customer-onboarding-m1.md",
+      "sha256": "9dccd77b47e0635d4a21bbd021392faa6f29fcbbc87883b3aa27b7c1296e14ed"
+    },
+    {
+      "path": "docs/customer-onboarding.md",
+      "sha256": "069a03b9dab146553697d982e8166ec4d5cf316aff6d008f24bd80113980c92a"
+    },
+    {
+      "path": "docs/eval-deployment.md",
+      "sha256": "f0368d26ab5fa13c9c47e20036e516e4352abbccee8893947f444db4132c8a40"
+    },
+    {
+      "path": "docs/eval-recovery.md",
+      "sha256": "b573f7ac87c142ebfa1115dd6b60c9f023b571d8ff1676f3bbd44baa60ab1a75"
+    },
+    {
+      "path": "docs/image-publication.md",
+      "sha256": "745cf398859b43c470f5966fad3431df92876a6ced37ff5f7a1b254a7877357c"
+    },
+    {
+      "path": "docs/operator-review.md",
+      "sha256": "8e26f68a61187ee4ac0cc27e786e5453b294c70d6b7d52e0dfe3b08fb3627c57"
+    },
+    {
+      "path": "docs/phases/m3-customer-api-contract.md",
+      "sha256": "7922d23706e09f7b1abcb3410d1658926544b4cc13e3763b726eb2730fca6751"
+    },
+    {
+      "path": "docs/phases/m3-publication-candidate.md",
+      "sha256": "5ccad789ec448381c8f49f283b94fe42c924f0d0ccd294f09119d400e9d2de66"
+    },
+    {
+      "path": "docs/phases/m3-reproduction-http.md",
+      "sha256": "cfb3bd7f84f30a534fe4bd8354ac02e85d014ea1b43544fa2ce47866ac7acfcf"
+    },
+    {
+      "path": "docs/phases/m3.md",
+      "sha256": "ac4d45e105b916efcdf1627e974c24081369be6d6973e315ecd4cb006c43e4c4"
+    },
+    {
+      "path": "scripts/download-integration-reporter.mjs",
+      "sha256": "ba9cd415dadbcea511d91023de4a9414cf66ab5925d32890b8fa29cfd13b65ef"
+    },
+    {
+      "path": "tests/download-integration.test.ts",
+      "sha256": "a12424aa6df732951a5b4948356633a8a989b25650dd9e0e7bacee1a9430306e"
+    }
+  ],
+  "tests": {
+    "unit": {
+      "passed": 423,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "fast": {
+      "checksPassed": 10,
+      "seconds": 23.43
+    },
+    "reporter": {
+      "passed": 2,
+      "actualSubprocessNegatives": [
+        "missing source suite",
+        "skipped",
+        "failed",
+        "cancelled"
+      ]
+    },
+    "workflows": "passed",
+    "buildAndPack": "passed"
+  },
+  "packagedArtifact": {
+    "path": "/workspace/scratch/agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "2fabacc9e68931b2d523d1d5f511972b6cd3867085134fc3a6541319ccbd1fee",
+    "milestoneRelease": false
+  },
+  "independentValidation": {
+    "agent": "/root/client_review",
+    "sourceCommit": "910423f23ce99779012719e1ca7cd6f980ff98cd",
+    "sourceTree": "64ef5068fd37495f0918e83537b865078765830b",
+    "findingsClosed": [
+      "Frozen release sources lack new reporter: separate immutable workflow checkout",
+      "Docker override must also replace prospective Podman socket and GID"
+    ],
+    "reporterTestsPassed": 2,
+    "workflowContexts": "passed",
+    "releasedM2": {
+      "archiveSha256": "824508ff97c813ab4ed5d11939f55a3217e75c8a43537b123e7ce80b249419d6",
+      "anonymousDownload": true,
+      "freshProductionInstallation": "offline",
+      "services": "existing loopback PG/Temporal; disposable DB and isolated Temporal namespace",
+      "credentials": "synthetic only",
+      "migrationsInOrder": [
+        "001_m1.sql",
+        "002_m2.sql",
+        "002_m2_eval_role.sql",
+        "003_m2_review_recovery.sql"
+      ],
+      "pinnedWorker": "RUNNING; graceful SIGTERM STOPPED exit 0",
+      "missingRunnerPin": "EvalPlanConfigurationError exit 1 before polling",
+      "disposableDatabase": "dropped"
+    }
+  },
+  "priorFailedAttempts": [
+    {
+      "path": "/workspace/scratch/release-docs-pack.log",
+      "reason": "npm cache path outside writable roots; corrected to existing workspace npm cache"
+    },
+    {
+      "path": "/workspace/scratch/release-docs-unit.log",
+      "reason": "subprocess inherited NODE_TEST_CONTEXT; corrected harness isolation; final unit tests passed"
+    },
+    {
+      "reason": "Independent initial shared DB startup missing agentci_scope; corrected to isolated disposable released-schema DB; initial log retained"
+    }
+  ],
+  "verificationLogs": [
+    {
+      "path": "/workspace/scratch/release-docs-unit-final.log",
+      "sha256": "08edd7d08d24ea2257477d9bb037186891c6415aeffda6cd6f58e8b42b499581"
+    },
+    {
+      "path": "/workspace/scratch/release-docs-fast-final.log",
+      "sha256": "49f6ca2fdc92e2c1e3c4c71647720f74e9919c70f3ad732f17cccc1aef727475"
+    },
+    {
+      "path": "/workspace/scratch/release-docs-final-package.log",
+      "sha256": "417e2fb8dd5093409e7428c691e76c73e597002aab6b5b3ab0d710bff03e488f"
+    },
+    {
+      "path": "/workspace/scratch/release-docs-independent-reporter-final-20261008.log",
+      "sha256": "6efb02544054d683f047fc8186e410e9f23b6aff19216a6b718f5d0df1961970"
+    },
+    {
+      "path": "/workspace/scratch/release-docs-independent-workflows-20261008.log",
+      "sha256": "cbb6627c6fbc680c66ab4c6145487e3ca5caebc34c37941cdeb736e70e4b2284"
+    },
+    {
+      "path": "/workspace/scratch/release-docs-independent-m2-worker-isolated-result-20261008.log",
+      "sha256": "d4b2e84dc6ca13f5f6f900136da62fe910607dabbd9bf5ad432fe4b6c488059b"
+    },
+    {
+      "path": "/workspace/scratch/release-docs-independent-m2-worker-pinned-20261008.log",
+      "sha256": "0e313636b19552711a7dcf3d92af20be6fff043ce18f29cc7d704fab57b583e0"
+    },
+    {
+      "path": "/workspace/scratch/release-docs-independent-m2-worker-missing-pin-20261008.log",
+      "sha256": "124488b511deaf3340e174b210c018603befd767c66744579f0d864d9c52aced"
+    }
+  ],
+  "limits": [
+    "No hosted workflow was triggered",
+    "No native image/evaluator isolation/recovery or live customer acceptance rerun",
+    "No repository production runtime, API, deploy or lockfile changes",
+    "All eighteen M3 release gates remain pending; no M4 start",
+    "Publication remains blocked; no alternate route or retry",
+    "Approved 8219f45 reservation/disposition candidate unchanged; this supplement has separate base and commits"
+  ]
+}

@@ -2,7 +2,7 @@
 
 Status: reviewed design. M3-07c-1 now implements profiles, admission, status and
 cancellation in development source; see [implemented slice](m3-customer-model-review-api.md).
-M3-07c-2A adds finding and history reads in development; profiles/submit/show/cancel client methods are implemented. M3-07c-2B adds retained snapshot export in development; reproduction admission remains a planned dependent slice. Development status/cancellation routes for already-reserved operations are described in [the HTTP slice](m3-reproduction-http.md).
+M3-07c-2A adds finding and history reads in development; profiles/submit/show/cancel client methods are implemented. M3-07c-2B adds retained snapshot export. PR #72 adds development reproduction reservation and operator disposition routes with public client/CLI support. Development status/cancellation routes for already-reserved operations are described in [the HTTP slice](m3-reproduction-http.md).
 OpenAPI and the operation map advertise only implemented routes. The immutable
 M1/M2 baselines and released `agentci review` command remain unchanged. The
 [operation map](../../specs/api/drafts/model-review-transport.json) and
@@ -128,17 +128,22 @@ reject unknown/repeated parameters. Review-finding pages use the immutable summa
 manifest; history pages use existing immutable versions, requiring no new mutable
 pagination snapshot store. Client verifies identities/digests on every page. Full-history traversal requires version 1 first, adjacent versions and predecessor hashes across pages, a stable watermark, and a final version equal to that watermark. Standalone later-page validation does not certify the omitted prefix.
 
-Mutation requests use exact `subject`, `expectedVersion` (1..10000), and
-`operationId` UUID. Reusing the same operation/body returns its original outcome,
+Mutation requests use exact `subject`, `expectedVersion`, and `operationId` UUID.
+Disposition accepts versions 1..9999; reproduction reservation accepts 1..9998,
+leaving room for both the queue and terminal history events. Reusing the same operation/body returns its original outcome,
 even after later history; changed reuse returns 409 `idempotency-conflict`.
 A new stale version returns 409 `version-conflict`. Authenticate on every replay.
 The existing finding event bound of 2 MiB remains; mutation bodies are at most
 8 KiB. Reject unknown fields. Never accept caller-chosen confirmation state.
 
 - `POST /v1/findings/{id}/dispositions`: only operator `false-positive` or
-  `resolved`, with nonblank reason (at most 4096 UTF-8 bytes) and `evidenceDigest` of
-  controller-readable evidence authorized for this finding/subject. The server
-  resolves the evidence; a supplied hash alone proves nothing. Exact legal
+  `resolved`, with nonblank reason (at most 4096 UTF-8 bytes) and `evidenceDigest`.
+  The scoped operator authenticates an attestation bound to the retained review,
+  finding and subject. Its receipt has `assertionDigest:null`; the evidence digest
+  is an attestation reference, not independently verified reproduction evidence
+  or a guarantee of retrievable artifact bytes. The original finding/history is
+  preserved. Operator-marked resolved or false-positive never means verified fixed.
+  See [implemented dispositions](m3-finding-dispositions.md). Exact legal
   transitions remain governed by `createFindingTransitions`; no force override.
 - `POST /v1/findings/{id}/reproductions`: request selects `approvalId` UUID and
   `approvalDigest`, not an executable plan. Operator registry/authorizer resolves
@@ -146,7 +151,9 @@ The existing finding event bound of 2 MiB remains; mutation bodies are at most
   subject, assertion bytes, runner and limits. Server-owned plan ID becomes the
   reproduction ID; operation ID remains request replay identity. Never accept
   commands, URLs, images, credentials or budgets from the caller. Return 202
-  with operation ID, reproduction ID and plan digest after durable dispatch.
+  with operation ID, reproduction ID and plan digest after durable reservation
+  intent. Acknowledged dispatch, actual execution and reproduction confirmation
+  require their separate retained observations.
 - `GET /v1/finding-reproductions/{id}?reviewId=UUID` exposes exact plan/finding
   references, dispatch/cancellation disposition and verified receipt or null,
   without executable assertion bytes or secrets. A receipt is never synthesized.
@@ -154,11 +161,16 @@ The existing finding event bound of 2 MiB remains; mutation bodies are at most
   cancellation, same acknowledgment semantics as review cancellation.
 
 PR #68 implements configured dispatch/recovery and explicit operator approval setup.
-The following response shape is frozen by 07c-3e-1 for the dependent transport
-slices; shared validators and fixed examples do not implement public routes. The
-selection/authority boundary above is fixed now; Public admission and executable reproduction clients remain pending. Status and
-cancellation for already-reserved operations are implemented in development by
-M3-07c-3e-2; their container, hosted and independent-review gates remain pending. Never-staged cancelled work has null receipt and remains unverified.
+The following response shape was frozen by 07c-3e-1; shared validators and fixed
+examples alone do not prove service execution. PR #72 implements public reservation
+and disposition routes in development; PR #73 integrates authenticated Check links
+and PR #74 prepares local installed-package customer scenarios. Those merges do
+not establish real customer/GitHub or physical reproduction acceptance.
+Status/cancellation routes and their
+executable client/CLI merged through PR #71. Hosted Verify `37715859131` passed
+for source `3cb889e5921bc78232bf478de94a3e6b74802c26`; independent source/artifact
+inspection is recorded separately, rather than claimed as a second runtime run.
+Live customer acceptance, dashboard and M3 milestone closure remain pending. Never-staged cancelled work has null receipt and remains unverified.
 These are explicit later-slice decisions, not missing user accounts or permissions.
 
 ## Frozen reproduction response semantics
@@ -263,7 +275,7 @@ provider keys, selected paths or full prompts. Sort by ID/revision; one bounded
 response, no pagination. Discovery is not authorization to execute.
 
 New CLI group: `agentci model-review submit|show|cancel|findings|export` and
-`agentci finding show|history|reproduce|cancel-reproduction|disposition`.
+`agentci finding show|history|reserve-reproduction|reproduction-status|cancel-reproduction|disposition`.
 Credentials come from separate private read/mutation config/environment; never
 argv. Preserve existing `agentci review --config PRIVATE_JSON --pr NUMBER` and
 its deterministic/eval behavior. Client/CLI verify expected exact subject and

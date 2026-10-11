@@ -5,7 +5,7 @@ source `9bcff7d57c40536c9ddec126e998aa97bd045f03`. Public package installation, 
 six native image roles, security disposition and real customer CLI/API acceptance
 passed. Final phase closure is governed by [the M2 ledger](releases/m2-gates.json),
 [release/demo record](docs/releases/m2.md) and [retrospective](docs/retrospectives/m2.md).
-M3 remains not-started until closure. The original M0–M10 product scope is intact.
+M2 closure is merged. M3 is in progress; its eighteen release gates remain pending. The original M0–M10 product scope is intact.
 
 ## Historical checkpoints
 

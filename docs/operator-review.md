@@ -1,9 +1,9 @@
 # Request or retry a review as an operator
 
-The M2 candidate adds `agentci review`. This command queues a review; a queued
-receipt does not mean evaluation passed or the phase is complete. M1's published
-CLI does not contain it yet. Build this source candidate or use the M2 package
-after publication.
+The released M2 `0.3.1-m2` includes `agentci review`. This command queues a review; a queued
+receipt does not mean evaluation passed or the phase is complete. Historical M1
+packages lack this command; install the public `0.3.1-m2` package using
+[customer onboarding](customer-onboarding.md).
 
 The operator uses the deployment's existing repository-scoped App key and webhook
 secret. The evidence bearer token is read-only and cannot schedule work. Keep
