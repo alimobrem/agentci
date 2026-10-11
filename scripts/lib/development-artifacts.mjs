@@ -1,4 +1,5 @@
-import {readFile} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
+import {readFile,readdir,lstat} from 'node:fs/promises';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {IMAGE_ROLES} from '../image-publication.mjs';
@@ -78,6 +79,7 @@ export async function validateDevelopmentAssets(directory,expected){
  if(published.schemaVersion!==1||published.attempt!==cohort.attempt)throw Error('Package and image publication attempts differ');
  const images=await readDevelopmentImages(join(directory,'publication-evidence'),cohort);
  if(JSON.stringify(images)!==JSON.stringify(published.images))throw Error('Published image manifest differs from retained native evidence');
+ await validatePublicationArchive(directory,manifest.package.name);
  return {manifest,cohort,images,packageSha256:hash(archive),manifestSha256:hash(manifestBytes)};
 }
 export function validatePackageReceipt(receipt,arch,assets,verification){
@@ -89,4 +91,22 @@ export function normalizePackOutput(value,version){
  if(entries.length!==1||entries[0]?.name!=='agentci'||entries[0].version!==version||entries[0].filename!==`agentci-${version}.tgz`||!Array.isArray(entries[0].files)||!entries[0].files.length)throw Error('Pack identity mismatch');
  for(const file of entries[0].files)if(typeof file?.path!=='string'||!/^[A-Za-z0-9_.\/-]+$/.test(file.path)||file.path.startsWith('/')||file.path.split('/').some(p=>!p||p==='.'||p==='..'))throw Error('Unsafe pack output path');
  return entries[0];
+}
+
+export async function validatePublicationArchive(directory,packageName){
+ const evidenceDirectory=join(directory,'publication-evidence'),archivePath=join(directory,'publication-evidence.tgz');
+ const names=(await readdir(evidenceDirectory)).sort();
+ if(!names.length||names.length>1000||names.some(name=>!/^[a-zA-Z0-9_.-]+\.json$/.test(name)))throw Error('Invalid retained publication evidence members');
+ for(const name of names)if(!(await lstat(join(evidenceDirectory,name))).isFile())throw Error('Publication evidence must be regular files');
+ const archive=await readFile(archivePath);if(!archive.length||archive.length>64*1024*1024)throw Error('Publication evidence archive exceeds bound');
+ const tar=args=>execFileSync('tar',args,{env:{PATH:process.env.PATH,LC_ALL:'C'},timeout:30000,maxBuffer:32*1024*1024});
+ const members=tar(['-tzf',archivePath]).toString().trim().split('\n');
+ const wanted=names.map(name=>'publication-evidence/'+name);
+ if(members.length!==wanted.length||new Set(members).size!==members.length||JSON.stringify([...members].sort())!==JSON.stringify(wanted))throw Error('Uploaded publication archive members differ from retained evidence');
+ const verbose=tar(['-tvzf',archivePath]).toString().trim().split('\n');
+ if(verbose.length!==members.length||verbose.some(line=>line[0]!=='-'))throw Error('Uploaded publication archive contains nonregular members');
+ for(const name of names)if(!tar(['-xOzf',archivePath,'--','publication-evidence/'+name]).equals(await readFile(join(evidenceDirectory,name))))throw Error('Uploaded publication archive bytes differ from retained evidence');
+ const assets=[packageName,'package-manifest.json','images.json','publication-evidence.tgz'];
+ const expected=(await Promise.all(assets.map(async name=>`${hash(await readFile(join(directory,name)))}  ${name}\n`))).join('');
+ if((await readFile(join(directory,'SHA256SUMS'),'utf8'))!==expected)throw Error('Uploaded checksum file differs from exact asset bytes');
 }

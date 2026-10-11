@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-PREP-2",
+  "scope": "local preparation only; full hosted CI required before merge; publication activation and native public/customer/milestone acceptance remain separate",
+  "observedAt": "2026-10-11T23:52:26.822402+00:00",
+  "sourceCommit": "7dbcb94755442509967b26116d0749e0fe8eb530",
+  "sourceTree": "9e9b1d2de68f9e579cf5329c804ffbdccd47001e",
+  "baseCommit": "02597e0e77e8f2b0fc1b45f7cea1bef98e99430e",
+  "baseTree": "0a852f00b77a9002b202d9bcb54223aa4618c353",
+  "runtime": {
+    "node": "26.10.0",
+    "npm": "12.2.0",
+    "platform": "linux/amd64"
+  },
+  "sourceBindings": {
+    "scripts/development-release.mjs": "94853c7fd9f82d1661215b7099a7b24d279d6ce30762f5617a09241c85eadd90",
+    "scripts/lib/development-artifacts.mjs": "d4107a97cc29b7a92f28c842a53dd30561b477fde1d0f067f5767fe48a99b63b",
+    "scripts/published-package-smoke.mjs": "4b03383300b29a044776a4aa4ca5b3a8899bbcfa55153b98e311d835d41ac19d",
+    ".github/workflows/development-candidate.yaml": "d0d06160e79ae264889826d92d813584d2205a591b54425a1a95d0aaebf5f8ec",
+    ".github/workflows/images.yaml": "073bfaba944c16caaaede6912dc2217e1f05a8475a8689aa6746d3721c0c3818",
+    ".github/workflows/download-smoke.yaml": "a8da858074c6f0d2a66382211fa67e8ba6df11387721bc3b75eac464c8db83e4",
+    "scripts/download-integration-reporter.mjs": "4566d40f05ef5a09c8b67792b473bf62fac0b3fff50fdfb93a616ef958b452f2",
+    "scripts/published-downloads.mjs": "f0746e5a90bb2b6849c6c3c2b6b6ad0aa603e6b83ff4a2f7562507a3641aa47f",
+    "tests/development-artifacts.test.ts": "10aa62209238844d140e1e285cf9be7c2f0e7cbe2df42a04b40f4f0e9ae09226",
+    "tests/development-release-execution.test.ts": "f7941049172adcc94b8bf18f24b2b92bc48cf159fe4ee50d7a295302744552b1",
+    "docs/phases/m3-development-candidate.md": "2050e66b623c938e27e290470911f72bf8d62ef31c27110e25729b10862f1c9d",
+    "scripts/image-smoke.mjs": "fa6f1a62e22a4938f456c6f585b9aca46ef988265c645f98dd6d4fd38ab14cc7",
+    "scripts/lib/download-runtime-evidence.mjs": "09c987710083bb65e0ae29bd876e7300079aab14559d6a27765a31820d87bde9",
+    "scripts/record-download-runtime.mjs": "2e5fe21d12804535410ce19652e9e73289d9bdede59bada1853ed2a838d345d2"
+  },
+  "checks": [
+    {
+      "check": "focused",
+      "result": "passed",
+      "path": "/workspace/scratch/m3-dev2-publication-complete-bound-focused.log",
+      "sha256": "93d05e3bf61fd8e3cc06df8bddeeb0755f0cc0971cc4101f840cc7cd4ac2847d"
+    },
+    {
+      "check": "fast",
+      "result": "passed",
+      "path": "/workspace/scratch/m3-dev2-publication-complete-bound-fast.log",
+      "sha256": "147856747840ae7b172796132558b549adc1bb59b84383b6568379895506de6f"
+    },
+    {
+      "check": "workflows",
+      "result": "passed",
+      "path": "/workspace/scratch/m3-dev2-publication-complete-bound-workflows.log",
+      "sha256": "d8ba84896d82803c6a5c7d4fe407d5e32c8fa0b987ac2b266317782c4eb3d310"
+    },
+    {
+      "check": "build",
+      "result": "passed",
+      "path": "/workspace/scratch/m3-dev2-publication-complete-bound-build.log",
+      "sha256": "0b282be87e9cd8925caefeeaf85ff3321f09d54408c6fc8d2a30e088651a69b6"
+    },
+    {
+      "check": "api-compat",
+      "result": "passed",
+      "path": "/workspace/scratch/m3-dev2-publication-complete-bound-api-compat.log",
+      "sha256": "00b31dc07f335770bb136ab4c853f2bc4bb608c9cdb6d4c94ae42663181f40cf"
+    }
+  ],
+  "fastSeconds": 28.55,
+  "focused": {
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0
+  },
+  "independentReview": {
+    "sha256": "6c3b9ded06076cd5c3fbb13c499ff06bc2f8ca84327c0334828ab5b084b95e41",
+    "record": {
+      "head": "7db1baf2c903706d604c99a809bda1289e1a67bf",
+      "tree": "0d5aea6b36e94ded121ea86c47a31b3884072811",
+      "reviewedSourceHashes": {
+        "scripts/development-release.mjs": "ff6c3092b3175df740b26908f6305cc0d1867dc9db525f47cc87957cf15a95eb",
+        "scripts/lib/development-artifacts.mjs": "299edde2f77cb0ef37ffe84d147304cc4e1344d6fd0e6ae3ea39b6f48bdc897c",
+        "scripts/published-package-smoke.mjs": "4b03383300b29a044776a4aa4ca5b3a8899bbcfa55153b98e311d835d41ac19d",
+        ".github/workflows/development-candidate.yaml": "03e79fc02e4e2240f87a58341413b7910ff98bcee7949ac14fb70629bb98f2ab",
+        ".github/workflows/images.yaml": "073bfaba944c16caaaede6912dc2217e1f05a8475a8689aa6746d3721c0c3818",
+        ".github/workflows/download-smoke.yaml": "ee931845b3466c0e4a9d82b8aff1548676eb2912a3f9adbba427891d66948ffd",
+        "scripts/download-integration-reporter.mjs": "4566d40f05ef5a09c8b67792b473bf62fac0b3fff50fdfb93a616ef958b452f2",
+        "scripts/published-downloads.mjs": "f0746e5a90bb2b6849c6c3c2b6b6ad0aa603e6b83ff4a2f7562507a3641aa47f",
+        "tests/development-artifacts.test.ts": "434db0b51260701b7eef244817a0e3f5e3a5f6f8293ee0c71925b371f13ad228",
+        "tests/development-release-execution.test.ts": "b54816eedcbf324d12ddbb5f170f80528bca902a09ac592592301400ee2123cf",
+        "docs/phases/m3-development-candidate.md": "2ee0940aa4d4d27f4f3b724ec5caae68777145767cbedaf35fc5592c7c65a8fa"
+      },
+      "evidenceHashes": {
+        "/workspace/scratch/dev2-publication-independent-7db1-final-tests-20261011.log": "9fe3847143e0e48af19ab53127a3b07ce2ec79f44d58fb8492e89de485e36d02",
+        "/workspace/scratch/dev2-publication-independent-reporter-20261011.log": "0481f17eabcc494c37867ddd998eab34d55d08e839d57f8dd129f015691be283",
+        "/workspace/scratch/dev2-publication-independent-two-layout-20261011/smoke-offline.stdout.log": "3132e00311b30ccf0cc7ba73da8824be7e8b126d5c8ceffea2d43418829b81cd",
+        "/workspace/scratch/dev2-publication-independent-two-layout-20261011/smoke.stderr.log": "4d3986b092e62d1eac71e90823cfa030dc5f9abaf5a45ea4c92ed90ad53be33c",
+        "/workspace/scratch/dev2-publication-independent-two-layout-20261011/offline-install-observations.jsonl": "d2481985529028dbfd240ae5902ff5faa7f580ab8ffd640d5d5d93e088ebfdbd",
+        "/workspace/scratch/dev2-publication-independent-two-layout-20261011/anonymous-fetch-offline.jsonl": "6bc2b815dcd4fba84c716abd172419d01544ed2699e51eea4a5963dab69df11c"
+      },
+      "results": {
+        "focused": "7/7 passed on final HEAD",
+        "reporter": "2/2 passed",
+        "reconciliation": "1346 source IDs / 29 fenced children --check passed",
+        "milestoneGates": "18/18 pending",
+        "trackedRuntimeDomainSpecDeployVersions": "unchanged from 02597",
+        "activationDescriptor": "absent"
+      },
+      "twoLayoutActualScript": {
+        "result": "passed",
+        "fixture": "compiled actual package with synthetic dev.2 metadata",
+        "archiveSha256": "da54f32e685ddb60af0bc36c82793320f948f0860be8ab2e40cb7615496d9f2b",
+        "manifestSha256": "10889eb75281c8ac61c7ab8f2197d5873069f4eb3638aa59022c662308cb29c3",
+        "filesVerified": 540,
+        "fetch": "local mocked fetch serving only two fixture assets; no GitHub request",
+        "npm": "actual pinned npm12 ci --omit=dev and consumer install --omit=dev; preload adds --offline and links temporary cache to existing workspace npm cache",
+        "childCredentials": "sentinel TOKEN/API_KEY excluded; explicit environment allowlist observed",
+        "limits": [
+          "No real anonymous published download",
+          "No public dependency network availability",
+          "No native ARM acceptance",
+          "No live provider/customer acceptance"
+        ],
+        "priorColdAttempt": "npm ci stalled approximately 130s, own child manually terminated; generic sanitized stderr only, no specific registry diagnosis established"
+      },
+      "findings": "Original pack JSON/shrinkwrap/finalizer hash/cohort defects closed. No remaining local preparation blocker found. Full hosted/native/publication/customer evidence remains pending."
+    }
+  },
+  "cacheState": "warm installed dependencies; pinned actionlint/oasdiff cached archives checksum-verified; independent two-layout fixture used existing offline npm cache; no cold-network/public-download proof",
+  "basePostmergeCI": {
+    "runId": "38172916517",
+    "head": "02597e0e77e8f2b0fc1b45f7cea1bef98e99430e",
+    "conclusion": "success"
+  },
+  "readiness": {
+    "localPreparation": "passed",
+    "hostedCI": "pending",
+    "activationDescriptor": "absent",
+    "runtimePackageVersion": "0.4.0-m3-dev.1",
+    "candidatePublication": "not-run",
+    "publicAnonymousDownloads": "not-run",
+    "nativeARM": "not-run",
+    "customerScenarios": "not-run",
+    "milestoneGates": "all 18 pending"
+  },
+  "limits": [
+    "Unpublished files from original local goal 01a10362-b55c-7d42-96d4-5c31ab6ace66 were not transferred; no inference about their absence.",
+    "Only inaccessible external model provider tests may be explicitly deferred after other applicable gates; no broader exception is adopted.",
+    "No original M3 acceptance threshold or persistent hosting gate is invented."
+  ],
+  "priorAcceptance": {
+    "path": "delivery/acceptance/m3-development-publication-retained-local.json",
+    "sha256": "88dd9459b00e660571bb55d77cc9be1ba96e97a033b7a54093b779ac08f0e548",
+    "reason": "Historical local preparation proof preserved; task reopened after parent identified missing retained runtime receipts and unchecked uploaded archive/checksums. Corrected proof replaces it for current readiness."
+  },
+  "retentionAddendum": {
+    "sha256": "b9b815416ba9b0e8b5ab08d880d9873cf20111299d213b4e76e50d35ce5f46be",
+    "record": {
+      "head": "3c7989ec934e0d2abf8b2758879816813cd20575",
+      "tree": "a841fba8e5d6ec2e16fad3e078170b5f7b5e0d31",
+      "priorReviewedCommit": "c6b2eb4bb8891b2a9e36def901a9e1f3e3a11222",
+      "sourceHashes": {
+        ".github/workflows/development-candidate.yaml": "d0d06160e79ae264889826d92d813584d2205a591b54425a1a95d0aaebf5f8ec",
+        "tests/development-artifacts.test.ts": "10aa62209238844d140e1e285cf9be7c2f0e7cbe2df42a04b40f4f0e9ae09226"
+      },
+      "finding": "Finalizer sanitized receipt artifact retention gap closed by explicit development-assets/publication-attempt.json path in existing always() artifact upload; focused static assertion checks both always() and exact path.",
+      "scope": "Two single-line source changes only; release/core/package smoke source unchanged. Required task rework/reconciliation metadata changed separately.",
+      "historicalAcceptanceRecordSha256": "3901e798e00d004d182167edb7d96dd0bcef794070bc5dcfcc4767bbf72ced0e",
+      "inheritedEventsPreserved": true,
+      "reconciliation": "--check passed 1346 source IDs / 29 fenced children, M0-M10 preserved",
+      "milestoneGates": "18 pending",
+      "activation": "absent",
+      "tests": "No unchanged runtime tests rerun; parent source-bound checks in progress",
+      "remainingBlockers": "Exact changed-source hosted CI required before merge; real native/public/customer acceptance remains separate."
+    }
+  },
+  "completeEvidenceReview": {
+    "sha256": "3c9e9ab001dd80e84bcc1d8d995d4dc2da08b1ad6dcd06dff721b3bc58506225",
+    "record": {
+      "baseHead": "c62f318b904d322d9a4d098f8989514a5f0c439a",
+      "status": "reviewed current local fix pending commit/source freeze",
+      "reviewedSourceHashes": {
+        "scripts/lib/download-runtime-evidence.mjs": "09c987710083bb65e0ae29bd876e7300079aab14559d6a27765a31820d87bde9",
+        "scripts/record-download-runtime.mjs": "2e5fe21d12804535410ce19652e9e73289d9bdede59bada1853ed2a838d345d2",
+        "scripts/lib/development-artifacts.mjs": "d4107a97cc29b7a92f28c842a53dd30561b477fde1d0f067f5767fe48a99b63b",
+        "scripts/development-release.mjs": "94853c7fd9f82d1661215b7099a7b24d279d6ce30762f5617a09241c85eadd90",
+        "scripts/image-smoke.mjs": "fa6f1a62e22a4938f456c6f585b9aca46ef988265c645f98dd6d4fd38ab14cc7",
+        ".github/workflows/download-smoke.yaml": "a8da858074c6f0d2a66382211fa67e8ba6df11387721bc3b75eac464c8db83e4",
+        "tests/development-release-execution.test.ts": "f7941049172adcc94b8bf18f24b2b92bc48cf159fe4ee50d7a295302744552b1",
+        "docs/phases/m3-development-candidate.md": "2050e66b623c938e27e290470911f72bf8d62ef31c27110e25729b10862f1c9d"
+      },
+      "tests": {
+        "actualScriptFocused": "7/7 passed; all5 mandatory proofs perarch missing/bodytamper-rehashed/cohort negatives zeroREST; archiveonly/checksumonly/regularmember-substitution zeroREST; complete sourcepin proofpositive passed",
+        "archiveIndependentProbe": "valid regular passed; duplicate/traversal/nonregular rejected"
+      },
+      "evidenceHashes": {
+        "/workspace/scratch/dev2-runtime-archive-independent-focused-20261011.log": "8fb43279adefa4d2da0b60eac531c14077ec1ca75a42c7d1ca0398b91a1c3778",
+        "/workspace/scratch/dev2-runtime-archive-independent-probe-20261011.log": "269924276007fd4ae575cc52795bf1d861f1f9d38bd270e5e8f14e4b1f6c76fc"
+      },
+      "findings": "No remaining blocker found in current inspected fix. Both mandatory finalizer proof/actual uploaded archive integrity gaps closed. Final commit binding and exact-source hosted CI required.",
+      "limits": [
+        "No remote writes/native executions/publication/activation/customer credentials",
+        "Artifact evidence still attests synthetic/runtime cohort, not actual customer proof",
+        "Customer stack must inherit final correction and rerun changed-source hostedCI; prior CI does not transfer"
+      ]
+    },
+    "committedBindingSha256": "16912384bb0bc9a7cc2086df017c98fab0328a1e31f956156c9454e5b4c8784c",
+    "committedBinding": {
+      "head": "7dbcb94755442509967b26116d0749e0fe8eb530",
+      "tree": "9e9b1d2de68f9e579cf5329c804ffbdccd47001e",
+      "priorReviewSha256": "3c9e9ab001dd80e84bcc1d8d995d4dc2da08b1ad6dcd06dff721b3bc58506225",
+      "reviewedSourceHashesVerified": {
+        "scripts/lib/download-runtime-evidence.mjs": "09c987710083bb65e0ae29bd876e7300079aab14559d6a27765a31820d87bde9",
+        "scripts/record-download-runtime.mjs": "2e5fe21d12804535410ce19652e9e73289d9bdede59bada1853ed2a838d345d2",
+        "scripts/lib/development-artifacts.mjs": "d4107a97cc29b7a92f28c842a53dd30561b477fde1d0f067f5767fe48a99b63b",
+        "scripts/development-release.mjs": "94853c7fd9f82d1661215b7099a7b24d279d6ce30762f5617a09241c85eadd90",
+        "scripts/image-smoke.mjs": "fa6f1a62e22a4938f456c6f585b9aca46ef988265c645f98dd6d4fd38ab14cc7",
+        ".github/workflows/download-smoke.yaml": "a8da858074c6f0d2a66382211fa67e8ba6df11387721bc3b75eac464c8db83e4",
+        "tests/development-release-execution.test.ts": "f7941049172adcc94b8bf18f24b2b92bc48cf159fe4ee50d7a295302744552b1",
+        "docs/phases/m3-development-candidate.md": "2050e66b623c938e27e290470911f72bf8d62ef31c27110e25729b10862f1c9d"
+      },
+      "evidenceHashesVerified": true,
+      "previousTwoAcceptanceRecords": "exact preserved hashes",
+      "taskEvents": "exact prefix retained plus one reopen event",
+      "gates": "18 pending",
+      "activation": "absent",
+      "testReruns": false,
+      "findings": "Committed fix files byte-identical to independent review. No additional blocker. Exact-source full hosted CI and parent critical review remain required before merge/activation."
+    }
+  },
+  "historicalPreparationCI": {
+    "head": "816ee9cba94a5e30729a6003d574e09330a7f462",
+    "runId": "38185035496",
+    "conclusion": "success",
+    "meaning": "Historical source passed hosted CI; current fix is changed source and requires a new complete hosted run."
+  }
+}
