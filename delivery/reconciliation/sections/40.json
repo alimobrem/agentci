@@ -6278,6 +6278,23 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07d-2a",
+          "status": "done",
+          "startedAt": "2026-10-08T03:11:49.328Z",
+          "completedAt": "2026-10-08T03:17:02.847Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local-only runner validates production-installed client/CLI and compiled service Check links against real loopback PostgreSQL/Temporal and isolated GitHub HTTP fixtures, never claiming actual GitHub/customer acceptance. Four original seeded/unsupported/fixed/failure-recovery scenarios identify reused fixtures, required observations and exact external prerequisites/actions. Metadata-only credential check reveals no secret values. Independent review, applicable packaging and task reconciliation pass; parent M3-07d-2 acceptance remains pending.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-preparation-local.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6356,6 +6373,12 @@
         {
           "path": "delivery/acceptance/m3-docker-cli-security-local.json",
           "sha256": "07d8bfa6cd29e9c931aef64d3e8cc633db7b25b741d5f30ade2ee97dd49f58d3",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-preparation-local.json",
+          "sha256": "111665109795a77f0ac111406a97ce33bfa32ffa4793dfafaf97f6231b8ef2f8",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -6602,6 +6625,23 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07d-2a",
+          "status": "done",
+          "startedAt": "2026-10-08T03:11:49.328Z",
+          "completedAt": "2026-10-08T03:17:02.847Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local-only runner validates production-installed client/CLI and compiled service Check links against real loopback PostgreSQL/Temporal and isolated GitHub HTTP fixtures, never claiming actual GitHub/customer acceptance. Four original seeded/unsupported/fixed/failure-recovery scenarios identify reused fixtures, required observations and exact external prerequisites/actions. Metadata-only credential check reveals no secret values. Independent review, applicable packaging and task reconciliation pass; parent M3-07d-2 acceptance remains pending.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-preparation-local.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6680,6 +6720,12 @@
         {
           "path": "delivery/acceptance/m3-docker-cli-security-local.json",
           "sha256": "07d8bfa6cd29e9c931aef64d3e8cc633db7b25b741d5f30ade2ee97dd49f58d3",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-preparation-local.json",
+          "sha256": "111665109795a77f0ac111406a97ce33bfa32ffa4793dfafaf97f6231b8ef2f8",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

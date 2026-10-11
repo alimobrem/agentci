@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07d-2a",
+  "state": "local-preparation-passed-actual-customer-gates-unverified",
+  "recordedAt": "2026-10-08T03:17:01.820966+00:00",
+  "sourceCommit": "fa714ec3fd2ad19d26b9f31652835e99c75becfe",
+  "sourceTree": "f05fe71c8c30c0f72858f01ac7076302f0a176b5",
+  "base": "bbcf5b5c223319485527a1acb5cf2258d48deddb",
+  "validation": {
+    "node": "26.10.0",
+    "npm": "12.2.0",
+    "fastChecks": 10,
+    "unitTests": 425,
+    "productionInstalledTests": 11,
+    "failed": 0,
+    "skipped": 0,
+    "independentReview": "/root/client_review:11installed passed,367compiledfiles match, packaged manifest/runbook match; six sourcefiles bind to exactcommit; no blockers",
+    "runtimeApiWorkflowChanges": "None relative to bbcf5b5; prior compatible M1/M2/workflow evidence retained",
+    "guards": "No live flag; missing services fail, nonloopback DB/Temporal and DB query overrides reject before install, credential-bearing errors redacted, child env excludes App/API/provider secrets"
+  },
+  "archive": {
+    "path": "/workspace/scratch/customer-prep-package/agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "68c71aa2ce3d0d8550aae447582f620957ff087790ab3e569704eeb8f691a48d"
+  },
+  "fixtureManifest": "specs/fixtures/m3-customer-acceptance.json",
+  "runbook": "docs/phases/m3-customer-acceptance-preparation.md",
+  "readinessMetadata": {
+    "kind": "metadata-only-no-secret-read-or-transmission",
+    "configured": {
+      "GITHUB_APP_ID": false,
+      "GITHUB_INSTALLATION_ID": false,
+      "GITHUB_PRIVATE_KEY_FILE": false,
+      "AGENTCI_REPOSITORY": false,
+      "AGENTCI_PUBLIC_URL": false,
+      "AGENTCI_EVIDENCE_TOKEN": false,
+      "AGENTCI_OPERATOR_TOKEN": false,
+      "AGENTCI_CURSOR_KEY": false,
+      "OPENAI_API_KEY": false,
+      "ANTHROPIC_API_KEY": false,
+      "XAI_API_KEY": false
+    },
+    "privateKeyFile": null
+  },
+  "logs": [
+    {
+      "path": "/workspace/scratch/customer-prep-fast-exact.log",
+      "sha256": "14f0300f1a364bae4ba2519185bfe0cf225a372e8452fbce7749f601bbca64e0"
+    },
+    {
+      "path": "/workspace/scratch/customer-prep-fast-exact-source.json",
+      "sha256": "66a28595a5387a33d102d65b67e410342d327f2d9a6f67224dfdce99995e1134"
+    },
+    {
+      "path": "/workspace/scratch/customer-prep-installed-guarded.log",
+      "sha256": "4d90dd30d860ac35442eb34dcf355a5537337fe545775cb47e8bc5f93a2a4b77"
+    },
+    {
+      "path": "/workspace/scratch/customer-prep-guards.log",
+      "sha256": "ab4e6f84b59f8289b238cbec2078f1ec898973c022f04c0e63f0d06b95989db4"
+    },
+    {
+      "path": "/workspace/scratch/customer-prep-independent-installed-final-20261008.log",
+      "sha256": "a325d6ff73ecdfcb9e37ff976c4f0628061e39fa366c183a645876a31f06e9f4"
+    },
+    {
+      "path": "/workspace/scratch/customer-prep-independent-commit-binding-fa714ec-20261008.log",
+      "sha256": "c54c6c26bf0a1967a5dc2d666f8588d9a07a2419306b71956b6f23a8c11ebe67"
+    },
+    {
+      "path": "/workspace/scratch/customer-prep-runtime-diff.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "reviewFindingsResolved": [
+    "Independent review identified missing loopback enforcement; guard added and remote/queryoverride/secret-redaction regressions independently passed. No remote endpoint execution occurred."
+  ],
+  "setupAttempts": "Initial task-start command preceded offline development-dependency install and failed missing tsx; retry after install recorded actual start without backdating. Task record existed before implementation.",
+  "preserved": {
+    "dispositionHead": "8219f45d81f4ba5e0dda1fea2a2dec47a26fa26e",
+    "checksSupplement": "bbcf5b5c223319485527a1acb5cf2258d48deddb",
+    "demoHead": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+    "demoUnchanged": true
+  },
+  "limits": [
+    "Completed preparation child only: parentM3-07d-2 and aggregateM3-07/R1 remain pending. No original phase acceptance promoted; all18M3gates open, UI notstarted.",
+    "No newpublication, merge, deployment, realGitHub/App call, customerbranch/PR mutation or persistentaccess. Existingpublicationapproval still pending; this preparation not silently added to its scope.",
+    "ActualGitHub/customer and isolated physical seeded/fixed/cleanup acceptance remain unverified. Four-scenario manifest is a plan, not evidence those actual scenarios passed.",
+    "No credential values or private-key contents read/transmitted; absent executorenvironment metadata does not prove account/App readiness elsewhere.",
+    "Allthreeadapters preserved; only inaccessible external-model-provider validation may remain explicitly deferred/unverified after otherapplicablegatespass. OptionalNextadapters/router/persistenthosting notadded.",
+    "Macuntouched; unpublishedoriginalMacfiles nottransferredorinferred."
+  ]
+}
