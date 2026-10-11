@@ -2254,6 +2254,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-R1-PREP-2",
+          "status": "done",
+          "startedAt": "2026-10-11T20:53:55.476Z",
+          "completedAt": "2026-10-11T20:55:35.040Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Reviewed main-only development orchestration reuses native six-role publication and corrected mandatory downloads, scopes transient token permissions, rejects occupied or ambiguous identities, retains partial failures, and never marks candidate verified before all six images/native downloads and separate anonymous exact-source package install pass. Preparation tests/lint/build/independent review pass; activation/publication and all phase gates remain separate.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-development-publication-retained-local.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -2794,6 +2811,12 @@
         {
           "path": "delivery/acceptance/m3-api-worker-authority-local.json",
           "sha256": "12aef2dcab6c1d46f24b6369c1194b0ca982c4d183c783390883a0a8ed075767",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-development-publication-retained-local.json",
+          "sha256": "88dd9459b00e660571bb55d77cc9be1ba96e97a033b7a54093b779ac08f0e548",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -4445,6 +4468,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-R1-PREP-2",
+          "status": "done",
+          "startedAt": "2026-10-11T20:53:55.476Z",
+          "completedAt": "2026-10-11T20:55:35.040Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Reviewed main-only development orchestration reuses native six-role publication and corrected mandatory downloads, scopes transient token permissions, rejects occupied or ambiguous identities, retains partial failures, and never marks candidate verified before all six images/native downloads and separate anonymous exact-source package install pass. Preparation tests/lint/build/independent review pass; activation/publication and all phase gates remain separate.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-development-publication-retained-local.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -4888,6 +4928,12 @@
         {
           "path": "delivery/acceptance/m3-api-worker-authority-local.json",
           "sha256": "12aef2dcab6c1d46f24b6369c1194b0ca982c4d183c783390883a0a8ed075767",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-development-publication-retained-local.json",
+          "sha256": "88dd9459b00e660571bb55d77cc9be1ba96e97a033b7a54093b779ac08f0e548",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

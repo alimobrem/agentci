@@ -26,6 +26,32 @@ on:
       eval_agentci_image:
         description: Public eval-agentci image with sha256 digest
         required: true
+  workflow_call:
+    inputs:
+      source_commit:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+      api_image:
+        required: true
+        type: string
+      worker_image:
+        required: true
+        type: string
+      eval_worker_image:
+        required: true
+        type: string
+      eval_runner_image:
+        required: true
+        type: string
+      eval_engines_image:
+        required: true
+        type: string
+      eval_agentci_image:
+        required: true
+        type: string
 permissions:
   contents: read
 jobs:
