@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "mode": "preparation-only-not-execution-evidence",
+  "repository": "alimobrem/agentci-onboarding-demo",
+  "serviceRepository": "alimobrem/agentci",
+  "scenarios": [
+    {"id":"seeded-defect","fixture":"tests/fixtures/reproduction.ts","input":"Trusted base allowed(ns) restricts safe; seeded head returns true. Preserve the trusted base repro.mjs; never trust the PR's replacement harness.","required":"Installed HTTP admission -> configured worker -> retained finding -> approved isolated reproduction -> authenticated receipt/history/export and exact-head Check. Fixture model claims alone remain advisory.","localLimit":"Local preparation verifies transport; physical reproduction and real GitHub confirmation remain unverified."},
+    {"id":"unsupported-claim","fixture":"tests/finding-reproduction.test.ts","input":"Reuse unsupported assertion/compiler rejection cases; do not create an approval for an unsupported claim.","required":"Installed service/CLI and exact-head Check retain explicit unconfirmed status; no receipt or consensus-only confirmation.","localLimit":"Compiler/transport fixtures do not prove a real customer GitHub flow."},
+    {"id":"fixed-result","fixture":"tests/fixtures/reproduction.ts","input":"Use the same trusted bypass assertion against a fixed head restoring allowed(ns) to safe-only, on a new exact PR head/admission. Keep the original confirmed observation immutable.","required":"Actual isolated runner reports the defect no longer reproduced; retain exact fixed-head evidence/history/export and truthful advisory Check. An operator resolved attestation alone is insufficient.","localLimit":"No fixed-result physical execution is claimed by the preparation runner."},
+    {"id":"failure-restart-recovery","fixture":"tests/integration/model-review-publication-scheduler.test.ts","input":"Reuse committed-response-loss/process-death fixtures plus model-review-export.test.ts interrupted summary and model-reproduction-client.test.ts never-staged recovery.","required":"Packaged actual customer deployment demonstrates failure, restart and recovery with retained identity/evidence, no duplicated billing intent, honest missing coverage and verified cleanup where execution staged.","localLimit":"Local recovery tests and never-staged proof do not establish actual customer physical cleanup or provider compatibility."}
+  ],
+  "externalRequirements": [
+    "Explicit approval for customer fixture branch/commit/PR creation and updates in alimobrem/agentci-onboarding-demo, and scoped GitHub Check writes through its existing customer App.",
+    "Verify existing customer App installation identity and permissions for only the demo repository; securely configure key and read/operator/cursor credentials without printing or transmitting them in artifacts.",
+    "Explicit authorization for the selected cloud service/evaluator deployment and an authenticated reachable endpoint; no Mac dependency or new persistent hosting assumption.",
+    "Exact-source published/downloaded package and API/worker/evaluator/runner images with immutable digests, configured reviewer profiles, approved assertion catalog/applied authority and bounded budget.",
+    "Record actual PR/base/head, review/profile/finding/version/operation/approval identities, receipt/non-execution proof, complete export certificate, Check/App identity, failure/restart observations and anonymous artifact download provenance."
+  ],
+  "scopeLimits": "All three initial adapters remain required. Only inaccessible external-model-provider validation may remain explicitly deferred/unverified under the approved exception after other applicable gates pass. Optional router/Next adapters and persistent hosting are not added here. UI remains behind M3-07/R1; all M0-M10 and release/download/demo gates remain intact."
+}
