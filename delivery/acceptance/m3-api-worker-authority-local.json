@@ -1,0 +1,49 @@
+{
+  "task": "M3-07d-2b",
+  "kind": "local-configuration-slice-not-customer-acceptance",
+  "checkedAt": "2026-10-11T20:23:46.812030+00:00",
+  "sourceCommit": "bfeed1d7674970293c95203483dd061483308c67",
+  "sourceTree": "33c632905192bffcb373e2c2370bcd8375a92771",
+  "base": "4680a69a0ced2f259a77dcc90ab453762fdd0e45",
+  "sourceFiles": [
+    {
+      "path": "deploy/reproduction.compose.yaml",
+      "sha256": "cd6e1941233eba7f609a198d67c8d86423581ed70eff065d3167f94491d97e94"
+    },
+    {
+      "path": "tests/integration/reproduction-deployment.test.ts",
+      "sha256": "06444e28bf9f7aed784828ed9258a85873e38f35833136f1501f44b34deaaa5e"
+    },
+    {
+      "path": "docs/phases/m3-reproduction-consumer.md",
+      "sha256": "a835afe56089cc79e9fbc3264b2f949912c0f54bb4f675e420f950f7e4f8d45d"
+    }
+  ],
+  "checks": {
+    "focused": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "logSha256": "f6d10702698792d95760d69159608b2c44613df7954b0479d134303996029f69"
+    },
+    "fast": {
+      "passed": 10,
+      "seconds": 23.05,
+      "logSha256": "42e7131008932d0ab037bff9e98387b03f4e308ff9db94eb5c3fc8357de3faba"
+    },
+    "independent": {
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "logSha256": "e078cc0e30689bf83e222ede32f070519200ea889bf9ba85ac90baa664ca90f2",
+      "review": "Agent /root/client_review verified source, credential prerequisites, 363 unchanged runtime/spec/release files, task/event preservation and corrected startup wording at bfeed1d"
+    }
+  },
+  "limits": [
+    "Compose rendering is configuration evidence; runtime loader checks validate structure/catalog, API and worker initialization validate applied DB authority",
+    "Referenced App/operator credentials were not materialized or configured",
+    "Base M2 defaults and evaluator compose source unchanged",
+    "Full hosted CI required before merge; no actual customer or publication evidence",
+    "All18M3gates pending; M0-M10 and threeadapters unchanged"
+  ]
+}
