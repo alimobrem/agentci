@@ -12,9 +12,11 @@ function fixture(status='completed'):ModelReviewStatus{
 test('model review conclusion never treats synthetic, unconfirmed or incomplete work as clean success',()=>{
  const complete=fixture(),render=(value:ModelReviewStatus)=>modelReviewCheckOutput(value,admission.subject,'https://agentci.example');
  assert.equal(render(complete).conclusion,'neutral');assert.match(render(complete).output.summary,/Synthetic fixture/);assert.match(render(complete).output.summary,/not whole-repository/);
+ assert.match(render(complete).output.summary,new RegExp(`/v1/model-reviews/${admission.id}/findings`));assert.match(render(complete).output.summary,new RegExp(`/v1/model-reviews/${admission.id}/export`));assert.match(render(complete).output.summary,/verified export end frame and EOF/);
  for(const role of ['refused','incomplete'])assert.equal(render(fixture(role)).conclusion,'action_required');
  for(const state of ['failed','cancelled','terminated','timed-out'] as const){const value=fixture();value.execution.state=state;value.execution.terminalDigest=digest(state);value.summary=null;assert.equal(render(value).conclusion,'action_required');assert.match(render(value).output.summary,/Coverage unknown/);}
  const queued=fixture();queued.execution={state:'queued',cancelRequested:false,terminalDigest:null};queued.summary=null;assert.equal(render(queued).status,'in_progress');assert.equal(render(queued).conclusion,undefined);
+ assert.ok(!render(queued).output.summary.includes('/findings'));assert.ok(render(queued).output.summary.includes('/export'));
 });
 test('renderer binds exact subject, summary and role digests and refuses credential-bearing URLs',()=>{
  const good=fixture();

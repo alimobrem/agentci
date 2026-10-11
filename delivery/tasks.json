@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2405,7 +2405,7 @@
       "completedAt": "2026-10-06T03:28:34.944Z",
       "acceptance": [
         {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0–M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
           "status": "passed",
           "evidence": [
             "docs/acceptance-reconciliation.md"
@@ -2708,7 +2708,7 @@
       "completedAt": null,
       "acceptance": [
         {
-          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0–M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
+          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0\u2013M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
           "status": "pending",
           "evidence": []
         }
@@ -2850,6 +2850,30 @@
         }
       ],
       "blockedReason": "Local integrity and reconciliation fixes independently pass; changed publication requires explicit approval, and exact-source hosted runtime/physical isolation remain unverified."
+    },
+    {
+      "id": "M3-07d-1a",
+      "title": "Integrated authenticated Check finding and export evidence links",
+      "requirementIds": [
+        "SECTION-12.3",
+        "SPEC-12.3-001",
+        "SECTION-12.5",
+        "SPEC-12.5-001"
+      ],
+      "status": "blocked",
+      "startedAt": "2026-10-08T02:58:41.816Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Evidence-bound advisory Check links reach actual authenticated status, paginated findings/history and complete verified export; exact review/subject/admission/summary/reference identities remain bound with no credentials in URLs. Real PostgreSQL plus Octokit/HTTP and compiled production package validate queued/complete/partial evidence, original references after operator disposition, auth and redacted boundaries. Preserve scheduler restart/stale-head contracts; no live GitHub or aggregate phase closure claimed.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-0"
+      ],
+      "blockedReason": "Compiled authenticated status/findings/history/export links and advisory identity, current disposition references, installed acceptance and independent review pass locally. Actual live GitHub/customer evidence URLs and exact-new-source hosted CI/isolation remain pending; no publication or phase closure authorized."
     }
   ]
 }
