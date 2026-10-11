@@ -6249,6 +6249,35 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-DOCKER-CLI-SECURITY-1",
+          "status": "blocked",
+          "startedAt": "2026-10-11T17:08:23.512Z",
+          "completedAt": null,
+          "blockedReason": "Exact-source hosted full scans/runtime and all affected draft CI remain pending; no aggregate milestone acceptance",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Verify official image source/digest, both architecture binary hashes and Go runtime patch against immutable upstream artifacts",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-docker-cli-security-local.json"
+              ]
+            },
+            {
+              "text": "Preserve native provenance, client compatibility and scan thresholds; independently validate narrowly scoped source changes",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-docker-cli-security-local.json"
+              ]
+            },
+            {
+              "text": "All affected draft PRs run exact-source full CI; preserve prior failed scans and honest remaining milestone/download gates",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -6323,6 +6352,12 @@
           "sha256": "a7f455bbd6acce7a9a8b52ba466d5a4b28242d5bafa0e8d3a144e95b2f5a3008",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-docker-cli-security-local.json",
+          "sha256": "07d8bfa6cd29e9c931aef64d3e8cc633db7b25b741d5f30ade2ee97dd49f58d3",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
       ],
       "verification": {
@@ -6331,7 +6366,13 @@
         "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
       },
       "owner": "AgentCI maintainers",
-      "blocker": null,
+      "blocker": [
+        {
+          "task": "M3-DOCKER-CLI-SECURITY-1",
+          "reason": "Exact-source hosted full scans/runtime and all affected draft CI remain pending; no aggregate milestone acceptance",
+          "deferral": null
+        }
+      ],
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
       "reconciliationGaps": []
     },
@@ -6532,6 +6573,35 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-DOCKER-CLI-SECURITY-1",
+          "status": "blocked",
+          "startedAt": "2026-10-11T17:08:23.512Z",
+          "completedAt": null,
+          "blockedReason": "Exact-source hosted full scans/runtime and all affected draft CI remain pending; no aggregate milestone acceptance",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Verify official image source/digest, both architecture binary hashes and Go runtime patch against immutable upstream artifacts",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-docker-cli-security-local.json"
+              ]
+            },
+            {
+              "text": "Preserve native provenance, client compatibility and scan thresholds; independently validate narrowly scoped source changes",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-docker-cli-security-local.json"
+              ]
+            },
+            {
+              "text": "All affected draft PRs run exact-source full CI; preserve prior failed scans and honest remaining milestone/download gates",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -6606,6 +6676,12 @@
           "sha256": "a7f455bbd6acce7a9a8b52ba466d5a4b28242d5bafa0e8d3a144e95b2f5a3008",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-docker-cli-security-local.json",
+          "sha256": "07d8bfa6cd29e9c931aef64d3e8cc633db7b25b741d5f30ade2ee97dd49f58d3",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
       ],
       "verification": {
@@ -6614,7 +6690,13 @@
         "note": "No release candidate selected; source inspection and a passing task are not a current release pass"
       },
       "owner": "AgentCI maintainers",
-      "blocker": null,
+      "blocker": [
+        {
+          "task": "M3-DOCKER-CLI-SECURITY-1",
+          "reason": "Exact-source hosted full scans/runtime and all affected draft CI remain pending; no aggregate milestone acceptance",
+          "deferral": null
+        }
+      ],
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
       "reconciliationGaps": []
     },

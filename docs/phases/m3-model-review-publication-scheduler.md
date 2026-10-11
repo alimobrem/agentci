@@ -11,7 +11,9 @@ Publication defaults off. To enable it, apply migrations through
 `AGENTCI_MODEL_REVIEW_CHECKS=true` in the worker's private deployment environment.
 Only `true`, `false`, or absence are accepted. The worker uses its existing scoped
 GitHub App installation and explicit `AGENTCI_PUBLIC_URL`; the public origin must
-serve authenticated `/v1/model-reviews/{id}` reads. No extra App permission or
+serve authenticated `/v1/model-reviews/{id}` status/export reads and, with an
+independent private control-service cursor key, summary findings and finding
+history reads. Findings-index links appear only after a retained summary exists. No extra App permission or
 installation is requested. Development tests use a fake GitHub HTTP service;
 live App acceptance is still separate.
 

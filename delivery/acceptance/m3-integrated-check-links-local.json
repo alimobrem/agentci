@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07d-1a",
+  "state": "local-integrated-links-verified-live-github-hosted-pending",
+  "recordedAt": "2026-10-08T03:06:32.838105+00:00",
+  "sourceCommit": "d6a7a63b1509971220c88ab31d87f99ecc16a240",
+  "sourceTree": "3d4270b21dcf5cf9fed7486e59a3fe1b14d676ab",
+  "base": "8219f45d81f4ba5e0dda1fea2a2dec47a26fa26e",
+  "scope": "Advisory model Check links to authenticated status/export and, only with retained summary, findings and exact-review current history. Immutable original summary references remain; later operator history/export is explicitly current-at-read. Verified end frame plus EOF/client certificate required. No conclusion-policy or scheduler contract change.",
+  "validation": {
+    "node": "26.10.0",
+    "npm": "12.2.0",
+    "fastChecks": 10,
+    "unitTests": 424,
+    "focusedPostgresTemporal": 17,
+    "productionInstalled": {
+      "mutationAndCheckLinks": 10,
+      "existingReaderDeployment": 14,
+      "reviewClientCliRealTemporal": 1,
+      "totalDistinctTests": 25
+    },
+    "failed": 0,
+    "skipped": 0,
+    "compatibility": "Immutable M1/M2 baseline and negative checks passed",
+    "workflows": "Pinned actionlint/context negative checks passed",
+    "independentReview": "/root/client_review independently passed installed10 and compared367compiledarchivefiles; nine committed changed files match reviewed source manifest, no blockers",
+    "scenarios": [
+      "Queued Check exposes export with honest missing-role snapshot; no complete findings index link",
+      "Completed Check links serve authenticated no-store status/index/current history/export with exact admission/summary/finding reference",
+      "Real operator disposition after valid queued lifecycle preserves pinned original index/reference and advisory conclusion while current history/export retain three events",
+      "Public client paginates actual history and verifies full export/end/EOF completion; reads/disposition do not dispatch providers",
+      "Stale PR head produces no evidence-link rewrite",
+      "Existing scheduler lost-response/process-death/durable-generation/cooldown and export interruption/backpressure/corruption regressions pass",
+      "Actual realTemporal review submit/show/cancel/findings/history/export and installed executable CLI pass"
+    ]
+  },
+  "archive": {
+    "path": "/workspace/scratch/check-links-package/agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "5b3da88ce51aa6fb7ae32938bacfc5b002b6a7d7722d5b305494d4d256a1606e"
+  },
+  "logs": [
+    {
+      "path": "/workspace/scratch/check-links-final-fast.log",
+      "sha256": "5d5e1f628bc158625cc357deb90efef2ba3e197c6a618c0d2e89d52501208bc5"
+    },
+    {
+      "path": "/workspace/scratch/check-links-fast-exact-source.json",
+      "sha256": "07621faaaa527836161011acd83da84b24fa508615a38b5002aab041fa0160e0"
+    },
+    {
+      "path": "/workspace/scratch/check-links-aggregate2.log",
+      "sha256": "543eac5ecf5e9425d27b104bcacf214d41db846aaa06a1d5dc17433454051b08"
+    },
+    {
+      "path": "/workspace/scratch/check-links-installed.log",
+      "sha256": "575c933573472a8aa65ba837bdca6a939f7696b76b5bd235793ab4de74e4da86"
+    },
+    {
+      "path": "/workspace/scratch/check-links-installed-review-client.log",
+      "sha256": "ff72053b519581cee97c0d4547cb54426d547f7953aae6dc19a34f9a84280aac"
+    },
+    {
+      "path": "/workspace/scratch/check-links-package-smoke.log",
+      "sha256": "8ff9de86b7c20b1687d2eeb8d8f3be34e0be483c3cd0d5a35a5b7e1f41377733"
+    },
+    {
+      "path": "/workspace/scratch/check-links-compat.log",
+      "sha256": "2dc9078e5f7431ed5c1cc28a8224df977405fd478f183f2aa930888b4b7a1212"
+    },
+    {
+      "path": "/workspace/scratch/check-links-workflows.log",
+      "sha256": "d8ba84896d82803c6a5c7d4fe407d5e32c8fa0b987ac2b266317782c4eb3d310"
+    },
+    {
+      "path": "/workspace/scratch/check-links-independent-installed-20261008.log",
+      "sha256": "a3ebd22adb0a97c7cc7599bfd22e23dfd9c5b619169374deaa9a6bfa49f177e1"
+    },
+    {
+      "path": "/workspace/scratch/check-links-independent-archive-equivalence-20261008.log",
+      "sha256": "0b85749ea80d847f1e5cc715c1cef79c00c014e3521d93562945113ba7990da8"
+    },
+    {
+      "path": "/workspace/scratch/check-links-independent-commit-binding-d6a7a63-20261008.log",
+      "sha256": "340e6093abdf0b0350043564415d3a2e2a0aec6a6583b13e2fe5db02d94a579b"
+    },
+    {
+      "path": "/workspace/scratch/check-links-independent-fixed-focused-20261008.log",
+      "sha256": "42edcc0e06304d726e66e829935f15ec4336a422e931db2fc2f4ed25dab12332"
+    },
+    {
+      "path": "/workspace/scratch/check-links-independent-integration-20261008.log",
+      "sha256": "c209a0f15ede975a1442cd913282a7a20c3a0ee148e7ad405fd5f594ee87dd0a"
+    },
+    {
+      "path": "/workspace/scratch/check-links-types.log",
+      "sha256": "54ada48f47019a4c9dd2228f1de5a29fa6e234ff8ac42c950e577987f8c5f5da"
+    },
+    {
+      "path": "/workspace/scratch/check-links-integration.log",
+      "sha256": "2e8fb1ac89d32c02c52996a3f06c8e4f1b857aee30ec85d9c966fc56c2cbd01e"
+    },
+    {
+      "path": "/workspace/scratch/check-links-aggregate.log",
+      "sha256": "18b555c546235f1971f6d220aa8e2adc06c86940903702a42fd75e63ffb5ce67"
+    }
+  ],
+  "failedAttemptsPreserved": [
+    "Initial integration fixture attempted false-positive from deduplicated finding: invalid-transition409. Corrected fixture with trusted internal queue transition, existing lifecycle unchanged. This fixture does not claim approved reproduction dispatch.",
+    "Initial optional compiled helper made control context any: two implicit-any callback diagnostics. Added precise factory types.",
+    "Independent reviewer required explicit EOF alongside end-frame wording; source/unit assertions corrected.",
+    "Initial broader selection omitted existing Temporal address and refused before that test execution (16pass/1setupfailure); verified existing loopback server connection and reran all17 with explicit address."
+  ],
+  "limits": [
+    "No GitHub/App mutation, publication, merge, deployment or release performed; existing approval remains pending.",
+    "Prior39-file publicationcandidate8219f45 retained clean in siblingworktree, patchdigest reverified unchanged. This new increment is separate local work, not silently added to that approval scope.",
+    "Live deployed GitHub/customer and exact-source hostedCI/physical-isolation pending. All18M3gates remain pending; UI not started.",
+    "All three provider adapters required; no live-provider validation claim. Only inaccessible external-provider tests eligible for explicit owner exception.",
+    "Checks serve current-at-read evidence; renderer cannot assert deployed uptime, immutable finding version from digest alone or full export completion before EOF.",
+    "Original unpublished Mac files not transferred or inferred."
+  ]
+}

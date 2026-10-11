@@ -50,10 +50,10 @@ export function modelReviewCheckOutput(value:ModelReviewStatus,expected:ReviewSu
   lines.push(`Snapshot: ${value.summary!.digest}; context: ${summary.contextDigest}.`,`Selected coverage: ${summary.coverage.selectedFiles} files, ${summary.coverage.completedRoles}/${summary.coverage.configuredRoles} completed roles; not whole-repository coverage.`);
   for(const role of summary.roles)lines.push(`- ${escape(role.role)}: ${role.status}; request ${role.requestId}; result ${role.digest}.`);
   lines.push(`Retained finding references: ${summary.findings.length}. Findings are advisory proposals; confirmation requires separately verified reproduction evidence.`);
-  for(const finding of summary.findings)lines.push(`- Finding ${finding.id}; retained event ${finding.digest}.`);
+  for(const finding of summary.findings)lines.push(`- Finding ${finding.id}; retained event ${finding.digest}. [Authenticated current history](${origin(publicUrl)}/v1/findings/${encodeURIComponent(finding.id)}/history?reviewId=${request.id})`);
  }else lines.push('Coverage unknown: no complete retained summary. Missing results are not a clean review.');
  if(request.mode==='synthetic')lines.push('Synthetic fixture execution demonstrates orchestration only; it does not establish model quality or repository correctness.');
- lines.push(`[Authenticated status and retained summary](${url})`,'Evidence requires deployment authentication; credentials are never included in these links.','This Check does not certify merge readiness or absence of defects.');
+ lines.push(`[Authenticated status and retained summary](${url})`, `${summary?`[Authenticated findings](${url}/findings) · `:''}[Authenticated evidence export](${url}/export)`, 'Links read retained evidence when opened; current history may include later dispositions. Require a verified export end frame and EOF, or the client completion certificate, before treating its snapshot as complete.', 'Evidence requires deployment authentication; credentials are never included in these links.','This Check does not certify merge readiness or absence of defects.');
  const output={title:`AgentCI model review: ${e.state}`,summary:lines.join('\n')};
  if(Buffer.byteLength(output.summary)>60000)fail();
  const incomplete=summary?.roles.some(role=>role.status!=='completed');

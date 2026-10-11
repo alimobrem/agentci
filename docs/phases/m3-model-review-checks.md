@@ -1,9 +1,9 @@
 # Model review Checks: publication slice
 
 Development acceptance for M3-07d-1. This slice supplies the renderer, PostgreSQL
-publication source, and authenticated GitHub Checks client calls. It does not
-register a background publisher or claim customer evidence routes are deployed.
-The task remains in progress until scheduling and real service links are integrated.
+publication source, and authenticated GitHub Checks client calls. The [durable scheduler](m3-model-review-publication-scheduler.md) registers the optional
+background publisher. Status, findings, history and export links now have local
+authenticated HTTP acceptance; deployed GitHub/customer and hosted acceptance remain pending.
 
 The separate `agentci/model-review` Check binds organization, repository, PR,
 base/head SHAs, admission ID/digest, profile revision, retained summary digest,
@@ -22,8 +22,16 @@ its reproduction/operator evidence before changing conclusion policy.
 
 The output is bounded below GitHub's summary limit and escapes text. Status links
 contain only the operator-owned origin and validated admission UUID; credentials
-never appear in links. Only `/v1/model-reviews/{id}` is linked by this slice.
-Findings/export links wait for their implemented authenticated routes.
+never appear in links. Status and export links are emitted for retained admissions. Findings-index links
+are emitted only when a retained summary exists; a queued or partial review has
+no complete findings index. Each summary finding links to its authenticated
+current history with the exact review ID. Original finding-event digests remain
+in the output and index even after later dispositions. Links read evidence when
+opened; current history/export may include later lifecycle events. Require the
+verified end frame plus EOF or the client completion certificate for a complete
+export. Configure an independent private `AGENTCI_CURSOR_KEY` in the control
+service for findings/history routes; the deployment origin must serve these
+authenticated routes. Tokens are supplied in authorization headers, never URLs.
 
 ## Retry and concurrency boundary
 
@@ -58,20 +66,17 @@ using different databases are outside this lock's guarantee.
 
 ## Remaining integration
 
-The following slice must provide durable pending-publication state and bounded
-retry/backoff. A status/summary terminal commitment must enqueue publication;
-independent termination recovery must enqueue it too. Publication success should
-record the acknowledged evidence identity only after the GitHub write, so an
-ambiguous response retries through reconciliation. Newer admission/state changes
-must leave newer pending work intact. A repeated main-loop scan must not publish
-unchanged evidence indefinitely. Schema migration and transition tests belong to
-that slice; no in-memory flag is a substitute for restart recovery.
+The durable scheduler retains generations, leases, acknowledgments and bounded
+retry/cooldown in migration013. See its acceptance record for process-death and
+ambiguous-response recovery; link integration preserves those contracts.
 
 Acceptance so far uses real PostgreSQL and authenticated Octokit requests to an
 isolated HTTP server. It exercises lost remote responses, two independent
 controller source instances, lock contention, older/newer admissions, stale heads,
 terminal retries and preservation of existing Checks. Unit acceptance verifies
 identity/digest rejection, refusal/incomplete conclusions, unknown coverage and
-credential-bearing origin rejection. Real deployed status URL access, durable
-publication scheduling, restart/termination recovery and packaged customer
-acceptance remain outstanding. No live provider or GitHub mutation is claimed.
+credential-bearing origin rejection. Compiled local status/findings/history/export links now verify exact retained
+admission/summary references and authenticated access before and after an
+operator disposition. Queued export coverage remains incomplete and stale heads
+receive no link rewrite. Existing scheduler restart/recovery evidence is retained.
+Live deployed GitHub/customer and exact-source hosted acceptance remain outstanding. No live provider or GitHub mutation is claimed.

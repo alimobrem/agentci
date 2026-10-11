@@ -126,7 +126,7 @@ RUN case "$TARGETARCH" in \
     podman --version | grep '6.1.3'
 
 # Copy only the CLI component into UBI; no Docker daemon or upstream Alpine filesystem ships.
-FROM docker:29.8.2-cli@sha256:b1805116a6a86cc591b5d5f60a910a0715cdcc9d18d866ad68b1457ead25c35c AS docker-cli
+FROM docker:29.9.0-cli@sha256:1a4c7cb63513f349bdad01fcc6e0f3f2f67d37b9da86f14dc0d4a0942eecda00 AS docker-cli
 FROM runtime AS eval-worker-base
 USER 0
 RUN microdnf remove -y microdnf rpm rpm-libs libdnf libmodulemd librepo libsolv dnf-data rpm-sequoia
@@ -151,6 +151,6 @@ USER 0
 COPY --from=docker-cli /usr/local/bin/docker /usr/local/bin/docker
 COPY deploy/security/docker-cli-vendor.mod /licenses/docker-cli/go.mod
 COPY deploy/licenses/docker-cli-LICENSE /licenses/docker-cli-LICENSE
-RUN mkdir -p /opt/agentci/docker-config && chmod 0555 /opt/agentci/docker-config && docker --version | grep '29.8.2'
+RUN mkdir -p /opt/agentci/docker-config && chmod 0555 /opt/agentci/docker-config && docker --version | grep '29.9.0'
 ENV AGENTCI_CONTAINER_ENGINE=docker DOCKER_CONFIG=/opt/agentci/docker-config DOCKER_HOST=unix:///run/agentci/engine.sock
 USER 1001
