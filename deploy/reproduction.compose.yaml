@@ -1,6 +1,30 @@
 # Opt-in M3 development consumer. Apply the pinned authority config explicitly
 # before starting; the released M2 base deployment remains disabled by default.
 services:
+  api:
+    image: ${AGENTCI_REPRODUCTION_API_IMAGE:-agentci-api:0.4.0-m3-dev.1}
+    environment:
+      AGENTCI_REPRODUCTION_CATALOG_FILE: /run/agentci/reproduction-catalog.json
+      AGENTCI_REPRODUCTION_CATALOG_DIGEST: ${AGENTCI_REPRODUCTION_CATALOG_DIGEST:?Set canonical operator catalog digest}
+      AGENTCI_REPRODUCTION_CONFIG_REVISION: ${AGENTCI_REPRODUCTION_CONFIG_REVISION:?Set expected applied config revision}
+      AGENTCI_REPRODUCTION_CONFIG_DIGEST: ${AGENTCI_REPRODUCTION_CONFIG_DIGEST:?Set expected applied config digest}
+      AGENTCI_CURSOR_KEY: ${AGENTCI_CURSOR_KEY:?Set an independent cursor signing key}
+      AGENTCI_OPERATOR_TOKEN: ${AGENTCI_OPERATOR_TOKEN:?Set a distinct scoped operator token}
+      GITHUB_PRIVATE_KEY_FILE: /run/secrets/github-app.pem
+      OPENAI_API_KEY: ""
+      ANTHROPIC_API_KEY: ""
+      XAI_API_KEY: ""
+    volumes:
+      - type: bind
+        source: ${AGENTCI_REPRODUCTION_CATALOG_FILE:?Set absolute operator catalog path}
+        target: /run/agentci/reproduction-catalog.json
+        read_only: true
+        bind: { create_host_path: false }
+      - type: bind
+        source: ${GITHUB_PRIVATE_KEY_FILE:?Set GITHUB_PRIVATE_KEY_FILE}
+        target: /run/secrets/github-app.pem
+        read_only: true
+        bind: { create_host_path: false }
   worker:
     image: ${AGENTCI_REPRODUCTION_WORKER_IMAGE:-agentci-worker:0.4.0-m3-dev.1}
     environment:
@@ -10,4 +34,8 @@ services:
       AGENTCI_REPRODUCTION_CONFIG_DIGEST: ${AGENTCI_REPRODUCTION_CONFIG_DIGEST:?Set expected applied config digest}
       AGENTCI_CURSOR_KEY: ${AGENTCI_CURSOR_KEY:?Set an independent cursor signing key}
     volumes:
-      - ${AGENTCI_REPRODUCTION_CATALOG_FILE:?Set absolute operator catalog path}:/run/agentci/reproduction-catalog.json:ro
+      - type: bind
+        source: ${AGENTCI_REPRODUCTION_CATALOG_FILE:?Set absolute operator catalog path}
+        target: /run/agentci/reproduction-catalog.json
+        read_only: true
+        bind: { create_host_path: false }

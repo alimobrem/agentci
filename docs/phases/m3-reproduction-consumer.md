@@ -8,12 +8,16 @@ The catalog is an operator-owned JSON artifact with `schemaVersion: v1alpha1`, d
 
 Before reserving the first operation, use the catalog readers to validate and explicitly apply a `ReproductionOperatorConfig` through `ReproductionAuthorityStore.apply(config, expected)`. Initial application uses `expected: null`; later revisions require the exact previous revision and digest. This is an explicit operator action, separate from worker startup. The configuration validator recompiles each enabled approved plan against the authenticated historical finding and exact base/head snapshots. Revocation tombstones prevent re-enabling a revoked plan. The deployment operator command below applies this configuration. Public customer mutation routes and the full customer onboarding demo remain separate gates.
 
-Enable the controller by setting all four variables:
+Enable API admission and the worker controller with the same operator catalog and applied authority identity. Set all four variables in both processes:
 
 - `AGENTCI_REPRODUCTION_CATALOG_FILE`: absolute path to the operator artifact.
 - `AGENTCI_REPRODUCTION_CATALOG_DIGEST`: canonical SHA-256 of that JSON document.
 - `AGENTCI_REPRODUCTION_CONFIG_REVISION`: expected positive integer applied revision.
 - `AGENTCI_REPRODUCTION_CONFIG_DIGEST`: canonical SHA-256 of that applied configuration.
+
+The API also requires its scoped `AGENTCI_OPERATOR_TOKEN` and App key file (`GITHUB_PRIVATE_KEY_FILE`); the overlay supplies the read-only App mount and excludes provider keys from the control process. This references existing credentials and does not create access. Catalog and API App bind mounts refuse to create missing host paths.
+
+The opt-in Compose overlay mounts the same catalog read-only at `/run/agentci/reproduction-catalog.json` in API and worker. Verify the daemon-visible mount, canonical catalog digest and applied database revision/digest in both processes before enabling admission. API/worker startup checks the applied identity; Compose rendering alone does not prove database authority or real execution.
 
 Without these variables, reproduction is disabled. Partial configuration is an error. Loading is bounded to 32 MiB and validates scope and identity; startup only reads the expected applied identity. An independent `AGENTCI_CURSOR_KEY` is also required for authenticated historical finding reads; it must not reuse the evidence or operator token. The existing isolated evaluator queue is `agentci-eval-v1`. Drain old controller/evaluator workers and readers and apply the migrations before enabling this consumer; mixed deployments have not been accepted as safe.
 
@@ -23,7 +27,7 @@ After reservation, immutable scoped database plans are authoritative. A present 
 
 Use the compiled deployment operator command on a trusted controller host with its scoped database, App and cursor-key environment. It is packaged under `dist/cmd/reproduction-operator/main.js`; it is not a public API request. From an installed package, replace `dist/` in these commands with `node_modules/agentci/dist/`.
 
-1. Prepare the operator catalog of compiled plans and a configuration JSON document. Each enabled approval references the **historical pre-queue** finding version/digest and the complete queued plan ID/digest, plus an explicit expiry. See `packages/findings/reproduction-config.ts` for the exact schema. Scope must match the deployment. The initial document has revision 1.
+1. Bootstrap the API/worker with `deploy/reviewer.compose.yaml` and reproduction disabled. First register the reviewer profile and retain an actual exact-head review admission and historical finding. Read its exact base/head snapshots before compiling an approved plan. A changed fixed head requires a new exact-subject admission and approval; the original receipt remains immutable. Prepare the operator catalog of compiled plans and a configuration JSON document. Each enabled approval references the **historical pre-queue** finding version/digest and the complete queued plan ID/digest, plus an explicit expiry. See `packages/findings/reproduction-config.ts` for the exact schema. Scope must match the deployment. The initial document has revision 1.
 2. Compute the canonical digests, never a raw file-byte hash. From the built checkout:
 
    ```sh
@@ -39,7 +43,7 @@ Use the compiled deployment operator command on a trusted controller host with i
    ```
 
    Success prints only `{"applied":{"revision":1,"digest":"sha256:…"}}`. It validates authentic finding history and exact source snapshots, writes configuration, and queues no reproduction or evaluator job.
-5. For Compose development, add `-f deploy/reproduction.compose.yaml` to the existing deployment command so the catalog is mounted read-only at the container path. Build/use the M3 worker image matching the tested source, and apply all migrations before starting it. The base M2 images do not implement this consumer. Start the configured controller and isolated evaluator. A queued operation requires its separate approved reservation; configuration alone does not start work. For a later revision, use `--expected 'PREVIOUS_REVISION:sha256:PREVIOUS_DIGEST'` and the new target identity. An exact retry of an ambiguously completed apply uses the **same original expected identity**. A stale expectation or changed replay fails. To revoke a plan, set its approval `enabled` to false in the next revision; that plan cannot be re-enabled.
+5. For Compose development, add `-f deploy/reproduction.compose.yaml` to the existing deployment command so the catalog is mounted read-only at the container path. Use both M3 API and worker images matching the tested source, and apply all migrations before starting them. The base M2 images do not implement this consumer. Start the configured controller and isolated evaluator. A queued operation requires its separate approved reservation; configuration alone does not start work. For a later revision, use `--expected 'PREVIOUS_REVISION:sha256:PREVIOUS_DIGEST'` and the new target identity. An exact retry of an ambiguously completed apply uses the **same original expected identity**. A stale expectation or changed replay fails. To revoke a plan, set its approval `enabled` to false in the next revision; that plan cannot be re-enabled.
 
 Config files are bounded to 64 KiB and pinned before a privileged connection is opened. Config bytes, credentials and backend exception text are not printed. Invalid arguments and unavailable application exit 2 with distinct bounded error codes. A success is a configuration-application result, not passing behavioral evidence. Operator updates and workflow recovery remain deployment-scoped.
 

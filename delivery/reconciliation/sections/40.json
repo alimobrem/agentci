@@ -6326,6 +6326,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-07d-2b",
+          "status": "done",
+          "startedAt": "2026-10-11T20:19:23.846Z",
+          "completedAt": "2026-10-11T20:23:47.857Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local configuration slice: opt-in Compose renders identical read-only catalog path, canonical catalog digest and applied revision/digest in API and worker with required API credentials referenced; missing/empty inputs fail before startup and missing catalog host paths cannot be created. Base M2 and evaluator boundaries stay unchanged. Focused Compose/runtime tests, local fast checks and independent source review pass. Full combined-tree hosted CI is required before merge; real customer and milestone acceptance remain pending.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-api-worker-authority-local.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6416,6 +6433,12 @@
         {
           "path": "delivery/acceptance/m3-release-docs-integration-local.json",
           "sha256": "2aca68b18f8168b4d8a1c4cd0bfbf2a97a4ac725f06d18e6b39502a32c912472",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-api-worker-authority-local.json",
+          "sha256": "12aef2dcab6c1d46f24b6369c1194b0ca982c4d183c783390883a0a8ed075767",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -6710,6 +6733,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-07d-2b",
+          "status": "done",
+          "startedAt": "2026-10-11T20:19:23.846Z",
+          "completedAt": "2026-10-11T20:23:47.857Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local configuration slice: opt-in Compose renders identical read-only catalog path, canonical catalog digest and applied revision/digest in API and worker with required API credentials referenced; missing/empty inputs fail before startup and missing catalog host paths cannot be created. Base M2 and evaluator boundaries stay unchanged. Focused Compose/runtime tests, local fast checks and independent source review pass. Full combined-tree hosted CI is required before merge; real customer and milestone acceptance remain pending.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-api-worker-authority-local.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6800,6 +6840,12 @@
         {
           "path": "delivery/acceptance/m3-release-docs-integration-local.json",
           "sha256": "2aca68b18f8168b4d8a1c4cd0bfbf2a97a4ac725f06d18e6b39502a32c912472",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-api-worker-authority-local.json",
+          "sha256": "12aef2dcab6c1d46f24b6369c1194b0ca982c4d183c783390883a0a8ed075767",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
