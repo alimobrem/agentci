@@ -1,3 +1,4 @@
+import {loadReproductionRuntime} from '../../packages/runtime/reproductions.ts';
 import {readFile} from 'node:fs/promises';
 import {loadReviewerDefinition} from '../../packages/runtime/reviewers.ts';
 import {installationClient} from '../../packages/github/client.ts';
@@ -19,8 +20,10 @@ const comparisons=new EvalStore(pool,config.organizationId,config.repository);
 await comparisons.ready();
 const definition=await loadReviewerDefinition();
 if(definition&&!config.operatorToken)throw Error('Model review mutation credential required');
-const github=definition?installationClient(config.appId,config.installationId,await readFile(process.env.GITHUB_PRIVATE_KEY_FILE??'','utf8')):undefined;
-const modelReviews=await createModelReviewControl(pool,config,definition,github);
+const reproductionRuntime=await loadReproductionRuntime(config);
+if(reproductionRuntime&&!config.operatorToken)throw Error('Reproduction mutation credential required');
+const github=definition||reproductionRuntime?installationClient(config.appId,config.installationId,await readFile(process.env.GITHUB_PRIVATE_KEY_FILE??'','utf8')):undefined;
+const modelReviews=await createModelReviewControl(pool,config,definition,github,reproductionRuntime);
 const server = createControlApi(config, store, comparisons,modelReviews);
 server.requestTimeout = 10_000; server.headersTimeout = 10_000;
 const port = Number(process.env.AGENTCI_PORT ?? 3000);

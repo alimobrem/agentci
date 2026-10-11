@@ -2762,6 +2762,94 @@
         "M3-07c-0"
       ],
       "blockedReason": "Local client/CLI HTTP/PostgreSQL and production-installed checks pass; exact published-source hosted CI and independent review remain pending. Evidence: delivery/acceptance/m3-reproduction-client-cli-cloud.json"
+    },
+    {
+      "id": "M3-07c-3f",
+      "title": "Operator-authorized reproduction reservation HTTP and client",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3",
+        "SECTION-12.4",
+        "SECTION-12.5"
+      ],
+      "status": "blocked",
+      "startedAt": "2026-10-08T02:15:44.399Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Authenticated operator reservation uses pinned applied approval and fresh permission checks with reservation/event/intent/state committed in the same authority transaction; typed client and executable CLI preserve original admission, exact request identity, bounded retry/deadline, version/idempotency conflicts and redacted errors. Actual PostgreSQL/HTTP and installed package regressions cover denied/stale/revoked permissions, rollback, concurrent retries, immediate status/cancellation and no implicit execution. No disposition or full phase closure claimed.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-3d-2b"
+      ],
+      "blockedReason": "Local reservation/client/CLI, 33 PostgreSQL checks, 5 production-installed tests, compatibility and independent review pass. Exact-new-source hosted CI/physical isolation remain pending; local immutable UBI runner unavailable. No new publication/phase acceptance claimed."
+    },
+    {
+      "id": "M3-07c-3g",
+      "title": "Authenticated retained operator receipts and disposition transport/client",
+      "requirementIds": [
+        "SECTION-31.1",
+        "SPEC-31.2-001",
+        "SECTION-32",
+        "SECTION-12.3",
+        "SECTION-12.4",
+        "SECTION-12.5"
+      ],
+      "status": "blocked",
+      "startedAt": "2026-10-08T02:33:35.525Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Operator-only disposition produces authenticated immutable receipt from validated operator input, binds original review/subject/finding/version/operation, and retains receipt plus lifecycle event in one transaction. Trusted reader rejects substituted/corrupt/cross-scope receipts; concurrent exact replay preserves original outcome after later history; invalid transitions/conflicts and transaction failures leave no partial mutation. Typed client and CLI plus real PostgreSQL/HTTP and production-installed tests verify bounded/auth/identity/error/recovery behavior. Original M1/M2 contracts and no consensus-only confirmation remain intact. Hosted CI/isolation and aggregate M3 transport/phase gates remain separate.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": [
+        "M3-07c-2"
+      ],
+      "blockedReason": "Local immutable receipt/disposition route, client and CLI, PostgreSQL failure/recovery and nine production-installed tests plus independent review pass. Exact-source hosted CI/physical isolation remain pending; local immutable UBI runner unavailable. No publication or aggregate phase acceptance claimed."
+    },
+    {
+      "id": "M3-07c-INTEGRITY-1",
+      "title": "Snapshot mutation inputs before acquisition and authenticate disposition replay",
+      "requirementIds": [
+        "SECTION-31",
+        "SECTION-12",
+        "SECTION-13"
+      ],
+      "status": "blocked",
+      "startedAt": "2026-10-08T03:59:45.813Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Delayed acquisition and transaction-query tests bind original caller subject/selector/action for both public storage wrappers and shared transaction methods",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-pr72-integrity-local.json"
+          ]
+        },
+        {
+          "text": "Raw HTTP exact replay authenticates retained receipt/event agreement, rejects coherent rehashed reason substitution and preserves valid idempotent replay/recovery",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-pr72-integrity-local.json"
+          ]
+        },
+        {
+          "text": "Independent exact-source review and applicable local fast/PostgreSQL/installed/contract/reconciliation checks pass; hosted runtime remains explicitly unverified",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-pr72-integrity-local.json"
+          ]
+        }
+      ],
+      "blockedReason": "Local integrity and reconciliation fixes independently pass; changed publication requires explicit approval, and exact-source hosted runtime/physical isolation remain unverified."
     }
   ]
 }

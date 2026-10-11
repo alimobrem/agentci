@@ -1,0 +1,37 @@
+{
+  "task": "M3-R1",
+  "recordedAt": "2026-10-08T02:27:43.178379+00:00",
+  "reviewer": "/root/client_review",
+  "reviewedSource": "3cb889e5921bc78232bf478de94a3e6b74802c26",
+  "reuse": "Verifier hash and relevant scripts/workflows/tests unchanged from dfa3c970; existing evidence reusable",
+  "verification": {
+    "publicationTests": 8,
+    "operationalChecks": [
+      "complete synthetic receipts accepted",
+      "missingplatform/tampered evidence rejected without assemblyinputs",
+      "failed outcome/null digest/source+run identity retained by actual command",
+      "failure upload always; assembly requires successful native jobs"
+    ],
+    "logs": [
+      {
+        "path": "/workspace/scratch/r1-review-negative-tests-20261008.log",
+        "sha256": "571935a03b932a23ae6d14655dc357a3cee94abd702a8acb2bf8f2c2ca28e80b"
+      },
+      {
+        "path": "/workspace/scratch/r1-review-operational-negative-20261008.log",
+        "sha256": "c132b1e39936577bdb25d5fce74d88fedefd8bcdb9354e8660387a697cf87370"
+      }
+    ]
+  },
+  "nativeExistingEvidence": "Twelve native builds, six immutable indices, bothplatform scans, anonymous downloaded runtime/isolation/recovery and timeout margins established in m3-r1-native-downloads.json; reviewer inspected records, did not re-download remote artifacts",
+  "remaining": [
+    "Observed warm layer reuse at next necessary publication",
+    "Consolidate reviewed acceptance and matched-cache timing before claiming acceleration"
+  ],
+  "limits": [
+    "No deliberately failed remote publication required by agreed acceptance",
+    "Actual upload after remote failure/runnerloss unverified and not claimed",
+    "Development candidate evidence is not final M3 release evidence",
+    "No task or phase gate promoted"
+  ]
+}

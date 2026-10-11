@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07c-3g",
+  "state": "locally-verified-hosted-ci-physical-isolation-pending",
+  "recordedAt": "2026-10-08T02:47:04.154085+00:00",
+  "sourceCommit": "660806dd6541abf3d45096cd77b18a65915bc2c9",
+  "sourceTree": "dca2b7018fabd0e0de0f19540691ad716f624fa1",
+  "base": "29480a8942a81ed77b4a2b6dca1955ccb69935d4",
+  "scope": "Authenticated scoped operator receipts and false-positive/resolved dispositions, one transaction with immutable lifecycle event; original draft contract, typed client and executable CLI. Operator attestations have assertionDigest:null and do not confirm reproduction. No implicit evaluator execution.",
+  "validation": {
+    "node": "26.10.0",
+    "npm": "12.2.0",
+    "fastChecks": 10,
+    "unitTests": 424,
+    "focusedPostgres": 24,
+    "productionInstalled": 9,
+    "failed": 0,
+    "skipped": 0,
+    "genericPackageSmoke": "passed, all three installed provider adapters with no live external-provider call",
+    "compatibility": "Immutable M1/M2 baselines and negative checks passed",
+    "workflows": "Pinned actionlint/context negative checks passed",
+    "independentReview": "/root/client_review: exact final archive installed9 passed; 367 compiled files and packaged migration/contracts/docs match; no remaining blocking findings",
+    "scenarios": [
+      "reader denied and operator required before I/O; strict body/scope/admission rejection",
+      "concurrent exact replay one receipt/event; changed input and stale version conflict",
+      "original event replay after later resolution and service restart",
+      "immutable SQL receipts; migration replay/checksum integrity",
+      "failed event insertion rolls back receipt; same operation safely recovers; redacted errors",
+      "trusted reader rejects cross-scope, rehashed request/receipt and rehashed operation-ID substitutions",
+      "installed client rejects rehashed response operation-ID substitution",
+      "lost response retries byte-identical input, one event/receipt, no evaluator jobs",
+      "compiled executable CLI original result and prompt FIFO rejection"
+    ]
+  },
+  "archive": {
+    "path": "/workspace/scratch/disposition-package/agentci-0.4.0-m3-dev.1.tgz",
+    "sha256": "754a47644a35f14973ab3a5d1f7c5207d257141e9a29b6fa1c6595153179bb16"
+  },
+  "logs": [
+    {
+      "path": "/workspace/scratch/disposition-fast-final.log",
+      "sha256": "d4f46c7a8efdc6e3702e1c24e74c12b0a9da70532a30267c08c57c0f6a27b971"
+    },
+    {
+      "path": "/workspace/scratch/disposition-fast-exact-source.json",
+      "sha256": "dfeefcb38511a455ed1d2d2145061cc7a884731a9bcfee36b4b6b8b53a427b4e"
+    },
+    {
+      "path": "/workspace/scratch/disposition-source-fast.log",
+      "sha256": "3c9098fbb14e23c26fbf97457eb7c9693005f35d95a879ce414169cc74903b27"
+    },
+    {
+      "path": "/workspace/scratch/disposition-source-focused.log",
+      "sha256": "49496530f6effad92caec3d4e53bb32392339f2d4588161a0f7f3641c58d54a9"
+    },
+    {
+      "path": "/workspace/scratch/disposition-source-compat.log",
+      "sha256": "2dc9078e5f7431ed5c1cc28a8224df977405fd478f183f2aa930888b4b7a1212"
+    },
+    {
+      "path": "/workspace/scratch/disposition-source-workflows.log",
+      "sha256": "d8ba84896d82803c6a5c7d4fe407d5e32c8fa0b987ac2b266317782c4eb3d310"
+    },
+    {
+      "path": "/workspace/scratch/disposition-source-installed2.log",
+      "sha256": "645685d0f4f0acc64d895970ce9b83c17c551a1394758aaeda790f2ddf666c39"
+    },
+    {
+      "path": "/workspace/scratch/disposition-package-smoke-final.log",
+      "sha256": "ffc1aa63839af0dfbaf7d34a04a913ffadc459ee45c73d35b9f0b61043a4601e"
+    },
+    {
+      "path": "/workspace/scratch/disposition-independent-installed-660806d-20261008.log",
+      "sha256": "ce00ee65933b37fb97c92ccb8e13d88d861327b29bbf3c09b75fcaf8e41bab04"
+    },
+    {
+      "path": "/workspace/scratch/disposition-independent-final-equivalence-660806d-20261008.log",
+      "sha256": "f57187f4c111a13bb2cd7ab67ba2715c35de2239524b791eca001234e0cb46df"
+    },
+    {
+      "path": "/workspace/scratch/disposition-independent-reader-corruption-20261008.log",
+      "sha256": "60dd96b45420b4141c3cab8ac79ab1fc43b07e1480230951bcd17689178bed39"
+    },
+    {
+      "path": "/workspace/scratch/disposition-independent-reader-fixed-20261008.log",
+      "sha256": "cfdbe76b9d698399f1c933674ac574b4811983b8508e69983173e382fa803138"
+    },
+    {
+      "path": "/workspace/scratch/disposition-types.log",
+      "sha256": "f0699dc96e413ebd14bac37882afaebaaa17dafd8939a5d469f08cfb6ec7da1a"
+    },
+    {
+      "path": "/workspace/scratch/disposition-types3.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/disposition-source-installed.log",
+      "sha256": "a38df513371ea94c23d82e4a82d6b27ac816316fdbd156ee75ba3ee37db5d00f"
+    }
+  ],
+  "failedAttemptsPreserved": [
+    "Initial typecheck identified two nullable-review accesses; corrected without behavior change.",
+    "Independent reviewer demonstrated operation-ID substitution accepted by standalone receipt reader; explicit event operation binding added and independently rerun with real database regression. No route bypass demonstrated.",
+    "Initial exact-source installed rerun omitted task-specific npm cache, failed ENOENT before execution; rerun with /workspace/toolchains/npm-cache passed.",
+    "Initial block CLI invocation omitted task verb; made no tracking change; corrected task command and retained normal block event."
+  ],
+  "limits": [
+    "No new publication, merge, deploy or release authorized/performed. PR71 remains draft/unmerged.",
+    "Exact new-source hosted CI and mandatory physical container isolation remain unverified; local immutable UBI runner inaccessible. Prior CI does not certify new mutation source.",
+    "M3-07 aggregate customer/Checks and success/failure/recovery acceptance, R1 remaining warm-publication evidence and all 18 M3 milestone gates remain pending. UI has not started.",
+    "Only inaccessible external model-provider validation may remain explicitly deferred under approved exception; all three adapters remain required.",
+    "Unpublished original Mac files were not transferred or inferred; Mac untouched.",
+    "Fast final report identifies clean runtime source660806d; subsequent source-fast includes delivery-tracking-only dirty changes. Evidence commit affects metadata only."
+  ]
+}

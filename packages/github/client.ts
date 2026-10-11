@@ -27,18 +27,18 @@ export function createRemoteSnapshotReader(client:Octokit,limits:{maxBytes?:numb
   if(!Number.isSafeInteger(seedTimeoutMs)||seedTimeoutMs<1||seedTimeoutMs>40000||limits.seedTimeoutMs!==undefined&&!limits.seed)throw Error('Invalid seed timeout');
   const cache:VerifiedBlobCache={blobs:new Map(),bytes:0,maxBytes,maxEntries};
   const metrics:SnapshotReadMetrics={commitAttempts:0,treeAttempts:0,memoryHits:0,localHits:0,localMisses:0,remoteBlobAttempts:0,remoteHits:0,requestFailures:0,localCooldownBlocks:0,localReadFailures:0,verificationFailures:0};
-  return Object.assign((repository:string,sha:string)=>readRemoteSnapshot(client,repository,sha,cache,limits.seed,metrics,seedTimeoutMs),{metrics:()=>({...metrics})});
+  return Object.assign((repository:string,sha:string,signal?:AbortSignal)=>readRemoteSnapshot(client,repository,sha,cache,limits.seed,metrics,seedTimeoutMs,signal),{metrics:()=>({...metrics})});
 }
 export async function remoteSnapshot(client: Octokit, repository: string, sha: string): Promise<Snapshot> {
   return readRemoteSnapshot(client,repository,sha);
 }
-async function readRemoteSnapshot(client:Octokit,repository:string,sha:string,cache?:VerifiedBlobCache,seed?:GitBlobSeed,metrics?:SnapshotReadMetrics,seedTimeoutMs=40000):Promise<Snapshot> {
+async function readRemoteSnapshot(client:Octokit,repository:string,sha:string,cache?:VerifiedBlobCache,seed?:GitBlobSeed,metrics?:SnapshotReadMetrics,seedTimeoutMs=40000,signal?:AbortSignal):Promise<Snapshot> {
   if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('Exact SHA required');
   if(seed&&seed.repository!==repository)throw Error('Seed repository mismatch');
   const request=async<T>(kind:'commitAttempts'|'treeAttempts'|'remoteBlobAttempts',call:()=>Promise<T>):Promise<T>=>{
-    if(metrics)metrics[kind]++;try{return await call();}catch(error){if(metrics)metrics[error instanceof GitHubRateLimitWait?'localCooldownBlocks':'requestFailures']++;throw error;}
+    signal?.throwIfAborted();if(metrics)metrics[kind]++;try{const result=await call();signal?.throwIfAborted();return result;}catch(error){if(metrics)metrics[error instanceof GitHubRateLimitWait?'localCooldownBlocks':'requestFailures']++;throw error;}
   };
-  const repo = names(repository);
+  const repo = {...names(repository),...(signal?{request:{signal,timeout:9000}}:{})};
   const { data: commit } = await request('commitAttempts',()=>client.git.getCommit({ ...repo, commit_sha: sha }));
   if (commit.sha !== sha) throw new Error('Commit identity mismatch');
   const { data } = await request('treeAttempts',()=>client.git.getTree({ ...repo, tree_sha: commit.tree.sha, recursive: 'true' }));
