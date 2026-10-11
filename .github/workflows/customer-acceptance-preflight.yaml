@@ -1,0 +1,48 @@
+name: Customer acceptance preflight
+on:
+  workflow_dispatch:
+    inputs:
+      fixtures:
+        description: Exact JSON with repository, serviceSource, appId, installationId and seeded/fixed subjects
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: agentci-customer-acceptance-preflight
+  cancel-in-progress: false
+jobs:
+  preflight:
+    if: github.repository == 'alimobrem/agentci' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { ref: '${{ github.sha }}', persist-credentials: false }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0, cache: npm }
+      - run: npm install --global npm@12.2.0
+      - run: npm ci && npm run build
+      - name: Validate immutable fixture inputs before loading key
+        env:
+          FIXTURES: ${{ inputs.fixtures }}
+        run: |
+          node --input-type=module - <<'JS'
+          import {writeFileSync} from 'node:fs';
+          import {validateCustomerInputs} from './scripts/lib/customer-acceptance-preflight.mjs';
+          const input=validateCustomerInputs(JSON.parse(process.env.FIXTURES));
+          if(input.serviceSource!==process.env.GITHUB_SHA)throw Error('Service source mismatch');
+          writeFileSync('customer-fixtures.json',JSON.stringify(input),{mode:0o600});
+          JS
+      - name: Inspect separate customer App and exact fixture heads
+        env:
+          AGENTCI_CUSTOMER_APP_PRIVATE_KEY: ${{ secrets.AGENTCI_CUSTOMER_APP_PRIVATE_KEY }}
+        run: node scripts/m3-customer-app-preflight.mjs customer-fixtures.json
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: customer-preflight
+          path: customer-preflight.json
+          if-no-files-found: error
+      - name: Remove public input scratch
+        if: always()
+        run: rm -f customer-fixtures.json

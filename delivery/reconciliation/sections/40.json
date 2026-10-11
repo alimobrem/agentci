@@ -6360,6 +6360,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-07d-2c",
+          "status": "done",
+          "startedAt": "2026-10-11T20:48:41.016Z",
+          "completedAt": "2026-10-11T20:52:11.612Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local preflight verifies exact separate demo App, installation, permissions and immutable fixture heads; key lifecycle and rejection tests pass. This accepts preparation only; live four-scenario driver, customer Checks and physical execution remain pending.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-app-preflight-local.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6462,6 +6479,12 @@
         {
           "path": "delivery/acceptance/m3-development-publication-retained-local.json",
           "sha256": "88dd9459b00e660571bb55d77cc9be1ba96e97a033b7a54093b779ac08f0e548",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-app-preflight-local.json",
+          "sha256": "25702f9821e8cded7473cf9cf38cad798fdfd66a6e9fc476048b8579fc1c838e",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -6790,6 +6813,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-07d-2c",
+          "status": "done",
+          "startedAt": "2026-10-11T20:48:41.016Z",
+          "completedAt": "2026-10-11T20:52:11.612Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local preflight verifies exact separate demo App, installation, permissions and immutable fixture heads; key lifecycle and rejection tests pass. This accepts preparation only; live four-scenario driver, customer Checks and physical execution remain pending.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-app-preflight-local.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6892,6 +6932,12 @@
         {
           "path": "delivery/acceptance/m3-development-publication-retained-local.json",
           "sha256": "88dd9459b00e660571bb55d77cc9be1ba96e97a033b7a54093b779ac08f0e548",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-app-preflight-local.json",
+          "sha256": "25702f9821e8cded7473cf9cf38cad798fdfd66a6e9fc476048b8579fc1c838e",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

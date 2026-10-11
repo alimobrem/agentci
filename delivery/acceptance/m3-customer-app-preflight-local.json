@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07d-2c",
+  "scope": "Local separate customer App read-only preflight preparation only",
+  "sourceCommit": "d019b1cb0c74190d667fc929d1a44f0cc0cd1824",
+  "sourceTree": "c9419542f45ef390c67827b6c616559397eae6bd",
+  "recordedAt": "2026-10-11T20:52:10.546151+00:00",
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/customer-acceptance-preflight.yaml",
+      "sha256": "b3024278b8284c886cf6efcef6391bf265377aa8136bac6e352bb2bee513bd90"
+    },
+    {
+      "path": "scripts/lib/customer-acceptance-preflight.mjs",
+      "sha256": "69b1a3f5572947974a995f9e903d745411f2934a360c70da43af9f97350e768e"
+    },
+    {
+      "path": "scripts/m3-customer-app-preflight.mjs",
+      "sha256": "45b3b7097c57f8b51e9c0daf0689369587592633b7919703f5e96cafff812d58"
+    },
+    {
+      "path": "tests/customer-app-preflight.test.ts",
+      "sha256": "156a1ae8fdd28621062b9d96eae5e5148b5115cc90247582d4778bb493453d87"
+    },
+    {
+      "path": "docs/phases/m3-customer-acceptance-preparation.md",
+      "sha256": "b2e7d86d8d437ff3dc9ccda2204f74c268ea4d47a483b932fccd779c9765647f"
+    }
+  ],
+  "checks": [
+    {
+      "name": "focused-5-tests",
+      "result": "passed",
+      "path": "/workspace/scratch/customer-preflight-focused-final.log",
+      "sha256": "80c80fc947110f3c2259de7e9f23abef0941b8c52aae461b9b5014a2c32db74c"
+    },
+    {
+      "name": "fast-10-checks",
+      "result": "passed",
+      "seconds": 22.86,
+      "path": "/workspace/scratch/customer-preflight-fast-final.log",
+      "sha256": "aee1377818eadf80327e8937378b3998976c5c961c35c475291ced7a7d7d2bfc"
+    },
+    {
+      "name": "workflow-lint",
+      "result": "passed",
+      "cache": "existing pinned archive verified by repository script"
+    }
+  ],
+  "fullHostedCI": "required-before-merge",
+  "liveScenarioExecution": "unverified",
+  "physicalReproduction": "unverified",
+  "customerChecks": "unverified",
+  "externallyReachableEndpoint": "unverified",
+  "credentialsConfigured": false,
+  "publicCustomerAppIds": "unknown",
+  "milestoneGates": "all 18 M3 gates remain pending",
+  "originalScope": "M0-M10 order, all three adapters, observed-rate calibration and descriptive Wilson; sole inaccessible external provider exception unchanged"
+}
