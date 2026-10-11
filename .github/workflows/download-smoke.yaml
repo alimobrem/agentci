@@ -101,7 +101,10 @@ jobs:
         with:
           ref: ${{ github.workflow_sha }}
           path: .acceptance-harness
-          sparse-checkout: scripts/download-integration-reporter.mjs
+          sparse-checkout: |
+            scripts/download-integration-reporter.mjs
+            scripts/record-download-runtime.mjs
+            scripts/lib/download-runtime-evidence.mjs
           sparse-checkout-cone-mode: false
           persist-credentials: false
       - name: Anonymously download and bind all six role digests
@@ -163,6 +166,8 @@ jobs:
         run: |
           node scripts/verify-native-provenance.mjs "$WORKER_IMAGE" > downloaded-worker-native.json
           node scripts/verify-native-provenance.mjs "$EVAL_WORKER_IMAGE" > downloaded-eval-worker-native.json
+      - name: Bind all mandatory runtime and native proof files to this acceptance cohort
+        run: node .acceptance-harness/scripts/record-download-runtime.mjs
       - name: Remove acceptance Temporal
         if: always()
         run: docker rm -f agentci-download-temporal || true

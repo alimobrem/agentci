@@ -11,13 +11,14 @@ async function fixture(){
  const root=await mkdtemp(join(tmpdir(),'agentci-release-execution-'));
  const put=async(path:string,value:string|Buffer)=>{await mkdir(dirname(join(root,path)),{recursive:true});await writeFile(join(root,path),value);};
  const json=async(path:string,value:any)=>put(path,JSON.stringify(value,null,2)+'\n');
- for(const file of ['development-release.mjs','download-integration-reporter.mjs','image-publication.mjs','native-publication.mjs','lib/development-artifacts.mjs']){await mkdir(dirname(join(root,'scripts',file)),{recursive:true});await copyFile(join('scripts',file),join(root,'scripts',file));}
+ for(const file of ['development-release.mjs','download-integration-reporter.mjs','image-publication.mjs','native-publication.mjs','lib/development-artifacts.mjs','lib/download-runtime-evidence.mjs','record-download-runtime.mjs']){await mkdir(dirname(join(root,'scripts',file)),{recursive:true});await copyFile(join('scripts',file),join(root,'scripts',file));}
  await symlink(resolve('node_modules'),join(root,'node_modules'),'dir');
  await json('package.json',{name:'agentci',version,type:'module',files:['dist','npm-shrinkwrap.json']});
  const lock={name:'agentci',version,lockfileVersion:3,packages:{'':{name:'agentci',version}}};
  await json('package-lock.json',lock);await json('npm-shrinkwrap.json',lock);
  await json('releases/m3-development-candidate.json',{schemaVersion:1,version,repository:'alimobrem/agentci',publication:'approved-development-candidate'});
  await put('dist/cmd/agentci/main.js',`console.log('${version}');\n`);await put('dist/packages/version.js',`export const VERSION='${version}';\n`);
+ for(const file of ['deploy/security/native-components.json','deploy/engines/patches/forge-backport.json','deploy/engines/patches/verify-forge-backport.cjs','deploy/engines/patches/forge-nested-digest-fixture.json','deploy/licenses/docker-cli-LICENSE'])await put(file,await readFile(file));
  await put('tests/integration/probe.test.ts','export {};\n');
  execFileSync('git',['init','--quiet'],{cwd:root});execFileSync('git',['add','package.json'],{cwd:root});execFileSync('git',['-c','user.name=Synthetic acceptance','-c','user.email=synthetic@example.invalid','commit','--quiet','-m','Synthetic source'],{cwd:root});
  const sourceCommit=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),expected={version,sourceCommit,runId:'123',attempt:'1'};
@@ -64,9 +65,32 @@ test('actual finalizer rejects corrupt package/native cohorts before REST writes
   const counts={tests:1,passed:1,failed:0,skipped:0,cancelled:0,todo:0},file=join(f.root,'tests/integration/probe.test.ts');
   for(const arch of ['amd64','arm64']){
    await f.json(`verified/package-${arch}.json`,{result:'passed',...f.expected,platform:'linux/'+arch,anonymous:true,productionOnly:true,lockedRootInstall:true,consumerInstall:true,packageSha256:manifest.package.sha256,manifestSha256:hash(manifestBytes),publicationRunId:'123',publicationAttempt:'1',verificationRunId:'123',verificationAttempt:'1',filesVerified:manifest.files.length});
-   await f.json(`verified/${arch}/downloaded-identities.json`,{...f.expected,platform:'linux/'+arch,anonymous:true,images:images.images.map((i:any)=>({...i,...f.expected,platform:'linux/'+arch}))});
+   await f.json(`verified/${arch}/downloaded-identities.json`,{...f.expected,platform:'linux/'+arch,anonymous:true,images:images.images.map((i:any)=>({...i,...f.expected,localImageId:'sha256:'+'f'.repeat(64),platform:'linux/'+arch}))});
    await f.json(`verified/${arch}/downloaded-integration.json`,{...f.expected,acceptanceCommit:f.expected.sourceCommit,inputs:[{file,sha256:hash(await readFile(file))}],summaries:[{success:true,file,counts},{success:true,counts}]});
   }
+  await addRuntimeProofs(f);
+  // Exercise the actual trusted-harness producer envelope, not just handcrafted
+  // finalizer fixtures, against complete real producer-shaped raw JSON.
+  const identity=await readFile(join(f.root,'verified/amd64/downloaded-identities.json'));await f.put('downloaded-identities.json',identity);
+  const proofNames=['downloaded-image-smoke.json','downloaded-eval-worker-smoke.json','downloaded-worker-native.json','downloaded-eval-worker-native.json','downloaded-forge-backport.json'];
+  for(const name of proofNames){const {acceptance,...raw}=JSON.parse(await readFile(join(f.root,'verified/amd64',name),'utf8'));await f.json(name,raw);}
+  const producer=spawnSync(process.execPath,['scripts/record-download-runtime.mjs'],{cwd:f.root,env:{PATH:process.env.PATH,RELEASE_SOURCE:f.expected.sourceCommit,RELEASE_VERSION:version,RELEASE_ARCH:'amd64',ACCEPTANCE_SOURCE:f.expected.sourceCommit,GITHUB_RUN_ID:'123',GITHUB_RUN_ATTEMPT:'1'},encoding:'utf8'});assert.equal(producer.status,0,producer.stderr);
+  for(const name of proofNames){const result=JSON.parse(await readFile(join(f.root,name),'utf8'));assert.equal(result.acceptance.file,name);assert.equal(result.acceptance.identitiesSha256,hash(identity));}
+  const rejectBeforeREST=async(command='finalize')=>{await rm(join(f.root,'rest.jsonl'),{force:true});const result=f.execute(command);assert.equal(result.status,1,result.stderr);await assert.rejects(readFile(join(f.root,'rest.jsonl')),{code:'ENOENT'});};
+  // Every mandatory proof is required on both native platforms. A rewritten
+  // envelope checksum cannot hide wrong actual runtime identities or assertions.
+  const runtimeFiles=['downloaded-image-smoke.json','downloaded-eval-worker-smoke.json','downloaded-worker-native.json','downloaded-eval-worker-native.json','downloaded-forge-backport.json'];
+  for(const arch of ['amd64','arm64'])for(const name of runtimeFiles){const path=`verified/${arch}/${name}`,original=await readFile(join(f.root,path));await rm(join(f.root,path));await rejectBeforeREST();await f.put(path,original);
+   const changed=JSON.parse(original.toString());if(name.includes('image-smoke'))changed.images.api='sha256:'+'0'.repeat(64);else if(name.includes('eval-worker-smoke'))changed.workerImage='sha256:'+'0'.repeat(64);else if(name.includes('native'))changed.files={...changed.files,'Cargo.lock':'0'.repeat(64)};else changed.malformedRegressionRejected=false;
+   const {acceptance,...body}=changed;changed.acceptance={...acceptance,recordSha256:hash(JSON.stringify(body))};await f.json(path,changed);await rejectBeforeREST();await f.put(path,original);
+   const wrongCohort=JSON.parse(original.toString());wrongCohort.acceptance.attempt='99';await f.json(path,wrongCohort);await rejectBeforeREST();await f.put(path,original);
+  }
+  for(const name of ['publication-evidence.tgz','SHA256SUMS']){const path=join(f.root,'development-assets',name),original=await readFile(path);await writeFile(path,'corrupt-only-uploaded-asset');await rejectBeforeREST('publish');await rejectBeforeREST();await writeFile(path,original);}
+  // A valid gzip archive with a substituted regular member is also rejected,
+  // even if its checksum file was rewritten to match that corrupted archive.
+  const tarPath=join(f.root,'development-assets/publication-evidence.tgz'),tarBytes=await readFile(tarPath),sumsPath=join(f.root,'development-assets/SHA256SUMS'),sums=await readFile(sumsPath);
+  const stage=join(f.root,'substituted/publication-evidence');await mkdir(stage,{recursive:true});const members=execFileSync('tar',['-tzf',tarPath],{encoding:'utf8'}).trim().split('\n');for(const member of members)await copyFile(join(f.root,'development-assets',member),join(f.root,'substituted',member));await writeFile(join(stage,'api-identity.json'),'{}');execFileSync('tar',['-czf',tarPath,'-C',join(f.root,'substituted'),'--',...members]);
+  await writeFile(sumsPath,sums.toString().replace(hash(tarBytes),hash(await readFile(tarPath))));await rejectBeforeREST('publish');await rejectBeforeREST();await writeFile(tarPath,tarBytes);await writeFile(sumsPath,sums);
   const paths=['verified/package-amd64.json','development-assets/package-manifest.json','development-assets/images.json','development-assets/publication-evidence/api-amd64-scan.json','verified/arm64/downloaded-integration.json'];
   for(const path of paths){
    const original=await readFile(join(f.root,path)),changed=JSON.parse(original.toString());
@@ -98,3 +122,21 @@ test('actual partial release upload retains successful asset hashes and refuses 
   const retry=(await readFile(join(f.root,'rest.jsonl'),'utf8')).trim().split('\n').map(line=>JSON.parse(line));assert.ok(retry.every(r=>r.method==='GET'));
  }finally{await rm(f.root,{recursive:true,force:true});}
 });
+// Complete producer-shaped evidence, including source pins and independently
+// retained runtime/native/forge receipts; no workflow-success shortcut.
+async function addRuntimeProofs(f:any){
+ const native=JSON.parse(await readFile('deploy/security/native-components.json','utf8')),forge=JSON.parse(await readFile('deploy/engines/patches/forge-backport.json','utf8'));
+ // @ts-expect-error operational ESM helper
+ const {RUNTIME_FILES,IMAGE_CHECKS,EVAL_CHECKS}=await import('../scripts/lib/download-runtime-evidence.mjs');
+ for(const arch of ['amd64','arm64']){
+  const identityBytes=await readFile(join(f.root,`verified/${arch}/downloaded-identities.json`)),identities=JSON.parse(identityBytes.toString()),image=(role:string)=>identities.images.find((i:any)=>i.role===role);
+  const records:any={
+   'downloaded-image-smoke.json':{result:'passed',version:'downloaded',platform:arch==='amd64'?'x64':arch,images:{api:image('api').localImageId,worker:image('worker').localImageId},checks:IMAGE_CHECKS},
+   'downloaded-eval-worker-smoke.json':{result:'passed',deployment:'native-CLI',engine:'docker',platform:'linux/'+arch,workerImage:image('eval-worker').localImageId,runnerImage:image('eval-runner').localImageId,uid:1001,node:process.version,cli:`Docker version ${native.dockerCli.version}, build ${native.dockerCli.sourceCommit.slice(0,7)}`,license:hash(await readFile('deploy/licenses/docker-cli-LICENSE')),checks:EVAL_CHECKS},
+   'downloaded-worker-native.json':{image:image('worker').image,engine:'docker',platform:'linux/'+arch,temporalNativeArtifacts:'matched official npm artifact',files:native.temporalBridge.files},
+   'downloaded-eval-worker-native.json':{image:image('eval-worker').image,engine:'docker',platform:'linux/'+arch,temporalNativeArtifacts:'matched official npm artifact',files:native.temporalBridge.files,dockerCli:{Version:native.dockerCli.version,GitCommit:native.dockerCli.sourceCommit.slice(0,7),GoVersion:native.dockerCli.goVersion,sha256:native.dockerCli.binarySha256[arch],vendorManifestSha256:native.dockerCli.vendorManifest.sha256}},
+   'downloaded-forge-backport.json':{image:image('eval-engines').localImageId,releaseImage:image('eval-engines').image,...f.expected,platform:'linux/'+arch,observed:{arch:arch==='amd64'?'x64':arch,rsaSha256:forge.afterSha256,metadata:forge,verifierSha256:hash(await readFile('deploy/engines/patches/verify-forge-backport.cjs')),fixtureSha256:hash(await readFile('deploy/engines/patches/forge-nested-digest-fixture.json'))},malformedRegressionRejected:true,validSignaturesAccepted:true,wrongMessagesRejected:true,scannerFindingRetained:true}
+  };
+  for(const name of RUNTIME_FILES){const body=records[name];await f.json(`verified/${arch}/${name}`,{...body,acceptance:{schemaVersion:1,...f.expected,acceptanceCommit:f.expected.sourceCommit,platform:'linux/'+arch,identitiesSha256:hash(identityBytes),file:name,recordSha256:hash(JSON.stringify(body))}});}
+ }
+}

@@ -3,6 +3,7 @@ import {execFileSync} from 'node:child_process';
 import {Octokit} from '@octokit/rest';
 import {tmpdir} from 'node:os';
 import {resolve,join,dirname} from 'node:path';
+import {RUNTIME_FILES,validateRuntimeEvidence} from './lib/download-runtime-evidence.mjs';
 import {validateCoverage} from './download-integration-reporter.mjs';
 import {IMAGE_ROLES,assertUnusedImageTag} from './image-publication.mjs';
 import {DEVELOPMENT_VERSION,SERVICE_REPOSITORY,candidateIdentity,hash,requireAvailableResponse,validatePackageManifest,readDevelopmentImages,validateDevelopmentAssets,validatePackageReceipt,normalizePackOutput} from './lib/development-artifacts.mjs';
@@ -52,7 +53,7 @@ if(command==='preflight'){
  const evidenceFiles=names.filter(n=>/\.json$/.test(n));
  await mkdir('development-assets/publication-evidence',{recursive:true});
  for(const name of evidenceFiles)await copyFile('published/'+name,'development-assets/publication-evidence/'+name);
- execFileSync('tar',['-czf','development-assets/publication-evidence.tgz','-C','development-assets','publication-evidence']);
+ execFileSync('tar',['-czf','development-assets/publication-evidence.tgz','-C','development-assets','--',...evidenceFiles.sort().map(name=>'publication-evidence/'+name)]);
  const assets=[pack.filename,'package-manifest.json','images.json','publication-evidence.tgz'];
  await writeFile('development-assets/SHA256SUMS',(await Promise.all(assets.map(async name=>`${hash(await readFile('development-assets/'+name))}  ${name}\n`))).join(''));
  for(const image of images)await emit(image.role.replaceAll('-','_')+'_image',image.image);
@@ -75,13 +76,18 @@ if(command==='preflight'){
  for(const [index,arch] of ['amd64','arm64'].entries())validatePackageReceipt(receipts[index],arch,assets,expected);
  const publishedImages={images:assets.images};
  const nativeRecords=[];
+ const readJSON=async path=>JSON.parse(await readFile(path));
+ const pins={native:await readJSON('deploy/security/native-components.json'),forge:await readJSON('deploy/engines/patches/forge-backport.json'),verifierSha256:hash(await readFile('deploy/engines/patches/verify-forge-backport.cjs')),fixtureSha256:hash(await readFile('deploy/engines/patches/forge-nested-digest-fixture.json')),dockerLicenseSha256:hash(await readFile('deploy/licenses/docker-cli-LICENSE'))};
  const suites=(await readdir('tests/integration')).filter(name=>name.endsWith('.test.ts')).sort().map(name=>resolve('tests/integration',name));
  for(const arch of ['amd64','arm64']){
   const identities=JSON.parse(await readFile(`verified/${arch}/downloaded-identities.json`)),integration=JSON.parse(await readFile(`verified/${arch}/downloaded-integration.json`));
   if(identities.sourceCommit!==sourceCommit||identities.version!==version||identities.platform!=='linux/'+arch||identities.anonymous!==true||identities.images?.length!==6||new Set(identities.images.map(v=>v.role)).size!==6||integration.sourceCommit!==sourceCommit||integration.acceptanceCommit!==process.env.GITHUB_WORKFLOW_SHA)throw Error('Incomplete native image/download acceptance');
   for(const record of [identities,integration])if(record.runId!==expected.runId||!(/^[1-9]\d*$/.test(record.attempt??''))||BigInt(record.attempt)>BigInt(expected.attempt))throw Error('Native download verification cohort mismatch');
-  for(const image of identities.images)if(image.image!==publishedImages.images.find(v=>v.role===image.role)?.image||image.sourceCommit!==sourceCommit||image.version!==version||image.platform!=='linux/'+arch)throw Error('Downloaded role differs from published manifest');
-  nativeRecords.push({arch,identities,integration});
+  for(const image of identities.images)if(image.localImageId!==publishedImages.images.find(v=>v.role===image.role)?.receipts.find(v=>v.arch===arch)?.configDigest||image.image!==publishedImages.images.find(v=>v.role===image.role)?.image||image.sourceCommit!==sourceCommit||image.version!==version||image.platform!=='linux/'+arch)throw Error('Downloaded role differs from published manifest');
+  const records=Object.fromEntries(await Promise.all(RUNTIME_FILES.map(async name=>[name,await readJSON(`verified/${arch}/${name}`)])));
+  validateRuntimeEvidence(records,identities,{sourceCommit,version,runId:expected.runId,attempt:identities.attempt,platform:'linux/'+arch,acceptanceCommit:process.env.GITHUB_WORKFLOW_SHA,identitiesSha256:hash(await readFile(`verified/${arch}/downloaded-identities.json`))},pins);
+  if(integration.attempt!==identities.attempt)throw Error('Integration and runtime verification attempts differ');
+  nativeRecords.push({arch,identities,integration,records});
   validateCoverage(suites,integration.summaries);
   if(integration.inputs?.length!==suites.length)throw Error('Incomplete source suite manifest');
   for(const file of suites)if(integration.inputs.find(v=>v.file===file)?.sha256!==hash(await readFile(file)))throw Error('Downloaded test source mismatch');
