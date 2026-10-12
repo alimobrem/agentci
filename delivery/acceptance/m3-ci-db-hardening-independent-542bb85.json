@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "result": "PASS bounded synthetic atomic snapshot rework",
+  "sourceCommit": "542bb85ca84597b6c73f096709bf904be11f3fd6",
+  "sourceTree": "e48602ec0d0689012e5428c091e3d76b74559dc4",
+  "fixtureBinding": {
+    "path": "tests/helpers/image-smoke-engine-fixture.cjs",
+    "sha256": "38e50feac1030c4e2228daf9de3c158028314bfae8bab24090681f0175ec0820"
+  },
+  "review": "Exclusive per-PID0600 same-directory temporary file plus atomicrename avoids cancellation poll reading truncated engine-state; tests/assertions and product/runtime sources unchanged. No new concrete blocker.",
+  "independentFocused": {
+    "passed": 25,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 24099.4811,
+    "path": "/workspace/scratch/db-hardening-independent-542bb85-focused.log",
+    "sha256": "ff754d87db3ff2749fd3b4af8cc30b080e166d9177637ed41df610a94779fcff"
+  },
+  "preservedFailures": "Hosted successor2d fastfeedback Unexpected end JSON belongs prior direct-write fixture, retained separately; not relabeled success",
+  "scope": "No policy/threshold/gate or production-runtime changes; no remote writes",
+  "limits": [
+    "Local fake-engine fullCLI and real synthetic child tests only",
+    "Fresh successor hosted full CI and parent actual source/artifact review pending",
+    "Untracked reused node_modules; no fresh dependency installation claim"
+  ]
+}

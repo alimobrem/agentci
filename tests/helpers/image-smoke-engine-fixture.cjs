@@ -3,7 +3,8 @@ const fs=require('node:fs'),path=require('node:path');
 const root=path.dirname(process.argv[1]),file=path.join(root,'engine-state.json'),state=JSON.parse(fs.readFileSync(file)),args=process.argv.slice(2);
 state.calls.push(args);state.inheritedControllerToken ||= Boolean(process.env.GITHUB_TOKEN);
 const value=key=>args[args.indexOf(key)+1],name=args.at(-1),label=value('--label'),labels=()=>Object.fromEntries(args.flatMap((arg,index)=>arg==='--label'?[args[index+1].split('=')]:[]));
-const save=()=>fs.writeFileSync(file,JSON.stringify(state),{mode:0o600});
+// Cancellation polling may overlap a save; expose only a complete snapshot.
+const save=()=>{const pending=file+'.'+process.pid+'.tmp';fs.writeFileSync(pending,JSON.stringify(state),{mode:0o600,flag:'wx'});fs.renameSync(pending,file);};
 const output=text=>{save();if(text)console.log(text);};
 const fail=()=>{save();console.error(state.secrets[0]??'synthetic-engine-diagnostic');process.exit(3);};
 if(args[0]==='create'){

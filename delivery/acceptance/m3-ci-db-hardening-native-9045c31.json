@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "9045c31f4325dec523dbb5ed08f199bbd73269d3",
+  "node": "v26.10.0",
+  "transport": "actual cached pinned PostgreSQL image and Docker daemon; real authenticated SELECT, no fixture transport",
+  "freshAcrossInvocations": true,
+  "checks": [
+    {
+      "authenticated": true,
+      "host": "127.0.0.1",
+      "port": 32813,
+      "sourceMatchesCheckout": true,
+      "eventSourceDiffers": true,
+      "maskCommands": 2,
+      "cleanup": {
+        "schemaVersion": 1,
+        "name": "agentci-customer-pg-990001-1-5da708a661176ea3",
+        "owner": "990001:1:9045c31f4325dec523dbb5ed08f199bbd73269d3:5da708a661176ea3",
+        "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+        "result": "passed",
+        "ownedContainers": 0,
+        "privateFilesRemoved": true
+      }
+    },
+    {
+      "authenticated": true,
+      "host": "127.0.0.1",
+      "port": 32814,
+      "sourceMatchesCheckout": true,
+      "eventSourceDiffers": true,
+      "maskCommands": 2,
+      "cleanup": {
+        "schemaVersion": 1,
+        "name": "agentci-customer-pg-990001-1-5785e73275c5ee14",
+        "owner": "990001:1:9045c31f4325dec523dbb5ed08f199bbd73269d3:5785e73275c5ee14",
+        "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+        "result": "passed",
+        "ownedContainers": 0,
+        "privateFilesRemoved": true
+      }
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "scripts/ci-database.mjs",
+      "sha256": "27bfe77e30d4ba381f9d818804c01d4463ba53a1fbea6882bb4a7821d3837a89"
+    },
+    {
+      "path": "scripts/lib/ci-database-command.mjs",
+      "sha256": "bb9a9c8224fb1690347805a888cae05f8ea126516967de7b72f462dffdd81bcf"
+    },
+    {
+      "path": "scripts/lib/credential-output.mjs",
+      "sha256": "adf8f1431ea59bc25cb4e5afa7bf034626c695de24ecb92948e339ea818455d0"
+    },
+    {
+      "path": "scripts/lib/customer-ci-database.mjs",
+      "sha256": "f670cd2c17722c97e1ee09a6845946066459539b9634da0f282b6ca7a1e9d924"
+    }
+  ],
+  "qualification": "Local synthetic CI identity, actual cached pinned Docker/PostgreSQL. Not hosted, UBI/downloaded/customer acceptance."
+}

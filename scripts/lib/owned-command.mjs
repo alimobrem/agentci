@@ -30,7 +30,8 @@ export async function waitOwnedCommand(child,outputs){
  try{const[result]=await Promise.race([Promise.all([exited,outputs,closed]),deadline]);verifiedClosures.add(child);return !cancelled&&result.code===0&&!result.signal?0:1;}
  catch{
   arm();await stop();
-  try{await Promise.race([closed,deadline]);if(!expired)verifiedClosures.add(child);}
+  // A forced stream close after output failure is not proof of clean EOF.
+  try{await Promise.race([closed,deadline]);}
   finally{if(expired){child.stdout?.destroy();child.stderr?.destroy();}}
   throw Error('Owned command failed; diagnostics withheld');
  }

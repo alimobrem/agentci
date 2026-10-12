@@ -47,14 +47,14 @@ export async function runWithDatabase(path,args,{environment=process.env,stdout=
  let passed=false;
  try{
   child=launch(args[0],args.slice(1),{env:{...environment,DATABASE_URL:url,AGENTCI_TEST_DATABASE_URL:url,PGUSER:state.user,['PGPASSWORD']:state.password},stdio:['ignore','pipe','pipe'],detached:true});
-  const output=Promise.all([pipeline(child.stdout,credentialOutput([url,state.password]),stdout,{end:false}),pipeline(child.stderr,credentialOutput([url,state.password]),stderr,{end:false})]).then(()=>Promise.all([drainDestination(stdout),drainDestination(stderr)]));
+  const output=Promise.all([pipeline(child.stdout,credentialOutput([url,state.password]),stdout,{end:false}),pipeline(child.stderr,credentialOutput([url,state.password]),stderr,{end:false})]).then(async()=>{await Promise.all([drainDestination(stdout),drainDestination(stderr)]);if(!child.stdout.readableEnded||!child.stderr.readableEnded)throw Error('Owned command source EOF unverified');});
   completion=waitOwnedCommand(child,output);completion.catch(()=>{});
   await journal(record,JSON.stringify({schemaVersion:1,owner:state.owner,result:'running',pid:child.pid??null}),{mode:0o600});
   passed=await completion===0;return passed?0:1;
  }finally{
   if(child)await terminateOwnedGroup(child);
   if(completion)await completion.catch(()=>{});
-  const verified=!child||ownedCommandClosed(child)&&(!child.pid||!(await ownedGroupMembers(child.pid)).length);
+  const verified=!child||!child.pid||ownedCommandClosed(child)&&(!child.pid||!(await ownedGroupMembers(child.pid)).length);
   await writeFile(record,JSON.stringify({schemaVersion:1,owner:state.owner,result:verified?'zero-owned-processes':'recovery-required-unverified',pid:child?.pid??null}),{mode:0o600});
   if(redactArtifact){
    if(verified)await redactIntegrationArtifact([url,state.password],{required:passed,onSafe:onArtifactSafe});

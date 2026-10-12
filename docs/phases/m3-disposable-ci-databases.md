@@ -23,7 +23,10 @@ TERM/KILL shutdown and are checked for remaining executing members. Private comm
 receipts prevent database removal while command recovery is unresolved. The drain
 deadline starts at child exit, error or cancellation, before waiting for inherited
 pipes or queued destination writes. Unverified closure also withholds the artifact
-upload flag and removes the retained integration JSON.
+upload flag and removes the retained integration JSON. A destination error can
+force a pipe closed without genuine source EOF; that path stays unresolved even
+when the original process group is empty. Both source streams must reach clean
+EOF and both destinations must drain before closure can be certified.
 
 Image smoke generates separate fresh database, webhook and evidence credentials.
 Private environment files transport them to Docker create/exec; Docker receives
