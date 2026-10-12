@@ -38,3 +38,12 @@ test('HTTP provenance is public operator identity only; optional engines require
   assert.ok(compileEvalUnits(enginePlan,value.base,value.head,{...policy,enginesImage}).every(u=>u.runner.runnerImage===enginesImage));
   for(const env of [{AGENTCI_EVAL_RUNNER_IMAGE:'latest'},{AGENTCI_EVAL_RUNNER_IMAGE:image,AGENTCI_EVAL_MAX_UNITS:'513'},{AGENTCI_EVAL_RUNNER_IMAGE:image,AGENTCI_EVAL_MAX_TOTAL_TRIALS:'0'}])assert.throws(()=>controllerEvalPolicy(env),EvalPlanConfigurationError);
 });
+
+test('comparison plans preserve literal Next route paths without weakening path or commit identity checks',()=>{
+  const value=input(),path='apps/dashboard/app/api/reviews/[id]/route.ts';
+  const head={...value.head,files:{...value.head.files,[path]:'export const GET = () => new Response("fixture");'}};
+  const plan=planComparison({...value,head});assert.ok(plan.analysis.changes.some(c=>c.path===path));
+  assert.equal(compileEvalUnits(plan,value.base,head,controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image})).length,4);
+  assert.throws(()=>planComparison({...value,head:{...head,files:{...head.files,'apps/../escape.ts':'invalid'}}}),/Unsafe snapshot path or content/);
+  assert.throws(()=>compileEvalUnits({...plan,headSha:'c'.repeat(40)},value.base,head,controllerEvalPolicy({AGENTCI_EVAL_RUNNER_IMAGE:image})),EvalPlanConfigurationError);
+});

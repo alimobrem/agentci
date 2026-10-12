@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2405,7 +2405,7 @@
       "completedAt": "2026-10-06T03:28:34.944Z",
       "acceptance": [
         {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "text": "Preserve every source inventory ID and historical evidence; map all M0–M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
           "status": "passed",
           "evidence": [
             "docs/acceptance-reconciliation.md"
@@ -2708,7 +2708,7 @@
       "completedAt": null,
       "acceptance": [
         {
-          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0\u2013M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
+          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0–M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
           "status": "pending",
           "evidence": []
         }
@@ -3253,6 +3253,27 @@
           "status": "passed",
           "evidence": [
             "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-ADVISORY-PATH-1",
+      "title": "Handle literal bracket filenames in eval staging",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "done",
+      "startedAt": "2026-10-12T03:40:21.482Z",
+      "completedAt": "2026-10-12T03:45:46.033Z",
+      "acceptance": [
+        {
+          "text": "Bounded local repair accepts literal bracket route filenames during planning and actual eval staging while preserving selector, traversal, control-character, protected-input, source and immutable identity guards. First failing exact-tree reproduction retained; meaningful negative and real PostgreSQL staging regressions and affected checks pass with independent review. Hosted CI and parent review remain required; no provider/live customer/release actions or M3 gate closure.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-advisory-literal-path-repair-1c6edc6.json"
           ]
         }
       ]
