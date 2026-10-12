@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-CI-DB-2",
+  "testedLocalSourceCommit": "f55abe12cebabd42a0d5399fb60a8fa8cc98027f",
+  "testedLocalSourceTree": "045c6b8443b4d594b1dce6b2d1b7056576475d99",
+  "actualRemoteParent": "5d0db0437fad15525fa9cfe862e152e7396fcb35",
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/dogfood.yaml",
+      "sha256": "5013719b9d83c2ae85c6fc740fa3cffc962e11e91e43d26da56180803455cff5"
+    },
+    {
+      "path": ".github/workflows/download-smoke.yaml",
+      "sha256": "69edbc34688bca65d48d0f3cb0a9d0cf404ba3f46b12790ac7dc107af2d23697"
+    },
+    {
+      "path": ".github/workflows/verify.yaml",
+      "sha256": "f9f2101360874863f8188e60e7f5d5383223761c63cd654dde5ec65e147db3d1"
+    },
+    {
+      "path": "docs/phases/m3-disposable-ci-databases.md",
+      "sha256": "87af70cc2212039174770827098aeb2072246f3555f1a293c1a42d4675be7d24"
+    },
+    {
+      "path": "scripts/ci-database.mjs",
+      "sha256": "27bfe77e30d4ba381f9d818804c01d4463ba53a1fbea6882bb4a7821d3837a89"
+    },
+    {
+      "path": "scripts/image-smoke-cleanup.mjs",
+      "sha256": "782acf4d08ab6da82c9dd068479e118527e82025946a9bfee6b63ea623ffc600"
+    },
+    {
+      "path": "scripts/image-smoke.mjs",
+      "sha256": "35dbfd45e364d7f8cafd3f6ae2f2a5030ae610e37f966f099ffa2f3c1ad28b77"
+    },
+    {
+      "path": "scripts/lib/ci-database-command.mjs",
+      "sha256": "aa430aef3d0f3292e7405275bd3aef965a0bacf90cc32272104391439ec7e56a"
+    },
+    {
+      "path": "scripts/lib/credential-output.mjs",
+      "sha256": "adf8f1431ea59bc25cb4e5afa7bf034626c695de24ecb92948e339ea818455d0"
+    },
+    {
+      "path": "scripts/lib/image-smoke-state.mjs",
+      "sha256": "c521942be5d8999b0cf11beffbc89023cb65381d1a10b6daf4dcda5771420ce8"
+    },
+    {
+      "path": "scripts/lib/owned-command.mjs",
+      "sha256": "a2941023c3c9d23e84765385e86b1ad9e6ea72195329cfa6e252ffb078bfe670"
+    },
+    {
+      "path": "scripts/lib/smoke-resources.mjs",
+      "sha256": "f63ff28dbc95b5b902b075cbcf0f53f939e3198766ad5cab7e4de559cd4a6ec7"
+    },
+    {
+      "path": "tests/ci-database-hardening.test.ts",
+      "sha256": "5e83cd8a2f261eba4f71527f209c3c14638f6286daf09d170efcbafbdb7ca446"
+    },
+    {
+      "path": "tests/helpers/image-smoke-engine-fixture.cjs",
+      "sha256": "443b5aeacdfce5e745798b4668a5ca58cfd8e043630d9a9765b9d5bccb46b3e1"
+    }
+  ],
+  "localValidation": {
+    "fastPassed": true,
+    "fastChecks": 10,
+    "fastSeconds": 46.783729269,
+    "rootTests": 532,
+    "dirty": true,
+    "qualification": "Only reused untracked node_modules symlink; pinned tool caches reused; no fresh npm ci claim",
+    "focusedTests": 25,
+    "apiCompatibility": "immutable released M1/M2 + self tests passed",
+    "workflowLint": "pinned actionlint passed",
+    "nativeProof": "delivery/acceptance/m3-ci-db-hardening-native-f55abe1.json"
+  },
+  "retainedFirstRemoteAttempt": {
+    "head": "5d0db0437fad15525fa9cfe862e152e7396fcb35",
+    "verifyRun": 38307811745,
+    "conclusion": "failure",
+    "failedStep": "Verify compiled containers",
+    "artifact": 11773527795,
+    "artifactSha256": "b92058915ace3b06ab716893dddb1a5571f07e1682ff154a358ee94c89d810fe",
+    "scannerRun": 38307811892,
+    "scannerConclusion": "success",
+    "advisoryRun": 38307811907,
+    "advisoryConclusion": "success",
+    "qualification": "Parent actual ZIP review found cleanup receipts passed; empty image result and withheld inner diagnostics. Advisory executed trusted main workflow/helper. No first-head full acceptance claimed."
+  },
+  "rework": [
+    "Parent review found late cleanup cancellation could print PASS; handlers now cover final cleanup/event delivery and reject late cancellation",
+    "Drain deadline now arms at exit/error/cancellation before waiting for inherited pipe and queued destination writes",
+    "Unverified child closure retains command recovery state and withholds artifact upload flag; escaped-writer regression asserts it",
+    "Actual Docker/pinned PG observation shows Mounts empty, HostConfig.Tmpfs correct and filesystem tmpfs. Guard corrected; likely hosted failure cause, not confirmed by withheld old diagnostics",
+    "Stage-only failure diagnostics without credential/service/engine payloads",
+    "Initial added-test type narrowing failure retained locally then fixed",
+    "Initial stalled output regression exposed queued writes beyond end:false pipeline; destination drain added, then focused pass"
+  ],
+  "evidence": [
+    {
+      "path": "/workspace/scratch/db-hardening-f55-fast.log",
+      "sha256": "83fbdf78e02205aa90a700cbb53378acd03c415b956ad7454f8bd3027d439f04"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-f55-api.log",
+      "sha256": "3355e8638f12279b5eed0eda226da3f02147a53f3fdb6391ca064f28c5c4e6e5"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-f55-workflows.log",
+      "sha256": "ac98e827708aafdae3b7fa4ffba0b502f5553388772a78dc8b87061af4e2214b"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-f55-native.log",
+      "sha256": "c605616ef41be6189e02b4c52d9c2d147d1b60d497343fe5086d72b9eecf870a"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-p2-artifact-focused.log",
+      "sha256": "cf633f08c604da2b90b1ebfcf56ce49c87b0fd0f3877365ddfdd88be291bb750"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-tmpfs-observed.log",
+      "sha256": "ff5a46510d7d82feccb0b2700976c31fb33d9656acb78a5a93cf9e0a74474d0e"
+    }
+  ],
+  "acceptance": "Pending successor exact remote CI/scanner and parent independent actual source/artifact review, then approved merge and postmerge checks",
+  "release": "All 18 M3 gates pending; exact GitGuardian incident unmatched and release publication remains paused. No release descriptor/activation, token repair, rotation, suppression or history rewrite."
+}

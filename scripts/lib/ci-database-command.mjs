@@ -6,7 +6,12 @@ import {randomBytes} from 'node:crypto';
 import {constants} from 'node:fs';
 import {readDatabaseState,customerDatabaseUrl,databaseOwnership} from './customer-ci-database.mjs';
 import {credentialOutput} from './credential-output.mjs';
-import {waitOwnedCommand,ownedGroupMembers,terminateOwnedGroup} from './owned-command.mjs';
+import {waitOwnedCommand,ownedGroupMembers,terminateOwnedGroup,ownedCommandClosed} from './owned-command.mjs';
+function drainDestination(stream){
+ if(stream.destroyed)return Promise.reject(Error('Credential output destination unavailable'));
+ if(!stream.writableLength)return Promise.resolve();
+ return new Promise((resolve,reject)=>stream.write('',error=>error?reject(Error('Credential output drain failed')):resolve()));
+}
 
 export async function redactIntegrationArtifact(values,{required=true,onSafe=async()=>{}}={}){
  let file,failure=false,result='passed';
@@ -42,14 +47,18 @@ export async function runWithDatabase(path,args,{environment=process.env,stdout=
  let passed=false;
  try{
   child=launch(args[0],args.slice(1),{env:{...environment,DATABASE_URL:url,AGENTCI_TEST_DATABASE_URL:url,PGUSER:state.user,['PGPASSWORD']:state.password},stdio:['ignore','pipe','pipe'],detached:true});
-  const output=Promise.all([pipeline(child.stdout,credentialOutput([url,state.password]),stdout,{end:false}),pipeline(child.stderr,credentialOutput([url,state.password]),stderr,{end:false})]);
+  const output=Promise.all([pipeline(child.stdout,credentialOutput([url,state.password]),stdout,{end:false}),pipeline(child.stderr,credentialOutput([url,state.password]),stderr,{end:false})]).then(()=>Promise.all([drainDestination(stdout),drainDestination(stderr)]));
   completion=waitOwnedCommand(child,output);completion.catch(()=>{});
   await journal(record,JSON.stringify({schemaVersion:1,owner:state.owner,result:'running',pid:child.pid??null}),{mode:0o600});
   passed=await completion===0;return passed?0:1;
  }finally{
   if(child)await terminateOwnedGroup(child);
   if(completion)await completion.catch(()=>{});
-  if(!child?.pid||!(await ownedGroupMembers(child.pid)).length)await writeFile(record,JSON.stringify({schemaVersion:1,owner:state.owner,result:'zero-owned-processes',pid:child?.pid??null}),{mode:0o600});
-  if(redactArtifact)await redactIntegrationArtifact([url,state.password],{required:passed,onSafe:onArtifactSafe});
+  const verified=!child||ownedCommandClosed(child)&&(!child.pid||!(await ownedGroupMembers(child.pid)).length);
+  await writeFile(record,JSON.stringify({schemaVersion:1,owner:state.owner,result:verified?'zero-owned-processes':'recovery-required-unverified',pid:child?.pid??null}),{mode:0o600});
+  if(redactArtifact){
+   if(verified)await redactIntegrationArtifact([url,state.password],{required:passed,onSafe:onArtifactSafe});
+   else{await rm('downloaded-integration.json',{recursive:true,force:true});await writeFile('downloaded-integration-redaction.json',JSON.stringify({schemaVersion:1,result:'writer-closure-unverified',safeForUpload:false})+'\n');}
+  }
  }
 }

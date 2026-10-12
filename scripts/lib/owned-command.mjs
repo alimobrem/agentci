@@ -15,15 +15,24 @@ export async function terminateOwnedGroup(child){
  for(let attempt=0;attempt<30;attempt++){if(!(await ownedGroupMembers(child.pid)).length)return;await pause(50);}
  throw Error('Owned command processes remain after forced termination');
 }
+const verifiedClosures=new WeakSet();
+export const ownedCommandClosed=child=>verifiedClosures.has(child);
 export async function waitOwnedCommand(child,outputs){
- let cancelled=false,stopping;
+ let cancelled=false,stopping,timer,expired=false;
  const stop=()=>stopping??=terminateOwnedGroup(child);
- const handlers=new Map(['SIGINT','SIGTERM'].map(signal=>[signal,()=>{cancelled=true;void stop().catch(()=>{});} ]));
+ let rejectDeadline;const deadline=new Promise((resolve,reject)=>{rejectDeadline=reject;});
+ // Arm at exit or cancellation, rather than after waiting for inherited pipes.
+ const arm=()=>{if(!timer){timer=setTimeout(()=>{expired=true;rejectDeadline(Error('Owned command drain remained unverified'));},3000);timer.unref();}};
+ const handlers=new Map(['SIGINT','SIGTERM'].map(signal=>[signal,()=>{cancelled=true;arm();void stop().catch(()=>{});} ]));
  for(const [signal,handler]of handlers)process.on(signal,handler);
  const closed=new Promise(resolve=>child.once('close',resolve));
- const exited=new Promise((resolve,reject)=>{child.once('error',()=>reject(Error('Owned command could not start')));child.once('exit',(code,signal)=>{void stop().then(()=>resolve({code,signal}),reject);});});
- const boundedClose=()=>Promise.race([closed,pause(3000,undefined,{ref:false}).then(()=>{throw Error('Owned command close remained unverified');})]);
- try{const[result]=await Promise.all([exited,outputs]);await boundedClose();return !cancelled&&result.code===0&&!result.signal?0:1;}
- catch{await stop();await boundedClose();throw Error('Owned command failed; diagnostics withheld');}
- finally{for(const [signal,handler]of handlers)process.off(signal,handler);}
+ const exited=new Promise((resolve,reject)=>{child.once('error',()=>{arm();reject(Error('Owned command could not start'));});child.once('exit',(code,signal)=>{arm();void stop().then(()=>resolve({code,signal}),reject);});});
+ try{const[result]=await Promise.race([Promise.all([exited,outputs,closed]),deadline]);verifiedClosures.add(child);return !cancelled&&result.code===0&&!result.signal?0:1;}
+ catch{
+  arm();await stop();
+  try{await Promise.race([closed,deadline]);if(!expired)verifiedClosures.add(child);}
+  finally{if(expired){child.stdout?.destroy();child.stderr?.destroy();}}
+  throw Error('Owned command failed; diagnostics withheld');
+ }
+ finally{clearTimeout(timer);for(const [signal,handler]of handlers)process.off(signal,handler);}
 }

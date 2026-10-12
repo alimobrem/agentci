@@ -20,7 +20,10 @@ App key boundaries, and removes the App key before database cleanup. All three
 workflows retain a bounded cleanup receipt. Unknown startup outcomes and failed
 owned cleanup fail the job. Detached trusted command groups receive bounded
 TERM/KILL shutdown and are checked for remaining executing members. Private command
-receipts prevent database removal while command recovery is unresolved.
+receipts prevent database removal while command recovery is unresolved. The drain
+deadline starts at child exit, error or cancellation, before waiting for inherited
+pipes or queued destination writes. Unverified closure also withholds the artifact
+upload flag and removes the retained integration JSON.
 
 Image smoke generates separate fresh database, webhook and evidence credentials.
 Private environment files transport them to Docker create/exec; Docker receives
@@ -29,7 +32,11 @@ network and volume; inventory and ownership checks precede removal. Success is
 printed only after verified zero owned resources and private-file removal. State is
 registered before daemon writes, and both calling workflows run owned recovery
 after cancellation, including hard interruption. PostgreSQL tmpfs storage avoids
-an anonymous volume outside the ownership inventory. Failure
+an anonymous volume outside the ownership inventory. Storage acceptance checks
+selected mount metadata, the exact HostConfig tmpfs path and the actual filesystem
+type; Docker may report an empty Mounts array for this tmpfs. Signals delivered
+during final cleanup still withhold runtime success. Bounded stage diagnostics
+identify failures without engine or service payloads. Failure
 retains private recovery state and reports a bounded receipt without service logs.
 
 Regression transports are explicitly synthetic. Hosted native execution, scanner

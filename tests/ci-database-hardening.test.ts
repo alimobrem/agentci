@@ -99,7 +99,7 @@ test('three workflows retain commands, trusted sources and always cleanup withou
 test('CI entry refuses unknown context without emitting caller credentials',()=>{const result=spawnSync(process.execPath,['scripts/ci-database.mjs','start'],{env:{PATH:process.env.PATH,GITHUB_TOKEN:'synthetic-never-log'},encoding:'utf8'});assert.equal(result.status,1);assert.ok(!result.stdout.includes('synthetic-never-log'));assert.ok(!result.stderr.includes('synthetic-never-log'));});
 test('actual image smoke entry protects argv/output and defers PASS until owned cleanup, including lost create and teardown failures',async()=>{
  const successes:string[][]=[];
- for(const failure of ['', '', 'lost-create','service-start','teardown','artifact-directory']){
+ for(const failure of ['', '', 'lost-create','service-start','teardown','artifact-directory','late-cancel','storage-volume']){
   const root=await mkdtemp(join(tmpdir(),'hardening-smoke-entry-')),script=resolve('scripts/image-smoke.mjs');
   try{
    const {mkdir}=await import('node:fs/promises');await mkdir(join(root,'deploy/migrations'),{recursive:true});
@@ -119,6 +119,18 @@ test('actual image smoke entry protects argv/output and defers PASS until owned 
   }finally{await rm(root,{recursive:true,force:true});}
  }
  assert.ok(!successes[0]!.some(secret=>successes[1]!.includes(secret)),'All actual smoke credentials are fresh between invocations');
+});
+test('exit and completed stop still bound a detached descendant pipe; unverified drain retains private recovery state',async()=>{
+ const root=await mkdtemp(join(tmpdir(),'hardening-detached-pipe-')),api=privateEngine();let path:string|undefined,escaped:number|undefined,child:any;const previousCwd=process.cwd();let artifactSafe=0;
+ try{path=(await startCustomerDatabase({base:root,...identity,mask:()=>{},command:api.command,health:async()=>{}})).path;assert.ok(path);process.chdir(root);await writeFile('downloaded-integration.json',JSON.stringify({value:api.state.password}));const out=capture(),err=capture();let exited:()=>void=()=>{};const parentExited=new Promise<void>(resolve=>{exited=resolve});
+  const code=`const {spawn}=require('node:child_process');const child=spawn(process.execPath,['-e',"process.on('SIGTERM',()=>{});setInterval(()=>{},1000)"],{detached:true,stdio:['ignore',process.stdout,process.stderr]});console.log('escaped:'+child.pid);child.unref();process.exit(0);`;
+  const operation=runWithDatabase(path,[process.execPath,'-e',code],{environment:{PATH:process.env.PATH},stdout:out.stream,stderr:err.stream,redactArtifact:true,onArtifactSafe:async()=>{artifactSafe++},launch:(command:string,argv:string[],options:any)=>{child=spawn(command,argv,options);let text='';child.stdout.on('data',(chunk:Buffer)=>{text+=chunk.toString();const match=text.match(/escaped:(\d+)/);if(match)escaped=Number(match[1]);});child.once('exit',exited);return child;}});const observed=operation.then(()=>0,()=>1);await parentExited;await new Promise(resolve=>setTimeout(resolve,150));process.emit('SIGTERM');assert.equal(await Promise.race([observed,new Promise(resolve=>setTimeout(()=>resolve('timeout'),4500))]),1);assert.ok(escaped);await assert.rejects(requireDatabaseCommandsStopped(path));await access(path);assert.ok(!out.value.includes(api.state.password));const names=(await import('node:fs/promises')).readdir;const records=await names(dirname(path));const journal=JSON.parse(await readFile(join(dirname(path),records.find(name=>name.startsWith('command-'))!),'utf8'));assert.equal(journal.result,'recovery-required-unverified');assert.equal(artifactSafe,0);await assert.rejects(access('downloaded-integration.json'));assert.equal(JSON.parse(await readFile('downloaded-integration-redaction.json','utf8')).safeForUpload,false);
+ }finally{process.chdir(previousCwd);if(escaped)try{process.kill(-escaped,'SIGKILL');}catch{}if(child?.pid)try{process.kill(-child.pid,'SIGKILL');}catch{}if(path)await stopCustomerDatabase(path,{command:api.command});await rm(root,{recursive:true,force:true});}
+});
+test('a stalled output drain after child exit expires and cannot authorize private database teardown',async()=>{
+ const root=await mkdtemp(join(tmpdir(),'hardening-stalled-drain-')),api=privateEngine();let path:string|undefined;
+ try{path=(await startCustomerDatabase({base:root,...identity,mask:()=>{},command:api.command,health:async()=>{}})).path;assert.ok(path);const stalled=new Writable({write(){/* Deliberately retain the callback after exit. */}}),err=capture();const operation=runWithDatabase(path,[process.execPath,'-e',"process.stdout.write('fixture-drain'.repeat(30))"],{environment:{PATH:process.env.PATH},stdout:stalled,stderr:err.stream});assert.equal(await Promise.race([operation.then(()=>0,()=>1),new Promise(resolve=>setTimeout(()=>resolve('timeout'),4500))]),1);await assert.rejects(requireDatabaseCommandsStopped(path));await access(path);stalled.destroy();
+ }finally{if(path)await stopCustomerDatabase(path,{command:api.command});await rm(root,{recursive:true,force:true});}
 });
 test('image state is registered before daemon writes and always cleanup recovers SIGTERM and SIGKILL interruptions',async()=>{
  for(const signal of ['SIGTERM','SIGKILL'] as const){const root=await mkdtemp(join(tmpdir(),'hardening-smoke-cancel-')),script=resolve('scripts/image-smoke.mjs'),cleanup=resolve('scripts/image-smoke-cleanup.mjs'),envFile=join(root,'github-env');let child:any;

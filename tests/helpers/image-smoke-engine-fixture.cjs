@@ -12,9 +12,9 @@ if(args[0]==='create'){
  if(state.failure==='lost-create'&&id.endsWith('-db'))fail();output(id);
 }else if(args[0]==='ps')output(Object.keys(state.container).join('\n'));
 else if(args[0]==='inspect'){
- const format=value('--format');if(format.includes('.Mounts'))output(JSON.stringify([{Type:'tmpfs',Destination:'/var/lib/postgresql'}]));else if(format.includes('.Config.Labels'))output(JSON.stringify(state.container[name]));else if(format.includes('.State.ExitCode'))output('0');else output('sha256:'+'d'.repeat(64));
+ const format=value('--format');if(format.includes('.HostConfig.Tmpfs'))output(JSON.stringify({mounts:state.failure==='storage-volume'?[{Type:'volume',Destination:'/var/lib/postgresql'}]:[],tmpfs:{'/var/lib/postgresql':'rw,nosuid,nodev,size=512m'}}));else if(format.includes('.Config.Labels'))output(JSON.stringify(state.container[name]));else if(format.includes('.State.ExitCode'))output('0');else output('sha256:'+'d'.repeat(64));
 }else if(args[0]==='rm'){
- if(state.failure==='teardown')fail();delete state.container[name];output('');
+ if(state.failure==='teardown')fail();delete state.container[name];if(state.failure==='late-cancel')process.kill(process.ppid,'SIGTERM');output('');
 }else if(['network','volume'].includes(args[0])){
  const kind=args[0];if(args[1]==='create'){state[kind][name]={name,labels:labels()};output(name);}else if(args[1]==='ls')output(Object.keys(state[kind]).join('\n'));else if(args[1]==='inspect')output(JSON.stringify(state[kind][name]));else if(args[1]==='rm'){delete state[kind][name];output('');}else fail();
 }else if(args[0]==='image')output('sha256:'+'e'.repeat(64));
@@ -23,7 +23,8 @@ else if(args[0]==='start'){
  if(state.failure==='service-start'&&name.endsWith('-api'))fail();output(name);
 }else if(['stop','restart','cp'].includes(args[0]))output('');
 else if(args[0]==='exec'){
- if(args.includes('psql'))output(args.includes('SELECT 1')?'1':'');
+ if(args.includes('stat'))output('tmpfs');
+ else if(args.includes('psql'))output(args.includes('SELECT 1')?'1':'');
  else if(args.includes('temporal'))output('SERVING');
  else if(args.includes('test'))output('');
  else if(args.at(-1).includes('/readyz'))output('ready');

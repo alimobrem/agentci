@@ -16,20 +16,28 @@ const statePath=await registerImageSmokeState(directory,prefix);
 let cancelled=false;const cancel=()=>{cancelled=true;};process.on('SIGINT',cancel);process.on('SIGTERM',cancel);
 let summary;
 const pause = () => new Promise(resolve => setTimeout(resolve, 250));
+let stage='owned-network-setup';
 async function wait(probe) { for (let i = 0; i < 80; i++) { if(cancelled)throw Error('Image smoke cancelled');try { if (probe()) return; } catch {} await pause(); } throw new Error('Service did not become ready'); }
 try {
   docker('network', 'create', '--label', `${SMOKE_OWNER_LABEL}=${prefix}`, prefix);
   docker('volume', 'create', '--label', `${SMOKE_OWNER_LABEL}=${prefix}`, temporalVolume);
   const db = `${prefix}-db`, temporal = `${prefix}-temporal`;
+  stage='database-private-setup';
   const key=randomBytes(32).toString('hex'),postgresEnv=join(directory,'postgres.env');
   const pgValues={['POSTGRES_PASSWORD']:key,POSTGRES_DB:'agentci',['PGPASSWORD']:key};
   await writeFile(postgresEnv,Object.entries(pgValues).map(([name,value])=>`${name}=${value}`).join('\n')+'\n',{mode:0o600});
   create(db, '--network-alias', 'postgres', '--env-file', postgresEnv, '--tmpfs', '/var/lib/postgresql:rw,nosuid,nodev,size=512m', 'postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873'); docker('start', db);
-  const mounts=JSON.parse(docker('inspect','--format','{{json .Mounts}}',db));if(!Array.isArray(mounts)||!mounts.some(mount=>mount.Type==='tmpfs'&&mount.Destination==='/var/lib/postgresql')||mounts.some(mount=>mount.Type==='volume'))throw Error('Private PostgreSQL storage mount guard failed');
+  stage='database-tmpfs-verification';
+  const storage=JSON.parse(docker('inspect','--format','{"mounts":{{json .Mounts}},"tmpfs":{{json .HostConfig.Tmpfs}}}',db));
+  if(!Array.isArray(storage.mounts)||storage.mounts.some(mount=>mount.Type==='volume')||storage.tmpfs?.['/var/lib/postgresql']!=='rw,nosuid,nodev,size=512m'||docker('exec',db,'stat','-f','-c','%T','/var/lib/postgresql')!=='tmpfs')throw Error('Private PostgreSQL storage mount guard failed');
+  stage='database-authenticated-health';
   await wait(() => docker('exec', '--env-file', postgresEnv, db, 'psql', '-h', '127.0.0.1', '-U', 'postgres', '-d', 'agentci', '-tAc', 'SELECT 1') === '1');
+  stage='database-migrations';
   for(const migration of ['001_m1.sql','002_m2.sql','003_m2_review_recovery.sql'])smokeEngine(['exec', '--env-file', postgresEnv, '-i', db, 'psql', '-v', 'ON_ERROR_STOP=1', '-U', 'postgres', '-d', 'agentci'], { input: await readFile('deploy/migrations/'+migration) });
+  stage='temporal-private-setup';
   create(temporal, '--network-alias', 'temporal', '-v', `${temporalVolume}:/home/temporal`, 'temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e', 'server', 'start-dev', '--ip', '0.0.0.0', '--db-filename', '/home/temporal/temporal.db', '--headless'); docker('start', temporal);
   await wait(() => docker('exec', temporal, 'temporal', 'operator', 'cluster', 'health', '--address', '127.0.0.1:7233').includes('SERVING'));
+  stage='private-service-identity';
   const keyPath = join(directory, 'fixture.pem');
   const { privateKey } = generateKeyPairSync('rsa', { modulusLength: 2048 });
   await writeFile(keyPath, privateKey.export({ type: 'pkcs8', format: 'pem' }), { mode: 0o600 });
@@ -42,6 +50,7 @@ try {
     AGENTCI_EVAL_RUNNER_IMAGE: process.env.AGENTCI_TEST_RUNNER_IMAGE??docker('image','inspect',`agentci-eval-runner:${roles}`,'--format','{{.Id}}'),
   };
   const serviceEnv=join(directory,'services.env');await writeFile(serviceEnv,Object.entries(env).map(([key,value])=>`${key}=${value}`).join('\n')+'\n',{mode:0o600});
+  stage='service-create-start';
   for (const role of ['api', 'worker']) {
     const name = `${prefix}-${role}`;
     create(name, '--user', `${process.getuid()}:${process.getgid()}`, '--env-file', serviceEnv, `agentci-${role}:${roles}`);
@@ -51,12 +60,15 @@ try {
   }
   const api = `${prefix}-api`, worker = `${prefix}-worker`;
   const request = script => docker('exec', api, 'node', '--input-type=module', '-e', script);
+  stage='api-authenticated-readiness';
   await wait(() => request("const r=await fetch('http://127.0.0.1:3000/readyz');if(!r.ok)process.exit(1);console.log('ready')") === 'ready');
+  stage='worker-startup';
   await wait(() => {
     const result = spawnSync('docker', ['logs', worker], { encoding: 'utf8', env:{PATH:process.env.PATH} });
     const output = result.stdout + result.stderr;
     return output.includes("state: 'RUNNING'");
   });
+  stage='api-authentication-and-webhook';
   const statuses = JSON.parse(request(`
     import {createHmac,randomUUID} from 'node:crypto';
     const origin='http://127.0.0.1:3000';
@@ -71,6 +83,7 @@ try {
     console.log(JSON.stringify([health.status,denied.status,invalid.status,closed.status,(await closed.json()).status,evalDenied.status,evalInvalid.status,evalMissing.status]));
   `));
   if (JSON.stringify(statuses) !== '[200,401,401,202,"ignored",401,400,404]') throw new Error(`Unexpected runtime responses: ${JSON.stringify(statuses)}`);
+  stage='compiled-comparison-and-export';
   const project=await readFile('agentci.yaml','utf8');
   if(request(`
     import {Pool} from 'pg';import {randomUUID} from 'node:crypto';
@@ -94,23 +107,29 @@ try {
       console.log('comparison-read');
     }finally{await pool.end();}
   `)!=='comparison-read')throw new Error('Compiled comparison API/client probe failed');
+  stage='temporal-persistence';
   docker('exec', temporal, 'test', '-s', '/home/temporal/temporal.db');
   docker('restart', '--time', '20', temporal);
   await wait(() => docker('exec', temporal, 'temporal', 'operator', 'cluster', 'health', '--address', '127.0.0.1:7233').includes('SERVING'));
   docker('exec', temporal, 'test', '-s', '/home/temporal/temporal.db');
+  stage='graceful-service-shutdown';
   docker('stop', '--time', '20', api, worker);
   for (const name of [api, worker]) if (docker('inspect', '--format', '{{.State.ExitCode}}', name) !== '0') throw new Error(`Unclean shutdown: ${name}`);
   summary={ result: 'passed', images: smokeImages, version: roles, platform: process.arch, checks: ['non-root API/worker startup', 'M2 schema readiness', 'signature rejection', 'evidence authentication', 'comparison authentication/UUID/scoped lookup', 'compiled comparison API/client reads actual queued database evidence', 'compiled snapshot export/client completion', 'signed closed delivery', 'non-root persistent Temporal database startup/restart', 'graceful shutdown'], github: 'synthetic credentials; no live GitHub review claimed' };
 } catch {
-  console.error('Image smoke failed; engine and service diagnostics withheld to protect private credentials');
+  console.log(JSON.stringify({result:'failed',stage,platform:process.arch}));
+  console.error('Image smoke failed at '+stage+'; engine and service diagnostics withheld to protect private credentials');
   throw Error('Image smoke runtime acceptance failed');
 } finally {
   // State remains private when any owned removal or verification fails.
   let receipt;
   try{receipt=await cleanupImageSmokeState(statePath);}
   catch{receipt={schemaVersion:1,result:'recovery-required-or-unverified',owner:prefix,privateState:'retained for recovery',privateDirectory:directory};}
-  process.off('SIGINT',cancel);process.off('SIGTERM',cancel);
   await mkdir('.agentci/artifacts',{recursive:true});await writeFile('.agentci/artifacts/image-smoke-cleanup.json',JSON.stringify(receipt,null,2)+'\n');
   if(receipt.result!=='passed')throw Error('Image smoke cleanup incomplete; private recovery state retained');
 }
+// Deliver signals queued during synchronous engine operations and final cleanup.
+await new Promise(resolve=>setImmediate(resolve));
+if(cancelled){console.log(JSON.stringify({result:'failed',stage:'cancelled-after-owned-cleanup',platform:process.arch}));throw Error('Image smoke cancelled after cleanup; runtime acceptance withheld');}
+process.off('SIGINT',cancel);process.off('SIGTERM',cancel);
 if(summary)console.log(JSON.stringify(summary,null,2));
