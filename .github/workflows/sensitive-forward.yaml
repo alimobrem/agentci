@@ -1,0 +1,46 @@
+name: Forward secret protection
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # PR policy comes only from the exact trusted base. Main pushes use reviewed main.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          path: policy
+          persist-credentials: false
+      # Base repository's PR network exposes the exact fork head commit too.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          path: subject
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: 26.10.0
+      - name: Scan exact introduced content locally
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          SCAN_CACHE: ${{ runner.temp }}/agentci-forward-tools
+          SCAN_REPORT: ${{ runner.temp }}/agentci-forward-report/report.json
+        run: >-
+          node policy/scripts/security/scan-forward.mjs
+          --repo subject --base "$BASE_SHA" --head "$HEAD_SHA"
+          --cache "$SCAN_CACHE" --output "$SCAN_REPORT"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: forward-secret-metadata
+          path: ${{ runner.temp }}/agentci-forward-report/report.json
+          if-no-files-found: warn
+          retention-days: 14

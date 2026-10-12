@@ -334,11 +334,36 @@
         "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
       },
       "mappingAuthority": "provisional-needs-review",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-CI-SENSITIVE-FORWARD-1",
+          "status": "done",
+          "startedAt": "2026-10-12T04:17:35.133Z",
+          "completedAt": "2026-10-12T04:25:23.253Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local pinned CLI gate scans exact introduced commit range and changed endpoint blobs without PR code execution or inherited credentials; actual synthetic positive/negative, intermediate deletion/reintroduction, binary attributes, path encoding, symlink/shallow/missing-base and integrity regressions pass. Reports contain metadata only. Historical findings remain separate unresolved; no full-history-clean assertion. Independent review/full hosted bootstrap remain separate.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-sensitive-forward-current-main-3222fc8.json"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "delivery/acceptance/m3-sensitive-forward-current-main-3222fc8.json",
+          "sha256": "f2e0fa8ee2b957362dfee00be549cb953e552134fa18baa3b01f2f3a25a3ad71",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -348,9 +373,7 @@
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
       "reconciliationGaps": [
-        "modality-and-multi-phase-mapping-review",
-        "no-row-evidence",
-        "no-task-or-operation-link"
+        "modality-and-multi-phase-mapping-review"
       ]
     },
     {
@@ -1369,11 +1392,36 @@
         "note": "Provisional routing only; clause modality, compound splitting and cross-cutting ownership require review"
       },
       "mappingAuthority": "provisional-needs-review",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-CI-SENSITIVE-FORWARD-1",
+          "status": "done",
+          "startedAt": "2026-10-12T04:17:35.133Z",
+          "completedAt": "2026-10-12T04:25:23.253Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local pinned CLI gate scans exact introduced commit range and changed endpoint blobs without PR code execution or inherited credentials; actual synthetic positive/negative, intermediate deletion/reintroduction, binary attributes, path encoding, symlink/shallow/missing-base and integrity regressions pass. Reports contain metadata only. Historical findings remain separate unresolved; no full-history-clean assertion. Independent review/full hosted bootstrap remain separate.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-sensitive-forward-current-main-3222fc8.json"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "delivery/acceptance/m3-sensitive-forward-current-main-3222fc8.json",
+          "sha256": "f2e0fa8ee2b957362dfee00be549cb953e552134fa18baa3b01f2f3a25a3ad71",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -1383,9 +1431,7 @@
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
       "reconciliationGaps": [
-        "modality-and-multi-phase-mapping-review",
-        "no-row-evidence",
-        "no-task-or-operation-link"
+        "modality-and-multi-phase-mapping-review"
       ]
     },
     {
