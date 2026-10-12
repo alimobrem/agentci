@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-ADVISORY-PATH-1",
+  "scope": "Bounded local advisory literal-path repair; draft PR81 update and new hosted CI pending",
+  "recordedAt": "2026-10-12T03:45:44.959305+00:00",
+  "sourceCommit": "1c6edc63d00c9f45f3986c95e797ce49fa16c1fe",
+  "sourceTree": "52251f9905458e3d35811edf7126eb7dfcc8edb8",
+  "baseCommit": "00a8d245375f0148293327ce14bac8689b12d0f5",
+  "baseTree": "5dbb216e6b0e9f8e260a93e016293b771441fa45",
+  "sourceFiles": [
+    {
+      "path": "packages/evals/contracts.ts",
+      "sha256": "1166e5365f1582ba34475e2a4566d30d45b0421bb3bf82b18300030a5d046a5c"
+    },
+    {
+      "path": "tests/eval-contracts.test.ts",
+      "sha256": "f15a40fb52f978139ae89a43fc920299ac4681e43a1b84084ad6e19f8747c46d"
+    },
+    {
+      "path": "tests/eval-orchestration.test.ts",
+      "sha256": "a63e1fc17e19361f92096937fddfebee9d40eb58fc8daa6f1c1a062c8f5095af"
+    },
+    {
+      "path": "tests/integration/eval-review-staging.test.ts",
+      "sha256": "409534868dca9aeada120e7e81f4d2db69bdac9d0fa70c71cedd4408ba06a1a0"
+    }
+  ],
+  "diagnosis": {
+    "path": "/workspace/scratch/dashboard609-advisory-local-staging-diagnosis-20261012.json",
+    "sha256": "71fa9602818da443a4e276471888b8e7e8fd5270e9cb5958eea594abcb0a674d",
+    "hostedRuns": [
+      38199870002,
+      38199897199
+    ],
+    "safeHostedEvidence": {
+      "path": "/workspace/scratch/dashboard609-advisory-failure-safe-diagnostics-20261012.json",
+      "sha256": "b06de69eb917e10baa0cabfa20f83047a18a3360e462b3d2236822812e45ac5b"
+    },
+    "cause": "Literal bracket filename apps/dashboard/app/api/reviews/[id]/route.ts rejected by selectSuites safeEvalPath; actual stage probe reproduces retryable EvalReviewUnavailable before store.save/evals.stage/model execution",
+    "qualification": "Hosted underlying cause intentionally not retained. Local exact tree-equivalent source reproduces the failure independently; zero snapshot failures and staging location provide consistent evidence, not a claim to raw hosted cause or provider health."
+  },
+  "checks": [
+    {
+      "path": "/workspace/scratch/advisory-literal-path-corrected-focused-20261012.log",
+      "sha256": "ba59da52f408886e194eb4b0f6df5742e0f36659f539f37cd5faa656bcae8483",
+      "result": "20 affected contracts/planning/harness tests passed; zero failure/skip"
+    },
+    {
+      "path": "/workspace/scratch/advisory-literal-path-corrected-real-staging-20261012.log",
+      "sha256": "1d80f1652bc5d44d49f07686d0576782d46130abfffbb36d0afa3605bf62a88d",
+      "result": "Real approved-digest PostgreSQL GitHTTP/staging regression passed; ownedcontainer0 and privatefilesremoved"
+    },
+    {
+      "path": "/workspace/scratch/advisory-literal-path-corrected-fast-20261012.log",
+      "sha256": "6f7a26cbba99dcd24c5d6f5c41b064c9e9fec21e154a4ce92b661151e77e84cc",
+      "result": "10 fast checks passed52.13s;492 unit tests passed zero failure/skip; typecheck/API included"
+    },
+    {
+      "path": "/workspace/scratch/advisory-literal-path-corrected-fast-report-20261012.json",
+      "sha256": "62f9e8bbeff1857e0a4dd8db58c6309047a8be1fb8cc1d8a74b4794f6dea9784",
+      "result": "Immutable exact-source report; dirty:true reflects untracked dependency symlink"
+    },
+    {
+      "path": "/workspace/scratch/advisory-literal-path-corrected-build-20261012.log",
+      "sha256": "76cbc2ccbbdb7b068905dbe246aa8581706d322289330db6ac2dcbfd9a71cfbf",
+      "result": "Actual production TypeScript build passed"
+    },
+    {
+      "path": "/workspace/scratch/advisory-literal-path-exact-tree-plan-20261012.log",
+      "sha256": "ee7127a2dc888f92e9d7a7cb8783ba5490960ed5d77183655b72150487df4186",
+      "result": "Original tree0c68 to5dbb:62changedpaths,8compiledunits; planning/harness/projection pass, zero provider invocation"
+    },
+    {
+      "path": "/workspace/scratch/customer-review-advisory-1c6-independent-20261012.json",
+      "sha256": "e8b560334b0f273aa6b5ff6fb1ae364ebbb4c7fd94b97952667b1440b799973a",
+      "result": "Independent exact-source20 focused plus realPostgres staging1 test passed; ownedcleanup passed"
+    }
+  ],
+  "guardReview": [
+    "Globtrue selector/catalog/include behavior unchanged; minimatch consumes changed paths as literal input only",
+    "Only bracket literal rejection removed; *?{} literal wildcard restriction remains",
+    "All traversal, absolute, control, backslash, negation, drive, protected-input, source and immutable identity guards preserved",
+    "Literal snapshot/provenance/harness/report callers do not execute filenames as commands or interpret them as selectors"
+  ],
+  "failedAttemptsPreserved": [
+    {
+      "path": "/workspace/scratch/advisory-literal-path-focused-20261012.log",
+      "sha256": "c69bf2479afc70b205646bd5c76724be78e165c29d7efc1b3873e60d6fddc836",
+      "qualification": "Superseded source/test expectation or typed-reader regression; not current pass"
+    },
+    {
+      "path": "/workspace/scratch/advisory-literal-path-fast-20261012.log",
+      "sha256": "98b2cef9a8ad680aeecb20d5ba8d883ef9bec24dd31da8734b133a9c9ffce77b",
+      "qualification": "Superseded source/test expectation or typed-reader regression; not current pass"
+    },
+    {
+      "path": "/workspace/scratch/customer-review-advisory-977c-focused-20261012.log",
+      "sha256": "4ff1784a50d2708dfb7e723442c9d327ea8b3d37a1e96f87a377ffaa4e4a333c",
+      "qualification": "Superseded source/test expectation or typed-reader regression; not current pass"
+    },
+    {
+      "path": "/workspace/scratch/customer-review-advisory-12a-focused-20261012.log",
+      "sha256": "2c57b05455699b94f358ae968e5e4bfa460d9dc99c3e32b48d2ccf788b884665",
+      "qualification": "Superseded source/test expectation or typed-reader regression; not current pass"
+    }
+  ],
+  "sourceWorkspace": {
+    "trackedCleanBeforeAndAfter": true,
+    "untracked": "node_modules dependency symlink",
+    "dirty": true,
+    "qualification": "Exact-source hash bindings; no clean-checkout claim"
+  },
+  "pending": [
+    "Draft PR81 update, fresh exact-source full hosted CI and parent critical review before any merge",
+    "Hosted advisory rerun still required; original two runs remain failures and cannot be relabeled",
+    "Hosted artifact ZIP inspection unavailable to root403; no independent hosted artifact acceptance claim",
+    "All18 M3 gates remain pending; three adapters, M0-M10 order, observed-rate/descriptive Wilson and sole approved inaccessible-provider exception unchanged"
+  ],
+  "externalActions": "None; no provider, live App/customer, merge, deployment, release or historical credential actions"
+}
