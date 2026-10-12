@@ -30,7 +30,7 @@ export async function stopCustomerDatabase(path,{command=databaseCommand}={}){
  if(command(['ps','--all','--quiet','--filter','name=^/'+state.name+'$']).trim())throw Error('Owned database remains after cleanup');
  const receipt={...ownership(state),result:'passed',ownedContainers:0,privateFilesRemoved:true};await rm(dirname(path),{recursive:true,force:true});await writeFile(dirname(path)+'.cleanup.json',JSON.stringify(receipt),{mode:0o600});return receipt;
 }
-export async function startCustomerDatabase({base,runId,attempt,source,mask,onState=async()=>{},command=databaseCommand,health,tries=60,delay=500}){
+export async function startCustomerDatabase({base,runId,attempt,source,mask,onState=async()=>{},command=databaseCommand,health,tries=60,delay=500,removePrivateDirectory=rm}){
  if(!isAbsolute(base)||!(/^[1-9]\d*$/.test(runId)&&/^[1-9]\d*$/.test(attempt)&&/^[a-f0-9]{40}$/.test(source))||typeof mask!=='function')throw Error('Owned database setup identity required');
  await mkdir(base,{recursive:true});const root=await mkdtemp(join(base,'agentci-customer-pg-')),path=join(root,'state.json'),nonce=randomBytes(8).toString('hex');
  let creationAttempted=false;const state={schemaVersion:1,name:`agentci-customer-pg-${runId}-${attempt}-${nonce}`,owner:`${runId}:${attempt}:${source}:${nonce}`,image:CUSTOMER_POSTGRES_IMAGE,user:'postgres',database:'agentci_customer',password:randomBytes(32).toString('hex'),port:null};
@@ -46,5 +46,5 @@ export async function startCustomerDatabase({base,runId,attempt,source,mask,onSt
   if(!ready)throw Error('Authenticated owned database health check failed');
   await writeFile(join(root,'startup.json'),JSON.stringify({...ownership(state),result:'authenticated-ready'}),{mode:0o600});
   return {path,name:state.name,image:state.image,host:'127.0.0.1',port:state.port};
- }catch{try{if(creationAttempted)await stopCustomerDatabase(path,{command});else{const receipt={...ownership(state),result:'passed',ownedContainers:0,privateFilesRemoved:true,creationAttempted:false};await writeFile(root+'.cleanup.json',JSON.stringify(receipt),{mode:0o600});await rm(root,{recursive:true,force:true});}}catch{throw Error('Owned database startup failed; cleanup incomplete, private state retained');}throw Error('Owned database startup failed; owned resources cleaned');}
+ }catch{try{if(creationAttempted)await stopCustomerDatabase(path,{command});else{const receipt={...ownership(state),result:'passed',ownedContainers:0,privateFilesRemoved:true,creationAttempted:false};await removePrivateDirectory(root,{recursive:true,force:true});await writeFile(root+'.cleanup.json',JSON.stringify(receipt),{mode:0o600});}}catch{throw Error('Owned database startup failed; cleanup incomplete, private state retained');}throw Error('Owned database startup failed; owned resources cleaned');}
 }
