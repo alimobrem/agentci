@@ -6546,29 +6546,48 @@
         },
         {
           "id": "M3-R1-PUB-DIAG-1",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-12T07:12:53.071Z",
-          "completedAt": null,
+          "completedAt": "2026-10-12T22:24:22.736Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Standalone trusted main diagnostic uses exact Node/npm/source and existing preflight ephemeral Contentswrite/Metadataread/Packagesread grants, performs only fixed-repository GET, and retains bounded redacted push-field presence/type/boolean and repository-match evidence. No raw response/token/App key, publication or capability-logic change. Applicable tests, hosted CI and independent exact-head review required before diagnostic main activation; retained real diagnosis required before evidenced repair.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dev3-token-diagnostic-observed-834e49ab.json"
+              ]
             }
           ]
         },
         {
           "id": "M3-R1-CI-DB-2",
-          "status": "blocked",
+          "status": "done",
           "startedAt": "2026-10-12T20:19:51.793Z",
-          "completedAt": null,
-          "blockedReason": "Exactstdout-only35b root533 independent26 old-red/new-green beforedeadline passed; product unchanged; pending final exactheadCI and parent artifact review",
+          "completedAt": "2026-10-12T22:27:04.156Z",
+          "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Fresh per-run private credentials, loopback-only host binding, bounded sanitized diagnostics, and verified owned teardown in advisory/Verify/download workflows and image smoke. Regression tests cover argv/log leakage, exposure, lost startup responses and cleanup failures; applicable local checks, hosted CI including dedicated scanner and independent exact-source/artifact review pass before merge. Unmatched GitGuardian finding and original milestone/release gates remain open.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-ci-db-hardening-postmerge-a33747e.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-R1-PUB-TOKEN-2",
+          "status": "blocked",
+          "startedAt": "2026-10-12T13:49:26.121Z",
+          "completedAt": null,
+          "blockedReason": "Hardened5ea536unit/31rootfocused/32independent/10fast/API/lint passed; current-source hold lifted, historicalalert open; pending actual draftCI/source/artifact review before separate dev3 activation/native downloads",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Correction integrated onto hardened main follows actual diagnostic38257163110 HTTP200/identitymatch/pushfalse and runtime Contentswrite. Explicit trusted Actions installation mode binds exact committed source/job/repository/Contentswrite/token injection and actual Octokit installation authentication; generic false/missing push never gains fallback. Keep authenticated paginated draft discovery and collision/denial/ambiguity fail-closed checks. Meaningful tests, applicable local checks, independent source/evidence review; retain prior failed attempts/allM3gates. Parent lifted the current-source temporary hold after actual hardened-source postmerge review; historical alert remains open. Exact repair draft CI/source/artifact review precedes separately approved dev.3 activation and native anonymous downloads; no new identity, credentials, access or security settings.",
               "status": "pending",
               "evidence": []
             }
@@ -6725,6 +6744,18 @@
           "sha256": "14828754c3622a6f761711553cfb7fe2f20d5edd289af6a5b9b2d164d599b1a0",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dev3-token-diagnostic-observed-834e49ab.json",
+          "sha256": "192754718b7dfc784d4f520c688781d18acb53d54479c5cde6b96e661a49b8f7",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-ci-db-hardening-postmerge-a33747e.json",
+          "sha256": "447aa999b202fe1a09f55ed92b97cf9a792ebcb533c24b0d3a4bedf801a754ba",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
       ],
       "verification": {
@@ -6745,8 +6776,8 @@
           "deferral": null
         },
         {
-          "task": "M3-R1-CI-DB-2",
-          "reason": "Exactstdout-only35b root533 independent26 old-red/new-green beforedeadline passed; product unchanged; pending final exactheadCI and parent artifact review",
+          "task": "M3-R1-PUB-TOKEN-2",
+          "reason": "Hardened5ea536unit/31rootfocused/32independent/10fast/API/lint passed; current-source hold lifted, historicalalert open; pending actual draftCI/source/artifact review before separate dev3 activation/native downloads",
           "deferral": null
         }
       ],
@@ -7247,29 +7278,48 @@
         },
         {
           "id": "M3-R1-PUB-DIAG-1",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-12T07:12:53.071Z",
-          "completedAt": null,
+          "completedAt": "2026-10-12T22:24:22.736Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Standalone trusted main diagnostic uses exact Node/npm/source and existing preflight ephemeral Contentswrite/Metadataread/Packagesread grants, performs only fixed-repository GET, and retains bounded redacted push-field presence/type/boolean and repository-match evidence. No raw response/token/App key, publication or capability-logic change. Applicable tests, hosted CI and independent exact-head review required before diagnostic main activation; retained real diagnosis required before evidenced repair.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dev3-token-diagnostic-observed-834e49ab.json"
+              ]
             }
           ]
         },
         {
           "id": "M3-R1-CI-DB-2",
-          "status": "blocked",
+          "status": "done",
           "startedAt": "2026-10-12T20:19:51.793Z",
-          "completedAt": null,
-          "blockedReason": "Exactstdout-only35b root533 independent26 old-red/new-green beforedeadline passed; product unchanged; pending final exactheadCI and parent artifact review",
+          "completedAt": "2026-10-12T22:27:04.156Z",
+          "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Fresh per-run private credentials, loopback-only host binding, bounded sanitized diagnostics, and verified owned teardown in advisory/Verify/download workflows and image smoke. Regression tests cover argv/log leakage, exposure, lost startup responses and cleanup failures; applicable local checks, hosted CI including dedicated scanner and independent exact-source/artifact review pass before merge. Unmatched GitGuardian finding and original milestone/release gates remain open.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-ci-db-hardening-postmerge-a33747e.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-R1-PUB-TOKEN-2",
+          "status": "blocked",
+          "startedAt": "2026-10-12T13:49:26.121Z",
+          "completedAt": null,
+          "blockedReason": "Hardened5ea536unit/31rootfocused/32independent/10fast/API/lint passed; current-source hold lifted, historicalalert open; pending actual draftCI/source/artifact review before separate dev3 activation/native downloads",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Correction integrated onto hardened main follows actual diagnostic38257163110 HTTP200/identitymatch/pushfalse and runtime Contentswrite. Explicit trusted Actions installation mode binds exact committed source/job/repository/Contentswrite/token injection and actual Octokit installation authentication; generic false/missing push never gains fallback. Keep authenticated paginated draft discovery and collision/denial/ambiguity fail-closed checks. Meaningful tests, applicable local checks, independent source/evidence review; retain prior failed attempts/allM3gates. Parent lifted the current-source temporary hold after actual hardened-source postmerge review; historical alert remains open. Exact repair draft CI/source/artifact review precedes separately approved dev.3 activation and native anonymous downloads; no new identity, credentials, access or security settings.",
               "status": "pending",
               "evidence": []
             }
@@ -7426,6 +7476,18 @@
           "sha256": "14828754c3622a6f761711553cfb7fe2f20d5edd289af6a5b9b2d164d599b1a0",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dev3-token-diagnostic-observed-834e49ab.json",
+          "sha256": "192754718b7dfc784d4f520c688781d18acb53d54479c5cde6b96e661a49b8f7",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-ci-db-hardening-postmerge-a33747e.json",
+          "sha256": "447aa999b202fe1a09f55ed92b97cf9a792ebcb533c24b0d3a4bedf801a754ba",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
       ],
       "verification": {
@@ -7446,8 +7508,8 @@
           "deferral": null
         },
         {
-          "task": "M3-R1-CI-DB-2",
-          "reason": "Exactstdout-only35b root533 independent26 old-red/new-green beforedeadline passed; product unchanged; pending final exactheadCI and parent artifact review",
+          "task": "M3-R1-PUB-TOKEN-2",
+          "reason": "Hardened5ea536unit/31rootfocused/32independent/10fast/API/lint passed; current-source hold lifted, historicalalert open; pending actual draftCI/source/artifact review before separate dev3 activation/native downloads",
           "deferral": null
         }
       ],

@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "taskId": "M3-R1-PUB-DIAG-1",
+  "sourceCommit": "834e49ab98c5280db7223c4dca654e774bda9acb",
+  "sourceTree": "406a9b011bcf906818fa6c3eadafb4036b7f5aab",
+  "observed": {
+    "mergeCommit": "834e49ab98c5280db7223c4dca654e774bda9acb",
+    "reviewedTree": "406a9b011bcf906818fa6c3eadafb4036b7f5aab",
+    "ownerApproval": {
+      "assistantMessage": "Sentinel_1ba478e2219c81918aec2c21da1fa6b2",
+      "ownerMessage": "Sentinel_cc2d264826e88191aea1b7904578203a",
+      "ownerReply": "Yes",
+      "ownerTimestamp": "2026-10-12T13:37:44.791727+00:00",
+      "scope": "Merge PR91 and run read-only repository-metadata diagnostic only"
+    },
+    "runId": 38257163110,
+    "jobId": 114838087206,
+    "observation": {
+      "schemaVersion": 1,
+      "operation": "GET fixed repository metadata only",
+      "result": "observed",
+      "sourceCommit": "834e49ab98c5280db7223c4dca654e774bda9acb",
+      "capability": {
+        "permissionsObject": true,
+        "pushFieldPresent": true,
+        "pushType": "boolean",
+        "pushBoolean": false,
+        "repositoryMatches": true
+      },
+      "httpStatus": 200
+    },
+    "qualification": "Actual allowlisted diagnostic JSON parsed from Work GitHub decoded job logs; not an artifact ZIP inspection; no release publication or milestone acceptance"
+  },
+  "actualJobGrants": {
+    "contents": "write",
+    "metadata": "read",
+    "packages": "read"
+  },
+  "artifact": {
+    "id": 11750184117,
+    "sha256": "4f882c827020708e0ce70e3bc2851fac9f767fdc1401dc67a1fcaaccbd2b2868",
+    "rootInspection": "Allowlisted job-log JSON only; no ZIP inspection",
+    "parentInspection": "Parent confirmed actual downloaded ZIP and diagnostic JSON"
+  },
+  "completedBaselineCI": [
+    {
+      "path": "delivery/runs/38257163110-attempt-1.json",
+      "sha256": "39298cbc007fc3d8ff68993bb3581e9b13c3f47f6976e0b50c00b80cb6a6c279"
+    },
+    {
+      "path": "delivery/runs/38257163050-attempt-1.json",
+      "sha256": "b9e78940655375142cf625e42e2df42c5cff20bd4654e5a9a72cf03dd8a616e1"
+    },
+    {
+      "path": "delivery/runs/38257163181-attempt-1.json",
+      "sha256": "7c1edf0f364e942f6fdbbcac7309843723bf759297ee00fa4adc0f5c7fa88d59"
+    },
+    {
+      "path": "delivery/runs/38257163098-attempt-1.json",
+      "sha256": "f2dd0e28fbe698d6a40abdf5020b74463c8de6bf8481b9a919484c6fb3822ffd"
+    }
+  ],
+  "qualification": "Read-only diagnostic completed; confirms explicit false user-style push field, not absent field. No draft inventory, tag absence, publication, new credential or milestone pass claimed."
+}

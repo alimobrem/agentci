@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-PUB-TOKEN-2",
+  "base": "a33747e2bfba12a919198fe50bb6d2ea5d254e81",
+  "originalLocalCandidate": "ea057840285fdab569511b4806a278d66c651c40",
+  "testedSourceCommit": "5ea359b6023e3b1e8f0eb350bbf5e776cf7893f6",
+  "sourceFiles": [
+    {
+      "path": "scripts/development-release.mjs",
+      "sha256": "f3ad776908c0c25184769185c1b900859142eab0cbcd2f3f02cb4b6b611ba73e"
+    },
+    {
+      "path": "scripts/lib/immutable-release-publication.mjs",
+      "sha256": "ca679f42f8c1e4b63759a78f421232aa3ca405ce4f2aa1a9b5e017e28bd4e348"
+    },
+    {
+      "path": "tests/development-release-execution.test.ts",
+      "sha256": "fed0f125f3c5e2ab598538ebe9687eb2a815af62309ef269e5a0be647fc9cb76"
+    },
+    {
+      "path": "tests/immutable-release-publication.test.ts",
+      "sha256": "75df79a2cbb999fb578b4ce418042a0c6817c2eaa36c7c993eb15c019e84157a"
+    },
+    {
+      "path": "docs/phases/m3-development-candidate.md",
+      "sha256": "160fa18ca96d2a1ddec817539aec550902959db62c0c39e3043d764b98fb615f"
+    }
+  ],
+  "localValidation": {
+    "rootTests": 536,
+    "fastPassed": true,
+    "fastChecks": 10,
+    "fastSeconds": 44.894398324,
+    "rootFocused": 31,
+    "independentFocused": 32,
+    "apiCompatibility": "Immutable M1/M2 and selftests passed",
+    "workflowLint": "Pinned actionlint passed",
+    "qualification": "Reused dependency symlink and checksum-pinned caches. Fast begins at clean tracked5ea source; task completion and evidence records follow; final task/canonical validation separate."
+  },
+  "independentProof": {
+    "path": "delivery/acceptance/m3-dev3-token-hardened-independent-1b475210.json",
+    "sha256": "0b11c45c3ab61008b285a11a3a0aad36a1e6d5c9a1d5cb93830971a21c83cb02",
+    "qualification": "Exact four code/test bytes at1b unchanged5ea; docs updated separately. Final tree/actual hosted/source/artifact review pending."
+  },
+  "preserved": [
+    "All hardened database runtime/tests and three workflows byteexacta337",
+    "All release workflows/descriptors/version and18pendingM3gates byteexacta337",
+    "Original failure runs/dev2 release and candidate identities retained; no destination overwritten",
+    "OriginalTOKEN2trackedstart/events and three local historicalproofs/four diagnosticCIrecords imported with their original identities",
+    "DIAG1 actualobservedproof closes viaCLI; DB2 actualpre/postCIandparent ZIP review closes viaCLI; other137existingtasks preserved"
+  ],
+  "holdLift": "Authenticated parent delegation lifts temporary release hold for reviewed current source after postmerge actualadvisory/security audit. Unmatched historical GitGuardian incident remains open, not declared resolved.",
+  "visibility": "ExactGitHEAD+committedWorkflowJobGrant+tokenInjection+repositoryIdentity+actualOctokitInstallationAuthenticationFingerprint; WeakMapexactobject prevents forgery; generic false/missingpush denied; paginated draft/collision/ref/lostACK guards unchanged.",
+  "activation": "Descriptor unchanged in repair draft. ExactheadCI/source/actualartifact review before merge and separate approveddev3 activation. No new credentials/access/services/securitysettings/identity authorized.",
+  "evidence": [
+    {
+      "path": "/workspace/scratch/dev3-hardened-final-fast.log",
+      "sha256": "a84ea05b18d1d9c8a3eea1883f38bd3384529c915af10afe7dbafb24de772a2e"
+    },
+    {
+      "path": "/workspace/scratch/dev3-hardened-focused.log",
+      "sha256": "fd88f7e6b6cb2068bf966cd57907e20d4ca68e5525fa3c0e5e2700cbdb590d5b"
+    },
+    {
+      "path": "/workspace/scratch/dev3-hardened-api.log",
+      "sha256": "3355e8638f12279b5eed0eda226da3f02147a53f3fdb6391ca064f28c5c4e6e5"
+    },
+    {
+      "path": "/workspace/scratch/dev3-hardened-workflows.log",
+      "sha256": "ac98e827708aafdae3b7fa4ffba0b502f5553388772a78dc8b87061af4e2214b"
+    }
+  ],
+  "collisionObservation": "Work releaseslist retains occupiedimmutabledev2 withzeroassets. Dev3taglookup returned anerror; no proven globalabsence from that response. Authenticated paginated release/tag/all6registry preflight must proveunused before mutation.",
+  "acceptance": "Pending draftexacthead fullCI/scanner and parentsource/actualartifactreview; actualhostedtoken visibility and nativepublication/anonymousdownloads required after approved activation. No M3milestonecompletion claimed."
+}

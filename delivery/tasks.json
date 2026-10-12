@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2405,7 +2405,7 @@
       "completedAt": "2026-10-06T03:28:34.944Z",
       "acceptance": [
         {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0–M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
           "status": "passed",
           "evidence": [
             "docs/acceptance-reconciliation.md"
@@ -2708,7 +2708,7 @@
       "completedAt": null,
       "acceptance": [
         {
-          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0–M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
+          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0\u2013M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
           "status": "pending",
           "evidence": []
         }
@@ -3278,14 +3278,16 @@
         "SPEC-40-051"
       ],
       "dependsOn": [],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-12T07:12:53.071Z",
-      "completedAt": null,
+      "completedAt": "2026-10-12T22:24:22.736Z",
       "acceptance": [
         {
           "text": "Standalone trusted main diagnostic uses exact Node/npm/source and existing preflight ephemeral Contentswrite/Metadataread/Packagesread grants, performs only fixed-repository GET, and retains bounded redacted push-field presence/type/boolean and repository-match evidence. No raw response/token/App key, publication or capability-logic change. Applicable tests, hosted CI and independent exact-head review required before diagnostic main activation; retained real diagnosis required before evidenced repair.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dev3-token-diagnostic-observed-834e49ab.json"
+          ]
         }
       ]
     },
@@ -3297,17 +3299,38 @@
         "SPEC-40-051"
       ],
       "dependsOn": [],
-      "status": "blocked",
+      "status": "done",
       "startedAt": "2026-10-12T20:19:51.793Z",
-      "completedAt": null,
+      "completedAt": "2026-10-12T22:27:04.156Z",
       "acceptance": [
         {
           "text": "Fresh per-run private credentials, loopback-only host binding, bounded sanitized diagnostics, and verified owned teardown in advisory/Verify/download workflows and image smoke. Regression tests cover argv/log leakage, exposure, lost startup responses and cleanup failures; applicable local checks, hosted CI including dedicated scanner and independent exact-source/artifact review pass before merge. Unmatched GitGuardian finding and original milestone/release gates remain open.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-ci-db-hardening-postmerge-a33747e.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-R1-PUB-TOKEN-2",
+      "title": "Separate trusted Actions installation-token draft inventory from generic push metadata",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "blocked",
+      "startedAt": "2026-10-12T13:49:26.121Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Correction integrated onto hardened main follows actual diagnostic38257163110 HTTP200/identitymatch/pushfalse and runtime Contentswrite. Explicit trusted Actions installation mode binds exact committed source/job/repository/Contentswrite/token injection and actual Octokit installation authentication; generic false/missing push never gains fallback. Keep authenticated paginated draft discovery and collision/denial/ambiguity fail-closed checks. Meaningful tests, applicable local checks, independent source/evidence review; retain prior failed attempts/allM3gates. Parent lifted the current-source temporary hold after actual hardened-source postmerge review; historical alert remains open. Exact repair draft CI/source/artifact review precedes separately approved dev.3 activation and native anonymous downloads; no new identity, credentials, access or security settings.",
           "status": "pending",
           "evidence": []
         }
       ],
-      "blockedReason": "Exactstdout-only35b root533 independent26 old-red/new-green beforedeadline passed; product unchanged; pending final exactheadCI and parent artifact review"
+      "blockedReason": "Hardened5ea536unit/31rootfocused/32independent/10fast/API/lint passed; current-source hold lifted, historicalalert open; pending actual draftCI/source/artifact review before separate dev3 activation/native downloads"
     }
   ]
 }

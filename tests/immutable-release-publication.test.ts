@@ -1,3 +1,4 @@
+import {mkdtemp,mkdir,writeFile,rm} from 'node:fs/promises';import{join,dirname}from'node:path';import{tmpdir}from'node:os';import{execFileSync}from'node:child_process';import{randomBytes}from'node:crypto';import{stringify}from'yaml';import{Octokit}from'@octokit/rest';
 import test from 'node:test';import assert from 'node:assert/strict';
 // @ts-expect-error operational ESM helper
 import {publishDraftAssets,requireRetainedArtifact,requireReleaseAssets,candidateReleases,requireCandidateReleaseAbsent,actionsDraftVisibility} from '../scripts/lib/immutable-release-publication.mjs';
@@ -24,28 +25,50 @@ test('wrong actual tag after irreversible publication preserves published-unveri
 
 test('only404 proves absent tag; malformed200 ref aborts before create or upload',async()=>{for(const object of [undefined,{type:'commit'},{type:'commit',sha:'not-a-full-sha'}]){const api=transport();api.rest.git.getRef=async()=>({data:{object}} as any);await assert.rejects(publishDraftAssets(api,{},intent,assets,()=>{}),/Ambiguous Git ref/);assert.equal(api.calls.length,0);}});
 
-const actionsEnvironment={GITHUB_ACTIONS:'true',GITHUB_REPOSITORY:'alimobrem/agentci',GITHUB_REF:'refs/heads/main',GITHUB_EVENT_NAME:'push',GITHUB_WORKFLOW_REF:'alimobrem/agentci/.github/workflows/development-candidate.yaml@refs/heads/main',GITHUB_SHA:'a'.repeat(40),GITHUB_WORKFLOW_SHA:'a'.repeat(40),GITHUB_JOB:'preflight',GITHUB_TOKEN:'synthetic-installation-token'};
-const actionsWorkflow={jobs:{preflight:{permissions:{contents:'write'}},'release-candidate':{permissions:{contents:'write'}}}};
-test('installation response without user permissions uses only verified exact Actions contents-write grant',async()=>{
- const api=transport(),repository={owner:'alimobrem',repo:'agentci'};api.rest.repos.get=async()=>({data:{full_name:'alimobrem/agentci'}} as any);
- await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag),/visibility/);
- const grant=actionsDraftVisibility(actionsEnvironment,actionsWorkflow);
- await requireCandidateReleaseAbsent(api,repository,intent.tag,grant);
- api.rest.repos.get=async()=>({data:{full_name:'alimobrem/agentci',permissions:{push:false}}} as any);
- await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag,grant),/visibility/);
- api.rest.repos.get=async()=>({data:{full_name:'other/repository'}} as any);
- await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag,grant),/visibility/);
- assert.equal(api.calls.length,0);
+const actionsEnvironment={GITHUB_ACTIONS:'true',GITHUB_REPOSITORY:'alimobrem/agentci',GITHUB_REF:'refs/heads/main',GITHUB_EVENT_NAME:'push',GITHUB_WORKFLOW_REF:'alimobrem/agentci/.github/workflows/development-candidate.yaml@refs/heads/main',GITHUB_JOB:'preflight'};
+const actionsWorkflow={jobs:{preflight:{permissions:{contents:'write'},steps:[{run:'node scripts/development-release.mjs preflight',env:{GITHUB_TOKEN:'${{ secrets.GITHUB_TOKEN }}'}}]},'release-candidate':{permissions:{contents:'write'},steps:[{run:'node scripts/development-release.mjs publish',env:{GITHUB_TOKEN:'${{ secrets.GITHUB_TOKEN }}'}}]}}};
+async function actionsFixture(workflow:any=actionsWorkflow){
+ const root=await mkdtemp(join(tmpdir(),'actions-installation-contract-')),path=join(root,'.github/workflows/development-candidate.yaml');
+ await mkdir(dirname(path),{recursive:true});await writeFile(path,stringify(workflow));
+ execFileSync('git',['init','--quiet'],{cwd:root});execFileSync('git',['add','.github/workflows/development-candidate.yaml'],{cwd:root});execFileSync('git',['-c','user.name=Synthetic acceptance','-c','user.email=synthetic@example.invalid','-c','commit.gpgsign=false','commit','--quiet','-m','Synthetic source'],{cwd:root});
+ const source=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),token='ghs_'+randomBytes(20).toString('hex');
+ const environment={...actionsEnvironment,GITHUB_SHA:source,GITHUB_WORKFLOW_SHA:source,GITHUB_TOKEN:token},options={cwd:root,command:'preflight'};
+ return{root,path,environment,options,authentication:new Octokit({auth:token}).auth,close:()=>rm(root,{recursive:true,force:true})};
+}
+test('trusted Actions installation mode uses bound app permission contract while generic false or absent push remains denied',async()=>{
+ const f=await actionsFixture();try{const repository={owner:'alimobrem',repo:'agentci'},grant=await actionsDraftVisibility(f.environment,f.options);
+ for(const permissions of [undefined,{push:false},{push:true},{push:null},{push:'diagnostic-only'}]){
+  let listed=0;const api={...transport(),auth:f.authentication};api.rest.repos.get=async()=>({data:{full_name:'alimobrem/agentci',permissions}} as any);api.rest.repos.listReleases=async()=>{listed++;return{data:[]}};
+  if(permissions?.push!==true){await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag),/visibility/);assert.equal(listed,0);}
+  await requireCandidateReleaseAbsent(api,repository,intent.tag,grant);assert.equal(api.calls.length,0);
+ }
+ }finally{await f.close();}
 });
-test('missing or foreign Actions job, workflow, source and contents grant never authorize draft visibility',()=>{
- for(const patch of [{GITHUB_ACTIONS:'false'},{GITHUB_REPOSITORY:'other/repository'},{GITHUB_REF:'refs/pull/9/merge'},{GITHUB_EVENT_NAME:'pull_request'},{GITHUB_WORKFLOW_REF:'foreign/workflow@refs/heads/main'},{GITHUB_WORKFLOW_SHA:'b'.repeat(40)},{GITHUB_JOB:'images'},{GITHUB_SHA:'short'},{GITHUB_TOKEN:''}])assert.throws(()=>actionsDraftVisibility({...actionsEnvironment,...patch},actionsWorkflow));
- assert.throws(()=>actionsDraftVisibility(actionsEnvironment,{jobs:{preflight:{permissions:{contents:'read'}}}}));
+test('missing or foreign Actions context, committed grants, operations and token injection never construct installation mode',async()=>{
+ const f=await actionsFixture();try{
+ for(const patch of [{GITHUB_ACTIONS:'false'},{GITHUB_REPOSITORY:'other/repository'},{GITHUB_REF:'refs/pull/9/merge'},{GITHUB_EVENT_NAME:'pull_request'},{GITHUB_WORKFLOW_REF:'foreign/workflow@refs/heads/main'},{GITHUB_WORKFLOW_SHA:'b'.repeat(40)},{GITHUB_JOB:'images'},{GITHUB_SHA:'short'},{GITHUB_TOKEN:''}])await assert.rejects(actionsDraftVisibility({...f.environment,...patch},f.options));
+ await assert.rejects(actionsDraftVisibility(f.environment,{...f.options,command:'publish'}));
+ await writeFile(f.path,stringify({jobs:{preflight:{permissions:{contents:'write'}}}}));await assert.rejects(actionsDraftVisibility(f.environment,f.options),/exact committed source/);
+ }finally{await f.close();}
+ for(const workflow of [{jobs:{preflight:{permissions:{contents:'read'},steps:actionsWorkflow.jobs.preflight.steps}}},{jobs:{preflight:{permissions:{contents:'write'},steps:[]}}},{jobs:{preflight:{permissions:{contents:'write'},steps:[{run:'node scripts/development-release.mjs preflight',env:{GITHUB_TOKEN:'${{ secrets.FOREIGN_TOKEN }}'}}]}}},{jobs:{preflight:{permissions:{contents:'write'},steps:[...actionsWorkflow.jobs.preflight.steps,...actionsWorkflow.jobs.preflight.steps]}}}]){
+ const bad=await actionsFixture(workflow);try{await assert.rejects(actionsDraftVisibility(bad.environment,bad.options));}finally{await bad.close();}
+ }
 });
-test('installation grant retains paginated occupied-draft and API ambiguity failure before writes',async()=>{
- const repository={owner:'alimobrem',repo:'agentci'},grant=actionsDraftVisibility(actionsEnvironment,actionsWorkflow);
- for(const mode of ['occupied','error','duplicate']){
-  const api=transport();api.rest.repos.get=async()=>({data:{full_name:'alimobrem/agentci'}} as any);
-  api.rest.repos.listReleases=async(input:any)=>{if(mode==='error')throw Object.assign(Error('unavailable'),{status:403});return {data:input.page===1?Array.from({length:100},(_,i)=>({id:i+100,tag_name:'other'})):mode==='occupied'?[{id:9,tag_name:intent.tag,draft:true}]:[{id:100,tag_name:'other'}]};};
+test('installation mode rejects forged branding, foreign identity, OAuth or mismatched actual authentication before listing',async()=>{
+ const f=await actionsFixture();try{const repository={owner:'alimobrem',repo:'agentci'},grant=await actionsDraftVisibility(f.environment,f.options);
+ for(const mode of ['forged','spread','repository','oauth','token','auth-error']){
+ let listed=0;const api={...transport(),auth:async()=>mode==='auth-error'?Promise.reject(Error('authentication unavailable')):{type:'token',tokenType:mode==='oauth'?'oauth':'installation',token:mode==='token'?'foreign synthetic token':f.environment.GITHUB_TOKEN}};
+ api.rest.repos.get=async()=>({data:{full_name:mode==='repository'?'other/repository':'alimobrem/agentci',permissions:{push:true}}} as any);api.rest.repos.listReleases=async()=>{listed++;return{data:[]}};
+ await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag,mode==='forged'?JSON.parse(JSON.stringify(grant)):mode==='spread'?{...grant}:grant));assert.equal(listed,0);assert.equal(api.calls.length,0);
+ }
+ }finally{await f.close();}
+});
+test('installation mode retains paginated occupied drafts and API denial or ambiguity before writes',async()=>{
+ const f=await actionsFixture();try{const repository={owner:'alimobrem',repo:'agentci'},grant=await actionsDraftVisibility(f.environment,f.options);
+ for(const mode of ['occupied','error','duplicate','malformed']){
+  const api={...transport(),auth:f.authentication};api.rest.repos.get=async()=>({data:{full_name:'alimobrem/agentci',permissions:{push:false}}} as any);
+  api.rest.repos.listReleases=async(input:any)=>{if(mode==='error')throw Object.assign(Error('unavailable'),{status:403});if(mode==='malformed')return{data:{}} as any;return {data:input.page===1?Array.from({length:100},(_,i)=>({id:i+100,tag_name:'other'})):mode==='occupied'?[{id:9,tag_name:intent.tag,draft:true}]:[{id:100,tag_name:'other'}]};};
   await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag,grant));assert.equal(api.calls.length,0);
  }
+ }finally{await f.close();}
 });
