@@ -5,7 +5,7 @@ import {anonymousDownload} from '../published-package-smoke.mjs';
 import {validateDevelopmentAssets,hash} from './development-artifacts.mjs';
 
 export async function customerPublicationAssets(prepared,input,request=fetch){
- const version='0.4.0-m3-dev.2',assets=join(prepared.temporaryRoot,'development-assets');
+ const version='0.4.0-m3-dev.3',assets=join(prepared.temporaryRoot,'development-assets');
  // The checksum file is reconstructed from all four owner-pinned public bytes.
  // It is checked by the same archive/native validator used for publication.
  if(hash(prepared.manifestBytes)!==input.packageManifestSha256||hash(prepared.archive)!==input.packageSha256)throw Error('Prepared customer package checksum mismatch');

@@ -132,7 +132,7 @@ bounded synthetic fault fixture, not a new product acceptance threshold.
 main and consumes one public JSON input with `fixtures` as above, `releaseSource`
 (full candidate commit), and the four exact checksums `packageManifestSha256`,
 `packageSha256`, `imagesManifestSha256`, `publicationEvidenceSha256`. All refer to
-`v0.4.0-m3-dev.2`. The factored anonymous package helper verifies source/version,
+the owner-approved corrected `v0.4.0-m3-dev.3`; the failed dev.2 identity remains untouched. The factored anonymous package helper verifies source/version,
 file bytes, regular archive paths, equivalent packaged locks, actual locked-root
 and consumer production installs, CLI/client and all three adapter imports before
 any customer key file/private configuration exists. It reconstructs the canonical

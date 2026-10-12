@@ -8,7 +8,7 @@ permissions:
   contents: read
   packages: read
 concurrency:
-  group: agentci-development-candidate-0.4.0-m3-dev.2
+  group: agentci-development-candidate-0.4.0-m3-dev.3
   cancel-in-progress: false
 jobs:
   preflight:
@@ -34,7 +34,7 @@ jobs:
     needs: preflight
     permissions: { contents: read, packages: write }
     uses: ./.github/workflows/images.yaml
-    with: { version: 0.4.0-m3-dev.2 }
+    with: { version: 0.4.0-m3-dev.3 }
   release-candidate:
     needs: images
     runs-on: ubuntu-24.04
@@ -74,7 +74,7 @@ jobs:
     uses: ./.github/workflows/download-smoke.yaml
     with:
       source_commit: ${{ github.sha }}
-      version: 0.4.0-m3-dev.2
+      version: 0.4.0-m3-dev.3
       api_image: ${{ needs.release-candidate.outputs.api_image }}
       worker_image: ${{ needs.release-candidate.outputs.worker_image }}
       eval_worker_image: ${{ needs.release-candidate.outputs.eval_worker_image }}
@@ -101,7 +101,7 @@ jobs:
       - name: Download without credentials, verify source/hash before production installation
         env:
           RELEASE_SOURCE: ${{ github.sha }}
-          RELEASE_VERSION: 0.4.0-m3-dev.2
+          RELEASE_VERSION: 0.4.0-m3-dev.3
           RELEASE_ARCH: ${{ matrix.arch }}
           PACKAGE_SHA256: ${{ needs.release-candidate.outputs.package_sha256 }}
           PACKAGE_MANIFEST_SHA256: ${{ needs.release-candidate.outputs.manifest_sha256 }}
