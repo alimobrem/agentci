@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-12T06:01:10.620852+00:00",
+  "task": "M3-07-ui-draft-integration",
+  "state": "Actual planner main independently verified equal frozen equivalent; bounded UI local source/review passed, freshlinear draft and hosted checks pending",
+  "sourceCommit": "28b4ad488d0ee469b84969775ebe886bb3f191f4",
+  "sourceTree": "0bb305a6a668cae0887166acbf7825fb5716a0e1",
+  "runtimeTestSource": "a3c74ca43d04ff5e1111a5e07d396061c9dac81a",
+  "runtimeTestTree": "aeecd6a5e9281b67adafdad11e1661812a54421f",
+  "actualMain": {
+    "sha": "05049813724167d81610d107bcc2515a86294e5b",
+    "tree": "a464eb8ae25dcf28464deac60f3d2407ad479b32",
+    "parents": [
+      "100731c7e15a83fbe49afa7bfef0e01e70ee2dda",
+      "5c559cde0b1e631c02e4f2c4f65e91b926e015b9"
+    ]
+  },
+  "localEquivalentMain": {
+    "commit": "6662005d917535aea2d46d00fc9aee701818bd63",
+    "tree": "a464eb8ae25dcf28464deac60f3d2407ad479b32"
+  },
+  "sourceBindings": [
+    {
+      "path": ".github/workflows/dashboard-verify.yaml",
+      "sha256": "0bd0b9cea7f84ef37d5834be64a5877094915b2265150524012feb1dcb6e573a"
+    },
+    {
+      "path": "apps/dashboard/.gitignore",
+      "sha256": "add44d99b8351d4ef77e1e141f278780749922a158227df86c51dad8f8a0b613"
+    },
+    {
+      "path": "apps/dashboard/app/api/reviews/[id]/route.ts",
+      "sha256": "b8f91d12ff7e351c0fdb462d696a2ac3327f4e3c92473ac1a180640e29f88aa6"
+    },
+    {
+      "path": "apps/dashboard/app/api/session/route.ts",
+      "sha256": "3b7e11364bbfa64dd2341f524665ad1f2cd93a7599aa88de610749ef5449248d"
+    },
+    {
+      "path": "apps/dashboard/app/auth/callback/route.ts",
+      "sha256": "8a823b95ee8190e4e1bc80ac6accd910ebc847cfb2b00f5b463a3c4f2910ec69"
+    },
+    {
+      "path": "apps/dashboard/app/auth/login/route.ts",
+      "sha256": "82a3559cc292f531aa827789537d4cdbc1a7e499e7b99ae6a65a061b1919a730"
+    },
+    {
+      "path": "apps/dashboard/app/auth/logout/route.ts",
+      "sha256": "6f8b35b8bfe4b9bd9908350f537bdf0c5cf811e0fab66510a601e8016a56a48c"
+    },
+    {
+      "path": "apps/dashboard/app/error.tsx",
+      "sha256": "58e6ca0df501196de13d2baff934b8e742b0581299cbd7a7d0486e5dc0daf8fc"
+    },
+    {
+      "path": "apps/dashboard/app/globals.css",
+      "sha256": "f52fd3e5657ba4a894843d9a0968d5ad5f81849f8641564e9d1dc6edda8fdcce"
+    },
+    {
+      "path": "apps/dashboard/app/layout.tsx",
+      "sha256": "69d5cbe3056fa743f848221d95927e84d7adbd9380a7e15ac20884d6a0d249a2"
+    },
+    {
+      "path": "apps/dashboard/app/loading.tsx",
+      "sha256": "cdee6b6fcf219200232d157d74463adea5b08492dd6c7ae0be82a54632e7335b"
+    },
+    {
+      "path": "apps/dashboard/app/page.tsx",
+      "sha256": "800d9adde33ed0a8aee175826b213fa34d8ae27f46494bac94bf086b22bb794b"
+    },
+    {
+      "path": "apps/dashboard/components/refresh-review.tsx",
+      "sha256": "18693a85e23277a5fc8bc5669dce9f3ab6b3ed6066dcdc788d5ecbd5e2126188"
+    },
+    {
+      "path": "apps/dashboard/components/review-detail.tsx",
+      "sha256": "9a18a83a1fb9576153fb157e17cf03274d8bf033c3ec213bfa1077669cc5a8c7"
+    },
+    {
+      "path": "apps/dashboard/components/review-loader.tsx",
+      "sha256": "2a570456627948d952034118f1fb810c0cb9bbb7b77986b521303b8d86ea6160"
+    },
+    {
+      "path": "apps/dashboard/components/session-boundary.tsx",
+      "sha256": "b8e489440eeb0ce0cc7c1906a380559a5b4910be594c2a656c61b0c50bea2865"
+    },
+    {
+      "path": "apps/dashboard/components/sign-out.tsx",
+      "sha256": "fdb2053ac90c2bd6eaec6bf2ecfa419e6ff1b26fbe4706ee8b34eade3a54d49e"
+    },
+    {
+      "path": "apps/dashboard/components/ui/tabs.tsx",
+      "sha256": "76f9005af9eda76d8047bd9ae38ffa6033016a1b663f0abf6630611ebefb9b16"
+    },
+    {
+      "path": "apps/dashboard/lib/admissions.ts",
+      "sha256": "8b2b9cdff83608910f0e812fde5eed47e0a3d03e42afa2b50e583b057fc6e079"
+    },
+    {
+      "path": "apps/dashboard/lib/dashboard.ts",
+      "sha256": "841c794a8de9461598b374920c2f8ce9ed9d373830dbf192d15f30554185fc66"
+    },
+    {
+      "path": "apps/dashboard/lib/oidc.ts",
+      "sha256": "99abed3e1880fe484aba2f9ce61852df782f1d51348bd311b10bcfd0cee5faba"
+    },
+    {
+      "path": "apps/dashboard/lib/runtime.ts",
+      "sha256": "0b9ab83ba319f483b84fe3126f98323ff6ea15d8d17e9d682a0e470962221ce1"
+    },
+    {
+      "path": "apps/dashboard/lib/session.ts",
+      "sha256": "db690298d96ffb4311b2371db2a88f4ee4a73b1850e021e96c8f23a582f04bc9"
+    },
+    {
+      "path": "apps/dashboard/next-env.d.ts",
+      "sha256": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b"
+    },
+    {
+      "path": "apps/dashboard/next.config.ts",
+      "sha256": "7fc67a637373c3102b44c8ac83851156982e95617cc764c94cb50fa07766b61c"
+    },
+    {
+      "path": "apps/dashboard/package-lock.json",
+      "sha256": "0ad03dc2dfe2d40029647480d9ee46ae58d3fd2b7efba99894cb12ed0f9c33db"
+    },
+    {
+      "path": "apps/dashboard/package.json",
+      "sha256": "6a5c9c9c966f119663c899fe8d503a2a2e1fb2394d78c55d2a55c2a6f0ac956a"
+    },
+    {
+      "path": "apps/dashboard/postcss.config.mjs",
+      "sha256": "cc8f514ba7fda07a2e2828670c99e34275f314b350628d8c2ab39e68e50bf9f8"
+    },
+    {
+      "path": "apps/dashboard/tests/browser/bootstrap.ts",
+      "sha256": "df8844e7fc9a8b11229757d036abc7a2cf4260e59e7489e4ac5c91a682f5b705"
+    },
+    {
+      "path": "apps/dashboard/tests/browser/check.mjs",
+      "sha256": "4ae584a4e17341f64e3d2e40dba82905a614b89b3ec4e176b519847bf66af76c"
+    },
+    {
+      "path": "apps/dashboard/tests/ci-receipt.test.ts",
+      "sha256": "13f0e6ec51b15be183c31467792fb57faaff094b3819cffc9d3d89c3e5e1b0d8"
+    },
+    {
+      "path": "apps/dashboard/tests/dashboard.test.ts",
+      "sha256": "48b61b57a3311e5f3f683751aa42c29f4282c728a10266434ed94335efc97d66"
+    },
+    {
+      "path": "apps/dashboard/tests/helpers/retained-finding.ts",
+      "sha256": "f2a696bcca2ac953144da0b2f564494522c2983ca3607239c78e70093074f55d"
+    },
+    {
+      "path": "apps/dashboard/tests/oidc.test.ts",
+      "sha256": "82a6bb84b8b5d502068d60ab3cad9f5981ce081d43060a133cfea44cd8bb415a"
+    },
+    {
+      "path": "apps/dashboard/tests/presenter.test.ts",
+      "sha256": "a5443aaef0ef01a4456daebab9809363736268abcb812e8016617e83df52538a"
+    },
+    {
+      "path": "apps/dashboard/tests/session.test.ts",
+      "sha256": "185e32662864f571e9a518c7253de3137768e8f07e8cbb2a6ca4c8d212af8f7f"
+    },
+    {
+      "path": "apps/dashboard/tsconfig.json",
+      "sha256": "15913b642e425b3b90a773a28f2b9caa40d9cc60f6a100ab9e61c8c76e20ab8e"
+    },
+    {
+      "path": "docs/phases/m3-dashboard-local-preparation.md",
+      "sha256": "7f882e7c5dfa3510739f9362d7dcdb9e8eb983e782b1d360c54bcc057f32a085"
+    },
+    {
+      "path": "docs/phases/m3-model-review-client.md",
+      "sha256": "af67de8796ce4c4763047b7afd6682f0f591aca7a8dbe780690cbc08c19bdd4b"
+    },
+    {
+      "path": "packages/client/index.ts",
+      "sha256": "f8008d776a94b64da04995a1c6e74d07f3676c36a88bf4427a69dd0dbc43e502"
+    },
+    {
+      "path": "packages/client/model-review.ts",
+      "sha256": "7de81395f044b3de008ce99f8e727a3495adcee0b2d8183de6af2ae7bb09c978"
+    },
+    {
+      "path": "packages/evals/contracts.ts",
+      "sha256": "1166e5365f1582ba34475e2a4566d30d45b0421bb3bf82b18300030a5d046a5c"
+    },
+    {
+      "path": "scripts/dashboard-ci-receipt.mjs",
+      "sha256": "1de368dc3270bb1283fcd51050e17a27d0565a1f7b61d86df850def7023bc303"
+    },
+    {
+      "path": "scripts/lib/dashboard-ci-evidence.mjs",
+      "sha256": "d1d53646cbb67ea7187b1849f8be56d64f3f8fe28a661d0f942768c5a6fd0787"
+    },
+    {
+      "path": "tests/eval-contracts.test.ts",
+      "sha256": "f15a40fb52f978139ae89a43fc920299ac4681e43a1b84084ad6e19f8747c46d"
+    },
+    {
+      "path": "tests/eval-orchestration.test.ts",
+      "sha256": "a63e1fc17e19361f92096937fddfebee9d40eb58fc8daa6f1c1a062c8f5095af"
+    },
+    {
+      "path": "tests/integration/eval-review-staging.test.ts",
+      "sha256": "f3ebeddd361de8949818e631e758aebd59067414b8a84f1e9a056e923e5cb10b"
+    },
+    {
+      "path": "tests/model-finding-client.test.ts",
+      "sha256": "e018021b9ea3e8c1451219b3eec50742ac78eef37e9e9c6622e342a7aea4cef7"
+    },
+    {
+      "path": "tsconfig.build.json",
+      "sha256": "4754ee1b0c3e58f29a80af0452de9967adf3a9c27250f3f2c6266af359728e8c"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "8b75e612225dc4b5e8468367c4feb6ece8c6f36f407ccf3cb0db23ff209ae316"
+    }
+  ],
+  "evidenceBindings": [
+    {
+      "path": "delivery/acceptance/m3-dashboard-scanner-planner-integration-a3c74ca.json",
+      "sha256": "2ccbf19af839a23084b34f8715b0d6696ee7c3887440c61d5300c103b5c0339d"
+    },
+    {
+      "path": "/workspace/scratch/ui-actual-planner-main-05049813.json",
+      "sha256": "a2df0b436093088a852f8f62b9b23210733c86aee5e9169a107a05f4b1abf42d"
+    },
+    {
+      "path": "/workspace/scratch/ui-integration-client-independent-28b4ad48-20261012.json",
+      "sha256": "1881858cf2e90893efe8cf235b1cfe89fa6b55120435e932edac5ddc0d4158dd"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-final-binding-28b4ad48-20261012.json",
+      "sha256": "697bcf101fe513b58ae16fb20f3d2c3cb67e2ad5ad0fdadb95517db5f73bea83"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-postrecord-canonical.log",
+      "sha256": "3c655087d3e415beeae76d42e7aa0390cb2b1f5f8e30976b0de71ba65d44fc1b"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-postrecord-delivery.log",
+      "sha256": "5fb823451eb905274f1c8f923d94e72615fdc4c66a2d64cf5ee565cc0acb7267"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-final-forward-report.json",
+      "sha256": "1e2733c1d9d9376ec22e5e7a905cd639201998436306996604f0c426cf5adac3"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-final-forward.log",
+      "sha256": "9f37bd5e142baa4ce6d452d21038ced604d8ca732f484f68ddf02300c311ba84"
+    }
+  ],
+  "previousRecordQualification": "Old pending-premerge record remains immutable historical; actual main identity verified after parent-approved PR87 merge through readonly Work Git data. No borrowed later CI claim.",
+  "reuseQualification": "50 runtime/test inputs (46 frozenac9 UI/SDK/CI plus4 frozen666 planner) unchanged from testedsourcea3 and independently reviewed28.509rootunits/17UIunits/24builtbrowsercases/zero mutations/build/audit0/compatibility/workflows remain exact-input-qualified local proof; no duplicate browser tests for bookkeeping-only change.",
+  "publication": "Root creates freshlinear UI DRAFT fromactual050 main, preserving existingPR81 branch/publichistory/failures. Avoid inherited oldbranch mergecontext selection; no scanner/cleanup/rulechanges or suppression.",
+  "preservation": {
+    "all135MainTaskObjectsExact": true,
+    "mainEventBytePrefixPreserved": true,
+    "legacyUIRecords": "immutable",
+    "failedHostedAttempts": "38201331467/38202263061 retained",
+    "M0M10": "fullscope/order preserved",
+    "all18M3Gates": "openunchanged",
+    "UIIntegrationTask": "in-progress pending newdraft/hostedchecks"
+  },
+  "pending": [
+    "Finalpostrecord canonical/delivery and exact local-equivalent666\u2192finalsource forwardscan",
+    "Independent final actual-base bookbinding",
+    "Freshlinear UI draft +Verify/Forward/Dashboard CI",
+    "NoUImerge/deploy authorization",
+    "LiveOIDC/App/customer/provider/fullUI/export/history/interruption/packaging/native/release/download/demo acceptance remainsunverified; only inaccessibleexternalproviders mayuseowner exception afterallotherapplicablegates pass"
+  ]
+}

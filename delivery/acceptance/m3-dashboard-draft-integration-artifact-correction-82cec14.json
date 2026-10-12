@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "82cec14ef198c2ba1ed5cb885ee87e5261f56aa8",
+  "sourceTree": "e75d7c3fc46a58e10c6d8fb965a26709d88f5f36",
+  "supersededField": {
+    "record": "delivery/acceptance/m3-dashboard-draft-integration-82cec14.json",
+    "recordSha256": "a0411643dbff5b40d018813e2d4b73cc2bdf8b7913e85d9959146ac2799964ec",
+    "field": "ui.browserArtifacts",
+    "reason": "Common output directory contained two historical screenshots. Copying them into a source-named directory did not make them current-source evidence."
+  },
+  "currentSourceBrowserArtifacts": {
+    ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/fixture-cancellation-intent.png": "a9ba2bca74c5c08c7cacaad2cfa377525a8786c36ea0164ff8f60b15a31c3db8",
+    ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/fixture-exact-review-detail.png": "e4f0bbe93364628c95136f25dd1782d72515748d95b0387f42500d4d3b0d7a87",
+    ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/fixture-missing-evidence.png": "b8387a9683cde5dfb07b0a3cfe2f833803c63c985e639dab65e8bd74a1634f3f",
+    ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/fixture-session-expired.png": "49744d610013c4816d6d25f6cf3bbd28d7d4e55659e1e873c42a00fab113f5c5",
+    ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/result.json": "60915202e253625d00496285289c3532565919b1062e84d4eac66cfe0f327d67"
+  },
+  "historicalArtifactsExcludedFromFreshEvidence": {
+    ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/cancelled-mobile.png": {
+      "sha256": "f5cd33b4569d7920f0afc56059099f722d1fb5e4900bd612cdc5c65b28ff1b49",
+      "provenanceSource": "45453c56ded0388cf5d73654978f298840cc3263",
+      "freshCurrentSourceEvidence": false
+    },
+    ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/queued-mobile.png": {
+      "sha256": "bdccfa0a796a2bf4da30a10a2dcdf74e00559a71d3a5080755b61e4ae66ffcdb",
+      "provenanceSource": "45453c56ded0388cf5d73654978f298840cc3263",
+      "freshCurrentSourceEvidence": false
+    }
+  },
+  "priorRecordsAndSnapshotsPreserved": true,
+  "currentSourceChecksStillPassed": {
+    "browserCases": 20,
+    "backendMutations": 0,
+    "sourceUnchanged": true,
+    "noTestRerunNeeded": true
+  },
+  "releaseComplete": false
+}

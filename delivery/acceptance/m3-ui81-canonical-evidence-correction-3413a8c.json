@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-ADVISORY-PATH-1",
+  "scope": "UI draft81 canonical evidence correction only; no runtime implementation or acceptance-gate promotion",
+  "recordedAt": "2026-10-12T04:20:31.070228+00:00",
+  "sourceCommit": "3413a8cea919966d42a15a149d158446a56d710f",
+  "sourceTree": "8097c09ef7f044a01e9dcd2f0924126cbbad1494",
+  "baseCommit": "be2fe8a3e9287d5c7d197cb3769b5a870fe1e1d0",
+  "baseTree": "9300d5366207178636acb23165ffc66e7f5f9620",
+  "sourceInputs": [
+    {
+      "path": "delivery/reconciliation/requirement-test-evidence.json",
+      "sha256": "1b77ed17ab50f9cddfa516f3e7d14135e040b2c9c9d08d7cbb6627e32292e126"
+    },
+    {
+      "path": "delivery/reconciliation/sections/40.json",
+      "sha256": "5e70044a5e8a85a90826cc9f19d393a855ae4c9b2f01b82ecfa5f278722f75c6"
+    },
+    {
+      "path": "delivery/runs/38201331467-attempt-1.json",
+      "sha256": "ab98927c41b43e4582b54d7ebd51ee378e80686d39f2076c1ad7bef1b3495a13"
+    }
+  ],
+  "diagnosis": {
+    "cause": "Final wording qualification changed acceptance record digest after reconciliation generation; SPEC-40-050/051 evidence and section40 metadata digest retained prior record bytes",
+    "changedDigestBefore": "f634257926540aec67821449c07834388cdebe2bcf6cdc7c944995768aee37ca",
+    "actualCommittedDigest": "ef670a7b0ec255a7e45156fab39246fc4a4b7b0194e16545f56afe34f823b43b",
+    "diffProof": {
+      "path": "/workspace/scratch/ui81-canonical-diff-before-repair-20261012.json",
+      "sha256": "e2b0261066720f79bdb09bb5f243980a3bfc4a2ac4245e5cbee9f313852aabf9"
+    },
+    "sourceBinding": {
+      "path": "/workspace/scratch/ui81-canonical-failed-source-binding-20261012.json",
+      "sha256": "b6ec6428d658d84b3ccad742d81db3f3f127e07869c156f21b08446d510cd989"
+    },
+    "qualification": "Failure is generated evidence bookkeeping, not snapshot input mismatches, provider access, dashboard behavior or runtime planner change"
+  },
+  "failedHostedCI": {
+    "record": "delivery/runs/38201331467-attempt-1.json",
+    "sha256": "ab98927c41b43e4582b54d7ebd51ee378e80686d39f2076c1ad7bef1b3495a13",
+    "run": 38201331467,
+    "attempt": 1,
+    "conclusion": "failure",
+    "sourceCommit": "0de01568af6d04a390a17d4c41ea7c4c3059a90e",
+    "sourceTree": "9300d5366207178636acb23165ffc66e7f5f9620",
+    "failedStep": "Verify requirement reconciliation and captured history",
+    "cohort": "optimized",
+    "cache": "unknown",
+    "collection": "Delivery completed-attempt CLI via restricted exact read-only metadata adapter from successful Work GitHub GET run/full2jobs responses; no token bridge or rawlogs",
+    "fullNewSourceCI": "pending; original failedattempt never relabeled"
+  },
+  "checks": [
+    {
+      "path": "/workspace/scratch/ui81-canonical-repair-3413a8c-check-20261012.log",
+      "sha256": "3c655087d3e415beeae76d42e7aa0390cb2b1f5f8e30976b0de71ba65d44fc1b",
+      "result": "Exact committed-source canonical check passed1346source IDs/29children; allM0-M10 preserved"
+    },
+    {
+      "path": "/workspace/scratch/ui81-canonical-repair-3413a8c-delivery-20261012.log",
+      "sha256": "b5095d025a24f49c00f56e94689b768d63d9c0c88ce999e89ecc6af45382ebc9",
+      "result": "138tasks validated;18M3gates open"
+    },
+    {
+      "path": "/workspace/scratch/customer-review-ui81-canonical-3413-independent-20261012.json",
+      "sha256": "1193535f793ebbee431a62df09dbdebbba94fc74219ed3c2ef4d33623974e753",
+      "result": "Independent canonical/scope/history review passed; runtime tests not repeated"
+    }
+  ],
+  "runtimeSourceUnchanged": [
+    {
+      "path": "packages/evals/contracts.ts",
+      "sha256": "1166e5365f1582ba34475e2a4566d30d45b0421bb3bf82b18300030a5d046a5c"
+    },
+    {
+      "path": "tests/eval-contracts.test.ts",
+      "sha256": "f15a40fb52f978139ae89a43fc920299ac4681e43a1b84084ad6e19f8747c46d"
+    },
+    {
+      "path": "tests/eval-orchestration.test.ts",
+      "sha256": "a63e1fc17e19361f92096937fddfebee9d40eb58fc8daa6f1c1a062c8f5095af"
+    },
+    {
+      "path": "tests/integration/eval-review-staging.test.ts",
+      "sha256": "409534868dca9aeada120e7e81f4d2db69bdac9d0fa70c71cedd4408ba06a1a0"
+    }
+  ],
+  "preserved": [
+    "Allnon-deliveryruntime/test/workflow bytes unchanged vsfrozenbe2",
+    "Original ef670 acceptance byte-identical and prior failedCI/source/reviewer proofs retained",
+    "137other taskobjects and all originaleventprefix/captured-gate-history bytes preserved",
+    "Reopened task via CLI before committed repair; allsections/currentmetadata regenerated from final immutable inputbytes"
+  ],
+  "separateMainPlannerCheck": {
+    "candidate": "a1e333be3b52dc470ce34f012d1fc3c389e2ae22",
+    "result": "Canonicalcheck independently runbyworkerpassed; same stale-input cause absent; no additionalmain/UI imports or repair performed",
+    "trustedMainActivation": "Requires separate reviewedcoremerge; UI-only draftcannot activate advisory trustedmain checkout"
+  },
+  "runtimeRetests": "Not repeated: no runtime/test/workflow change. Prior runtime proof remains historical atitsbound source; thisrecord proves corrected evidence generation only.",
+  "pending": [
+    "Finalbookkeeping independentbinding and rootdraft81 update/newfullhostedCI",
+    "No merge/deploy/liveApp/model/customer/release action performed",
+    "All18M3gates pending;M0-M10/threeadapters/observedrate/descriptiveWilson/soleapprovedinaccessibleproviderexception unchanged"
+  ],
+  "workspaceQualification": "Trackedcleanbeforechecks; onlyuntrackednode_modules symlink; no cleancheckoutclaim"
+}

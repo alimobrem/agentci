@@ -1,0 +1,3 @@
+import type {NextConfig} from 'next';
+const config:NextConfig={output:'standalone',serverExternalPackages:['agentci'],outputFileTracingIncludes:{'/*':['../../dist/packages/**/*.json']},poweredByHeader:false,outputFileTracingRoot:new URL('../../',import.meta.url).pathname,async headers(){return [{source:'/:path*',headers:[{key:'Cache-Control',value:'private, no-store, max-age=0'},{key:'X-Content-Type-Options',value:'nosniff'},{key:'Referrer-Policy',value:'no-referrer'},{key:'Content-Security-Policy',value:"frame-ancestors 'none'; object-src 'none'; base-uri 'self'"}]}];}};
+export default config;
