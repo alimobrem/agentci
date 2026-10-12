@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 const prefix = `agentci-smoke-${randomUUID().slice(0, 8)}`;
 const docker = (...args) => execFileSync('docker', args, { encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'], timeout: 60_000 }).trim();
+const smokeImages = {};
 const containers = [], directory = await mkdtemp(join(tmpdir(), 'agentci-image-smoke-'));
 const temporalVolume = `${prefix}-temporal-data`;
 const roles = process.argv[2] ?? '0.2.1-m1';
@@ -33,6 +34,7 @@ try {
   for (const role of ['api', 'worker']) {
     const name = `${prefix}-${role}`;
     create(name, '--user', `${process.getuid()}:${process.getgid()}`, ...Object.entries(env).flatMap(([key, value]) => ['-e', `${key}=${value}`]), `agentci-${role}:${roles}`);
+    smokeImages[role]=docker('inspect','--format','{{.Image}}',name);
     if (role === 'worker') docker('cp', '-a', keyPath, `${name}:/tmp/fixture.pem`);
     docker('start', name);
   }
@@ -87,7 +89,7 @@ try {
   docker('exec', temporal, 'test', '-s', '/home/temporal/temporal.db');
   docker('stop', '--time', '20', api, worker);
   for (const name of [api, worker]) if (docker('inspect', '--format', '{{.State.ExitCode}}', name) !== '0') throw new Error(`Unclean shutdown: ${name}`);
-  console.log(JSON.stringify({ result: 'passed', version: roles, platform: process.arch, checks: ['non-root API/worker startup', 'M2 schema readiness', 'signature rejection', 'evidence authentication', 'comparison authentication/UUID/scoped lookup', 'compiled comparison API/client reads actual queued database evidence', 'compiled snapshot export/client completion', 'signed closed delivery', 'non-root persistent Temporal database startup/restart', 'graceful shutdown'], github: 'synthetic credentials; no live GitHub review claimed' }, null, 2));
+  console.log(JSON.stringify({ result: 'passed', images: smokeImages, version: roles, platform: process.arch, checks: ['non-root API/worker startup', 'M2 schema readiness', 'signature rejection', 'evidence authentication', 'comparison authentication/UUID/scoped lookup', 'compiled comparison API/client reads actual queued database evidence', 'compiled snapshot export/client completion', 'signed closed delivery', 'non-root persistent Temporal database startup/restart', 'graceful shutdown'], github: 'synthetic credentials; no live GitHub review claimed' }, null, 2));
 } catch (error) {
   for (const name of containers.filter(name => /-(api|worker)$/.test(name))) {
     try {

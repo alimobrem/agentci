@@ -31,6 +31,6 @@ if(process.argv[1]===fileURLToPath(import.meta.url)){
    identities.push(validateDownloadedIdentity(role,reference,source,version,arch,image));
    docker('tag',reference,'agentci-'+role+':downloaded');
   }
-  await writeFile('downloaded-identities.json',JSON.stringify({sourceCommit:source,version,platform:'linux/'+arch,execution:'native',anonymous:true,dockerServer:{version:server.ServerVersion,architecture:server.Architecture},images:identities},null,2)+'\n');
+  await writeFile('downloaded-identities.json',JSON.stringify({runId:process.env.GITHUB_RUN_ID,attempt:process.env.GITHUB_RUN_ATTEMPT,sourceCommit:source,version,platform:'linux/'+arch,execution:'native',anonymous:true,dockerServer:{version:server.ServerVersion,architecture:server.Architecture},images:identities},null,2)+'\n');
  }finally{await rm(configuration,{recursive:true,force:true});}
 }

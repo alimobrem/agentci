@@ -1,0 +1,144 @@
+name: Publish approved M3 development candidate
+on:
+  push:
+    branches: [main]
+    paths: [releases/m3-development-candidate.json]
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: read
+concurrency:
+  group: agentci-development-candidate-0.4.0-m3-dev.2
+  cancel-in-progress: false
+jobs:
+  preflight:
+    if: github.repository == 'alimobrem/agentci' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { ref: '${{ github.sha }}', persist-credentials: false }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0 }
+      - run: npm install --global npm@12.2.0
+      - run: npm ci
+      - name: Reject occupied or ambiguous package, tag and six-role destinations
+        env: { GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+        run: node scripts/development-release.mjs preflight
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with: { name: development-preflight-attempt, path: development-assets/publication-attempt.json, if-no-files-found: warn }
+  images:
+    needs: preflight
+    permissions: { contents: read, packages: write }
+    uses: ./.github/workflows/images.yaml
+    with: { version: 0.4.0-m3-dev.2 }
+  release-candidate:
+    needs: images
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions: { contents: write, packages: read }
+    outputs:
+      api_image: ${{ steps.assemble.outputs.api_image }}
+      worker_image: ${{ steps.assemble.outputs.worker_image }}
+      eval_worker_image: ${{ steps.assemble.outputs.eval_worker_image }}
+      eval_runner_image: ${{ steps.assemble.outputs.eval_runner_image }}
+      eval_engines_image: ${{ steps.assemble.outputs.eval_engines_image }}
+      eval_agentci_image: ${{ steps.assemble.outputs.eval_agentci_image }}
+      package_sha256: ${{ steps.assemble.outputs.package_sha256 }}
+      manifest_sha256: ${{ steps.assemble.outputs.manifest_sha256 }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { ref: '${{ github.sha }}', persist-credentials: false }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0 }
+      - run: npm install --global npm@12.2.0
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with: { pattern: 'published-images-*', path: published, merge-multiple: true }
+      - name: Bind all six roles and exact-source package before uploading
+        id: assemble
+        run: node scripts/development-release.mjs assemble
+      - name: Publish new prerelease assets with validation explicitly pending
+        env: { GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+        run: node scripts/development-release.mjs publish
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with: { name: development-assets, path: development-assets/, if-no-files-found: error }
+  native-image-downloads:
+    needs: release-candidate
+    permissions: { contents: read }
+    uses: ./.github/workflows/download-smoke.yaml
+    with:
+      source_commit: ${{ github.sha }}
+      version: 0.4.0-m3-dev.2
+      api_image: ${{ needs.release-candidate.outputs.api_image }}
+      worker_image: ${{ needs.release-candidate.outputs.worker_image }}
+      eval_worker_image: ${{ needs.release-candidate.outputs.eval_worker_image }}
+      eval_runner_image: ${{ needs.release-candidate.outputs.eval_runner_image }}
+      eval_engines_image: ${{ needs.release-candidate.outputs.eval_engines_image }}
+      eval_agentci_image: ${{ needs.release-candidate.outputs.eval_agentci_image }}
+  native-package-downloads:
+    needs: release-candidate
+    permissions: { contents: read }
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { runner: ubuntu-24.04, arch: amd64 }
+          - { runner: ubuntu-24.04-arm, arch: arm64 }
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { ref: '${{ github.sha }}', persist-credentials: false }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0 }
+      - run: npm install --global npm@12.2.0
+      - name: Download without credentials, verify source/hash before production installation
+        env:
+          RELEASE_SOURCE: ${{ github.sha }}
+          RELEASE_VERSION: 0.4.0-m3-dev.2
+          RELEASE_ARCH: ${{ matrix.arch }}
+          PACKAGE_SHA256: ${{ needs.release-candidate.outputs.package_sha256 }}
+          PACKAGE_MANIFEST_SHA256: ${{ needs.release-candidate.outputs.manifest_sha256 }}
+        run: node scripts/published-package-smoke.mjs
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: native-package-${{ matrix.arch }}
+          path: package-${{ matrix.arch }}.json
+          if-no-files-found: error
+  finalize:
+    needs: [release-candidate, native-image-downloads, native-package-downloads]
+    permissions: { contents: write }
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { ref: '${{ github.sha }}', persist-credentials: false }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0 }
+      - run: npm install --global npm@12.2.0
+      - run: npm ci
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with: { name: development-assets, path: development-assets }
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with: { pattern: native-package-*, path: verified, merge-multiple: true }
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with: { name: published-amd64-runtime, path: verified/amd64 }
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with: { name: published-arm64-runtime, path: verified/arm64 }
+      - name: Record development download acceptance only after both native cohorts pass
+        env: { GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+        run: node scripts/development-release.mjs finalize
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: final-native-download-evidence
+          path: |
+            verified/
+            native-download-evidence.tgz
+            development-assets/publication-attempt.json
+          if-no-files-found: error

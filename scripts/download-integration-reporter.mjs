@@ -28,5 +28,5 @@ export default async function* report(source) {
   for await (const event of source) if (event.type === 'test:summary') summaries.push(event.data);
   const coverage = validateCoverage(files, summaries);
   for (const input of inputs) if (createHash('sha256').update(readFileSync(input.file)).digest('hex') !== input.sha256) throw new Error('Suite source changed during acceptance');
-  yield JSON.stringify({ sourceCommit: process.env.RELEASE_SOURCE ?? null, acceptanceCommit: process.env.ACCEPTANCE_SOURCE ?? null, ...coverage, inputs, summaries }, null, 2) + '\n';
+  yield JSON.stringify({ runId: process.env.GITHUB_RUN_ID ?? null, attempt: process.env.GITHUB_RUN_ATTEMPT ?? null, sourceCommit: process.env.RELEASE_SOURCE ?? null, acceptanceCommit: process.env.ACCEPTANCE_SOURCE ?? null, ...coverage, inputs, summaries }, null, 2) + '\n';
 }

@@ -2991,6 +2991,31 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M3-R1-PREP-2",
+      "title": "Source-bound development candidate publication and anonymous package validation",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SECTION-12.3",
+        "SECTION-12.5"
+      ],
+      "dependsOn": [
+        "M3-07d-2b"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-11T23:43:53.355Z",
+      "completedAt": "2026-10-11T23:52:27.856Z",
+      "acceptance": [
+        {
+          "text": "Reviewed main-only development orchestration reuses native six-role publication and corrected mandatory downloads, scopes transient token permissions, rejects occupied or ambiguous identities, retains partial failures, and never marks candidate verified before all six images/native downloads and separate anonymous exact-source package install pass. Preparation tests/lint/build/independent review pass; activation/publication and all phase gates remain separate.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-development-publication-complete-evidence-local.json"
+          ]
+        }
+      ]
     }
   ]
 }

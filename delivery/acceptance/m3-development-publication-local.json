@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-PREP-2",
+  "scope": "local preparation only; full hosted CI required before merge; publication activation and native public/customer/milestone acceptance remain separate",
+  "observedAt": "2026-10-11T20:51:15.397120+00:00",
+  "sourceCommit": "7db1baf2c903706d604c99a809bda1289e1a67bf",
+  "sourceTree": "0d5aea6b36e94ded121ea86c47a31b3884072811",
+  "baseCommit": "02597e0e77e8f2b0fc1b45f7cea1bef98e99430e",
+  "baseTree": "0a852f00b77a9002b202d9bcb54223aa4618c353",
+  "runtime": {
+    "node": "26.10.0",
+    "npm": "12.2.0",
+    "platform": "linux/amd64"
+  },
+  "sourceBindings": {
+    "scripts/development-release.mjs": "ff6c3092b3175df740b26908f6305cc0d1867dc9db525f47cc87957cf15a95eb",
+    "scripts/lib/development-artifacts.mjs": "299edde2f77cb0ef37ffe84d147304cc4e1344d6fd0e6ae3ea39b6f48bdc897c",
+    "scripts/published-package-smoke.mjs": "4b03383300b29a044776a4aa4ca5b3a8899bbcfa55153b98e311d835d41ac19d",
+    ".github/workflows/development-candidate.yaml": "03e79fc02e4e2240f87a58341413b7910ff98bcee7949ac14fb70629bb98f2ab",
+    ".github/workflows/images.yaml": "073bfaba944c16caaaede6912dc2217e1f05a8475a8689aa6746d3721c0c3818",
+    ".github/workflows/download-smoke.yaml": "ee931845b3466c0e4a9d82b8aff1548676eb2912a3f9adbba427891d66948ffd",
+    "scripts/download-integration-reporter.mjs": "4566d40f05ef5a09c8b67792b473bf62fac0b3fff50fdfb93a616ef958b452f2",
+    "scripts/published-downloads.mjs": "f0746e5a90bb2b6849c6c3c2b6b6ad0aa603e6b83ff4a2f7562507a3641aa47f",
+    "tests/development-artifacts.test.ts": "434db0b51260701b7eef244817a0e3f5e3a5f6f8293ee0c71925b371f13ad228",
+    "tests/development-release-execution.test.ts": "b54816eedcbf324d12ddbb5f170f80528bca902a09ac592592301400ee2123cf",
+    "docs/phases/m3-development-candidate.md": "2ee0940aa4d4d27f4f3b724ec5caae68777145767cbedaf35fc5592c7c65a8fa"
+  },
+  "checks": [
+    {
+      "check": "focused",
+      "result": "passed",
+      "path": "/workspace/scratch/m3-dev2-publication-bound-focused.log",
+      "sha256": "be616abe55c22c91cf29b42620973e4decaa838e5d3c6d543340f41e6871c8eb"
+    },
+    {
+      "check": "fast",
+      "result": "passed",
+      "path": "/workspace/scratch/m3-dev2-publication-bound-fast.log",
+      "sha256": "6c74f21e276074e6ff5e79080cf3949d5c2681541c31c19f3cb6c3343a175aa9"
+    },
+    {
+      "check": "workflows",
+      "result": "passed",
+      "path": "/workspace/scratch/m3-dev2-publication-bound-workflows.log",
+      "sha256": "d8ba84896d82803c6a5c7d4fe407d5e32c8fa0b987ac2b266317782c4eb3d310"
+    },
+    {
+      "check": "build",
+      "result": "passed",
+      "path": "/workspace/scratch/m3-dev2-publication-bound-build.log",
+      "sha256": "0b282be87e9cd8925caefeeaf85ff3321f09d54408c6fc8d2a30e088651a69b6"
+    },
+    {
+      "check": "api-compat",
+      "result": "passed",
+      "path": "/workspace/scratch/m3-dev2-publication-bound-api-compat.log",
+      "sha256": "00b31dc07f335770bb136ab4c853f2bc4bb608c9cdb6d4c94ae42663181f40cf"
+    }
+  ],
+  "fastSeconds": 24.92,
+  "focused": {
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0
+  },
+  "independentReview": {
+    "sha256": "6c3b9ded06076cd5c3fbb13c499ff06bc2f8ca84327c0334828ab5b084b95e41",
+    "record": {
+      "head": "7db1baf2c903706d604c99a809bda1289e1a67bf",
+      "tree": "0d5aea6b36e94ded121ea86c47a31b3884072811",
+      "reviewedSourceHashes": {
+        "scripts/development-release.mjs": "ff6c3092b3175df740b26908f6305cc0d1867dc9db525f47cc87957cf15a95eb",
+        "scripts/lib/development-artifacts.mjs": "299edde2f77cb0ef37ffe84d147304cc4e1344d6fd0e6ae3ea39b6f48bdc897c",
+        "scripts/published-package-smoke.mjs": "4b03383300b29a044776a4aa4ca5b3a8899bbcfa55153b98e311d835d41ac19d",
+        ".github/workflows/development-candidate.yaml": "03e79fc02e4e2240f87a58341413b7910ff98bcee7949ac14fb70629bb98f2ab",
+        ".github/workflows/images.yaml": "073bfaba944c16caaaede6912dc2217e1f05a8475a8689aa6746d3721c0c3818",
+        ".github/workflows/download-smoke.yaml": "ee931845b3466c0e4a9d82b8aff1548676eb2912a3f9adbba427891d66948ffd",
+        "scripts/download-integration-reporter.mjs": "4566d40f05ef5a09c8b67792b473bf62fac0b3fff50fdfb93a616ef958b452f2",
+        "scripts/published-downloads.mjs": "f0746e5a90bb2b6849c6c3c2b6b6ad0aa603e6b83ff4a2f7562507a3641aa47f",
+        "tests/development-artifacts.test.ts": "434db0b51260701b7eef244817a0e3f5e3a5f6f8293ee0c71925b371f13ad228",
+        "tests/development-release-execution.test.ts": "b54816eedcbf324d12ddbb5f170f80528bca902a09ac592592301400ee2123cf",
+        "docs/phases/m3-development-candidate.md": "2ee0940aa4d4d27f4f3b724ec5caae68777145767cbedaf35fc5592c7c65a8fa"
+      },
+      "evidenceHashes": {
+        "/workspace/scratch/dev2-publication-independent-7db1-final-tests-20261011.log": "9fe3847143e0e48af19ab53127a3b07ce2ec79f44d58fb8492e89de485e36d02",
+        "/workspace/scratch/dev2-publication-independent-reporter-20261011.log": "0481f17eabcc494c37867ddd998eab34d55d08e839d57f8dd129f015691be283",
+        "/workspace/scratch/dev2-publication-independent-two-layout-20261011/smoke-offline.stdout.log": "3132e00311b30ccf0cc7ba73da8824be7e8b126d5c8ceffea2d43418829b81cd",
+        "/workspace/scratch/dev2-publication-independent-two-layout-20261011/smoke.stderr.log": "4d3986b092e62d1eac71e90823cfa030dc5f9abaf5a45ea4c92ed90ad53be33c",
+        "/workspace/scratch/dev2-publication-independent-two-layout-20261011/offline-install-observations.jsonl": "d2481985529028dbfd240ae5902ff5faa7f580ab8ffd640d5d5d93e088ebfdbd",
+        "/workspace/scratch/dev2-publication-independent-two-layout-20261011/anonymous-fetch-offline.jsonl": "6bc2b815dcd4fba84c716abd172419d01544ed2699e51eea4a5963dab69df11c"
+      },
+      "results": {
+        "focused": "7/7 passed on final HEAD",
+        "reporter": "2/2 passed",
+        "reconciliation": "1346 source IDs / 29 fenced children --check passed",
+        "milestoneGates": "18/18 pending",
+        "trackedRuntimeDomainSpecDeployVersions": "unchanged from 02597",
+        "activationDescriptor": "absent"
+      },
+      "twoLayoutActualScript": {
+        "result": "passed",
+        "fixture": "compiled actual package with synthetic dev.2 metadata",
+        "archiveSha256": "da54f32e685ddb60af0bc36c82793320f948f0860be8ab2e40cb7615496d9f2b",
+        "manifestSha256": "10889eb75281c8ac61c7ab8f2197d5873069f4eb3638aa59022c662308cb29c3",
+        "filesVerified": 540,
+        "fetch": "local mocked fetch serving only two fixture assets; no GitHub request",
+        "npm": "actual pinned npm12 ci --omit=dev and consumer install --omit=dev; preload adds --offline and links temporary cache to existing workspace npm cache",
+        "childCredentials": "sentinel TOKEN/API_KEY excluded; explicit environment allowlist observed",
+        "limits": [
+          "No real anonymous published download",
+          "No public dependency network availability",
+          "No native ARM acceptance",
+          "No live provider/customer acceptance"
+        ],
+        "priorColdAttempt": "npm ci stalled approximately 130s, own child manually terminated; generic sanitized stderr only, no specific registry diagnosis established"
+      },
+      "findings": "Original pack JSON/shrinkwrap/finalizer hash/cohort defects closed. No remaining local preparation blocker found. Full hosted/native/publication/customer evidence remains pending."
+    }
+  },
+  "cacheState": "warm installed dependencies; pinned actionlint/oasdiff cached archives checksum-verified; independent two-layout fixture used existing offline npm cache; no cold-network/public-download proof",
+  "basePostmergeCI": {
+    "runId": "38172916517",
+    "head": "02597e0e77e8f2b0fc1b45f7cea1bef98e99430e",
+    "conclusion": "success"
+  },
+  "readiness": {
+    "localPreparation": "passed",
+    "hostedCI": "pending",
+    "activationDescriptor": "absent",
+    "runtimePackageVersion": "0.4.0-m3-dev.1",
+    "candidatePublication": "not-run",
+    "publicAnonymousDownloads": "not-run",
+    "nativeARM": "not-run",
+    "customerScenarios": "not-run",
+    "milestoneGates": "all 18 pending"
+  },
+  "limits": [
+    "Unpublished files from original local goal 01a10362-b55c-7d42-96d4-5c31ab6ace66 were not transferred; no inference about their absence.",
+    "Only inaccessible external model provider tests may be explicitly deferred after other applicable gates; no broader exception is adopted.",
+    "No original M3 acceptance threshold or persistent hosting gate is invented."
+  ]
+}
