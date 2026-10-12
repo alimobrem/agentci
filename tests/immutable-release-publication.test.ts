@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 // @ts-expect-error operational ESM helper
-import {publishDraftAssets,requireRetainedArtifact,requireReleaseAssets,candidateReleases,requireCandidateReleaseAbsent} from '../scripts/lib/immutable-release-publication.mjs';
+import {publishDraftAssets,requireRetainedArtifact,requireReleaseAssets,candidateReleases,requireCandidateReleaseAbsent,actionsDraftVisibility} from '../scripts/lib/immutable-release-publication.mjs';
 const intent={tag:'v0.4.0-m3-dev.3',sourceCommit:'a'.repeat(40),body:'owned exact source/run/attempt intent',name:'pending'},assets=['package','manifest','images','evidence','sums'].map(name=>({name,bytes:Buffer.from(name),sha256:'b'.repeat(64)}));
 function transport(lost:string[]=[]){let release:any,stored:any[]=[];const calls:string[]=[];const fail=(op:string)=>{if(lost.includes(op)){lost.splice(lost.indexOf(op),1);throw Object.assign(Error('lost acknowledgement'),{status:504});}};const rest={git:{getRef:async()=>{if(!release||release.draft)throw Object.assign(Error('tag absent'),{status:404});return {data:{object:{type:'commit',sha:intent.sourceCommit}}};}},repos:{get:async()=>({data:{permissions:{push:true}}}),listReleases:async(_input?:any)=>({data:release?[release]:[]}),createRelease:async(input:any)=>{calls.push('create');release={id:9,...input};fail('create');return {data:release};},getReleaseByTag:async()=>{if(release?.draft)throw Object.assign(Error('published only'),{status:404});return {data:release};},getRelease:async()=>({data:release}),listReleaseAssets:async()=>({data:stored}),uploadReleaseAsset:async(input:any)=>{calls.push('upload');if(!release.draft)throw Object.assign(Error('immutable'),{status:422});const a=assets.find(a=>a.name===input.name)!;stored.push({name:a.name,state:'uploaded',size:a.bytes.length,digest:'sha256:'+a.sha256});fail('upload');return {data:{}};},updateRelease:async(input:any)=>{calls.push('publish');release={...release,...input};fail('publish');return {data:release};}}};return {rest,calls,get release(){return release},get stored(){return stored}};}
 test('lost create/upload/publish acknowledgements reconcile exact owned release and digests',async()=>{for(const lost of ['create','upload','publish']){const api=transport([lost]),states:any[]=[];assert.equal(await publishDraftAssets(api,{},intent,assets,(state:any)=>states.push(state)),9);assert.deepEqual(api.calls,['create',...assets.map(()=> 'upload'),'publish']);assert.equal(api.release.draft,false);assert.equal(states.at(-1).publicationState,'published');}});
@@ -23,3 +23,29 @@ test('foreign actual Git tag race before publication prevents PATCH even at same
 test('wrong actual tag after irreversible publication preserves published-unverified failure',async()=>{const api=transport(['publish']);api.rest.git.getRef=async()=>{if(!api.release||api.release.draft)throw Object.assign(Error('absent'),{status:404});return {data:{object:{type:'commit',sha:'f'.repeat(40)}}};};const states:any[]=[];await assert.rejects(publishDraftAssets(api,{},intent,assets,(s:any)=>states.push(s)),/Actual published Git tag/);assert.equal(api.release.draft,false);assert.equal(states.at(-1).publicationState,'published-unverified');assert.ok(!states.some(s=>s.publicationState==='published'));});
 
 test('only404 proves absent tag; malformed200 ref aborts before create or upload',async()=>{for(const object of [undefined,{type:'commit'},{type:'commit',sha:'not-a-full-sha'}]){const api=transport();api.rest.git.getRef=async()=>({data:{object}} as any);await assert.rejects(publishDraftAssets(api,{},intent,assets,()=>{}),/Ambiguous Git ref/);assert.equal(api.calls.length,0);}});
+
+const actionsEnvironment={GITHUB_ACTIONS:'true',GITHUB_REPOSITORY:'alimobrem/agentci',GITHUB_REF:'refs/heads/main',GITHUB_EVENT_NAME:'push',GITHUB_WORKFLOW_REF:'alimobrem/agentci/.github/workflows/development-candidate.yaml@refs/heads/main',GITHUB_SHA:'a'.repeat(40),GITHUB_WORKFLOW_SHA:'a'.repeat(40),GITHUB_JOB:'preflight',GITHUB_TOKEN:'synthetic-installation-token'};
+const actionsWorkflow={jobs:{preflight:{permissions:{contents:'write'}},'release-candidate':{permissions:{contents:'write'}}}};
+test('installation response without user permissions uses only verified exact Actions contents-write grant',async()=>{
+ const api=transport(),repository={owner:'alimobrem',repo:'agentci'};api.rest.repos.get=async()=>({data:{full_name:'alimobrem/agentci'}} as any);
+ await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag),/visibility/);
+ const grant=actionsDraftVisibility(actionsEnvironment,actionsWorkflow);
+ await requireCandidateReleaseAbsent(api,repository,intent.tag,grant);
+ api.rest.repos.get=async()=>({data:{full_name:'alimobrem/agentci',permissions:{push:false}}} as any);
+ await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag,grant),/visibility/);
+ api.rest.repos.get=async()=>({data:{full_name:'other/repository'}} as any);
+ await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag,grant),/visibility/);
+ assert.equal(api.calls.length,0);
+});
+test('missing or foreign Actions job, workflow, source and contents grant never authorize draft visibility',()=>{
+ for(const patch of [{GITHUB_ACTIONS:'false'},{GITHUB_REPOSITORY:'other/repository'},{GITHUB_REF:'refs/pull/9/merge'},{GITHUB_EVENT_NAME:'pull_request'},{GITHUB_WORKFLOW_REF:'foreign/workflow@refs/heads/main'},{GITHUB_WORKFLOW_SHA:'b'.repeat(40)},{GITHUB_JOB:'images'},{GITHUB_SHA:'short'},{GITHUB_TOKEN:''}])assert.throws(()=>actionsDraftVisibility({...actionsEnvironment,...patch},actionsWorkflow));
+ assert.throws(()=>actionsDraftVisibility(actionsEnvironment,{jobs:{preflight:{permissions:{contents:'read'}}}}));
+});
+test('installation grant retains paginated occupied-draft and API ambiguity failure before writes',async()=>{
+ const repository={owner:'alimobrem',repo:'agentci'},grant=actionsDraftVisibility(actionsEnvironment,actionsWorkflow);
+ for(const mode of ['occupied','error','duplicate']){
+  const api=transport();api.rest.repos.get=async()=>({data:{full_name:'alimobrem/agentci'}} as any);
+  api.rest.repos.listReleases=async(input:any)=>{if(mode==='error')throw Object.assign(Error('unavailable'),{status:403});return {data:input.page===1?Array.from({length:100},(_,i)=>({id:i+100,tag_name:'other'})):mode==='occupied'?[{id:9,tag_name:intent.tag,draft:true}]:[{id:100,tag_name:'other'}]};};
+  await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag,grant));assert.equal(api.calls.length,0);
+ }
+});

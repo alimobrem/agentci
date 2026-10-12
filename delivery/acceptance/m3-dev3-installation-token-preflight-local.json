@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-PUB-TOKEN-1",
+  "sourceCommit": "c8aed92a303cf22a9aecaeb1cda0b7e4de6dc242",
+  "sourceTree": "e8e582707320661caccfc7cc6d1d41adfa44b05f",
+  "actualMain": "fc3bba500f22ba228cdd0f18e5bc8f95b62d28d2",
+  "failedPublication": {
+    "runId": 38213411342,
+    "attempt": 1,
+    "artifactId": 11730201957,
+    "sha256": "af2829de4e8c0c14e97ebcc229ff50ba76f77137a4ff7620ad7e20009b6641a5",
+    "cause": "Authenticated push visibility required for draft inventory",
+    "parentInspected": true,
+    "rootZipInspected": false,
+    "releaseId": null,
+    "uploadedAssets": [],
+    "scope": "Failed before inventory/tag/registry checks; absence or occupied identity not established"
+  },
+  "change": "Absent user-style permissions only accepts branded exact-repository trusted main Actions contents-write grant bound to committed workflow and equal checkout bytes. Explicit denial and all occupied/ambiguous checks preserved. Same dev3 descriptor marker triggers existing publication only upon main merge. No token values, credential or permission changes.",
+  "sources": [
+    {
+      "path": "scripts/development-release.mjs",
+      "sha256": "950a461715b1ffcdd3d5f18c1425bf82798d9e02333d8f9526c060eae8cb9a7c"
+    },
+    {
+      "path": "scripts/lib/immutable-release-publication.mjs",
+      "sha256": "33675c1afc9a18f904e1889fe3db43e69d53d5cae3cdf9cfa6b224b995473c6b"
+    },
+    {
+      "path": "tests/development-release-execution.test.ts",
+      "sha256": "5ab19797d45e3d4febff72093437a59134f478d1ffb64d278e28b21a544e7c00"
+    },
+    {
+      "path": "tests/immutable-release-publication.test.ts",
+      "sha256": "56d1055e27e1617bc89403b0cf1968fcaa0ec0cd8116c820781b7ace595dd41c"
+    },
+    {
+      "path": "releases/m3-development-candidate.json",
+      "sha256": "112d5425ba44d5d9b714df393e9eec31497f0a08f8160791b0aeec37a9f3a51e"
+    },
+    {
+      "path": ".github/workflows/development-candidate.yaml",
+      "sha256": "88df55f1383d94723368e8681e164382eb65988aed1013b62649c4c01899c070"
+    }
+  ],
+  "validation": {
+    "focused": {
+      "tests": 32,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 15.059
+    },
+    "fast": {
+      "tests": 511,
+      "checks": 10,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 37.088219045
+    },
+    "build": "passed",
+    "immutableM1M2Api": "passed",
+    "pinnedWorkflowLint": "passed",
+    "sourceScan": {
+      "commits": 1,
+      "blobs": 11,
+      "findings": 0,
+      "cache": "Verified existing official pinned cache; no fresh download claim"
+    },
+    "independentSource": {
+      "path": "delivery/acceptance/m3-dev3-token-independent-source-review.json",
+      "sha256": "e378a80d5cd0bb4c6b3ca05b3620d238958afd2f6ad3686e89003f9a1bdbf566",
+      "tests": 25,
+      "failed": 0
+    }
+  },
+  "preservedLimitations": [
+    "Initial WIP fast pass was dirty and preceded final source-binding correction; superseded by frozen source fast check",
+    "Initial scanner invocation used parent cache directory and exited2; corrected version-specific verified cache invocation passed",
+    "New hosted Verify/dedicated scan and parent exact-head artifact review required before merge",
+    "Actual hosted draft visibility, all native builds, immutable assets and anonymous downloads remain unverified",
+    "Failed dev2 preserved; no new version or occupied identity overwrite",
+    "All18 M3 gates pending; UI remains draft; customer saved-key confirmation outstanding"
+  ]
+}
