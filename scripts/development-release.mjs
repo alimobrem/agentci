@@ -1,3 +1,4 @@
+import {publishDraftAssets,requireRetainedArtifact,requireReleaseAssets} from './lib/immutable-release-publication.mjs';
 import {readFile,writeFile,mkdir,copyFile,readdir,mkdtemp,rm,stat,chmod} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {Octokit} from '@octokit/rest';
@@ -62,13 +63,12 @@ if(command==='preflight'){
  const assets=await validateDevelopmentAssets('development-assets',expected);if(assets.cohort.attempt!==expected.attempt)throw Error('Publish must use the current build attempt');
  await absent(()=>github.rest.git.getRef({...repository,ref:'tags/'+tag}));
  await absent(()=>github.rest.repos.getReleaseByTag({...repository,tag}));
- const response=await github.rest.repos.createRelease({...repository,tag_name:tag,target_commitish:sourceCommit,name:`AgentCI ${version} — download validation pending`,prerelease:true,draft:false,make_latest:'false',body:`Development candidate from ${sourceCommit}. All six native image roles published; package/image download validation is pending. This is not M3 milestone completion. Partial failures and attempt evidence remain retained.`});
- stageRecord.releaseId=response.data.id;await retainStage();
  const assetNames=[`agentci-${version}.tgz`,'package-manifest.json','images.json','publication-evidence.tgz','SHA256SUMS'];
- for(const name of assetNames){const bytes=await readFile('development-assets/'+name);await github.rest.repos.uploadReleaseAsset({...repository,release_id:response.data.id,name,headers:{'content-type':'application/octet-stream','content-length':bytes.length},data:bytes});stageRecord.uploadedAssets.push({name,sha256:hash(bytes)});await retainStage();}
- await emit('release_id',String(response.data.id));
+ const uploadAssets=await Promise.all(assetNames.map(async name=>{const bytes=await readFile('development-assets/'+name);return {name,bytes,sha256:hash(bytes)};}));
+ const releaseId=await publishDraftAssets(github,repository,{tag,sourceCommit,name:`AgentCI ${version} — download validation pending`,body:`Development candidate from ${sourceCommit}; publication run ${expected.runId} attempt ${expected.attempt}. All six native image roles published; package/image download validation is pending. This is not M3 milestone completion. Partial failures and attempt evidence remain retained.`},uploadAssets,async state=>{if(state.asset)stageRecord.uploadedAssets.push(state.asset);else Object.assign(stageRecord,state);await retainStage();});
+ await emit('release_id',String(releaseId));
  console.log('Development assets published; validation still pending');
-}else if(command==='finalize'){
+}else if(command==='finalize'||command==='mark-verified'){
  // Only the orchestration job depending on both native downloads and package jobs
  // may call this; validate retained outputs as well as the job dependency guards.
  const assets=await validateDevelopmentAssets('development-assets',expected);
@@ -96,22 +96,30 @@ if(command==='preflight'){
  stageRecord.releaseId=release.data.id;await retainStage();
  const tagCommit=await github.rest.git.getRef({...repository,ref:'tags/'+tag});
  if(tagCommit.data.object.type!=='commit'||tagCommit.data.object.sha!==sourceCommit||release.data.draft||!release.data.prerelease)throw Error('Development release source mismatch');
+ const releaseAssets=(await github.rest.repos.listReleaseAssets({...repository,release_id:release.data.id,per_page:100})).data;
+ const initialNames=[`agentci-${version}.tgz`,'package-manifest.json','images.json','publication-evidence.tgz','SHA256SUMS'];
+ requireReleaseAssets(releaseAssets,await Promise.all(initialNames.map(async name=>{const bytes=await readFile('development-assets/'+name);return {name,bytes,sha256:hash(bytes)};})));
  const record={schemaVersion:1,...expected,result:'passed',scope:'development image and package native downloads only; customer/M3 gates remain pending',publicationRunId:assets.cohort.runId,publicationAttempt:assets.cohort.attempt,verificationAttempt:expected.attempt,packageReceipts:receipts,nativeRecords};
- await writeFile('verified/native-download-acceptance.json',JSON.stringify(record,null,2)+'\n');
- execFileSync('tar',['-czf','native-download-evidence.tgz','-C','verified','.']);
+ if(command==='finalize'){await writeFile('verified/native-download-acceptance.json',JSON.stringify(record,null,2)+'\n');execFileSync('tar',['-czf','native-download-evidence.tgz','-C','verified','.']);}
+ else if(!Buffer.from(await readFile('verified/native-download-acceptance.json')).equals(Buffer.from(JSON.stringify(record,null,2)+'\n')))throw Error('Retained acceptance record differs from validated receipts');
  const nativeEvidence=await readFile('native-download-evidence.tgz');
  const bytes=Buffer.from(JSON.stringify(record,null,2)+'\n');
- await github.rest.repos.uploadReleaseAsset({...repository,release_id:release.data.id,name:'native-download-acceptance.json',headers:{'content-type':'application/json','content-length':bytes.length},data:bytes});
- stageRecord.uploadedAssets.push({name:'native-download-acceptance.json',sha256:hash(bytes)});await retainStage();
- await github.rest.repos.uploadReleaseAsset({...repository,release_id:release.data.id,name:'native-download-evidence.tgz',headers:{'content-type':'application/octet-stream','content-length':nativeEvidence.length},data:nativeEvidence});
- stageRecord.uploadedAssets.push({name:'native-download-evidence.tgz',sha256:hash(nativeEvidence)});await retainStage();
  const checksums=Buffer.from(`${hash(bytes)}  native-download-acceptance.json\n${hash(nativeEvidence)}  native-download-evidence.tgz\n`);
- await github.rest.repos.uploadReleaseAsset({...repository,release_id:release.data.id,name:'native-download-SHA256SUMS',headers:{'content-type':'text/plain','content-length':checksums.length},data:checksums});
- stageRecord.uploadedAssets.push({name:'native-download-SHA256SUMS',sha256:hash(checksums)});await retainStage();
- await github.rest.repos.updateRelease({...repository,release_id:release.data.id,name:`AgentCI ${version} — native downloads verified`,body:`Development candidate ${sourceCommit}: all six roles and package passed anonymous native AMD64/ARM64 download/runtime checks. Source-bound evidence is attached. Actual customer scenarios, UI and all M3 milestone gates remain separate; this is not M3 completion.`});
-}else throw Error('Use preflight, assemble, publish or finalize');
+ if(command==='finalize')await writeFile('native-download-SHA256SUMS',checksums);else if(!Buffer.from(await readFile('native-download-SHA256SUMS')).equals(checksums))throw Error('Retained evidence checksum mismatch');
+ stageRecord.retainedEvidence=[{name:'verified/native-download-acceptance.json',sha256:hash(bytes)},{name:'native-download-evidence.tgz',sha256:hash(nativeEvidence)},{name:'native-download-SHA256SUMS',sha256:hash(checksums)}];
+ stageRecord.evidenceAccess='Actions artifacts require authenticated retrieval; this does not claim anonymous evidence download';await retainStage();
+ if(command==='mark-verified'){
+  const artifactId=Number(process.env.NATIVE_EVIDENCE_ARTIFACT_ID),digest=process.env.NATIVE_EVIDENCE_ARTIFACT_DIGEST,name=`final-native-download-evidence-${expected.runId}-${expected.attempt}`;
+  if(!Number.isSafeInteger(artifactId)||artifactId<=0)throw Error('Retained evidence artifact required before verified notes');
+  const artifact=await github.rest.actions.getArtifact({...repository,artifact_id:artifactId});
+  stageRecord.retainedArtifact=requireRetainedArtifact(artifact.data,{id:artifactId,digest,name,...expected});await retainStage();
+ await github.rest.repos.updateRelease({...repository,release_id:release.data.id,name:`AgentCI ${version} — native downloads verified`,body:`Development candidate ${sourceCommit}: all six roles and package passed anonymous native AMD64/ARM64 download/runtime checks. Source-bound evidence and checksums are retained at https://github.com/alimobrem/agentci/actions/runs/${expected.runId}/artifacts/${artifactId}; artifact SHA256 ${digest}; native archive SHA256 ${hash(nativeEvidence)}; acceptance JSON SHA256 ${hash(bytes)}; source ${sourceCommit}; attempt ${expected.attempt}; retention expires ${artifact.data.expires_at} (authenticated retrieval; independent artifact inspection remains required). Release assets remain unchanged. Actual customer scenarios, UI and all M3 milestone gates remain separate; this is not M3 completion.`});
+ }
+
+}else throw Error('Use preflight, assemble, publish, finalize or mark-verified');
 stageRecord.result='passed';await retainStage();
-}catch{
+}catch(error){
+ if(stageRecord){const status=Number.isInteger(error?.status)?error.status:null;let message=String(error?.response?.data?.message??error?.message??'Unknown failure');if(process.env.GITHUB_TOKEN)message=message.split(process.env.GITHUB_TOKEN).join('[redacted]');message=message.replace(/(?:gh[pousr]_[A-Za-z0-9_]+|github_pat_[A-Za-z0-9_]+|Bearer\s+\S+)/gi,'[redacted]').replace(/[\r\n]/g,' ').slice(0,512);stageRecord.failure={status,message};}
  if(stageRecord){stageRecord.result='failed';try{await retainStage();}catch{}}
  console.error('Development publication failed; preserve attempt evidence and occupied identities. No candidate completion is claimed.');
  process.exitCode=1;

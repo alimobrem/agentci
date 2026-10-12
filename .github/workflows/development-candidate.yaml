@@ -60,7 +60,7 @@ jobs:
       - name: Bind all six roles and exact-source package before uploading
         id: assemble
         run: node scripts/development-release.mjs assemble
-      - name: Publish new prerelease assets with validation explicitly pending
+      - name: Upload every candidate asset to draft, then publish immutable prerelease
         env: { GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
         run: node scripts/development-release.mjs publish
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -112,7 +112,7 @@ jobs:
           if-no-files-found: error
   finalize:
     needs: [release-candidate, native-image-downloads, native-package-downloads]
-    permissions: { contents: write }
+    permissions: { contents: write, actions: read }
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -134,11 +134,28 @@ jobs:
         env: { GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
         run: node scripts/development-release.mjs finalize
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        id: final_evidence
         if: always()
         with:
-          name: final-native-download-evidence
+          retention-days: 90
+          name: final-native-download-evidence-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
             verified/
             native-download-evidence.tgz
+            native-download-SHA256SUMS
             development-assets/publication-attempt.json
+          if-no-files-found: error
+      - name: Mark verified notes only after retained artifact identity is checked
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NATIVE_EVIDENCE_ARTIFACT_ID: ${{ steps.final_evidence.outputs.artifact-id }}
+          NATIVE_EVIDENCE_ARTIFACT_DIGEST: sha256:${{ steps.final_evidence.outputs.artifact-digest }}
+        run: node scripts/development-release.mjs mark-verified
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: final-metadata-attempt-${{ github.run_id }}-${{ github.run_attempt }}
+          path: development-assets/publication-attempt.json
+          retention-days: 90
           if-no-files-found: error

@@ -3115,6 +3115,29 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M3-R1-PUB-IMM-1",
+      "title": "Repair immutable development release publication ordering",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [
+        "M3-R1-ACT-1"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-12T01:50:14.185Z",
+      "completedAt": "2026-10-12T02:02:07.107Z",
+      "acceptance": [
+        {
+          "text": "Local software preparation uploads every initial candidate asset to a draft before publication, refuses partial immutable publication, and retains post-publication native acceptance separately with an explicit approved prospective public evidence route. Mock transport/workflow sequencing regressions and applicable checks pass. No occupied dev.2 reuse, new version activation or public acceptance claimed; hosted CI/independent review required before merge.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-immutable-release-preparation-be54216.json"
+          ]
+        }
+      ]
     }
   ]
 }

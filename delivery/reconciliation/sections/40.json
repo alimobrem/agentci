@@ -6428,6 +6428,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-R1-PUB-IMM-1",
+          "status": "done",
+          "startedAt": "2026-10-12T01:50:14.185Z",
+          "completedAt": "2026-10-12T02:02:07.107Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local software preparation uploads every initial candidate asset to a draft before publication, refuses partial immutable publication, and retains post-publication native acceptance separately with an explicit approved prospective public evidence route. Mock transport/workflow sequencing regressions and applicable checks pass. No occupied dev.2 reuse, new version activation or public acceptance claimed; hosted CI/independent review required before merge.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-immutable-release-preparation-be54216.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6554,6 +6571,12 @@
         {
           "path": "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json",
           "sha256": "03fa44a7c12f165079668cc6b80ae6df6c52050d6d3e7f6e4ad90b1c098fe40f",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-immutable-release-preparation-be54216.json",
+          "sha256": "0d9d3a2e5e334d9b0c68b824e5e04c9ffe938de2f6a351bbb6b8d9f252d5a053",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -6950,6 +6973,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-R1-PUB-IMM-1",
+          "status": "done",
+          "startedAt": "2026-10-12T01:50:14.185Z",
+          "completedAt": "2026-10-12T02:02:07.107Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local software preparation uploads every initial candidate asset to a draft before publication, refuses partial immutable publication, and retains post-publication native acceptance separately with an explicit approved prospective public evidence route. Mock transport/workflow sequencing regressions and applicable checks pass. No occupied dev.2 reuse, new version activation or public acceptance claimed; hosted CI/independent review required before merge.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-immutable-release-preparation-be54216.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -7076,6 +7116,12 @@
         {
           "path": "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json",
           "sha256": "03fa44a7c12f165079668cc6b80ae6df6c52050d6d3e7f6e4ad90b1c098fe40f",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-immutable-release-preparation-be54216.json",
+          "sha256": "0d9d3a2e5e334d9b0c68b824e5e04c9ffe938de2f6a351bbb6b8d9f252d5a053",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
