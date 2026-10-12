@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-12T03:31:33.882357+00:00",
+  "state": "Bounded local software preparation and integrated source validation passed; fresh hosted CI and review pending",
+  "task": "M3-CI-SEC-DB-1",
+  "sourceCommit": "bdbc0000302f943642f0b3b5ac6351038ca16b2d",
+  "sourceTree": "407a9b126846738c851acc0d4eafd394244b1ed7",
+  "actualRemoteMain": {
+    "commit": "f955e58b6a790977656950e0f3a3c3499065d89d",
+    "tree": "0c68d760d348450331c640b9c0ea6189a2980448"
+  },
+  "localEquivalentMain": {
+    "commit": "b1ade9132586d45231700b1d46d4ac7741b227ed",
+    "tree": "0c68d760d348450331c640b9c0ea6189a2980448",
+    "qualification": "identical source tree; distinct local commit ancestry"
+  },
+  "frozenCandidate": "43dbb3c639b095828b85d5986f5c468e1ab286f6",
+  "preservedEvidence": {
+    "path": "delivery/acceptance/m3-customer-ci-credential-cleanup-a26b74d.json",
+    "sha256": "dcdceddde2781e5b6e2723ab487c8aef9c08ea2df49d2a507dfd8fadd610306b",
+    "reuse": "Nine database source files unchanged; original 11 independent physical/focused checks remain bound to those bytes; integrated-tree physical rerun not claimed"
+  },
+  "independentIntegration": {
+    "path": "/workspace/scratch/customer-review-ci-db-bdbc-integration-20261012.json",
+    "sha256": "bde834d21752b0ef442454a7ccf2f1cf2e3fd94a4b1c60f532d512d58d7cdbaf",
+    "result": "All 133 parent task objects/events preserved; database source and records unchanged; release files equal reviewed main"
+  },
+  "localFast": {
+    "sourceCommit": "bdbc0000302f943642f0b3b5ac6351038ca16b2d",
+    "passed": true,
+    "seconds": 41.458967661,
+    "checks": [
+      {
+        "name": "types",
+        "exitCode": 0
+      },
+      {
+        "name": "tests",
+        "exitCode": 0
+      },
+      {
+        "name": "api",
+        "exitCode": 0
+      },
+      {
+        "name": "contract-evals",
+        "exitCode": 0
+      },
+      {
+        "name": "risk-evals",
+        "exitCode": 0
+      },
+      {
+        "name": "project",
+        "exitCode": 0
+      },
+      {
+        "name": "status",
+        "exitCode": 0
+      },
+      {
+        "name": "delivery",
+        "exitCode": 0
+      },
+      {
+        "name": "phase-plan",
+        "exitCode": 0
+      },
+      {
+        "name": "native-inputs",
+        "exitCode": 0
+      }
+    ],
+    "unitCounts": {
+      "tests": 497,
+      "pass": 497,
+      "fail": 0,
+      "skipped": 0
+    },
+    "reportSha256": "ddd7c366ae394ad23c5db30191cacdc3bc8ff79593a8cebd20e70af7bfa41d0b",
+    "logSha256": "177bc51b796f9fcca5083969b06076b1ae1367b326558aac11d3e5a01ee5110b",
+    "dirtyFlag": true,
+    "dirtyQualification": "untracked node_modules symlink only; tracked source unchanged during tests"
+  },
+  "limitations": [
+    "Historical temporary credential finding remains in history; no history rewrite or broader no-reuse assertion",
+    "No customer App, live customer, retained recovery after runner lifetime or release acceptance claimed",
+    "Fresh hosted CI, independent review of hosted evidence and actual workflow execution remain pending",
+    "All 18 M3 release gates remain pending; M0\u2013M10 scope and order preserved"
+  ]
+}

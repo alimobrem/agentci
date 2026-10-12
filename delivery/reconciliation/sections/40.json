@@ -6430,6 +6430,23 @@
           ]
         },
         {
+          "id": "M3-CI-SEC-DB-1",
+          "status": "done",
+          "startedAt": "2026-10-12T03:45:44.116Z",
+          "completedAt": "2026-10-12T03:51:37.403Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local CI preparation replaces the flagged customer workflow static database credential with unpredictable per-run credentials before an owned loopback PostgreSQL service starts. Private0700/0600 files, masking control, no password argv/log/artifact, real authenticated health checks and exact owned success/failure/ambiguous startup cleanup regressions pass. No alerts inspected, rotation/history rewrite/live customer or release action performed; hosted verification and independent review required.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-ci-cleanup-startup-order-852ac09.json"
+              ]
+            }
+          ]
+        },
+        {
           "id": "M3-R1-PUB-IMM-1",
           "status": "done",
           "startedAt": "2026-10-12T02:16:28.661Z",
@@ -6588,6 +6605,12 @@
         {
           "path": "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json",
           "sha256": "03fa44a7c12f165079668cc6b80ae6df6c52050d6d3e7f6e4ad90b1c098fe40f",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-ci-cleanup-startup-order-852ac09.json",
+          "sha256": "200f120636ed35caf657bbb592db48f4ee301e4a199a57afd593249d7f24c437",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -6992,6 +7015,23 @@
           ]
         },
         {
+          "id": "M3-CI-SEC-DB-1",
+          "status": "done",
+          "startedAt": "2026-10-12T03:45:44.116Z",
+          "completedAt": "2026-10-12T03:51:37.403Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local CI preparation replaces the flagged customer workflow static database credential with unpredictable per-run credentials before an owned loopback PostgreSQL service starts. Private0700/0600 files, masking control, no password argv/log/artifact, real authenticated health checks and exact owned success/failure/ambiguous startup cleanup regressions pass. No alerts inspected, rotation/history rewrite/live customer or release action performed; hosted verification and independent review required.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-ci-cleanup-startup-order-852ac09.json"
+              ]
+            }
+          ]
+        },
+        {
           "id": "M3-R1-PUB-IMM-1",
           "status": "done",
           "startedAt": "2026-10-12T02:16:28.661Z",
@@ -7150,6 +7190,12 @@
         {
           "path": "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json",
           "sha256": "03fa44a7c12f165079668cc6b80ae6df6c52050d6d3e7f6e4ad90b1c098fe40f",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-ci-cleanup-startup-order-852ac09.json",
+          "sha256": "200f120636ed35caf657bbb592db48f4ee301e4a199a57afd593249d7f24c437",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
