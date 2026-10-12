@@ -10,7 +10,7 @@ import {parse} from 'yaml';
 import {candidateIdentity,bindDevelopmentImages,hash,requireAvailableResponse,validatePackageManifest,sanitizedPackageEnvironment} from '../scripts/lib/development-artifacts.mjs';
 // @ts-expect-error operational ESM helper
 import {anonymousDownload,verifyPackageFiles} from '../scripts/published-package-smoke.mjs';
-const expected={version:'0.4.0-m3-dev.2',sourceCommit:'a'.repeat(40),runId:'123',attempt:'1'};
+const expected={version:'0.4.0-m3-dev.3',sourceCommit:'a'.repeat(40),runId:'123',attempt:'1'};
 const roles=['api','worker','eval-worker','eval-runner','eval-engines','eval-agentci'];
 function cohort(){
  const indexes:any={},identities:any[]=[],acceptances:any[]=[];

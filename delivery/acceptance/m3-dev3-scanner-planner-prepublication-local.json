@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-12T05:48:56.711272+00:00",
+  "sourceCommit": "23824a9d81f6897992afe5bf78d528e51da335ef",
+  "sourceTree": "e2bf71759a14843001b72cd29d8d775bbb1a0763",
+  "state": "Bounded local prepublication preparation passed; independent final binding and fresh linear hosted candidate checks required before activation merge",
+  "sourceBindings": [
+    {
+      "path": ".github/workflows/development-candidate.yaml",
+      "sha256": "88df55f1383d94723368e8681e164382eb65988aed1013b62649c4c01899c070"
+    },
+    {
+      "path": "deploy/reproduction.compose.yaml",
+      "sha256": "40a2de23a862a1dd4839dbc112c1f4c60a2dbf21c635ac5c528c8758bf5210a4"
+    },
+    {
+      "path": "deploy/reviewer.compose.yaml",
+      "sha256": "f0e28aea5d2c06ae29299e22fe6c2784aa5fb78a2b0717a897f4566854a4a0b3"
+    },
+    {
+      "path": "docs/phases/m3-customer-acceptance-preparation.md",
+      "sha256": "0eb0cda930b8fbb6ea4b81ab5a9bcbed87f60d7a9c0e18f68585a5c6e39c6b14"
+    },
+    {
+      "path": "docs/phases/m3-development-candidate.md",
+      "sha256": "db09cd89de6154439951bac4064adfcdadd493e8823cf628720d21eefd192357"
+    },
+    {
+      "path": "npm-shrinkwrap.json",
+      "sha256": "01dbe4e372c600aaf4e418f06087adfeade85205e6c5b08cbb9b5c1b0012888c"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "01dbe4e372c600aaf4e418f06087adfeade85205e6c5b08cbb9b5c1b0012888c"
+    },
+    {
+      "path": "package.json",
+      "sha256": "ab7d330bf38c96f7cd1a3419822466bf3ffa5c780264233681b7ccef38a07f86"
+    },
+    {
+      "path": "packages/evals/contracts.ts",
+      "sha256": "1166e5365f1582ba34475e2a4566d30d45b0421bb3bf82b18300030a5d046a5c"
+    },
+    {
+      "path": "packages/version.ts",
+      "sha256": "856ed4088f4965b7f7d3782c91024f1ab8ce2ab64f92ac661ef0de92091f5ee3"
+    },
+    {
+      "path": "releases/m3-development-candidate.json",
+      "sha256": "711f3b03df5058de36bc0571ca5ab03a4831646fb3016f6459cb05fe69dd6b24"
+    },
+    {
+      "path": "scripts/lib/customer-publication-assets.mjs",
+      "sha256": "223fb8cf11016fa256bcfbf16de57f6d528a979ebfc986eb8294a5cb0367249b"
+    },
+    {
+      "path": "scripts/lib/development-artifacts.mjs",
+      "sha256": "cf9f1f30ecf776a83ae8133afcba8b7afc4859cf97fbc1820c0e74f7260f27c1"
+    },
+    {
+      "path": "scripts/m3-customer-live-demo.mjs",
+      "sha256": "2e000180c874c3df7900f30a8bf8c363c56345c74dc7c2321b7e7e6bb23d9fb4"
+    },
+    {
+      "path": "scripts/m3-customer-live-observe.mjs",
+      "sha256": "47a5f132ad7f7691fc162f4b0567dd9def947f2906c0c73871f93d596f920fcf"
+    },
+    {
+      "path": "specs/api/openapi.json",
+      "sha256": "2b499e9ce86e8c9ab1521324ffcbb22555d944219f666c57e5ec4d00ea6f24b1"
+    },
+    {
+      "path": "tests/development-artifacts.test.ts",
+      "sha256": "119996fe90dd352f6b6a432a9175de142b5d5e594a7484d3f9f67e1156b8030e"
+    },
+    {
+      "path": "tests/development-release-execution.test.ts",
+      "sha256": "d7a5d2d628076fba6d194a60f5144df070abe15d3a87c7e8342042dfe41b0fe8"
+    },
+    {
+      "path": "tests/eval-contracts.test.ts",
+      "sha256": "f15a40fb52f978139ae89a43fc920299ac4681e43a1b84084ad6e19f8747c46d"
+    },
+    {
+      "path": "tests/eval-orchestration.test.ts",
+      "sha256": "a63e1fc17e19361f92096937fddfebee9d40eb58fc8daa6f1c1a062c8f5095af"
+    },
+    {
+      "path": "tests/immutable-release-publication.test.ts",
+      "sha256": "f216daff7cfff35ed2fec5a0b17bff86d3bb5164b9c959173a52e23fb054cb15"
+    },
+    {
+      "path": "tests/integration/eval-review-staging.test.ts",
+      "sha256": "f3ebeddd361de8949818e631e758aebd59067414b8a84f1e9a056e923e5cb10b"
+    },
+    {
+      "path": "tests/integration/reproduction-deployment.test.ts",
+      "sha256": "a3098bdd87522a235b82c59f1c7854a8f7954a336b24c70ca4b7e05c4144ab4f"
+    },
+    {
+      "path": "tests/published-package-preparation.test.ts",
+      "sha256": "3038b98f6d48be09cba08374444546668ce5062bd01aec31308b3584ef1b849b"
+    }
+  ],
+  "evidenceBindings": [
+    {
+      "path": "/workspace/scratch/dev3-planner-ready-build.log",
+      "sha256": "d60a7eb92fec7deb71f3c94a12912094e692e522e6ab46e5f19f44234abb2533"
+    },
+    {
+      "path": "/workspace/scratch/dev3-planner-ready-focused.log",
+      "sha256": "f24100c470a662f7c79bc6f15d6822371871471d7793072d3f9eb943bc68fa18"
+    },
+    {
+      "path": "/workspace/scratch/dev3-planner-ready-fast.log",
+      "sha256": "999ea061a4549199b0e5b553592ea66efa65a30c4b4e6825d2acd7210d4ba973"
+    },
+    {
+      "path": "/workspace/scratch/dev3-planner-ready-api-compat.log",
+      "sha256": "3355e8638f12279b5eed0eda226da3f02147a53f3fdb6391ca064f28c5c4e6e5"
+    },
+    {
+      "path": "/workspace/scratch/dev3-planner-ready-workflows.log",
+      "sha256": "ac98e827708aafdae3b7fa4ffba0b502f5553388772a78dc8b87061af4e2214b"
+    },
+    {
+      "path": "/workspace/scratch/dev3-planner-ready-deployment.log",
+      "sha256": "15804d8c0ff5e4b92388e88e0377f53eaf74ef0fe444f0d0807d94088f1a1469"
+    },
+    {
+      "path": "/workspace/scratch/dev3-planner-ready-pack.json",
+      "sha256": "d2c670b22c21df5554af44feda1529224553401db7e79a9cc54855a0903701eb"
+    },
+    {
+      "path": "/workspace/scratch/dev3-planner-ready-pack.stderr",
+      "sha256": "b4abe3e2ba4d85b1ccb8ba3cbd89a97ec00ca92d0df11fc56b1408956939014a"
+    },
+    {
+      "path": "/workspace/scratch/dev3-planner-ready-package-smoke.log",
+      "sha256": "ffc1aa63839af0dfbaf7d34a04a913ffadc459ee45c73d35b9f0b61043a4601e"
+    },
+    {
+      "path": "/workspace/scratch/dev3-planner-ready-delta.json",
+      "sha256": "346bdcb42e45e84358d65c7a54e45a2eb834d36d585447a69ffac524dcd19e85"
+    },
+    {
+      "path": "/workspace/scratch/dev3-planner-ready-delta.log",
+      "sha256": "f6632c012c87322c0e08838d7a9641d100cd1d0c4e53f8c76211eb513a069779"
+    },
+    {
+      "path": "/workspace/scratch/dev3-planner-isolated-pg-staging.log",
+      "sha256": "5e11ae0b2bf970cb975bd33693982cdb114eb71b3599633a47878407551083eb"
+    },
+    {
+      "path": "/workspace/scratch/dev3-final-pre-record-forward.json",
+      "sha256": "5a158df563c2654e8863327185dce236536d2f09b5dd9b80b2d7ff24183e382c"
+    },
+    {
+      "path": "/workspace/scratch/dev3-final-pre-record-forward.log",
+      "sha256": "51604d6ceaab11868a8f2add4cf1f3e924b29454d5d75c9c2c8ab4f2c8f46bab"
+    }
+  ],
+  "archiveBinding": {
+    "path": "/workspace/scratch/dev3-planner-ready-package/agentci-0.4.0-m3-dev.3.tgz",
+    "sha256": "8b54dfb95e34db44eb3f8ec6ccbb52a6f67e903431ea2f1c983755d2ec4693c2",
+    "compiledFilesByteEqual": 367
+  },
+  "results": {
+    "focusedPassed": 39,
+    "fastChecksPassed": 10,
+    "fastSeconds": 43.57,
+    "isolatedPGStagingPassed": 1,
+    "ownedContainersAfter": 0,
+    "privateFilesRemoved": true,
+    "productionInstall": "offline omit=dev actual publicCLI/client and threeSDK invocations no-network",
+    "deploymentPassed": 1,
+    "forward": "bda to022:4 introduced commits39blobs0findings",
+    "canonical": "1346sourceIDs29children",
+    "delivery": "136tasks18openGates"
+  },
+  "preservation": {
+    "plannerMainEquivalent": "6662005d917535aea2d46d00fc9aee701818bd63",
+    "planner135TaskObjectsExact": true,
+    "planner4SourceBlobsExact": true,
+    "locksEqual": true,
+    "version": "0.4.0-m3-dev.3",
+    "ACT3": "in-progress",
+    "M3GateFileExact": true,
+    "trackedClean": true,
+    "actualPlannerMerged": true
+  },
+  "failedAttemptBindings": [
+    {
+      "path": "/workspace/scratch/dev3-planner-ready-integration.log",
+      "sha256": "c4fec0322e93e707957308894c0bc704bfbe96eece2df733df948756a3e54607"
+    },
+    {
+      "path": "/workspace/scratch/dev3-scanner-main-delta-source.json",
+      "sha256": "e746246a308cb2bbc7831da5c734b57f9701bc7678ce3730b8ed82049ca73f5f"
+    },
+    {
+      "path": "/workspace/scratch/dev3-clean-scanner-source-delta.json",
+      "sha256": "8ec8a5ee34ffa1517ae8e5f759f0e8b84443468811f7623db0b4fd63d07f0d34"
+    }
+  ],
+  "qualifications": [
+    "Prepared local aligned descriptor has not been remotely activated",
+    "Reused SHA-verified pinned official tool caches and npm cache; no fresh tool download/cold install claim",
+    "Prior shared default PG refused after owned cleanup; fresh loopback isolated generated credential wrapper passed without customer keys",
+    "Earlier unpublished failed fixture branches retained; no scanner rule weakening/allowlist or public history rewrite",
+    "Native12/sixrole/anonymousAMD-ARM publication and customer/provider/UI gates not proven; all18 gates remain open",
+    "No actual customer/App/provider credential read or new access",
+    "Runtime24source hashes unchanged between022 tested source and current record source; only completedCI metadata imported. No repeated unchanged runtime tests.",
+    "Record finalized before canonical. Final postrecord delta reported separately, avoiding selfreferential evidence hash."
+  ],
+  "recordedAt": "2026-10-12T06:00:38.564393+00:00",
+  "task": "M3-R1-ACT-3",
+  "testedExecutableSource": "022391540b7a288ad8ec913c9817d9ab79d51dd4",
+  "actualBase": {
+    "commit": "05049813724167d81610d107bcc2515a86294e5b",
+    "tree": "a464eb8ae25dcf28464deac60f3d2407ad479b32",
+    "localEquivalent": "6662005d917535aea2d46d00fc9aee701818bd63",
+    "treeEqualityIndependentlyVerified": true
+  },
+  "version": "0.4.0-m3-dev.3",
+  "changes": "20 aligned version/publication/customer pins/docs plus bounded runtime-generated Compose environment fixture; exact four reviewed planner files inherited. Current cleanup and scanner preserved, no obsolete cleanup import.",
+  "remaining": [
+    "Independent final record/source/ledger binding",
+    "Root fresh linear draft off actual050498, exact candidate fullVerify and forward gate",
+    "Owner-approved activation merge only after all applicable reviews/hosted gates; triggers existing12native/sixrole/immutablefiveassets/anonymousAMD64ARM64 pipeline",
+    "Real customer/provider/UI/deployment/closure acceptance and18M3gates remain pending; provideronly exception scope unchanged"
+  ],
+  "hostedMetadataBindings": [
+    {
+      "path": "delivery/runs/38204184291-attempt-1.json",
+      "sha256": "42e35b2a2e32ecf9d21d060602d9dda2f4ace3851ac86a7c40bc2b6a91ebdd1b"
+    },
+    {
+      "path": "delivery/runs/38205979692-attempt-1.json",
+      "sha256": "a8686b9f49a43f068639196ebc0444e8046df0fd2980066f36e2e19522d6b0d4"
+    },
+    {
+      "path": "delivery/runs/38207141970-attempt-1.json",
+      "sha256": "f283958505ef5907399f24d8405d8d46f672d0a4f71467fbf9149b0d6ae54b4d"
+    },
+    {
+      "path": "delivery/runs/38208360001-attempt-1.json",
+      "sha256": "f4cc5e8e1e3fc32de95a160548d7a9166717272e36069c618b8475288aeabea6"
+    },
+    {
+      "path": "delivery/runs/38208361896-attempt-1.json",
+      "sha256": "1e924ec78d09300c5c49124d76c9aafb23e7ff800c5b3936e6899126dccc1d0a"
+    },
+    {
+      "path": "delivery/runs/38208439797-attempt-1.json",
+      "sha256": "c86577eb1ab6ae104a36346de6bf1ca4cb4d9fc4d842eaffd3a3fbbc47d02d1b"
+    },
+    {
+      "path": "delivery/runs/38209295299-attempt-1.json",
+      "sha256": "bb399ecb90d55e676b05cf4109e73ccc531a15c5126ca83ec113771ab02ea79f"
+    },
+    {
+      "path": "delivery/runs/38209295308-attempt-1.json",
+      "sha256": "7d6c7a9c0c1df8b650142439b971c8953f6b9698cfda26dcba14fec44c9befc8"
+    }
+  ],
+  "hostedQualification": "Completed original source metadata only; failed old84 forward attempts retained. Actual planner merge exact tree confirmed; source022 local package proof not anonymous/native/public claim. Parent artifact ZIP review reported separately, child did not inspect ZIP."
+}

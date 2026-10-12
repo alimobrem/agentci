@@ -1,10 +1,14 @@
 # M3 development candidate publication
 
-The next proposed immutable identity is `0.4.0-m3-dev.2`. This preparation does not
-activate publication: a later reviewed change must synchronize package, lockfile,
-CLI and OpenAPI versions and add `releases/m3-development-candidate.json`. Its
-explicit descriptor identifies the repository, development version and approved
-publication purpose. The activation merge supplies the full frozen source SHA.
+The owner approved corrected development identity `0.4.0-m3-dev.3` in the existing
+GitHub/GHCR destinations after the dev.2 immutable-release publication failure.
+The occupied dev.2 release, tag, images and original failure records stay untouched.
+This local activation preparation synchronizes package/root locks, CLI/OpenAPI,
+opt-in M3 overlays, publication and customer download guards and the fixed four-field
+`releases/m3-development-candidate.json` descriptor. The actual activation merge
+supplies the frozen source SHA without a self-referential descriptor. Repair merge,
+independent exact-source review and full hosted CI remain required before activation.
+No customer or milestone gate is closed by this version change.
 
 `development-candidate.yaml` runs only on reviewed `alimobrem/agentci` main, on
 that descriptor change or an owner manual dispatch. It checks exact checkout and
@@ -67,3 +71,5 @@ Anonymous AMD64/ARM64 package and image checks run after publication. The finali
 The draft-recovery correction uses authenticated `listReleases` with all pages before create and during ambiguous-create reconciliation. Published-only `getReleaseByTag` is retained for published occupancy/finalizer checks and never substitutes for draft discovery. Preflight requests narrowly scoped ephemeral `contents: write` (and existing `packages: read`) because GitHub exposes drafts only to authenticated callers with push access; the repository response must affirm push permission before listing. Missing permission, listing errors, repeated identities or incomplete pagination fail closed. A next Link on a short page still requires the next fixed repository/page read; foreign or inconsistent next links are rejected rather than followed. The trusted-main/repository guards remain. Any matching tag blocks a fresh attempt; only the same in-flight failed-create intent may reconcile one exact draft with matching source/run/attempt body and positive numeric release ID. Duplicate or foreign attempts fail without uploads/publication.
 
 Actual Git refs are checked absent before creating/uploading the owned draft and immediately before publishing, then read back as the exact source commit after publish acknowledgement or same-release recovery. Draft metadata supplies no owned tag-creation receipt, so any prepublication tag (including a same-SHA tag) is rejected. A wrong or missing ref after an irreversible publish remains `published-unverified` failed evidence; no rollback, overwritten ref or verified completion is attempted.
+
+Current local preparation starts from the corrected immutable-release, CI cleanup and path-aware forward-scanner main. Historical scanner observations remain separate and unresolved; they are not a classification prerequisite for the forward gate. This version-only local descriptor preparation does not trigger publication. Trusted planner integration, independent review and applicable exact combined-source checks must precede the final release-source freeze and root-controlled publication. No remote activation, publication run, customer fixture or live service is created by this local preparation.

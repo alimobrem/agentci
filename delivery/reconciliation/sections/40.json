@@ -137,7 +137,7 @@
       "evidence": [
         {
           "path": "package.json",
-          "sha256": "ef18bd3c01b4448c899255507fc34afd7790817306f0cbe487a7833145260d4f",
+          "sha256": "ab7d330bf38c96f7cd1a3419822466bf3ffa5c780264233681b7ccef38a07f86",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -6513,6 +6513,21 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-R1-ACT-3",
+          "status": "in-progress",
+          "startedAt": "2026-10-12T03:41:43.626Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local preparation synchronizes approved dev.3 package/identical root locks/CLI/OpenAPI/M3 opt-in overlays/descriptor and trusted publication/customer consumer version guards. Applicable build/API/package/Compose/immutable ordering checks pass with source-bound evidence. Failed dev.2 and historical baselines remain unchanged; all M3 gates pending. Independent review/full hosted CI/repair actual merge required before activation merge. No remote publication performed.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -7142,6 +7157,21 @@
               "evidence": [
                 "delivery/acceptance/m3-planner-scanner-main-integration-41b9180.json"
               ]
+            }
+          ]
+        },
+        {
+          "id": "M3-R1-ACT-3",
+          "status": "in-progress",
+          "startedAt": "2026-10-12T03:41:43.626Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local preparation synchronizes approved dev.3 package/identical root locks/CLI/OpenAPI/M3 opt-in overlays/descriptor and trusted publication/customer consumer version guards. Applicable build/API/package/Compose/immutable ordering checks pass with source-bound evidence. Failed dev.2 and historical baselines remain unchanged; all M3 gates pending. Independent review/full hosted CI/repair actual merge required before activation merge. No remote publication performed.",
+              "status": "pending",
+              "evidence": []
             }
           ]
         }
@@ -10049,7 +10079,7 @@
       "evidence": [
         {
           "path": "package.json",
-          "sha256": "ef18bd3c01b4448c899255507fc34afd7790817306f0cbe487a7833145260d4f",
+          "sha256": "ab7d330bf38c96f7cd1a3419822466bf3ffa5c780264233681b7ccef38a07f86",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },

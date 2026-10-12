@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-12T03:55:09.324118+00:00",
+  "task": "M3-R1-ACT-3",
+  "sourceCommit": "5cb9eef6114fa1a37b2919a3eb1f89a1c097bebf",
+  "sourceTree": "6a55bb96c0541b403ff9daaa28a93f817bee5432",
+  "state": "Local unfrozen preparation only; subsequent cleanup-order correction, scanner review and final security integration required",
+  "version": "0.4.0-m3-dev.3",
+  "base": "d2b96eb46c6f9c786ef16117f9360ec3fb939746",
+  "changes": "18 version-only source/pin files and two bounded documentation changes. Corrected release logic and original database cleanup source preserved.",
+  "fast": {
+    "passed": true,
+    "checks": 10,
+    "seconds": 61.053986625,
+    "reportSha256": "6049fc21a8963c21a43ca205462904f850b0dd4d8cf2b07bc060fb5f3689ed20",
+    "logSha256": "46777c42db82d6d132fe0a27b2f3ef92493a540229e179b519a0584928e5198f",
+    "dirtyFlag": true,
+    "qualification": "untracked node_modules symlink only"
+  },
+  "apiCompatibility": {
+    "baselines": [
+      "immutable released M1 0.2.1-m1",
+      "immutable released M2 0.3.1-m2"
+    ],
+    "passed": true,
+    "negativeEndpointRemovalRejected": true,
+    "reportSha256": "eb0650c141f74eb0b12076fc2bc086e620beec24df785e9d93cd4c0b416c727b"
+  },
+  "packageSmoke": {
+    "path": "/workspace/scratch/dev3-current-security-package-local-smoke.json",
+    "sha256": "780885497ae57b51190cb082744e8a03312760b095d456feb5974d2baa3ce643",
+    "qualification": "537-file actual ordinary npm package/build, CLI/client and allthreeadapter imports using existing workspace dependencies; fresh production installs, release lock restoration, provenance assembly and anonymous/native gates unverified",
+    "initialCacheFailurePreserved": "/workspace/scratch/dev3-current-security-pack-initial-cache-failure.log"
+  },
+  "remaining": [
+    "Integrate independently reviewed cleanup startup receipt-order correction6236ec1; this source still contains earlier cleanup candidate",
+    "Integrate reviewed scanner source after parent redaction/classification and hosted bootstrap",
+    "Independent exact-source review, full hosted CI and actual main merge before candidate freeze",
+    "All12nativebuilds/sixroles/package/publicanonymousAMD64ARM64/download/runtime/failure/recovery/customer/demo gates remain required",
+    "ExistingcustomerAppkey saved confirmation pending; no newkey approval requested"
+  ],
+  "preservation": "Occupied faileddev2 and alloriginal evidence stay untouched; originaldev3 task histories imported and reopened viaCLI before edits; all18M3gates pending; M0\u2013M10 scope/order preserved"
+}
