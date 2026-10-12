@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "tasks": [
+    "M3-R1-PUB-IMM-1",
+    "M3-R1-PUB-IMM-2"
+  ],
+  "scope": "LOCAL SOFTWARE PREPARATION rework only; current release activation/publication hold remains in effect",
+  "recordedAt": "2026-10-12T02:32:57.714458+00:00",
+  "sourceCommit": "f393c178fe49ca30b8135a62624ac04343e227b0",
+  "sourceTree": "753ed997fd070a483cd39adefe671242ff4c53fe",
+  "baseCommit": "109c42b675e9af1ac11bf48d2b4c279c93c380c7",
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/development-candidate.yaml",
+      "sha256": "7a7ffa0285e9b536a9225da2be7e049873082947fa08f6045e9fc1c95b601ff8"
+    },
+    {
+      "path": "docs/phases/m3-development-candidate.md",
+      "sha256": "dc44d90c93c9f06520c456d8836ddd529f93f790b4e3be7d00dd654fa7e383cb"
+    },
+    {
+      "path": "scripts/development-release.mjs",
+      "sha256": "49d0588bbfb61d5d448d8803d86ee4a581c38ab44b5d6f59bfec21c746584350"
+    },
+    {
+      "path": "scripts/lib/immutable-release-publication.mjs",
+      "sha256": "b474461c107f0b6b5e2625b9f95cb3ba526d13a360204bb0b5a57bd9ca4f3a0e"
+    },
+    {
+      "path": "tests/development-artifacts.test.ts",
+      "sha256": "b95bcdd8cb54919f015d6d5333a0af551af8e47fb1ab57eb360b157cbf675ebb"
+    },
+    {
+      "path": "tests/development-release-execution.test.ts",
+      "sha256": "711ba7317e6c87b1f8249ca9f78d6e458bf3adac2d614d52e1139f7cad9297e1"
+    },
+    {
+      "path": "tests/immutable-release-publication.test.ts",
+      "sha256": "e73977f4eb17e81055bce6912b138d3f0a2622c1216156875162b8ac55ac177c"
+    }
+  ],
+  "checks": [
+    {
+      "name": "focused25",
+      "result": "passed",
+      "path": "/workspace/scratch/immutable-draft-ref-final-focused.log",
+      "sha256": "f4abaa11909cf5b80d7a6ed479896115e04b4c91996105aff2601501c68a9f2d"
+    },
+    {
+      "name": "fast10-55.21s",
+      "result": "passed",
+      "path": "/workspace/scratch/immutable-draft-ref-final-fast.log",
+      "sha256": "493744fa4eb24850382603e8a649002791f87bf1adf23c0dead322c4d21625a6"
+    },
+    {
+      "name": "fast-report488unit",
+      "result": "passed",
+      "path": "/workspace/scratch/immutable-draft-ref-final-fast-report.json",
+      "sha256": "e3185e19d125821d3d63265cdd00af9d1e1c5b4cafe1fc5e5601bf6c4db6bde2"
+    },
+    {
+      "name": "typecheck",
+      "result": "passed",
+      "path": "/workspace/scratch/immutable-draft-tag-final-typecheck.log",
+      "sha256": "e9245b4db3df4c22f8d5b577b16e58459dbeb69e710fd367ccbad76eb36cb3c3"
+    },
+    {
+      "name": "workflow-lint",
+      "result": "passed",
+      "path": "/workspace/scratch/immutable-draft-ref-final-workflows.log",
+      "sha256": "8c4c5d5e4b28c3fd41e48240eaf4de65b6a2ecb3c3a4000e42137c99945c354d"
+    }
+  ],
+  "results": {
+    "focused": 25,
+    "unit": 488,
+    "fast": 10,
+    "seconds": 55.21,
+    "failed": 0,
+    "skipped": 0
+  },
+  "independentReview": {
+    "path": "/workspace/scratch/immutable-draft-ref-independent-final-review-20261012.json",
+    "sha256": "ad8b2a968a9c62506b9c62fdcc7a7eb1586999c8a5a165078f9d8e8057da9ade",
+    "result": "No remaining blocker for bounded local software preparation; exact-source independent25/25 passed"
+  },
+  "behavior": "Authenticated repository push visibility plus complete numbered release listing before create/preflight and during lost-create recovery. Short-page next Links honored only within fixed repository/page scope. Published-only tag endpoint never stands for draft discovery. Any occupied/duplicate/foreign tag attempt fails closed; ambiguous creation reconciles only one exact draft intent with numeric release ID. Actual Git tag absence checked before create/upload/publish; only404 proves absence, malformed200 fails before writes. After publish or lost ACK, actual commit ref and all5 asset digests must bind exact source. Wrong/missing tag after irreversible publish remains failed published-unverified, without rollback/overwrite or verified claims. Retained phase/status/ID/hash journals distinguish reconciliation facts.",
+  "permissions": "Preflight ephemeral contents:write plus existing packages:read is necessary for push-visible draft reads; only read requests in preflight. Trusted main/repository/source guards unchanged. Actual hosted token policy and draft visibility remain unverified locally. No persistent access added.",
+  "history": "Prior accepted be542/109 and 26fe/6698 checks remain historical/superseded, not current acceptance. IMM1 reopened by CLI with parent finding before repair, IMM2 started before edits and criteria expanded for tag race. Original proofs/start/rework/case/events preserved. Before-fix independent race proof retained by reviewer.",
+  "checkoutQualification": "Fast source is exactf393; dirty:true only untracked node_modules symlink. Tracked implementation committed and unchanged throughout final checks; no clean-checkout claim.",
+  "officialContract": "https://docs.github.com/en/rest/releases/releases#get-a-release-by-tag-name",
+  "externalRaceLimit": "No atomic exclusion of concurrent external tag writes is claimed. Postpublish wrong-ref detection can leave an irreversibly published failed candidate; no acceptance/overwrite/retry assumed.",
+  "fullHostedCI": "Current exact repair still requires normal full hosted CI and parent critical review before merge. Older PR82 CI does not accept this changed source.",
+  "releaseHold": "Parent precautionary hold: no release activation/publication, dev3 integration or customer live execution until parent triage results. Local bookkeeping only; no suspected alert/value inspected or acted upon.",
+  "dev3ActivationWorktree": "untouched by this rework",
+  "failedDev2": "untouched",
+  "nativePublicationAndAnonymousDownloads": "unverified by local repair",
+  "AppAndLiveCustomerAcceptance": "unverified",
+  "externallyReachableEndpoint": "unverified",
+  "milestoneGates": "all18 M3 gates pending; M0-M10 order, three adapters, observed-rate/descriptive Wilson and sole inaccessible-provider exception preserved",
+  "remoteActions": "none by worker"
+}
