@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2405,7 +2405,7 @@
       "completedAt": "2026-10-06T03:28:34.944Z",
       "acceptance": [
         {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0–M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
           "status": "passed",
           "evidence": [
             "docs/acceptance-reconciliation.md"
@@ -2708,7 +2708,7 @@
       "completedAt": null,
       "acceptance": [
         {
-          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0–M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
+          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0\u2013M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
           "status": "pending",
           "evidence": []
         }
@@ -3112,6 +3112,29 @@
           "status": "passed",
           "evidence": [
             "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-CI-SEC-DB-1",
+      "title": "Prepare per-run private customer CI database credentials",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [
+        "M3-07d-2e"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-12T02:37:12.385Z",
+      "completedAt": "2026-10-12T03:28:19.878Z",
+      "acceptance": [
+        {
+          "text": "Local CI preparation replaces the flagged customer workflow static database credential with unpredictable per-run credentials before an owned loopback PostgreSQL service starts. Private0700/0600 files, masking control, no password argv/log/artifact, real authenticated health checks and exact owned success/failure/ambiguous startup cleanup regressions pass. No alerts inspected, rotation/history rewrite/live customer or release action performed; hosted verification and independent review required.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-ci-credential-cleanup-a26b74d.json"
           ]
         }
       ]
