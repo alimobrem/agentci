@@ -24,6 +24,8 @@ export interface ModelReviewClientOptions {
   operatorToken?: string;
   timeoutMs?: number;
   maxAttempts?: number;
+  /** Aggregate consumed response-body byte budget across every read on this instance. */
+  maxReadBytes?: number;
 }
 const failures: Record<number, readonly string[]> = {
   400: ['invalid-request', 'invalid-cursor'], 401: ['unauthorized'], 403: ['forbidden', 'review-denied','reproduction-denied'],
@@ -42,6 +44,9 @@ export class ModelReviewClient {
   #operatorToken?: string;
   #timeoutMs: number;
   #maxAttempts: number;
+  #maxReadBytes?:number;
+  #readBytes=0;
+  #readBudgetController=new AbortController();
   constructor(options: ModelReviewClientOptions) {
     try {
       const url = new URL(options.url);
@@ -57,11 +62,14 @@ export class ModelReviewClient {
     this.#timeoutMs = options.timeoutMs ?? 15000; this.#maxAttempts = options.maxAttempts ?? 3;
     if (!Number.isSafeInteger(this.#timeoutMs) || this.#timeoutMs < 1 || this.#timeoutMs > 120000) throw new AgentCIError('invalid-timeout');
     if (!Number.isSafeInteger(this.#maxAttempts) || this.#maxAttempts < 1 || this.#maxAttempts > 3) throw new AgentCIError('invalid-attempts');
+    if(options.maxReadBytes!==undefined&&(!Number.isSafeInteger(options.maxReadBytes)||options.maxReadBytes<1||options.maxReadBytes>MAX_MODEL_EXPORT_BYTES))throw new AgentCIError('invalid-request');
+    this.#maxReadBytes=options.maxReadBytes;
   }
   private admission(value: unknown): ReviewAdmissionRequest {
     try {return validateReviewAdmission(value);} catch {throw new AgentCIError('invalid-request');}
   }
-  private async body(response: Response, maximum: number): Promise<unknown> {
+  private consumeReadBytes(size:number){if(this.#maxReadBytes!==undefined){this.#readBytes+=size;if(this.#readBytes>this.#maxReadBytes){this.#readBudgetController.abort();throw new AgentCIError('response-too-large');}}}
+  private async body(response: Response, maximum: number, read=false): Promise<unknown> {
     if (!/^application\/json(?:;|$)/i.test(response.headers.get('content-type') ?? '')) {
       await response.body?.cancel(); throw new AgentCIError('invalid-response');
     }
@@ -70,24 +78,24 @@ export class ModelReviewClient {
     try {
       for (;;) {
         const {done, value} = await reader.read(); if (done) break;
-        size += value.byteLength; if (size > maximum) throw new AgentCIError('response-too-large'); chunks.push(value);
+        if(read)this.consumeReadBytes(value.byteLength);size += value.byteLength; if (size > maximum) throw new AgentCIError('response-too-large'); chunks.push(value);
       }
       try {return JSON.parse(new TextDecoder('utf-8', {fatal: true}).decode(Buffer.concat(chunks)));}
       catch {throw new AgentCIError('invalid-response');}
-    } finally {await reader.cancel();}
+    } finally {await reader.cancel().catch(()=>{});}
   }
   private async request(path: string, mutation: boolean, status: number, body?: string, externalSignal?: AbortSignal): Promise<{value: unknown; location: string | null}> {
     const token = mutation ? this.#operatorToken : this.#readToken ?? this.#operatorToken;
     if (!token) throw new AgentCIError('operator-token-required');
     // One overall deadline includes response bodies and backoff. Retried writes
     // keep exactly the same normalized admission ID/body or cancellation path.
-    const signal = AbortSignal.any([AbortSignal.timeout(this.#timeoutMs), ...(externalSignal ? [externalSignal] : [])]);
+    const signal = AbortSignal.any([AbortSignal.timeout(this.#timeoutMs), ...(externalSignal ? [externalSignal] : []),...(!mutation?[this.#readBudgetController.signal]:[])]);
     for (let attempt = 1; ; attempt++) {
       try {
         const response = await fetch(this.#origin + path, {method: mutation ? 'POST' : 'GET', redirect: 'error', signal,
           headers: {authorization: `Bearer ${token}`, ...(body !== undefined ? {'content-type': 'application/json'} : {})},
           ...(body !== undefined ? {body} : {})});
-        const value = await this.body(response, response.status === status ? 4 * 1024 * 1024 : 1024);
+        const value = await this.body(response, response.status === status ? 4 * 1024 * 1024 : 1024,!mutation);
         if (response.status !== status) {
           if (!exact(value, ['error']) || !exact((value as any).error, ['code']) ||
             !failures[response.status]?.includes((value as any).error.code)) throw new AgentCIError('invalid-response', response.status);
@@ -218,12 +226,13 @@ export class ModelReviewClient {
     throw new AgentCIError('incomplete-findings');
   }
   /** Current finding by default; version selects an immutable historical event. */
-  async finding(expected: ReviewAdmissionRequest, id: string, options: {version?: number} = {}): Promise<FindingHistoryRecord> {
+  async finding(expected: ReviewAdmissionRequest, id: string, options: {version?: number; signal?: AbortSignal} = {}): Promise<FindingHistoryRecord> {
     const request = this.admission(expected); this.findingId(id);
     if (options.version !== undefined && (!Number.isSafeInteger(options.version) || options.version < 1 || options.version > 10000)) throw new AgentCIError('invalid-request');
-    await this.show(request);
+    const signal=AbortSignal.any([AbortSignal.timeout(this.#timeoutMs),...(options.signal?[options.signal]:[])]);
+    await this.show(request,{signal});
     const query = new URLSearchParams({reviewId: request.id}); if (options.version !== undefined) query.set('version', String(options.version));
-    const {value} = await this.request(`/v1/findings/${id}?${query}`, false, 200);
+    const {value} = await this.request(`/v1/findings/${id}?${query}`, false, 200, undefined, signal);
     let record: FindingHistoryRecord;
     try {record = validateFindingHistoryRecord(value, request.subject);} catch {throw new AgentCIError('invalid-response');}
     if (record.event.finding.id !== id || options.version !== undefined && record.event.finding.version !== options.version) throw new AgentCIError('identity-mismatch');
@@ -260,7 +269,7 @@ export class ModelReviewClient {
   async *modelReviewExport(expected: ReviewAdmissionRequest, options: {signal?: AbortSignal; timeoutMs?: number} = {}): AsyncGenerator<ModelReviewExportOutput> {
     const request = this.admission(expected), timeout = options.timeoutMs ?? 120000;
     if (!Number.isSafeInteger(timeout) || timeout < 1 || timeout > 120000) throw new AgentCIError('invalid-timeout');
-    const signal = AbortSignal.any([AbortSignal.timeout(timeout), ...(options.signal ? [options.signal] : [])]);
+    const signal = AbortSignal.any([AbortSignal.timeout(timeout), ...(options.signal ? [options.signal] : []),this.#readBudgetController.signal]);
     const verifier = new ModelReviewExportVerifier(request);
     let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
     try {
@@ -269,7 +278,7 @@ export class ModelReviewClient {
       const response = await fetch(this.#origin + `/v1/model-reviews/${request.id}/export`, {redirect: 'error', signal,
         headers: {authorization: `Bearer ${this.#readToken ?? this.#operatorToken}`}});
       if (response.status !== 200) {
-        const value: any = await this.body(response, 1024);
+        const value: any = await this.body(response, 1024,true);
         if (!exact(value, ['error']) || !exact(value.error, ['code']) || !failures[response.status]?.includes(value.error.code)) throw new AgentCIError('invalid-response', response.status);
         throw new AgentCIError(value.error.code, response.status);
       }
@@ -282,7 +291,7 @@ export class ModelReviewClient {
         signal.throwIfAborted();
         const {done, value} = await reader.read();
         signal.throwIfAborted(); if (done) break;
-        total += value.byteLength; if (total > MAX_MODEL_EXPORT_BYTES) throw new AgentCIError('response-too-large');
+        this.consumeReadBytes(value.byteLength);total += value.byteLength; if (total > MAX_MODEL_EXPORT_BYTES) throw new AgentCIError('response-too-large');
         let start = 0;
         for (let i = 0; i <= value.length; i++) {
           if (i < value.length && value[i] !== 10) continue;

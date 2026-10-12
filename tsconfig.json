@@ -11,5 +11,14 @@
     "noEmit": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["apps/**/*.ts", "cmd/**/*.ts", "packages/**/*.ts", "tests/**/*.ts", "scripts/**/*.ts"]
+  "include": [
+    "apps/**/*.ts",
+    "cmd/**/*.ts",
+    "packages/**/*.ts",
+    "tests/**/*.ts",
+    "scripts/**/*.ts"
+  ],
+  "exclude": [
+    "apps/dashboard"
+  ]
 }

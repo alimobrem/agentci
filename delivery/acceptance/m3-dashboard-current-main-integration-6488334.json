@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-12T03:25:48.706271+00:00",
+  "state": "local integration and independent source binding passed; draft PR update and fresh hosted CI pending",
+  "task": "M3-07-ui-hash-navigation-rework",
+  "sourceCommit": "64883342898dbdf05aca2c588e95bd7acfaeaf0b",
+  "sourceTree": "3a7250c5d8e0dc1c4ed4ff249b2382efdaa81d67",
+  "actualRemoteMain": {
+    "commit": "f955e58b6a790977656950e0f3a3c3499065d89d",
+    "tree": "0c68d760d348450331c640b9c0ea6189a2980448"
+  },
+  "localEquivalentMain": {
+    "commit": "b1ade9132586d45231700b1d46d4ac7741b227ed",
+    "tree": "0c68d760d348450331c640b9c0ea6189a2980448",
+    "qualification": "same source tree; distinct local commit ancestry"
+  },
+  "uiFrozenCandidate": "9d8541037f22ffbfbc9c1126872e9e78c4859001",
+  "uiEvidence": {
+    "path": "delivery/acceptance/m3-dashboard-hash-navigation-4336eb3.json",
+    "sha256": "6763a3dfe1b4a169cbbe00c0c97fcbf1559884529b3a662df1264f9a9dc43f38",
+    "reuse": "UI/SDK source bytes unchanged by integration; 24 source-bound synthetic browser checks and zero backend mutations; no integrated-tree browser rerun claimed"
+  },
+  "independentReview": {
+    "path": "/workspace/scratch/customer-review-ui-hash-9d854-integrated-648833-20261012.json",
+    "sha256": "a3bd2f4643b9e7d14b9cf612aba090de6299433a8b6027bf4f12b2bbe65a5a09",
+    "result": "PASS: all 137 task objects, events and UI/SDK source blobs preserved"
+  },
+  "localFast": {
+    "sourceCommit": "64883342898dbdf05aca2c588e95bd7acfaeaf0b",
+    "seconds": 41.273459154,
+    "passed": true,
+    "checks": [
+      {
+        "name": "types",
+        "exitCode": 0
+      },
+      {
+        "name": "tests",
+        "exitCode": 0
+      },
+      {
+        "name": "api",
+        "exitCode": 0
+      },
+      {
+        "name": "contract-evals",
+        "exitCode": 0
+      },
+      {
+        "name": "risk-evals",
+        "exitCode": 0
+      },
+      {
+        "name": "project",
+        "exitCode": 0
+      },
+      {
+        "name": "status",
+        "exitCode": 0
+      },
+      {
+        "name": "delivery",
+        "exitCode": 0
+      },
+      {
+        "name": "phase-plan",
+        "exitCode": 0
+      },
+      {
+        "name": "native-inputs",
+        "exitCode": 0
+      }
+    ],
+    "reportSha256": "47003e655215a26785e9ffc2836c2b7759c9c75f0b0b1a9822cae3a8f1923949",
+    "logSha256": "25679df96c602aa7c8f860b171f53e186289f0dd78fecabf41aad1eff1e50767",
+    "dirtyFlag": true,
+    "dirtyQualification": "untracked node_modules symlink only; no tracked changes during run"
+  },
+  "scope": "Authorized draft publication and hosted CI only; no UI merge or deployment",
+  "limitations": [
+    "No live OIDC/customer/external endpoint acceptance",
+    "All 18 M3 release gates remain pending",
+    "Fast feedback does not replace hosted integration, API, packaging, native publication or release gates"
+  ],
+  "preservedTaskCount": 137
+}

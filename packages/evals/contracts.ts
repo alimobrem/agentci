@@ -38,8 +38,9 @@ const validators = Object.fromEntries(['eval-suite','eval-run','http-eval-reques
 export function validateHttpEnvelope(value:unknown,kind:'request'|'response'):void {
   if(!validators[`http-eval-${kind}`]!(value))throw new Error('Invalid HTTP eval envelope');
 }
+/** Literal paths may contain bracket filenames; selector patterns are interpreted only by glob callers. */
 export function safeEvalPath(value:string, glob=false):boolean {
-  return !!value && !value.startsWith('/') && !value.startsWith('!') && !value.includes('\\') && !/[\x00-\x1f]/.test(value) && !value.split('/').some(part=>part==='..'||part==='.'||part==='') && !/^[A-Za-z]:/.test(value) && (glob || !/[*?{}[\]]/.test(value));
+  return !!value && !value.startsWith('/') && !value.startsWith('!') && !value.includes('\\') && !/[\x00-\x1f]/.test(value) && !value.split('/').some(part=>part==='..'||part==='.'||part==='') && !/^[A-Za-z]:/.test(value) && (glob || !/[*?{}]/.test(value));
 }
 export function validateEvalSuite(value:unknown):EvalSuite {
   if (!validators['eval-suite']!(value)) throw new Error('Invalid EvalSuite contract');

@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-12T02:00:55.215993+00:00",
+  "sourceCommit": "82cec14ef198c2ba1ed5cb885ee87e5261f56aa8",
+  "sourceTree": "e75d7c3fc46a58e10c6d8fb965a26709d88f5f36",
+  "baseCommit": "79b8f612efc1c6cb27fe143984ec25a843208623",
+  "scope": "Independently reviewed draft dashboard/session software and synthetic fixtures, integrated with actual main. No live OIDC/customer or M3 closure.",
+  "files": {
+    ".github/workflows/dashboard-verify.yaml": "0bd0b9cea7f84ef37d5834be64a5877094915b2265150524012feb1dcb6e573a",
+    "apps/dashboard/.gitignore": "add44d99b8351d4ef77e1e141f278780749922a158227df86c51dad8f8a0b613",
+    "apps/dashboard/app/api/reviews/[id]/route.ts": "69bf60112728ef5e9747fd24c553835f2c1250ccb4e9e095e0d85a37684994fe",
+    "apps/dashboard/app/api/session/route.ts": "3b7e11364bbfa64dd2341f524665ad1f2cd93a7599aa88de610749ef5449248d",
+    "apps/dashboard/app/auth/callback/route.ts": "8a823b95ee8190e4e1bc80ac6accd910ebc847cfb2b00f5b463a3c4f2910ec69",
+    "apps/dashboard/app/auth/login/route.ts": "82a3559cc292f531aa827789537d4cdbc1a7e499e7b99ae6a65a061b1919a730",
+    "apps/dashboard/app/auth/logout/route.ts": "6f8b35b8bfe4b9bd9908350f537bdf0c5cf811e0fab66510a601e8016a56a48c",
+    "apps/dashboard/app/error.tsx": "58e6ca0df501196de13d2baff934b8e742b0581299cbd7a7d0486e5dc0daf8fc",
+    "apps/dashboard/app/globals.css": "f52fd3e5657ba4a894843d9a0968d5ad5f81849f8641564e9d1dc6edda8fdcce",
+    "apps/dashboard/app/layout.tsx": "69d5cbe3056fa743f848221d95927e84d7adbd9380a7e15ac20884d6a0d249a2",
+    "apps/dashboard/app/loading.tsx": "cdee6b6fcf219200232d157d74463adea5b08492dd6c7ae0be82a54632e7335b",
+    "apps/dashboard/app/page.tsx": "588c0bc56a85538245259fefb1c9a854e0540ec3e42e129337db1dcf74eb983a",
+    "apps/dashboard/components/refresh-review.tsx": "18693a85e23277a5fc8bc5669dce9f3ab6b3ed6066dcdc788d5ecbd5e2126188",
+    "apps/dashboard/components/review-detail.tsx": "2bcb5a3891b7e207c280a69c9012f811965d8267e893006012f8f30d75702eb4",
+    "apps/dashboard/components/session-boundary.tsx": "b8e489440eeb0ce0cc7c1906a380559a5b4910be594c2a656c61b0c50bea2865",
+    "apps/dashboard/components/sign-out.tsx": "fdb2053ac90c2bd6eaec6bf2ecfa419e6ff1b26fbe4706ee8b34eade3a54d49e",
+    "apps/dashboard/components/ui/tabs.tsx": "86fbda25de08e83b24b45e2efa112ca46015cf89e4f8073fce31e83b38a00ed5",
+    "apps/dashboard/lib/dashboard.ts": "2d04e788d105d602ff0ff03fcdbf9481f1bfe572ad564758a702376d37f5c4f5",
+    "apps/dashboard/lib/oidc.ts": "99abed3e1880fe484aba2f9ce61852df782f1d51348bd311b10bcfd0cee5faba",
+    "apps/dashboard/lib/runtime.ts": "0b9ab83ba319f483b84fe3126f98323ff6ea15d8d17e9d682a0e470962221ce1",
+    "apps/dashboard/lib/session.ts": "ad4b4cb8efd5d738b373c123643855b37a3463dd8c03205c6ce72557f4672f6e",
+    "apps/dashboard/next-env.d.ts": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b",
+    "apps/dashboard/next.config.ts": "7fc67a637373c3102b44c8ac83851156982e95617cc764c94cb50fa07766b61c",
+    "apps/dashboard/package-lock.json": "0ad03dc2dfe2d40029647480d9ee46ae58d3fd2b7efba99894cb12ed0f9c33db",
+    "apps/dashboard/package.json": "6a5c9c9c966f119663c899fe8d503a2a2e1fb2394d78c55d2a55c2a6f0ac956a",
+    "apps/dashboard/postcss.config.mjs": "cc8f514ba7fda07a2e2828670c99e34275f314b350628d8c2ab39e68e50bf9f8",
+    "apps/dashboard/tests/browser/bootstrap.ts": "c71a10c228ad6c1c1f684b1445ccb675fe11f08eca7bcc42a8c9e1292052c8f3",
+    "apps/dashboard/tests/browser/check.mjs": "19181d63cbff4e3254cb9c5fe24d80a1abbcdf6d5fd2fed8192b9b7d157c93a6",
+    "apps/dashboard/tests/ci-receipt.test.ts": "13f0e6ec51b15be183c31467792fb57faaff094b3819cffc9d3d89c3e5e1b0d8",
+    "apps/dashboard/tests/dashboard.test.ts": "06b5bad7c661ad20fee20fa358a28cde699dbfd763aa55d7088483002b0c627c",
+    "apps/dashboard/tests/oidc.test.ts": "82a6bb84b8b5d502068d60ab3cad9f5981ce081d43060a133cfea44cd8bb415a",
+    "apps/dashboard/tests/presenter.test.ts": "a5443aaef0ef01a4456daebab9809363736268abcb812e8016617e83df52538a",
+    "apps/dashboard/tests/session.test.ts": "f8163f453602a8a1ffc9f73073c0b663ae08288949bbe3690d570d7f2b941a10",
+    "apps/dashboard/tsconfig.json": "15913b642e425b3b90a773a28f2b9caa40d9cc60f6a100ab9e61c8c76e20ab8e",
+    "delivery/acceptance/m3-dashboard-ci-preparation-de74c56.json": "e380b8b721630b09eb62c4d5f39f8adb242536020534d720fce56f611a14cd26",
+    "delivery/acceptance/m3-dashboard-local-preparation-45453c5.json": "9df801e47161b21d7a5df8e8ffbc24d7ad92ba20548c2018ffa7bb582c9496f0",
+    "delivery/acceptance/m3-dashboard-local-preparation-c645176.json": "d90c0f8095e44127112adf1e6fb5f7b9eb15cf391fc072d03e26d8a5a9903b78",
+    "delivery/acceptance/m3-dashboard-local-preparation-faa8740.json": "02e32517af590b7eec7bfd53985e9a52c75931c6955adc36ed5343a8809e3aa0",
+    "delivery/acceptance/m3-dashboard-local-preparation.json": "c99ca61cb354522651280aa14e6e11d1b6bb8e8fd7c00ada85ec5dd29455a474",
+    "delivery/task-events.jsonl": "45aa10f8dd957c2e11e2f3f2f79084b274ac18c7ae64a7f89363f83e1647254c",
+    "delivery/tasks.json": "be5e56b58eb545e1c246cdc5e1786e9c57b8239a04dc5599eb9d452b573e1ba2",
+    "docs/phases/m3-dashboard-local-preparation.md": "b705808baaa0efcd598b35691b0372a5934cef0f00285643e733cdb0b6714bab",
+    "scripts/dashboard-ci-receipt.mjs": "1de368dc3270bb1283fcd51050e17a27d0565a1f7b61d86df850def7023bc303",
+    "scripts/lib/dashboard-ci-evidence.mjs": "a4681b8f31b87016d9e66901264ace484f818bcd6af3d728bfc914117e4b2839",
+    "tsconfig.build.json": "4754ee1b0c3e58f29a80af0452de9967adf3a9c27250f3f2c6266af359728e8c",
+    "tsconfig.json": "8b75e612225dc4b5e8468367c4feb6ece8c6f36f407ccf3cb0db23ff209ae316"
+  },
+  "checks": [
+    {
+      "log": "/workspace/scratch/dashboard-integrated-82cec14/backend-build.log",
+      "sha256": "76cbc2ccbbdb7b068905dbe246aa8581706d322289330db6ac2dcbfd9a71cfbf",
+      "exitCode": 0
+    },
+    {
+      "log": "/workspace/scratch/dashboard-integrated-82cec14/browser.log",
+      "sha256": "f3bacaea2fe1056939ac52e9a24aea59306d07e0b1b51342b66ddf8411b04537",
+      "exitCode": 0
+    },
+    {
+      "log": "/workspace/scratch/dashboard-integrated-82cec14/build.log",
+      "sha256": "ebb3a8e18e7394ca8ad8b94675ee31d0fa325c3447302beb0e78aab532e2239f",
+      "exitCode": 0
+    },
+    {
+      "log": "/workspace/scratch/dashboard-integrated-82cec14/fast.log",
+      "sha256": "960084e5b65ad92c11f89606096c586a2adcc32662980e8e8458c335083e8721",
+      "exitCode": 0
+    },
+    {
+      "log": "/workspace/scratch/dashboard-integrated-82cec14/types.log",
+      "sha256": "ede264564d22ba889a85acdd1b230c2b814e18b2f3f1d0177b5b4e7d7867480c",
+      "exitCode": 0
+    },
+    {
+      "log": "/workspace/scratch/dashboard-integrated-82cec14/ui-install-existing-cache.log",
+      "sha256": "dc36a4bb707e8a11ff69a9db851f7bc1b36ab8b22e7f4e90f6359312d1141c0c",
+      "exitCode": 0
+    },
+    {
+      "log": "/workspace/scratch/dashboard-integrated-82cec14/units.log",
+      "sha256": "74f346f102dd7c2aeb84e28d25b9386e935342aaf99e00fb44d7afe4a64a8c10",
+      "exitCode": 0
+    },
+    {
+      "log": "/workspace/scratch/dashboard-integrated-82cec14/workflows.log",
+      "sha256": "8c4c5d5e4b28c3fd41e48240eaf4de65b6a2ecb3c3a4000e42137c99945c354d",
+      "exitCode": 0
+    }
+  ],
+  "fast": {
+    "passed": true,
+    "checks": 10,
+    "seconds": 33.371272534999996,
+    "unitTests": 471
+  },
+  "ui": {
+    "unitTests": 14,
+    "typecheck": true,
+    "productionBuild": true,
+    "browserChecks": 20,
+    "backendMutations": 0,
+    "browserSource": "82cec14ef198c2ba1ed5cb885ee87e5261f56aa8",
+    "browserTree": "e75d7c3fc46a58e10c6d8fb965a26709d88f5f36",
+    "browserArtifacts": {
+      ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/fixture-cancellation-intent.png": "a9ba2bca74c5c08c7cacaad2cfa377525a8786c36ea0164ff8f60b15a31c3db8",
+      ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/fixture-exact-review-detail.png": "e4f0bbe93364628c95136f25dd1782d72515748d95b0387f42500d4d3b0d7a87",
+      ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/fixture-missing-evidence.png": "b8387a9683cde5dfb07b0a3cfe2f833803c63c985e639dab65e8bd74a1634f3f",
+      ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/fixture-session-expired.png": "49744d610013c4816d6d25f6cf3bbd28d7d4e55659e1e873c42a00fab113f5c5",
+      ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/result.json": "60915202e253625d00496285289c3532565919b1062e84d4eac66cfe0f327d67"
+    }
+  },
+  "priorRecordsPreserved": true,
+  "independentSourceReview": {
+    "path": "/workspace/scratch/dashboard-integrated-source-independent-review-82cec14-20261012.json",
+    "sha256": "3ae32687e1be27d00c9590704b902e2c7e3caaf888bed5a613089ee8c4a17d26"
+  },
+  "qualification": {
+    "trackedSourceCommitted": true,
+    "untrackedSharedRootNodeModules": true,
+    "localBrowser": "Existing /usr/bin/chromium, explicitly configured; hosted uses bundled locked Playwright Chromium",
+    "uiInstall": "Clean npm ci offline ignore-scripts using previously documented /workspace/npm-cache-dashboard",
+    "priorAuditReuse": "Dependency entries unchanged except local file SDK version dev.1→dev.2. Prior exact lock dependency audit recorded zero vulnerabilities; hosted performs fresh audit. No fresh audit claimed here."
+  },
+  "failedPreparationAttempts": [
+    {
+      "log": "/workspace/scratch/dashboard-integrated-82cec14/ui-install.log",
+      "sha256": "ae7e5cee8b31de0fa3f5a869462693cece2219d2bf9b025aa080b2e5f45d0e40",
+      "result": "ENOTCACHED in default cache, then successful clean install from already documented dashboard cache. No alternate download bypass."
+    },
+    {
+      "result": "Initial new task status pending rejected by delivery CLI; preparatory merge aborted, corrected to valid not-started and CLI started before retained integration. No fabricated start date."
+    }
+  ],
+  "hostedCI": "Pending draft publication; local checks do not substitute",
+  "originalUiTasks": "Pending",
+  "releaseComplete": false,
+  "m3OpenGates": 18,
+  "deferredException": "Only inaccessible external model-provider tests may be explicitly deferred; no UI/session/packaging/customer exemption.",
+  "historicalArtifactsExcludedFromFreshEvidence": {
+    ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/cancelled-mobile.png": {
+      "sha256": "f5cd33b4569d7920f0afc56059099f722d1fb5e4900bd612cdc5c65b28ff1b49",
+      "provenanceSource": "45453c56ded0388cf5d73654978f298840cc3263",
+      "freshCurrentSourceEvidence": false
+    },
+    ".agentci/artifacts/dashboard-browser-fixed/82cec14ef198c2ba1ed5cb885ee87e5261f56aa8/queued-mobile.png": {
+      "sha256": "bdccfa0a796a2bf4da30a10a2dcdf74e00559a71d3a5080755b61e4ae66ffcdb",
+      "provenanceSource": "45453c56ded0388cf5d73654978f298840cc3263",
+      "freshCurrentSourceEvidence": false
+    }
+  },
+  "publicationCorrection": {
+    "supersededRecordLocallyPreservedAtCommit": "3e623f35348e4962fd638f88bd53672fdef02bd9",
+    "supersededRecordSha256": "a0411643dbff5b40d018813e2d4b73cc2bdf8b7913e85d9959146ac2799964ec",
+    "supersededRecordNotIncludedInPublishedCandidate": true,
+    "reason": "Automatic approval review rejected publishing ambiguous old screenshot provenance; corrected record binds only files from actual current browser run. Prior local Git evidence and original45453 snapshots remain preserved."
+  }
+}

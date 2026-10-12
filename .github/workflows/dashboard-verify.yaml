@@ -1,0 +1,73 @@
+name: Dashboard Verify
+on:
+  pull_request:
+  push:
+    branches: [main]
+defaults:
+  run:
+    shell: bash
+permissions:
+  contents: read
+concurrency:
+  group: dashboard-verify-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  dashboard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      AGENTCI_UI_ARTIFACT_DIR: ${{ github.workspace }}/.agentci/artifacts/dashboard-ci/browser
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: 26.10.0
+          cache: npm
+          cache-dependency-path: |
+            npm-shrinkwrap.json
+            apps/dashboard/package-lock.json
+      - run: npm install --global npm@12.2.0
+      - name: Install backend dependencies
+        id: root_install
+        run: mkdir -p .agentci/artifacts/dashboard-ci && npm ci 2>&1 | tee .agentci/artifacts/dashboard-ci/backend-install.log
+      - name: Build existing validated backend client
+        id: root_build
+        run: npm run build 2>&1 | tee .agentci/artifacts/dashboard-ci/backend-build.log
+      - name: Install locked dashboard dependencies
+        id: ui_install
+        run: npm ci --prefix apps/dashboard 2>&1 | tee .agentci/artifacts/dashboard-ci/dashboard-install.log
+      - name: Audit dashboard dependencies
+        id: audit
+        run: npm audit --prefix apps/dashboard --audit-level=high --json > .agentci/artifacts/dashboard-ci/dependency-audit.json
+      - name: Typecheck dashboard
+        id: types
+        run: npm run typecheck --prefix apps/dashboard 2>&1 | tee .agentci/artifacts/dashboard-ci/typecheck.log
+      - name: Test signed OIDC and scoped contract fixtures
+        id: units
+        run: npm run test --prefix apps/dashboard 2>&1 | tee .agentci/artifacts/dashboard-ci/tests.log
+      - name: Build production standalone dashboard
+        id: build
+        run: npm run build --prefix apps/dashboard 2>&1 | tee .agentci/artifacts/dashboard-ci/build.log
+      - name: Install locked Playwright Chromium
+        id: browser_install
+        working-directory: apps/dashboard
+        run: ./node_modules/.bin/playwright install --with-deps chromium 2>&1 | tee ../../.agentci/artifacts/dashboard-ci/browser-install.log
+      - name: Test isolated production runtime with synthetic session/backend fixtures
+        id: browser
+        run: npm run test:browser --prefix apps/dashboard 2>&1 | tee .agentci/artifacts/dashboard-ci/browser.log
+      - name: Retain qualified source and attempt receipt
+        if: always()
+        env:
+          UI_STAGE_OUTCOMES: >-
+            {"rootInstall":"${{ steps.root_install.outcome }}","rootBuild":"${{ steps.root_build.outcome }}","uiInstall":"${{ steps.ui_install.outcome }}","audit":"${{ steps.audit.outcome }}","types":"${{ steps.types.outcome }}","units":"${{ steps.units.outcome }}","build":"${{ steps.build.outcome }}","browserInstall":"${{ steps.browser_install.outcome }}","browser":"${{ steps.browser.outcome }}"}
+          UI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: node scripts/dashboard-ci-receipt.mjs
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: dashboard-fixture-verification-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .agentci/artifacts/dashboard-ci
+          include-hidden-files: true
+          if-no-files-found: warn
