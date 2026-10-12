@@ -1,39 +1,50 @@
-import { execFileSync, spawnSync } from 'node:child_process';
-import { generateKeyPairSync, randomUUID } from 'node:crypto';
-import { mkdtemp, writeFile, readFile, rm } from 'node:fs/promises';
+import { spawnSync } from 'node:child_process';
+import {smokeEngine,SMOKE_OWNER_LABEL} from './lib/smoke-resources.mjs';
+import {registerImageSmokeState,cleanupImageSmokeState} from './lib/image-smoke-state.mjs';
+import { generateKeyPairSync, randomUUID, randomBytes } from 'node:crypto';
+import { mkdtemp, writeFile, readFile, rm, mkdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-const prefix = `agentci-smoke-${randomUUID().slice(0, 8)}`;
-const docker = (...args) => execFileSync('docker', args, { encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'], timeout: 60_000 }).trim();
+const prefix = `agentci-smoke-${randomBytes(8).toString('hex')}`;
+const docker = (...args) => {if(cancelled)throw Error('Image smoke cancelled');return smokeEngine(args);};
 const smokeImages = {};
-const containers = [], directory = await mkdtemp(join(tmpdir(), 'agentci-image-smoke-'));
+const directory = await mkdtemp(join(tmpdir(), 'agentci-image-smoke-'));
 const temporalVolume = `${prefix}-temporal-data`;
 const roles = process.argv[2] ?? '0.2.1-m1';
-const create = (name, ...args) => { containers.push(name); return docker('create', '--name', name, '--label', 'agentci.purpose=image-smoke', '--network', prefix, ...args); };
+const create = (name, ...args) => docker('create', '--name', name, '--label', 'agentci.purpose=image-smoke', '--label', `${SMOKE_OWNER_LABEL}=${prefix}`, '--network', prefix, ...args);
+const statePath=await registerImageSmokeState(directory,prefix);
+let cancelled=false;const cancel=()=>{cancelled=true;};process.on('SIGINT',cancel);process.on('SIGTERM',cancel);
+let summary;
 const pause = () => new Promise(resolve => setTimeout(resolve, 250));
-async function wait(probe) { for (let i = 0; i < 80; i++) { try { if (probe()) return; } catch {} await pause(); } throw new Error('Service did not become ready'); }
+async function wait(probe) { for (let i = 0; i < 80; i++) { if(cancelled)throw Error('Image smoke cancelled');try { if (probe()) return; } catch {} await pause(); } throw new Error('Service did not become ready'); }
 try {
-  docker('network', 'create', prefix);
-  docker('volume', 'create', temporalVolume);
+  docker('network', 'create', '--label', `${SMOKE_OWNER_LABEL}=${prefix}`, prefix);
+  docker('volume', 'create', '--label', `${SMOKE_OWNER_LABEL}=${prefix}`, temporalVolume);
   const db = `${prefix}-db`, temporal = `${prefix}-temporal`;
-  create(db, '--network-alias', 'postgres', '-e', 'POSTGRES_PASSWORD=local-smoke-only', '-e', 'POSTGRES_DB=agentci', 'postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873'); docker('start', db);
-  await wait(() => docker('exec', '-e', 'PGPASSWORD=local-smoke-only', db, 'psql', '-h', '127.0.0.1', '-U', 'postgres', '-d', 'agentci', '-tAc', 'SELECT 1') === '1');
-  for(const migration of ['001_m1.sql','002_m2.sql','003_m2_review_recovery.sql'])execFileSync('docker', ['exec', '-i', db, 'psql', '-v', 'ON_ERROR_STOP=1', '-U', 'postgres', '-d', 'agentci'], { input: await readFile(new URL('../deploy/migrations/'+migration, import.meta.url)), stdio: ['pipe', 'pipe', 'pipe'] });
+  const key=randomBytes(32).toString('hex'),postgresEnv=join(directory,'postgres.env');
+  const pgValues={['POSTGRES_PASSWORD']:key,POSTGRES_DB:'agentci',['PGPASSWORD']:key};
+  await writeFile(postgresEnv,Object.entries(pgValues).map(([name,value])=>`${name}=${value}`).join('\n')+'\n',{mode:0o600});
+  create(db, '--network-alias', 'postgres', '--env-file', postgresEnv, '--tmpfs', '/var/lib/postgresql:rw,nosuid,nodev,size=512m', 'postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873'); docker('start', db);
+  const mounts=JSON.parse(docker('inspect','--format','{{json .Mounts}}',db));if(!Array.isArray(mounts)||!mounts.some(mount=>mount.Type==='tmpfs'&&mount.Destination==='/var/lib/postgresql')||mounts.some(mount=>mount.Type==='volume'))throw Error('Private PostgreSQL storage mount guard failed');
+  await wait(() => docker('exec', '--env-file', postgresEnv, db, 'psql', '-h', '127.0.0.1', '-U', 'postgres', '-d', 'agentci', '-tAc', 'SELECT 1') === '1');
+  for(const migration of ['001_m1.sql','002_m2.sql','003_m2_review_recovery.sql'])smokeEngine(['exec', '--env-file', postgresEnv, '-i', db, 'psql', '-v', 'ON_ERROR_STOP=1', '-U', 'postgres', '-d', 'agentci'], { input: await readFile('deploy/migrations/'+migration) });
   create(temporal, '--network-alias', 'temporal', '-v', `${temporalVolume}:/home/temporal`, 'temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e', 'server', 'start-dev', '--ip', '0.0.0.0', '--db-filename', '/home/temporal/temporal.db', '--headless'); docker('start', temporal);
   await wait(() => docker('exec', temporal, 'temporal', 'operator', 'cluster', 'health', '--address', '127.0.0.1:7233').includes('SERVING'));
   const keyPath = join(directory, 'fixture.pem');
   const { privateKey } = generateKeyPairSync('rsa', { modulusLength: 2048 });
   await writeFile(keyPath, privateKey.export({ type: 'pkcs8', format: 'pem' }), { mode: 0o600 });
+  const databaseUrl=new URL('postgresql://postgres:5432/agentci');databaseUrl.username='postgres';databaseUrl.password=key;
   const env = {
     AGENTCI_REPOSITORY: 'example/repo', AGENTCI_ORGANIZATION_ID: '00000000-0000-4000-8000-000000000001',
     AGENTCI_PUBLIC_URL: 'http://localhost:3000', GITHUB_APP_ID: '1', GITHUB_INSTALLATION_ID: '12',
-    GITHUB_PRIVATE_KEY_FILE: '/tmp/fixture.pem', GITHUB_WEBHOOK_SECRET: 's'.repeat(32), AGENTCI_EVIDENCE_TOKEN: 'e'.repeat(32),
-    DATABASE_URL: 'postgresql://postgres:local-smoke-only@postgres:5432/agentci', TEMPORAL_ADDRESS: 'temporal:7233',
+    GITHUB_PRIVATE_KEY_FILE: '/tmp/fixture.pem', GITHUB_WEBHOOK_SECRET: randomBytes(32).toString('hex'), AGENTCI_EVIDENCE_TOKEN: randomBytes(32).toString('hex'),
+    DATABASE_URL: databaseUrl.href, TEMPORAL_ADDRESS: 'temporal:7233',
     AGENTCI_EVAL_RUNNER_IMAGE: process.env.AGENTCI_TEST_RUNNER_IMAGE??docker('image','inspect',`agentci-eval-runner:${roles}`,'--format','{{.Id}}'),
   };
+  const serviceEnv=join(directory,'services.env');await writeFile(serviceEnv,Object.entries(env).map(([key,value])=>`${key}=${value}`).join('\n')+'\n',{mode:0o600});
   for (const role of ['api', 'worker']) {
     const name = `${prefix}-${role}`;
-    create(name, '--user', `${process.getuid()}:${process.getgid()}`, ...Object.entries(env).flatMap(([key, value]) => ['-e', `${key}=${value}`]), `agentci-${role}:${roles}`);
+    create(name, '--user', `${process.getuid()}:${process.getgid()}`, '--env-file', serviceEnv, `agentci-${role}:${roles}`);
     smokeImages[role]=docker('inspect','--format','{{.Image}}',name);
     if (role === 'worker') docker('cp', '-a', keyPath, `${name}:/tmp/fixture.pem`);
     docker('start', name);
@@ -42,7 +53,7 @@ try {
   const request = script => docker('exec', api, 'node', '--input-type=module', '-e', script);
   await wait(() => request("const r=await fetch('http://127.0.0.1:3000/readyz');if(!r.ok)process.exit(1);console.log('ready')") === 'ready');
   await wait(() => {
-    const result = spawnSync('docker', ['logs', worker], { encoding: 'utf8' });
+    const result = spawnSync('docker', ['logs', worker], { encoding: 'utf8', env:{PATH:process.env.PATH} });
     const output = result.stdout + result.stderr;
     return output.includes("state: 'RUNNING'");
   });
@@ -52,15 +63,15 @@ try {
     const health=await fetch(origin+'/healthz');
     const denied=await fetch(origin+'/v1/evidence/'+randomUUID());
     const evalDenied=await fetch(origin+'/v1/eval-comparisons/invalid');
-    const evalInvalid=await fetch(origin+'/v1/eval-comparisons/invalid',{headers:{authorization:'Bearer '+'e'.repeat(32)}});
-    const evalMissing=await fetch(origin+'/v1/eval-comparisons/'+randomUUID(),{headers:{authorization:'Bearer '+'e'.repeat(32)}});
+    const evalInvalid=await fetch(origin+'/v1/eval-comparisons/invalid',{headers:{authorization:'Bearer '+process.env.AGENTCI_EVIDENCE_TOKEN}});
+    const evalMissing=await fetch(origin+'/v1/eval-comparisons/'+randomUUID(),{headers:{authorization:'Bearer '+process.env.AGENTCI_EVIDENCE_TOKEN}});
     const invalid=await fetch(origin+'/v1/webhooks/github',{method:'POST',headers:{'content-type':'application/json'},body:'{}'});
     const raw=JSON.stringify({action:'closed',number:1,installation:{id:12},repository:{full_name:'example/repo'},pull_request:{number:1,base:{sha:'a'.repeat(40),repo:{full_name:'example/repo'}},head:{sha:'b'.repeat(40)}}});
-    const closed=await fetch(origin+'/v1/webhooks/github',{method:'POST',headers:{'content-type':'application/json','x-github-event':'pull_request','x-github-delivery':randomUUID(),'x-hub-signature-256':'sha256='+createHmac('sha256','s'.repeat(32)).update(raw).digest('hex')},body:raw});
+    const closed=await fetch(origin+'/v1/webhooks/github',{method:'POST',headers:{'content-type':'application/json','x-github-event':'pull_request','x-github-delivery':randomUUID(),'x-hub-signature-256':'sha256='+createHmac('sha256',process.env.GITHUB_WEBHOOK_SECRET).update(raw).digest('hex')},body:raw});
     console.log(JSON.stringify([health.status,denied.status,invalid.status,closed.status,(await closed.json()).status,evalDenied.status,evalInvalid.status,evalMissing.status]));
   `));
   if (JSON.stringify(statuses) !== '[200,401,401,202,"ignored",401,400,404]') throw new Error(`Unexpected runtime responses: ${JSON.stringify(statuses)}`);
-  const project=await readFile(new URL('../agentci.yaml',import.meta.url),'utf8');
+  const project=await readFile('agentci.yaml','utf8');
   if(request(`
     import {Pool} from 'pg';import {randomUUID} from 'node:crypto';
     import {Store} from './dist/packages/storage/postgres.js';import {EvalStore} from './dist/packages/storage/evals.js';
@@ -89,18 +100,17 @@ try {
   docker('exec', temporal, 'test', '-s', '/home/temporal/temporal.db');
   docker('stop', '--time', '20', api, worker);
   for (const name of [api, worker]) if (docker('inspect', '--format', '{{.State.ExitCode}}', name) !== '0') throw new Error(`Unclean shutdown: ${name}`);
-  console.log(JSON.stringify({ result: 'passed', images: smokeImages, version: roles, platform: process.arch, checks: ['non-root API/worker startup', 'M2 schema readiness', 'signature rejection', 'evidence authentication', 'comparison authentication/UUID/scoped lookup', 'compiled comparison API/client reads actual queued database evidence', 'compiled snapshot export/client completion', 'signed closed delivery', 'non-root persistent Temporal database startup/restart', 'graceful shutdown'], github: 'synthetic credentials; no live GitHub review claimed' }, null, 2));
-} catch (error) {
-  for (const name of containers.filter(name => /-(api|worker)$/.test(name))) {
-    try {
-      const result = spawnSync('docker', ['logs', name], { encoding: 'utf8' });
-      console.error(name, (result.stdout + result.stderr).slice(-2000));
-    } catch (diagnostic) { console.error(name, diagnostic.stderr?.toString().slice(-2000)); }
-  }
-  throw error;
+  summary={ result: 'passed', images: smokeImages, version: roles, platform: process.arch, checks: ['non-root API/worker startup', 'M2 schema readiness', 'signature rejection', 'evidence authentication', 'comparison authentication/UUID/scoped lookup', 'compiled comparison API/client reads actual queued database evidence', 'compiled snapshot export/client completion', 'signed closed delivery', 'non-root persistent Temporal database startup/restart', 'graceful shutdown'], github: 'synthetic credentials; no live GitHub review claimed' };
+} catch {
+  console.error('Image smoke failed; engine and service diagnostics withheld to protect private credentials');
+  throw Error('Image smoke runtime acceptance failed');
 } finally {
-  for (const name of containers.reverse()) { try { docker('rm', '-f', '-v', name); } catch {} }
-  try { docker('network', 'rm', prefix); } catch {}
-  try { docker('volume', 'rm', temporalVolume); } catch {}
-  await rm(directory, { recursive: true, force: true });
+  // State remains private when any owned removal or verification fails.
+  let receipt;
+  try{receipt=await cleanupImageSmokeState(statePath);}
+  catch{receipt={schemaVersion:1,result:'recovery-required-or-unverified',owner:prefix,privateState:'retained for recovery',privateDirectory:directory};}
+  process.off('SIGINT',cancel);process.off('SIGTERM',cancel);
+  await mkdir('.agentci/artifacts',{recursive:true});await writeFile('.agentci/artifacts/image-smoke-cleanup.json',JSON.stringify(receipt,null,2)+'\n');
+  if(receipt.result!=='passed')throw Error('Image smoke cleanup incomplete; private recovery state retained');
 }
+if(summary)console.log(JSON.stringify(summary,null,2));

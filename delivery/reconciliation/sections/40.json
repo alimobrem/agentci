@@ -6558,6 +6558,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-R1-CI-DB-2",
+          "status": "blocked",
+          "startedAt": "2026-10-12T20:19:51.793Z",
+          "completedAt": null,
+          "blockedReason": "Await exact remote hosted Verify and dedicated scanner plus parent independent source and actual artifact review before approved merge; unmatched GitGuardian incident remains open.",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Fresh per-run private credentials, loopback-only host binding, bounded sanitized diagnostics, and verified owned teardown in advisory/Verify/download workflows and image smoke. Regression tests cover argv/log leakage, exposure, lost startup responses and cleanup failures; applicable local checks, hosted CI including dedicated scanner and independent exact-source/artifact review pass before merge. Unmatched GitGuardian finding and original milestone/release gates remain open.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -6727,6 +6742,11 @@
         {
           "task": "M3-R1-PUB-TOKEN-1",
           "reason": "Merged repair passed source/full CI review but hosted run38215995488 still failed push visibility assertion before inventory; real response field unknown. Standalone read-only diagnostic required before further capability logic changes.",
+          "deferral": null
+        },
+        {
+          "task": "M3-R1-CI-DB-2",
+          "reason": "Await exact remote hosted Verify and dedicated scanner plus parent independent source and actual artifact review before approved merge; unmatched GitGuardian incident remains open.",
           "deferral": null
         }
       ],
@@ -7239,6 +7259,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-R1-CI-DB-2",
+          "status": "blocked",
+          "startedAt": "2026-10-12T20:19:51.793Z",
+          "completedAt": null,
+          "blockedReason": "Await exact remote hosted Verify and dedicated scanner plus parent independent source and actual artifact review before approved merge; unmatched GitGuardian incident remains open.",
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Fresh per-run private credentials, loopback-only host binding, bounded sanitized diagnostics, and verified owned teardown in advisory/Verify/download workflows and image smoke. Regression tests cover argv/log leakage, exposure, lost startup responses and cleanup failures; applicable local checks, hosted CI including dedicated scanner and independent exact-source/artifact review pass before merge. Unmatched GitGuardian finding and original milestone/release gates remain open.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -7408,6 +7443,11 @@
         {
           "task": "M3-R1-PUB-TOKEN-1",
           "reason": "Merged repair passed source/full CI review but hosted run38215995488 still failed push visibility assertion before inventory; real response field unknown. Standalone read-only diagnostic required before further capability logic changes.",
+          "deferral": null
+        },
+        {
+          "task": "M3-R1-CI-DB-2",
+          "reason": "Await exact remote hosted Verify and dedicated scanner plus parent independent source and actual artifact review before approved merge; unmatched GitGuardian incident remains open.",
           "deferral": null
         }
       ],

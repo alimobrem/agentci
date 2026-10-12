@@ -76,12 +76,6 @@ jobs:
       EVAL_RUNNER_IMAGE: ${{ inputs.eval_runner_image }}
       EVAL_ENGINES_IMAGE: ${{ inputs.eval_engines_image }}
       EVAL_AGENTCI_IMAGE: ${{ inputs.eval_agentci_image }}
-    services:
-      postgres:
-        image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
-        env: { POSTGRES_PASSWORD: agentci-ci-only, POSTGRES_DB: agentci }
-        ports: [5432:5432]
-        options: --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 3s --health-retries 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -102,6 +96,15 @@ jobs:
           ref: ${{ github.workflow_sha }}
           path: .acceptance-harness
           sparse-checkout: |
+            scripts/ci-database.mjs
+            scripts/image-smoke-cleanup.mjs
+            scripts/lib/image-smoke-state.mjs
+            scripts/image-smoke.mjs
+            scripts/lib/customer-ci-database.mjs
+            scripts/lib/owned-command.mjs
+            scripts/lib/ci-database-command.mjs
+            scripts/lib/credential-output.mjs
+            scripts/lib/smoke-resources.mjs
             scripts/download-integration-reporter.mjs
             scripts/record-download-runtime.mjs
             scripts/lib/download-runtime-evidence.mjs
@@ -139,6 +142,9 @@ jobs:
             test -n "$id"
             echo "AGENTCI_TEST_${key}_IMAGE=$id" >> "$GITHUB_ENV"
           done
+      - name: Start private CI database
+        id: ci_database
+        run: node .acceptance-harness/scripts/ci-database.mjs start
       - name: Start isolated Temporal
         run: docker run -d --name agentci-download-temporal -p 127.0.0.1:7233:7233 temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e server start-dev --ip 0.0.0.0 --headless
       - name: Wait for Temporal
@@ -150,16 +156,15 @@ jobs:
           if(!connected)throw new Error('Temporal unavailable');
           JS
       - name: Mandatory native integration using downloaded execution images
+        id: native_integration
         env:
-          AGENTCI_TEST_DATABASE_URL: postgresql://127.0.0.1:5432/agentci
-          PGUSER: postgres
-          PGPASSWORD: agentci-ci-only
           AGENTCI_TEST_TEMPORAL_ADDRESS: 127.0.0.1:7233
         run: |
-          node --import tsx --test --test-reporter=spec --test-reporter-destination=stdout --test-reporter=./.acceptance-harness/scripts/download-integration-reporter.mjs --test-reporter-destination=downloaded-integration.json tests/integration/*.test.ts > downloaded-integration.log 2>&1 || { cat downloaded-integration.log; exit 1; }
+          node .acceptance-harness/scripts/ci-database.mjs run --redact-integration-artifact node --import tsx --test --test-reporter=spec --test-reporter-destination=stdout --test-reporter=./.acceptance-harness/scripts/download-integration-reporter.mjs --test-reporter-destination=downloaded-integration.json tests/integration/*.test.ts > downloaded-integration.log 2>&1 || { cat downloaded-integration.log; exit 1; }
           cat downloaded-integration.log
       - name: Verify downloaded API and worker runtime
-        run: node scripts/image-smoke.mjs downloaded > downloaded-image-smoke.json
+        id: image_smoke
+        run: node .acceptance-harness/scripts/image-smoke.mjs downloaded > downloaded-image-smoke.json
       - name: Verify downloaded evaluator isolation and recovery
         run: node scripts/eval-worker-image-smoke.mjs agentci-eval-worker:downloaded agentci-eval-runner:downloaded > downloaded-eval-worker-smoke.json
       - name: Verify downloaded worker native artifact provenance
@@ -168,14 +173,24 @@ jobs:
           node scripts/verify-native-provenance.mjs "$EVAL_WORKER_IMAGE" > downloaded-eval-worker-native.json
       - name: Bind all mandatory runtime and native proof files to this acceptance cohort
         run: node .acceptance-harness/scripts/record-download-runtime.mjs
+      - name: Recover owned image smoke resources
+        if: always()
+        env: { AGENTCI_IMAGE_SMOKE_OUTCOME: '${{ steps.image_smoke.outcome }}' }
+        run: node .acceptance-harness/scripts/image-smoke-cleanup.mjs
+      - name: Stop owned CI database
+        if: always()
+        env: { AGENTCI_CI_DATABASE_START_OUTCOME: '${{ steps.ci_database.outcome }}' }
+        run: node .acceptance-harness/scripts/ci-database.mjs stop
       - name: Remove acceptance Temporal
         if: always()
         run: docker rm -f agentci-download-temporal || true
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        if: always()
+        if: always() && (steps.native_integration.outcome == 'skipped' || steps.native_integration.outputs.redaction_complete == 'true')
         with:
           name: published-${{ matrix.arch }}-runtime
           path: |
             downloaded-*.json
             downloaded-integration.log
+            ci-database-cleanup.json
+            .agentci/artifacts/image-smoke-cleanup.json
           if-no-files-found: error
