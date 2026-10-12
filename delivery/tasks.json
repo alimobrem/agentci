@@ -3258,12 +3258,32 @@
         "SPEC-40-051"
       ],
       "dependsOn": [],
-      "status": "in-progress",
+      "status": "blocked",
       "startedAt": "2026-10-12T06:41:46.998Z",
       "completedAt": null,
       "acceptance": [
         {
           "text": "Replace missing user permissions.push inference only for source-bound trusted main Actions installation context with existing contents-write job contract; preserve explicit denial, authenticated paginated draft discovery, occupied identity and ambiguous API failure rejection. Realistic missing-field and negative scope/grant tests, applicable local checks and hosted CI/source review required; preserve failed run38213411342, dev2 and candidate version; native/download/M3 gates remain pending.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "blockedReason": "Merged repair passed source/full CI review but hosted run38215995488 still failed push visibility assertion before inventory; real response field unknown. Standalone read-only diagnostic required before further capability logic changes."
+    },
+    {
+      "id": "M3-R1-PUB-DIAG-1",
+      "title": "Observe hosted installation-token repository capability metadata read-only",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "in-progress",
+      "startedAt": "2026-10-12T07:12:53.071Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Standalone trusted main diagnostic uses exact Node/npm/source and existing preflight ephemeral Contentswrite/Metadataread/Packagesread grants, performs only fixed-repository GET, and retains bounded redacted push-field presence/type/boolean and repository-match evidence. No raw response/token/App key, publication or capability-logic change. Applicable tests, hosted CI and independent exact-head review required before diagnostic main activation; retained real diagnosis required before evidenced repair.",
           "status": "pending",
           "evidence": []
         }

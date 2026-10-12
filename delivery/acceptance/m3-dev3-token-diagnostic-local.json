@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-PUB-DIAG-1",
+  "sourceCommit": "1c9dfdefc04de21fa7d510d2609f66d1f6df1251",
+  "sourceTree": "f8da4056086de37410ed0ccbf9a0aa05bc5ceccf",
+  "actualMain": "5682c67208fdd4eedfcb3fa90deaf161de852831",
+  "scope": "Standalone fixed-repository GET with exact existing preflight ephemeral grant; no capability or publication logic change. Main merge triggers diagnostic only through its own workflow path.",
+  "sources": [
+    {
+      "path": ".github/workflows/development-token-diagnostic.yaml",
+      "sha256": "86fa839514162afb12d980188db7fc89c12c4ce47bd37abf08271108186d12d7"
+    },
+    {
+      "path": "scripts/development-token-diagnostic.mjs",
+      "sha256": "59602133f2c08e5569eb26c73572324ae65b17d8a029554cad8204f4a1c95109"
+    },
+    {
+      "path": "scripts/lib/development-token-diagnostic.mjs",
+      "sha256": "e038ca7e8ff189ab4573f63355aa01026176e681d71d36002544944022fd1c62"
+    },
+    {
+      "path": "tests/development-token-diagnostic.test.ts",
+      "sha256": "2db6a10f91ad9153b64a670844a9f1e1dc6d61c28c3d15a678e5b4dcff7f9789"
+    }
+  ],
+  "secondFailure": {
+    "runId": 38215995488,
+    "attempt": 1,
+    "artifactId": 11731627776,
+    "sha256": "a85eea4aef6aab0af607c8e503799f95bcd7260e4304b6d296b398c87eaae026",
+    "parentInspected": true,
+    "cause": "Authenticated push visibility required for draft inventory",
+    "releaseId": null,
+    "uploadedAssets": [],
+    "unknown": "Push field state and repository identity match not distinguishable; no occupied or absent candidate conclusion"
+  },
+  "validation": {
+    "focused": 3,
+    "independentFocused": 3,
+    "rootTests": 514,
+    "fastChecks": 10,
+    "fastSeconds": 43.430608428,
+    "fastSource": "1c9dfdefc04de21fa7d510d2609f66d1f6df1251",
+    "pinnedWorkflowLint": "passed",
+    "forwardScan": {
+      "policyCommit": "1c9dfdefc04de21fa7d510d2609f66d1f6df1251",
+      "harnessSha256": "64be7dc608da3e9ee0056724d1dac3e6742f60f9a4723e67a14b94ed9496dcc2",
+      "schema": "agentci-sensitive-forward-v1",
+      "baseCommit": "7b4cd40667e8beaabe12430eb0757ca23734826b",
+      "headCommit": "1c9dfdefc04de21fa7d510d2609f66d1f6df1251",
+      "headTree": "f8da4056086de37410ed0ccbf9a0aa05bc5ceccf",
+      "scannerVersion": "8.30.1",
+      "binarySha256": "88f91962aa2f93ac6ab281d553b9e125f5197bbbce38f9f2437f7299c32e5509",
+      "upstreamPolicySha256": "e163e53b9e7e8a8511e77271e2b323ed057759542a6d988258afe3a1fa329caf",
+      "policySha256": "719492eab4c71b1c762b518f4e63ffe8e2a1201f2d77c14b7c32608073f9921d",
+      "introducedCommitCount": 1,
+      "selectedBlobCount": 13,
+      "introducedReferenceCount": 13,
+      "findings": [],
+      "status": "no-new-change-findings",
+      "scope": "Introduced commits HEAD ^ BASE, parent-relative changed regular file blobs, and changed HEAD blobs vs BASE. No historical-clean assertion; deleted pre-base data and unchanged historical findings are outside this gate."
+    },
+    "independent": {
+      "path": "delivery/acceptance/m3-dev3-token-diagnostic-independent-source.json",
+      "sha256": "4d5a9f0b1e8089ff280608883d97a0a2330be71af41ac9e3aa004c489e8e9fcf"
+    }
+  },
+  "limitations": [
+    "Initial abbreviated-head scanner invocation rejected before coverage; superseded by exact40SHA scan",
+    "Actual diagnostic response remains unknown until hosted run",
+    "Fresh hosted Verify/dedicated scanner and parent exact-head review required before diagnostic activation",
+    "Real response evidence required before further capability logic change",
+    "Six completed CI attempts retained with cache state unknown",
+    "No candidate publication retried by this change; failed dev2 and both dev3 attempts preserved",
+    "All18 M3 gates pending; UI remains draft; saved customer-key confirmation still outstanding"
+  ]
+}
