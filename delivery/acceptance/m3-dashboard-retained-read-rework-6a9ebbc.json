@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07-ui-retained-read-rework",
+  "state": "local corrections passed; source-bound independent review and fresh hosted CI pending",
+  "scope": "Retained evidence navigation, strictly projected authenticated shell and bounded cancellable nonempty primary-view reads; synthetic fixtures only",
+  "recordedAt": "2026-10-12T02:42:19.826938+00:00",
+  "baseCommit": "7621193d0ef6541d722a117339948b326727fa46",
+  "sourceCommit": "6a9ebbc5b7581832b227288d361ea8bfb72f893c",
+  "sourceTree": "151c2194580d15913105cade03b67d255613a404",
+  "implementationCommit": "1973b6e920c72715510a241f8bfb04b8e9ce2ba1",
+  "sourceFileHashes": {
+    "apps/dashboard/app/api/reviews/[id]/route.ts": "b8f91d12ff7e351c0fdb462d696a2ac3327f4e3c92473ac1a180640e29f88aa6",
+    "apps/dashboard/app/page.tsx": "800d9adde33ed0a8aee175826b213fa34d8ae27f46494bac94bf086b22bb794b",
+    "apps/dashboard/components/review-detail.tsx": "9a18a83a1fb9576153fb157e17cf03274d8bf033c3ec213bfa1077669cc5a8c7",
+    "apps/dashboard/components/review-loader.tsx": "2a570456627948d952034118f1fb810c0cb9bbb7b77986b521303b8d86ea6160",
+    "apps/dashboard/components/ui/tabs.tsx": "1f8dc2e7d583e768f2a6d651bce105b6d2b876a36a1708e6abb81040a17af5e2",
+    "apps/dashboard/lib/admissions.ts": "8b2b9cdff83608910f0e812fde5eed47e0a3d03e42afa2b50e583b057fc6e079",
+    "apps/dashboard/lib/dashboard.ts": "841c794a8de9461598b374920c2f8ce9ed9d373830dbf192d15f30554185fc66",
+    "apps/dashboard/lib/session.ts": "db690298d96ffb4311b2371db2a88f4ee4a73b1850e021e96c8f23a582f04bc9",
+    "apps/dashboard/tests/browser/bootstrap.ts": "df8844e7fc9a8b11229757d036abc7a2cf4260e59e7489e4ac5c91a682f5b705",
+    "apps/dashboard/tests/browser/check.mjs": "a88a1775e7fbf4c9f9c78a7caf6131ba35e51eaebb5d0d0296ab8c29e22c459c",
+    "apps/dashboard/tests/dashboard.test.ts": "48b61b57a3311e5f3f683751aa42c29f4282c728a10266434ed94335efc97d66",
+    "apps/dashboard/tests/helpers/retained-finding.ts": "f2a696bcca2ac953144da0b2f564494522c2983ca3607239c78e70093074f55d",
+    "apps/dashboard/tests/session.test.ts": "185e32662864f571e9a518c7253de3137768e8f07e8cbb2a6ca4c8d212af8f7f",
+    "delivery/reconciliation/requirement-test-evidence.json": "c65e8ec216a2d5c70dddd75abb21341f7518c8ad149c03674737564d86d2ee0b",
+    "delivery/reconciliation/sections/40.json": "b3958658dc8dd314af7ae7a82ecb9aebd49eaa2d54348ebb1f7890a97ff93561",
+    "delivery/task-events.jsonl": "82a51881c54fbb3ae35a98340326f23dc0d64b882a338efdadff1f8e70b11c8d",
+    "delivery/tasks.json": "841c8bf2c2d809c0a87005ea5d8c81e9a99ecc3947b524fa8621830456651210",
+    "docs/phases/m3-dashboard-local-preparation.md": "c68c960c8b038c6880360da04da832141abb5e69c2f84c9b199c55339261bf8f",
+    "docs/phases/m3-model-review-client.md": "af67de8796ce4c4763047b7afd6682f0f591aca7a8dbe780690cbc08c19bdd4b",
+    "packages/client/index.ts": "f8008d776a94b64da04995a1c6e74d07f3676c36a88bf4427a69dd0dbc43e502",
+    "packages/client/model-review.ts": "7de81395f044b3de008ce99f8e727a3495adcee0b2d8183de6af2ae7bb09c978",
+    "scripts/lib/dashboard-ci-evidence.mjs": "c1b3cb049ce9d41b2a4a0050378af0361333f38b315995af9d1acf69458b96d1",
+    "tests/model-finding-client.test.ts": "e018021b9ea3e8c1451219b3eec50742ac78eef37e9e9c6622e342a7aea4cef7"
+  },
+  "corrections": [
+    "Retained anchor activates Evidence before exact focused article; direct hash reload supported; receipt absence stays unverified",
+    "Primary view is authenticated scoped server shell plus browser AbortController data-route read; no unsupported Next SSR cancellation internals",
+    "Caller Request.signal and server session revoke/rotate/expiry signal reach every SDK admission and pinned finding request",
+    "Shared15s operational deadline, existing64-finding manifest bound, SDK8MiB consumed response-body-byte budget including repeated admission/error/history/export plus separate decoded-display guard; not milestone acceptance thresholds",
+    "Strict production admission validator rejects extra private fields before SSR/RSC/list/client projection; original session rechecked afterawaits"
+  ],
+  "checks": [
+    {
+      "command": "AGENTCI_BROWSER_EXECUTABLE=/usr/bin/chromium node apps/dashboard/tests/browser/check.mjs",
+      "sourceCommit": "6a9ebbc5b7581832b227288d361ea8bfb72f893c",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-retained-v3-browser.log",
+      "sha256": "c75743c1d6ea232c0735bd0c6b0113b2839ad36fb45cfd4b4bd65302a52c9d13"
+    },
+    {
+      "command": "npm run check:fast",
+      "sourceCommit": "6a9ebbc5b7581832b227288d361ea8bfb72f893c",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-retained-v3-fast.log",
+      "sha256": "abaa96c645ae9b75c81ed609cb5cf60c12d2a03b1f170ed5244b567d4696f3e4"
+    },
+    {
+      "command": "npm run check:api:compat",
+      "sourceCommit": "6a9ebbc5b7581832b227288d361ea8bfb72f893c",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-retained-v3-api-compat-cached.log",
+      "sha256": "dc38bcfacd9e48d189db51f78b16ff1639fc77fe5db7160f199745816d4622b4"
+    },
+    {
+      "command": "npm run check:workflows",
+      "sourceCommit": "6a9ebbc5b7581832b227288d361ea8bfb72f893c",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-retained-v3-workflows.log",
+      "sha256": "8c4c5d5e4b28c3fd41e48240eaf4de65b6a2ecb3c3a4000e42137c99945c354d"
+    },
+    {
+      "command": "node scripts/reconcile-acceptance.mjs --check",
+      "sourceCommit": "6a9ebbc5b7581832b227288d361ea8bfb72f893c",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-retained-v3-reconciliation.log",
+      "sha256": "3c655087d3e415beeae76d42e7aa0390cb2b1f5f8e30976b0de71ba65d44fc1b"
+    }
+  ],
+  "reusedMatchingInputChecks": [
+    {
+      "command": "npm run build",
+      "sourceCommit": "1973b6e920c72715510a241f8bfb04b8e9ce2ba1",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-retained-v2-sdk-build.log",
+      "sha256": "76cbc2ccbbdb7b068905dbe246aa8581706d322289330db6ac2dcbfd9a71cfbf",
+      "reuseReason": "Only browser-harness MJS Summary-tab selection changed after this committed source. All SDK/admission/primary-loader/session/component/budget/package/lock/type/unit/build inputs match exactly."
+    },
+    {
+      "command": "npm run typecheck --prefix apps/dashboard",
+      "sourceCommit": "1973b6e920c72715510a241f8bfb04b8e9ce2ba1",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-retained-v2-types.log",
+      "sha256": "ede264564d22ba889a85acdd1b230c2b814e18b2f3f1d0177b5b4e7d7867480c",
+      "reuseReason": "Only browser-harness MJS Summary-tab selection changed after this committed source. All SDK/admission/primary-loader/session/component/budget/package/lock/type/unit/build inputs match exactly."
+    },
+    {
+      "command": "npm run test --prefix apps/dashboard",
+      "sourceCommit": "1973b6e920c72715510a241f8bfb04b8e9ce2ba1",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-retained-v2-tests.log",
+      "sha256": "57846107e714510631ec6e9c3929fe30fdfe41901b96d7064d3783fda14ff9a2",
+      "reuseReason": "Only browser-harness MJS Summary-tab selection changed after this committed source. All SDK/admission/primary-loader/session/component/budget/package/lock/type/unit/build inputs match exactly."
+    },
+    {
+      "command": "node --import tsx --test tests/model-finding-client.test.ts",
+      "sourceCommit": "1973b6e920c72715510a241f8bfb04b8e9ce2ba1",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-retained-v2-client.log",
+      "sha256": "2836eaa00ea26e18f6917989764484166f48b23cebd56e5a4e636c6798dff60d",
+      "reuseReason": "Only browser-harness MJS Summary-tab selection changed after this committed source. All SDK/admission/primary-loader/session/component/budget/package/lock/type/unit/build inputs match exactly."
+    },
+    {
+      "command": "npm run build --prefix apps/dashboard",
+      "sourceCommit": "1973b6e920c72715510a241f8bfb04b8e9ce2ba1",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-retained-v2-build.log",
+      "sha256": "c11d5e2736c303e1d08e43c57db117a831f91b303912b96a975cda9d0242be51",
+      "reuseReason": "Only browser-harness MJS Summary-tab selection changed after this committed source. All SDK/admission/primary-loader/session/component/budget/package/lock/type/unit/build inputs match exactly."
+    }
+  ],
+  "tests": {
+    "dashboardPassed": 17,
+    "clientPassed": 9,
+    "failed": 0,
+    "skipped": 0,
+    "sourceCommit": "1973b6e920c72715510a241f8bfb04b8e9ce2ba1"
+  },
+  "browser": {
+    "passedChecks": 23,
+    "checks": [
+      "isolated standalone without test bootstrap/configuration fails closed",
+      "anonymous view and direct data route denied",
+      "authenticated original-admission detail mobile/unknown evidence",
+      "focus revalidation hides protected content before asynchronous session response",
+      "server remaining TTL hides expired content independently of browser wall clock",
+      "Radix keyboard focus and tabs",
+      "cross tenant direct route and account view isolated",
+      "cross origin logout CSRF denied",
+      "malformed503/unavailable503/backendcredential502/notfound404/incomplete409/bounded413 distinguished from session expiry",
+      "cancel intent cannot assert cleanup",
+      "retained finding reference activates Evidence tab and exact focused target, including direct hash reload",
+      "nonempty primary view close and active session revocation abort backend finding sockets before release without next reads or mutations",
+      "completed refusal displays exact subject/profile/role coverage without inferred clean review",
+      "rapid exact-review navigation discards obsolete first-subject response",
+      "closing a view with an active read never requests backend cancellation/mutation",
+      "private evidence caching and browser credential absence",
+      "revoked session during backend read cannot deliver evidence",
+      "logout then Back cannot show retained account detail",
+      "RSC refreshed session-binding props cannot expose children before verifying new binding",
+      "same-browser account change/restoration cannot reveal prior tenant cached detail",
+      "strict production admission rejects extra private sentinel before SSR/RSC/client props or backend access",
+      "real synthetic server-session expiry hides review and distinguishes retained evidence",
+      "zero AgentCI API mutations"
+    ],
+    "browser": "151.0.7922.173",
+    "sourceCommit": "6a9ebbc5b7581832b227288d361ea8bfb72f893c",
+    "sourceTree": "151c2194580d15913105cade03b67d255613a404",
+    "backendMutations": 0,
+    "activeNonemptyReadTermination": "actual backend response closes on primary-view close and active session revoke before fixture release; no next finding read",
+    "assets": {
+      ".agentci/artifacts/dashboard-browser-fixed/6a9ebbc5b7581832b227288d361ea8bfb72f893c/fixture-missing-evidence.png": {
+        "sha256": "b8387a9683cde5dfb07b0a3cfe2f833803c63c985e639dab65e8bd74a1634f3f",
+        "bytes": 79499
+      },
+      ".agentci/artifacts/dashboard-browser-fixed/6a9ebbc5b7581832b227288d361ea8bfb72f893c/fixture-retained-evidence-reference.png": {
+        "sha256": "46fbbad7485dc57eb33d633425614223c3b7fcbab38bc0cbd2b8311f722dfdb7",
+        "bytes": 133635
+      },
+      ".agentci/artifacts/dashboard-browser-fixed/6a9ebbc5b7581832b227288d361ea8bfb72f893c/fixture-exact-review-detail.png": {
+        "sha256": "51f8db9b66872bdfc442b90a0bda43dafd051cecb9aff2aa276f1508b9c0e67d",
+        "bytes": 81447
+      },
+      ".agentci/artifacts/dashboard-browser-fixed/6a9ebbc5b7581832b227288d361ea8bfb72f893c/result.json": {
+        "sha256": "2bfa5e159255002e02c6d50c8df2bbe467649bfc10ea7b40c807131f508da01d",
+        "bytes": 5921
+      },
+      ".agentci/artifacts/dashboard-browser-fixed/6a9ebbc5b7581832b227288d361ea8bfb72f893c/fixture-cancellation-intent.png": {
+        "sha256": "a9ba2bca74c5c08c7cacaad2cfa377525a8786c36ea0164ff8f60b15a31c3db8",
+        "bytes": 83465
+      },
+      ".agentci/artifacts/dashboard-browser-fixed/6a9ebbc5b7581832b227288d361ea8bfb72f893c/fixture-session-expired.png": {
+        "sha256": "49744d610013c4816d6d25f6cf3bbd28d7d4e55659e1e873c42a00fab113f5c5",
+        "bytes": 19962
+      }
+    },
+    "screenshotsAreSyntheticFixturesNotLiveAcceptance": true
+  },
+  "failedAttempts": [
+    {
+      "sourceCommit": "3a6c560407ef053c34ddbfa58117e965e481c8dd",
+      "log": "/workspace/scratch/dashboard-retained-final-browser.log",
+      "sha256": "1cd7eb22f467850c66ee853228964aa2b6e01470ab64e81214855bfe3559bec2",
+      "reason": "Initial evidence target focus occurred before inactive panel mounted; focused after animation frame. Preliminary attempt superseded; subsequent strict-projection review edits invalidate any final-source reuse."
+    },
+    {
+      "sourceCommit": "1973b6e920c72715510a241f8bfb04b8e9ce2ba1",
+      "log": "/workspace/scratch/dashboard-retained-v2-browser.log",
+      "sha256": "630c98924d7e5306b1dd3df1f9ee670f4edc874099663343e8c02d4d682c2dcb",
+      "reason": "After direct hash navigation, subsequent refusal test failed to select Summary before asserting hidden Summary text; explicitly selected Summary in harness."
+    },
+    {
+      "sourceCommit": "6a9ebbc5b7581832b227288d361ea8bfb72f893c",
+      "log": "/workspace/scratch/dashboard-retained-v3-api-compat.log",
+      "sha256": "23ca223e75cf5d0710ef960834e8f44ee2bce1bd4cb62dc39450eb56750f9fbc",
+      "reason": "Pinned compatibility tool fetch failed EAI_AGAIN github.com; reused existing cached archive with required checksum verification, then checks passed."
+    }
+  ],
+  "dependencyChanges": false,
+  "apiContractChange": "Additive SDK finding.signal, maxReadBytes and strict validator export; HTTP/OpenAPI and immutable M1/M2 baselines unchanged",
+  "independentReview": "corrected source reviewed and independent focused4/4 passed; immutable evidence binding pending customer_review final record",
+  "hostedCi": "fresh run required on final published head; old hosted results not transferred",
+  "limitations": [
+    "No live/configured OIDC/customer acceptance",
+    "No UI image/native packaging/publication or deploy acceptance",
+    "Full export/history traversal/complete browser corpus remains pending",
+    "Original three UI tasks and all18M3 gates remain pending",
+    "No UI merge/deploy approval; no remote writes by this worker"
+  ],
+  "localTaskStatus": "in-progress pending broader parent review"
+}

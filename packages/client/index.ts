@@ -106,3 +106,6 @@ export class AgentCIClient {
 export type {FindingReproductionRequest,FindingReproductionAccepted} from '../findings/reproduction-transport.ts';
 
 export type {FindingDispositionRequest} from '../findings/disposition-transport.ts';
+
+/** Strict public admission input validation only; never grants authorization. */
+export {validateReviewAdmission} from '../reviewers/admission.ts';

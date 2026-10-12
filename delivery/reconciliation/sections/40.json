@@ -6428,6 +6428,66 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-07-ui-local-prep",
+          "status": "in-progress",
+          "startedAt": "2026-10-12T01:05:45.328Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local-only Next App Router foundation and OIDC/server-session/read-only contract bridge implementation with scoped access, CSRF, expiry, private caching, missing-evidence and interruption tests; source-bound local evidence. Does not close original UI foundation/session/dashboard tasks, image/publication or live OIDC/customer acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-ci-prep",
+          "status": "in-progress",
+          "startedAt": "2026-10-12T01:47:28.674Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Dedicated read-only dashboard hosted workflow uses pinned repository actions and locked dependencies to build/type/test and exercise qualified fixture-only browser acceptance; default hosted bundled Chromium and explicit optional existing local executable; always-upload source/attempt/outcome-bound logs and fixture evidence. Verify session-boundary prop transition fails closed. Local preparation only, no hosted CI result, merge/deploy, full original UI or release acceptance implied.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-draft-integration",
+          "status": "in-progress",
+          "startedAt": "2026-10-12T01:57:14.583Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Preserve existing task/event histories and dev.2 activation blobs, refresh dashboard file dependency metadata, validate exact integrated source and independently reviewed draft publication; live OIDC/customer, full dashboard and M3 release gates remain pending.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-retained-read-rework",
+          "status": "in-progress",
+          "startedAt": "2026-10-12T02:17:23.946Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Retained finding reference activates/focuses the exact Evidence target in production browser fixtures. Existing read-only dashboard has one aggregate deadline/byte bound, caller and session revocation cancellation propagated into pinned finding reads, and nonempty delayed-finding regressions; no controller cancellation mutations or verified-fix claims. Source-bound local checks, reconciliation and independent review retained; broader UI/live/release acceptance remains pending.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -6948,6 +7008,66 @@
               "evidence": [
                 "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json"
               ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-local-prep",
+          "status": "in-progress",
+          "startedAt": "2026-10-12T01:05:45.328Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local-only Next App Router foundation and OIDC/server-session/read-only contract bridge implementation with scoped access, CSRF, expiry, private caching, missing-evidence and interruption tests; source-bound local evidence. Does not close original UI foundation/session/dashboard tasks, image/publication or live OIDC/customer acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-ci-prep",
+          "status": "in-progress",
+          "startedAt": "2026-10-12T01:47:28.674Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Dedicated read-only dashboard hosted workflow uses pinned repository actions and locked dependencies to build/type/test and exercise qualified fixture-only browser acceptance; default hosted bundled Chromium and explicit optional existing local executable; always-upload source/attempt/outcome-bound logs and fixture evidence. Verify session-boundary prop transition fails closed. Local preparation only, no hosted CI result, merge/deploy, full original UI or release acceptance implied.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-draft-integration",
+          "status": "in-progress",
+          "startedAt": "2026-10-12T01:57:14.583Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Preserve existing task/event histories and dev.2 activation blobs, refresh dashboard file dependency metadata, validate exact integrated source and independently reviewed draft publication; live OIDC/customer, full dashboard and M3 release gates remain pending.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-retained-read-rework",
+          "status": "in-progress",
+          "startedAt": "2026-10-12T02:17:23.946Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Retained finding reference activates/focuses the exact Evidence target in production browser fixtures. Existing read-only dashboard has one aggregate deadline/byte bound, caller and session revocation cancellation propagated into pinned finding reads, and nonempty delayed-finding regressions; no controller cancellation mutations or verified-fix claims. Source-bound local checks, reconciliation and independent review retained; broader UI/live/release acceptance remains pending.",
+              "status": "pending",
+              "evidence": []
             }
           ]
         }

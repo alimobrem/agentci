@@ -113,3 +113,33 @@ they do not prove live SSO/customer, image distribution or milestone acceptance.
 the non-authorizing per-session identity and renders valid children only for the
 identity actually verified in state. A changed prop cannot reuse an earlier valid
 state while its new verification is still pending.
+
+## Retained references and read interruption rework
+
+The primary view is an authenticated scoped server shell. Its detail loader reads
+the existing authorized API route with a browser AbortController; obsolete subject
+responses, component cleanup and page hiding abort that read. The route combines
+its public Request signal with server session revocation/rotation/expiry signals.
+No unsupported Next server-component cancellation internals are used. The existing
+SDK `finding` read accepts an additive optional AbortSignal and forwards it to both
+its exact-admission check and pinned finding request. Server credentials stay outside
+the client bundle and props. Closing a view never calls controller cancellation.
+
+A single 15-second deadline, 8 MiB aggregate display budget and the existing
+64-finding manifest bound cover the complete view read, including repeated admission
+checks and retained records. These are operational resource limits, not new milestone
+quality thresholds. Budget/deadline failure cannot certify a partial passing view.
+
+Retained reference anchors activate the Evidence tab before mounting/focusing their
+exact retained article. Direct hash navigation is supported. A retained record
+without an execution receipt remains explicitly unverified; navigation cannot
+establish reproduction or a verified fix. Nonempty domain-validated synthetic
+fixtures test actual backend response closure on view close and session revocation.
+
+The 8 MiB traversal budget is enforced in the SDK on actual consumed response-body
+bytes before JSON parsing, including padded payloads and all repeated admission
+reads. A separate decoded display accounting guard also remains. Payload framing
+and HTTP/TLS headers are not represented as JSON body bytes. Server shells validate
+admissions with the production validator before any public list/RSC/client projection,
+then recheck the original session after asynchronous work. Extra configuration fields
+are rejected without serializing their values or accessing the backend.

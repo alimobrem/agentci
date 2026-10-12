@@ -9,6 +9,8 @@ export const requiredBrowserCases = [
   "cross origin logout CSRF denied",
   "malformed503/unavailable503/backendcredential502/notfound404/incomplete409/bounded413 distinguished from session expiry",
   "cancel intent cannot assert cleanup",
+  "retained finding reference activates Evidence tab and exact focused target, including direct hash reload",
+  "nonempty primary view close and active session revocation abort backend finding sockets before release without next reads or mutations",
   "completed refusal displays exact subject/profile/role coverage without inferred clean review",
   "rapid exact-review navigation discards obsolete first-subject response",
   "closing a view with an active read never requests backend cancellation/mutation",
@@ -17,6 +19,7 @@ export const requiredBrowserCases = [
   "logout then Back cannot show retained account detail",
   "RSC refreshed session-binding props cannot expose children before verifying new binding",
   "same-browser account change/restoration cannot reveal prior tenant cached detail",
+  "strict production admission rejects extra private sentinel before SSR/RSC/client props or backend access",
   "real synthetic server-session expiry hides review and distinguishes retained evidence",
   "zero AgentCI API mutations"
 ];

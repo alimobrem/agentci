@@ -3172,6 +3172,25 @@
         }
       ],
       "dependsOn": []
+    },
+    {
+      "id": "M3-07-ui-retained-read-rework",
+      "title": "Retained evidence navigation and bounded cancellable dashboard reads",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-12T02:17:23.946Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Retained finding reference activates/focuses the exact Evidence target in production browser fixtures. Existing read-only dashboard has one aggregate deadline/byte bound, caller and session revocation cancellation propagated into pinned finding reads, and nonempty delayed-finding regressions; no controller cancellation mutations or verified-fix claims. Source-bound local checks, reconciliation and independent review retained; broader UI/live/release acceptance remains pending.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": []
     }
   ]
 }
