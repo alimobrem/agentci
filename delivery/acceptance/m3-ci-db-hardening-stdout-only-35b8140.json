@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-CI-DB-2",
+  "testedLocalSourceCommit": "35b8140182af9af38a7e14d8dccb7c3b821fdca4",
+  "testedLocalSourceTree": "2ca3dc98eb5358ae6ad19b4780ea304316fed163",
+  "change": "Parent-requested precise regression only: detached descendant inherits stdout while stderr is ignored. Production source unchanged from9045/c928.",
+  "oldBehaviorProbe": {
+    "productSourceCommit": "2d7a6bd20dd72ed0e02814352f224d33c09bb654",
+    "method": "Isolated detached old worktree, new exact test copied in, reused node_modules; selected subprocess test only, no product modification.",
+    "conclusion": "failed as expected",
+    "failure": "Missing expected rejection of requireDatabaseCommandsStopped while escaped stdout writer remains alive",
+    "testMilliseconds": 379.818625,
+    "qualification": "This is an actual local subprocess regression, synthetic database transport, not credential exploit or hosted customer acceptance."
+  },
+  "correctedBehaviorProbe": {
+    "sourceCommit": "35b8140182af9af38a7e14d8dccb7c3b821fdca4",
+    "conclusion": "passed",
+    "testMilliseconds": 198.6196,
+    "checks": "Detached writer alive, database stop refused, unresolved command journal and retained state, artifact removed, safeForUpload false, callback zero; before timeout."
+  },
+  "localValidation": {
+    "fastPassed": true,
+    "fastSeconds": 44.69253022,
+    "rootTests": 533,
+    "fastChecks": 10,
+    "qualification": "Reused dependency/tool caches. Native two-real-PG probe remains exact unchanged product bytes at9045; no new native run claimed at35."
+  },
+  "sourceFiles": [
+    {
+      "path": "scripts/lib/ci-database-command.mjs",
+      "sha256": "bb9a9c8224fb1690347805a888cae05f8ea126516967de7b72f462dffdd81bcf"
+    },
+    {
+      "path": "scripts/lib/owned-command.mjs",
+      "sha256": "0bd6887b8c8c90beadd9f825ea6dc3f0e992657dcf2062db55b6c924a16c20c0"
+    },
+    {
+      "path": "tests/ci-database-hardening.test.ts",
+      "sha256": "c8c16205408243a8530230dd827b4d7c33cac69a11f2f53898dc88cfa3eb204c"
+    },
+    {
+      "path": "tests/helpers/image-smoke-engine-fixture.cjs",
+      "sha256": "38e50feac1030c4e2228daf9de3c158028314bfae8bab24090681f0175ec0820"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/workspace/scratch/db-hardening-stdout-only-fast.log",
+      "sha256": "ffaff68a047116981d6eb1f575a8ba7b461f91798123f9f394b1b6de0f90ed51"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-stdout-only-fixed.log",
+      "sha256": "c456e1b478a776dc6be1f196384cd4ba23201ca3927bffd0b8dd9fe7fc89ea4d"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-stdout-only-old.log",
+      "sha256": "d3c1d8312b126e2f4daa2634e9c8bd34da25c04ea6504f8f024a6443acfee8df"
+    }
+  ],
+  "acceptance": "Pending final exact published head hosted CI/scanner and parent source/artifact review, then authorized merge and postmerge checks",
+  "release": "All18M3gates pending; exact GitGuardian incident unmatched; no release activation, descriptor, rotation, suppression or published history rewrite.",
+  "priorHostedAttempt": {
+    "head": "c92847d547ecd402e73ae6e04c69fa752704bd0a",
+    "verifyRun": 38312240640,
+    "verifyConclusion": "success",
+    "runtimeArtifact": 11775028779,
+    "runtimeArtifactSha256": "f032259d1c408a1c422ad21d7d2cb41a0f7fd27e32574c306b4aec4e1a5dd7a2",
+    "scannerRuns": [
+      38312237137,
+      38312274534
+    ],
+    "advisoryRuns": [
+      38312237132,
+      38312274522
+    ],
+    "allConclusion": "success",
+    "qualification": "All completed attempts collected by delivery CLI, cache unknown. Product source unchanged at final test refinement. Actual ZIP review and final-head CI remain required; no firstattempt acceptance promotion."
+  },
+  "independentReview": {
+    "path": "delivery/acceptance/m3-ci-db-hardening-independent-35b8140.json",
+    "sha256": "2d3888f3465f883050f72a120006227c67981a7096363e1ba9bbf87f63a78e4a",
+    "tests": 26,
+    "oldRedMilliseconds": 564.503095,
+    "newGreenMilliseconds": 173.647823,
+    "qualification": "Independent old failure / corrected pass before3s deadline; exact durations read directly from peer proof."
+  }
+}
