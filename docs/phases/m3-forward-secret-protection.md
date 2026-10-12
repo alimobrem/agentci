@@ -10,14 +10,17 @@ complete repository checked out at the exact head. The gate scans every regular-
 blob changed relative to a parent in commits reachable from head but not base,
 and changed head blobs relative to base. This includes intermediate additions later
 deleted, binary Git diff attributes, identical reintroduction and force-push rollback.
-Divergent PR base/head histories work when both exact commits are available. Whole
+Divergent PR base/head histories work when both exact commits are available. Each commit uses an isolated private snapshot retaining exact logical paths,
+including identical bytes under different filenames; path-conditioned rules are
+therefore applied to each actual context. File/directory changes across commits
+remain separate, and findings bind only the path/commit/blob actually matched. Whole
 changed blobs are scanned, so an old match within an edited file is conservatively
 raised again. Unchanged files and deleted pre-base data remain outside this boundary.
 
 Missing/zero identities, missing base, mismatched HEAD, shallow repositories, lossy
 UTF-8/BOM/colliding paths and newly introduced symlinks/submodules fail coverage.
 Bounds are 10,000 introduced commits, 5 million compared tree entries, 100,000
-references/findings, 20 MB per selected blob, 256 MB total and a four-minute lifetime.
+references/findings, 20 MB per selected blob, 256 MB unique and materialized bytes total and a four-minute lifetime.
 Heuristics do not exhaustively recognize binary/encoded formats, unknown secrets,
 or arbitrary personal/confidential data. A no-new-change result is not a security
 clearance or a full-history-clean assertion.
@@ -52,3 +55,8 @@ reintroduction, binary attributes, path failures, missing/shallow coverage and
 integrity. Local preseeded official cache proves byte integrity and scanner behavior;
 fresh hosted tool/policy download remains a separate network verification.
 All M3 release/customer/provider/UI gates remain unchanged.
+
+Retargeted PR base changes trigger a fresh scan through the pull_request_target
+`edited` event; its exact new base/head identities are used. Prior bare-SHA
+materialization proofs and green CI remain historical: that implementation missed
+path-conditioned rules and is superseded by this rework.

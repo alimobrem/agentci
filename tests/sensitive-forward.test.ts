@@ -45,3 +45,30 @@ test('actual pinned tool/archive and fetched policy integrity failures fail clos
     await copyFile(join(cache,'gitleaks.tar.gz'),join(broken,'gitleaks.tar.gz'));await writeFile(join(broken,'upstream-policy.toml'),'corrupt');await assert.rejects(scanForward({repo:f.root,base:f.base,head,cache:broken,output:f.output}),/integrity/);await assert.rejects(readFile(f.output),{code:'ENOENT'});
   }finally{await rm(f.root,{recursive:true,force:true});}
 });
+test('actual CLI preserves path-conditioned rules across identical bytes, rename and file/directory commit epochs',supported,async()=>{
+  const f=await fixture();try{
+    const value=randomBytes(24).toString('hex');const xml=`<configuration><packageSourceCredentials><synthetic><add key="ClearTextPassword" value="${value}" /></synthetic></packageSourceCredentials></configuration>\n`;
+    await writeFile(join(f.root,'contextless.xml'),xml);const base=commit(f.root);
+    await mkdir(join(f.root,'nested'));git(f.root,'mv','contextless.xml','nested/NuGet.Config');await writeFile(join(f.root,'nested/data.xml'),xml);const renamed=commit(f.root);
+    let child=cli(f.root,base,renamed,f.output);assert.equal(child.status,1);let report=JSON.parse(await readFile(f.output,'utf8'));
+    assert.ok(report.findings.some((x:{rule:string;path:string})=>x.rule==='nuget-config-password'&&x.path==='nested/NuGet.Config'));
+    assert.ok(!report.findings.some((x:{rule:string;path:string})=>x.rule==='nuget-config-password'&&x.path==='nested/data.xml'));assert.ok(!JSON.stringify(report).includes(value));
+    // A path is a file in one commit and a directory in the next; epochs stay separate.
+    await writeFile(join(f.root,'switch'),xml);const fileEpoch=commit(f.root);git(f.root,'rm','switch');await mkdir(join(f.root,'switch'));await writeFile(join(f.root,'switch/NuGet.Config'),xml);const dirEpoch=commit(f.root);
+    child=cli(f.root,base,dirEpoch,f.output);assert.equal(child.status,1);report=JSON.parse(await readFile(f.output,'utf8'));assert.ok(report.findings.some((x:{rule:string;path:string;commit:string})=>x.rule==='nuget-config-password'&&x.path==='switch/NuGet.Config'&&x.commit===dirEpoch));assert.ok(!report.findings.some((x:{rule:string;path:string;commit:string})=>x.rule==='nuget-config-password'&&x.path==='switch'&&x.commit===fileEpoch));
+    const b64=randomBytes(24).toString('base64');await writeFile(join(f.root,'secret.yaml'),`apiVersion: v1\nkind: Secret\nmetadata:\n  name: synthetic\ndata:\n  value: ${b64}\n`);
+    await writeFile(join(f.root,'secret.tf'),`password = "${randomBytes(8).toString('hex')}"\n`);
+    await writeFile(join(f.root,'fixture.php'),`<?php $x = array('secret_key' => 'sk_${randomBytes(15).toString('hex').slice(0,29)}');\n`);
+    const keyDir=join(f.root,'.git','private-material');await mkdir(keyDir);const keyPath=join(keyDir,'key.pem');const certPath=join(keyDir,'cert.crt');await writeFile(keyPath,generateKeyPairSync('rsa',{modulusLength:2048}).privateKey.export({type:'pkcs8',format:'pem'}),{mode:0o600});
+    const childEnv={PATH:process.env.PATH,HOME:'/nonexistent'};execFileSync('openssl',['req','-new','-x509','-key',keyPath,'-out',certPath,'-subj','/CN=synthetic.invalid','-days','1'],{stdio:'ignore',env:childEnv});execFileSync('openssl',['pkcs12','-export','-inkey',keyPath,'-in',certPath,'-out',join(f.root,'generated.pfx'),'-passout','pass:'],{stdio:'ignore',env:childEnv});const head=commit(f.root);
+    child=cli(f.root,dirEpoch,head,f.output);assert.equal(child.status,1);report=JSON.parse(await readFile(f.output,'utf8'));
+    for(const rule of ['kubernetes-secret-yaml','hashicorp-tf-password','freemius-secret-key','pkcs12-file'])assert.ok(report.findings.some((x:{rule:string})=>x.rule===rule),`missing path-aware rule ${rule}`);
+    assert.ok(!JSON.stringify(report).includes(value));assert.ok(!JSON.stringify(report).includes(b64));assert.ok(!`${child.stdout}${child.stderr}`.includes(value));
+  }finally{await rm(f.root,{recursive:true,force:true});}
+});
+test('trusted PR workflow rescans edited/retargeted base identities',async()=>{
+  const {parse}=await import('yaml');const workflow=parse(await readFile('.github/workflows/sensitive-forward.yaml','utf8'));
+  assert.ok(workflow.on.pull_request_target.types.includes('edited'));
+  const steps=workflow.jobs.scan.steps;assert.equal(steps[0].with.ref,'${{ github.event.pull_request.base.sha || github.sha }}');
+  const scan=steps.find((x:{name?:string})=>x.name==='Scan exact introduced content locally');assert.equal(scan.env.BASE_SHA,'${{ github.event.pull_request.base.sha || github.event.before }}');assert.equal(scan.env.HEAD_SHA,'${{ github.event.pull_request.head.sha || github.sha }}');
+});

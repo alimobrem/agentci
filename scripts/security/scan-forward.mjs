@@ -53,23 +53,42 @@ export async function scanForward({ repo, base, head, cache, output }) {
     const globalPaths = /\npaths = \[\n[\s\S]*?\n\]/; if (!globalPaths.test(upstream)) throw new Error('Policy structure changed');
     const policy = upstream.replace(globalPaths, '\npaths = []') + '\n' + await readFile(new URL('./gitleaks.toml', import.meta.url), 'utf8');
     const trustedPolicy = join(temp, 'policy.toml'); await writeFile(trustedPolicy, policy, { mode: 0o600 });
-    const snapshot = join(temp, 'blobs'); await mkdir(snapshot, { mode: 0o700 }); let total = 0;
+    // Path-conditioned rules must see the exact logical path, separately in each commit.
+    const snapshots = new Map();
+    for (const [blob, introductions] of selected) for (const {commit, path} of introductions.values()) {
+      if (!snapshots.has(commit)) snapshots.set(commit, new Map());
+      const paths = snapshots.get(commit);
+      if (paths.has(path) && paths.get(path) !== blob) throw new Error('Colliding snapshot path');
+      paths.set(path, blob);
+    }
+    const bytesByBlob = new Map(); let uniqueBytes = 0; let materializedBytes = 0;
     for (const [blob] of selected) {
-      const bytes = git(['cat-file', 'blob', blob]); total += bytes.length;
-      if (bytes.length > 20_000_000 || total > 256_000_000) throw new Error('Blob coverage bound exceeded');
-      await writeFile(join(snapshot, blob), bytes, { flag: 'wx', mode: 0o600 });
+      const bytes = git(['cat-file', 'blob', blob]); uniqueBytes += bytes.length;
+      if (bytes.length > 20_000_000 || uniqueBytes > 256_000_000) throw new Error('Blob coverage bound exceeded');
+      bytesByBlob.set(blob, bytes);
     }
     const ignore = join(temp, '.gitleaksignore'); await writeFile(ignore, '', { mode: 0o600 });
-    const rawReport = join(temp, 'raw.json');
-    const child = spawnSync(binary, ['dir', '.', '--config', trustedPolicy, '--gitleaks-ignore-path', ignore, '--ignore-gitleaks-allow', '--redact=100', '--no-banner', '--no-color', '--exit-code', '23', '--timeout', '120', '--report-format', 'json', '--report-path', rawReport], { cwd: snapshot, env, timeout: Math.min(130_000, remaining()), maxBuffer: 8_000_000, encoding: 'utf8' });
-    if (child.error || ![0,23].includes(child.status) || (await stat(rawReport)).size > 16_000_000) throw new Error('Incomplete scanner coverage');
-    const raw = JSON.parse(await readFile(rawReport, 'utf8')); if (!Array.isArray(raw)) throw new Error('Invalid report');
     const findings = []; let emitted = 0;
-    for (const f of raw) {
-      const blob = typeof f.File === 'string' ? f.File.replace(/^\.\//, '') : null; const introductions = selected.get(blob);
-      if (!introductions || typeof f.RuleID !== 'string' || !Number.isInteger(f.StartLine)) throw new Error('Unbound scanner finding');
-      if ((emitted += introductions.size) > 100_000) throw new Error('Finding expansion bound exceeded');
-      for (const {commit, path} of introductions.values()) findings.push({ fingerprint: sha256(JSON.stringify([f.RuleID,path,f.StartLine,commit,blob])), rule: f.RuleID, path, line: f.StartLine, commit, blob, disposition: 'unresolved' });
+    for (const [commit, paths] of snapshots) {
+      const snapshot = join(temp, commit); await mkdir(snapshot, { mode: 0o700 });
+      for (const [path, blob] of paths) {
+        const target = resolve(snapshot, path);
+        if (!target.startsWith(snapshot + '/')) throw new Error('Snapshot containment failed');
+        const bytes = bytesByBlob.get(blob); materializedBytes += bytes.length;
+        if (materializedBytes > 256_000_000) throw new Error('Materialized coverage bound exceeded');
+        await mkdir(dirname(target), { recursive: true, mode: 0o700 });
+        await writeFile(target, bytes, { flag: 'wx', mode: 0o600 });
+      }
+      const rawReport = join(temp, `report-${commit}.json`);
+      const child = spawnSync(binary, ['dir', '.', '--config', trustedPolicy, '--gitleaks-ignore-path', ignore, '--ignore-gitleaks-allow', '--redact=100', '--no-banner', '--no-color', '--exit-code', '23', '--timeout', '120', '--report-format', 'json', '--report-path', rawReport], { cwd: snapshot, env, timeout: Math.min(130_000, remaining()), maxBuffer: 8_000_000, encoding: 'utf8' });
+      if (child.error || ![0,23].includes(child.status) || (await stat(rawReport)).size > 16_000_000) throw new Error('Incomplete scanner coverage');
+      const raw = JSON.parse(await readFile(rawReport, 'utf8')); if (!Array.isArray(raw)) throw new Error('Invalid report');
+      for (const f of raw) {
+        const path = typeof f.File === 'string' ? f.File.replace(/^\.\//, '') : null; const blob = paths.get(path);
+        if (!blob || typeof f.RuleID !== 'string' || !Number.isInteger(f.StartLine)) throw new Error('Unbound scanner finding');
+        if (++emitted > 100_000) throw new Error('Finding expansion bound exceeded');
+        findings.push({ fingerprint: sha256(JSON.stringify([f.RuleID,path,f.StartLine,commit,blob])), rule: f.RuleID, path, line: f.StartLine, commit, blob, disposition: 'unresolved' });
+      }
     }
     findings.sort((a,b) => a.fingerprint.localeCompare(b.fingerprint));
     const policyRoot = fileURLToPath(new URL('../../', import.meta.url));
