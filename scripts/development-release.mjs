@@ -1,5 +1,4 @@
 import {publishDraftAssets,requireRetainedArtifact,requireReleaseAssets,requireCandidateReleaseAbsent,actionsDraftVisibility} from './lib/immutable-release-publication.mjs';
-import {parse} from 'yaml';
 import {readFile,writeFile,mkdir,copyFile,readdir,mkdtemp,rm,stat,chmod} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {Octokit} from '@octokit/rest';
@@ -23,9 +22,7 @@ stageRecord={schemaVersion:1,...expected,command,result:'in-progress',releaseId:
 const github=new Octokit({auth:process.env.GITHUB_TOKEN,request:{timeout:30000}}),repository={owner:'alimobrem',repo:'agentci'},tag='v'+version;
 let draftVisibility;
 if(['preflight','publish'].includes(command)){
- const workflowPath='.github/workflows/development-candidate.yaml',checkedWorkflow=await readFile(workflowPath),committedWorkflow=execFileSync('git',['show',sourceCommit+':'+workflowPath]);
- if(!checkedWorkflow.equals(committedWorkflow))throw Error('Actions draft-visibility workflow differs from exact committed source');
- draftVisibility=actionsDraftVisibility(process.env,parse(committedWorkflow.toString('utf8')));
+ draftVisibility=await actionsDraftVisibility(process.env,{command});
 }
 async function absent(read){try{await read();requireAvailableResponse(200);}catch(error){if(error.status===404)return;throw Error('Candidate occupied or availability inconclusive');}}
 const emit=async(key,value)=>{if(!process.env.GITHUB_OUTPUT||/[\r\n]/.test(value))throw Error('Invalid workflow output');await writeFile(process.env.GITHUB_OUTPUT,`${key}=${value}\n`,{flag:'a'});};

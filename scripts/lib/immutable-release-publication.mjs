@@ -1,16 +1,37 @@
-// Drafts are visible only to authenticated callers with push access. Never use published-only getReleaseByTag for draft inventory.
-const actionsVisibility=Symbol('source-bound Actions installation contents-write grant');
-export function actionsDraftVisibility(environment,workflow){
- const repository='alimobrem/agentci',job=environment.GITHUB_JOB;
- if(environment.GITHUB_ACTIONS!=='true'||environment.GITHUB_REPOSITORY!==repository||environment.GITHUB_REF!=='refs/heads/main'||!['push','workflow_dispatch'].includes(environment.GITHUB_EVENT_NAME)||environment.GITHUB_WORKFLOW_REF!==repository+'/.github/workflows/development-candidate.yaml@refs/heads/main'||environment.GITHUB_WORKFLOW_SHA!==environment.GITHUB_SHA||!/^[a-f0-9]{40}$/.test(environment.GITHUB_SHA??'')||!['preflight','release-candidate'].includes(job)||workflow?.jobs?.[job]?.permissions?.contents!=='write'||!environment.GITHUB_TOKEN)throw Error('Source-bound Actions contents-write context required for draft inventory');
- return Object.freeze({[actionsVisibility]:true,repository});
+import {createHash} from 'node:crypto';
+import {readFile} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
+import {join} from 'node:path';
+import {parse} from 'yaml';
+// Generic callers require push access. Trusted Actions callers use the distinct
+// source-bound installation permission contract, never public listing alone.
+const actionsVisibility=new WeakMap();
+const tokenDigest=token=>createHash('sha256').update(token).digest('hex');
+export async function actionsDraftVisibility(environment,{cwd=process.cwd(),command}={}){
+ const repository='alimobrem/agentci',job=environment.GITHUB_JOB,source=environment.GITHUB_SHA,path='.github/workflows/development-candidate.yaml';
+ if(environment.GITHUB_ACTIONS!=='true'||environment.GITHUB_REPOSITORY!==repository||environment.GITHUB_REF!=='refs/heads/main'||!['push','workflow_dispatch'].includes(environment.GITHUB_EVENT_NAME)||environment.GITHUB_WORKFLOW_REF!==repository+'/'+path+'@refs/heads/main'||environment.GITHUB_WORKFLOW_SHA!==source||!/^[a-f0-9]{40}$/.test(source??'')||!['preflight','release-candidate'].includes(job)||typeof environment.GITHUB_TOKEN!=='string'||!environment.GITHUB_TOKEN)throw Error('Source-bound Actions contents-write context required for draft inventory');
+ if(execFileSync('git',['rev-parse','HEAD'],{cwd,encoding:'utf8'}).trim()!==source)throw Error('Actions installation source HEAD mismatch');
+ const committed=execFileSync('git',['show',source+':'+path],{cwd});
+ if(!(await readFile(join(cwd,path))).equals(committed))throw Error('Actions draft-visibility workflow differs from exact committed source');
+ const workflow=parse(committed.toString('utf8')),jobContract=workflow?.jobs?.[job];
+ if(jobContract?.permissions?.contents!=='write')throw Error('Committed Actions contents-write grant required');
+ const expectedCommand=job==='preflight'?'preflight':'publish',steps=jobContract.steps;
+ if(command!==expectedCommand)throw Error('Actions installation job and operation differ');
+ const injections=Array.isArray(steps)?steps.filter(step=>step.run==='node scripts/development-release.mjs '+command):[];
+ if(injections.length!==1||injections[0].env?.GITHUB_TOKEN!=='${{ secrets.GITHUB_TOKEN }}')throw Error('Exact committed Actions token injection required');
+ const visibility=Object.freeze({mode:'trusted-actions-installation',repository,sourceCommit:source,job});
+ actionsVisibility.set(visibility,Object.freeze({tokenDigest:tokenDigest(environment.GITHUB_TOKEN),repository,sourceCommit:source,job}));
+ return visibility;
 }
 export async function candidateReleases(github,repository,tag,visibility){
  const access=await github.rest.repos.get(repository),push=access.data.permissions?.push;
- // Installation tokens do not promise the user-style permissions field. Only
- // the verified trusted workflow grant may substitute for an absent field.
- const installationGrant=push===undefined&&visibility?.[actionsVisibility]===true&&visibility.repository===repository.owner+'/'+repository.repo&&access.data.full_name===visibility.repository;
- if(push!==true&&!installationGrant)throw Error('Authenticated push visibility required for draft inventory');
+ if(visibility!==undefined){
+  const bound=visibility&&typeof visibility==='object'?actionsVisibility.get(visibility):null;
+  if(!bound||visibility.mode!=='trusted-actions-installation'||visibility.repository!==bound.repository||visibility.sourceCommit!==bound.sourceCommit||visibility.job!==bound.job||bound.repository!==repository.owner+'/'+repository.repo||access.data.full_name!==bound.repository||typeof github.auth!=='function')throw Error('Authenticated Actions installation visibility required for draft inventory');
+  const authentication=await github.auth();
+  if(authentication?.type!=='token'||authentication.tokenType!=='installation'||typeof authentication.token!=='string'||tokenDigest(authentication.token)!==bound.tokenDigest)throw Error('Actions installation authentication differs from committed token injection');
+  // User-style push metadata is diagnostic only in this separately validated mode.
+ }else if(push!==true)throw Error('Authenticated push visibility required for draft inventory');
  const matches=[];const ids=new Set();
  for(let page=1;page<=1000;page++){
   const response=await github.rest.repos.listReleases({...repository,per_page:100,page});const releases=response.data;

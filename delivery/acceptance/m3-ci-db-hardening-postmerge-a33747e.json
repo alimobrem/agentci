@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-CI-DB-2",
+  "pullRequest": "https://github.com/alimobrem/agentci/pull/92",
+  "reviewedHead": "027fe74d816eee62ab6cb1a7e763b6d14dbd122d",
+  "mergeCommit": "a33747e2bfba12a919198fe50bb6d2ea5d254e81",
+  "tree": "aafb8ffffbe88ecd161c9c047de854b3d3db2bf3",
+  "testedCode": "35b8140182af9af38a7e14d8dccb7c3b821fdca4",
+  "premergeParentReview": {
+    "status": "Passed exact source and actual ZIP review, authenticated parent delegation",
+    "run": 38313428611,
+    "artifact": 11775912833,
+    "artifactSha256": "69b341ff5d4bd1786a858a9bf9b914af33ff91b9f62e57a30d5f92421404acea",
+    "checks": {
+      "unit": 533,
+      "integration": 197,
+      "readers": 14,
+      "client": 11
+    },
+    "cleanup": "Verified zero resources and private-file removal",
+    "attribution": "Parent inspected ZIP bytes; root did not"
+  },
+  "postmergeRuns": [
+    {
+      "id": 38314754967,
+      "name": "Forward secret protection",
+      "event": "push",
+      "head": "a33747e2bfba12a919198fe50bb6d2ea5d254e81",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/alimobrem/agentci/actions/runs/38314754967",
+      "artifacts": [
+        {
+          "id": 11775813388,
+          "name": "forward-secret-metadata",
+          "size": 726,
+          "digest": "sha256:49ca80bd15d7f303504dcbcdc13d458ab10da5a264df014dd8b4894d345f1be5"
+        }
+      ]
+    },
+    {
+      "id": 38314754975,
+      "name": "AgentCI advisory review",
+      "event": "push",
+      "head": "a33747e2bfba12a919198fe50bb6d2ea5d254e81",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/alimobrem/agentci/actions/runs/38314754975",
+      "artifacts": [
+        {
+          "id": 11775754130,
+          "name": "advisory-ci-database-cleanup",
+          "size": 409,
+          "digest": "sha256:5f2cc2c3b0d3ca7f78f29614b7b4e94b4040c40c91946290946f8e8792478114"
+        },
+        {
+          "id": 11775619252,
+          "name": "agentci-evidence-38314754975-1",
+          "size": 57227,
+          "digest": "sha256:307464e68063ed1db3f336582d11aa265e156db5cafbcde468a8130574646bac"
+        }
+      ]
+    },
+    {
+      "id": 38314754917,
+      "name": "Verify",
+      "event": "push",
+      "head": "a33747e2bfba12a919198fe50bb6d2ea5d254e81",
+      "status": "completed",
+      "conclusion": "success",
+      "attempt": 1,
+      "url": "https://github.com/alimobrem/agentci/actions/runs/38314754917",
+      "artifacts": [
+        {
+          "id": 11776752533,
+          "name": "m1-verification",
+          "size": 1588107,
+          "digest": "sha256:333b22fc920731959cfd7754dd2af0431609d9b9e998fb4fc28743d19b7aa21b"
+        },
+        {
+          "id": 11776716062,
+          "name": "fast-feedback",
+          "size": 20936,
+          "digest": "sha256:c7de03dc4ef37da37a6af53cd5f070cffc587e86ca2911cab0d78d5ba091a30e"
+        }
+      ]
+    }
+  ],
+  "advisory": "Actual push on changed trusted-main workflow: private CI database start, App-key load, exact PR reviews and owned DB stop passed.",
+  "qualifications": [
+    "Postmerge API metadata and completed CLI records only; root has not read postmerge ZIP bytes.",
+    "Collected cache state unknown, using captured read-only Work GitHub metadata adapter.",
+    "Full source tree matches approved review; published history and original failed/completed attempts retained.",
+    "Actual downloaded-release acceptance remains separate; all18M3releasegates pending, unknown historical GitGuardian incident unresolved and release publication hold remains.",
+    "Task state on merged main remains historical blocked premerge checkpoint; completion evidence/ledger publication is a separate follow-up.",
+    "No release activation, descriptor, token repair, credential rotation, suppression, protection or new access changes."
+  ]
+}
