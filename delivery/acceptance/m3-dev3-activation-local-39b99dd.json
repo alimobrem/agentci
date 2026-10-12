@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-ACT-3",
+  "actualBaseMerge": "eccfe59f2006a6aff2f9161478d536c0de5f320a",
+  "repairHead": "88f39824f2f11a08d13db50fe49333c04c2c724b",
+  "repairTree": "af0558028bf88c76bf372457112f8bda03e25326",
+  "testedLocalSource": "39b99ddd7997e46b6afc6bfb2b31be66ed3fe01e",
+  "testedLocalTree": "bbbf77c33a9a709b70c5798192f9a84758f831f4",
+  "activation": "Only existing descriptorpreflightContract marker changes; samefivefields, fouridentityfields unchanged, sameapproveddev3version/destinations. Existing mainpushpath triggerspublication onlyafter approvedexactactivationmerge.",
+  "sourceFiles": [
+    {
+      "path": "releases/m3-development-candidate.json",
+      "sha256": "c7e414186ce90e79ae1b9286019ef0a243f5e36eef415a7a22dfa9c7aa27897e"
+    },
+    {
+      "path": "docs/phases/m3-development-candidate.md",
+      "sha256": "77e567947ed96c5e1025067f6abe2b03e30e798e7ec50fe0760d61ef9b63dd61"
+    }
+  ],
+  "localValidation": {
+    "rootTests": 536,
+    "fastPassed": true,
+    "fastSeconds": 51.394418272,
+    "fastChecks": 10,
+    "apiCompatibility": "Immutable M1/M2 and selftests passed",
+    "workflowLint": "Pinned actionlint passed",
+    "qualification": "Reused dependencies/pinned caches; no actualpublication/native/download acceptance claimed. Laterrecords/taskblock only, codebytes unchanged."
+  },
+  "independent": {
+    "path": "delivery/acceptance/m3-dev3-activation-independent-39b99dd.json",
+    "sha256": "7280d1ddb12d55d0b62e0c349fd1a4ea6bdca94ca23f4f8d390ecea2a96b509d",
+    "qualification": "Bounded source/workflow/identity/nativegates and allhardenedfiles reviewed; no redundant tests rerun on unchangedruntime."
+  },
+  "repairReview": {
+    "parent": "Exacthead88andtreeaf055source/actualartifactreview passed; Verify38317351466 scanner38317351471 advisory38317351516 allpassed",
+    "artifact": 11777613379,
+    "sha256": "c26c81ef0fa8905848810b0ca8ba501e82f22d9b7104ee0fc2ba3f2c8a56f660",
+    "checks": {
+      "unit": 536,
+      "integration": 197,
+      "reader": 14,
+      "client": 11
+    }
+  },
+  "retainedApprovalFailure": "FirstexactPR93merge automaticreview rejected availableauthorization. PRreadyunmerged/maina337 retained. Parent then obtained explicitauthenticatedownerapproval for head88; oneexactretry succeeded actualecc merge. No workaround/indirectmainupdate; original rejection retained in session and originallocalactivationacc8 artifacts.",
+  "preserved": "DBhardening/source/tests/workflows/locks/deploy/18gatefile unchanged; no newcandidateidentity/permissions/credentials/access/securitysettings. Occupieddev2release/tag/images and allfailedattempts preserved.",
+  "requirements": "Actual authenticatedGHApreflight must rejectoccupied/ambiguousdraft/tag/all6image destinations beforemutations;12nativeAMD64ARM64builds/six-rolepublication, fiveassets uploaded/verifiedtodraftbeforeimmutableprerelease, source/hashbound anonymous package/image downloads onbotharchitectures, retainednativeproofs/expiry/identity beforeverifiednotes. No milestone/customer/UI acceptance inferred.",
+  "hold": "Current-source temporaryhold lifted byparent afteractualhardenedpostmergeaudit; historicalGitGuardianincidentopen, notresolved/suppressed.",
+  "acceptance": "PendingexactactivationdraftfullCI/scanner andparentsource/actualartifactreview before activation; nativepublication/downloads aftertrigger mustfinish endtoend.",
+  "evidence": [
+    {
+      "path": "/workspace/scratch/dev3-activation-repaired-fast.log",
+      "sha256": "4d4c5270fc9bcdc384b86038b38a59d9dfa7b6438f2762d116a6533f865dcec2"
+    },
+    {
+      "path": "/workspace/scratch/dev3-activation-repaired-api.log",
+      "sha256": "3355e8638f12279b5eed0eda226da3f02147a53f3fdb6391ca064f28c5c4e6e5"
+    },
+    {
+      "path": "/workspace/scratch/dev3-activation-repaired-workflows.log",
+      "sha256": "ac98e827708aafdae3b7fa4ffba0b502f5553388772a78dc8b87061af4e2214b"
+    }
+  ]
+}

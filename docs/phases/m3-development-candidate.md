@@ -4,8 +4,8 @@ The owner approved corrected development identity `0.4.0-m3-dev.3` in the existi
 GitHub/GHCR destinations after the dev.2 immutable-release publication failure.
 The occupied dev.2 release, tag, images and original failure records stay untouched.
 This local activation preparation synchronizes package/root locks, CLI/OpenAPI,
-opt-in M3 overlays, publication and customer download guards and the fixed four-field
-`releases/m3-development-candidate.json` descriptor. The actual activation merge
+opt-in M3 overlays, publication and customer download guards and the fixed identity fields and existing preflight-contract marker in
+`releases/m3-development-candidate.json`. The actual activation merge
 supplies the frozen source SHA without a self-referential descriptor. Repair merge,
 independent exact-source review and full hosted CI remain required before activation.
 No customer or milestone gate is closed by this version change.
@@ -75,3 +75,5 @@ Actual Git refs are checked absent before creating/uploading the owned draft and
 Current local preparation starts from the corrected immutable-release, CI cleanup and path-aware forward-scanner main. Historical scanner observations remain separate and unresolved; they are not a classification prerequisite for the forward gate. This version-only local descriptor preparation does not trigger publication. Trusted planner integration, independent review and applicable exact combined-source checks must precede the final release-source freeze and root-controlled publication. No remote activation, publication run, customer fixture or live service is created by this local preparation.
 
 The current-source temporary publication hold was lifted after parent review of hardened main `a33747e2bfba12a919198fe50bb6d2ea5d254e81` and its actual postmerge advisory cleanup/evidence artifacts. The unmatched historical GitGuardian incident remains open. The observed token repair is integrated onto that hardened tree; its older local branch is not a publication source. Repair draft CI and exact source/artifact review precede separate descriptor activation of the already approved dev.3 identity. All native and anonymous package/image download requirements remain in force.
+
+The reviewed token repair was merged as `eccfe59f2006a6aff2f9161478d536c0de5f320a`, preserving the hardened tree. The separate activation changes only the existing preflight-contract annotation to `source-bound-actions-installation-token-authentication` in the same descriptor; version `0.4.0-m3-dev.3`, repository, publication identity and grants remain unchanged. Merging that descriptor change is the existing push trigger for the approved publication, so exact activation CI and parent source/artifact review are required first. Occupied identities still block mutation. Actual native AMD64/ARM64 publication and anonymous package/image acceptance, with retained failures and source/run/attempt hashes, are required before verified candidate notes.
