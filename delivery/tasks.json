@@ -3161,6 +3161,27 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M3-ADVISORY-PATH-1",
+      "title": "Handle literal bracket filenames in eval staging",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "done",
+      "startedAt": "2026-10-12T03:53:11.105Z",
+      "completedAt": "2026-10-12T03:56:51.438Z",
+      "acceptance": [
+        {
+          "text": "Bounded local repair accepts literal bracket route filenames during planning and actual eval staging while preserving selector, traversal, control-character, protected-input, source and immutable identity guards. First failing exact-tree reproduction retained; meaningful negative and real PostgreSQL staging regressions and affected checks pass with independent review. Hosted CI and parent review remain required; no provider/live customer/release actions or M3 gate closure.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-trusted-main-literal-path-revalidation-01c2864.json"
+          ]
+        }
+      ]
     }
   ]
 }

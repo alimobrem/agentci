@@ -6462,6 +6462,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-ADVISORY-PATH-1",
+          "status": "done",
+          "startedAt": "2026-10-12T03:53:11.105Z",
+          "completedAt": "2026-10-12T03:56:51.438Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Bounded local repair accepts literal bracket route filenames during planning and actual eval staging while preserving selector, traversal, control-character, protected-input, source and immutable identity guards. First failing exact-tree reproduction retained; meaningful negative and real PostgreSQL staging regressions and affected checks pass with independent review. Hosted CI and parent review remain required; no provider/live customer/release actions or M3 gate closure.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-trusted-main-literal-path-revalidation-01c2864.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6594,6 +6611,12 @@
         {
           "path": "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json",
           "sha256": "0339493d57d44d492f9e2d3a1da2c162dca0fe454724a2dcd3cd0e0557fb8524",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-trusted-main-literal-path-revalidation-01c2864.json",
+          "sha256": "9d4454e3378778487fb265a064eda39ca20dc465d4ff78eb78e7cef2a6fde35c",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -7024,6 +7047,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-ADVISORY-PATH-1",
+          "status": "done",
+          "startedAt": "2026-10-12T03:53:11.105Z",
+          "completedAt": "2026-10-12T03:56:51.438Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Bounded local repair accepts literal bracket route filenames during planning and actual eval staging while preserving selector, traversal, control-character, protected-input, source and immutable identity guards. First failing exact-tree reproduction retained; meaningful negative and real PostgreSQL staging regressions and affected checks pass with independent review. Hosted CI and parent review remain required; no provider/live customer/release actions or M3 gate closure.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-trusted-main-literal-path-revalidation-01c2864.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -7156,6 +7196,12 @@
         {
           "path": "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json",
           "sha256": "0339493d57d44d492f9e2d3a1da2c162dca0fe454724a2dcd3cd0e0557fb8524",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-trusted-main-literal-path-revalidation-01c2864.json",
+          "sha256": "9d4454e3378778487fb265a064eda39ca20dc465d4ff78eb78e7cef2a6fde35c",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

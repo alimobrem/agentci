@@ -68,3 +68,12 @@ test('missing tool contracts and permission defenses remain explicit without req
   assert.deepEqual(selectSuites([],impact('prompt')).selectionGaps,[]);
   assert.deepEqual(selectSuites([],impact('source')).selectionGaps,[]);
 });
+
+test('literal bracket filenames remain data while selectors and escaping paths retain guards',()=>{
+  const path='apps/dashboard/app/api/reviews/[id]/route.ts';
+  assert.equal(safeEvalPath(path),true);
+  assert.equal(selectSuites([evalSuite({class:'regression'})],{changes:[{path,categories:['source']}],requirementIds:[]}).suites.length,1);
+  for(const value of ['../[id]/secret','/[id]/route.ts','a/../[id]','a/./[id]','a//[id]','C:/[id]','a\\[id]','[id]/\0','!route']){assert.equal(safeEvalPath(value),false,value);assert.equal(safeEvalPath(value,true),false,value);}
+  for(const value of ['apps/**','apps/route?.ts','apps/{a,b}.ts']){assert.equal(safeEvalPath(value),false,value);assert.equal(safeEvalPath(value,true),true,value);}
+  assert.throws(()=>selectSuites([evalSuite()],{changes:[{path:'../[id]/secret',categories:['source']}],requirementIds:[]}),/Unsafe changed path/);
+});

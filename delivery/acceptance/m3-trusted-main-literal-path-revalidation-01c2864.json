@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-ADVISORY-PATH-1",
+  "scope": "Trusted-main minimal planner repair preparation; new draft publication/full hosted CI pending",
+  "recordedAt": "2026-10-12T03:56:50.399060+00:00",
+  "sourceCommit": "01c286487d66cd4895aeacb095ab25512bffa093",
+  "sourceTree": "952fadf64a79213b822733a9b3d5a9ce6cfecc1b",
+  "baseCommit": "b1ade9132586d45231700b1d46d4ac7741b227ed",
+  "baseTree": "0c68d760d348450331c640b9c0ea6189a2980448",
+  "baseQualification": "Local exact-tree equivalent of actualmainf955. Work-published commit identity is distinct; exact tree0c68 bound.",
+  "sourceFiles": [
+    {
+      "path": "packages/evals/contracts.ts",
+      "sha256": "1166e5365f1582ba34475e2a4566d30d45b0421bb3bf82b18300030a5d046a5c"
+    },
+    {
+      "path": "tests/eval-contracts.test.ts",
+      "sha256": "f15a40fb52f978139ae89a43fc920299ac4681e43a1b84084ad6e19f8747c46d"
+    },
+    {
+      "path": "tests/eval-orchestration.test.ts",
+      "sha256": "a63e1fc17e19361f92096937fddfebee9d40eb58fc8daa6f1c1a062c8f5095af"
+    },
+    {
+      "path": "tests/integration/eval-review-staging.test.ts",
+      "sha256": "409534868dca9aeada120e7e81f4d2db69bdac9d0fa70c71cedd4408ba06a1a0"
+    }
+  ],
+  "activationConstraint": "Advisory dogfood workflow intentionally checks out trusted ref:main. UI-only draft81 changes do not activate hosted planner. This separate candidate preserves workflow/security guards and requires approved main merge before subsequent advisory runs can consume fix.",
+  "historicalAcceptance": {
+    "path": "delivery/acceptance/m3-advisory-literal-path-repair-1c6edc6.json",
+    "sha256": "ef670a7b0ec255a7e45156fab39246fc4a4b7b0194e16545f56afe34f823b43b",
+    "qualification": "Exact original UI-tree record preserved as historical; not current main-source or hosted pass"
+  },
+  "firstFailingReproduction": {
+    "path": "/workspace/scratch/dashboard609-advisory-local-staging-diagnosis-20261012.json",
+    "sha256": "71fa9602818da443a4e276471888b8e7e8fd5270e9cb5958eea594abcb0a674d",
+    "result": "Original0c68\u21925dbb literal[id] path causes planning rejection and retryablestage failure before storage/model. Safe hosted counters corroborate successful snapshot reads; underlying hostedcause not retained."
+  },
+  "checks": [
+    {
+      "path": "/workspace/scratch/trusted-main-literal-path-focused-20261012.log",
+      "sha256": "04c58c681bc33a9248f0e0acb624f5dae21b54e1e02fd7b6a9d7d79d8701749c",
+      "result": "20 affected tests pass0fail/skip on this minimal trusted-main source"
+    },
+    {
+      "path": "/workspace/scratch/trusted-main-literal-path-real-staging-20261012.log",
+      "sha256": "d1b34bdc788314e02269a2f343307ab2f530d692a84f0fef61c575ae4934476a",
+      "result": "Real PostgreSQL GitHTTP staging1passed; bracket route retained, unsafe path rejected, immutable replay; ownedContainers0/privateFilesRemovedtrue"
+    },
+    {
+      "path": "/workspace/scratch/trusted-main-literal-path-fast-20261012.log",
+      "sha256": "96ca2995aed8b29fd20e920cde19f8c85d9e9b7aedf9b80c62056ab9ffefd2a9",
+      "result": "10 fast checks passed42.51s including490unit tests0fail/skip and typecheck/API"
+    },
+    {
+      "path": "/workspace/scratch/trusted-main-literal-path-fast-report-20261012.json",
+      "sha256": "bb2b5165d84153edea1fcb37d7e4a02e78791043e74e60f8c375381e5f2df4f7",
+      "result": "Exact-source immutable fast report; dirtytrue untracked dependency symlink"
+    },
+    {
+      "path": "/workspace/scratch/customer-review-trusted-main-01c-minimal-20261012.json",
+      "sha256": "bedc5a2da12e62bfa6839a19c0795d03f113c463c97eebbdb93be14368de24f7",
+      "result": "Independent minimal scope/hash review passes; previous independent affected tests reused only for exact matching four reviewed blobs"
+    }
+  ],
+  "independentReuse": {
+    "sourceCommit": "1c6edc63d00c9f45f3986c95e797ce49fa16c1fe",
+    "proof": "/workspace/scratch/customer-review-advisory-1c6-independent-20261012.json",
+    "sha256": "e8b560334b0f273aa6b5ff6fb1ae364ebbb4c7fd94b97952667b1440b799973a",
+    "scope": "Independent20affected tests+physicalPostgreSQL1 historical at1c6 reused for fourbyte-identicalsource/testblobs only. Currentcombinedmain20/physical1/fullfast were separately rerun by implementing worker; no independent whole-main/hosted claim."
+  },
+  "historyIntegrity": [
+    "All132base taskobjects preserved unchanged, only original M3-ADVISORY-PATH-1 imported",
+    "Original start/accept/done events preserved exactly; explicit CLIreopen before fourcode/testblob edits; new acceptance/done appended only",
+    "Original acceptance and failed reviewer/author/reproduction proof references preserved; no UI task/history imported",
+    "No workflow, PRcheckout, UIimplementation, versions, packaging, native release or customer configuration changes"
+  ],
+  "workspaceQualification": {
+    "trackedCleanBeforeAfterChecks": true,
+    "dirty": true,
+    "reason": "Untracked node_modules dependency symlink; no clean-checkout claim"
+  },
+  "pending": [
+    "Parent independent finalledger/source review, new draft publication and exact-source full hosted CI",
+    "Any trusted-main merge requires appropriate authorization and passing applicable review/CI; no merge/deploy performed by worker",
+    "Advisory failures38199870002/38199897199 remain failures; subsequent main-consuming execution not yet verified",
+    "All18M3gates pending; threeadapters/M0-M10/observed-rate/descriptiveWilson/sole approved inaccessible-provider exception unchanged"
+  ],
+  "externalActions": "None; no remote publication, model/provider requests, livecustomer/App, release, credentials or historical rewrite actions"
+}
