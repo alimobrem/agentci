@@ -2,7 +2,7 @@
 # before starting; the released M2 base deployment remains disabled by default.
 services:
   api:
-    image: ${AGENTCI_REPRODUCTION_API_IMAGE:-agentci-api:0.4.0-m3-dev.1}
+    image: ${AGENTCI_REPRODUCTION_API_IMAGE:-agentci-api:0.4.0-m3-dev.2}
     environment:
       AGENTCI_REPRODUCTION_CATALOG_FILE: /run/agentci/reproduction-catalog.json
       AGENTCI_REPRODUCTION_CATALOG_DIGEST: ${AGENTCI_REPRODUCTION_CATALOG_DIGEST:?Set canonical operator catalog digest}
@@ -26,7 +26,7 @@ services:
         read_only: true
         bind: { create_host_path: false }
   worker:
-    image: ${AGENTCI_REPRODUCTION_WORKER_IMAGE:-agentci-worker:0.4.0-m3-dev.1}
+    image: ${AGENTCI_REPRODUCTION_WORKER_IMAGE:-agentci-worker:0.4.0-m3-dev.2}
     environment:
       AGENTCI_REPRODUCTION_CATALOG_FILE: /run/agentci/reproduction-catalog.json
       AGENTCI_REPRODUCTION_CATALOG_DIGEST: ${AGENTCI_REPRODUCTION_CATALOG_DIGEST:?Set canonical operator catalog digest}

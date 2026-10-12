@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-ACT-1",
+  "scope": "Bounded LOCAL SOFTWARE PREPARATION of approved dev.2 activation source only",
+  "recordedAt": "2026-10-12T00:51:21.096369+00:00",
+  "sourceCommit": "f06a9c7ee02f5a3382d212f2196226d19b2da52c",
+  "sourceTree": "4af52760e599d0dfbb534b4e9aac6fc7883746ba",
+  "baseCommit": "8f52abcdb11cf532f88f71ab9e32bbf8c4c99427",
+  "baseTree": "f15c421ec5981dce5d08088b8c3cb8b550f263f6",
+  "sourceFiles": [
+    {
+      "path": "package.json",
+      "sha256": "ef18bd3c01b4448c899255507fc34afd7790817306f0cbe487a7833145260d4f"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "3a13261e3311d73348f69ccb40b6395f2c516ada41544b3209fab72241a90ce9"
+    },
+    {
+      "path": "npm-shrinkwrap.json",
+      "sha256": "3a13261e3311d73348f69ccb40b6395f2c516ada41544b3209fab72241a90ce9"
+    },
+    {
+      "path": "packages/version.ts",
+      "sha256": "2906d5104bf2e2d318f6517088b9da6c7fbd49975a4e834ac3d6cf1ff2577e13"
+    },
+    {
+      "path": "specs/api/openapi.json",
+      "sha256": "0fec89424d0e6370a277a151a2054d6cdb35181bb63e786099f0fa755459b9d9"
+    },
+    {
+      "path": "deploy/reviewer.compose.yaml",
+      "sha256": "6ded0c649b37ffe74eb8d2cefda60fbfff0efa294ffaf265cb10f8585c633ff8"
+    },
+    {
+      "path": "deploy/reproduction.compose.yaml",
+      "sha256": "3405279c25f159e4d1438ed5f95c54714594d6a45339c1bf3f282c5e013af5d0"
+    },
+    {
+      "path": "tests/integration/reproduction-deployment.test.ts",
+      "sha256": "0c2bc550a8127ba0a428070e91f6a69399be065b0423865398b342e75f5533ed"
+    },
+    {
+      "path": "releases/m3-development-candidate.json",
+      "sha256": "23ae1b76697397294f88d75dcbb30b54168a4c6a593f1a80441875293c12c890"
+    }
+  ],
+  "checks": [
+    {
+      "name": "final-combined-fast10-33.40s",
+      "result": "passed",
+      "path": "/workspace/scratch/dev2-activation-restacked-fast.log",
+      "sha256": "6919b7baec2e5f7ae3a4a548c630ae68c9db2eec81ab48bd665f82cdca187e7c"
+    },
+    {
+      "name": "final-build",
+      "result": "passed",
+      "path": "/workspace/scratch/dev2-activation-restacked-build.log",
+      "sha256": "76cbc2ccbbdb7b068905dbe246aa8581706d322289330db6ac2dcbfd9a71cfbf"
+    },
+    {
+      "name": "affected-repaired-demo1",
+      "result": "passed",
+      "path": "/workspace/scratch/dev2-activation-restacked-affected.log",
+      "sha256": "b097aa1cfe3c1140095142bfe2e8285d679c9d21a3383ab260164e5b8c4922c4"
+    },
+    {
+      "name": "unchanged-version-focused10",
+      "result": "passed",
+      "path": "/workspace/scratch/dev2-activation-focused.log",
+      "sha256": "500fe9497d587c34a3f87cde7e7b163d4ec0fe5e1dba236611bff862470f0228"
+    },
+    {
+      "name": "unchanged-version-api-compatibility",
+      "result": "passed",
+      "path": "/workspace/scratch/dev2-activation-api-compat-cache.log",
+      "sha256": "dc38bcfacd9e48d189db51f78b16ff1639fc77fe5db7160f199745816d4622b4"
+    }
+  ],
+  "checkQualification": "Final combined fast/build and affected repaired entry rerun. Version/publication/Compose focused10 and M1/M2 oasdiff negative selftests cover unchanged nine version blobs originally tested on692247b; unchanged source hashes verified. Full hosted CI required before merge.",
+  "locks": "Source package-lock and shrinkwrap bytes equal; package/CLI/OpenAPI version dev.2",
+  "activationDescriptor": "Only fixed schemaVersion/version/repository/publication fields; no final SHA self-reference",
+  "preserved": "M2 base Compose/versionhistory/APIbaselines, all corrected79 task objects/start/rework/acceptance events preserved. Original activation start event/date retained.",
+  "supersededCI": {
+    "run": "delivery/runs/38188523893-attempt-1.json",
+    "cache": "delivery/acceptance/m3-customer-driver-original-ci-cache.json",
+    "qualification": "Original success belongs only to superseded6fe9fc8; no acceptance for repaired79 or activation source"
+  },
+  "attempts": "Original fresh API fetch EAI_AGAIN retained; existing pinned oasdiff archive verified by repo checker. Raw npm12 pack excludes locks, existing release script restores both source locks. Initial default npm cache absent, workspace-cache retry retained.",
+  "independentReview": "required-before-merge; final source provided to parent/reviewer",
+  "fullHostedCI": "required-before-merge; activation cannot merge before repaired79 actualmerge/review and retarget exacttreechecks",
+  "nativePublication": "unverified",
+  "anonymousDownloads": "unverified",
+  "AppAndLiveCustomerAcceptance": "unverified",
+  "externallyReachableEndpoint": "unverified",
+  "milestoneGates": "all18 M3 gates pending; M0-M10 order/all3 adapters/observed-rate with descriptiveWilson preserved",
+  "remoteActions": "none by worker",
+  "checkoutQualification": {
+    "dirty": true,
+    "reason": "Untracked node_modules symlink; tracked source was committed at f06a9c7 before checks, only delivery evidence/bookkeeping changed afterward. Do not interpret fast artifact dirty:true as a clean checkout.",
+    "trackedImplementationDiffAfterChecks": "",
+    "originalVersionBlobHashComparison": "All9 sourceFiles hashes equal preliminary692247b checks source",
+    "finalUnitTests": {
+      "passed": 471,
+      "failed": 0,
+      "skipped": 0
+    }
+  }
+}
