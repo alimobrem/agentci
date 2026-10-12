@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-ADVISORY-PATH-1",
+  "scope": "Approved minimal planner/scoped integration assertion restack onto current scanner main; local SOFTWAREPREPARATION only",
+  "recordedAt": "2026-10-12T05:28:20.924782+00:00",
+  "sourceCommit": "41b918016583594a83901593a71ec14e0cf87b46",
+  "sourceTree": "6e6f0a770a34def6977a692aa4eda6a638b46e46",
+  "baseCommit": "bda6ca961c66d99222f953290d7447165ad1658a",
+  "baseTree": "89714a94888565c9390711f2f6e8b584d8e54d4f",
+  "actualMainReference": "100731c7e15a83fbe49afa7bfef0e01e70ee2dda",
+  "mainQualification": "Parent supplied actualpublished identity; local bda6 exacttree897 is independent source/test base. Root adds actualmain parent for publication; worker performs no remote mutations.",
+  "copiedCandidate": "d308429df782fe8bede4b1640bb6f8656d785455",
+  "sourceFiles": [
+    {
+      "path": "packages/evals/contracts.ts",
+      "sha256": "1166e5365f1582ba34475e2a4566d30d45b0421bb3bf82b18300030a5d046a5c",
+      "qualification": "Byte-identical frozen reviewed d308"
+    },
+    {
+      "path": "tests/eval-contracts.test.ts",
+      "sha256": "f15a40fb52f978139ae89a43fc920299ac4681e43a1b84084ad6e19f8747c46d",
+      "qualification": "Byte-identical frozen reviewed d308"
+    },
+    {
+      "path": "tests/eval-orchestration.test.ts",
+      "sha256": "a63e1fc17e19361f92096937fddfebee9d40eb58fc8daa6f1c1a062c8f5095af",
+      "qualification": "Byte-identical frozen reviewed d308"
+    },
+    {
+      "path": "tests/integration/eval-review-staging.test.ts",
+      "sha256": "f3ebeddd361de8949818e631e758aebd59067414b8a84f1e9a056e923e5cb10b",
+      "qualification": "Byte-identical frozen reviewed d308"
+    }
+  ],
+  "checks": [
+    {
+      "path": "/workspace/scratch/planner-scanner-main-41b-focused-20261012.log",
+      "sha256": "8d47997e880f4ba1cb4b0ba44f2af14383e51fa349b4ca79f11e56893f76c3fe",
+      "result": "20affectedunits passed0fail/skip"
+    },
+    {
+      "path": "/workspace/scratch/planner-scanner-main-41b-real-staging-20261012.log",
+      "sha256": "c20685a4a352e15e773e343ed896252192e818139a407404a659cf7428dd47a9",
+      "result": "ActualPGstaging1 passed with same-scope unrelatedjob context, exactowncount stable; owned0/privatefilestrue"
+    },
+    {
+      "path": "/workspace/scratch/planner-scanner-main-41b-cached-scanner-20261012.log",
+      "sha256": "236348189c0c9d66c6f8471e718baddb39ba1a908bbc72e3ddcef3331ebb705b",
+      "result": "Six actual pinnedscannerCLI privategeneratedfixture regressions passed0fail/skip"
+    },
+    {
+      "path": "/workspace/scratch/planner-scanner-main-41b-cached-fast-20261012.log",
+      "sha256": "ae52c97d0a32149041ebe147d1400babdd6f9c7c17e64be406d41f02b14100a8",
+      "result": "10checks67.55s including507unit0fail/skip/typecheck/API"
+    },
+    {
+      "path": "/workspace/scratch/planner-scanner-main-41b-cached-fast-report-20261012.json",
+      "sha256": "74569b88d1f022acaee404ae8b83fc95984e0e5e07afb1e5ea6d85b3f72a7a03",
+      "result": "Immutable exact-source fast report; dirtytrue untracked dependency symlink"
+    },
+    {
+      "path": "/workspace/scratch/planner-scanner-main-41b-cached-api-compat-20261012.log",
+      "sha256": "dc38bcfacd9e48d189db51f78b16ff1639fc77fe5db7160f199745816d4622b4",
+      "result": "Pinned oasdiff immutable M1/M2 baselines +negative endpoint-removal selftests passed"
+    },
+    {
+      "path": "/workspace/scratch/planner-scanner-main-41b-cached-api-report-20261012.json",
+      "sha256": "0912d1bf4e810cfda34cf98e903d3779245d938af6133e3b03fa925beeb97fa1",
+      "result": "Immutable exact-source APIcompatibility artifact"
+    },
+    {
+      "path": "/workspace/scratch/planner-scanner-main-41b-cache-integrity-20261012.log",
+      "sha256": "90110b258045ed9194991b22c8f36a9874305b523b1e965441bb865dab179715",
+      "result": "Unchanged checksummedinstaller validates authorized existing officialcachebytes; no source waiver"
+    },
+    {
+      "path": "/workspace/scratch/planner-scanner-main-41b-canonical-20261012.log",
+      "sha256": "3c655087d3e415beeae76d42e7aa0390cb2b1f5f8e30976b0de71ba65d44fc1b",
+      "result": "Canonical1346IDs/29children preserved"
+    },
+    {
+      "path": "/workspace/scratch/customer-review-planner-scanner-41b-integration-20261012.json",
+      "sha256": "a645b94790713f493cb40e871d660fda5575d9fa7dfbcb9440826b3b20806c4e",
+      "result": "Independent source/main/scanner/history identity review passed"
+    }
+  ],
+  "introducedDeltaAtCodeSource": {
+    "path": "/workspace/scratch/planner-scanner-main-41b-forward-20261012.json",
+    "sha256": "d240dd7cc25fe816f4d6b0e1aef23d15b723d86384cfd3176bde16df874fa100",
+    "policyCommit": "41b918016583594a83901593a71ec14e0cf87b46",
+    "headCommit": "41b918016583594a83901593a71ec14e0cf87b46",
+    "headTree": "6e6f0a770a34def6977a692aa4eda6a638b46e46",
+    "baseCommit": "bda6ca961c66d99222f953290d7447165ad1658a",
+    "findingsType": "array",
+    "findingCount": 0,
+    "status": "no-new-change-findings",
+    "introducedCommitCount": 2,
+    "selectedBlobCount": 12,
+    "introducedReferenceCount": 18,
+    "qualification": "This exact report binds pre-bookkeeping code-source41b. Postcommit finalcandidate delta remains required and separately source-bound by final independent review; no historical-clean claim."
+  },
+  "cacheQualification": {
+    "source": "Existing authorized successful /workspace/agentci-forward-path-aware/.agentci/local/tools official pinned assets only",
+    "gitleaksVersion": "8.30.1",
+    "gitleaksArchiveSha256": "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb",
+    "gitleaksBinarySha256": "88f91962aa2f93ac6ab281d553b9e125f5197bbbce38f9f2437f7299c32e5509",
+    "upstreamPolicySha256": "e163e53b9e7e8a8511e77271e2b323ed057759542a6d988258afe3a1fa329caf",
+    "oasdiffArchiveSha256": "43a4e328e2d13ba1552d760aa68d2485c75c5621f309f6ff64ae895188345247",
+    "freshHostedDownload": "unverified; cached local pass does not establish fresh network/bootstrap availability",
+    "guards": "No alternate network/auth/routes, policy suppression, rule edits or provider-exception waiver"
+  },
+  "initialFailuresPreserved": [
+    {
+      "path": "/workspace/scratch/planner-scanner-main-41b-fast-20261012.log",
+      "sha256": "7b3be428cdba22bd76a0d0b5cf3e7d543f52f54563e7ad787e27bb0462bd94a8",
+      "qualification": "Same source41b before owned approved toolcache setup; failed result never relabeled"
+    },
+    {
+      "path": "/workspace/scratch/planner-scanner-main-41b-initial-failed-fast-report-20261012.json",
+      "sha256": "b44ee206616c9d491c4b0a93a53f1478c9db01eb747052df461a6606b1827259",
+      "qualification": "Same source41b before owned approved toolcache setup; failed result never relabeled"
+    },
+    {
+      "path": "/workspace/scratch/planner-scanner-main-41b-api-compat-20261012.log",
+      "sha256": "23ca223e75cf5d0710ef960834e8f44ee2bce1bd4cb62dc39450eb56750f9fbc",
+      "qualification": "Same source41b before owned approved toolcache setup; failed result never relabeled"
+    }
+  ],
+  "boundedFailureDiagnosis": "New worktree had no scanner testcache archive (explicitENOENT) and first scannerCLI cases returnedcoveragefailure2; APIcompat officialdownload failed EAI_AGAIN github.com. After copying only authorized official bytes and unchangedpin validation, all6 scannerfixtures/API/fullfast pass with no source change.",
+  "preserved": [
+    "All134 main/scanner taskobjects, acceptance and originaleventprefix preserved; only originaladvisory task imported plus its9events/3records/failedCI record",
+    "CLIreopen f3a22 before fourblob integration; newacceptance/done appended only",
+    "Allother non-deliverymainblobs byte-identical bda6, including scanner, workflows, policy, versions; no UI",
+    "Prior exactreview-scoped SQL identity/replay/unsafe-path and literal bracket/traversal guards unchanged",
+    "Capturedhistory and allM0-M10 phase mapping unchanged; allsection/currentmetadata generated after finalizedrecord/task transitions"
+  ],
+  "historicalRecords": [
+    {
+      "path": "delivery/acceptance/m3-advisory-literal-path-repair-1c6edc6.json",
+      "sha256": "ef670a7b0ec255a7e45156fab39246fc4a4b7b0194e16545f56afe34f823b43b"
+    },
+    {
+      "path": "delivery/acceptance/m3-trusted-main-literal-path-revalidation-01c2864.json",
+      "sha256": "9d4454e3378778487fb265a064eda39ca20dc465d4ff78eb78e7cef2a6fde35c"
+    },
+    {
+      "path": "delivery/acceptance/m3-planner-shared-ci-assertion-repair-c6b666f.json",
+      "sha256": "6ac65d89416697b987ee5023c9dcb89dbd072c331819b8a52eb482d407be843b"
+    },
+    {
+      "path": "delivery/runs/38202263061-attempt-1.json",
+      "sha256": "61e06371c0e5f6742c2c64f97f2bc1e4eaa933a378c7f42392de1bbe0d75848f"
+    }
+  ],
+  "workspaceQualification": "Tracked sourcecleanbefore/afterchecks; ignoredownedtoolcaches +untrackednode_modules symlink; exactreportdirtytrue/no cleancheckoutclaim",
+  "pending": [
+    "Postcommit canonical and finalintroduceddelta/arraybinding plus independent finalledger proof before rootdraft84 update",
+    "Fresh exactsource full hostedVerify/forwardgate/criticalreview and appropriate authorization before any coremerge",
+    "Original38202263061 failed194/195 remains failed; no currentwholeintegration195pass or subsequentmain-advisoryexecution claimed",
+    "Existing original128 plus additional441 historical scannerobservations remain unresolved; introduceddelta doesnot establish historicalcleanliness",
+    "All18M3gates pending;M0-M10/threeadapters/observedrate/descriptiveWilson/soleapprovedinaccessibleproviderexception unchanged"
+  ],
+  "externalActions": "No remote write/merge/deploy, keyread/setup, model/provider, App/customer live execution, release/versionactivation or historicalrewrite"
+}
