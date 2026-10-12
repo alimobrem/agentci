@@ -3091,6 +3091,30 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M3-R1-ACT-1",
+      "title": "Prepare approved dev.2 version activation source",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [
+        "M3-07d-2d",
+        "M3-07d-2e"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-12T00:36:25.546Z",
+      "completedAt": "2026-10-12T00:51:22.173Z",
+      "acceptance": [
+        {
+          "text": "Local preparation synchronizes package and identical root locks, CLI/OpenAPI version and M3 overlay defaults to approved dev.2 and adds fixed non-self-referential activation descriptor. Applicable build/API/package/Compose/publication guard checks pass; exact-source full hosted CI and independent review remain required before merge. No publication, native download, live customer or milestone acceptance is claimed.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json"
+          ]
+        }
+      ]
     }
   ]
 }

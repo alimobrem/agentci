@@ -1,0 +1,17 @@
+{
+  "runId": 38188523893,
+  "attempt": 1,
+  "sourceCommit": "6fe9fc87764490a3fa7b359a6b55a67476498254",
+  "classification": "warm",
+  "scope": "Both CI jobs restored the npm cache; this does not claim all Docker build layers were cached.",
+  "contractsJob": 114616018652,
+  "fastJob": 114616018744,
+  "lines": [
+    "2026-10-12T00:34:59.0159951Z Cache hit for: node-cache-Linux-x64-npm-08b9cfc23b117d36b056d99fd72af6979e75e15238a73e0b9232be17a696c6dd",
+    "2026-10-12T00:35:03.0165751Z Cache restored successfully",
+    "2026-10-12T00:35:03.0223505Z Cache restored from key: node-cache-Linux-x64-npm-08b9cfc23b117d36b056d99fd72af6979e75e15238a73e0b9232be17a696c6dd",
+    "2026-10-12T00:45:18.9675786Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-08b9cfc23b117d36b056d99fd72af6979e75e15238a73e0b9232be17a696c6dd, not saving cache."
+  ],
+  "qualification": "Superseded original PR79 source; not acceptance for repaired efcae428.",
+  "collectionRoute": "Unmodified delivery CLI replayed exact read-only Work GitHub run/jobs responses via a local offline adapter; no credential or network forwarding."
+}

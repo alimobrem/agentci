@@ -137,7 +137,7 @@
       "evidence": [
         {
           "path": "package.json",
-          "sha256": "26a31b1d7199362aaf507333aba26e0be8cd09d2a4c51ede6aac91bd89457140",
+          "sha256": "ef18bd3c01b4448c899255507fc34afd7790817306f0cbe487a7833145260d4f",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -6411,6 +6411,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-R1-ACT-1",
+          "status": "done",
+          "startedAt": "2026-10-12T00:36:25.546Z",
+          "completedAt": "2026-10-12T00:51:22.173Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local preparation synchronizes package and identical root locks, CLI/OpenAPI version and M3 overlay defaults to approved dev.2 and adds fixed non-self-referential activation descriptor. Applicable build/API/package/Compose/publication guard checks pass; exact-source full hosted CI and independent review remain required before merge. No publication, native download, live customer or milestone acceptance is claimed.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6531,6 +6548,12 @@
         {
           "path": "delivery/acceptance/m3-customer-driver-repaired-software-preparation-852421f.json",
           "sha256": "5dc0d3e085f968951254b4b20818366244f3eec143fa0606cb92544deac601f8",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json",
+          "sha256": "03fa44a7c12f165079668cc6b80ae6df6c52050d6d3e7f6e4ad90b1c098fe40f",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -6910,6 +6933,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-R1-ACT-1",
+          "status": "done",
+          "startedAt": "2026-10-12T00:36:25.546Z",
+          "completedAt": "2026-10-12T00:51:22.173Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local preparation synchronizes package and identical root locks, CLI/OpenAPI version and M3 overlay defaults to approved dev.2 and adds fixed non-self-referential activation descriptor. Applicable build/API/package/Compose/publication guard checks pass; exact-source full hosted CI and independent review remain required before merge. No publication, native download, live customer or milestone acceptance is claimed.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -7030,6 +7070,12 @@
         {
           "path": "delivery/acceptance/m3-customer-driver-repaired-software-preparation-852421f.json",
           "sha256": "5dc0d3e085f968951254b4b20818366244f3eec143fa0606cb92544deac601f8",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json",
+          "sha256": "03fa44a7c12f165079668cc6b80ae6df6c52050d6d3e7f6e4ad90b1c098fe40f",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -9785,7 +9831,7 @@
       "evidence": [
         {
           "path": "package.json",
-          "sha256": "26a31b1d7199362aaf507333aba26e0be8cd09d2a4c51ede6aac91bd89457140",
+          "sha256": "ef18bd3c01b4448c899255507fc34afd7790817306f0cbe487a7833145260d4f",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
