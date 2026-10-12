@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "client_review",
+  "at": "2026-10-12T07:16:32.197080+00:00",
+  "state": "PASS bounded WIP source snapshot; committedsourcebinding stillrequired",
+  "baseCommit": "1c9dfdefc04de21fa7d510d2609f66d1f6df1251",
+  "sourceBindings": [
+    {
+      "path": ".github/workflows/development-token-diagnostic.yaml",
+      "sha256": "86fa839514162afb12d980188db7fc89c12c4ce47bd37abf08271108186d12d7"
+    },
+    {
+      "path": "scripts/development-token-diagnostic.mjs",
+      "sha256": "59602133f2c08e5569eb26c73572324ae65b17d8a029554cad8204f4a1c95109"
+    },
+    {
+      "path": "scripts/lib/development-token-diagnostic.mjs",
+      "sha256": "e038ca7e8ff189ab4573f63355aa01026176e681d71d36002544944022fd1c62"
+    },
+    {
+      "path": "tests/development-token-diagnostic.test.ts",
+      "sha256": "2db6a10f91ad9153b64a670844a9f1e1dc6d61c28c3d15a678e5b4dcff7f9789"
+    }
+  ],
+  "independentFocused": {
+    "tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "skipped": 0,
+    "path": "/workspace/scratch/dev3-token-diagnostic-independent-focused.log",
+    "sha256": "fea3d232128e1e992e00109b36cba6545ea538bfbe2267c25a1a62f4cf8b9c11"
+  },
+  "review": [
+    "ExactlyonefixedrepoGET;30sOctokittimeout, no release/tag/registry/customer/key operations",
+    "Exacttrustedrepo/main/push/diagnosticjob/workflowref/workflowSHA/HEAD and committedworkflowbytes guards",
+    "Exactexistingephemeral contentswrite/packagesread grants; no newaccess or persistentcredentials",
+    "Outputonlyallowlistedbooleans/type/HTTPstatus andvalidatedsourceidentity, no APIresponse/rawerror/token/credentialstrings",
+    "Actualscript200/403 syntheticresponses andtokensentinels redactstdout/artifact/stderr; committedworkflowmutationrejects beforeGET",
+    "Trigger mainpush onlyownworkflowpath; descriptorpublicationtriggerunchanged"
+  ],
+  "publicationControlsByteUnchanged": [
+    ".github/workflows/development-candidate.yaml",
+    "releases/m3-development-candidate.json",
+    "scripts/development-release.mjs",
+    "scripts/lib/immutable-release-publication.mjs"
+  ],
+  "finding": "No blockingprivacy/capability/source/triggerboundary finding identified",
+  "limitations": [
+    "Syntheticonly; actual hosted permissionsfield remainsunknown until approveddiagnosticrun",
+    "No retryactivation/publicationlogicchange; no release/native/customer/UI gate passclaim",
+    "Workflows have existing npmbootstrap/dependencynetwork needs; no freshnetwork/testsuccess claim",
+    "Finalcommit/ledger/fullhostedCI/parentartifactreview pending"
+  ],
+  "remoteActions": "none"
+}

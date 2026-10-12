@@ -1,0 +1,94 @@
+{
+  "runId": 38215995488,
+  "attempt": 1,
+  "conclusion": "failure",
+  "cohort": "optimized",
+  "cache": "unknown",
+  "collectedAt": "2026-10-12T07:09:30.454Z",
+  "sourceCommit": "5682c67208fdd4eedfcb3fa90deaf161de852831",
+  "url": "https://github.com/alimobrem/agentci/actions/runs/38215995488",
+  "event": "push",
+  "jobs": [
+    {
+      "name": "preflight",
+      "seconds": 21,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Reject occupied or ambiguous package, tag and six-role destinations",
+          "seconds": 0,
+          "conclusion": "failure"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "images",
+      "seconds": -1,
+      "steps": []
+    },
+    {
+      "name": "release-candidate",
+      "seconds": 0,
+      "steps": []
+    },
+    {
+      "name": "native-image-downloads",
+      "seconds": 0,
+      "steps": []
+    },
+    {
+      "name": "native-package-downloads",
+      "seconds": 0,
+      "steps": []
+    },
+    {
+      "name": "finalize",
+      "seconds": 0,
+      "steps": []
+    }
+  ]
+}
