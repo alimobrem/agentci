@@ -28,6 +28,27 @@ export class CustomerRuntimeProcesses{
  async close(){const failures=[];for(const role of [...this.children.keys()].reverse()){try{await this.stop(role);}catch{failures.push(role);}}if(failures.length)throw Error('Owned process cleanup incomplete: '+failures.join(','));return {ownedProcessesRemaining:this.children.size,events:this.events};}
 }
 
-export async function withCustomerServiceLifetime(session,run,onClosed=async()=>{}){
- try{return await run();}finally{const cleanup=await session.close();await onClosed(cleanup);}
+/** Completed phases are retained; a failed phase keeps its dependencies usable. */
+export function customerCleanupItems(items,clear){
+ const completed=new Set();
+ return async()=>{for(const item of items){if(completed.has(item))continue;await clear(item);completed.add(item);}};
+}
+export function customerCleanupPhases(phases){
+ const completed=new Map();let inFlight;
+ return ()=>{
+  if(inFlight)return inFlight;
+  inFlight=(async()=>{for(const [name,action] of phases){if(completed.has(name))continue;try{completed.set(name,await action());}catch{const error=Error('Customer owned cleanup incomplete: '+name);error.customerRecoveryRequired=true;throw error;}}return Object.fromEntries(completed);})().finally(()=>{inFlight=null;});
+  return inFlight;
+ };
+}
+export async function withCustomerServiceLifetime(session,run,onClosed=async()=>{},{attempts=3,timeoutMs=120000}={}){
+ if(!Number.isSafeInteger(attempts)||attempts<1||attempts>3||!Number.isSafeInteger(timeoutMs)||timeoutMs<1||timeoutMs>120000)throw Error('Invalid customer cleanup retry bound');
+ try{return await run();}finally{
+  const deadline=Date.now()+timeoutMs;let cleanup,closed=false;
+  for(let attempt=0;attempt<attempts&&Date.now()<deadline;attempt++){
+   let timer;try{cleanup=await Promise.race([session.close(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Customer cleanup deadline exceeded')),Math.max(1,deadline-Date.now()));})]);closed=true;break;}catch{}finally{clearTimeout(timer);}
+  }
+  if(!closed){const error=Error('Customer cleanup requires recovery; private key and dependency paths retained');error.customerRecoveryRequired=true;throw error;}
+  await onClosed(cleanup);
+ }
 }

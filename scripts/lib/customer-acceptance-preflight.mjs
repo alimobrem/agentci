@@ -37,9 +37,10 @@ export async function inspectCustomerScope(input,appClient,installationClient){
  }
  return {schemaVersion:1,result:'preflight-passed',repository:CUSTOMER_REPOSITORY,serviceSource:input.serviceSource,appId:input.appId,installationId:input.installationId,permissions:{contents:'read',pull_requests:'read',metadata:'read',checks:'write'},subjects:input.subjects,liveScenarioExecution:'unverified'};
 }
-/** Key lives outside source/build/artifact directories and is removed on every outcome. */
+/** Keep the private key only when owned cleanup explicitly requires recovery. */
 export async function withCustomerKey(secret,parent,run){
  if(typeof secret!=='string'||!secret.includes('-----BEGIN')||secret.length>32768)throw Error('Missing or invalid separate customer App secret');
  const root=await mkdtemp(join(parent,'agentci-customer-private-'));await chmod(root,0o700);
- try{const path=join(root,'app.pem');await writeFile(path,secret,{mode:0o600,flag:'wx'});return await run(path);}finally{await rm(root,{recursive:true,force:true});}
+ let recovery=false;
+ try{const path=join(root,'app.pem');await writeFile(path,secret,{mode:0o600,flag:'wx'});return await run(path);}catch(error){recovery=error?.customerRecoveryRequired===true;throw error;}finally{if(!recovery)await rm(root,{recursive:true,force:true});}
 }

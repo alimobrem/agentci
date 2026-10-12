@@ -1,7 +1,8 @@
-import {readFile,writeFile,mkdir,mkdtemp,rm} from 'node:fs/promises';import {join,resolve} from 'node:path';import {tmpdir} from 'node:os';import {execFileSync} from 'node:child_process';import {Octokit} from '@octokit/rest';import {createAppAuth} from '@octokit/auth-app';
+import {readFile,writeFile,mkdtemp,rm} from 'node:fs/promises';import {join} from 'node:path';import {tmpdir} from 'node:os';import {execFileSync} from 'node:child_process';import {Octokit} from '@octokit/rest';import {createAppAuth} from '@octokit/auth-app';
+import {customerPublicationAssets} from './lib/customer-publication-assets.mjs';
 import {withCustomerServiceLifetime} from './lib/customer-runtime-processes.mjs';
 import {requireCustomerActivation} from './lib/customer-activation.mjs';
-import {preparePublishedPackage,anonymousDownload} from './published-package-smoke.mjs';import {validateDevelopmentAssets,hash} from './lib/development-artifacts.mjs';import {validateCustomerInputs,inspectCustomerScope,withCustomerKey} from './lib/customer-acceptance-preflight.mjs';import {createCustomerServiceSession} from './lib/customer-service-session.mjs';import {runCustomerFourScenarios} from './lib/customer-four-scenarios.mjs';
+import {preparePublishedPackage} from './published-package-smoke.mjs';import {hash} from './lib/development-artifacts.mjs';import {validateCustomerInputs,inspectCustomerScope,withCustomerKey} from './lib/customer-acceptance-preflight.mjs';import {createCustomerServiceSession} from './lib/customer-service-session.mjs';import {runCustomerFourScenarios} from './lib/customer-four-scenarios.mjs';
 const key=process.env.AGENTCI_CUSTOMER_APP_PRIVATE_KEY;delete process.env.AGENTCI_CUSTOMER_APP_PRIVATE_KEY;
 let prepared,session,privateRoot,result,cleanup,partial;let operationJournal=[];
 const operationSnapshot=()=>session?.reservations.map(({review,request,reference,acknowledged,recoveredAcknowledgement,absentAfterControllerDrain})=>({admission:review.admission,request,reference,acknowledged,recoveredAcknowledgement,absentAfterControllerDrain}));
@@ -12,10 +13,7 @@ try{
  const arch=process.arch==='x64'?'amd64':process.arch;
  // Anonymous bytes and both actual production installs are verified before a key file/config exists.
  prepared=await preparePublishedPackage({version:'0.4.0-m3-dev.2',sourceCommit:input.releaseSource,arch,manifestSha256:input.packageManifestSha256,packageSha256:input.packageSha256});
- const assets=join(prepared.temporaryRoot,'development-assets');await mkdir(assets);await writeFile(join(assets,'package-manifest.json'),prepared.manifestBytes);await writeFile(join(assets,prepared.manifest.package.name),prepared.archive);
- const base='https://github.com/alimobrem/agentci/releases/download/v0.4.0-m3-dev.2/';const images=await anonymousDownload(base+'images.json',input.imagesManifestSha256,8*1024*1024),publication=await anonymousDownload(base+'publication-evidence.tgz',input.publicationEvidenceSha256,64*1024*1024);await writeFile(join(assets,'images.json'),images);const evidenceArchive=join(assets,'publication-evidence.tgz');await writeFile(evidenceArchive,publication);
- const safeEnv={PATH:process.env.PATH};const paths=execFileSync('tar',['-tzf',evidenceArchive],{env:safeEnv,encoding:'utf8',timeout:30000,maxBuffer:8*1024*1024}).trim().split('\n');if(new Set(paths).size!==paths.length||paths.some(path=>!/^publication-evidence\/[A-Za-z0-9_.\/-]*$/.test(path)||path.split('/').filter(Boolean).some(part=>part==='.'||part==='..'))||execFileSync('tar',['-tvzf',evidenceArchive],{env:safeEnv,encoding:'utf8',timeout:30000,maxBuffer:8*1024*1024}).trim().split('\n').some(line=>!['-','d'].includes(line[0])))throw Error('Publication evidence archive paths rejected');execFileSync('tar',['-xzf',evidenceArchive,'--no-same-owner','--no-same-permissions','-C',assets],{env:safeEnv,stdio:'pipe',timeout:30000});
- const trusted=await validateDevelopmentAssets(assets,{version:'0.4.0-m3-dev.2',sourceCommit:input.releaseSource,runId:prepared.manifest.runId,attempt:prepared.manifest.attempt});
+ const {trusted,images,publication}=await customerPublicationAssets(prepared,input);
  const role=kind=>{const image=trusted.images.find(value=>value.role===kind);if(!image||!image.platforms.includes('linux/'+arch))throw Error('Required native artifact missing');return image.image;};
  privateRoot=await mkdtemp(join(process.env.RUNNER_TEMP??tmpdir(),'agentci-customer-runtime-'));
  result=await withCustomerKey(key,privateRoot,async keyPath=>{
@@ -29,7 +27,7 @@ try{
 }catch{console.error('Customer live demo failed; no customer or milestone acceptance claimed.');process.exitCode=1;await retain('failed-or-unverified');}
 finally{
  // Processes, evaluator and owned assertion cleanup are attempted before any package/private path removal.
- if(session){try{cleanup=await session.close();operationJournal=JSON.parse(JSON.stringify(operationSnapshot()));session=null;}catch{console.error('Customer owned cleanup remains unverified; retained operation evidence requires recovery.');process.exitCode=1;}}
+ if(session){try{await withCustomerServiceLifetime(session,async()=>{},async proof=>{cleanup=proof;operationJournal=JSON.parse(JSON.stringify(operationSnapshot()));session=null;});}catch{console.error('Customer owned cleanup remains unverified; retained operation evidence requires recovery.');process.exitCode=1;}}
  if(process.exitCode===1)await retain('failed-or-unverified');
  if(!session){if(privateRoot)await rm(privateRoot,{recursive:true,force:true});await prepared?.cleanup();}
 }

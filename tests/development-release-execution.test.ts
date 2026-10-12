@@ -44,6 +44,30 @@ async function fixture(){
  }
  return {root,put,json,execute,expected};
 }
+test('customer asset preparation crosses the real publication validator with all four pinned checksums',async()=>{
+ // @ts-expect-error operational ESM helper
+ const {customerPublicationAssets}=await import('../scripts/lib/customer-publication-assets.mjs');
+ // @ts-expect-error operational ESM helper
+ const {validateDevelopmentAssets}=await import('../scripts/lib/development-artifacts.mjs');
+ const f=await fixture();try{
+  assert.equal(f.execute('assemble').status,0);
+  const original=join(f.root,'development-assets'),manifestBytes=await readFile(join(original,'package-manifest.json')),manifest=JSON.parse(manifestBytes.toString());
+  const archive=await readFile(join(original,manifest.package.name)),images=await readFile(join(original,'images.json')),publication=await readFile(join(original,'publication-evidence.tgz'));
+  // Reproduce the old live-demo integration failure, then exercise its actual replacement.
+  await rm(join(original,'SHA256SUMS'));
+  await assert.rejects(validateDevelopmentAssets(original,f.expected),{code:'ENOENT'});
+  const input={releaseSource:f.expected.sourceCommit,packageManifestSha256:hash(manifestBytes),packageSha256:hash(archive),imagesManifestSha256:hash(images),publicationEvidenceSha256:hash(publication)};
+  const temporaryRoot=join(f.root,'customer');await mkdir(temporaryRoot);
+  const prepared={temporaryRoot,manifest,manifestBytes,archive};let requests=0;
+  const request=async(url:string,options:any)=>{requests++;assert.deepEqual(options.headers,{accept:'application/octet-stream'});return new Response(url.endsWith('images.json')?images:publication);};
+  const result=await customerPublicationAssets(prepared,input,request);
+  assert.equal(requests,2);assert.equal(result.trusted.images.length,6);assert.equal(result.trusted.cohort.sourceCommit,f.expected.sourceCommit);
+  const names=[manifest.package.name,'package-manifest.json','images.json','publication-evidence.tgz'];
+  assert.equal(await readFile(join(temporaryRoot,'development-assets/SHA256SUMS'),'utf8'),(await Promise.all(names.map(async name=>`${hash(await readFile(join(temporaryRoot,'development-assets',name)))}  ${name}\n`))).join(''));
+  await assert.rejects(customerPublicationAssets({...prepared,temporaryRoot:join(f.root,'bad-package')},{...input,packageSha256:'0'.repeat(64)},request),/checksum mismatch/);
+  await assert.rejects(customerPublicationAssets({...prepared,temporaryRoot:join(f.root,'bad-publication')},{...input,publicationEvidenceSha256:'0'.repeat(64)},request),/checksum mismatch/);
+ }finally{await rm(f.root,{recursive:true,force:true});}
+});
 test('actual pinned npm pack assembly restores both locks and binds final archive bytes',async()=>{
  const f=await fixture();try{
   const result=f.execute('assemble');assert.equal(result.status,0,result.stderr);

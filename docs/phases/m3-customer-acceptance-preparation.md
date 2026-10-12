@@ -135,8 +135,10 @@ main and consumes one public JSON input with `fixtures` as above, `releaseSource
 `v0.4.0-m3-dev.2`. The factored anonymous package helper verifies source/version,
 file bytes, regular archive paths, equivalent packaged locks, actual locked-root
 and consumer production installs, CLI/client and all three adapter imports before
-any customer key file/private configuration exists. It then verifies the complete
-six-role native image evidence/cohort and uses immutable evaluator/runner refs.
+any customer key file/private configuration exists. It reconstructs the canonical
+four-asset checksum file from these hash-pinned public bytes and crosses the same
+archive and six-role native evidence/cohort validator used for publication. It
+uses immutable evaluator/runner refs.
 
 The driver starts actual installed API/worker entrypoints against disposable
 loopback PostgreSQL/Temporal. It retains a real synthetic finding, compiles a
@@ -159,8 +161,13 @@ Successful units prove completed unit teardown and no remaining owned containers
 cancelled units additionally require the exact owned cleanup workflow result.
 Public partial attempt/operation/checkpoint observations are retained on failure.
 Controller processes, evaluator and owned assertion cleanup precede package/path
-cleanup. Failed cleanup remains explicitly unverified and does not become a
-passing demo result.
+cleanup. Owned reservation reconciliation and teardown retry while the key,
+database and Temporal connection remain usable. Completed cleanup phases are
+retained rather than replayed. Exhausted retries preserve the private runner-temp
+recovery context for the final owned cleanup attempt; the key/path is removed
+after confirmed teardown. Unresolved cleanup remains explicitly unverified,
+retains public operation evidence, and does not become a passing demo result.
+The workflow runner remains temporary; this introduces no persistent access.
 
 Local compiler, supervisor, archive/install and isolation-guard tests are
 preparation evidence only. Actual App-authenticated execution is still pending.
