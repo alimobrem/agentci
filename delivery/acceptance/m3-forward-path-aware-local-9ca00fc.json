@@ -1,0 +1,104 @@
+{
+  "schema": "agentci-forward-path-aware-local-v1",
+  "sourceCommit": "9ca00fcd4c9d92a8d1b0851da0af6546a254a237",
+  "sourceTree": "aa0dbc12b2702f0d827ffcc88b9d06ba6bffe616",
+  "priorSource": "723e013ce8524ff5e0881fe5407311f3534eea44",
+  "comparisonBase": "6236ec1ddda008d220cb8932fecebdc89f6ce0c4",
+  "sourceBindings": [
+    {
+      "path": ".github/workflows/sensitive-forward.yaml",
+      "sha256": "b25990eb2e38807d4c00a0b9447f8f43b0570ab8da3ba0a1eb7112541f164293"
+    },
+    {
+      "path": "scripts/security/install-gitleaks.mjs",
+      "sha256": "12c9034deb529ca452e50132baac2ee949deb12f4841513f587f16f994c96807"
+    },
+    {
+      "path": "scripts/security/scan-forward.mjs",
+      "sha256": "64be7dc608da3e9ee0056724d1dac3e6742f60f9a4723e67a14b94ed9496dcc2"
+    },
+    {
+      "path": "scripts/security/gitleaks.toml",
+      "sha256": "479c71c32b3ab3342975d55ca98022fc1e1ec7c909b9da418c39e7fcc10a7f7a"
+    },
+    {
+      "path": "tests/sensitive-forward.test.ts",
+      "sha256": "e62b66c86ca9a6862f8bc1d2e71e1b2e90fb174fcd5bb767d529803b97830a2e"
+    },
+    {
+      "path": "docs/phases/m3-forward-secret-protection.md",
+      "sha256": "2db183576581202679a012b575c446dd52d644dfd2721b38a4758e89103e9f16"
+    }
+  ],
+  "evidenceBindings": [
+    {
+      "path": "/workspace/scratch/sensitive-forward-path-aware-frozen-focused.log",
+      "sha256": "aaa4b319636d942c2287a5f052ec226194a3200834d7d2d3932c0b2757c212bc"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-path-aware-frozen-fast.log",
+      "sha256": "163cf940f965ffa6fb973d099d682fe0b9c1de58d9e18660e54813d69711a1ad"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-path-aware-frozen-workflows.log",
+      "sha256": "8c4c5d5e4b28c3fd41e48240eaf4de65b6a2ecb3c3a4000e42137c99945c354d"
+    },
+    {
+      "path": "/workspace/scratch/forward-path-aware-source-delta.json",
+      "sha256": "5814de9740a52abc24419bf2f2d115dbed1b984075ac93d558de06585207f163"
+    },
+    {
+      "path": "/workspace/scratch/forward-path-aware-source-delta.log",
+      "sha256": "e757e4f6822f639a0cbbda5ced54a6f197a7e14a9729b46172a71482af2afef6"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-independent-path-aware-review-9ca00fcd-20261012.json",
+      "sha256": "842daa29d0b058ef4ec608900c8a1fb3345465eed5c8ec546dfc4b2219822e8a"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-path-context-old-probe.log",
+      "sha256": "05a32711f6e6d7a135af75011d4934df70c8ca49b1d9cbad7cbcd45161369b53"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-path-context-old-pfx-probe.log",
+      "sha256": "196387c4c1d661ce89ade93d091e943de23fea5bfa18359bfa7e8001e588aab8"
+    }
+  ],
+  "results": {
+    "focusedPassed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "fastPassed": 10,
+    "fastSeconds": 48.41,
+    "pinnedWorkflowLint": "passed",
+    "independentReview": "bounded6source review plus independent6actualCLI and privatecache samebytes NuGet neutralXML probe passed",
+    "actualSourceDelta": "exit0 no-new-change-findings exact623 to9ca,5introducedcommits24unique blobs"
+  },
+  "corrections": [
+    "Each introduction commit uses isolated private snapshot retaining exact logical paths and actualbytes",
+    "Identical bytes at different paths scanned separately; findings only bind matching samecommit,path,blob",
+    "Crosscommit file-directory epochs separated; containment/wx/cumulativebytes bound enforced",
+    "PR edited event uses fresh exact base/head identities after retarget"
+  ],
+  "actualRegressionRules": [
+    "nuget-config-password",
+    "kubernetes-secret-yaml",
+    "freemius-secret-key",
+    "hashicorp-tf-password",
+    "pkcs12-file using actual privately generated PFX"
+  ],
+  "oldProofQualification": "Previous accepted bareSHA source/greenCI remain immutable historical evidence and do not establish path-aware coverage. Parent independently reproduced NuGetXML and PFX falseclean; failures preserved in evidenceBindings. No history rewrite, rule weakening or path/test allowlist.",
+  "supersededHostedMetadata": {
+    "runId": "38204184291",
+    "artifactId": "11726393832",
+    "artifactDigest": "654206702f6fc590c5ca5ad4f75179ee4f70ab43875b2cdb953edf51a5ebbed6",
+    "basis": "parent-provided completed metadata only; no ZIP inspection; not transferred to new source"
+  },
+  "scope": "Bounded introduced commit versions and endpoint rollback only. Original128 plus expanded441 audit observations remain separate unresolved; no fullhistory-clean assertion. No PR code execution/npm/dependency installation or inherited childcredentials.",
+  "pending": [
+    "Fresh changed-source hosted Verify/dedicatedscanner run before merge",
+    "Actual hosted edited-event retarget proof and branch protection separate",
+    "Fresh network download qualification as recorded; local pinned cached bytes verified",
+    "No M3 customer/provider/UI release or closure claim;18gates unchanged"
+  ]
+}

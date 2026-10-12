@@ -6479,6 +6479,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-CI-SENSITIVE-FORWARD-1",
+          "status": "done",
+          "startedAt": "2026-10-12T04:46:17.603Z",
+          "completedAt": "2026-10-12T04:56:02.133Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local pinned CLI gate scans exact introduced commit range and changed endpoint blobs without PR code execution or inherited credentials; actual synthetic positive/negative, intermediate deletion/reintroduction, binary attributes, path encoding, symlink/shallow/missing-base and integrity regressions pass. Reports contain metadata only. Historical findings remain separate unresolved; no full-history-clean assertion. Independent review/full hosted bootstrap remain separate.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-forward-path-aware-local-9ca00fc.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6617,6 +6634,12 @@
         {
           "path": "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json",
           "sha256": "0339493d57d44d492f9e2d3a1da2c162dca0fe454724a2dcd3cd0e0557fb8524",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-forward-path-aware-local-9ca00fc.json",
+          "sha256": "47b4b6a2a52e0d86be0beac16aec671cd805dc9617e9cd14fb8f30d2faddbcc9",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -7064,6 +7087,23 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-CI-SENSITIVE-FORWARD-1",
+          "status": "done",
+          "startedAt": "2026-10-12T04:46:17.603Z",
+          "completedAt": "2026-10-12T04:56:02.133Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local pinned CLI gate scans exact introduced commit range and changed endpoint blobs without PR code execution or inherited credentials; actual synthetic positive/negative, intermediate deletion/reintroduction, binary attributes, path encoding, symlink/shallow/missing-base and integrity regressions pass. Reports contain metadata only. Historical findings remain separate unresolved; no full-history-clean assertion. Independent review/full hosted bootstrap remain separate.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-forward-path-aware-local-9ca00fc.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -7202,6 +7242,12 @@
         {
           "path": "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json",
           "sha256": "0339493d57d44d492f9e2d3a1da2c162dca0fe454724a2dcd3cd0e0557fb8524",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-forward-path-aware-local-9ca00fc.json",
+          "sha256": "47b4b6a2a52e0d86be0beac16aec671cd805dc9617e9cd14fb8f30d2faddbcc9",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

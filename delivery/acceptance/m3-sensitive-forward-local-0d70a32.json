@@ -1,0 +1,96 @@
+{
+  "schema": "agentci-sensitive-forward-local-v1",
+  "sourceCommit": "0d70a3290ae11fa79ea32da85d2f9a3c1d26502d",
+  "sourceTree": "3c325a45c663c1bbe999627750d6ee183ffafd9b",
+  "baseCommit": "b1ade9132586d45231700b1d46d4ac7741b227ed",
+  "sourceBindings": [
+    {
+      "path": ".github/workflows/sensitive-forward.yaml",
+      "sha256": "2460c1698cc8a72193460d086159f9cb134011d33ec6a2e112355ed7991deaa4"
+    },
+    {
+      "path": "scripts/security/install-gitleaks.mjs",
+      "sha256": "12c9034deb529ca452e50132baac2ee949deb12f4841513f587f16f994c96807"
+    },
+    {
+      "path": "scripts/security/scan-forward.mjs",
+      "sha256": "855fc09627d9ed46748837cd70ab615fd8edaa751480a8b0a3e2dbd7c23b979e"
+    },
+    {
+      "path": "scripts/security/gitleaks.toml",
+      "sha256": "479c71c32b3ab3342975d55ca98022fc1e1ec7c909b9da418c39e7fcc10a7f7a"
+    },
+    {
+      "path": "tests/sensitive-forward.test.ts",
+      "sha256": "c93d0c6d38e92f762f52d23fbbed5abb964baa255dd761227b73402d34e577b4"
+    },
+    {
+      "path": "docs/phases/m3-forward-secret-protection.md",
+      "sha256": "7e0c77726a7c3729373896fd1f46a45105b9911c6740d1ca9ddbcdc5125805d0"
+    }
+  ],
+  "evidenceBindings": [
+    {
+      "path": "/workspace/scratch/sensitive-forward-frozen-focused.log",
+      "sha256": "055ea895b2e5135959b1498f7a155178734a4807026e47408afc6805836579a5"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-frozen-fast.log",
+      "sha256": "59218e19c94d317afbeb517e33048f01630cee70921a18bfd5f970bc276ee807"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-frozen-workflows.log",
+      "sha256": "8c4c5d5e4b28c3fd41e48240eaf4de65b6a2ecb3c3a4000e42137c99945c354d"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-actual-candidate-report.json",
+      "sha256": "e807fca82bb21832645ee0c45089fc129649acafc6d5f59703a9f4a6008d4318"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-actual-candidate.log",
+      "sha256": "2806b24aeb14a6e9e66ed6a22a7ba00d0303db0597cd27a463bdf2d4f277b090"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-independent-0d70-focused.log",
+      "sha256": "b37d66a4dbf7d8a3480d6d98573bb1f5c09b58ebe839653aa87b8274c29c356c"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-independent-merge-probe.log",
+      "sha256": "4ca36da4af676122e9485d408de97a3a9db71fc50afec25f0bf8b28aee5ee7e7"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-independent-review-0d70a329-20261012.json",
+      "sha256": "7cfcd93bc4991beefc91a6de307e77e6b731dc6cdd3120635c73a2d017d13996"
+    }
+  ],
+  "results": {
+    "actualCliFocusedPassed": 4,
+    "failed": 0,
+    "skipped": 0,
+    "fastPassed": 10,
+    "fastSeconds": 43.27,
+    "pinnedWorkflowLint": "passed",
+    "independentReview": "bounded source review and actual4CLI plus intermediate binary merge-parent probe passed",
+    "actualCandidateDeltaScan": "exit0 no-new-change-findings on exact b1 to source commit"
+  },
+  "scope": "Every parent-relative changed regular blob in introduced commit range HEAD ^ BASE and changed HEAD endpoint blobs vs BASE, using exact complete base/head identities. No historical baseline input or full-history-clean assertion. Whole changed file blobs may raise an existing match within an edited file.",
+  "categories": "Pinned maintained upstream token/private-key/generic-key rules plus password assignment and URL userinfo, global path exclusions removed; rule-specific/placeholder exceptions and unknown/binary/encoded/personal-data limits remain.",
+  "syntheticRegressions": [
+    "Unchanged pre-base generated credential outside gate; clean public change passes",
+    "Intermediate add/delete binary attributes and private RSA/URL/password generated matches fail",
+    "Repo policy/inline allows and lock/config path exclusions cannot bypass",
+    "Identical reintroduction and endpoint rollback fail; divergent PR base/head supported",
+    "InvalidUTF8/BOM/introducedsymlink/shallow/missingbase/zeroidentity/headmismatch failcoverage without stale report",
+    "Archive and fetched policy integrity failures failclosed",
+    "Independent actual merge-parent introduction/deletion binary probe passes"
+  ],
+  "historicalAuditQualification": "Original128 plus expanded441 historical observations remain separate unresolved evidence, outside this forward gate. No classification, suppression, baseline promotion or history rewrite.",
+  "localRuntimeQualification": "Actual pinned CLI and policy bytes preseeded from official sources into private cache and SHA verified; fresh hosted network downloads remain unproven locally. No PR code execution/npm install/inherited scanner credentials or repository upload.",
+  "pending": [
+    "Dedicated workflow cannot enforce its own introductoryPR until merged on main",
+    "First hosted dedicated execution/full CI pending",
+    "Branch-protection adoption separate",
+    "No M3 release/customer/provider/UI phase closure; all18 gates preserved"
+  ],
+  "metadataFormatQualification": "Binding records pair neutral path and sha256 fields to avoid representing a public integrity digest as a secret-named JSON key. Failed prior2d74 metadata-only attempt remains preserved on its local branch; this fresh candidate excludes that introduced version. No detector suppression or history rewrite."
+}

@@ -1,0 +1,13 @@
+# Additional AgentCI rules; the wrapper combines the pinned upstream policy without global path exclusions.
+
+[[rules]]
+id = "agentci-password-assignment"
+description = "Password assignment (including synthetic credentials; requires review)"
+regex = '''(?i)(?:password|passwd|pwd)\s*[:=]\s*["']?([^\s"'`,;}{]{8,})'''
+secretGroup = 1
+
+[[rules]]
+id = "agentci-url-userinfo"
+description = "URL embedded username/password"
+regex = '''[a-zA-Z][a-zA-Z0-9+.-]*://[^\s/@:]+:([^\s/@]+)@'''
+secretGroup = 1

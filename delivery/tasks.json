@@ -3184,6 +3184,29 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M3-CI-SENSITIVE-FORWARD-1",
+      "title": "Prepare minimal pinned forward sensitive-data CI gate",
+      "requirementIds": [
+        "SPEC-29.1-006",
+        "SPEC-29.3-003",
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "done",
+      "startedAt": "2026-10-12T04:46:17.603Z",
+      "completedAt": "2026-10-12T04:56:02.133Z",
+      "acceptance": [
+        {
+          "text": "Local pinned CLI gate scans exact introduced commit range and changed endpoint blobs without PR code execution or inherited credentials; actual synthetic positive/negative, intermediate deletion/reintroduction, binary attributes, path encoding, symlink/shallow/missing-base and integrity regressions pass. Reports contain metadata only. Historical findings remain separate unresolved; no full-history-clean assertion. Independent review/full hosted bootstrap remain separate.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-forward-path-aware-local-9ca00fc.json"
+          ]
+        }
+      ]
     }
   ]
 }
