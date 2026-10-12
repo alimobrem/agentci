@@ -2288,6 +2288,40 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-07d-2d",
+          "status": "done",
+          "startedAt": "2026-10-11T20:53:00.401Z",
+          "completedAt": "2026-10-12T00:30:53.513Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local software preparation implements the pinned installed-package observation CLI with exact subject, retained history/receipt, complete export EOF and App-owned Check guards. Focused local guard/package checks pass; full exact-source hosted CI is required before merge. Actual App/customer/physical execution and endpoint acceptance remain unverified.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-driver-software-preparation-dfde87a.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07d-2e",
+          "status": "done",
+          "startedAt": "2026-10-12T00:36:55.779Z",
+          "completedAt": "2026-10-12T00:44:32.719Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local software preparation implements trusted temporary production service/bootstrap, explicit authority apply, four original synthetic scenarios, scoped activation, owned ambiguous creation/reservation recovery and failure journaling. Focused compiler/environment/lifecycle/package/daemon-inspection checks pass; full hosted CI is required before merge. Actual App-authenticated customer scenario execution remains unverified.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-driver-repaired-software-preparation-852421f.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -2840,6 +2874,18 @@
         {
           "path": "delivery/acceptance/m3-customer-app-preflight-local.json",
           "sha256": "25702f9821e8cded7473cf9cf38cad798fdfd66a6e9fc476048b8579fc1c838e",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-driver-software-preparation-dfde87a.json",
+          "sha256": "8cdcf78b93df0742d9e569e25c9e9c667b244328d815ee4d5623e6930ba9ac9c",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-driver-repaired-software-preparation-852421f.json",
+          "sha256": "5dc0d3e085f968951254b4b20818366244f3eec143fa0606cb92544deac601f8",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -4525,6 +4571,40 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-07d-2d",
+          "status": "done",
+          "startedAt": "2026-10-11T20:53:00.401Z",
+          "completedAt": "2026-10-12T00:30:53.513Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local software preparation implements the pinned installed-package observation CLI with exact subject, retained history/receipt, complete export EOF and App-owned Check guards. Focused local guard/package checks pass; full exact-source hosted CI is required before merge. Actual App/customer/physical execution and endpoint acceptance remain unverified.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-driver-software-preparation-dfde87a.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07d-2e",
+          "status": "done",
+          "startedAt": "2026-10-12T00:36:55.779Z",
+          "completedAt": "2026-10-12T00:44:32.719Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local software preparation implements trusted temporary production service/bootstrap, explicit authority apply, four original synthetic scenarios, scoped activation, owned ambiguous creation/reservation recovery and failure journaling. Focused compiler/environment/lifecycle/package/daemon-inspection checks pass; full hosted CI is required before merge. Actual App-authenticated customer scenario execution remains unverified.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-driver-repaired-software-preparation-852421f.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -4980,6 +5060,18 @@
         {
           "path": "delivery/acceptance/m3-customer-app-preflight-local.json",
           "sha256": "25702f9821e8cded7473cf9cf38cad798fdfd66a6e9fc476048b8579fc1c838e",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-driver-software-preparation-dfde87a.json",
+          "sha256": "8cdcf78b93df0742d9e569e25c9e9c667b244328d815ee4d5623e6930ba9ac9c",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-driver-repaired-software-preparation-852421f.json",
+          "sha256": "5dc0d3e085f968951254b4b20818366244f3eec143fa0606cb92544deac601f8",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

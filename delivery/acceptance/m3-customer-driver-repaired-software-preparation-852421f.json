@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07d-2e",
+  "scope": "SOFTWARE PREPARATION repair only; no live customer acceptance",
+  "recordedAt": "2026-10-12T00:44:31.625718+00:00",
+  "sourceCommit": "852421fb60633f288541ee9dfc2078b857c2a60a",
+  "sourceTree": "28b38e21f2dafee062e2c6482faf26319a7f46c5",
+  "baseCommit": "fdfb51f0dc71d4a559ff8e3a2450e82b79ae5a6a",
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/customer-installation-scope.yaml",
+      "sha256": "c8b6905037af956f96dd52e7d38e15e331652088539b002e70a998f7d8fd95eb"
+    },
+    {
+      "path": ".github/workflows/customer-live-demo.yaml",
+      "sha256": "337dae021baf990bb5ce31207e7a8d790968c4ded15b513e8739d894f347eb69"
+    },
+    {
+      "path": "docs/phases/m3-customer-acceptance-preparation.md",
+      "sha256": "a53abb400b4f99feea64b3cbc19cb177c39ae12dfa81deb443ab08e65b73a47b"
+    },
+    {
+      "path": "scripts/lib/customer-acceptance-preflight.mjs",
+      "sha256": "629e6eb803d310b230026016dc67f4ea50328d802cfcf802149ab52fbb973215"
+    },
+    {
+      "path": "scripts/lib/customer-activation.mjs",
+      "sha256": "5e590ceac3819c4474d641b12e665f4f91d4fe4e862a95307e25b2a01d1e9555"
+    },
+    {
+      "path": "scripts/lib/customer-approved-catalog.mjs",
+      "sha256": "7fc3f7977a1f9b68a7b081bc5844ac8efb5c50d1dbebd1dbd562ba0497ada0ac"
+    },
+    {
+      "path": "scripts/lib/customer-evaluator-container.mjs",
+      "sha256": "12130d513cf5ecaf6fcebaf35cf2a0f4537ea77542fdf0d1f057e618a9f2956d"
+    },
+    {
+      "path": "scripts/lib/customer-four-scenarios.mjs",
+      "sha256": "d266f9b0d3e68b5cd027068ce29f186c419c58f11c20d469879648fd20e4b06c"
+    },
+    {
+      "path": "scripts/lib/customer-live-observations.mjs",
+      "sha256": "956fccf413a46ddb2e40a7ccff9a20274e18b6ca0843bd027b8e268d5944ba56"
+    },
+    {
+      "path": "scripts/lib/customer-owned-reservations.mjs",
+      "sha256": "f2f32fe4d2a1ec0738b5ffbd4db19e304fc8cbd7d0f3aef7a8e4f2aab44c9a80"
+    },
+    {
+      "path": "scripts/lib/customer-publication-assets.mjs",
+      "sha256": "66c823f9a5af4c9a26cf8d0df431aa0c281b14837c33096de16b71b344c63df8"
+    },
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "234647fb21ca056c53bce9a3040702313cf8b199bfa1442cb0e3c3c7ff1dd858"
+    },
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "sha256": "c82fe6c4c488f56e2d20666e05405debb959d8e52493a396b238464c5b5fb469"
+    },
+    {
+      "path": "scripts/m3-customer-app-preflight.mjs",
+      "sha256": "35154c5f2e1113f107f6427d1382dcf41934d812f8b5fe099896d22abcf9e30c"
+    },
+    {
+      "path": "scripts/m3-customer-live-demo.mjs",
+      "sha256": "ae0cbe27531dbbec3920747a2db266ece112d19afbc0fe6e7eedfee5752ed6e3"
+    },
+    {
+      "path": "scripts/m3-customer-live-observe.mjs",
+      "sha256": "e9a7c6a16019ca28219eba38016f252521c099f04151055c7ab4272d2412b427"
+    },
+    {
+      "path": "scripts/published-package-smoke.mjs",
+      "sha256": "28f519060aa3659dedb47154f757ea9cad0d8e5692ac0414714660cb957e191e"
+    },
+    {
+      "path": "tests/customer-activation.test.ts",
+      "sha256": "037613f69ad9cf712c6bd7591f864cfda855453d20618770d2c254ffa5de8663"
+    },
+    {
+      "path": "tests/customer-app-preflight.test.ts",
+      "sha256": "24f0650905153720e198e16a41f1dc93e72ec2b73d691d6942576283c3a1b5a1"
+    },
+    {
+      "path": "tests/customer-approved-catalog.test.ts",
+      "sha256": "0687154860ef7ffb258f9a46db62bb765d0074e7a5be07d627c8a187c9ed5f90"
+    },
+    {
+      "path": "tests/customer-evaluator-container.test.ts",
+      "sha256": "2ffd8434acd406bda040588ae6b042fc0cfb4968e669151b3a1cbec188b669ef"
+    },
+    {
+      "path": "tests/customer-live-demo.test.ts",
+      "sha256": "677da3aeb93dabae2988ec08a02b5e35a528f7d7d50b04b2b0276b19706e6bf0"
+    },
+    {
+      "path": "tests/customer-live-observations.test.ts",
+      "sha256": "83dddcd738d45aa1ecc8589d427c727c624d0693fc82b1c7570177181c330a3f"
+    },
+    {
+      "path": "tests/customer-owned-reservations.test.ts",
+      "sha256": "c3b03f147a67b96d57c94c9672d757d65781085a23a208c2eeddb491a9fd7077"
+    },
+    {
+      "path": "tests/customer-runtime-processes.test.ts",
+      "sha256": "1ff36b2635f523332f7840db775b6e774f60105cd1553d1ad0f1b08e94044a34"
+    },
+    {
+      "path": "tests/development-release-execution.test.ts",
+      "sha256": "345ee59965c6313946f7081cd7cba48cbfab62dd0a642d5e75033bf01640502d"
+    },
+    {
+      "path": "tests/published-package-preparation.test.ts",
+      "sha256": "46b35049f9acf0c41bd08284106ea01c9426bac37b76377dd48466cbc020e448"
+    }
+  ],
+  "checks": [
+    {
+      "path": "/workspace/scratch/customer-driver-repair-852421f-focused-20261012.log",
+      "sha256": "7613e911de90b927a6f81677c09ce953e3f9a8581c736cc03d3210f2505d163a",
+      "result": "23 affected execution tests passed; zero fail/skip"
+    },
+    {
+      "path": "/workspace/scratch/customer-driver-repair-852421f-fast-20261012.log",
+      "sha256": "7a3a54136fcea0a530743eb9164f921af46a413b4b3bd9ad98199334eb6391ae",
+      "result": "10 fast checks passed 35.39s including full unit suite/typecheck"
+    },
+    {
+      "path": "/workspace/scratch/customer-driver-repaired-final-independent-review-852421f-20261012.json",
+      "sha256": "4dda8c3e2b6b241759cf116e1f28e6f9e681db3cdfff8feab037832aa05f2668",
+      "result": "Independent final software-preparation review passed"
+    }
+  ],
+  "reusedChecks": [
+    {
+      "path": "/workspace/scratch/customer-driver-repair-ba458ac-build-20261012.log",
+      "sha256": "0b282be87e9cd8925caefeeaf85ff3321f09d54408c6fc8d2a30e088651a69b6",
+      "sourceCommit": "ba458acaae04526c946dc77b33eeb3cd7163014e",
+      "reason": "All build inputs/workflow lint inputs unchanged between ba458ac and final852421f; changed MJS cleanup helpers/tests checked by final focused/fast checks. Full new-source hosted Verify remains required."
+    },
+    {
+      "path": "/workspace/scratch/customer-driver-repair-ba458ac-workflows-20261012.log",
+      "sha256": "d8ba84896d82803c6a5c7d4fe407d5e32c8fa0b987ac2b266317782c4eb3d310",
+      "sourceCommit": "ba458acaae04526c946dc77b33eeb3cd7163014e",
+      "reason": "All build inputs/workflow lint inputs unchanged between ba458ac and final852421f; changed MJS cleanup helpers/tests checked by final focused/fast checks. Full new-source hosted Verify remains required."
+    }
+  ],
+  "parentFindings": [
+    "Missing canonical SHA256SUMS prevented real shared asset validator from reaching App preflight",
+    "First cleanup failure closed DB/Temporal and key before ambiguous reservation retry",
+    "Later lost ACK drained API and retry could replay an earlier already-cleared intent"
+  ],
+  "repairs": [
+    "All four owner-hash-pinned anonymous assets bind reconstructed canonical SHA256SUMS; actual shared publication validator regression",
+    "Retryable ordered phases and owned-intent cleanup cache; no dependency teardown before exact reconciliation and owned container zero",
+    "Bounded cleanup retains ephemeral private recovery context on explicit marker; final retry bounded too; successful cleanup deletes private paths"
+  ],
+  "originalAcceptanceRecordPreserved": "delivery/acceptance/m3-customer-driver-software-preparation-dfde87a.json",
+  "historicalChecks": [
+    {
+      "sourceCommit": "ba458acaae04526c946dc77b33eeb3cd7163014e",
+      "focused": 39,
+      "fastChecks": 10,
+      "fastSeconds": 37.94,
+      "qualification": "Passed before final multi-intent correction; not claimed final-source proof"
+    }
+  ],
+  "fullHostedCI": "New exact-source hosted Verify and parent critical review required before merge; original38188523893 pertains to superseded6fe9fc8 only",
+  "ownerKeyEntry": "Already authorized; saved confirmation absent; no new approval requested",
+  "liveAppScopePhysicalCustomerNativeDownloadsEndpoint": "unverified",
+  "M3MilestoneGates": "18 pending; M0-M10 order, three adapters and all agreed phase obligations preserved",
+  "versionActivationDescriptors": "absent"
+}

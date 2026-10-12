@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {mkdtemp,readFile,stat,readdir,rm,writeFile} from 'node:fs/promises';import {tmpdir} from 'node:os';import {join} from 'node:path';import {execFileSync} from 'node:child_process';
 // @ts-ignore JavaScript guard is shared with trusted hosted execution.
-import {validateCustomerInputs,inspectCustomerScope,withCustomerKey} from '../scripts/lib/customer-acceptance-preflight.mjs';
+import {validateCustomerInputs,inspectCustomerScope,inspectCustomerInstallationScope,withCustomerKey} from '../scripts/lib/customer-acceptance-preflight.mjs';
 const permissions={contents:'read',pull_requests:'read',metadata:'read',checks:'write'};
 const input=()=>({repository:'alimobrem/agentci-onboarding-demo',serviceSource:'a'.repeat(40),appId:12,installationId:34,subjects:[{kind:'seeded',pullRequest:1,baseSha:'b'.repeat(40),headSha:'c'.repeat(40)},{kind:'fixed',pullRequest:2,baseSha:'b'.repeat(40),headSha:'d'.repeat(40)}]});
 function clients(mutate:(data:any,route:string)=>void=()=>{}){const calls:string[]=[];const client={request:async(route:string,args:any)=>{calls.push(route);let data:any;
@@ -22,3 +22,5 @@ test('trusted-context Git child never inherits the customer key',async()=>{const
 if [ -n "$AGENTCI_CUSTOMER_APP_PRIVATE_KEY" ]; then printf leaked > '${root}/observed'; else printf clean > '${root}/observed'; fi
 printf '%s\\n' '${input().serviceSource}'
 `,{mode:0o700});assert.throws(()=>execFileSync(process.execPath,['scripts/m3-customer-app-preflight.mjs',join(root,'input.json')],{env:{PATH:root+':'+process.env.PATH,RUNNER_TEMP:root,GITHUB_REPOSITORY:'alimobrem/agentci',GITHUB_REF:'refs/heads/main',GITHUB_EVENT_NAME:'workflow_dispatch',GITHUB_SHA:input().serviceSource,AGENTCI_CUSTOMER_APP_PRIVATE_KEY:'SENTINEL-CUSTOMER-SECRET'},stdio:'pipe'}),(e:any)=>e.status===1&&!e.stderr.toString().includes('SENTINEL'));assert.equal(await readFile(join(root,'observed'),'utf8'),'clean');assert.ok(!(await readdir(root)).some(name=>name.startsWith('agentci-customer-private-')));}finally{await rm(root,{recursive:true,force:true});}});
+
+test('installation scope guard works before fixture PR creation and performs no PR reads',async()=>{const {subjects,...scope}=input();const {client,calls}=clients();const result=await inspectCustomerInstallationScope(scope,client,client);assert.equal(result.result,'installation-scope-passed');assert.equal(result.fixtureHeads,'not-yet-validated');assert.equal(calls.length,3);assert.ok(calls.every(route=>!route.includes('/pulls/')));});

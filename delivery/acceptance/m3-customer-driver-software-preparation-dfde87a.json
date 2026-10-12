@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "tasks": [
+    "M3-07d-2d",
+    "M3-07d-2e"
+  ],
+  "scope": "Bounded local SOFTWARE PREPARATION only; implementation of observation and temporary four-scenario orchestrator is not live scenario acceptance",
+  "recordedAt": "2026-10-12T00:30:52.433541+00:00",
+  "sourceCommit": "dfde87a98097b7678cb64d34b72bee8aae672b2a",
+  "sourceTree": "72d5b1dff6053f7e57d66ca06dce089bc6523a19",
+  "baseCommit": "fdfb51f0dc71d4a559ff8e3a2450e82b79ae5a6a",
+  "baseTree": "ef1cac26fdf5d5c2c2a43207cc4137d906aef032",
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/customer-installation-scope.yaml",
+      "sha256": "c8b6905037af956f96dd52e7d38e15e331652088539b002e70a998f7d8fd95eb"
+    },
+    {
+      "path": ".github/workflows/customer-live-demo.yaml",
+      "sha256": "337dae021baf990bb5ce31207e7a8d790968c4ded15b513e8739d894f347eb69"
+    },
+    {
+      "path": "docs/phases/m3-customer-acceptance-preparation.md",
+      "sha256": "b7280642159f48cd0bfa523af9791bcf7ac6d2cf2a022b39c018d04a871d5609"
+    },
+    {
+      "path": "scripts/lib/customer-acceptance-preflight.mjs",
+      "sha256": "645a11f9ac7a8aa5e02f1ec7eb666af2c2afb92c49580062aad9f7d192d8bf1f"
+    },
+    {
+      "path": "scripts/lib/customer-activation.mjs",
+      "sha256": "5e590ceac3819c4474d641b12e665f4f91d4fe4e862a95307e25b2a01d1e9555"
+    },
+    {
+      "path": "scripts/lib/customer-approved-catalog.mjs",
+      "sha256": "7fc3f7977a1f9b68a7b081bc5844ac8efb5c50d1dbebd1dbd562ba0497ada0ac"
+    },
+    {
+      "path": "scripts/lib/customer-evaluator-container.mjs",
+      "sha256": "12130d513cf5ecaf6fcebaf35cf2a0f4537ea77542fdf0d1f057e618a9f2956d"
+    },
+    {
+      "path": "scripts/lib/customer-four-scenarios.mjs",
+      "sha256": "d266f9b0d3e68b5cd027068ce29f186c419c58f11c20d469879648fd20e4b06c"
+    },
+    {
+      "path": "scripts/lib/customer-live-observations.mjs",
+      "sha256": "956fccf413a46ddb2e40a7ccff9a20274e18b6ca0843bd027b8e268d5944ba56"
+    },
+    {
+      "path": "scripts/lib/customer-owned-reservations.mjs",
+      "sha256": "f2f32fe4d2a1ec0738b5ffbd4db19e304fc8cbd7d0f3aef7a8e4f2aab44c9a80"
+    },
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "e8f1c840d36aa5e521c01f7e8995196bfbdb61600439b6c52b492282399fdbc8"
+    },
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "sha256": "8084eb17c6faab77b6f160f346bda769733a7acdb00a14f7be499dd13c156cd8"
+    },
+    {
+      "path": "scripts/m3-customer-app-preflight.mjs",
+      "sha256": "35154c5f2e1113f107f6427d1382dcf41934d812f8b5fe099896d22abcf9e30c"
+    },
+    {
+      "path": "scripts/m3-customer-live-demo.mjs",
+      "sha256": "93c33a46aa77f5c23c16c51615426904435565e57d755c3043e43833f1d7e2df"
+    },
+    {
+      "path": "scripts/m3-customer-live-observe.mjs",
+      "sha256": "e9a7c6a16019ca28219eba38016f252521c099f04151055c7ab4272d2412b427"
+    },
+    {
+      "path": "scripts/published-package-smoke.mjs",
+      "sha256": "28f519060aa3659dedb47154f757ea9cad0d8e5692ac0414714660cb957e191e"
+    },
+    {
+      "path": "tests/customer-activation.test.ts",
+      "sha256": "037613f69ad9cf712c6bd7591f864cfda855453d20618770d2c254ffa5de8663"
+    },
+    {
+      "path": "tests/customer-app-preflight.test.ts",
+      "sha256": "24f0650905153720e198e16a41f1dc93e72ec2b73d691d6942576283c3a1b5a1"
+    },
+    {
+      "path": "tests/customer-approved-catalog.test.ts",
+      "sha256": "0687154860ef7ffb258f9a46db62bb765d0074e7a5be07d627c8a187c9ed5f90"
+    },
+    {
+      "path": "tests/customer-evaluator-container.test.ts",
+      "sha256": "2ffd8434acd406bda040588ae6b042fc0cfb4968e669151b3a1cbec188b669ef"
+    },
+    {
+      "path": "tests/customer-live-demo.test.ts",
+      "sha256": "677da3aeb93dabae2988ec08a02b5e35a528f7d7d50b04b2b0276b19706e6bf0"
+    },
+    {
+      "path": "tests/customer-live-observations.test.ts",
+      "sha256": "83dddcd738d45aa1ecc8589d427c727c624d0693fc82b1c7570177181c330a3f"
+    },
+    {
+      "path": "tests/customer-owned-reservations.test.ts",
+      "sha256": "c3b03f147a67b96d57c94c9672d757d65781085a23a208c2eeddb491a9fd7077"
+    },
+    {
+      "path": "tests/customer-runtime-processes.test.ts",
+      "sha256": "b6f34701408eb326f27a82f6199ff85087bb87d879511ddea4ad1aeedc5ee11e"
+    },
+    {
+      "path": "tests/published-package-preparation.test.ts",
+      "sha256": "46b35049f9acf0c41bd08284106ea01c9426bac37b76377dd48466cbc020e448"
+    }
+  ],
+  "checks": [
+    {
+      "name": "focused-local-tests",
+      "passed": 31,
+      "failed": 0,
+      "skipped": 0,
+      "path": "/workspace/scratch/customer-driver-final2-focused.log",
+      "sha256": "e279747208db04ed35d4b30f1e78ba562a4bcc15198d084784099736d0cf36f2"
+    },
+    {
+      "name": "fast-local-feedback",
+      "passed": 10,
+      "seconds": 31.62,
+      "includes": "typecheck",
+      "path": "/workspace/scratch/customer-driver-final2-fast.log",
+      "sha256": "7135ce90e55411d4ab252c5751d949b2292047f08a8ea18d0288442d4c7a475b"
+    },
+    {
+      "name": "workflow-lint",
+      "result": "passed",
+      "path": "/workspace/scratch/customer-driver-final2-workflows.log",
+      "sha256": "cbb6627c6fbc680c66ab4c6145487e3ca5caebc34c37941cdeb736e70e4b2284"
+    },
+    {
+      "name": "build",
+      "result": "passed",
+      "exitCode": 0,
+      "path": "/workspace/scratch/customer-driver-source-bound-build-20261012.log",
+      "sha256": "0b282be87e9cd8925caefeeaf85ff3321f09d54408c6fc8d2a30e088651a69b6",
+      "previousBuild": "Earlier build log was silent; compiled apps/cmd/packages, tsconfigs and build-assets inputs unchanged between 4ccfaf1 and dfde87a. Build repeated once on final source for a durable command log."
+    }
+  ],
+  "independentReview": {
+    "path": "/workspace/scratch/customer-driver-final-independent-review-20261012.json",
+    "sha256": "29dfd9dbeec480103534fb9da74e6d037cbffa57bdb2121d18fe31fcc0409d3d",
+    "decision": "No remaining blocker for bounded local SOFTWARE PREPARATION draft/full hosted CI",
+    "targetedCriticalChecks": 4
+  },
+  "preservedPublicationHelper": {
+    "path": "scripts/lib/development-artifacts.mjs",
+    "sha256": "d4107a97cc29b7a92f28c842a53dd30561b477fde1d0f067f5767fe48a99b63b",
+    "unchangedFromBase": true
+  },
+  "workflowLintCache": "Repository verified existing pinned actionlint 1.7.12 archive after initial EAI_AGAIN fetch failure; original attempt retained",
+  "activationDescriptors": "absent; no live workflow activated",
+  "fullHostedCI": "required-before-merge; local fast does not replace full exact-source CI",
+  "ownerCredentialApproval": "Already granted separately; secure private owner entry not confirmed",
+  "publicCustomerAppIds": "Historical references only; actual identity and scope must be verified",
+  "liveScenarioExecution": "unverified",
+  "physicalReproductionAndRecovery": "unverified",
+  "customerChecks": "unverified",
+  "nativeCandidatePublicationAndAnonymousDownloads": "unverified",
+  "externallyReachableEndpoint": "unverified; temporary loopback endpoint does not close this gate",
+  "milestoneGates": "all 18 M3 gates remain pending",
+  "originalScope": "M0-M10 order and all three adapters preserved; observed-rate calibration chosen, Wilson descriptive; only inaccessible external provider tests may remain explicitly deferred after all other applicable gates pass",
+  "remoteActions": "none performed by this worker"
+}

@@ -18,17 +18,16 @@ export async function anonymousDownload(url,sha256,limit,request=fetch){
  for await(const chunk of response.body){length+=chunk.length;if(length>limit)throw Error('Public asset oversized');chunks.push(chunk);}
  const bytes=Buffer.concat(chunks);if(hash(bytes)!==sha256)throw Error('Public asset checksum mismatch');return bytes;
 }
-if(process.argv[1]===fileURLToPath(import.meta.url)){
+export async function preparePublishedPackage({version,sourceCommit,arch,manifestSha256,packageSha256,verificationRunId=process.env.GITHUB_RUN_ID,verificationAttempt=process.env.GITHUB_RUN_ATTEMPT,request=fetch}){
  let root;
  try{
-  const version=process.env.RELEASE_VERSION,sourceCommit=process.env.RELEASE_SOURCE,arch=process.env.RELEASE_ARCH;
   candidateIdentity(version,sourceCommit);
   if(process.platform!=='linux'||arch!==(process.arch==='x64'?'amd64':process.arch))throw Error('Actual native Linux package host required');
   const base=`https://github.com/alimobrem/agentci/releases/download/v${version}/`;
-  const manifestBytes=await anonymousDownload(base+'package-manifest.json',process.env.PACKAGE_MANIFEST_SHA256,8*1024*1024);
+  const manifestBytes=await anonymousDownload(base+'package-manifest.json',manifestSha256,8*1024*1024,request);
   const manifest=validatePackageManifest(JSON.parse(manifestBytes),{version,sourceCommit});
-  if(manifest.package.sha256!==process.env.PACKAGE_SHA256)throw Error('Manifest/package checksum binding mismatch');
-  const archive=await anonymousDownload(base+manifest.package.name,manifest.package.sha256,64*1024*1024);
+  if(manifest.package.sha256!==packageSha256)throw Error('Manifest/package checksum binding mismatch');
+  const archive=await anonymousDownload(base+manifest.package.name,manifest.package.sha256,64*1024*1024,request);
   root=await mkdtemp(join(tmpdir(),'agentci-anonymous-package-'));
   const env=sanitizedPackageEnvironment(root,process.env.PATH);
   await writeFile(join(root,'empty.npmrc'),'');await writeFile(join(root,'empty-global.npmrc'),'');
@@ -62,10 +61,15 @@ if(process.argv[1]===fileURLToPath(import.meta.url)){
    const module=join(installed,'dist/packages/providers/'+name+'.js');
    run(process.execPath,['--input-type=module','-e','await import('+JSON.stringify(pathToFileURL(module).href)+');']);
   }
-  const receipt={publicationRunId:manifest.runId,publicationAttempt:manifest.attempt,verificationRunId:process.env.GITHUB_RUN_ID,verificationAttempt:process.env.GITHUB_RUN_ATTEMPT,result:'passed',version,sourceCommit,platform:'linux/'+arch,anonymous:true,productionOnly:true,lockedRootInstall:true,consumerInstall:true,packageSha256:hash(archive),manifestSha256:hash(manifestBytes),filesVerified:manifest.files.length,node:process.version};
-  await writeFile('package-'+arch+'.json',JSON.stringify(receipt,null,2)+'\n');
-  console.log(JSON.stringify(receipt));
- }catch{
-  console.error('Anonymous package validation failed; no install/download acceptance claimed.');process.exitCode=1;
- }finally{if(root)await rm(root,{recursive:true,force:true});}
+  const receipt={publicationRunId:manifest.runId,publicationAttempt:manifest.attempt,verificationRunId,verificationAttempt,result:'passed',version,sourceCommit,platform:'linux/'+arch,anonymous:true,productionOnly:true,lockedRootInstall:true,consumerInstall:true,packageSha256:hash(archive),manifestSha256:hash(manifestBytes),filesVerified:manifest.files.length,node:process.version};
+  return {installedRoot:installed,lockedRoot:locked,manifest,manifestBytes,archive,receipt,temporaryRoot:root,cleanup:()=>rm(root,{recursive:true,force:true})};
+ }catch(error){if(root)await rm(root,{recursive:true,force:true});throw error;}
+}
+if(process.argv[1]===fileURLToPath(import.meta.url)){
+ let prepared;
+ try{
+  prepared=await preparePublishedPackage({version:process.env.RELEASE_VERSION,sourceCommit:process.env.RELEASE_SOURCE,arch:process.env.RELEASE_ARCH,manifestSha256:process.env.PACKAGE_MANIFEST_SHA256,packageSha256:process.env.PACKAGE_SHA256});
+  await writeFile('package-'+process.env.RELEASE_ARCH+'.json',JSON.stringify(prepared.receipt,null,2)+'\n');console.log(JSON.stringify(prepared.receipt));
+ }catch{console.error('Anonymous package validation failed; no install/download acceptance claimed.');process.exitCode=1;}
+ finally{await prepared?.cleanup();}
 }

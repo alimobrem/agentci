@@ -1,0 +1,75 @@
+name: Temporary customer demo
+on:
+  push:
+    branches: [main]
+    paths: [releases/m3-customer-demo.json]
+  workflow_dispatch:
+    inputs:
+      candidate_and_fixtures:
+        description: Approved exact release source/checksums and connector-created seeded/fixed fixture subjects JSON
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: agentci-temporary-customer-demo
+  cancel-in-progress: false
+jobs:
+  demo:
+    if: github.repository == 'alimobrem/agentci' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
+        env: { POSTGRES_PASSWORD: agentci-customer-ci-only, POSTGRES_DB: agentci_customer }
+        ports: [5432:5432]
+        options: --health-cmd "pg_isready -U postgres -d agentci_customer" --health-interval 5s --health-timeout 3s --health-retries 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { ref: '${{ github.sha }}', persist-credentials: false, fetch-depth: 0 }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0, cache: npm }
+      - run: npm install --global npm@12.2.0
+      - run: npm ci && npm run build
+      - name: Validate public candidate/fixture inputs
+        env:
+          CANDIDATE_FIXTURES: ${{ inputs.candidate_and_fixtures }}
+        run: |
+          node --input-type=module - <<'JS'
+          import {writeFileSync,readFileSync} from 'node:fs';
+          import {customerActivationInput} from './scripts/lib/customer-activation.mjs';
+          import {validateCustomerInputs} from './scripts/lib/customer-acceptance-preflight.mjs';
+          const input=process.env.GITHUB_EVENT_NAME==='push'?customerActivationInput('demo',JSON.parse(readFileSync('releases/m3-customer-demo.json','utf8')),process.env.GITHUB_SHA):JSON.parse(process.env.CANDIDATE_FIXTURES);validateCustomerInputs(input.fixtures);
+          if(input.fixtures.serviceSource!==process.env.GITHUB_SHA||!(/^[a-f0-9]{40}$/.test(input.releaseSource)))throw Error('Exact source required');
+          for(const key of ['packageManifestSha256','packageSha256','imagesManifestSha256','publicationEvidenceSha256'])if(!(/^[a-f0-9]{64}$/.test(input[key])))throw Error('Pinned artifact checksums required');
+          writeFileSync('customer-demo-input.json',JSON.stringify(input),{mode:0o600});
+          JS
+      - name: Start owned temporary Temporal
+        run: |
+          docker run -d --name "agentci-customer-temporal-$GITHUB_RUN_ID-$GITHUB_RUN_ATTEMPT" --label "agentci.customer.infra=$GITHUB_RUN_ID:$GITHUB_RUN_ATTEMPT" -p 127.0.0.1:7233:7233 temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e server start-dev --ip 0.0.0.0 --headless
+          node --input-type=module - <<'JS'
+          import {Connection} from '@temporalio/client';
+          let ready=false;for(let i=0;i<60;i++){try{const c=await Connection.connect({address:'127.0.0.1:7233',connectTimeout:'2 seconds'});await c.close();ready=true;break;}catch{await new Promise(r=>setTimeout(r,1000));}}if(!ready)throw Error('Temporary Temporal unavailable');
+          JS
+      - name: Execute downloaded exact-source temporary customer demo
+        env:
+          AGENTCI_CUSTOMER_APP_PRIVATE_KEY: ${{ secrets.AGENTCI_CUSTOMER_APP_PRIVATE_KEY }}
+          AGENTCI_CUSTOMER_DATABASE_URL: postgresql://postgres:agentci-customer-ci-only@127.0.0.1:5432/agentci_customer
+          AGENTCI_CUSTOMER_TEMPORAL_ADDRESS: 127.0.0.1:7233
+        run: node scripts/m3-customer-live-demo.mjs customer-demo-input.json
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: temporary-customer-demo
+          path: customer-live-demo.json
+          if-no-files-found: warn
+      - name: Stop owned temporary Temporal and public scratch
+        if: always()
+        run: |
+          node --input-type=module - <<'JS'
+          import {execFileSync} from 'node:child_process';import {rmSync} from 'node:fs';
+          const name='agentci-customer-temporal-'+process.env.GITHUB_RUN_ID+'-'+process.env.GITHUB_RUN_ATTEMPT;
+          const found=execFileSync('docker',['ps','--all','--quiet','--filter','name=^/'+name+'$'],{encoding:'utf8'}).trim();
+          if(found){const info=JSON.parse(execFileSync('docker',['inspect',found],{encoding:'utf8'}))[0];if(info.Config.Labels['agentci.customer.infra']!==process.env.GITHUB_RUN_ID+':'+process.env.GITHUB_RUN_ATTEMPT)throw Error('Temporary infrastructure ownership mismatch');execFileSync('docker',['rm','--force',found]);}rmSync('customer-demo-input.json',{force:true});
+          JS

@@ -1,0 +1,52 @@
+name: Customer installation scope
+on:
+  push:
+    branches: [main]
+    paths: [releases/m3-customer-installation.json]
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: Exact JSON with repository, serviceSource, appId and installationId; no fixture PRs required
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: agentci-customer-installation-scope
+  cancel-in-progress: false
+jobs:
+  preflight:
+    if: github.repository == 'alimobrem/agentci' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { ref: '${{ github.sha }}', persist-credentials: false, fetch-depth: 0 }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0, cache: npm }
+      - run: npm install --global npm@12.2.0
+      - run: npm ci && npm run build
+      - name: Validate immutable fixture inputs before loading key
+        env:
+          FIXTURES: ${{ inputs.scope }}
+        run: |
+          node --input-type=module - <<'JS'
+          import {writeFileSync,readFileSync} from 'node:fs';
+          import {customerActivationInput} from './scripts/lib/customer-activation.mjs';
+          import {validateCustomerInstallationInputs} from './scripts/lib/customer-acceptance-preflight.mjs';
+          const input=validateCustomerInstallationInputs(process.env.GITHUB_EVENT_NAME==='push'?customerActivationInput('scope',JSON.parse(readFileSync('releases/m3-customer-installation.json','utf8')),process.env.GITHUB_SHA):JSON.parse(process.env.FIXTURES));
+          if(input.serviceSource!==process.env.GITHUB_SHA)throw Error('Service source mismatch');
+          writeFileSync('customer-fixtures.json',JSON.stringify(input),{mode:0o600});
+          JS
+      - name: Inspect separate customer App before Work fixture creation
+        env:
+          AGENTCI_CUSTOMER_APP_PRIVATE_KEY: ${{ secrets.AGENTCI_CUSTOMER_APP_PRIVATE_KEY }}
+        run: node scripts/m3-customer-app-preflight.mjs customer-fixtures.json --scope-only
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: customer-installation-scope
+          path: customer-preflight.json
+          if-no-files-found: error
+      - name: Remove public input scratch
+        if: always()
+        run: rm -f customer-fixtures.json
