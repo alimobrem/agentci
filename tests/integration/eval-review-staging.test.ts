@@ -48,9 +48,17 @@ test('Git HTTP and PostgreSQL staging retain exact plans, retry identity, gaps a
     assert.ok(requests.includes(`/repos/example/repo/git/commits/${base.sha}`));assert.ok(requests.includes(`/repos/example/repo/git/commits/${head.sha}`));
     for(const id of staged.unitIds){const unit=(await evals.unit(id))!;assert.equal(unit.inputs.head.snapshot.files['apps/dashboard/app/api/reviews/[id]/route.ts'],'export const GET = () => new Response("fixture");');assert.equal(unit.definition.assertionSide,'base');assert.equal(unit.definition.suite.spec.trials.count,20);assert.ok(['model-a','model-b'].includes(unit.definition.model!));}
     const retained=await store.evidence(staged.reviewId);assert.ok(retained!.analysis.changes.some(c=>c.path==='apps/dashboard/app/api/reviews/[id]/route.ts'));
+    // Parallel suites use the same deployment scope; distinguish this immutable review too.
+    const other=await activities.stageEvalReview({...job,pullRequest:74},randomUUID());
+    assert.notEqual(other.reviewId,staged.reviewId);assert.notEqual(other.comparisonId,staged.comparisonId);
+    const ownJobCount=async()=>Number((await pool.query(`SELECT count(*) FROM agentci_eval_jobs j
+      JOIN agentci_reviews r ON r.id=j.review_id WHERE j.repository=$1 AND r.repository=$1
+      AND (r.evidence->>'organizationId')::uuid=$2::uuid AND j.review_id=$3::uuid`,[repository,org,staged.reviewId])).rows[0].count);
+    const beforeUnsafe=await ownJobCount();assert.equal(beforeUnsafe,1);
+    assert.ok(Number((await pool.query('SELECT count(*) FROM agentci_eval_jobs WHERE repository=$1',[repository])).rows[0].count)>=2);
     const unsafe=createEvalReviewActivities(client,store,evals,scope,policy,Object.assign(async(_repository:string,sha:string)=>sha===base.sha?base:{...head,files:{...head.files,'apps/../escape.ts':'invalid'}},{metrics:createRemoteSnapshotReader(client).metrics}));
     await assert.rejects(unsafe.stageEvalReview(job,randomUUID()),e=>e instanceof ApplicationFailure&&e.type==='EvalReviewUnavailable'&&!e.nonRetryable);
-    assert.equal(Number((await pool.query('SELECT count(*) FROM agentci_eval_jobs')).rows[0].count),1);
+    assert.equal(await ownJobCount(),beforeUnsafe); // Invalid input must create no job for this exact fixture.
     const compare=(await evals.comparison(staged.comparisonId))!;assert.equal(compare.comparison.summary.outcome,'pending');assert.ok(compare.comparison.suiteChanges.some(c=>c.kind==='modified'));
     const altered=createEvalReviewActivities(client,store,evals,scope,{...policy,image:'sha256:'+'b'.repeat(64)});
     await assert.rejects(altered.stageEvalReview(job,attempt),e=>e instanceof ApplicationFailure&&e.nonRetryable===true&&e.type==='EvalReviewConfiguration');

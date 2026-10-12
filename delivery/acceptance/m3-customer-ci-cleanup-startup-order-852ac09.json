@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-12T03:51:36.355814+00:00",
+  "task": "M3-CI-SEC-DB-1",
+  "state": "Bounded local cleanup-evidence rework passed; independent final binding and fresh hosted CI pending",
+  "sourceCommit": "852ac09a528ece30bf6340531fe25a9429c7d649",
+  "sourceTree": "edbc7d9482b1d987a55b944cc902b73aa3c9af85",
+  "priorRemoteHead": "04539958fe4a4e7349095df1565950d2d3cbac4c",
+  "reviewFinding": "Pre-container creation failure published privateFilesRemoved success before awaiting private-directory deletion. Independent review found evidence-ordering error; no credential exposure identified.",
+  "change": "Await removal before successful receipt. Failed or partial deletion leaves no successful fallback proof; created-container cleanup and ownership/recovery guards unchanged.",
+  "sourceBindings": {
+    "scripts/lib/customer-ci-database.mjs": "f670cd2c17722c97e1ee09a6845946066459539b9634da0f282b6ca7a1e9d924",
+    "tests/customer-ci-database.test.ts": "4c542144b8f595b6087945aff3e173a4682b20879ed87a1094b3a1485ac570dc"
+  },
+  "localVerification": {
+    "focusedPassed": 13,
+    "physicalPostgresAndTemporal": true,
+    "unitPassed": 499,
+    "unitFailed": 0,
+    "unitSkipped": 0,
+    "fastPassed": 10,
+    "fastSeconds": 39.040767967,
+    "typecheck": "passed within fast checks",
+    "workflowLint": "passed with invalid-context negative fixture",
+    "fastReportSha256": "f1658026c60017deda1f5a1ea7dd538115feb492696e4a08dc99c8a24df6879c",
+    "dirtyFlag": true,
+    "dirtyQualification": "untracked node_modules symlink only, tracked source unchanged during checks"
+  },
+  "independentReview": {
+    "path": "/workspace/scratch/customer-review-ci-db-852ac09-removal-order-proof-20261012.json",
+    "sha256": "7b9ad9d07f209e5ccc3be9ff3988ddd015737346814c916c4e7a4ca69a7beca9",
+    "result": "PASS; independently executed complete/partial deletion failure and held-removal ordering tests"
+  },
+  "evidenceBindings": {
+    "/workspace/scratch/customer-ci-startup-receipt-order-focused.log": "67873a0f8a1b5a019a3fe16763d623a84bbca5ec909a89f1a1ef101df4a2bffb",
+    "/workspace/scratch/customer-ci-startup-receipt-order-fast.log": "859ac25325d706707c903d2d6b19755a0e12c7b9ca8f817afa8f0a87515e5bf2",
+    "/workspace/scratch/customer-ci-startup-receipt-order-workflows.log": "8c4c5d5e4b28c3fd41e48240eaf4de65b6a2ecb3c3a4000e42137c99945c354d",
+    "/workspace/scratch/customer-ci-startup-receipt-order-workflows-initial-dns-failure.log": "0d35f6af7b422a02282c5939bab898dd7887b8986263343844ad44b62008d967"
+  },
+  "toolQualification": "Initial GitHub actionlint download failed with EAI_AGAIN and is preserved; reused previously downloaded archive, script verified pinned SHA2568aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8 before lint. No alternate network or auth route.",
+  "preservation": "Original task acceptance/completion and reopened finding events, previous immutable source records and failed hosted attempts remain preserved.",
+  "limitations": [
+    "Fresh hosted CI and independent hosted artifact inspection pending",
+    "Actual customer workflow and live customer acceptance pending",
+    "All 18 M3 gates remain pending, with M0\u2013M10 scope/order preserved",
+    "No history rewrite, no credential rotation, no M3 completion and no recovery guarantee after runner expiry"
+  ]
+}

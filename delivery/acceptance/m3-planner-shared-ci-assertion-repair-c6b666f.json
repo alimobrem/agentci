@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-ADVISORY-PATH-1",
+  "scope": "Minimal trusted-current-main planner/test integration; bounded shared-CI assertion repair only",
+  "recordedAt": "2026-10-12T04:27:12.394552+00:00",
+  "sourceCommit": "c6b666fb1ca7b752da651206572eecff418e27af",
+  "sourceTree": "ce63a366748929528c69d56e95a15b46ce1eeeac",
+  "baseCommit": "6236ec1ddda008d220cb8932fecebdc89f6ce0c4",
+  "baseTree": "424c3f494e897b86314ccfbc26f8fd9ce65dce39",
+  "baseQualification": "Local correctedCIcleanup exacttree equivalent of actualmaincf1; root will preserve actual published parent when publishing",
+  "integratedMinimalCandidate": "a1e333be3b52dc470ce34f012d1fc3c389e2ae22",
+  "sourceFiles": [
+    {
+      "path": "packages/evals/contracts.ts",
+      "sha256": "1166e5365f1582ba34475e2a4566d30d45b0421bb3bf82b18300030a5d046a5c"
+    },
+    {
+      "path": "tests/eval-contracts.test.ts",
+      "sha256": "f15a40fb52f978139ae89a43fc920299ac4681e43a1b84084ad6e19f8747c46d"
+    },
+    {
+      "path": "tests/eval-orchestration.test.ts",
+      "sha256": "a63e1fc17e19361f92096937fddfebee9d40eb58fc8daa6f1c1a062c8f5095af"
+    },
+    {
+      "path": "tests/integration/eval-review-staging.test.ts",
+      "sha256": "f3ebeddd361de8949818e631e758aebd59067414b8a84f1e9a056e923e5cb10b"
+    }
+  ],
+  "diagnosis": "Negative-stage guard used global agentci_eval_jobs count. Parallel mandatory integrations share one database, sameorganization and sameexample/repo deployment, so even org/repo-only count can observe other tests. Parent retained originalCI194/195pass with actualcount5 vs1; isolatedsinglefile did not expose this interference.",
+  "repair": "Query exact staged.reviewId together with repository and joined immutable review evidence organization. Capture before count and require unchanged after rejected unsafe staging. Production planner has no new change vsrevieweda1.",
+  "deterministicRegression": "Stage a second valid sameorganization/repository review at differentPR before negative guard. Broadrepositorycount\u22652, exactownreviewcount1; invalidpath fails and exactowncount unchanged. Retained source/commit/trials/replay/identity checks remain.",
+  "failedCI": {
+    "record": "delivery/runs/38202263061-attempt-1.json",
+    "sha256": "61e06371c0e5f6742c2c64f97f2bc1e4eaa933a378c7f42392de1bbe0d75848f",
+    "run": 38202263061,
+    "attempt": 1,
+    "conclusion": "failure",
+    "sourceCommit": "89615238b4b81ccb37ca0978efbba28d2be631f4",
+    "sourceTree": "e81a4ccf35a5c9dfc12d5269eb80bb6353bf2ad3",
+    "cache": "unknown",
+    "collection": "Completed-attempt CLI using restricted cached WorkGET run+complete2jobs metadata; no rawlog/tokenbridge",
+    "parentReportedIntegration": {
+      "passed": 194,
+      "total": 195,
+      "failure": "eval-review-staging global count assertion actual5 expected1",
+      "qualification": "Counts/assertion from parentretainedlogs; WorkGET independently confirms completedfailure at mandatoryintegrationstep"
+    },
+    "remoteTreeBinding": {
+      "path": "/workspace/scratch/planner84-parallel-failed-source-binding-20261012.json",
+      "sha256": "3539cf5b7c4bde2702134b6654f85a65baa1eb0bd72ecab8dc8dcc8558387311"
+    }
+  },
+  "checks": [
+    {
+      "path": "/workspace/scratch/planner84-parallel-scoped-focused-20261012.log",
+      "sha256": "8c1cbd2e0779952ca7b957602952d4e15d2a535fe8eeada2a880482f8653ca6f",
+      "result": "20affectedunit tests passed0fail/skip"
+    },
+    {
+      "path": "/workspace/scratch/planner84-parallel-scoped-real-staging-20261012.log",
+      "sha256": "5f50554c536e16ed1a130fa69cf156c134fce65aed99ad16775f565334a19390",
+      "result": "ActualPGstaging1passes with additional sameorg/repo foreignreview present, owncount stable; ownedcleanup0/privatefilestrue"
+    },
+    {
+      "path": "/workspace/scratch/planner84-parallel-scoped-fast-20261012.log",
+      "sha256": "aba58fc1f6ce705d4b76bab86f5365762bdf8d534417186e96eba8d8610fb07c",
+      "result": "10fast checks42.58s pass;501unit0fail/skip/typecheck/API"
+    },
+    {
+      "path": "/workspace/scratch/planner84-parallel-scoped-fast-report-20261012.json",
+      "sha256": "08a52ba171a7c96be83bb82ef7cedea3dcf1da74e484bc61972a2943f5daaa54",
+      "result": "Immutable exactsource report;dirtytrue untracked dependency symlink"
+    },
+    {
+      "path": "/workspace/scratch/planner84-parallel-scoped-canonical-20261012.log",
+      "sha256": "3c655087d3e415beeae76d42e7aa0390cb2b1f5f8e30976b0de71ba65d44fc1b",
+      "result": "Canonical1346sourceIDs/29children passed"
+    },
+    {
+      "path": "/workspace/scratch/customer-review-planner-c6b-independent-20261012.json",
+      "sha256": "63851f2b0ee316114ea7929ad84db5801f0fafae65ca0768f2aefbffe0b7d381",
+      "result": "Independent source/SQLscope and actualPGstaging1 passed, owned0"
+    }
+  ],
+  "preserved": [
+    "All133correctedmainbase taskobjects/events/CIcleanup records preserved; only originaladvisory task+6events+twoexactrecords imported froma1, no UIsources/tasks/history",
+    "CLIreopen beforetestedit; prior source/failure/acceptance/rework retained; currentacceptdone append only",
+    "Productioncontracts and twoaffectedunit files byte-identicalrevieweda1; onlyintegrationtest assertion/interferencecontext changes vsminimalplanner",
+    "Capturedhistory/version/adapters/workflows unchanged; allsections/currentmetadata regenerated after finalrecord bytes and CLI transitions"
+  ],
+  "historicalRecords": [
+    {
+      "path": "delivery/acceptance/m3-advisory-literal-path-repair-1c6edc6.json",
+      "sha256": "ef670a7b0ec255a7e45156fab39246fc4a4b7b0194e16545f56afe34f823b43b"
+    },
+    {
+      "path": "delivery/acceptance/m3-trusted-main-literal-path-revalidation-01c2864.json",
+      "sha256": "9d4454e3378778487fb265a064eda39ca20dc465d4ff78eb78e7cef2a6fde35c"
+    }
+  ],
+  "workspaceQualification": "Trackedsource cleanbefore/afterchecks; untrackednode_modules symlink createsdirtytrue; no cleancheckoutclaim",
+  "pending": [
+    "Finalindependentledger binding and rootdraft84 update/fresh exactsourcefullhostedCI/criticalreview",
+    "OriginalfullVerify38202263061 remainsfailure;194/195doesnotprovecurrentwholeintegrationpass",
+    "Trusted-main advisory canconsume productionfix only after authorizedmainmerge; no PRheadcheckout or workflowweakening",
+    "All18M3gates pending;M0-M10 order/threeadapters/observedrate/descriptiveWilson/soleapprovedinaccessibleproviderexception unchanged"
+  ],
+  "externalActions": "Read-only Workmetadata and bounded owned localPGtests only; no remote mutations, model/provider/liveApp/customer/release/merge/deploy"
+}

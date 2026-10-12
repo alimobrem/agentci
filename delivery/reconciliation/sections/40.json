@@ -6430,6 +6430,23 @@
           ]
         },
         {
+          "id": "M3-CI-SEC-DB-1",
+          "status": "done",
+          "startedAt": "2026-10-12T03:45:44.116Z",
+          "completedAt": "2026-10-12T03:51:37.403Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local CI preparation replaces the flagged customer workflow static database credential with unpredictable per-run credentials before an owned loopback PostgreSQL service starts. Private0700/0600 files, masking control, no password argv/log/artifact, real authenticated health checks and exact owned success/failure/ambiguous startup cleanup regressions pass. No alerts inspected, rotation/history rewrite/live customer or release action performed; hosted verification and independent review required.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-ci-cleanup-startup-order-852ac09.json"
+              ]
+            }
+          ]
+        },
+        {
           "id": "M3-R1-PUB-IMM-1",
           "status": "done",
           "startedAt": "2026-10-12T02:16:28.661Z",
@@ -6464,10 +6481,27 @@
           ]
         },
         {
+          "id": "M3-CI-SENSITIVE-FORWARD-1",
+          "status": "done",
+          "startedAt": "2026-10-12T04:46:17.603Z",
+          "completedAt": "2026-10-12T04:56:02.133Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local pinned CLI gate scans exact introduced commit range and changed endpoint blobs without PR code execution or inherited credentials; actual synthetic positive/negative, intermediate deletion/reintroduction, binary attributes, path encoding, symlink/shallow/missing-base and integrity regressions pass. Reports contain metadata only. Historical findings remain separate unresolved; no full-history-clean assertion. Independent review/full hosted bootstrap remain separate.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-forward-path-aware-local-9ca00fc.json"
+              ]
+            }
+          ]
+        },
+        {
           "id": "M3-ADVISORY-PATH-1",
           "status": "done",
-          "startedAt": "2026-10-12T03:53:11.105Z",
-          "completedAt": "2026-10-12T03:56:51.438Z",
+          "startedAt": "2026-10-12T05:21:33.087Z",
+          "completedAt": "2026-10-12T05:28:22.095Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
@@ -6475,7 +6509,7 @@
               "text": "Bounded local repair accepts literal bracket route filenames during planning and actual eval staging while preserving selector, traversal, control-character, protected-input, source and immutable identity guards. First failing exact-tree reproduction retained; meaningful negative and real PostgreSQL staging regressions and affected checks pass with independent review. Hosted CI and parent review remain required; no provider/live customer/release actions or M3 gate closure.",
               "status": "passed",
               "evidence": [
-                "delivery/acceptance/m3-trusted-main-literal-path-revalidation-01c2864.json"
+                "delivery/acceptance/m3-planner-scanner-main-integration-41b9180.json"
               ]
             }
           ]
@@ -6609,14 +6643,26 @@
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
+          "path": "delivery/acceptance/m3-customer-ci-cleanup-startup-order-852ac09.json",
+          "sha256": "200f120636ed35caf657bbb592db48f4ee301e4a199a57afd593249d7f24c437",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
           "path": "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json",
           "sha256": "0339493d57d44d492f9e2d3a1da2c162dca0fe454724a2dcd3cd0e0557fb8524",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
-          "path": "delivery/acceptance/m3-trusted-main-literal-path-revalidation-01c2864.json",
-          "sha256": "9d4454e3378778487fb265a064eda39ca20dc465d4ff78eb78e7cef2a6fde35c",
+          "path": "delivery/acceptance/m3-forward-path-aware-local-9ca00fc.json",
+          "sha256": "47b4b6a2a52e0d86be0beac16aec671cd805dc9617e9cd14fb8f30d2faddbcc9",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-planner-scanner-main-integration-41b9180.json",
+          "sha256": "14828754c3622a6f761711553cfb7fe2f20d5edd289af6a5b9b2d164d599b1a0",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -7015,6 +7061,23 @@
           ]
         },
         {
+          "id": "M3-CI-SEC-DB-1",
+          "status": "done",
+          "startedAt": "2026-10-12T03:45:44.116Z",
+          "completedAt": "2026-10-12T03:51:37.403Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local CI preparation replaces the flagged customer workflow static database credential with unpredictable per-run credentials before an owned loopback PostgreSQL service starts. Private0700/0600 files, masking control, no password argv/log/artifact, real authenticated health checks and exact owned success/failure/ambiguous startup cleanup regressions pass. No alerts inspected, rotation/history rewrite/live customer or release action performed; hosted verification and independent review required.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-ci-cleanup-startup-order-852ac09.json"
+              ]
+            }
+          ]
+        },
+        {
           "id": "M3-R1-PUB-IMM-1",
           "status": "done",
           "startedAt": "2026-10-12T02:16:28.661Z",
@@ -7049,10 +7112,27 @@
           ]
         },
         {
+          "id": "M3-CI-SENSITIVE-FORWARD-1",
+          "status": "done",
+          "startedAt": "2026-10-12T04:46:17.603Z",
+          "completedAt": "2026-10-12T04:56:02.133Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local pinned CLI gate scans exact introduced commit range and changed endpoint blobs without PR code execution or inherited credentials; actual synthetic positive/negative, intermediate deletion/reintroduction, binary attributes, path encoding, symlink/shallow/missing-base and integrity regressions pass. Reports contain metadata only. Historical findings remain separate unresolved; no full-history-clean assertion. Independent review/full hosted bootstrap remain separate.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-forward-path-aware-local-9ca00fc.json"
+              ]
+            }
+          ]
+        },
+        {
           "id": "M3-ADVISORY-PATH-1",
           "status": "done",
-          "startedAt": "2026-10-12T03:53:11.105Z",
-          "completedAt": "2026-10-12T03:56:51.438Z",
+          "startedAt": "2026-10-12T05:21:33.087Z",
+          "completedAt": "2026-10-12T05:28:22.095Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
@@ -7060,7 +7140,7 @@
               "text": "Bounded local repair accepts literal bracket route filenames during planning and actual eval staging while preserving selector, traversal, control-character, protected-input, source and immutable identity guards. First failing exact-tree reproduction retained; meaningful negative and real PostgreSQL staging regressions and affected checks pass with independent review. Hosted CI and parent review remain required; no provider/live customer/release actions or M3 gate closure.",
               "status": "passed",
               "evidence": [
-                "delivery/acceptance/m3-trusted-main-literal-path-revalidation-01c2864.json"
+                "delivery/acceptance/m3-planner-scanner-main-integration-41b9180.json"
               ]
             }
           ]
@@ -7194,14 +7274,26 @@
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
+          "path": "delivery/acceptance/m3-customer-ci-cleanup-startup-order-852ac09.json",
+          "sha256": "200f120636ed35caf657bbb592db48f4ee301e4a199a57afd593249d7f24c437",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
           "path": "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json",
           "sha256": "0339493d57d44d492f9e2d3a1da2c162dca0fe454724a2dcd3cd0e0557fb8524",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
-          "path": "delivery/acceptance/m3-trusted-main-literal-path-revalidation-01c2864.json",
-          "sha256": "9d4454e3378778487fb265a064eda39ca20dc465d4ff78eb78e7cef2a6fde35c",
+          "path": "delivery/acceptance/m3-forward-path-aware-local-9ca00fc.json",
+          "sha256": "47b4b6a2a52e0d86be0beac16aec671cd805dc9617e9cd14fb8f30d2faddbcc9",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-planner-scanner-main-integration-41b9180.json",
+          "sha256": "14828754c3622a6f761711553cfb7fe2f20d5edd289af6a5b9b2d164d599b1a0",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-12T04:25:22.176338+00:00",
+  "task": "M3-CI-SENSITIVE-FORWARD-1",
+  "state": "Bounded forward protection software preparation and current-main validation passed; hosted CI and first trusted-main bootstrap pending",
+  "sourceCommit": "3222fc869f4d02bc7dcfdafcabe6098b857ec756",
+  "sourceTree": "621c90f06b6282f5aa24b7fd2158eefe8cfdc18d",
+  "actualMain": {
+    "commit": "cf1d7876c039062fac00f101fc14f36eb1f44fa1",
+    "tree": "424c3f494e897b86314ccfbc26f8fd9ce65dce39"
+  },
+  "localEquivalentMain": "6236ec1ddda008d220cb8932fecebdc89f6ce0c4",
+  "sourceBindings": [
+    {
+      "path": ".github/workflows/sensitive-forward.yaml",
+      "sha256": "2460c1698cc8a72193460d086159f9cb134011d33ec6a2e112355ed7991deaa4"
+    },
+    {
+      "path": "docs/phases/m3-forward-secret-protection.md",
+      "sha256": "7e0c77726a7c3729373896fd1f46a45105b9911c6740d1ca9ddbcdc5125805d0"
+    },
+    {
+      "path": "scripts/security/gitleaks.toml",
+      "sha256": "479c71c32b3ab3342975d55ca98022fc1e1ec7c909b9da418c39e7fcc10a7f7a"
+    },
+    {
+      "path": "scripts/security/install-gitleaks.mjs",
+      "sha256": "12c9034deb529ca452e50132baac2ee949deb12f4841513f587f16f994c96807"
+    },
+    {
+      "path": "scripts/security/scan-forward.mjs",
+      "sha256": "855fc09627d9ed46748837cd70ab615fd8edaa751480a8b0a3e2dbd7c23b979e"
+    },
+    {
+      "path": "tests/sensitive-forward.test.ts",
+      "sha256": "c93d0c6d38e92f762f52d23fbbed5abb964baa255dd761227b73402d34e577b4"
+    }
+  ],
+  "evidenceBindings": [
+    {
+      "path": "/workspace/agentci-sensitive-forward-current-main/.agentci/artifacts/delivery/fast-latest.json",
+      "sha256": "1d25ccf47d70a78b47e9f77586052030b827fafb4ee5ffb339b34b39865156f5"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-current-main-fast.log",
+      "sha256": "413caea0ea455e16d42d84c24e62ea92b049da81916093f1b6ae34d5a0eaa868"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-current-main-fast-initial-missing-cache.log",
+      "sha256": "d9965b6ca43787d9d736440a795bec3dfeecb6a263c8f6c600b1a22e8159e722"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-current-main-source-report.json",
+      "sha256": "41c67416c845d3dd92ecbe2be794fece926b80d0386b897a6a620262e20cff7a"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-current-main-source-scan.log",
+      "sha256": "2a7889a4433de02bfc2810e9c6bf40a08bf2b97b931bd660bbed1ac32a193904"
+    },
+    {
+      "path": "/workspace/scratch/sensitive-forward-independent-integration-3222fc86-20261012.json",
+      "sha256": "52b9bfe93c95882598a6f8683384cc4a4cf425652ca02900c58df3336aff5a73"
+    }
+  ],
+  "independentSourceReuse": "All six source files byte-identical reviewed0d70; independent4actualCLI cases and merge-added/deleted binary regression retained in original source-bound record16153f33e9230748293b71949fd260564a0c7100e1b9489151eca401bec5c3d6. No integrated-source rerun of those unchanged cases claimed.",
+  "localVerification": {
+    "fastPassed": 10,
+    "fastSeconds": 44.507875592000005,
+    "unitPassed": 503,
+    "unitFailed": 0,
+    "unitSkipped": 0,
+    "typecheck": "passed",
+    "introducedDeltaStatus": "no-new-change-findings",
+    "selectedBlobs": 12,
+    "findings": 0,
+    "dirtyFlag": true,
+    "dirtyQualification": "untracked node_modules symlink only; tracked source unchanged during tests"
+  },
+  "cacheQualification": "Initial current-worktree test failure due missing pinned cache is preserved. Official archive/binary/upstream policy caches reused and verified by pinned SHA checks; no fresh download claimed and no network/auth workaround.",
+  "boundary": "Scan raw regular blobs introduced by HEAD excluding BASE ancestry, compared with their parents, plus changed HEAD blobs versus BASE. Intermediate addition/deletion, reintroduction, divergent base and rollback are covered. Changed files are scanned completely, so existing matches retained in a modified file can conservatively block. Unchanged pre-base history is outside this gate.",
+  "historicalAudit": {
+    "pr": "https://github.com/alimobrem/agentci/pull/85",
+    "observations": 569,
+    "original": 128,
+    "expanded": 441,
+    "status": "Separate unresolved inventory; classification review does not block forward protection. No baseline loaded and no blanket allowlist."
+  },
+  "limitations": [
+    "Fresh hosted installs/downloads and exact-head hosted verification pending",
+    "New pull_request_target workflow uses trusted base, so dedicated gate first activates after reviewed main merge; no PR code or dependencies execute with secrets",
+    "Branch-protection enforcement not configured or claimed",
+    "No full-history-clean, exhaustive data-loss-prevention or M3 completion claim; all18M3gates remain pending"
+  ]
+}
