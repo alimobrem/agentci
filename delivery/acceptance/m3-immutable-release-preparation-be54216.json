@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-PUB-IMM-1",
+  "scope": "LOCAL SOFTWARE PREPARATION immutable release lifecycle repair only",
+  "recordedAt": "2026-10-12T02:02:06.009778+00:00",
+  "sourceCommit": "be5421603d822e506b2aebe8af726f54f248c2f8",
+  "sourceTree": "24eb42ff00097391f72134c67d3c294f8c0d2c55",
+  "baseCommit": "79b8f612efc1c6cb27fe143984ec25a843208623",
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/development-candidate.yaml",
+      "sha256": "3dde344bb7ec52d26abd56e2fc3c22a8317f8a64f5485b3c1440ef92e5e26e5f"
+    },
+    {
+      "path": "docs/phases/m3-development-candidate.md",
+      "sha256": "207e449dc53fbcd74e6ac2382143d39338678fac9f1b98c940c273526a2738b6"
+    },
+    {
+      "path": "scripts/development-release.mjs",
+      "sha256": "8b1e27d86ca39967f8ac410e807881f817f6460b15039fcd6c24db43d7798d41"
+    },
+    {
+      "path": "scripts/lib/immutable-release-publication.mjs",
+      "sha256": "2e67cbce3b44fac55fa3cfc95262957a9721682bb6ea3ba304dd407bbf7f8469"
+    },
+    {
+      "path": "tests/development-artifacts.test.ts",
+      "sha256": "3f9c3d3532d031b7bab66ea617eedeb73245c8307cf6b8c4c782711f94ef60f8"
+    },
+    {
+      "path": "tests/development-release-execution.test.ts",
+      "sha256": "08ea3ca037497238266eb9924abba1d1449ce4eec5282dcaeb6bfbbc8139cd66"
+    },
+    {
+      "path": "tests/immutable-release-publication.test.ts",
+      "sha256": "7417e07e9ba670677dd5140147450be50e3f57be6284ea4eea3342b4da30ef14"
+    }
+  ],
+  "checks": [
+    {
+      "name": "focused16",
+      "path": "/workspace/scratch/immutable-release-frozen-focused.log",
+      "sha256": "842f33a5d44bf4f9d3afcf178eb9ef13a25adf0f5bb370abe26b9e68a9cade8d",
+      "result": "passed"
+    },
+    {
+      "name": "fast10-42.52s",
+      "path": "/workspace/scratch/immutable-release-frozen-fast.log",
+      "sha256": "8e7641503b26832d3e9c3182024b31cd54a651774f3fbd8d81c85da570a61c2f",
+      "result": "passed"
+    },
+    {
+      "name": "fast-report479unit",
+      "path": "/workspace/scratch/immutable-release-frozen-fast-report.json",
+      "sha256": "55a1fac9c5bf9563d5f2ce576c4f26010aa5dafcd52fcc697d67e2ebdcdcf86e",
+      "result": "passed"
+    },
+    {
+      "name": "typecheck",
+      "path": "/workspace/scratch/immutable-release-final-typecheck.log",
+      "sha256": "e9245b4db3df4c22f8d5b577b16e58459dbeb69e710fd367ccbad76eb36cb3c3",
+      "result": "passed"
+    },
+    {
+      "name": "workflow-lint",
+      "path": "/workspace/scratch/immutable-release-workflows.log",
+      "sha256": "8c4c5d5e4b28c3fd41e48240eaf4de65b6a2ecb3c3a4000e42137c99945c354d",
+      "result": "passed"
+    }
+  ],
+  "results": {
+    "focusedPassed": 16,
+    "unitPassed": 479,
+    "failed": 0,
+    "skipped": 0,
+    "fastChecks": 10,
+    "seconds": 42.52
+  },
+  "checkoutQualification": "Fast report dirty:true reflects untracked node_modules symlink. All implementation files committed before final checks; tracked implementation diff empty afterward. This is not a clean-checkout claim.",
+  "independentReview": {
+    "path": "/workspace/scratch/immutable-release-independent-final-review-20261012.json",
+    "sha256": "ba7227babc7bfec2e1a78b2ea388568fa3567199db1383e8d41a4d2b595f3392",
+    "result": "No remaining blocker for bounded preparation/draft hosted CI; not candidate activation"
+  },
+  "behavior": "Upload and digest-readback all five draft assets before publication; lost create/upload/publish acknowledgements reconcile exact source/run/attempt intent and release ID. Foreign/duplicate/different assets fail before writes. No occupied candidate overwrite. Finalize validates published assets and anonymous native receipts; writes evidence only. Notes marking waits retained pinned Actions artifact, validates exact REST ID/name/run/source/digest/not-expired metadata, then edits title/notes only. Always-retained metadata artifact records marking success/failure. No post-publication asset mutation.",
+  "evidenceAccess": "Existing Actions artifacts authenticated, expire after requested90day retention (actual expiry recorded). Not permanent anonymous evidence; independent artifact inspection required. Separate reviewed public repository evidence PR remains prospective under existing approval. No new destination/service/access.",
+  "preserved": "Original occupied dev.2 failure and release identities remain untouched; version/activation descriptor/package/locks unchanged. Existing130taskobjects and all base start/rework/events retained.",
+  "failedAttemptsPreserved": [
+    "Initial independent test overlapped source revisions; old failed log retained and superseded by stable review",
+    "Earlier fast typecheck TS2532 nonempty fixture corrected via test-only non-null assertion; failure log retained; final typecheck/fast passed"
+  ],
+  "fullHostedCI": "required before merge; localfast does not replace applicable hosted/integration/native/publication acceptance",
+  "newCandidateActivation": "not performed; owner new-version decision remains separate",
+  "actualPublicationAndAnonymousDownloads": "unverified by this local repair",
+  "AppAndLiveCustomerAcceptance": "unverified",
+  "milestoneGates": "all18 M3 gates pending; M0-M10 order/three adapters/observed-rate and descriptive Wilson preserved",
+  "remoteActions": "none performed by this worker"
+}

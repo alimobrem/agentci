@@ -10,6 +10,7 @@ export const requiredBrowserCases = [
   "malformed503/unavailable503/backendcredential502/notfound404/incomplete409/bounded413 distinguished from session expiry",
   "cancel intent cannot assert cleanup",
   "retained finding reference activates Evidence tab and exact focused target, including direct hash reload",
+  "browser Back restores Summary and Forward restores exact focused retained Evidence target without backend mutations",
   "nonempty primary view close and active session revocation abort backend finding sockets before release without next reads or mutations",
   "completed refusal displays exact subject/profile/role coverage without inferred clean review",
   "rapid exact-review navigation discards obsolete first-subject response",

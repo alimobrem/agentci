@@ -62,12 +62,13 @@ test('publication is main-only, activation-bound, least privilege and gated on b
  const workflow=parse(readFileSync('.github/workflows/development-candidate.yaml','utf8'));
  assert.deepEqual(workflow.on.push.branches,['main']);assert.deepEqual(workflow.on.push.paths,['releases/m3-development-candidate.json']);assert.equal(workflow.on.pull_request,undefined);assert.equal(workflow.on.pull_request_target,undefined);
  assert.match(workflow.jobs.preflight.if,/github\.repository == 'alimobrem\/agentci'/);assert.match(workflow.jobs.preflight.if,/refs\/heads\/main/);
+ assert.deepEqual(workflow.jobs.preflight.permissions,{contents:'write',packages:'read'});assert.ok(workflow.jobs.preflight.if.includes("github.ref == 'refs/heads/main'"));assert.ok(workflow.jobs.preflight.if.includes("github.repository == 'alimobrem/agentci'"));
  assert.deepEqual(workflow.jobs.images.permissions,{contents:'read',packages:'write'});
  assert.deepEqual(workflow.jobs['release-candidate'].permissions,{contents:'write',packages:'read'});
  assert.equal(workflow.jobs['native-image-downloads'].uses,'./.github/workflows/download-smoke.yaml');
  assert.deepEqual(workflow.jobs.finalize.needs,['release-candidate','native-image-downloads','native-package-downloads']);
- assert.equal(workflow.jobs.finalize.if,undefined);
- const finalUpload=workflow.jobs.finalize.steps.find((step:any)=>step.with?.name==='final-native-download-evidence');assert.equal(finalUpload.if,'always()');assert.ok(finalUpload.with.path.split('\n').includes('development-assets/publication-attempt.json'));
+ assert.equal(workflow.jobs.finalize.if,undefined);assert.deepEqual(workflow.jobs.finalize.permissions,{contents:'write',actions:'read'});const finalSteps=workflow.jobs.finalize.steps;const retainIndex=finalSteps.findIndex((step:any)=>step.id==='final_evidence'),markIndex=finalSteps.findIndex((step:any)=>step.run==='node scripts/development-release.mjs mark-verified');assert.ok(markIndex>retainIndex);assert.equal(finalSteps[markIndex].if,'success()');assert.equal(finalSteps[retainIndex].with['retention-days'],90);
+ const finalUpload=workflow.jobs.finalize.steps.find((step:any)=>step.id==='final_evidence');assert.equal(finalUpload.if,'always()');assert.ok(finalUpload.with.path.split('\n').includes('development-assets/publication-attempt.json'));assert.ok(finalUpload.with.path.split('\n').includes('native-download-SHA256SUMS'));
  assert.deepEqual(workflow.jobs['native-package-downloads'].strategy.matrix.include.map((v:any)=>v.arch),['amd64','arm64']);
  for(const job of Object.values(workflow.jobs) as any[])for(const step of job.steps??[])if(step.uses?.includes('checkout')){assert.equal(step.with.ref,'${{ github.sha }}');assert.equal(step.with['persist-credentials'],false);}
  for(const file of ['images.yaml','download-smoke.yaml'])assert.ok(parse(readFileSync('.github/workflows/'+file,'utf8')).on.workflow_call);

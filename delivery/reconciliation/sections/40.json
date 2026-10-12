@@ -6488,6 +6488,55 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07-ui-hash-navigation-rework",
+          "status": "in-progress",
+          "startedAt": "2026-10-12T03:13:40.067Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Production-built synthetic exact-review browser proves Back from evidence hash restores Summary and Forward restores Evidence with exact focused target; required hosted case and source-bound evidence retained, zero backend mutations. No broader history/export/live acceptance claim.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-R1-PUB-IMM-1",
+          "status": "done",
+          "startedAt": "2026-10-12T02:16:28.661Z",
+          "completedAt": "2026-10-12T02:32:58.819Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local software preparation uploads every initial candidate asset to a draft before publication, refuses partial immutable publication, and retains post-publication native acceptance separately with an explicit approved prospective public evidence route. Mock transport/workflow sequencing regressions and applicable checks pass. No occupied dev.2 reuse, new version activation or public acceptance claimed; hosted CI/independent review required before merge.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-R1-PUB-IMM-2",
+          "status": "done",
+          "startedAt": "2026-10-12T02:16:29.262Z",
+          "completedAt": "2026-10-12T02:32:59.874Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local repair scans authenticated paginated release lists before create/preflight, rejects any occupied draft identity, and recovers lost create acknowledgement only from one exact draft tag/source/run/attempt intent. Published-only release-by-tag semantics and pagination/duplicates/foreign-attempt negative regressions pass with exact-source independent review. Hosted CI required before merge; no remote activation or M3 acceptance claimed. Actual Git tag absence is checked before create/upload/publish, and published ref must bind exact source after acknowledgement/recovery; foreign tag races fail closed without treating target_commitish as proof.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -6614,6 +6663,12 @@
         {
           "path": "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json",
           "sha256": "03fa44a7c12f165079668cc6b80ae6df6c52050d6d3e7f6e4ad90b1c098fe40f",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json",
+          "sha256": "0339493d57d44d492f9e2d3a1da2c162dca0fe454724a2dcd3cd0e0557fb8524",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -7070,6 +7125,55 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07-ui-hash-navigation-rework",
+          "status": "in-progress",
+          "startedAt": "2026-10-12T03:13:40.067Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Production-built synthetic exact-review browser proves Back from evidence hash restores Summary and Forward restores Evidence with exact focused target; required hosted case and source-bound evidence retained, zero backend mutations. No broader history/export/live acceptance claim.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-R1-PUB-IMM-1",
+          "status": "done",
+          "startedAt": "2026-10-12T02:16:28.661Z",
+          "completedAt": "2026-10-12T02:32:58.819Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local software preparation uploads every initial candidate asset to a draft before publication, refuses partial immutable publication, and retains post-publication native acceptance separately with an explicit approved prospective public evidence route. Mock transport/workflow sequencing regressions and applicable checks pass. No occupied dev.2 reuse, new version activation or public acceptance claimed; hosted CI/independent review required before merge.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-R1-PUB-IMM-2",
+          "status": "done",
+          "startedAt": "2026-10-12T02:16:29.262Z",
+          "completedAt": "2026-10-12T02:32:59.874Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Local repair scans authenticated paginated release lists before create/preflight, rejects any occupied draft identity, and recovers lost create acknowledgement only from one exact draft tag/source/run/attempt intent. Published-only release-by-tag semantics and pagination/duplicates/foreign-attempt negative regressions pass with exact-source independent review. Hosted CI required before merge; no remote activation or M3 acceptance claimed. Actual Git tag absence is checked before create/upload/publish, and published ref must bind exact source after acknowledgement/recovery; foreign tag races fail closed without treating target_commitish as proof.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -7196,6 +7300,12 @@
         {
           "path": "delivery/acceptance/m3-dev2-version-activation-preparation-f06a9c7.json",
           "sha256": "03fa44a7c12f165079668cc6b80ae6df6c52050d6d3e7f6e4ad90b1c098fe40f",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-immutable-draft-ref-rework-f393c17.json",
+          "sha256": "0339493d57d44d492f9e2d3a1da2c162dca0fe454724a2dcd3cd0e0557fb8524",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

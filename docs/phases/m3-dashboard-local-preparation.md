@@ -143,3 +143,10 @@ and HTTP/TLS headers are not represented as JSON body bytes. Server shells valid
 admissions with the production validator before any public list/RSC/client projection,
 then recheck the original session after asynchronous work. Extra configuration fields
 are rejected without serializing their values or accessing the backend.
+
+Browser hash changes and Back/Forward navigation synchronize the active tab: a
+recognized retained-evidence hash activates and focuses that exact article; an
+empty or unrelated hash restores Summary and clears a pending evidence target.
+The production fixture corpus exercises real Back/Forward traversal without backend
+mutations. This bounded navigation repair does not establish the remaining full
+interruption/export/history corpus or live customer acceptance.
