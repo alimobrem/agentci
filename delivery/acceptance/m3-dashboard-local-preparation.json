@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07-ui-local-prep",
+  "state": "local checks passed; independent review pending",
+  "scope": "local-only bounded foundation/session/read-only single original admission detail; synthetic fixtures only",
+  "recordedAt": "2026-10-12T01:21:12.500198+00:00",
+  "baseCommit": "c02587af1e5bb88d4963c9f99a87c199beb67d0a",
+  "sourceCommit": "a728f160df65782cc25130426ee473734ba38f5c",
+  "sourceTree": "a3f1c1bcdb49cc26f4252cbe1f240ec6e9f17dcf",
+  "sourceFileHashes": {
+    "apps/dashboard/.gitignore": "add44d99b8351d4ef77e1e141f278780749922a158227df86c51dad8f8a0b613",
+    "apps/dashboard/app/api/reviews/[id]/route.ts": "3e5f27b2165ef3aad0f7fcd43e1f7bd98605a74542535d9819a9abcfb7cd47b6",
+    "apps/dashboard/app/api/session/route.ts": "5a2619a24bacb95e9bf08290522696efef22d1e94b9b319237c5b7d7fc796efa",
+    "apps/dashboard/app/auth/callback/route.ts": "8a823b95ee8190e4e1bc80ac6accd910ebc847cfb2b00f5b463a3c4f2910ec69",
+    "apps/dashboard/app/auth/login/route.ts": "82a3559cc292f531aa827789537d4cdbc1a7e499e7b99ae6a65a061b1919a730",
+    "apps/dashboard/app/auth/logout/route.ts": "6f8b35b8bfe4b9bd9908350f537bdf0c5cf811e0fab66510a601e8016a56a48c",
+    "apps/dashboard/app/error.tsx": "58e6ca0df501196de13d2baff934b8e742b0581299cbd7a7d0486e5dc0daf8fc",
+    "apps/dashboard/app/globals.css": "f52fd3e5657ba4a894843d9a0968d5ad5f81849f8641564e9d1dc6edda8fdcce",
+    "apps/dashboard/app/layout.tsx": "69d5cbe3056fa743f848221d95927e84d7adbd9380a7e15ac20884d6a0d249a2",
+    "apps/dashboard/app/loading.tsx": "cdee6b6fcf219200232d157d74463adea5b08492dd6c7ae0be82a54632e7335b",
+    "apps/dashboard/app/page.tsx": "c4492b1cfac155d666c6e75cec06f766a386ea71cdcc74384f56b964d7c452ad",
+    "apps/dashboard/components/review-detail.tsx": "2bcb5a3891b7e207c280a69c9012f811965d8267e893006012f8f30d75702eb4",
+    "apps/dashboard/components/session-boundary.tsx": "48f307957a7ece811c2b335e467e209713d4f27338c6f699433867e9b6c42540",
+    "apps/dashboard/components/sign-out.tsx": "fdb2053ac90c2bd6eaec6bf2ecfa419e6ff1b26fbe4706ee8b34eade3a54d49e",
+    "apps/dashboard/components/ui/tabs.tsx": "86fbda25de08e83b24b45e2efa112ca46015cf89e4f8073fce31e83b38a00ed5",
+    "apps/dashboard/lib/dashboard.ts": "2d04e788d105d602ff0ff03fcdbf9481f1bfe572ad564758a702376d37f5c4f5",
+    "apps/dashboard/lib/oidc.ts": "6233078e5fe2d9b7ac95328bf4c2a210a1cb7b8da436d9561b404c3817059b6c",
+    "apps/dashboard/lib/runtime.ts": "0b9ab83ba319f483b84fe3126f98323ff6ea15d8d17e9d682a0e470962221ce1",
+    "apps/dashboard/lib/session.ts": "b9f731e5f40910d208a80b5266604f51cce0e7ff995ff4cd72021f0448e92818",
+    "apps/dashboard/next-env.d.ts": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b",
+    "apps/dashboard/next.config.ts": "7fc67a637373c3102b44c8ac83851156982e95617cc764c94cb50fa07766b61c",
+    "apps/dashboard/package-lock.json": "f6403522ce6e798a41c6a8a2c5a21f9c0622cb3250bec36fe45c76ef761e7549",
+    "apps/dashboard/package.json": "6a5c9c9c966f119663c899fe8d503a2a2e1fb2394d78c55d2a55c2a6f0ac956a",
+    "apps/dashboard/postcss.config.mjs": "cc8f514ba7fda07a2e2828670c99e34275f314b350628d8c2ab39e68e50bf9f8",
+    "apps/dashboard/tests/browser/bootstrap.ts": "9eb8c9f58b4f2286ada0a2675989b99b8cfa94deac269be945caa99b46c17a3d",
+    "apps/dashboard/tests/browser/check.mjs": "77b16da88b472e3bcd182608a63221f2e5314ceece476c96836e20e150477414",
+    "apps/dashboard/tests/dashboard.test.ts": "06b5bad7c661ad20fee20fa358a28cde699dbfd763aa55d7088483002b0c627c",
+    "apps/dashboard/tests/oidc.test.ts": "9994445c788a8d2eff30e7bf668b8b14107427e0032ea89965631cee8be0425c",
+    "apps/dashboard/tests/presenter.test.ts": "6bdd647751aca059fa0aa852d06bbb8c995c25f5bc30b5a1209233f0ae12e34f",
+    "apps/dashboard/tests/session.test.ts": "5d01160e04c249fa491b9074f77efcbad40b9d60a1d239f59ea5f1985354c57b",
+    "apps/dashboard/tsconfig.json": "15913b642e425b3b90a773a28f2b9caa40d9cc60f6a100ab9e61c8c76e20ab8e",
+    "delivery/task-events.jsonl": "5388026927e9f5cd9d564e364edc12d1c5239e1a9a2d871b803760fdeed02624",
+    "delivery/tasks.json": "09caabe10376ca6724bd4729c632581b8c4c2a8c8089e67de6a442aa47cc7692",
+    "docs/phases/m3-dashboard-local-preparation.md": "e6a992352edcef6f27fd3f3420c1a3ae71d55bd0519b6cc5320cf197649ef586",
+    "tsconfig.build.json": "4754ee1b0c3e58f29a80af0452de9967adf3a9c27250f3f2c6266af359728e8c",
+    "tsconfig.json": "8b75e612225dc4b5e8468367c4feb6ece8c6f36f407ccf3cb0db23ff209ae316"
+  },
+  "checks": [
+    {
+      "command": "npm run typecheck --prefix apps/dashboard",
+      "sourceCommit": "a728f160df65782cc25130426ee473734ba38f5c",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-final-types.log",
+      "sha256": "ede264564d22ba889a85acdd1b230c2b814e18b2f3f1d0177b5b4e7d7867480c"
+    },
+    {
+      "command": "npm run test --prefix apps/dashboard",
+      "sourceCommit": "a728f160df65782cc25130426ee473734ba38f5c",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-final-tests.log",
+      "sha256": "87062958536f4b75fc65be0f53a5045925c48846d2d18114c63dec27b67a58d9"
+    },
+    {
+      "command": "npm run build --prefix apps/dashboard",
+      "sourceCommit": "a728f160df65782cc25130426ee473734ba38f5c",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-final-build.log",
+      "sha256": "11d8744ed93753c70b2f1a02f66a9b179167e92d915fcc8375b97da34196cfa0"
+    },
+    {
+      "command": "node apps/dashboard/tests/browser/check.mjs",
+      "sourceCommit": "a728f160df65782cc25130426ee473734ba38f5c",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-final-browser.log",
+      "sha256": "7e97027044f7cc1d6e18608f263be27b450a54df1799cd2bd9a404221f595af0"
+    }
+  ],
+  "tests": {
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser": {
+    "passedChecks": 12,
+    "browser": "151.0.7922.173",
+    "backendMutations": 0,
+    "testOnlyBootstrapExcludedFromStandalone": true,
+    "unconfiguredNoBootstrapFailsClosed": true,
+    "assets": {
+      ".agentci/artifacts/dashboard-browser/cancelled-mobile.png": {
+        "sha256": "f5cd33b4569d7920f0afc56059099f722d1fb5e4900bd612cdc5c65b28ff1b49",
+        "bytes": 77405
+      },
+      ".agentci/artifacts/dashboard-browser/queued-mobile.png": {
+        "sha256": "bdccfa0a796a2bf4da30a10a2dcdf74e00559a71d3a5080755b61e4ae66ffcdb",
+        "bytes": 73439
+      },
+      ".agentci/artifacts/dashboard-browser/result.json": {
+        "sha256": "01e3915530c899051b52b26a9ffe495f376e2e5c2d890a5f37d94b7b419e5664",
+        "bytes": 1320
+      }
+    },
+    "networkEvidenceIncludesOnlyMethodPathStatus": true
+  },
+  "reusedChecks": [
+    {
+      "command": "npm ci --prefix apps/dashboard --ignore-scripts --offline --cache /workspace/npm-cache-dashboard",
+      "sourceCommit": "fc0c3f910a99948e2f83371d247f654a8d837b51",
+      "sha256": "1e6f6f8ca434265d1bf5821bec1bf276d1ccbea4c272bd541bd007282e048708",
+      "log": "/workspace/scratch/dashboard-fc0c-install.log",
+      "reason": "Only dashboard OIDC/session/routes/browser-test delta; package/lock/dependency inputs unchanged. Root check inputs exclude isolated dashboard package and remain byte-identical."
+    },
+    {
+      "command": "npm run check:fast",
+      "sourceCommit": "fc0c3f910a99948e2f83371d247f654a8d837b51",
+      "sha256": "f0f8037439981960044da3f92e66750060148aa7017c23fb7da746c98d3be371",
+      "log": "/workspace/scratch/dashboard-fc0c-fast.log",
+      "reason": "Only dashboard OIDC/session/routes/browser-test delta; package/lock/dependency inputs unchanged. Root check inputs exclude isolated dashboard package and remain byte-identical."
+    },
+    {
+      "command": "npm audit --prefix apps/dashboard --json --cache /workspace/npm-cache-dashboard",
+      "sourceCommit": "fc0c3f910a99948e2f83371d247f654a8d837b51",
+      "sha256": "a1493e6ce43b08cf6c715c9ed7c44f32414921a8d4211a96285407d6c74f3423",
+      "log": "/workspace/scratch/dashboard-fc0c-audit.json",
+      "reason": "Only dashboard OIDC/session/routes/browser-test delta; package/lock/dependency inputs unchanged. Root check inputs exclude isolated dashboard package and remain byte-identical."
+    }
+  ],
+  "dependencyVulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "priorAttempts": [
+    {
+      "sourceCommit": "283219d85c130d7b273e32c8a7342ad34e92e6b6",
+      "result": "browser harness immediate keyboard focus assertion failed; replaced with awaiting focused assertion",
+      "log": "/workspace/scratch/dashboard-283219-browser.log",
+      "sha256": "8eb7f85ed3ddf3902032cd3f3f2553a1b532ae4f5d05459bf72056b9f4b86579"
+    },
+    {
+      "result": "Chromium CDN download rejected HTTP403 Domain forbidden; no bypass; ordinary existing /usr/bin/chromium reused"
+    },
+    {
+      "result": "Optional package-lock-only wasm metadata refresh EALLOWREMOTE; no override; ordinary offline Linux clean install passed"
+    }
+  ],
+  "limitations": [
+    "No live/configured OIDC issuer/client/HTTPS or customer App acceptance",
+    "No UBI image/license/image-scan/native publication acceptance",
+    "No complete export UI/end-and-EOF or interrupted-export browser acceptance",
+    "Rapid review switching and interrupted-login return-path full corpus pending",
+    "Original three UI tasks and all eighteen M3 release gates remain pending",
+    "No UI push/PR/merge/deploy/persistent access"
+  ],
+  "independentReview": "pending parent review"
+}

@@ -3115,6 +3115,63 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M3-07-ui-local-prep",
+      "title": "Local dashboard/session foundation preparation",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-12T01:05:45.328Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Local-only Next App Router foundation and OIDC/server-session/read-only contract bridge implementation with scoped access, CSRF, expiry, private caching, missing-evidence and interruption tests; source-bound local evidence. Does not close original UI foundation/session/dashboard tasks, image/publication or live OIDC/customer acceptance.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "M3-07-ui-ci-prep",
+      "title": "Dashboard hosted verification and browser lifecycle preparation",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-12T01:47:28.674Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Dedicated read-only dashboard hosted workflow uses pinned repository actions and locked dependencies to build/type/test and exercise qualified fixture-only browser acceptance; default hosted bundled Chromium and explicit optional existing local executable; always-upload source/attempt/outcome-bound logs and fixture evidence. Verify session-boundary prop transition fails closed. Local preparation only, no hosted CI result, merge/deploy, full original UI or release acceptance implied.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": []
+    },
+    {
+      "id": "M3-07-ui-draft-integration",
+      "title": "Integrate dashboard draft with current main and source-bound hosted checks",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-12T01:57:14.583Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Preserve existing task/event histories and dev.2 activation blobs, refresh dashboard file dependency metadata, validate exact integrated source and independently reviewed draft publication; live OIDC/customer, full dashboard and M3 release gates remain pending.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "dependsOn": []
     }
   ]
 }
