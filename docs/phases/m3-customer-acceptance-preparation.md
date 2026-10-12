@@ -106,3 +106,80 @@ reachable customer endpoint gate. All 18 M3 gates and M0–M10 phase order remai
 unchanged; all three adapters remain required, observed-rate calibration remains
 chosen and Wilson intervals remain descriptive. The sole authorized external
 provider exception is unchanged.
+
+## Current temporary demo driver preparation
+
+The owner has separately approved entering the customer App key into the named
+repository Actions secret. Entry remains owner-controlled and unobserved here.
+Historical public references App `5182307` / installation `167710386` are not
+verified current identities or defaults: the actual key/App/install/scope guard
+must confirm supplied IDs before use.
+
+`Customer installation scope` (`customer-installation-scope.yaml`) performs only
+App/install/repository reads without requiring existing fixture PRs. Run that
+scope guard and anonymous candidate verification first. Then publish the trusted
+fixture bytes from `customerFixtureFiles()` in
+`scripts/lib/customer-approved-catalog.mjs` through Work GitHub. The base has the
+safe-only source and trusted report harness; seeded/fixed heads replace their
+harness with a trivial exit to demonstrate that the controller preserves the
+trusted base assertion. The full demo additionally validates the actual
+connector-created open PR repository/base/head before temporary service work.
+The optional trusted recovery flag delays each fixture assertion so a retained
+first trial and active second runner can be observed before SIGKILL; this is a
+bounded synthetic fault fixture, not a new product acceptance threshold.
+
+`Temporary customer demo` (`customer-live-demo.yaml`) checks out/builds trusted
+main and consumes one public JSON input with `fixtures` as above, `releaseSource`
+(full candidate commit), and the four exact checksums `packageManifestSha256`,
+`packageSha256`, `imagesManifestSha256`, `publicationEvidenceSha256`. All refer to
+`v0.4.0-m3-dev.2`. The factored anonymous package helper verifies source/version,
+file bytes, regular archive paths, equivalent packaged locks, actual locked-root
+and consumer production installs, CLI/client and all three adapter imports before
+any customer key file/private configuration exists. It then verifies the complete
+six-role native image evidence/cohort and uses immutable evaluator/runner refs.
+
+The driver starts actual installed API/worker entrypoints against disposable
+loopback PostgreSQL/Temporal. It retains a real synthetic finding, compiles a
+controller-owned exact-subject assertion, drains API and worker, explicitly
+applies authority through the packaged operator command, and starts both with
+matching catalog/config identities. Unsupported proposals receive no approval.
+Seeded and new fixed-head observations require actual evaluator receipts checked
+against retained EvalStore units and complete authenticated history/export.
+Never-staged cancellation must have no execution receipt. Recovery requires a
+retained checkpoint plus an actually running owned assertion container before
+evaluator SIGKILL, followed by the same parent/unit runs and retained trial
+digests. Staged cancellation requires real retained execution and exact owned
+cleanup. The original confirmed receipt remains immutable.
+
+The evaluator is a separate published nonroot/read-only/capability-free container
+with only its engine socket mount and restricted database credentials, and no
+controller key/config mounts or App/provider credentials. The trusted runner
+creates separate no-network/nonroot/resource-bounded assertion containers.
+Successful units prove completed unit teardown and no remaining owned containers;
+cancelled units additionally require the exact owned cleanup workflow result.
+Public partial attempt/operation/checkpoint observations are retained on failure.
+Controller processes, evaluator and owned assertion cleanup precede package/path
+cleanup. Failed cleanup remains explicitly unverified and does not become a
+passing demo result.
+
+Local compiler, supervisor, archive/install and isolation-guard tests are
+preparation evidence only. Actual App-authenticated execution is still pending.
+Runner-local URLs leave external customer endpoint acceptance unverified. No
+persistent deployment, paid service, broader App permissions, provider exemption
+or phase-order change is introduced. The existing 18 M3 gates remain open.
+
+For cloud independence, reviewed main push activations are also supported:
+`releases/m3-customer-installation.json` runs the scope-only stage, and
+`releases/m3-customer-demo.json` runs the exact-fixture demo after Work GitHub
+publication. These descriptor files are deliberately absent during preparation.
+The scope descriptor has `schemaVersion: 1`, purpose
+`approved-demo-installation-scope`, full reviewed `harnessBase`, and public `scope`
+(repository/App/install IDs only). The demo descriptor uses purpose
+`approved-temporary-four-scenario-demo`, the reviewed `harnessBase`, public
+`candidate` source/four checksums, and exact `fixtures` excluding `serviceSource`.
+The trusted workflow supplies its own full `github.sha`; scripts also verify the
+reviewed base is an ancestor. Scope output is public and may be read from normal
+Actions logs/artifacts before connector fixture writes. No secret API, PAT bridge,
+customer fixture write permissions or manual workflow-dispatch tool is assumed.
+Activation requires reviewed prep/CI, actual owner key entry, approved metadata
+and parent publication; merging preparation alone starts no customer workflow.
