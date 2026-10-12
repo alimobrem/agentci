@@ -12,6 +12,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   preflight:
+    # Draft visibility requires ephemeral repository push access; all requests remain reads.
+    permissions: { contents: write, packages: read }
     if: github.repository == 'alimobrem/agentci' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 10

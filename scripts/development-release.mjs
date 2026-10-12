@@ -1,4 +1,4 @@
-import {publishDraftAssets,requireRetainedArtifact,requireReleaseAssets} from './lib/immutable-release-publication.mjs';
+import {publishDraftAssets,requireRetainedArtifact,requireReleaseAssets,requireCandidateReleaseAbsent} from './lib/immutable-release-publication.mjs';
 import {readFile,writeFile,mkdir,copyFile,readdir,mkdtemp,rm,stat,chmod} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {Octokit} from '@octokit/rest';
@@ -23,6 +23,8 @@ const github=new Octokit({auth:process.env.GITHUB_TOKEN,request:{timeout:30000}}
 async function absent(read){try{await read();requireAvailableResponse(200);}catch(error){if(error.status===404)return;throw Error('Candidate occupied or availability inconclusive');}}
 const emit=async(key,value)=>{if(!process.env.GITHUB_OUTPUT||/[\r\n]/.test(value))throw Error('Invalid workflow output');await writeFile(process.env.GITHUB_OUTPUT,`${key}=${value}\n`,{flag:'a'});};
 if(command==='preflight'){
+ if(!process.env.GITHUB_TOKEN)throw Error('Authenticated publication token required');
+ await requireCandidateReleaseAbsent(github,repository,tag);
  await absent(()=>github.rest.git.getRef({...repository,ref:'tags/'+tag}));
  await absent(()=>github.rest.repos.getReleaseByTag({...repository,tag}));
  for(const role of IMAGE_ROLES)await assertUnusedImageTag(role,version,{actor:process.env.GITHUB_ACTOR,token:process.env.GITHUB_TOKEN});
@@ -60,12 +62,13 @@ if(command==='preflight'){
  for(const image of images)await emit(image.role.replaceAll('-','_')+'_image',image.image);
  await emit('package_sha256',hash(archive));await emit('manifest_sha256',hash(manifestBytes));
 }else if(command==='publish'){
+ if(!process.env.GITHUB_TOKEN)throw Error('Authenticated publication token required');
  const assets=await validateDevelopmentAssets('development-assets',expected);if(assets.cohort.attempt!==expected.attempt)throw Error('Publish must use the current build attempt');
  await absent(()=>github.rest.git.getRef({...repository,ref:'tags/'+tag}));
  await absent(()=>github.rest.repos.getReleaseByTag({...repository,tag}));
  const assetNames=[`agentci-${version}.tgz`,'package-manifest.json','images.json','publication-evidence.tgz','SHA256SUMS'];
  const uploadAssets=await Promise.all(assetNames.map(async name=>{const bytes=await readFile('development-assets/'+name);return {name,bytes,sha256:hash(bytes)};}));
- const releaseId=await publishDraftAssets(github,repository,{tag,sourceCommit,name:`AgentCI ${version} — download validation pending`,body:`Development candidate from ${sourceCommit}; publication run ${expected.runId} attempt ${expected.attempt}. All six native image roles published; package/image download validation is pending. This is not M3 milestone completion. Partial failures and attempt evidence remain retained.`},uploadAssets,async state=>{if(state.asset)stageRecord.uploadedAssets.push(state.asset);else Object.assign(stageRecord,state);await retainStage();});
+ const releaseId=await publishDraftAssets(github,repository,{tag,sourceCommit,name:`AgentCI ${version} — download validation pending`,body:`Development candidate from ${sourceCommit}; publication run ${expected.runId} attempt ${expected.attempt}. All six native image roles published; package/image download validation is pending. This is not M3 milestone completion. Partial failures and attempt evidence remain retained.`},uploadAssets,async state=>{if(state.asset)stageRecord.uploadedAssets.push(state.asset);else if(state.tagAbsence)(stageRecord.tagChecks??=[]).push(state.tagAbsence);else if(state.reconciliation)(stageRecord.reconciliations??=[]).push(state.reconciliation);else Object.assign(stageRecord,state);await retainStage();});
  await emit('release_id',String(releaseId));
  console.log('Development assets published; validation still pending');
 }else if(command==='finalize'||command==='mark-verified'){
