@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "result": "PASS bounded local reviewed successor; no remaining concrete source blocker",
+  "sourceCommit": "f55abe12cebabd42a0d5399fb60a8fa8cc98027f",
+  "sourceTree": "045c6b8443b4d594b1dce6b2d1b7056576475d99",
+  "sourceBindings": [
+    {
+      "path": "docs/phases/m3-disposable-ci-databases.md",
+      "sha256": "87af70cc2212039174770827098aeb2072246f3555f1a293c1a42d4675be7d24"
+    },
+    {
+      "path": "scripts/image-smoke.mjs",
+      "sha256": "35dbfd45e364d7f8cafd3f6ae2f2a5030ae610e37f966f099ffa2f3c1ad28b77"
+    },
+    {
+      "path": "scripts/lib/ci-database-command.mjs",
+      "sha256": "aa430aef3d0f3292e7405275bd3aef965a0bacf90cc32272104391439ec7e56a"
+    },
+    {
+      "path": "scripts/lib/owned-command.mjs",
+      "sha256": "a2941023c3c9d23e84765385e86b1ad9e6ea72195329cfa6e252ffb078bfe670"
+    },
+    {
+      "path": "tests/ci-database-hardening.test.ts",
+      "sha256": "5e83cd8a2f261eba4f71527f209c3c14638f6286daf09d170efcbafbdb7ca446"
+    },
+    {
+      "path": "tests/helpers/image-smoke-engine-fixture.cjs",
+      "sha256": "443b5aeacdfce5e745798b4668a5ca58cfd8e043630d9a9765b9d5bccb46b3e1"
+    }
+  ],
+  "independentFocused": {
+    "passed": 25,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 26047.228296,
+    "log": "/workspace/scratch/db-hardening-independent-f55abe1-focused.log",
+    "sha256": "035721025b2d603fea5622d25716fda13af742316042ec20695dd95990a1e440"
+  },
+  "verifiedFixes": [
+    "late cancellation during owned image cleanup is delivered before summary, emits bounded failed-stage JSON and exit1",
+    "exit/error/cancellation arms deadline before outputs/close; detached inherited-pipe and stalled destination expire",
+    "closure WeakSet plus owned live-group census gates command journal and DB stop",
+    "unverified escaped writer branch removes retained integration JSON, safeForUpload false, onArtifactSafe callback0",
+    "Docker empty Mounts accepted only with exact HostConfig.Tmpfs and actual stat filesystem tmpfs; volume rejected"
+  ],
+  "scope": {
+    "customerDatabaseHelperUnchanged": true,
+    "workflowsUnchanged": true,
+    "gatesUnchanged": true
+  },
+  "retainedEarlierEvidence": {
+    "priorSource": "05619486a7da59cdd80b3272cf42a83715b005a5",
+    "supersededForTwoParentDiscoveredGaps": true,
+    "failedHostedRun": "38307811745",
+    "priorHostedCleanupSuccessDoesNotProveNoLeakOrRuntimeAcceptance": true
+  },
+  "limits": [
+    "Real synthetic child process execution plus fake Docker full CLI transport; no independent native image run",
+    "Successor full hosted CI and parent source/artifact review pending",
+    "No real App/provider keys read; no remote edits/merge/activation",
+    "Reusable untracked node_modules dependency symlink; fresh install not claimed"
+  ]
+}

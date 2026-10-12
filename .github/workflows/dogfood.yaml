@@ -17,12 +17,6 @@ jobs:
     if: github.repository == 'alimobrem/agentci'
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    services:
-      postgres:
-        image: postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
-        env: { POSTGRES_PASSWORD: agentci-ci-only, POSTGRES_DB: agentci }
-        ports: [5432:5432]
-        options: --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 3s --health-retries 20
     env:
       # Owner-approved M2 Docker release default; Podman adoption remains deferred.
       AGENTCI_CONTAINER_ENGINE: docker
@@ -31,15 +25,11 @@ jobs:
       GITHUB_APP_ID: '5179954'
       GITHUB_INSTALLATION_ID: '167655696'
       GITHUB_PRIVATE_KEY_FILE: .agentci/local/hosted-app.pem
-      # Fixed test-only auth for this disposable service; never a deployment credential.
-      DATABASE_URL: postgresql://127.0.0.1:5432/agentci
-      PGUSER: postgres
-      PGPASSWORD: agentci-ci-only
       TEMPORAL_ADDRESS: 127.0.0.1:7233
     steps:
       # Never check out the PR head or execute files/dependencies from it with secrets.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-        with: { ref: main, persist-credentials: false }
+        with: { ref: '${{ github.workflow_sha }}', persist-credentials: false }
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with: { node-version: 26.10.0, cache: npm }
       - run: npm install --global npm@12.2.0
@@ -70,6 +60,9 @@ jobs:
           test -n "$runner" && test -n "$evaluator"
           echo "AGENTCI_EVAL_RUNNER_IMAGE=$runner" >> "$GITHUB_ENV"
           echo "AGENTCI_HOSTED_EVALUATOR_IMAGE=$evaluator" >> "$GITHUB_ENV"
+      - name: Start private CI database
+        id: ci_database
+        run: node scripts/ci-database.mjs start
       - name: Load repository-scoped App key
         env:
           APP_KEY: ${{ secrets.AGENTCI_APP_PRIVATE_KEY }}
@@ -93,7 +86,7 @@ jobs:
           JS
       - name: Review exact open PR revisions
         id: prepare
-        run: node dist/cmd/dogfood/main.js prepare
+        run: node scripts/ci-database.mjs run node dist/cmd/dogfood/main.js prepare
       - name: Retain evidence before publishing Checks
         id: evidence
         if: always()
@@ -112,3 +105,10 @@ jobs:
       - name: Remove ephemeral key
         if: always()
         run: rm -f "$GITHUB_PRIVATE_KEY_FILE"
+      - name: Stop owned CI database
+        if: always()
+        env: { AGENTCI_CI_DATABASE_START_OUTCOME: '${{ steps.ci_database.outcome }}' }
+        run: node scripts/ci-database.mjs stop
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with: { name: advisory-ci-database-cleanup, path: ci-database-cleanup.json, if-no-files-found: error }

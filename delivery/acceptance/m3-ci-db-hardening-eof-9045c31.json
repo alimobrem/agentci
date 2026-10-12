@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-CI-DB-2",
+  "testedLocalSourceCommit": "9045c31f4325dec523dbb5ed08f199bbd73269d3",
+  "testedLocalSourceTree": "928e3fe1d9a6258821b809bfc458d9c95533738c",
+  "actualRemoteParent": "2d7a6bd20dd72ed0e02814352f224d33c09bb654",
+  "parentSourceFinding": "Destination error destroys readable pipe; close and original group zero could certify escaped stdout writer. Source finding, subsequently exercised by actual subprocess regression.",
+  "fix": "Only success path with clean EOF on both source streams and drained destinations can certify closure; catch never grants closure. Failed output retains journal/private recovery and denies upload. Spawn with absent PID never started a process. Existing timeout and late signal guards preserved.",
+  "regression": "Actual detached writer ignores TERM and handles EPIPE, survives forced readable close; failing Writable produces bounded error, writer alive check, recovery journal, DB stop refusal, artifact removal, safeForUpload false and callback zero.",
+  "sourceFiles": [
+    {
+      "path": "scripts/lib/ci-database-command.mjs",
+      "sha256": "bb9a9c8224fb1690347805a888cae05f8ea126516967de7b72f462dffdd81bcf"
+    },
+    {
+      "path": "scripts/lib/owned-command.mjs",
+      "sha256": "0bd6887b8c8c90beadd9f825ea6dc3f0e992657dcf2062db55b6c924a16c20c0"
+    },
+    {
+      "path": "tests/ci-database-hardening.test.ts",
+      "sha256": "04ccf7ff5f25a20c35d296f1fd4766a1878f72f4977631e30f331568bc1531cf"
+    },
+    {
+      "path": "tests/helpers/image-smoke-engine-fixture.cjs",
+      "sha256": "38e50feac1030c4e2228daf9de3c158028314bfae8bab24090681f0175ec0820"
+    },
+    {
+      "path": "docs/phases/m3-disposable-ci-databases.md",
+      "sha256": "225df48a12010c85551a80b2d4c55a4218660a8d9daaf02d3ce7f62eac828eec"
+    }
+  ],
+  "localValidation": {
+    "fastPassed": true,
+    "fastSeconds": 47.085271298,
+    "fastChecks": 10,
+    "rootTests": 533,
+    "qualification": "Reused dependency symlink and pinned caches. Previous immutable API compatibility/workflow lint contracts unchanged; no fresh download claim.",
+    "actualNativeCLI": "Two fresh real pinned PostgreSQL authentication/cleanup invocations on frozen source; proof separately bound"
+  },
+  "nativeEvidence": "delivery/acceptance/m3-ci-db-hardening-native-9045c31.json",
+  "evidence": [
+    {
+      "path": "/workspace/scratch/db-hardening-eof-fast.log",
+      "sha256": "0ba71f48962f53b5410546ea7ba5649086bf21732902091572bad8e4c3fa203d"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-eof-native.log",
+      "sha256": "e99f9f759156de0554ab9ecc0ed43243946ccd35e0779abc25ba2ea229fc2b76"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-eof-focused.log",
+      "sha256": "a2d6f7f431ec60ed01788caeb83656454f4c76258629a555d4289baba8c5f753"
+    }
+  ],
+  "retainedQualification": "First exploratory26 focused run predates final EPIPE-handler test edit; frozen root533 + independent successor26 are the exact-source validation. Earlier firsthead5d compiled-smoke failure and successor2d fixture-fast failure retained without promotion.",
+  "acceptance": "Pending exact remote successor CI and parent independent actual source/artifact review then approved merge and postmerge checks",
+  "release": "All18M3gates pending; exact GitGuardian incident unmatched and publication hold remains. No token repair, release descriptor, rotation, suppression or published history rewrite."
+}

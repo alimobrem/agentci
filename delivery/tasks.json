@@ -3288,6 +3288,26 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M3-R1-CI-DB-2",
+      "title": "Harden four remaining disposable CI databases and verify owned teardown",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "blocked",
+      "startedAt": "2026-10-12T20:19:51.793Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Fresh per-run private credentials, loopback-only host binding, bounded sanitized diagnostics, and verified owned teardown in advisory/Verify/download workflows and image smoke. Regression tests cover argv/log leakage, exposure, lost startup responses and cleanup failures; applicable local checks, hosted CI including dedicated scanner and independent exact-source/artifact review pass before merge. Unmatched GitGuardian finding and original milestone/release gates remain open.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "blockedReason": "Exactstdout-only35b root533 independent26 old-red/new-green beforedeadline passed; product unchanged; pending final exactheadCI and parent artifact review"
     }
   ]
 }

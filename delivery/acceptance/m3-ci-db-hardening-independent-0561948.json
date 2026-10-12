@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "review": "independent frozen-source read-only disposable CI DB hardening review",
+  "sourceCommit": "05619486a7da59cdd80b3272cf42a83715b005a5",
+  "sourceTree": "9cce2a0f49a4bce07deb3ae61921a0b570cf610f",
+  "result": "PASS bounded local preparation; no remaining concrete reviewed-source blocker",
+  "sourceBindings": [
+    {
+      "path": ".github/workflows/dogfood.yaml",
+      "sha256": "5013719b9d83c2ae85c6fc740fa3cffc962e11e91e43d26da56180803455cff5"
+    },
+    {
+      "path": ".github/workflows/download-smoke.yaml",
+      "sha256": "69edbc34688bca65d48d0f3cb0a9d0cf404ba3f46b12790ac7dc107af2d23697"
+    },
+    {
+      "path": ".github/workflows/verify.yaml",
+      "sha256": "f9f2101360874863f8188e60e7f5d5383223761c63cd654dde5ec65e147db3d1"
+    },
+    {
+      "path": "docs/phases/m3-disposable-ci-databases.md",
+      "sha256": "fee3d31fdba8825afe74d61ed7da8d18dfc556755b4a04f47fd47d0e57632322"
+    },
+    {
+      "path": "scripts/ci-database.mjs",
+      "sha256": "27bfe77e30d4ba381f9d818804c01d4463ba53a1fbea6882bb4a7821d3837a89"
+    },
+    {
+      "path": "scripts/image-smoke-cleanup.mjs",
+      "sha256": "782acf4d08ab6da82c9dd068479e118527e82025946a9bfee6b63ea623ffc600"
+    },
+    {
+      "path": "scripts/image-smoke.mjs",
+      "sha256": "71f39e617ad426a60017ab80e3ebee6fcbcbaeb7ffe3dbdcbdb2433c48c520e5"
+    },
+    {
+      "path": "scripts/lib/ci-database-command.mjs",
+      "sha256": "be10937456540011b2ce985e224e56df1b12c4890fad4ee195e74ebf0b93a2c3"
+    },
+    {
+      "path": "scripts/lib/credential-output.mjs",
+      "sha256": "adf8f1431ea59bc25cb4e5afa7bf034626c695de24ecb92948e339ea818455d0"
+    },
+    {
+      "path": "scripts/lib/image-smoke-state.mjs",
+      "sha256": "c521942be5d8999b0cf11beffbc89023cb65381d1a10b6daf4dcda5771420ce8"
+    },
+    {
+      "path": "scripts/lib/owned-command.mjs",
+      "sha256": "c0d804fb7afdde89384c170fd6a7fcf4451a255d0d21e77fc5085bdd43fef21c"
+    },
+    {
+      "path": "scripts/lib/smoke-resources.mjs",
+      "sha256": "f63ff28dbc95b5b902b075cbcf0f53f939e3198766ad5cab7e4de559cd4a6ec7"
+    },
+    {
+      "path": "tests/ci-database-hardening.test.ts",
+      "sha256": "b5daaa9596ac11ee2624ac2fc6ec7a033eeef4a6cd58c8d8f8ac3ecaed0f79c6"
+    },
+    {
+      "path": "tests/helpers/image-smoke-engine-fixture.cjs",
+      "sha256": "f7c255f85d9f8baafc08f1c6ffb7a43600435083ba6add4d84f1984d3974a72c"
+    }
+  ],
+  "evidenceBindings": [
+    {
+      "path": "/workspace/scratch/db-hardening-independent-artifact-failure-probe.log",
+      "sha256": "7472ef9449beb6da8525dbb32f4d64f073339134c364e4a4dd2b804ca95dc4d2"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-independent-signal-probe.log",
+      "sha256": "58666868185510af55263cad7109551a75d6e629739998a319516fd889ba74b2"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-independent-fast-child-race-probe.log",
+      "sha256": "ac779fce0b9a98f8896ade9bdd93f9eba4b10aa754b4b33588eb06be8dfad521"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-independent-image-signal-probe.log",
+      "sha256": "9130d5ee80382ff88242d14b89ef0a7f0d50b176884014ed4074dbde9c965d32"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-independent-missing-journal-probe.log",
+      "sha256": "8ddaa0d680cd9bbcb25bdf126d649a9b2348339b012246bba17f645d52ca29c2"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-independent-early-design-review.json",
+      "sha256": "f31f457fbcb42359af247dc8516c2184a4d7c236e3d26f5d6755ff32025cff2f"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-independent-0561948-focused.log",
+      "sha256": "eeb6b120f67b4333e2efab4e6193dce1c78c7bdd9c9edba32004677f9bb0096b"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-independent-fifo-artifact-0561948.json",
+      "sha256": "0bd90524197de81d87bc187e04142d837fe43de1addd79f52b0a5eeda4910d7f"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-native-private-probe.json",
+      "sha256": "4795fa2ef2e6e5ca5ac7b0da1263c8c362a437cef0ab58be19dcd3b4f67b85e0"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-forward-frozen.json",
+      "sha256": "3da9cdadd3b627df20229a491b8b75939e5810f59924841a7d91c7e814791414"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-fast-frozen.log",
+      "sha256": "1133ab51d84967591e99b0196f758f9453a752f64de79915dee4ca4f7d4a4158"
+    }
+  ],
+  "independentExecution": {
+    "focusedTests": 23,
+    "passed": 23,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 11683.081686,
+    "transport": "real synthetic Node children plus fake Docker transport; no live App/provider access",
+    "fifoArtifactProbe": "nonregular FIFO immediately rejects exit1; no database/daemon"
+  },
+  "closedPriorFindings": [
+    "unsafe malformed/symlink retained integration artifact",
+    "unbounded direct-child cancellation/output-error descendants",
+    "metadata directory failure skipped image teardown",
+    "PostgreSQL anonymous volume outside labelled inventory",
+    "fast child exit before journal awaited/listeners attached",
+    "image SIGTERM/SIGKILL lacked externally recoverable state",
+    "missing command journal ENOENT bypassed stop gate"
+  ],
+  "verifiedScope": {
+    "auditedCustomerDatabaseHelperByteUnchanged": true,
+    "releaseGateFileByteUnchanged": true,
+    "milestoneAndProviderExceptionPreserved": true,
+    "trustedHistoricalDownloadHarness": "workflow_sha scripts; release-source cwd migrations/project/tests",
+    "advisoryCheckout": "workflow_sha, App removal before DB stop",
+    "privateRecovery": "commands or resource ownership unresolved => failure and state retained"
+  },
+  "qualifications": [
+    "Parent real cached pinned PostgreSQL CLI receipts reviewed/hash-bound; independently not rerun",
+    "Native image runtime and hosted cancellation/artifact acceptance still require actual full CI/source artifact review",
+    "Fresh dependency installation/download not claimed; node_modules untracked reused",
+    "No remote writes, release activation, credential access, or prior alert classification",
+    "Earlier failure proof preserved; initial WIP tests do not establish final-source acceptance"
+  ]
+}

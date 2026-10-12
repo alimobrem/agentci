@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "result": "PASS independent old-red/new-green stdout-only regression and exact frozen focused suite",
+  "sourceCommit": "35b8140182af9af38a7e14d8dccb7c3b821fdca4",
+  "sourceTree": "2ca3dc98eb5358ae6ad19b4780ea304316fed163",
+  "testBinding": {
+    "path": "tests/ci-database-hardening.test.ts",
+    "sha256": "c8c16205408243a8530230dd827b4d7c33cac69a11f2f53898dc88cfa3eb204c"
+  },
+  "oldRed": {
+    "sourceCommit": "2d7a6bd20dd72ed0e02814352f224d33c09bb654",
+    "actualProductFilesIndependentlyByteVerified": [
+      "scripts/lib/owned-command.mjs",
+      "scripts/lib/ci-database-command.mjs",
+      "scripts/lib/customer-ci-database.mjs",
+      "scripts/lib/credential-output.mjs"
+    ],
+    "testBytesSameFrozen35": true,
+    "exitCode": 1,
+    "failure": "Missing expected rejection at requireDatabaseCommandsStopped",
+    "caseDurationMs": 564.503095,
+    "path": "/workspace/scratch/db-hardening-independent-stdout-only-old2d.log",
+    "sha256": "6f1ae2a6f154238710481846f4fba1bed2d383bee26e2e3559ef0bf724d6d0d9"
+  },
+  "newGreen": {
+    "focusedPassed": 26,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 21088.644048,
+    "caseDurationMs": 173.647823,
+    "beforeThreeSecondDeadline": true,
+    "path": "/workspace/scratch/db-hardening-independent-stdout-only-35b814-focused.log",
+    "sha256": "389b0e624db95c84f1dd3d68d2836095d2fbe815956d97ef082d75f0d573967e"
+  },
+  "interpretation": "stdout-only detached EPIPE-tolerant writer causes destination failure and forced local pipe close without deadline expiration. Old catch incorrectly certified closure; new clean-EOF certificate rejects DB stop/artifact safety immediately while writer remains alive, then synthetic writer explicitly removed in test finally.",
+  "scope": "Only test writer stderr changed to ignore plus CLI task start; product/docs/workflows/gates byteunchanged from346/9045 correction. No remote changes.",
+  "qualification": [
+    "Fresh exact-head fullCI and parent actual source/ZIP review stillpending",
+    "Existingfailed/completedc928 attempts mustremain source-bound, no pass promotion",
+    "Local synthetic processes/fakeengine; no new native image acceptance or secret access"
+  ]
+}
