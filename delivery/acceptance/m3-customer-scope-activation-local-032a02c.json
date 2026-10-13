@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "result": "local-preparation-passed-hosted-scope-unverified",
+  "reviewedMain": "2652ee15b3214a3cc246cbf69f6ca01f8319a36c",
+  "testedSource": "032a02ca69d04a1ec48b385f7b232b977b7b2502",
+  "installation": {
+    "repository": "alimobrem/agentci-onboarding-demo",
+    "appId": 5182307,
+    "installationId": 167710386,
+    "identityStatus": "expected-inputs-not-current-authenticated-verification",
+    "expectedSlug": "agentci-onboarding-demo",
+    "slugStatus": "unverified-existing-guard-verifies-numeric-id-only"
+  },
+  "authority": {
+    "userGoal": "Complete M3",
+    "draftPublicationAndHostedCI": "Previously approved Work GitHub draft publication, evidence and bounded CI fixes",
+    "activationMerge": "Separate reviewed exact-source clearance required before main merge",
+    "customerCredential": "Owner-confirmed separate named Actions secret presence; value never read; validity unverified"
+  },
+  "effect": {
+    "onDraft": "Normal hosted CI; no customer App key use or customer mutation",
+    "onApprovedMainMerge": "Existing scope-only main workflow reads App/install/repository identities; no fixtures, Checks or demo execution",
+    "demoDescriptorAbsent": true
+  },
+  "localChecks": {
+    "activationBoundary": {
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0
+    },
+    "rootUnit": {
+      "passed": 544,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 56.363547651
+    },
+    "apiCompatibility": "Immutable released M1 and M2 boundaries passed",
+    "reconciliation": "1346 IDs, 29 fenced children, M0-M10 preserved",
+    "fast": {
+      "sourceCommit": "032a02ca69d04a1ec48b385f7b232b977b7b2502",
+      "dirty": true,
+      "seconds": 57.460589232,
+      "passed": true,
+      "checks": [
+        {
+          "name": "types",
+          "exitCode": 0,
+          "seconds": 4.676316592999999
+        },
+        {
+          "name": "tests",
+          "exitCode": 0,
+          "seconds": 57.449017843
+        },
+        {
+          "name": "api",
+          "exitCode": 0,
+          "seconds": 4.405752829
+        },
+        {
+          "name": "contract-evals",
+          "exitCode": 0,
+          "seconds": 1.709712746
+        },
+        {
+          "name": "risk-evals",
+          "exitCode": 0,
+          "seconds": 1.1459207509999998
+        },
+        {
+          "name": "project",
+          "exitCode": 0,
+          "seconds": 3.206522338
+        },
+        {
+          "name": "status",
+          "exitCode": 0,
+          "seconds": 3.7805876499999997
+        },
+        {
+          "name": "delivery",
+          "exitCode": 0,
+          "seconds": 2.303502617
+        },
+        {
+          "name": "phase-plan",
+          "exitCode": 0,
+          "seconds": 2.058114351
+        },
+        {
+          "name": "native-inputs",
+          "exitCode": 0,
+          "seconds": 0.184138273
+        }
+      ]
+    }
+  },
+  "priorFailure": {
+    "result": "failed",
+    "sourceCommit": "777fe3366a1919240a68afd51cf11dfac3bec6e8",
+    "dirty": true,
+    "seconds": 50.228143187,
+    "checks": [
+      {
+        "name": "types",
+        "exitCode": 0,
+        "seconds": 4.385634228
+      },
+      {
+        "name": "tests",
+        "exitCode": 1,
+        "seconds": 50.216130438
+      },
+      {
+        "name": "api",
+        "exitCode": 0,
+        "seconds": 3.535095404
+      },
+      {
+        "name": "contract-evals",
+        "exitCode": 0,
+        "seconds": 2.355376717
+      },
+      {
+        "name": "risk-evals",
+        "exitCode": 0,
+        "seconds": 2.1572617970000003
+      },
+      {
+        "name": "project",
+        "exitCode": 0,
+        "seconds": 3.7828563350000004
+      },
+      {
+        "name": "status",
+        "exitCode": 0,
+        "seconds": 3.0039866980000003
+      },
+      {
+        "name": "delivery",
+        "exitCode": 0,
+        "seconds": 1.815905237
+      },
+      {
+        "name": "phase-plan",
+        "exitCode": 0,
+        "seconds": 2.218934375
+      },
+      {
+        "name": "native-inputs",
+        "exitCode": 0,
+        "seconds": 0.115998457
+      }
+    ],
+    "diagnosis": "Fresh worktree lacked checksum-pinned Gitleaks archive. Four scanner tests failed; production code and scanner policy were unchanged. Existing exact pinned tool cache copied before retry.",
+    "scope": "Local environment setup; not hosted CI or customer App validity."
+  },
+  "dependencyQualification": "Existing cached root node_modules and checksum-pinned tool cache; not a clean dependency install",
+  "inputHashes": [
+    {
+      "path": "releases/m3-customer-installation.json",
+      "sha256": "41f8874033586d687ed702c13663ec78bd5a7b422029179761ecba89de18ad7c"
+    },
+    {
+      "path": "tests/customer-activation.test.ts",
+      "sha256": "0fe9e1467bba2bbf415cc5148c21eb9b4fd4fd06b65738b9a44a4d9475da7d21"
+    },
+    {
+      "path": ".github/workflows/customer-installation-scope.yaml",
+      "sha256": "c8b6905037af956f96dd52e7d38e15e331652088539b002e70a998f7d8fd95eb"
+    },
+    {
+      "path": "scripts/lib/customer-activation.mjs",
+      "sha256": "5e590ceac3819c4474d641b12e665f4f91d4fe4e862a95307e25b2a01d1e9555"
+    },
+    {
+      "path": "scripts/lib/customer-acceptance-preflight.mjs",
+      "sha256": "629e6eb803d310b230026016dc67f4ea50328d802cfcf802149ab52fbb973215"
+    },
+    {
+      "path": "scripts/m3-customer-app-preflight.mjs",
+      "sha256": "35154c5f2e1113f107f6427d1382dcf41934d812f8b5fe099896d22abcf9e30c"
+    }
+  ],
+  "remaining": [
+    "Exact-source hosted CI",
+    "Independent source/artifact review",
+    "Appropriate exact activation merge authorization",
+    "Actual hosted installation-scope-passed result",
+    "Four customer scenarios, owned recovery/cleanup and real GitHub evidence",
+    "Externally reachable endpoint and reliable every-PR acceptance",
+    "Authenticated live dashboard and applicable image packaging",
+    "Final 0.4.0-m3 release, downloads, demo, closure and retrospective"
+  ],
+  "phasePreservation": {
+    "all18M3Gates": "pending",
+    "plannedMilestoneVersion": "0.4.0-m3",
+    "threeAdapters": "required",
+    "observedRateCalibration": "chosen",
+    "wilson": "descriptive",
+    "soleException": "Inaccessible external model-provider validation may remain explicitly deferred/unverified after all other applicable gates pass",
+    "persistentHosting": "Not added as an original M3 gate",
+    "newPersistentAccessOrPaidServices": "Not authorized by this descriptor",
+    "mac": "Not accessed; unpublished Mac files are not transferred"
+  }
+}

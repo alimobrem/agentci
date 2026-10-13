@@ -6716,6 +6716,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07d-2-scope-activation",
+          "status": "in-progress",
+          "startedAt": "2026-10-13T20:29:00.835Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Public scope-only descriptor binds reviewed main ancestor, separate customer App 5182307 and installation 167710386 exclusively to alimobrem/agentci-onboarding-demo. Existing guard validates actual key/App/install/minimal permissions before fixture mutation. Preserve all other gates; local descriptor/negative contract checks, exact-source hosted CI and independent review before activation. Actual hosted read-only scope result required before task completion; secret presence alone is not validity.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -7595,6 +7610,21 @@
           "acceptance": [
             {
               "text": "Owner approved existing PR88 integration/CI/browser/privacy validation and merge after independent review, not deployment or unrelated unpublished features. Preserve fd76 dashboard source/history and latest reviewed main2b8eb75/dev3 release source/assets, resolve only integration conflicts, preserve all original task/event/spec/phase history and qualifications. Full combined CI, locked UI/SDK builds/audit, signed OIDC/session/privacy/read-interruption and production browser fixtures with exact source/tree/hash receipts pass; independent parent actual-source/artifact clearance before expected-head merge. Actual customer/SSO/deployment and aggregateM3 gates remain pending.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07d-2-scope-activation",
+          "status": "in-progress",
+          "startedAt": "2026-10-13T20:29:00.835Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Public scope-only descriptor binds reviewed main ancestor, separate customer App 5182307 and installation 167710386 exclusively to alimobrem/agentci-onboarding-demo. Existing guard validates actual key/App/install/minimal permissions before fixture mutation. Preserve all other gates; local descriptor/negative contract checks, exact-source hosted CI and independent review before activation. Actual hosted read-only scope result required before task completion; secret presence alone is not validity.",
               "status": "pending",
               "evidence": []
             }
