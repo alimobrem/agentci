@@ -19,7 +19,7 @@ jobs:
         with: { node-version: 26.10.0 }
       - run: npm install --global npm@12.2.0
       - run: npm ci
-      - name: Observe bounded repository capability metadata without publication
+      - name: Observe allowlisted auth classification and exact match with repository metadata
         env: { GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
         run: node scripts/development-token-diagnostic.mjs
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
