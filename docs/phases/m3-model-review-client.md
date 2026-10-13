@@ -214,3 +214,16 @@ The real HTTP/PostgreSQL test uses compiled public exports and a compiled CLI. `
 `agentci finding reserve-reproduction --request ADMISSION_JSON --id SHA256_ID --reservation RESERVATION_JSON` selects a preconfigured operator approval. The typed `reserveReproduction(admission, findingId, request)` method requires the same original admission, operator token, expected finding version, operation ID, approval ID and approved-plan digest. The JSON request contains schemaVersion, reviewId, subject, expectedVersion, operationId, approvalId and approvalDigest only; commands, images, limits and receipts are rejected. Preserve the complete returned reference for status/cancellation. Exact retries retain one intent; changed operation inputs conflict. A 202 is reservation intent, not execution or confirmation.
 
 `agentci finding disposition --request ADMISSION_JSON --id SHA256_ID --disposition DISPOSITION_JSON` and `client.setFindingDisposition(admission, findingId, request)` record an authenticated operator `false-positive` or `resolved` attestation. Preserve the operation ID and original request on retry. The receipt has `assertionDigest:null`; its evidence digest is an attestation reference, not independent reproduction proof or a guarantee that artifact bytes can be fetched. Preserve the original finding and history, and label the result operator-marked rather than verified fixed. See [disposition authority and request fields](m3-finding-dispositions.md).
+
+The additive `finding(expected, id, {version, signal})` option propagates the caller
+AbortSignal through the admission identity check and the single pinned finding read.
+Interrupting this read issues no cancellation/disposition mutation; retained evidence
+is unchanged. Omitting signal preserves the existing bounded request behavior.
+
+The optional instance `maxReadBytes` budget counts every consumed response-body chunk
+before JSON parsing, including whitespace/escaped JSON and repeated admission reads,
+error responses, history and export bodies. Crossing it aborts active reads and
+prevents further requests on that instance. Per-request bounds remain in place.
+This does not grant authorization and is distinct from any decoded-object display
+budget. `validateReviewAdmission` is exported for strict server-side input projection;
+validation never grants permission.

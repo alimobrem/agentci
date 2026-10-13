@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "kind": "owner-approved-existing-dashboard-PR88-current-main-refresh",
+  "originalRemoteHead": "fd76cdd82f254f1b16df13328cfd8f145db1e208",
+  "reviewedMain": "2b8eb75aadd604ebafe97ec06a3359734c4f20d2",
+  "localTrackingCommit": "a37e3542dd59a31f237904a640a07e69c98d710f",
+  "localIntegrationMerge": "5d7a3f029b6eb3708681c1e27fd0d84d0b1593c9",
+  "testedCommit": "76f8a098934032514bfc9550ee7de6599be9ad5b",
+  "testedTree": "77ef4c9175b083be0b3829d8decfaf575b460f48",
+  "authorization": {
+    "transcriptMessages": [
+      {
+        "role": "assistant",
+        "messageId": "Sentinel_2d0ad1c6b6cc8191bb38282ef6beae6f"
+      },
+      {
+        "role": "owner",
+        "messageId": "Sentinel_1e7c0db6e2f88191a81486b6135a6877"
+      }
+    ],
+    "reply": "yes merge",
+    "scope": "Existing PR88 refresh, fullCI/browser/privacy checks and merge after independent exact-source/artifact review. No deployment or unrelated unpublished UI features."
+  },
+  "inputs": [
+    {
+      "path": ".github/workflows/dashboard-verify.yaml",
+      "sha256": "0bd0b9cea7f84ef37d5834be64a5877094915b2265150524012feb1dcb6e573a"
+    },
+    {
+      "path": "apps/dashboard/.gitignore",
+      "sha256": "add44d99b8351d4ef77e1e141f278780749922a158227df86c51dad8f8a0b613"
+    },
+    {
+      "path": "apps/dashboard/app/api/reviews/[id]/route.ts",
+      "sha256": "b8f91d12ff7e351c0fdb462d696a2ac3327f4e3c92473ac1a180640e29f88aa6"
+    },
+    {
+      "path": "apps/dashboard/app/api/session/route.ts",
+      "sha256": "3b7e11364bbfa64dd2341f524665ad1f2cd93a7599aa88de610749ef5449248d"
+    },
+    {
+      "path": "apps/dashboard/app/auth/callback/route.ts",
+      "sha256": "8a823b95ee8190e4e1bc80ac6accd910ebc847cfb2b00f5b463a3c4f2910ec69"
+    },
+    {
+      "path": "apps/dashboard/app/auth/login/route.ts",
+      "sha256": "82a3559cc292f531aa827789537d4cdbc1a7e499e7b99ae6a65a061b1919a730"
+    },
+    {
+      "path": "apps/dashboard/app/auth/logout/route.ts",
+      "sha256": "6f8b35b8bfe4b9bd9908350f537bdf0c5cf811e0fab66510a601e8016a56a48c"
+    },
+    {
+      "path": "apps/dashboard/app/error.tsx",
+      "sha256": "58e6ca0df501196de13d2baff934b8e742b0581299cbd7a7d0486e5dc0daf8fc"
+    },
+    {
+      "path": "apps/dashboard/app/globals.css",
+      "sha256": "f52fd3e5657ba4a894843d9a0968d5ad5f81849f8641564e9d1dc6edda8fdcce"
+    },
+    {
+      "path": "apps/dashboard/app/layout.tsx",
+      "sha256": "69d5cbe3056fa743f848221d95927e84d7adbd9380a7e15ac20884d6a0d249a2"
+    },
+    {
+      "path": "apps/dashboard/app/loading.tsx",
+      "sha256": "cdee6b6fcf219200232d157d74463adea5b08492dd6c7ae0be82a54632e7335b"
+    },
+    {
+      "path": "apps/dashboard/app/page.tsx",
+      "sha256": "800d9adde33ed0a8aee175826b213fa34d8ae27f46494bac94bf086b22bb794b"
+    },
+    {
+      "path": "apps/dashboard/components/refresh-review.tsx",
+      "sha256": "18693a85e23277a5fc8bc5669dce9f3ab6b3ed6066dcdc788d5ecbd5e2126188"
+    },
+    {
+      "path": "apps/dashboard/components/review-detail.tsx",
+      "sha256": "9a18a83a1fb9576153fb157e17cf03274d8bf033c3ec213bfa1077669cc5a8c7"
+    },
+    {
+      "path": "apps/dashboard/components/review-loader.tsx",
+      "sha256": "2a570456627948d952034118f1fb810c0cb9bbb7b77986b521303b8d86ea6160"
+    },
+    {
+      "path": "apps/dashboard/components/session-boundary.tsx",
+      "sha256": "b8e489440eeb0ce0cc7c1906a380559a5b4910be594c2a656c61b0c50bea2865"
+    },
+    {
+      "path": "apps/dashboard/components/sign-out.tsx",
+      "sha256": "fdb2053ac90c2bd6eaec6bf2ecfa419e6ff1b26fbe4706ee8b34eade3a54d49e"
+    },
+    {
+      "path": "apps/dashboard/components/ui/tabs.tsx",
+      "sha256": "76f9005af9eda76d8047bd9ae38ffa6033016a1b663f0abf6630611ebefb9b16"
+    },
+    {
+      "path": "apps/dashboard/lib/admissions.ts",
+      "sha256": "8b2b9cdff83608910f0e812fde5eed47e0a3d03e42afa2b50e583b057fc6e079"
+    },
+    {
+      "path": "apps/dashboard/lib/dashboard.ts",
+      "sha256": "841c794a8de9461598b374920c2f8ce9ed9d373830dbf192d15f30554185fc66"
+    },
+    {
+      "path": "apps/dashboard/lib/oidc.ts",
+      "sha256": "99abed3e1880fe484aba2f9ce61852df782f1d51348bd311b10bcfd0cee5faba"
+    },
+    {
+      "path": "apps/dashboard/lib/runtime.ts",
+      "sha256": "0b9ab83ba319f483b84fe3126f98323ff6ea15d8d17e9d682a0e470962221ce1"
+    },
+    {
+      "path": "apps/dashboard/lib/session.ts",
+      "sha256": "db690298d96ffb4311b2371db2a88f4ee4a73b1850e021e96c8f23a582f04bc9"
+    },
+    {
+      "path": "apps/dashboard/next-env.d.ts",
+      "sha256": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b"
+    },
+    {
+      "path": "apps/dashboard/next.config.ts",
+      "sha256": "7fc67a637373c3102b44c8ac83851156982e95617cc764c94cb50fa07766b61c"
+    },
+    {
+      "path": "apps/dashboard/package-lock.json",
+      "sha256": "f53e726e0ba69f140b82a32338b5bed67fe2651e44e02210cbf48d6b629d24f3"
+    },
+    {
+      "path": "apps/dashboard/package.json",
+      "sha256": "6a5c9c9c966f119663c899fe8d503a2a2e1fb2394d78c55d2a55c2a6f0ac956a"
+    },
+    {
+      "path": "apps/dashboard/postcss.config.mjs",
+      "sha256": "cc8f514ba7fda07a2e2828670c99e34275f314b350628d8c2ab39e68e50bf9f8"
+    },
+    {
+      "path": "apps/dashboard/tests/browser/bootstrap.ts",
+      "sha256": "df8844e7fc9a8b11229757d036abc7a2cf4260e59e7489e4ac5c91a682f5b705"
+    },
+    {
+      "path": "apps/dashboard/tests/browser/check.mjs",
+      "sha256": "4ae584a4e17341f64e3d2e40dba82905a614b89b3ec4e176b519847bf66af76c"
+    },
+    {
+      "path": "apps/dashboard/tests/ci-receipt.test.ts",
+      "sha256": "13f0e6ec51b15be183c31467792fb57faaff094b3819cffc9d3d89c3e5e1b0d8"
+    },
+    {
+      "path": "apps/dashboard/tests/dashboard.test.ts",
+      "sha256": "48b61b57a3311e5f3f683751aa42c29f4282c728a10266434ed94335efc97d66"
+    },
+    {
+      "path": "apps/dashboard/tests/helpers/retained-finding.ts",
+      "sha256": "f2a696bcca2ac953144da0b2f564494522c2983ca3607239c78e70093074f55d"
+    },
+    {
+      "path": "apps/dashboard/tests/oidc.test.ts",
+      "sha256": "82a6bb84b8b5d502068d60ab3cad9f5981ce081d43060a133cfea44cd8bb415a"
+    },
+    {
+      "path": "apps/dashboard/tests/presenter.test.ts",
+      "sha256": "a5443aaef0ef01a4456daebab9809363736268abcb812e8016617e83df52538a"
+    },
+    {
+      "path": "apps/dashboard/tests/session.test.ts",
+      "sha256": "185e32662864f571e9a518c7253de3137768e8f07e8cbb2a6ca4c8d212af8f7f"
+    },
+    {
+      "path": "apps/dashboard/tsconfig.json",
+      "sha256": "15913b642e425b3b90a773a28f2b9caa40d9cc60f6a100ab9e61c8c76e20ab8e"
+    },
+    {
+      "path": "packages/client/index.ts",
+      "sha256": "f8008d776a94b64da04995a1c6e74d07f3676c36a88bf4427a69dd0dbc43e502"
+    },
+    {
+      "path": "packages/client/model-review.ts",
+      "sha256": "7de81395f044b3de008ce99f8e727a3495adcee0b2d8183de6af2ae7bb09c978"
+    }
+  ],
+  "integration": {
+    "conflicts": [
+      "delivery/tasks.json",
+      "delivery/task-events.jsonl",
+      "delivery/reconciliation/requirement-test-evidence.json",
+      "delivery/reconciliation/sections/40.json"
+    ],
+    "resolution": "Preserved complete main142task objects, existing5UI tasks, new tracked refresh task and both branch event histories; regenerated full1346ID/29child snapshot, no phase or gate promotion. No UI runtime conflict.",
+    "onlyUIInputChange": "Linked agentci SDK lock metadata versiondev2->dev3; dependency pins unchanged, fresh cached UI npmci, SDK link resolves to current combined worktree.",
+    "allMainSourceDescriptorLocksSpecM3GateBytesPreserved": true,
+    "allOtherExistingUIRuntimeTestInputsPreserved": true
+  },
+  "checks": {
+    "rootUnit": 543,
+    "uiUnit": 17,
+    "browser": 24,
+    "fastChecks": 10,
+    "fastSeconds": 51.389549003,
+    "rootNode": "v26.10.0",
+    "rootDirty": true,
+    "sdkBuild": "passed current combinedsource",
+    "uiTypecheck": "passed",
+    "uiBuild": "passed production standalone",
+    "auditVulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "apiCompatibility": "passed releasedM1/M2 baselines",
+    "workflowLint": "passed pinned actionlint",
+    "browserExecutable": "/usr/bin/chromium",
+    "browserVersion": "151.0.7922.173",
+    "browserZeroControllerMutations": true,
+    "browserLiveOidc": false,
+    "browserLiveCustomer": false,
+    "qualification": "Root dependencies/pinned tools reused; UI fresh cached npmci. Local browser uses explicitly selected system Chromium151, not locked Playwright bundled browser; full hosted DashboardVerify remains required. Production UI with synthetic fixtures/signed OIDC tests is not live issuer/customer/deployment acceptance."
+  },
+  "browserEvidence": {
+    "path": ".agentci/artifacts/dashboard-browser/result.json",
+    "sha256": "5e8875d210217836bef1f7db51402e2b41c796fc43ee5a4e1939d90c4eb88992",
+    "checks": [
+      "isolated standalone without test bootstrap/configuration fails closed",
+      "anonymous view and direct data route denied",
+      "authenticated original-admission detail mobile/unknown evidence",
+      "focus revalidation hides protected content before asynchronous session response",
+      "server remaining TTL hides expired content independently of browser wall clock",
+      "Radix keyboard focus and tabs",
+      "cross tenant direct route and account view isolated",
+      "cross origin logout CSRF denied",
+      "malformed503/unavailable503/backendcredential502/notfound404/incomplete409/bounded413 distinguished from session expiry",
+      "cancel intent cannot assert cleanup",
+      "browser Back restores Summary and Forward restores exact focused retained Evidence target without backend mutations",
+      "retained finding reference activates Evidence tab and exact focused target, including direct hash reload",
+      "nonempty primary view close and active session revocation abort backend finding sockets before release without next reads or mutations",
+      "completed refusal displays exact subject/profile/role coverage without inferred clean review",
+      "rapid exact-review navigation discards obsolete first-subject response",
+      "closing a view with an active read never requests backend cancellation/mutation",
+      "private evidence caching and browser credential absence",
+      "revoked session during backend read cannot deliver evidence",
+      "logout then Back cannot show retained account detail",
+      "RSC refreshed session-binding props cannot expose children before verifying new binding",
+      "same-browser account change/restoration cannot reveal prior tenant cached detail",
+      "strict production admission rejects extra private sentinel before SSR/RSC/client props or backend access",
+      "real synthetic server-session expiry hides review and distinguishes retained evidence",
+      "zero AgentCI API mutations"
+    ],
+    "screenshots": [
+      {
+        "name": "fixture-cancellation-intent.png",
+        "sha256": "a9ba2bca74c5c08c7cacaad2cfa377525a8786c36ea0164ff8f60b15a31c3db8"
+      },
+      {
+        "name": "fixture-exact-review-detail.png",
+        "sha256": "51f8db9b66872bdfc442b90a0bda43dafd051cecb9aff2aa276f1508b9c0e67d"
+      },
+      {
+        "name": "fixture-missing-evidence.png",
+        "sha256": "b8387a9683cde5dfb07b0a3cfe2f833803c63c985e639dab65e8bd74a1634f3f"
+      },
+      {
+        "name": "fixture-retained-evidence-reference.png",
+        "sha256": "46fbbad7485dc57eb33d633425614223c3b7fcbab38bc0cbd2b8311f722dfdb7"
+      },
+      {
+        "name": "fixture-session-expired.png",
+        "sha256": "49744d610013c4816d6d25f6cf3bbd28d7d4e55659e1e873c42a00fab113f5c5"
+      }
+    ]
+  },
+  "priorAttemptsPreserved": true,
+  "remaining": "Exact refreshed source fullcombined Verify/DashboardVerify/scanner/advisory and parent independent actual source/artifact/browser/privacy review before approved expected-head merge. All18M3gates, customer/SSO/deployment and original phase scope remain separate. Parent handles customer credentials; existingdogfood secret never substituted."
+}

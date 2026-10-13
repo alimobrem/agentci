@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {spawnSync,execFileSync} from 'node:child_process';
+import {mkdtemp,mkdir,writeFile,readFile,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {requiredBrowserCases} from '../../../scripts/lib/dashboard-ci-evidence.mjs';
+const repo=fileURLToPath(new URL('../../../',import.meta.url));
+test('explicit hosted bash preserves nonzero pipeline status through tee',()=>{const result=spawnSync('bash',['--noprofile','--norc','-e','-o','pipefail','-c','false | tee /dev/null']);assert.notEqual(result.status,0);});
+test('receipt is retained but successful stage outcomes cannot certify stale, missing or mutated browser proof',async t=>{const directory=await mkdtemp(path.join(tmpdir(),'dashboard-ci-receipt-'));t.after(()=>rm(directory,{recursive:true,force:true}));await mkdir(path.join(directory,'browser'));const sourceCommit=execFileSync('git',['rev-parse','HEAD'],{cwd:repo,encoding:'utf8'}).trim(),sourceTree=execFileSync('git',['rev-parse','HEAD^{tree}'],{cwd:repo,encoding:'utf8'}).trim();const success=Object.fromEntries(['rootInstall','rootBuild','uiInstall','audit','types','units','build','browserInstall','browser'].map(name=>[name,'success']));const valid={sourceCommit,sourceTree,runId:'1',runAttempt:'1',backendMutations:0,liveOidc:false,liveCustomer:false,checks:requiredBrowserCases};
+ for(const change of [undefined,{sourceCommit:'0'.repeat(40)},{backendMutations:1},{runAttempt:'2'},{checks:[]},{liveOidc:true}]){const file=path.join(directory,'browser/result.json');await writeFile(file,JSON.stringify(change?{...valid,...change}:null));const child=spawnSync(process.execPath,['scripts/dashboard-ci-receipt.mjs'],{cwd:repo,env:{PATH:process.env.PATH,NODE_ENV:'test',AGENTCI_UI_CI_DIR:directory,GITHUB_RUN_ID:'1',GITHUB_RUN_ATTEMPT:'1',UI_STAGE_OUTCOMES:JSON.stringify(success)},encoding:'utf8'});assert.notEqual(child.status,0);const receipt=JSON.parse(await readFile(path.join(directory,'ci-receipt.json'),'utf8'));assert.equal(receipt.softwareChecksPassed,false);assert.equal(receipt.releaseComplete,false);}
+ await writeFile(path.join(directory,'browser/result.json'),JSON.stringify(valid));const child=spawnSync(process.execPath,['scripts/dashboard-ci-receipt.mjs'],{cwd:repo,env:{PATH:process.env.PATH,NODE_ENV:'test',AGENTCI_UI_CI_DIR:directory,GITHUB_RUN_ID:'1',GITHUB_RUN_ATTEMPT:'1',UI_STAGE_OUTCOMES:JSON.stringify(success)},encoding:'utf8'});assert.equal(child.status,0);const receipt=JSON.parse(await readFile(path.join(directory,'ci-receipt.json'),'utf8'));assert.equal(receipt.softwareChecksPassed,true);assert.equal(receipt.liveOidc,false);
+});

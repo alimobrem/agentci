@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-12T02:13:10.199575+00:00",
+  "scope": "Bounded UI draft CI snapshot refresh, no product change",
+  "failedAttempt": {
+    "runId": 38194638758,
+    "attempt": 1,
+    "head": "9140c638612693b56740e88e79d5061f33f48bac",
+    "tree": "1dd8689387cb875cdde0398b1ca6ce604753b449",
+    "reason": "Requirement reconciliation snapshot stale after new UI tasks; snapshot regenerated using unchanged canonical generator."
+  },
+  "dedicatedDashboardCI": {
+    "runId": 38194638789,
+    "attempt": 1,
+    "conclusion": "success",
+    "artifactId": 11723290384,
+    "artifactDigest": "sha256:4108a6e4cf9235a42a3f403555cecedb709eaf313da41177146448c987aecea5",
+    "rootZipInspected": false
+  },
+  "files": {
+    "delivery/reconciliation/requirement-test-evidence.json": "96a412488fa08a4ea9dd41e0c2ba2148fbd9af82968b69c38cf0068beb5aabfd",
+    "delivery/reconciliation/sections/40.json": "b4a4ec5465b83a0ff0efe360b42e8ad972bce7b5de6530d5cbdf2f4af03d643f",
+    "delivery/runs/38194638758-attempt-1.json": "65e43892ac272fe09cf75022ffa9d34d6da3ec9850426049bceb1700023190e1"
+  },
+  "checks": {
+    "canonicalGenerator": true,
+    "check": true,
+    "sourceIds": 1346,
+    "commandResourceChildren": 29
+  },
+  "ciCollection": {
+    "command": "npm run delivery -- collect-ci 38194638758 optimized unknown",
+    "source": "Exact successful Work GitHub read-only run/jobs metadata replay through two-command offline adapter; no external credential forwarding",
+    "cache": "unknown"
+  },
+  "productionInputsUnchangedSince": "82cec14ef198c2ba1ed5cb885ee87e5261f56aa8",
+  "reusedLocalChecks": "Exact product/CI/browser code hashes unchanged; root10fast/471unit and UI14/build/type/20browser remain narrowly applicable. No new run claimed. Hosted CI required on updated draft.",
+  "uiPreparationTasks": "in-progress",
+  "m3OpenGates": 18,
+  "releaseComplete": false
+}

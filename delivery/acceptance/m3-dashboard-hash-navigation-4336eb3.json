@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07-ui-hash-navigation-rework",
+  "recordedAt": "2026-10-12T03:15:49.065593+00:00",
+  "state": "local bounded repair passed; independent source/evidence review and fresh hosted CI pending",
+  "scope": "Production-built synthetic exact-review retained-evidence Back/Forward tab and focus regression; no live customer or SSO acceptance",
+  "baseCommit": "e14db7a7b565a3b74a99ff27d13e20330baa0533",
+  "sourceCommit": "4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394",
+  "sourceTree": "88ab0d88af27904dcc10c98bccad3252333ae64b",
+  "sourceFileHashes": {
+    ".github/workflows/dashboard-verify.yaml": "0bd0b9cea7f84ef37d5834be64a5877094915b2265150524012feb1dcb6e573a",
+    "apps/dashboard/.gitignore": "add44d99b8351d4ef77e1e141f278780749922a158227df86c51dad8f8a0b613",
+    "apps/dashboard/app/api/reviews/[id]/route.ts": "b8f91d12ff7e351c0fdb462d696a2ac3327f4e3c92473ac1a180640e29f88aa6",
+    "apps/dashboard/app/api/session/route.ts": "3b7e11364bbfa64dd2341f524665ad1f2cd93a7599aa88de610749ef5449248d",
+    "apps/dashboard/app/auth/callback/route.ts": "8a823b95ee8190e4e1bc80ac6accd910ebc847cfb2b00f5b463a3c4f2910ec69",
+    "apps/dashboard/app/auth/login/route.ts": "82a3559cc292f531aa827789537d4cdbc1a7e499e7b99ae6a65a061b1919a730",
+    "apps/dashboard/app/auth/logout/route.ts": "6f8b35b8bfe4b9bd9908350f537bdf0c5cf811e0fab66510a601e8016a56a48c",
+    "apps/dashboard/app/error.tsx": "58e6ca0df501196de13d2baff934b8e742b0581299cbd7a7d0486e5dc0daf8fc",
+    "apps/dashboard/app/globals.css": "f52fd3e5657ba4a894843d9a0968d5ad5f81849f8641564e9d1dc6edda8fdcce",
+    "apps/dashboard/app/layout.tsx": "69d5cbe3056fa743f848221d95927e84d7adbd9380a7e15ac20884d6a0d249a2",
+    "apps/dashboard/app/loading.tsx": "cdee6b6fcf219200232d157d74463adea5b08492dd6c7ae0be82a54632e7335b",
+    "apps/dashboard/app/page.tsx": "800d9adde33ed0a8aee175826b213fa34d8ae27f46494bac94bf086b22bb794b",
+    "apps/dashboard/components/refresh-review.tsx": "18693a85e23277a5fc8bc5669dce9f3ab6b3ed6066dcdc788d5ecbd5e2126188",
+    "apps/dashboard/components/review-detail.tsx": "9a18a83a1fb9576153fb157e17cf03274d8bf033c3ec213bfa1077669cc5a8c7",
+    "apps/dashboard/components/review-loader.tsx": "2a570456627948d952034118f1fb810c0cb9bbb7b77986b521303b8d86ea6160",
+    "apps/dashboard/components/session-boundary.tsx": "b8e489440eeb0ce0cc7c1906a380559a5b4910be594c2a656c61b0c50bea2865",
+    "apps/dashboard/components/sign-out.tsx": "fdb2053ac90c2bd6eaec6bf2ecfa419e6ff1b26fbe4706ee8b34eade3a54d49e",
+    "apps/dashboard/components/ui/tabs.tsx": "76f9005af9eda76d8047bd9ae38ffa6033016a1b663f0abf6630611ebefb9b16",
+    "apps/dashboard/lib/admissions.ts": "8b2b9cdff83608910f0e812fde5eed47e0a3d03e42afa2b50e583b057fc6e079",
+    "apps/dashboard/lib/dashboard.ts": "841c794a8de9461598b374920c2f8ce9ed9d373830dbf192d15f30554185fc66",
+    "apps/dashboard/lib/oidc.ts": "99abed3e1880fe484aba2f9ce61852df782f1d51348bd311b10bcfd0cee5faba",
+    "apps/dashboard/lib/runtime.ts": "0b9ab83ba319f483b84fe3126f98323ff6ea15d8d17e9d682a0e470962221ce1",
+    "apps/dashboard/lib/session.ts": "db690298d96ffb4311b2371db2a88f4ee4a73b1850e021e96c8f23a582f04bc9",
+    "apps/dashboard/next-env.d.ts": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b",
+    "apps/dashboard/next.config.ts": "7fc67a637373c3102b44c8ac83851156982e95617cc764c94cb50fa07766b61c",
+    "apps/dashboard/package-lock.json": "0ad03dc2dfe2d40029647480d9ee46ae58d3fd2b7efba99894cb12ed0f9c33db",
+    "apps/dashboard/package.json": "6a5c9c9c966f119663c899fe8d503a2a2e1fb2394d78c55d2a55c2a6f0ac956a",
+    "apps/dashboard/postcss.config.mjs": "cc8f514ba7fda07a2e2828670c99e34275f314b350628d8c2ab39e68e50bf9f8",
+    "apps/dashboard/tests/browser/bootstrap.ts": "df8844e7fc9a8b11229757d036abc7a2cf4260e59e7489e4ac5c91a682f5b705",
+    "apps/dashboard/tests/browser/check.mjs": "4ae584a4e17341f64e3d2e40dba82905a614b89b3ec4e176b519847bf66af76c",
+    "apps/dashboard/tests/ci-receipt.test.ts": "13f0e6ec51b15be183c31467792fb57faaff094b3819cffc9d3d89c3e5e1b0d8",
+    "apps/dashboard/tests/dashboard.test.ts": "48b61b57a3311e5f3f683751aa42c29f4282c728a10266434ed94335efc97d66",
+    "apps/dashboard/tests/helpers/retained-finding.ts": "f2a696bcca2ac953144da0b2f564494522c2983ca3607239c78e70093074f55d",
+    "apps/dashboard/tests/oidc.test.ts": "82a6bb84b8b5d502068d60ab3cad9f5981ce081d43060a133cfea44cd8bb415a",
+    "apps/dashboard/tests/presenter.test.ts": "a5443aaef0ef01a4456daebab9809363736268abcb812e8016617e83df52538a",
+    "apps/dashboard/tests/session.test.ts": "185e32662864f571e9a518c7253de3137768e8f07e8cbb2a6ca4c8d212af8f7f",
+    "apps/dashboard/tsconfig.json": "15913b642e425b3b90a773a28f2b9caa40d9cc60f6a100ab9e61c8c76e20ab8e",
+    "delivery/task-events.jsonl": "20080755eda5ce77bfa492c95ef47d67cf755d83fa8379d48cd90ac419aad854",
+    "delivery/tasks.json": "e3216da724d349d57082eca7916fe873161967547731fa9356dc80687a979d78",
+    "docs/phases/m3-dashboard-local-preparation.md": "7f882e7c5dfa3510739f9362d7dcdb9e8eb983e782b1d360c54bcc057f32a085",
+    "packages/client/index.ts": "f8008d776a94b64da04995a1c6e74d07f3676c36a88bf4427a69dd0dbc43e502",
+    "packages/client/model-review.ts": "7de81395f044b3de008ce99f8e727a3495adcee0b2d8183de6af2ae7bb09c978",
+    "scripts/dashboard-ci-receipt.mjs": "1de368dc3270bb1283fcd51050e17a27d0565a1f7b61d86df850def7023bc303",
+    "scripts/lib/dashboard-ci-evidence.mjs": "d1d53646cbb67ea7187b1849f8be56d64f3f8fe28a661d0f942768c5a6fd0787"
+  },
+  "corrections": [
+    "Absent or unrelated evidence hash synchronizes Summary and clears pending target; popstate/hashchange synchronize retained Evidence tab and exact focused target",
+    "Actual browser goBack/goForward restores original no-hash Summary and exact Evidence target; required hosted named-case contract updated"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck (apps/dashboard)",
+      "sourceCommit": "4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394",
+      "sourceTree": "88ab0d88af27904dcc10c98bccad3252333ae64b",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-hash-4336-types.log",
+      "sha256": "ede264564d22ba889a85acdd1b230c2b814e18b2f3f1d0177b5b4e7d7867480c"
+    },
+    {
+      "command": "npm test (apps/dashboard)",
+      "sourceCommit": "4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394",
+      "sourceTree": "88ab0d88af27904dcc10c98bccad3252333ae64b",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-hash-4336-tests.log",
+      "sha256": "5642c53fa1dd96b61122c4b69b12c4c63055338b5560ba170e07bfb8fceba71c"
+    },
+    {
+      "command": "npm run build (apps/dashboard)",
+      "sourceCommit": "4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394",
+      "sourceTree": "88ab0d88af27904dcc10c98bccad3252333ae64b",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-hash-4336-build.log",
+      "sha256": "a1f4194e92cc2ddda156aad07fdbc84aa135a8c750b55be3a4134d6c5d50f1a2"
+    },
+    {
+      "command": "AGENTCI_BROWSER_EXECUTABLE=/usr/bin/chromium npm run test:browser (apps/dashboard)",
+      "sourceCommit": "4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394",
+      "sourceTree": "88ab0d88af27904dcc10c98bccad3252333ae64b",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-hash-4336-browser.log",
+      "sha256": "b7028b45544c36d09cc518ad6e8efb07b0e457022cf47c62e652d718a3a9a82c"
+    },
+    {
+      "command": "npm run check:fast",
+      "sourceCommit": "4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394",
+      "sourceTree": "88ab0d88af27904dcc10c98bccad3252333ae64b",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-hash-4336-fast.log",
+      "sha256": "14b8187cfdff362de193741047cfb7fb633a1114caa53a507b7671c1533fdc17"
+    },
+    {
+      "command": "node scripts/reconcile-acceptance.mjs --check",
+      "sourceCommit": "4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394",
+      "sourceTree": "88ab0d88af27904dcc10c98bccad3252333ae64b",
+      "exitCode": 0,
+      "log": "/workspace/scratch/dashboard-hash-4336-reconciliation.log",
+      "sha256": "3c655087d3e415beeae76d42e7aa0390cb2b1f5f8e30976b0de71ba65d44fc1b"
+    }
+  ],
+  "browser": {
+    "checks": [
+      "isolated standalone without test bootstrap/configuration fails closed",
+      "anonymous view and direct data route denied",
+      "authenticated original-admission detail mobile/unknown evidence",
+      "focus revalidation hides protected content before asynchronous session response",
+      "server remaining TTL hides expired content independently of browser wall clock",
+      "Radix keyboard focus and tabs",
+      "cross tenant direct route and account view isolated",
+      "cross origin logout CSRF denied",
+      "malformed503/unavailable503/backendcredential502/notfound404/incomplete409/bounded413 distinguished from session expiry",
+      "cancel intent cannot assert cleanup",
+      "browser Back restores Summary and Forward restores exact focused retained Evidence target without backend mutations",
+      "retained finding reference activates Evidence tab and exact focused target, including direct hash reload",
+      "nonempty primary view close and active session revocation abort backend finding sockets before release without next reads or mutations",
+      "completed refusal displays exact subject/profile/role coverage without inferred clean review",
+      "rapid exact-review navigation discards obsolete first-subject response",
+      "closing a view with an active read never requests backend cancellation/mutation",
+      "private evidence caching and browser credential absence",
+      "revoked session during backend read cannot deliver evidence",
+      "logout then Back cannot show retained account detail",
+      "RSC refreshed session-binding props cannot expose children before verifying new binding",
+      "same-browser account change/restoration cannot reveal prior tenant cached detail",
+      "strict production admission rejects extra private sentinel before SSR/RSC/client props or backend access",
+      "real synthetic server-session expiry hides review and distinguishes retained evidence",
+      "zero AgentCI API mutations"
+    ],
+    "backendMutations": 0,
+    "browser": "151.0.7922.173",
+    "liveOidc": false,
+    "liveCustomer": false,
+    "assets": [
+      {
+        "path": "/workspace/agentci-m3-dashboard-ui/.agentci/artifacts/dashboard-browser-fixed/4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394/fixture-cancellation-intent.png",
+        "sha256": "a9ba2bca74c5c08c7cacaad2cfa377525a8786c36ea0164ff8f60b15a31c3db8"
+      },
+      {
+        "path": "/workspace/agentci-m3-dashboard-ui/.agentci/artifacts/dashboard-browser-fixed/4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394/fixture-exact-review-detail.png",
+        "sha256": "51f8db9b66872bdfc442b90a0bda43dafd051cecb9aff2aa276f1508b9c0e67d"
+      },
+      {
+        "path": "/workspace/agentci-m3-dashboard-ui/.agentci/artifacts/dashboard-browser-fixed/4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394/fixture-missing-evidence.png",
+        "sha256": "b8387a9683cde5dfb07b0a3cfe2f833803c63c985e639dab65e8bd74a1634f3f"
+      },
+      {
+        "path": "/workspace/agentci-m3-dashboard-ui/.agentci/artifacts/dashboard-browser-fixed/4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394/fixture-retained-evidence-reference.png",
+        "sha256": "46fbbad7485dc57eb33d633425614223c3b7fcbab38bc0cbd2b8311f722dfdb7"
+      },
+      {
+        "path": "/workspace/agentci-m3-dashboard-ui/.agentci/artifacts/dashboard-browser-fixed/4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394/fixture-session-expired.png",
+        "sha256": "49744d610013c4816d6d25f6cf3bbd28d7d4e55659e1e873c42a00fab113f5c5"
+      },
+      {
+        "path": "/workspace/agentci-m3-dashboard-ui/.agentci/artifacts/dashboard-browser-fixed/4336eb3ca3ba6fe4d301cfa279ba8c4b502ad394/result.json",
+        "sha256": "6f7aee54245fa179548622604ab190212b2d236e6ae91737d6b80d147e7f527f"
+      }
+    ]
+  },
+  "preservedHistoricalFailedAttempts": [
+    {
+      "sourceCommit": "3a6c560407ef053c34ddbfa58117e965e481c8dd",
+      "log": "/workspace/scratch/dashboard-retained-final-browser.log",
+      "sha256": "1cd7eb22f467850c66ee853228964aa2b6e01470ab64e81214855bfe3559bec2",
+      "reason": "Initial evidence target focus occurred before inactive panel mounted; focused after animation frame. Preliminary attempt superseded; subsequent strict-projection review edits invalidate any final-source reuse."
+    },
+    {
+      "sourceCommit": "1973b6e920c72715510a241f8bfb04b8e9ce2ba1",
+      "log": "/workspace/scratch/dashboard-retained-v2-browser.log",
+      "sha256": "630c98924d7e5306b1dd3df1f9ee670f4edc874099663343e8c02d4d682c2dcb",
+      "reason": "After direct hash navigation, subsequent refusal test failed to select Summary before asserting hidden Summary text; explicitly selected Summary in harness."
+    },
+    {
+      "sourceCommit": "6a9ebbc5b7581832b227288d361ea8bfb72f893c",
+      "log": "/workspace/scratch/dashboard-retained-v3-api-compat.log",
+      "sha256": "23ca223e75cf5d0710ef960834e8f44ee2bce1bd4cb62dc39450eb56750f9fbc",
+      "reason": "Pinned compatibility tool fetch failed EAI_AGAIN github.com; reused existing cached archive with required checksum verification, then checks passed."
+    }
+  ],
+  "unchangedSdkInputs": {
+    "packages/client/model-review.ts": "7de81395f044b3de008ce99f8e727a3495adcee0b2d8183de6af2ae7bb09c978",
+    "packages/client/index.ts": "f8008d776a94b64da04995a1c6e74d07f3676c36a88bf4427a69dd0dbc43e502"
+  },
+  "qualification": "Screenshots/network metadata are local production-build synthetic fixtures. Source unchanged during affected checks; prior broader SDK/API checks retained only as historical matching-input evidence, not fresh full acceptance.",
+  "remaining": [
+    "Independent bounded source/evidence review pending",
+    "Fresh hosted CI belongs to root",
+    "All original UI/live/customer/export/full interruption/history/packaging/native/release/demo acceptance and all18M3 gates remain pending",
+    "Task remains in-progress until broader parent review",
+    "No UI merge/deploy authorization"
+  ]
+}

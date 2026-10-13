@@ -1,0 +1,358 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-12T05:39:14.892537+00:00",
+  "task": "M3-07-ui-draft-integration",
+  "state": "Bounded local combined source passed; independent review and actual PR84 main integration confirmation/hosted UI CI pending",
+  "scope": "Frozen read-only UI and secure session/BFF first slice on reviewed scanner/planner-main equivalent; synthetic fixtures only",
+  "sourceCommit": "a3c74ca43d04ff5e1111a5e07d396061c9dac81a",
+  "sourceTree": "aeecd6a5e9281b67adafdad11e1661812a54421f",
+  "sources": {
+    "frozenUI": "ac9ce8dc39d90fdd1471b057717ed277a7eeb1da",
+    "scannerMainEquivalent": "bda6ca961c66d99222f953290d7447165ad1658a",
+    "actualScannerMain": "100731c7e15a83fbe49afa7bfef0e01e70ee2dda",
+    "plannerMainEquivalent": "6662005d917535aea2d46d00fc9aee701818bd63",
+    "plannerMainTree": "a464eb8ae25dcf28464deac60f3d2407ad479b32",
+    "actualPlannerMain": "pending PR84 approved merge; public UI update held"
+  },
+  "sourceBindings": [
+    {
+      "path": ".github/workflows/dashboard-verify.yaml",
+      "sha256": "0bd0b9cea7f84ef37d5834be64a5877094915b2265150524012feb1dcb6e573a"
+    },
+    {
+      "path": "apps/dashboard/.gitignore",
+      "sha256": "add44d99b8351d4ef77e1e141f278780749922a158227df86c51dad8f8a0b613"
+    },
+    {
+      "path": "apps/dashboard/app/api/reviews/[id]/route.ts",
+      "sha256": "b8f91d12ff7e351c0fdb462d696a2ac3327f4e3c92473ac1a180640e29f88aa6"
+    },
+    {
+      "path": "apps/dashboard/app/api/session/route.ts",
+      "sha256": "3b7e11364bbfa64dd2341f524665ad1f2cd93a7599aa88de610749ef5449248d"
+    },
+    {
+      "path": "apps/dashboard/app/auth/callback/route.ts",
+      "sha256": "8a823b95ee8190e4e1bc80ac6accd910ebc847cfb2b00f5b463a3c4f2910ec69"
+    },
+    {
+      "path": "apps/dashboard/app/auth/login/route.ts",
+      "sha256": "82a3559cc292f531aa827789537d4cdbc1a7e499e7b99ae6a65a061b1919a730"
+    },
+    {
+      "path": "apps/dashboard/app/auth/logout/route.ts",
+      "sha256": "6f8b35b8bfe4b9bd9908350f537bdf0c5cf811e0fab66510a601e8016a56a48c"
+    },
+    {
+      "path": "apps/dashboard/app/error.tsx",
+      "sha256": "58e6ca0df501196de13d2baff934b8e742b0581299cbd7a7d0486e5dc0daf8fc"
+    },
+    {
+      "path": "apps/dashboard/app/globals.css",
+      "sha256": "f52fd3e5657ba4a894843d9a0968d5ad5f81849f8641564e9d1dc6edda8fdcce"
+    },
+    {
+      "path": "apps/dashboard/app/layout.tsx",
+      "sha256": "69d5cbe3056fa743f848221d95927e84d7adbd9380a7e15ac20884d6a0d249a2"
+    },
+    {
+      "path": "apps/dashboard/app/loading.tsx",
+      "sha256": "cdee6b6fcf219200232d157d74463adea5b08492dd6c7ae0be82a54632e7335b"
+    },
+    {
+      "path": "apps/dashboard/app/page.tsx",
+      "sha256": "800d9adde33ed0a8aee175826b213fa34d8ae27f46494bac94bf086b22bb794b"
+    },
+    {
+      "path": "apps/dashboard/components/refresh-review.tsx",
+      "sha256": "18693a85e23277a5fc8bc5669dce9f3ab6b3ed6066dcdc788d5ecbd5e2126188"
+    },
+    {
+      "path": "apps/dashboard/components/review-detail.tsx",
+      "sha256": "9a18a83a1fb9576153fb157e17cf03274d8bf033c3ec213bfa1077669cc5a8c7"
+    },
+    {
+      "path": "apps/dashboard/components/review-loader.tsx",
+      "sha256": "2a570456627948d952034118f1fb810c0cb9bbb7b77986b521303b8d86ea6160"
+    },
+    {
+      "path": "apps/dashboard/components/session-boundary.tsx",
+      "sha256": "b8e489440eeb0ce0cc7c1906a380559a5b4910be594c2a656c61b0c50bea2865"
+    },
+    {
+      "path": "apps/dashboard/components/sign-out.tsx",
+      "sha256": "fdb2053ac90c2bd6eaec6bf2ecfa419e6ff1b26fbe4706ee8b34eade3a54d49e"
+    },
+    {
+      "path": "apps/dashboard/components/ui/tabs.tsx",
+      "sha256": "76f9005af9eda76d8047bd9ae38ffa6033016a1b663f0abf6630611ebefb9b16"
+    },
+    {
+      "path": "apps/dashboard/lib/admissions.ts",
+      "sha256": "8b2b9cdff83608910f0e812fde5eed47e0a3d03e42afa2b50e583b057fc6e079"
+    },
+    {
+      "path": "apps/dashboard/lib/dashboard.ts",
+      "sha256": "841c794a8de9461598b374920c2f8ce9ed9d373830dbf192d15f30554185fc66"
+    },
+    {
+      "path": "apps/dashboard/lib/oidc.ts",
+      "sha256": "99abed3e1880fe484aba2f9ce61852df782f1d51348bd311b10bcfd0cee5faba"
+    },
+    {
+      "path": "apps/dashboard/lib/runtime.ts",
+      "sha256": "0b9ab83ba319f483b84fe3126f98323ff6ea15d8d17e9d682a0e470962221ce1"
+    },
+    {
+      "path": "apps/dashboard/lib/session.ts",
+      "sha256": "db690298d96ffb4311b2371db2a88f4ee4a73b1850e021e96c8f23a582f04bc9"
+    },
+    {
+      "path": "apps/dashboard/next-env.d.ts",
+      "sha256": "1862ac4bbbc5192d4bf562161df66ea547ed3e67173100656ab606ae9797db2b"
+    },
+    {
+      "path": "apps/dashboard/next.config.ts",
+      "sha256": "7fc67a637373c3102b44c8ac83851156982e95617cc764c94cb50fa07766b61c"
+    },
+    {
+      "path": "apps/dashboard/package-lock.json",
+      "sha256": "0ad03dc2dfe2d40029647480d9ee46ae58d3fd2b7efba99894cb12ed0f9c33db"
+    },
+    {
+      "path": "apps/dashboard/package.json",
+      "sha256": "6a5c9c9c966f119663c899fe8d503a2a2e1fb2394d78c55d2a55c2a6f0ac956a"
+    },
+    {
+      "path": "apps/dashboard/postcss.config.mjs",
+      "sha256": "cc8f514ba7fda07a2e2828670c99e34275f314b350628d8c2ab39e68e50bf9f8"
+    },
+    {
+      "path": "apps/dashboard/tests/browser/bootstrap.ts",
+      "sha256": "df8844e7fc9a8b11229757d036abc7a2cf4260e59e7489e4ac5c91a682f5b705"
+    },
+    {
+      "path": "apps/dashboard/tests/browser/check.mjs",
+      "sha256": "4ae584a4e17341f64e3d2e40dba82905a614b89b3ec4e176b519847bf66af76c"
+    },
+    {
+      "path": "apps/dashboard/tests/ci-receipt.test.ts",
+      "sha256": "13f0e6ec51b15be183c31467792fb57faaff094b3819cffc9d3d89c3e5e1b0d8"
+    },
+    {
+      "path": "apps/dashboard/tests/dashboard.test.ts",
+      "sha256": "48b61b57a3311e5f3f683751aa42c29f4282c728a10266434ed94335efc97d66"
+    },
+    {
+      "path": "apps/dashboard/tests/helpers/retained-finding.ts",
+      "sha256": "f2a696bcca2ac953144da0b2f564494522c2983ca3607239c78e70093074f55d"
+    },
+    {
+      "path": "apps/dashboard/tests/oidc.test.ts",
+      "sha256": "82a6bb84b8b5d502068d60ab3cad9f5981ce081d43060a133cfea44cd8bb415a"
+    },
+    {
+      "path": "apps/dashboard/tests/presenter.test.ts",
+      "sha256": "a5443aaef0ef01a4456daebab9809363736268abcb812e8016617e83df52538a"
+    },
+    {
+      "path": "apps/dashboard/tests/session.test.ts",
+      "sha256": "185e32662864f571e9a518c7253de3137768e8f07e8cbb2a6ca4c8d212af8f7f"
+    },
+    {
+      "path": "apps/dashboard/tsconfig.json",
+      "sha256": "15913b642e425b3b90a773a28f2b9caa40d9cc60f6a100ab9e61c8c76e20ab8e"
+    },
+    {
+      "path": "docs/phases/m3-dashboard-local-preparation.md",
+      "sha256": "7f882e7c5dfa3510739f9362d7dcdb9e8eb983e782b1d360c54bcc057f32a085"
+    },
+    {
+      "path": "docs/phases/m3-model-review-client.md",
+      "sha256": "af67de8796ce4c4763047b7afd6682f0f591aca7a8dbe780690cbc08c19bdd4b"
+    },
+    {
+      "path": "packages/client/index.ts",
+      "sha256": "f8008d776a94b64da04995a1c6e74d07f3676c36a88bf4427a69dd0dbc43e502"
+    },
+    {
+      "path": "packages/client/model-review.ts",
+      "sha256": "7de81395f044b3de008ce99f8e727a3495adcee0b2d8183de6af2ae7bb09c978"
+    },
+    {
+      "path": "packages/evals/contracts.ts",
+      "sha256": "1166e5365f1582ba34475e2a4566d30d45b0421bb3bf82b18300030a5d046a5c"
+    },
+    {
+      "path": "scripts/dashboard-ci-receipt.mjs",
+      "sha256": "1de368dc3270bb1283fcd51050e17a27d0565a1f7b61d86df850def7023bc303"
+    },
+    {
+      "path": "scripts/lib/dashboard-ci-evidence.mjs",
+      "sha256": "d1d53646cbb67ea7187b1849f8be56d64f3f8fe28a661d0f942768c5a6fd0787"
+    },
+    {
+      "path": "tests/eval-contracts.test.ts",
+      "sha256": "f15a40fb52f978139ae89a43fc920299ac4681e43a1b84084ad6e19f8747c46d"
+    },
+    {
+      "path": "tests/eval-orchestration.test.ts",
+      "sha256": "a63e1fc17e19361f92096937fddfebee9d40eb58fc8daa6f1c1a062c8f5095af"
+    },
+    {
+      "path": "tests/integration/eval-review-staging.test.ts",
+      "sha256": "f3ebeddd361de8949818e631e758aebd59067414b8a84f1e9a056e923e5cb10b"
+    },
+    {
+      "path": "tests/model-finding-client.test.ts",
+      "sha256": "e018021b9ea3e8c1451219b3eec50742ac78eef37e9e9c6622e342a7aea4cef7"
+    },
+    {
+      "path": "tsconfig.build.json",
+      "sha256": "4754ee1b0c3e58f29a80af0452de9967adf3a9c27250f3f2c6266af359728e8c"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "8b75e612225dc4b5e8468367c4feb6ece8c6f36f407ccf3cb0db23ff209ae316"
+    }
+  ],
+  "evidenceBindings": [
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-a3-sdk-build.log",
+      "sha256": "76cbc2ccbbdb7b068905dbe246aa8581706d322289330db6ac2dcbfd9a71cfbf"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-a3-ui-types.log",
+      "sha256": "ede264564d22ba889a85acdd1b230c2b814e18b2f3f1d0177b5b4e7d7867480c"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-a3-ui-tests.log",
+      "sha256": "20c4f8d13f630e1589399028b042a7e23300d0343d21d2ec1dabe84db3ba27b4"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-a3-ui-build.log",
+      "sha256": "ee8965a16c5a2134ca707e9d4c97230fb13f6cc76d7a16461aef72b29f5b045a"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-a3-ui-audit.log",
+      "sha256": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-a3-browser.log",
+      "sha256": "b7028b45544c36d09cc518ad6e8efb07b0e457022cf47c62e652d718a3a9a82c"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-a3-fast.log",
+      "sha256": "4302317ba4e14d074427c27060cfd0bd7cbc7c85047780c924effa0177851614"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-a3-compat-workflows.log",
+      "sha256": "8c4c5d5e4b28c3fd41e48240eaf4de65b6a2ecb3c3a4000e42137c99945c354d"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-a3-api-compat-observed.log",
+      "sha256": "971c26b9f1de49c4e93d6a42ece284d805dc621cedaab208d1d071e67a380025"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-a3-forward.log",
+      "sha256": "bedad59219bd9c719934a861972f39e1b22c4887a44342031f416f31bd6e25a5"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-a3-forward-report.json",
+      "sha256": "1abf2b05440d40d95a3dbe80fd3c26ac85654bde5c54e513332fb773f1b5d256"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-a3-fast-result.json",
+      "sha256": "d74101d76f6d5184c52011a4f35a7f929ddecbdc6a8a6d2f76b0797b3f23e310"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-preliminary-96820a3-20261012.json",
+      "sha256": "7067c0290317307b1bcba77b370f82a48f33d39f1a00bce6f472955aa69b2bd3"
+    }
+  ],
+  "failedAttemptBindings": [
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-initial-ui-install.log",
+      "sha256": "1ea34a01707f91f67d74af382ba27b1823f1d14868fdd2664efb5eeeb6852e6a"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-initial-fast.log",
+      "sha256": "bbb3f4ca81fdf3ba4774323f0c4a94a1ef428ecf9f26980704590b535e3bd4a9"
+    },
+    {
+      "path": "/workspace/scratch/ui-scanner-planner-initial-fast-failed-report.json",
+      "sha256": "3defe9fea67d8c8ce1cda001e125e3d5539aa08bc54684697090fc7f262325c0"
+    }
+  ],
+  "assets": [
+    {
+      "path": "/workspace/agentci-ui-scanner-planner-main/.agentci/artifacts/dashboard-browser-fixed/a3c74ca43d04ff5e1111a5e07d396061c9dac81a/fixture-cancellation-intent.png",
+      "sha256": "a9ba2bca74c5c08c7cacaad2cfa377525a8786c36ea0164ff8f60b15a31c3db8"
+    },
+    {
+      "path": "/workspace/agentci-ui-scanner-planner-main/.agentci/artifacts/dashboard-browser-fixed/a3c74ca43d04ff5e1111a5e07d396061c9dac81a/fixture-exact-review-detail.png",
+      "sha256": "51f8db9b66872bdfc442b90a0bda43dafd051cecb9aff2aa276f1508b9c0e67d"
+    },
+    {
+      "path": "/workspace/agentci-ui-scanner-planner-main/.agentci/artifacts/dashboard-browser-fixed/a3c74ca43d04ff5e1111a5e07d396061c9dac81a/fixture-missing-evidence.png",
+      "sha256": "b8387a9683cde5dfb07b0a3cfe2f833803c63c985e639dab65e8bd74a1634f3f"
+    },
+    {
+      "path": "/workspace/agentci-ui-scanner-planner-main/.agentci/artifacts/dashboard-browser-fixed/a3c74ca43d04ff5e1111a5e07d396061c9dac81a/fixture-retained-evidence-reference.png",
+      "sha256": "46fbbad7485dc57eb33d633425614223c3b7fcbab38bc0cbd2b8311f722dfdb7"
+    },
+    {
+      "path": "/workspace/agentci-ui-scanner-planner-main/.agentci/artifacts/dashboard-browser-fixed/a3c74ca43d04ff5e1111a5e07d396061c9dac81a/fixture-session-expired.png",
+      "sha256": "49744d610013c4816d6d25f6cf3bbd28d7d4e55659e1e873c42a00fab113f5c5"
+    },
+    {
+      "path": "/workspace/agentci-ui-scanner-planner-main/.agentci/artifacts/dashboard-browser-fixed/a3c74ca43d04ff5e1111a5e07d396061c9dac81a/result.json",
+      "sha256": "a3d6c530efc9c10fe4a5a85e12408fe8f54f27a052e5972ab406b7aae88156b8"
+    }
+  ],
+  "results": {
+    "rootUnitPassed": 509,
+    "rootUnitFailed": 0,
+    "rootUnitSkipped": 0,
+    "fastPassed": 10,
+    "fastSeconds": 45.773743376,
+    "sdkBuild": "passed",
+    "dashboardTypecheck": "passed",
+    "dashboardUnitPassed": 17,
+    "dashboardUnitFailed": 0,
+    "dashboardBuild": "passed",
+    "dashboardDependencyAudit": "zero vulnerabilities",
+    "productionBrowserCases": 24,
+    "backendMutations": 0,
+    "apiCompatibility": "immutable M1/M2 passed; new source command stdout observed in tool session31854 and qualified observation summary retained",
+    "workflows": "pinned actionlint passed",
+    "forwardDelta": "planner-main equivalent666 to sourcea3:2introducedcommits77blobs0findings"
+  },
+  "preservation": {
+    "all135PlannerMainTaskObjectsExact": true,
+    "plannerMainEventBytePrefixPreserved": true,
+    "totalTasks": 140,
+    "scanner/customerMainSources": "unchanged outside explicit UI/SDK additions and same reviewed planner4source files",
+    "frozenUISources": "all unchanged fromac9",
+    "scopedPlannerSources": "all unchanged fromd308/666",
+    "oldAcceptanceRecords": "retained immutable including canonical correction",
+    "failedHostedRuns": [
+      "38201331467-attempt-1",
+      "38202263061-attempt-1"
+    ],
+    "all18M3Gates": "pending unchanged",
+    "M0M10": "fullscope/order preserved"
+  },
+  "tracking": "Existing UI integration task already in-progress, CLI start resumed before integration; no invented prior completion to permit reopen. Task stays in-progress pending broader parent review. Planner advisory task follows frozen main object while both historical records/events retained.",
+  "failureQualification": "Initial npm default cache HOME missing; existing owned npm cache resolved setup. Initial fast project validation overlapped package filesystem setup and failed while other checks passed; failed full attempt retained, stable validation/fast passed. No test suppression.",
+  "cacheQualification": "Locked UI npmci used existing owned npm cache; official Gitleaks/oasdiff/actionlint archive/policy caches reused with unchanged SHA verification. Installed systemChromium ordinary local validation; no fresh tool download or live service claim. Production fixtures test-only; no new OIDC/App/provider keys/access, no credentials in screenshots/network metadata.",
+  "reuseQualification": "Prior planner physical PostgreSQL proof retained only for exact unchanged4source/dependency inputs; actual merged planner main confirmation and hosted combined-source checks stillrequired. Prior UI failures/proofs remain historical; freshsourcea3 SDK/type/unit/build/browser/fast performed.",
+  "remaining": [
+    "ActualPR84 merge confirmed exactfrozen tree beforeUI refupdate; incorporateanyfuturecorefix",
+    "Independent combinedsource/ledger/evidence review",
+    "Final postrecord canonical +postcommit checks/exact forwarddelta",
+    "UIdraft+normalCI only, noUImerge/deploy authorization",
+    "LiveOIDC/App/customer/provider, fullUI/export/history/interruption/native/container/packaging/release/download/demo acceptance and all18M3gates remainpending",
+    "Only inaccessible externalmodelprovider tests mayuseowner exception afterallotherapplicable gates pass"
+  ]
+}
