@@ -1,3 +1,4 @@
+import {randomBytes} from 'node:crypto';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
@@ -11,7 +12,7 @@ test('Compose API and consumer share pinned read-only authority while released d
  const dir=await mkdtemp(join(tmpdir(),'agentci-reproduction-compose-'));
  try{
   const envFile=join(dir,'fixture.env'),runtimeEnv=join(dir,'runtime.env'),catalog=join(dir,'catalog.json'),keyFile=join(dir,'app.pem'),reviewers=join(dir,'reviewers.json');
-  const values={POSTGRES_PASSWORD:'fixture-only',GITHUB_PRIVATE_KEY_FILE:keyFile,AGENTCI_OPERATOR_TOKEN:'operator-fixture-only',AGENTCI_REVIEWER_CONFIG_FILE:reviewers,AGENTCI_REPRODUCTION_CATALOG_FILE:catalog,AGENTCI_REPRODUCTION_CATALOG_DIGEST:'sha256:'+'a'.repeat(64),AGENTCI_REPRODUCTION_CONFIG_REVISION:'1',AGENTCI_REPRODUCTION_CONFIG_DIGEST:'sha256:'+'b'.repeat(64),AGENTCI_CURSOR_KEY:'k'.repeat(40)};
+  const values={...Object.fromEntries([['POSTGRES_PASSWORD',randomBytes(24).toString('hex')]]),GITHUB_PRIVATE_KEY_FILE:keyFile,AGENTCI_OPERATOR_TOKEN:'operator-fixture-only',AGENTCI_REVIEWER_CONFIG_FILE:reviewers,AGENTCI_REPRODUCTION_CATALOG_FILE:catalog,AGENTCI_REPRODUCTION_CATALOG_DIGEST:'sha256:'+'a'.repeat(64),AGENTCI_REPRODUCTION_CONFIG_REVISION:'1',AGENTCI_REPRODUCTION_CONFIG_DIGEST:'sha256:'+'b'.repeat(64),AGENTCI_CURSOR_KEY:'k'.repeat(40)};
   await writeFile(catalog,'{}');await writeFile(keyFile,'fixture-only');await writeFile(reviewers,'{}');await writeFile(runtimeEnv,'');
   const writeEnvironment=async(omit?:string,empty=false)=>writeFile(envFile,Object.entries(values).filter(([key])=>empty||key!==omit).map(([key,value])=>`${key}=${empty&&key===omit?'':value}\n`).join(''));
   await writeEnvironment();
@@ -30,7 +31,7 @@ test('Compose API and consumer share pinned read-only authority while released d
   const merged=render(true);
   for(const role of ['api','worker']){
    const service=merged.services[role];
-   assert.equal(service.image,`agentci-${role}:0.4.0-m3-dev.2`);
+   assert.equal(service.image,`agentci-${role}:0.4.0-m3-dev.3`);
    for(const key of ['AGENTCI_REPRODUCTION_CATALOG_DIGEST','AGENTCI_REPRODUCTION_CONFIG_REVISION','AGENTCI_REPRODUCTION_CONFIG_DIGEST','AGENTCI_CURSOR_KEY'])assert.equal(service.environment[key],values[key as keyof typeof values]);
    assert.equal(service.environment.AGENTCI_REPRODUCTION_CATALOG_FILE,'/run/agentci/reproduction-catalog.json');
    const mount=service.volumes.find((v:any)=>v.target==='/run/agentci/reproduction-catalog.json');

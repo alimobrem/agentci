@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "kind": "development-candidate-publication-terminal-checkpoint",
+  "recordedAt": "2026-10-12T23:25:16.824Z",
+  "sourceCommit": "2d2dabf00b01c743d92145ef89575df8c31e69cf",
+  "sourceTree": "4c2a48d8e31794c61a6a59cc47ec36329a7f0934",
+  "activation": {
+    "pullRequest": 94,
+    "head": "424f82e7f49bd8e0237d01e0c5c5362c67613974",
+    "actualMerge": "2d2dabf00b01c743d92145ef89575df8c31e69cf",
+    "parents": [
+      "eccfe59f2006a6aff2f9161478d536c0de5f320a",
+      "424f82e7f49bd8e0237d01e0c5c5362c67613974"
+    ],
+    "authorization": "Exact activation merge and resulting approved dev.3 publication authorized; original scope/identity/access unchanged."
+  },
+  "version": "0.4.0-m3-dev.3",
+  "publication": {
+    "runId": 38321652532,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "failure",
+    "url": "https://github.com/alimobrem/agentci/actions/runs/38321652532",
+    "failedJob": {
+      "id": 115050887813,
+      "name": "preflight",
+      "step": "Reject occupied or ambiguous package, tag and six-role destinations"
+    },
+    "skippedJobs": [
+      "images",
+      "release-candidate",
+      "native-package-downloads",
+      "native-image-downloads",
+      "finalize"
+    ],
+    "publicationWritesExecuted": false,
+    "qualification": "Workflow jobs prove no image/release/download/finalization execution in this attempt. This is not proof of destination absence or absence of unrelated remote work.",
+    "artifact": {
+      "id": 11778674286,
+      "name": "development-preflight-attempt",
+      "digest": "sha256:9c0c9a02a5d8ada115ec31a618b44fad837e119e1c5668f419c2157b4ee122e3",
+      "sizeInBytes": 413,
+      "sourceCommit": "2d2dabf00b01c743d92145ef89575df8c31e69cf",
+      "expiresAt": "2027-01-10T23:20:56Z",
+      "actualBytesInspected": false
+    },
+    "failureMessage": "Actions installation authentication differs from committed token injection",
+    "parentActualArtifactReview": {
+      "actualZipSha256": "9c0c9a02a5d8ada115ec31a618b44fad837e119e1c5668f419c2157b4ee122e3",
+      "sourceCommit": "2d2dabf00b01c743d92145ef89575df8c31e69cf",
+      "runId": 38321652532,
+      "attempt": 1,
+      "releaseId": null,
+      "uploadedAssets": [],
+      "qualification": "Parent independently inspected actual bytes; cloud worker has not downloaded or hashed these bytes."
+    }
+  },
+  "evidenceAccess": {
+    "connectorDownloadReferenceReturned": true,
+    "cloudDownload": "HTTP 403 tunnel denial; stopped, no alternate credentials/access workaround",
+    "zipDigestVerifiedLocally": false
+  },
+  "nextStep": "Source-bound read-only diagnostic to distinguish auth type/tokenType/tokenPresent/tokenMatches predicates; no prefix/token/digest/raw response disclosure. Preserve fail-closed guard, grants, candidate identity and all gates. No publication retry until diagnosis and review.",
+  "milestone": {
+    "completionClaimed": false,
+    "all18M3GatesPending": true,
+    "externalProviderException": "Only inaccessible product external model provider tests may remain explicitly deferred after other applicable gates pass."
+  },
+  "preservation": {
+    "failedDev2": true,
+    "threeAdaptersRequired": true,
+    "observedRateChosenWilsonDescriptive": true,
+    "historicalGitGuardianIncidentStillOpen": true,
+    "noMac": true,
+    "noNewIdentityOrCredentialsOrAccessOrServicesOrSettings": true
+  },
+  "environmentRecheck": {
+    "shellAvailable": true,
+    "gitHead": "2d2dabf00b01c743d92145ef89575df8c31e69cf",
+    "nodeVersion": "v26.10.0",
+    "sameSelectedCloudEnvironment": true,
+    "artifactDownloadStillUnverified": true
+  }
+}

@@ -1,0 +1,27 @@
+name: Read-only development publication token diagnostic
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/development-token-diagnostic.yaml]
+permissions:
+  contents: read
+jobs:
+  diagnostic:
+    if: github.repository == 'alimobrem/agentci' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    # Exact existing publication-preflight ephemeral grants; API use is GET only.
+    permissions: { contents: write, packages: read }
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { ref: '${{ github.sha }}', persist-credentials: false }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0 }
+      - run: npm install --global npm@12.2.0
+      - run: npm ci
+      - name: Observe allowlisted auth classification and exact match with repository metadata
+        env: { GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+        run: node scripts/development-token-diagnostic.mjs
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with: { name: development-token-diagnostic, path: development-diagnostic.json, if-no-files-found: error, retention-days: 14 }

@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "result": "PASS exact anonymously fetched published remote tree/source and final history binding",
+  "remoteCommit": "c92847d547ecd402e73ae6e04c69fa752704bd0a",
+  "remoteTree": "cb204ddb2fcafd04c77531c6a8a941547c55aae4",
+  "soleParent": "2d7a6bd20dd72ed0e02814352f224d33c09bb654",
+  "localEquivalentCommit": "346a6d8272f3c6333e509a74c0964b1f6a4fa010",
+  "testedSourceCommit": "9045c31f4325dec523dbb5ed08f199bbd73269d3",
+  "fetch": "Anonymous public Git HTTPS exact commit into independent bare repository; no credentials supplied",
+  "runtimeDocsTestsWorkflowsReleasesByteExactTested": true,
+  "newRecords": [
+    {
+      "path": "delivery/acceptance/m3-ci-db-hardening-eof-9045c31.json",
+      "sha256": "685a98a3010ae450b656bb74092062783a0583211262905679e05f4551e39f0d"
+    },
+    {
+      "path": "delivery/acceptance/m3-ci-db-hardening-fixture-542bb85.json",
+      "sha256": "b876df5b498e71c6b29fe0341ce4a7227ae0cac9987dac3578740886833a55ee"
+    },
+    {
+      "path": "delivery/acceptance/m3-ci-db-hardening-independent-542bb85.json",
+      "sha256": "10810a079ed505c9d2a8163a77fbfc089f35ebdc4f8eab2069808615b4597552"
+    },
+    {
+      "path": "delivery/acceptance/m3-ci-db-hardening-independent-9045c31.json",
+      "sha256": "94bbc5e59fdd50452ea3da3772e7ae176f19d7a7a284b76988691dfc5019e48c"
+    },
+    {
+      "path": "delivery/acceptance/m3-ci-db-hardening-native-9045c31.json",
+      "sha256": "c8ec0deb9b31f9f97e860581f8f3297f1b59dc54ede50a1d76c33f6bc12881fa"
+    },
+    {
+      "path": "delivery/acceptance/m3-ci-db-hardening-remote-2d7a6bd2.json",
+      "sha256": "f544715851f6c857324f6ba1e222db0bfca2d8d69cca76f580824205fe3599b9"
+    }
+  ],
+  "sourceEvidenceHashBindingsVerified": 26,
+  "existing142AcceptanceFilesByteUnchanged": true,
+  "retainedCompletedCIRecords": [
+    {
+      "path": "delivery/runs/38310902085-attempt-1.json",
+      "sha256": "cf76c304ade29c22b5c15f354731b8e54f285b32ec77eed33ad141070ccaa701",
+      "conclusion": "success",
+      "sourceCommit": "2d7a6bd20dd72ed0e02814352f224d33c09bb654"
+    },
+    {
+      "path": "delivery/runs/38310902106-attempt-1.json",
+      "sha256": "9ca5faa7c9132a416705205c38ce4363e110be90579aba4413e896f33906124b",
+      "conclusion": "success",
+      "sourceCommit": "2d7a6bd20dd72ed0e02814352f224d33c09bb654"
+    },
+    {
+      "path": "delivery/runs/38310903904-attempt-1.json",
+      "sha256": "c4f590a480a9c519b35c22bbe243183b50780880dbea16e97d1a2f6356f2d906",
+      "conclusion": "failure",
+      "sourceCommit": "2d7a6bd20dd72ed0e02814352f224d33c09bb654"
+    },
+    {
+      "path": "delivery/runs/38310946579-attempt-1.json",
+      "sha256": "c88d5ede6568d985e1652212ebffe61d455874f6e527c6c87ff1c66c7cb30b34",
+      "conclusion": "success",
+      "sourceCommit": "2d7a6bd20dd72ed0e02814352f224d33c09bb654"
+    },
+    {
+      "path": "delivery/runs/38310946620-attempt-1.json",
+      "sha256": "aa35e42e1ecd91470e81485e5a7aa9ec2e3465c5b8bcb4d24b292eb68756796c",
+      "conclusion": "success",
+      "sourceCommit": "2d7a6bd20dd72ed0e02814352f224d33c09bb654"
+    }
+  ],
+  "ledger": {
+    "taskCount": 139,
+    "other138TaskObjectsUnchanged": true,
+    "dbTaskBlocked": true,
+    "eventsAppendOnly": true,
+    "18GateFileUnchangedAndPending": true,
+    "canon": "1346 source IDs/29 children/M0-M10 preserved",
+    "delivery": "139 tasks/18 pending gates"
+  },
+  "evidence": [
+    {
+      "path": "/workspace/scratch/db-hardening-independent-c928-fetch.log",
+      "sha256": "f50a16a68a1501124256a4caaecc8092503b23af89324fb3c29d5385f07f5b92"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-independent-c928-record-check.json",
+      "sha256": "36aadb9ded8e76423987c96078004f66af16ab9ed210cb23e88d72f93d7a271f"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-independent-c928-canonical.log",
+      "sha256": "3c655087d3e415beeae76d42e7aa0390cb2b1f5f8e30976b0de71ba65d44fc1b"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-independent-c928-delivery.log",
+      "sha256": "53f1f3dc7e82b14d2e7ea7818062efda8378b83414f6ec1b5fd7b4adf320efa4"
+    }
+  ],
+  "qualification": [
+    "No ZIP artifact bytes inspected or downloaded",
+    "Old2d runtime-step success/overall failed run retained, not reassigned to current source",
+    "Freshc928 Verify38312240640/scanner38312237137/advisory38312237132 not assessed by this binding review",
+    "Parent exact source/actual ZIP review and fresh full CI remain required",
+    "No repeated unchanged runtime tests or remote mutation"
+  ]
+}

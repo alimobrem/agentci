@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2405,7 +2405,7 @@
       "completedAt": "2026-10-06T03:28:34.944Z",
       "acceptance": [
         {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "text": "Preserve every source inventory ID and historical evidence; map all M0–M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
           "status": "passed",
           "evidence": [
             "docs/acceptance-reconciliation.md"
@@ -2708,7 +2708,7 @@
       "completedAt": null,
       "acceptance": [
         {
-          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0\u2013M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
+          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0–M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
           "status": "pending",
           "evidence": []
         }
@@ -3230,6 +3230,153 @@
       ]
     },
     {
+      "id": "M3-R1-ACT-3",
+      "title": "Prepare owner-approved corrected dev.3 activation source",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [
+        "M3-R1-PUB-IMM-1"
+      ],
+      "status": "blocked",
+      "startedAt": "2026-10-12T03:41:43.626Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Local preparation synchronizes approved dev.3 package/identical root locks/CLI/OpenAPI/M3 opt-in overlays/descriptor and trusted publication/customer consumer version guards. Applicable build/API/package/Compose/immutable ordering checks pass with source-bound evidence. Failed dev.2 and historical baselines remain unchanged; all M3 gates pending. Independent review/full hosted CI/repair actual merge required before activation merge. No remote publication performed.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "blockedReason": "ActualrepairedmainECC local39b536unit10fast51.39s/API/lint/independentreview passed; pendingexactactivationCI andparent source/artifactclearance before maintrigger, then realpreflight/nativepublication/anonymousdownloads"
+    },
+    {
+      "id": "M3-R1-PUB-TOKEN-1",
+      "title": "Correct installation-token draft visibility preflight",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "blocked",
+      "startedAt": "2026-10-12T06:41:46.998Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Replace missing user permissions.push inference only for source-bound trusted main Actions installation context with existing contents-write job contract; preserve explicit denial, authenticated paginated draft discovery, occupied identity and ambiguous API failure rejection. Realistic missing-field and negative scope/grant tests, applicable local checks and hosted CI/source review required; preserve failed run38213411342, dev2 and candidate version; native/download/M3 gates remain pending.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "blockedReason": "Merged repair passed source/full CI review but hosted run38215995488 still failed push visibility assertion before inventory; real response field unknown. Standalone read-only diagnostic required before further capability logic changes."
+    },
+    {
+      "id": "M3-R1-PUB-DIAG-1",
+      "title": "Observe hosted installation-token repository capability metadata read-only",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "done",
+      "startedAt": "2026-10-12T07:12:53.071Z",
+      "completedAt": "2026-10-12T22:24:22.736Z",
+      "acceptance": [
+        {
+          "text": "Standalone trusted main diagnostic uses exact Node/npm/source and existing preflight ephemeral Contentswrite/Metadataread/Packagesread grants, performs only fixed-repository GET, and retains bounded redacted push-field presence/type/boolean and repository-match evidence. No raw response/token/App key, publication or capability-logic change. Applicable tests, hosted CI and independent exact-head review required before diagnostic main activation; retained real diagnosis required before evidenced repair.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dev3-token-diagnostic-observed-834e49ab.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-R1-CI-DB-2",
+      "title": "Harden four remaining disposable CI databases and verify owned teardown",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "done",
+      "startedAt": "2026-10-12T20:19:51.793Z",
+      "completedAt": "2026-10-12T22:27:04.156Z",
+      "acceptance": [
+        {
+          "text": "Fresh per-run private credentials, loopback-only host binding, bounded sanitized diagnostics, and verified owned teardown in advisory/Verify/download workflows and image smoke. Regression tests cover argv/log leakage, exposure, lost startup responses and cleanup failures; applicable local checks, hosted CI including dedicated scanner and independent exact-source/artifact review pass before merge. Unmatched GitGuardian finding and original milestone/release gates remain open.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-ci-db-hardening-postmerge-a33747e.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-R1-PUB-TOKEN-2",
+      "title": "Separate trusted Actions installation-token draft inventory from generic push metadata",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "blocked",
+      "startedAt": "2026-10-12T13:49:26.121Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Correction integrated onto hardened main follows actual diagnostic38257163110 HTTP200/identitymatch/pushfalse and runtime Contentswrite. Explicit trusted Actions installation mode binds exact committed source/job/repository/Contentswrite/token injection and actual Octokit installation authentication; generic false/missing push never gains fallback. Keep authenticated paginated draft discovery and collision/denial/ambiguity fail-closed checks. Meaningful tests, applicable local checks, independent source/evidence review; retain prior failed attempts/allM3gates. Parent lifted the current-source temporary hold after actual hardened-source postmerge review; historical alert remains open. Exact repair draft CI/source/artifact review precedes separately approved dev.3 activation and native anonymous downloads; no new identity, credentials, access or security settings.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "blockedReason": "Actual compound authentication failure38321652532 preserved. Owner approved separately tracked DIAG2 read-only classification and exact-match observation; no publication guard repair or retry before real diagnostic evidence and review."
+    },
+    {
+      "id": "M3-R1-PUB-DIAG-2",
+      "title": "Observe source-bound Octokit token classification and exact matching read-only",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "done",
+      "startedAt": "2026-10-13T01:17:25.172Z",
+      "completedAt": "2026-10-13T01:44:30.890Z",
+      "acceptance": [
+        {
+          "text": "Owner-approved standalone diagnostic retains only allowlisted auth type/tokenType and tokenPresent/tokenMatches booleans plus existing repository capability evidence. No token bytes/prefixes/digests/raw response, JWT claim parsing, publication guard changes, permission changes or publication retry. Real locked-Octokit stateless-format and true bind-A/authenticate-B regressions; applicable checks, exact draft CI and independent source/artifact review before approved diagnostic merge/run. Preserve failed38321652532 and all native/download/M3 gates.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dev3-auth-diagnostic-terminal-9f1d1288.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-R1-PUB-TOKEN-3",
+      "title": "Use exact trusted Actions credential binding instead of client token classification",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [
+        "M3-R1-PUB-DIAG-2"
+      ],
+      "status": "blocked",
+      "startedAt": "2026-10-13T01:58:16.588Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Owner-approved narrow repair removes only installation tokenType heuristic in separately source-bound trusted Actions mode. Preserve auth type/token presence/exact digest match/private binding/source/job/workflow/injection/grants; no prefix/claim parsing, no generic push fallback, no collision/API ambiguity relaxation. Real locked-Octokit stateless match/mismatch, invalid/forged context and occupied/inconclusive zero-write regressions; applicable checks, full CI and independent exact-source/artifact review before approved merge and dev3 retry. Preserve failed candidates; real anonymous native AMD64/ARM64 image/package downloads and final retained evidence required, all M3 gates remain pending.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "blockedReason": "Approved narrow repair808fd matches exact trusted Actions credential without client installation classification;541unit/36focused/10fast/API/lint passed. Pending exact draft fullCI and independent parent source/artifact clearance before descriptor-triggered same-identity dev3 retry. Native publication/anonymous downloads/final retained evidence remain required; collision guards fail closed."
+    },
+    {
       "id": "M3-07-ui-draft-integration",
       "title": "Integrate dashboard draft with current main and source-bound hosted checks",
       "requirementIds": [
@@ -3325,6 +3472,26 @@
         }
       ],
       "dependsOn": []
+    },
+    {
+      "id": "M3-07-ui-pr88-refresh-dev3",
+      "title": "Refresh authorized dashboard PR88 against independently verified dev3 main",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "blocked",
+      "startedAt": "2026-10-13T18:30:09.571Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Owner approved existing PR88 integration/CI/browser/privacy validation and merge after independent review, not deployment or unrelated unpublished features. Preserve fd76 dashboard source/history and latest reviewed main2b8eb75/dev3 release source/assets, resolve only integration conflicts, preserve all original task/event/spec/phase history and qualifications. Full combined CI, locked UI/SDK builds/audit, signed OIDC/session/privacy/read-interruption and production browser fixtures with exact source/tree/hash receipts pass; independent parent actual-source/artifact clearance before expected-head merge. Actual customer/SSO/deployment and aggregateM3 gates remain pending.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "blockedReason": "Approved existingPR88 refreshed with non-destructive main2b integration; local76f8 passed543rootunit/17UIunit/24production browser checks/10fast51.39s/SDK+UIbuild/audit0/API/lint. ActualSDKlink points to combinedworktree; systemChromium151 local qualified. Pending exact refreshed head fullVerify/DashboardVerify/scanner/advisory and independent actual-source/artifact review before owner-approved merge; no deployment or unrelated unpublished UI features."
     }
   ]
 }

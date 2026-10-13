@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "result": "PASS bounded clean EOF correction; no remaining concrete reviewed source blocker",
+  "sourceCommit": "9045c31f4325dec523dbb5ed08f199bbd73269d3",
+  "sourceTree": "928e3fe1d9a6258821b809bfc458d9c95533738c",
+  "sourceBindings": [
+    {
+      "path": "scripts/lib/owned-command.mjs",
+      "sha256": "0bd6887b8c8c90beadd9f825ea6dc3f0e992657dcf2062db55b6c924a16c20c0"
+    },
+    {
+      "path": "scripts/lib/ci-database-command.mjs",
+      "sha256": "bb9a9c8224fb1690347805a888cae05f8ea126516967de7b72f462dffdd81bcf"
+    },
+    {
+      "path": "tests/ci-database-hardening.test.ts",
+      "sha256": "04ccf7ff5f25a20c35d296f1fd4766a1878f72f4977631e30f331568bc1531cf"
+    },
+    {
+      "path": "docs/phases/m3-disposable-ci-databases.md",
+      "sha256": "225df48a12010c85551a80b2d4c55a4218660a8d9daaf02d3ce7f62eac828eec"
+    },
+    {
+      "path": "tests/helpers/image-smoke-engine-fixture.cjs",
+      "sha256": "38e50feac1030c4e2228daf9de3c158028314bfae8bab24090681f0175ec0820"
+    },
+    {
+      "path": "scripts/image-smoke.mjs",
+      "sha256": "35dbfd45e364d7f8cafd3f6ae2f2a5030ae610e37f966f099ffa2f3c1ad28b77"
+    }
+  ],
+  "independentExecution": {
+    "focusedTests": 26,
+    "passed": 26,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 25615.028211,
+    "log": "/workspace/scratch/db-hardening-independent-eof-9045c31-focused.log",
+    "sha256": "fa498bebede49896ab60ce73c3611df61abc3fff24d29d1a6e27bfe6b2463b50",
+    "combinedDetachedDestinationFailureDurationMs": 3053.80153
+  },
+  "verifiedCorrection": [
+    "catch path never brands forced stream closure as genuine source EOF",
+    "successful outputs require readableEnded both child streams and destination drain before closure certificate",
+    "exact closure certificate and live process-group zero gate journals/DB stop/artifact upload",
+    "actual detached writer handling EPIPE remains alive after failing Writable; wrapper fails bounded, recovery journal, DBstop denied, retained artifact removed, safeForUploadfalse and callback0",
+    "atomic synthetic snapshot writer from542 retained"
+  ],
+  "qualification": [
+    "Uncommitted evidence/reconciliation additions occurred during test; runtime/docs/test bytes independently equal frozen9045; no clean whole checkout claim",
+    "Earlier542 and f55 acceptance superseded for combined forced-close error gap; retain old records and hosted failures",
+    "Local real synthetic process and fake Docker fullCLI tests; no new live image runtime proof",
+    "Fresh exact-head full hosted CI and parent actual source/artifact review still required",
+    "No keys read, remote writes, merge/deploy/activation or gate promotion"
+  ]
+}

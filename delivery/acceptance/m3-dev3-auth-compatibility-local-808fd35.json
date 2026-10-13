@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "kind": "approved-trusted-Actions-exact-credential-compatibility-repair",
+  "baseCommit": "9f1d1288c229b989c4eadda05a220cc833b05584",
+  "testedCommit": "808fd35ddafe8d0ad4a77b0ea1665c1d0ab1923d",
+  "testedTree": "c92b796a30c1bdc3d4815ef4bd735f2644f05fc8",
+  "authorization": {
+    "transcriptMessages": [
+      {
+        "role": "assistant",
+        "messageId": "Sentinel_8af363d5a60481919bfd39159f9cd6da"
+      },
+      {
+        "role": "owner",
+        "messageId": "Sentinel_dee36f02131c81918b2e5dfa33dc3a20"
+      }
+    ],
+    "reply": "yes",
+    "scope": "Bounded compatibility repair, tests, independently reviewed merge, dev3 publication and anonymous download retry; no broader permissions or credentials."
+  },
+  "diagnosticEvidence": "delivery/acceptance/m3-dev3-auth-diagnostic-terminal-9f1d1288.json",
+  "inputs": [
+    {
+      "path": "scripts/lib/immutable-release-publication.mjs",
+      "sha256": "d2c6af72b0e41d883287355dfcf0bbe445554dbd626b5beaa1d04f81dcbcd39b"
+    },
+    {
+      "path": "tests/immutable-release-publication.test.ts",
+      "sha256": "e54ea835780337fe5691a794e9660d0f540ab3e096e79a0316aff6229163bb3c"
+    },
+    {
+      "path": "tests/development-release-execution.test.ts",
+      "sha256": "a0427d2dbd62cabc7304be8854f6b5f17088651882cf1f2b4c151972b3492bf5"
+    },
+    {
+      "path": "releases/m3-development-candidate.json",
+      "sha256": "1c2625f0fff2a1c51930d36be4336c7c59f84a107972f7d0e8153faa5156f8ea"
+    }
+  ],
+  "runtimeDelta": "Only client installation-classification predicate removed from separately validated trusted Actions mode. Auth type, token string, exact digest equality/private binding/source/workflow/job/repository/injection/grants and generic push/inventory/collision/API guards preserved. No token prefix or JWT claim parsing.",
+  "activation": "Only existing descriptor annotation changed to trigger same approved0.4.0-m3-dev.3 on exact reviewed merge. Four core identity fields/version/destinations/grants unchanged. Real authenticated preflight must verify absence before writes; never overwrite occupied candidate.",
+  "checks": {
+    "unit": {
+      "passed": 541,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "focused": {
+      "passed": 36,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "logSha256": "35413a7db1d8b5cb90c24b0fc74f61f9170a7df86ed13418690676138418f0b8"
+    },
+    "fast": {
+      "passed": true,
+      "checks": 10,
+      "seconds": 51.271608677,
+      "node": "v26.10.0",
+      "dirty": true,
+      "qualification": "Runtime/test files committed at testedCommit; dirty working tree contained reused node_modules symlink and collected base CI metadata. Reused dependencies/pinned tool caches; no fresh local installation or hosted/native claims."
+    },
+    "apiCompatibility": "Passed immutable released M1/M2 baselines",
+    "workflows": "Passed pinned actionlint/negative regression"
+  },
+  "oldGuardRegression": {
+    "sourceCommit": "89e19b76bc5195c136f204316b73af06903a31b6",
+    "result": "RED",
+    "failure": "Actions installation authentication differs from committed token injection",
+    "case": "Real locked Octokit stateless matching source-bound token",
+    "logSha256": "7f28f3382d7c2447c1c4b395051924e3cbda65f34aeaeca2049605109e88c2a4",
+    "successor": "36focused/541unit passed on committed repaired source"
+  },
+  "regressions": [
+    "Real locked Octokit stateless match and mismatch both classify app; exact match inventories, substitution rejects before listing",
+    "Forged/spread/private-binding-invalid and wrong source/job/ref/repository contexts fail closed",
+    "Matching stateless auth with occupied/403/503/malformed/duplicate inventories aborts before publication writes",
+    "Actual operational subprocess runs opaque and stateless matching credentials through authenticated draft/tag/six-role checks; REST mocked only, actual Octokit auth",
+    "Generic false/missing push remains denied; exact source token injection/grants and existing race/lost-ack/immutable-order guards retained"
+  ],
+  "remaining": "Full exact draft CI and parent independent actual-source/artifact review before approved descriptor-triggered main retry; real native AMD64/ARM64 builds/six roles/anonymous image+package downloads/final retained evidence and reviewed release notes required. All18M3gates remain pending; faileddev2/priorruns and historical GitGuardian incident preserved."
+}

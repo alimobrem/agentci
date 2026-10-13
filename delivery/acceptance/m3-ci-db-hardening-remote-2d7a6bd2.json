@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "result": "PASS bounded exact remote-tree/source/final-ledger binding",
+  "remoteCommit": "2d7a6bd20dd72ed0e02814352f224d33c09bb654",
+  "remoteTree": "f845b70e88454803eebdb55d7020969729357dd8",
+  "soleParent": "5d0db0437fad15525fa9cfe862e152e7396fcb35",
+  "localEquivalentCommit": "c0f615cb9988a644e99b5ab981e7c4d598939c79",
+  "testedSourceCommit": "f55abe12cebabd42a0d5399fb60a8fa8cc98027f",
+  "gitObjectInspection": "actual fetched commit object; entire tree matches local evidence HEAD",
+  "runtimeDocsTestsWorkflowsReleasesUnchangedFromTested": true,
+  "newEvidenceHashBindingsVerified": 30,
+  "originalThree056EvidenceRecordsBytePreserved": true,
+  "retainedCompletedAttemptRecords": [
+    {
+      "path": "delivery/runs/38307811745-attempt-1.json",
+      "sha256": "215fa7ead5d5af9f756159dac8897e542936ef2f0146061e2c5f626599fec29c",
+      "conclusion": "failure",
+      "sourceCommit": "5d0db0437fad15525fa9cfe862e152e7396fcb35"
+    },
+    {
+      "path": "delivery/runs/38307811892-attempt-1.json",
+      "sha256": "e32da445af033f8a1546832a69f0330861b2d715b597e8d1c349722a8bd71f75",
+      "conclusion": "success",
+      "sourceCommit": "5d0db0437fad15525fa9cfe862e152e7396fcb35"
+    },
+    {
+      "path": "delivery/runs/38307811907-attempt-1.json",
+      "sha256": "4efde32f79f8ed2d0e3c39217eca0b83e59e9e5022a218a65d4fba37e7d32e8a",
+      "conclusion": "success",
+      "sourceCommit": "5d0db0437fad15525fa9cfe862e152e7396fcb35"
+    }
+  ],
+  "history": {
+    "taskObjects": 139,
+    "other138Unchanged": true,
+    "dbTaskStatus": "blocked",
+    "eventPrefixPreserved": true,
+    "milestoneGateFileUnchanged": true,
+    "milestoneGatesPending": 18
+  },
+  "independentChecks": {
+    "canonical": "1346 source IDs/29 fenced children/M0-M10 preserved",
+    "delivery": "139 tasks/18 pending gates"
+  },
+  "evidence": [
+    {
+      "path": "/workspace/scratch/db-hardening-independent-remote-final-canonical.log",
+      "sha256": "3c655087d3e415beeae76d42e7aa0390cb2b1f5f8e30976b0de71ba65d44fc1b"
+    },
+    {
+      "path": "/workspace/scratch/db-hardening-independent-remote-final-delivery.log",
+      "sha256": "53f1f3dc7e82b14d2e7ea7818062efda8378b83414f6ec1b5fd7b4adf320efa4"
+    }
+  ],
+  "limitations": [
+    "No additional unchanged runtime tests repeated",
+    "Hosted successor CI and parent exact-source/actual ZIP artifact review required",
+    "No artifact bytes downloaded or inspected by this binding review",
+    "No remote mutation, merge, deploy, release activation, or actual key access"
+  ]
+}

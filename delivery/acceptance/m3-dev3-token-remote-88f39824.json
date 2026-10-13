@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "result": "PASS actual fetched PR93 remote-tree binding to reviewed candidate",
+  "remoteCommit": "88f39824f2f11a08d13db50fe49333c04c2c724b",
+  "remoteTree": "af0558028bf88c76bf372457112f8bda03e25326",
+  "soleParent": "a33747e2bfba12a919198fe50bb6d2ea5d254e81",
+  "localEquivalentCandidate": "ac4ceb4173f3aec0578b7968a68249e6d34e9f2b",
+  "runtimeTestSource": "1b475210a21a37305137317cf8221750b6df3e68",
+  "documentedRootTestSource": "5ea359b6023e3b1e8f0eb350bbf5e776cf7893f6",
+  "entireTreeByteEquivalentCandidate": true,
+  "sourceEvidenceRecordHashBindingsPreserved": true,
+  "DBHardeningAllWorkflowsDescriptorsReleasesDeployUnchangedBase": true,
+  "ledger": "140tasks; other137baseobjects unchanged; DIAG1/DB2reviewcompletion attributed; TOKEN2blocked; all18gatespending; originalrecords/eventprefix retained",
+  "priorProof": {
+    "path": "/workspace/scratch/dev3-token-hardened-final-independent-ac4ceb41.json",
+    "sha256": "94513883df224fdf1c687b33eb0961c100da82b7ae2417e1541a486df95af1e5"
+  },
+  "qualifications": [
+    "Inspected actual fetched Git commit/tree objects; no remote writes",
+    "No actual ZIP artifact bytes inspected",
+    "Current Verify38317351466/scanner38317351471/advisory38317351516 completion not assessed by this binding",
+    "No new hosted preflight or external identity absence claimed",
+    "Parent exacthead source/actualartifact review and fresh fullCI required before merge/activation; native/download/customer/UI requirements unchanged; unmatchedalert stillopen"
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "kind": "owner-approved-read-only-auth-diagnostic-local-validation",
+  "baseCommit": "2d2dabf00b01c743d92145ef89575df8c31e69cf",
+  "testedCommit": "11e3e8cce327f317bdc1c87d748520592f0a67db",
+  "testedTree": "3869b180cbe0350abdc9c1350a574d5e984b3a67",
+  "authorization": {
+    "reply": "Yes",
+    "scope": "Bounded read-only token diagnostic implementation, tests, reviewed merge and run; no publication guard change or publication retry before diagnosing.",
+    "transcriptMessages": [
+      {
+        "role": "assistant",
+        "messageId": "Sentinel_092abecb71248191be1658531963ddda"
+      },
+      {
+        "role": "owner",
+        "messageId": "Sentinel_95db62e5b8ac8191bbe3de805bbcc3b5"
+      }
+    ]
+  },
+  "checks": {
+    "unit": {
+      "passed": 539,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "focused": {
+      "passed": 34,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "logSha256": "e1194d62b42e60876ff24d26974977fc660a56c94ab0179976a0077ca423d4f4"
+    },
+    "fast": {
+      "passed": true,
+      "checks": 10,
+      "seconds": 45.026168611,
+      "node": "v26.10.0",
+      "dirty": true,
+      "qualification": "Runtime/test files committed at testedCommit. Working tree had reused node_modules symlink and captured completed base CI metadata, not changed tested runtime inputs. Reused dependencies/caches; no fresh local npm ci or hosted/native claim."
+    },
+    "apiCompatibility": "passed released M1/M2 baseline self-test",
+    "workflowValidation": "passed pinned actionlint with invalid runner-context negative regression",
+    "forwardScanner": {
+      "head": "11e3e8cce327f317bdc1c87d748520592f0a67db",
+      "commits": 4,
+      "selectedBlobs": 14,
+      "findings": 0,
+      "scope": "Introduced commits HEAD ^ BASE, parent-relative changed regular file blobs, and changed HEAD blobs vs BASE. No historical-clean assertion; deleted pre-base data and unchanged historical findings are outside this gate."
+    }
+  },
+  "preservedLocalFailures": [
+    {
+      "kind": "test TypeScript fixture typing errors",
+      "logSha256": "abe08ca5bc22bcd815c186e23c67cdd7644cb237fb79521d4c76f95e9320afaf",
+      "resolution": "Corrected test transport function typings; successor fullfast539unit/10checks passed."
+    },
+    {
+      "kind": "API tool fetch DNS EAI_AGAIN",
+      "logSha256": "a7d3bfd7f268130e7a7813a59b983e95515c7a6ab39c1e1fe18c090684ebd325",
+      "resolution": "Copied previously cached pinned tool archives; script checksum verification and API compatibility self-test passed."
+    },
+    {
+      "kind": "new task pending enum invalid before implementation",
+      "resolution": "Recorded original tracking commit; corrected to not-started and CLI-started diagnostic before implementation. No runtime implementation preceded validated start."
+    },
+    {
+      "kind": "forward scanner proof-field matches",
+      "sourceCommit": "a388322555c50a0162e87673ff96d41d98f3b1e7",
+      "findingCount": 5,
+      "resolution": "Inspected exact lines: transcript message identifier and source-file SHA256 values keyed by token-named paths. Converted proof into path/sha256 and role/messageId records; no credential data or scanner exception. Preserve original local history; publish only final reviewed tree as one commit on exact main base."
+    }
+  ],
+  "trustBoundary": {
+    "publicationGuardChanged": false,
+    "permissionsChanged": false,
+    "candidateIdentityChanged": false,
+    "publicationRetried": false,
+    "tokenValuesPrefixesDigestsOrRawResponsesEmitted": false,
+    "jwtClaimsParsed": false,
+    "exactCommittedTokenInjectionChecked": true,
+    "sourceRunAttemptRetained": true,
+    "classificationQualification": "Locked client heuristic, not server capability attestation; synthetic stateless format classified app with matching bytes does not establish actual hosted cause."
+  },
+  "regressions": {
+    "realOctokitClassification": "Legacy installation, stateless installation shape, plain app JWT and OAuth; real locked authentication, no token output",
+    "actualDiagnosticSubprocess": "GET-only success/403 and stateless shape; real Octokit with fetch mock only; output keys exact, secrets/prefixes absent; mutable committed workflow rejected",
+    "trueSubstitution": "Bind synthetic A via actual source contract; construct real Octokit B with installation classification; reject before release listing"
+  },
+  "remoteEvidence": {
+    "publicationFailure": "delivery/acceptance/m3-dev3-preflight-terminal-2d2dabf0.json",
+    "completedBaseCI": [
+      {
+        "runId": 38321651929,
+        "record": "delivery/runs/38321651929-attempt-1.json",
+        "qualification": "Completed Work GitHub metadata only; actual ZIP review not claimed by cloud worker."
+      },
+      {
+        "runId": 38321651934,
+        "record": "delivery/runs/38321651934-attempt-1.json",
+        "qualification": "Completed Work GitHub metadata only; actual ZIP review not claimed by cloud worker."
+      },
+      {
+        "runId": 38321651957,
+        "record": "delivery/runs/38321651957-attempt-1.json",
+        "qualification": "Completed Work GitHub metadata only; actual ZIP review not claimed by cloud worker."
+      }
+    ]
+  },
+  "remaining": "Exact scoped draft CI and independent parent source/artifact review before approved diagnostic merge and actual hosted read-only run. All18M3gates/native/download obligations unchanged; historical GitGuardian alert open.",
+  "inputs": [
+    {
+      "path": ".github/workflows/development-token-diagnostic.yaml",
+      "sha256": "f9cab947a6315a7e556c03e4290d20083c05158ef308d428238ea8a0d4ec195b"
+    },
+    {
+      "path": "scripts/development-token-diagnostic.mjs",
+      "sha256": "58c7029e93393909a08cd44374212d08becf12bfc66bda041e94dea8af22c30b"
+    },
+    {
+      "path": "scripts/lib/development-token-diagnostic.mjs",
+      "sha256": "57b783c69d6779475fe2e92634bec12ae34c9ac555c554882e2cffc25a001ba5"
+    },
+    {
+      "path": "tests/development-token-diagnostic.test.ts",
+      "sha256": "4b66d0be81268ffcb0f45dea51811056dbad9085514099d6a7cb39c74f1594af"
+    },
+    {
+      "path": "tests/immutable-release-publication.test.ts",
+      "sha256": "bb2e9e40e1b4e3deb4c3b22308a96a7ebe932d3e0e01468339cc134461856a1b"
+    },
+    {
+      "path": "tests/development-release-execution.test.ts",
+      "sha256": "804278f907da984f93edc8debc4f4cf12e206cae437996b1d6dd677021123e12"
+    }
+  ]
+}

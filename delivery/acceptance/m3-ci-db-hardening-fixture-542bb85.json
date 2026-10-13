@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-CI-DB-2",
+  "testedLocalSourceCommit": "542bb85ca84597b6c73f096709bf904be11f3fd6",
+  "change": "Only synthetic engine state saves now use exclusive mode0600 temporary files and same-directory atomic rename; product source and test assertions unchanged from f55abe1",
+  "failureRetained": {
+    "remoteHead": "2d7a6bd20dd72ed0e02814352f224d33c09bb654",
+    "run": 38310903904,
+    "job": 115016125676,
+    "failedStep": "Run npm run check:fast",
+    "failure": "Cancellation polling parsed the synthetic engine state during non-atomic write: Unexpected end of JSON input, test line138",
+    "fastArtifact": 11774398239,
+    "fastArtifactSha256": "a65f527d8c34c01307042e006b4bf8519fce5218f6ba1218c63f47adbb0fc3f8",
+    "qualification": "Completed Verify failure retained via delivery CLI; contracts-and-runtime job passed all steps, including compiled containers and native provenance. Fast-feedback alone failed on fixture JSON race. Actual ZIP review remains separate.",
+    "runtimeArtifact": 11775416204,
+    "runtimeArtifactSha256": "04acf55b5e2ddf0526ad1cf0fc70a4c9fdc2c80e41509278c5e3dde18ad6e3c5"
+  },
+  "localValidation": {
+    "fastPassed": true,
+    "fastSeconds": 45.711012468,
+    "fastChecks": 10,
+    "rootTests": 532,
+    "qualification": "Reused dependency symlink and pinned caches; no fresh npm ci claim"
+  },
+  "evidence": [
+    {
+      "path": "/workspace/scratch/db-hardening-atomic-fast.log",
+      "sha256": "f5f41c075834cb3e6e0f8c0eaff4cfd2eae71d3f8f9e1fa8a90084b5b0ba43c6"
+    }
+  ],
+  "acceptance": "Pending exact successor hosted CI/scanner and independent source/artifact review; no release promotion",
+  "release": "All18M3gates pending; exact GitGuardian incident unmatched, publication hold remains."
+}

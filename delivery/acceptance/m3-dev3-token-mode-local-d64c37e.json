@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-12T14:11:11.578035+00:00",
+  "scope": "LOCAL bounded repair preparation only; GitGuardian hold prevents release publication/activation. No new repair draft or hosted run; no actual candidate draft-visibility/absence or native/public acceptance claim",
+  "taskId": "M3-R1-PUB-TOKEN-2",
+  "sourceCommit": "d64c37e387279152efb98bce9adcf0a7a4c92d42",
+  "sourceTree": "bfee4b2fe113583d8b29dfb52307e54afc84624d",
+  "baseLocalCommit": "e5f13b429f84ff50c12f3c2b1265f054cd3afe87",
+  "equivalentRemoteMainCommit": "834e49ab98c5280db7223c4dca654e774bda9acb",
+  "equivalentBaseTree": "406a9b011bcf906818fa6c3eadafb4036b7f5aab",
+  "sources": [
+    {
+      "path": "scripts/development-release.mjs",
+      "sha256": "f3ad776908c0c25184769185c1b900859142eab0cbcd2f3f02cb4b6b611ba73e"
+    },
+    {
+      "path": "scripts/lib/immutable-release-publication.mjs",
+      "sha256": "ca679f42f8c1e4b63759a78f421232aa3ca405ce4f2aa1a9b5e017e28bd4e348"
+    },
+    {
+      "path": "tests/development-release-execution.test.ts",
+      "sha256": "fed0f125f3c5e2ab598538ebe9687eb2a815af62309ef269e5a0be647fc9cb76"
+    },
+    {
+      "path": "tests/immutable-release-publication.test.ts",
+      "sha256": "75df79a2cbb999fb578b4ce418042a0c6817c2eaa36c7c993eb15c019e84157a"
+    }
+  ],
+  "unchangedContracts": [
+    {
+      "path": ".github/workflows/development-candidate.yaml",
+      "sha256": "88df55f1383d94723368e8681e164382eb65988aed1013b62649c4c01899c070"
+    },
+    {
+      "path": "releases/m3-development-candidate.json",
+      "sha256": "112d5425ba44d5d9b714df393e9eec31497f0a08f8160791b0aeec37a9f3a51e"
+    },
+    {
+      "path": "package.json",
+      "sha256": "ab7d330bf38c96f7cd1a3419822466bf3ffa5c780264233681b7ccef38a07f86"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "01dbe4e372c600aaf4e418f06087adfeade85205e6c5b08cbb9b5c1b0012888c"
+    },
+    {
+      "path": "npm-shrinkwrap.json",
+      "sha256": "01dbe4e372c600aaf4e418f06087adfeade85205e6c5b08cbb9b5c1b0012888c"
+    },
+    {
+      "path": "docs/milestone-gates.md",
+      "sha256": "349c5cba36b25e08f814fe00b53e68134f74a22709d39a5ac7146991bf257535"
+    }
+  ],
+  "diagnosticEvidence": {
+    "path": "delivery/acceptance/m3-dev3-token-diagnostic-observed-834e49ab.json",
+    "sha256": "192754718b7dfc784d4f520c688781d18acb53d54479c5cde6b96e661a49b8f7"
+  },
+  "independentSourceReview": {
+    "path": "delivery/acceptance/m3-dev3-token-mode-independent-d64c37e.json",
+    "sha256": "6436f2a6b99d3c3c1ce00f85ee04fb4230562686a0d3ce6cf3307c80db51c2fb"
+  },
+  "localEvidence": [
+    {
+      "path": ".agentci/artifacts/delivery/fast-latest.json",
+      "sha256": "69b92b644dc10abac8c5d0922f3af66de82830342d416ea5d723e7c122d62cf9"
+    },
+    {
+      "path": "/workspace/scratch/dev3-observed-token-focused-final.log",
+      "sha256": "7716293bb85b4ce0156bf248f1e7a63888e0e076992df1c04141c9750386fd4e"
+    },
+    {
+      "path": "/workspace/scratch/dev3-observed-token-fast.log",
+      "sha256": "deb142dbf97104c8cb6943fa56cbb2590e3a74fc9f0ccd3c57dac9e249c92d61"
+    },
+    {
+      "path": "/workspace/scratch/dev3-observed-token-types.log",
+      "sha256": "24891980e1a4e24b0fa42dfc3ba5d72e0d18f079385b15c0fc688b5779456ff9"
+    },
+    {
+      "path": "/workspace/scratch/dev3-observed-token-api-compat.log",
+      "sha256": "3355e8638f12279b5eed0eda226da3f02147a53f3fdb6391ca064f28c5c4e6e5"
+    },
+    {
+      "path": ".agentci/artifacts/api-compatibility.json",
+      "sha256": "05a87525ed9bdd99f657ee14953b562b1e8b6569ae58a24ea3fe92475cae5e93"
+    },
+    {
+      "path": "/workspace/scratch/dev3-observed-token-workflow-lint.log",
+      "sha256": "cbb6627c6fbc680c66ab4c6145487e3ca5caebc34c37941cdeb736e70e4b2284"
+    },
+    {
+      "path": "/workspace/scratch/dev3-observed-token-source-forward.json",
+      "sha256": "79baf019fbd9c7e25722dda8b86e1297cfc783a4c80764d103ddf8714d36acde"
+    },
+    {
+      "path": "/workspace/scratch/dev3-observed-token-source-forward.log",
+      "sha256": "2806b24aeb14a6e9e66ed6a22a7ba00d0303db0597cd27a463bdf2d4f277b090"
+    },
+    {
+      "path": "/workspace/scratch/dev3-observed-token-pinned-cache.json",
+      "sha256": "00770769986b43b3b9a1c7632c1b2e1d76293172ed07c0eb3ad733990a498709"
+    }
+  ],
+  "results": {
+    "focusedTests": 32,
+    "independentHelperAndExecutionTests": 28,
+    "rootTests": 517,
+    "fastChecks": 10,
+    "fastSeconds": 47.654717002,
+    "sourceForwardFindings": 0
+  },
+  "authorizationBoundary": [
+    "Generic callers still require permissions.push===true before any listing; public empty listings never prove draft visibility",
+    "Explicit installation mode is created only after actual GitHEAD/exact committedworkflow bytes, source/ref/event/repository/job/command/Contentswrite/unique GitHub token injection checks",
+    "Module-private WeakMap binds exact frozen context and actual client token fingerprint/type; serialized or spread context copies never transfer authority",
+    "Octokit tokenType is local token-format classification, not a separate server-issued authorization receipt; the trusted workflow permission contract and authenticated API failures remain authoritative",
+    "User-style push metadata is diagnostic only inside this separately validated mode; matching repository identity and API denial/ambiguity remain hard requirements",
+    "Authenticated paginated draft discovery, occupied tags/releases/assets and lost-acknowledgement failure recovery remain unchanged"
+  ],
+  "reuseQualifications": [
+    "Existing verified installed dependencies and pinned checksum-verified scanner/API/lint cache reused; no clean npm install or fresh download claim",
+    "Fast report dirty:true is one untracked reused node_modules symlink; all tracked source bindings match exact d64 source",
+    "Completed CI records belong to baseline main834, not unpublished correctiond64; cache state unknown retained truthfully"
+  ],
+  "retainedFailures": [
+    "dev2 immutable upload failure run38191217711 remains untouched",
+    "dev3 preflight failures38213411342 and38215995488 retained in existing records; no candidate absence inferred",
+    "Earlier pre-WeakMap local review retained as superseded preparation, not final evidence"
+  ],
+  "hold": {
+    "kind": "Unclassified new GitGuardian Generic Database Assignment alert",
+    "reportedPushTimestamp": "2026-10-12T12:19:36Z",
+    "findingFileAndCommit": "Unknown to this worker; parent investigating",
+    "action": "No release publication, activation merge, workflow dispatch, suppression, rotation, settings change or history rewrite"
+  },
+  "pending": [
+    "Parent GitGuardian classification and release hold lift",
+    "Actual exact-source hosted verification and independent artifact review for corrected source",
+    "Actual authenticated draft inventory and all six destination occupancy checks",
+    "Explicit activation/merge authorization before any release-triggering action",
+    "Native AMD64/ARM64, anonymous downloads/customer recovery/dashboard/release/demo and all18M3gates",
+    "Existing customer-key saved confirmation/App scope prerequisites untouched"
+  ]
+}

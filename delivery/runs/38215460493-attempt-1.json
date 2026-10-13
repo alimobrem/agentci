@@ -1,0 +1,69 @@
+{
+  "runId": 38215460493,
+  "attempt": 1,
+  "conclusion": "success",
+  "cohort": "optimized",
+  "cache": "unknown",
+  "collectedAt": "2026-10-12T07:06:07.955Z",
+  "sourceCommit": "a7c691be7f99eb0c87be3ae3ee177c6997001e13",
+  "url": "https://github.com/alimobrem/agentci/actions/runs/38215460493",
+  "event": "pull_request_target",
+  "jobs": [
+    {
+      "name": "scan",
+      "seconds": 17,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan exact introduced content locally",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

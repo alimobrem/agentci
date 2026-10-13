@@ -1,6 +1,39 @@
-// Drafts are visible only to authenticated callers with push access. Never use published-only getReleaseByTag for draft inventory.
-export async function candidateReleases(github,repository,tag){
- const access=await github.rest.repos.get(repository);if(access.data.permissions?.push!==true)throw Error('Authenticated push visibility required for draft inventory');
+import {createHash} from 'node:crypto';
+import {readFile} from 'node:fs/promises';
+import {execFileSync} from 'node:child_process';
+import {join} from 'node:path';
+import {parse} from 'yaml';
+// Generic callers require push access. Trusted Actions callers use the distinct
+// source-bound installation permission contract, never public listing alone.
+const actionsVisibility=new WeakMap();
+const tokenDigest=token=>createHash('sha256').update(token).digest('hex');
+export async function actionsDraftVisibility(environment,{cwd=process.cwd(),command}={}){
+ const repository='alimobrem/agentci',job=environment.GITHUB_JOB,source=environment.GITHUB_SHA,path='.github/workflows/development-candidate.yaml';
+ if(environment.GITHUB_ACTIONS!=='true'||environment.GITHUB_REPOSITORY!==repository||environment.GITHUB_REF!=='refs/heads/main'||!['push','workflow_dispatch'].includes(environment.GITHUB_EVENT_NAME)||environment.GITHUB_WORKFLOW_REF!==repository+'/'+path+'@refs/heads/main'||environment.GITHUB_WORKFLOW_SHA!==source||!/^[a-f0-9]{40}$/.test(source??'')||!['preflight','release-candidate'].includes(job)||typeof environment.GITHUB_TOKEN!=='string'||!environment.GITHUB_TOKEN)throw Error('Source-bound Actions contents-write context required for draft inventory');
+ if(execFileSync('git',['rev-parse','HEAD'],{cwd,encoding:'utf8'}).trim()!==source)throw Error('Actions installation source HEAD mismatch');
+ const committed=execFileSync('git',['show',source+':'+path],{cwd});
+ if(!(await readFile(join(cwd,path))).equals(committed))throw Error('Actions draft-visibility workflow differs from exact committed source');
+ const workflow=parse(committed.toString('utf8')),jobContract=workflow?.jobs?.[job];
+ if(jobContract?.permissions?.contents!=='write')throw Error('Committed Actions contents-write grant required');
+ const expectedCommand=job==='preflight'?'preflight':'publish',steps=jobContract.steps;
+ if(command!==expectedCommand)throw Error('Actions installation job and operation differ');
+ const injections=Array.isArray(steps)?steps.filter(step=>step.run==='node scripts/development-release.mjs '+command):[];
+ if(injections.length!==1||injections[0].env?.GITHUB_TOKEN!=='${{ secrets.GITHUB_TOKEN }}')throw Error('Exact committed Actions token injection required');
+ const visibility=Object.freeze({mode:'trusted-actions-installation',repository,sourceCommit:source,job});
+ actionsVisibility.set(visibility,Object.freeze({tokenDigest:tokenDigest(environment.GITHUB_TOKEN),repository,sourceCommit:source,job}));
+ return visibility;
+}
+export async function candidateReleases(github,repository,tag,visibility){
+ const access=await github.rest.repos.get(repository),push=access.data.permissions?.push;
+ if(visibility!==undefined){
+  const bound=visibility&&typeof visibility==='object'?actionsVisibility.get(visibility):null;
+  if(!bound||visibility.mode!=='trusted-actions-installation'||visibility.repository!==bound.repository||visibility.sourceCommit!==bound.sourceCommit||visibility.job!==bound.job||bound.repository!==repository.owner+'/'+repository.repo||access.data.full_name!==bound.repository||typeof github.auth!=='function')throw Error('Authenticated Actions installation visibility required for draft inventory');
+  const authentication=await github.auth();
+  if(authentication?.type!=='token'||typeof authentication.token!=='string'||tokenDigest(authentication.token)!==bound.tokenDigest)throw Error('Actions installation authentication differs from committed token injection');
+  // tokenType is a client format heuristic. The exact committed Actions token
+  // injection and private credential binding establish this mode, not its label.
+  // User-style push metadata is diagnostic only in this separately validated mode.
+ }else if(push!==true)throw Error('Authenticated push visibility required for draft inventory');
  const matches=[];const ids=new Set();
  for(let page=1;page<=1000;page++){
   const response=await github.rest.repos.listReleases({...repository,per_page:100,page});const releases=response.data;
@@ -14,16 +47,16 @@ export async function candidateReleases(github,repository,tag){
  }
  throw Error('Release pagination incomplete');
 }
-export async function requireCandidateReleaseAbsent(github,repository,tag){if((await candidateReleases(github,repository,tag)).length)throw Error('Candidate occupied by published release or draft');}
+export async function requireCandidateReleaseAbsent(github,repository,tag,visibility){if((await candidateReleases(github,repository,tag,visibility)).length)throw Error('Candidate occupied by published release or draft');}
 export function requireReleaseAssets(remote,assets){if(remote.length!==assets.length||!assets.every(a=>remote.filter(r=>r.name===a.name&&r.state==='uploaded'&&r.size===a.bytes.length&&r.digest==='sha256:'+a.sha256).length===1))throw Error('Release asset inventory mismatch');}
 // Reconcile only this exact source/run draft intent; never overwrite occupied identities.
-export async function publishDraftAssets(github,repository,intent,assets,onState){
+export async function publishDraftAssets(github,repository,intent,assets,onState,visibility){
  const readTag=async()=>{try{const object=(await github.rest.git.getRef({...repository,ref:'tags/'+intent.tag})).data?.object;if(!object||!['commit','tag'].includes(object.type)||!/^[a-f0-9]{40}$/.test(object.sha??''))throw Error('Ambiguous Git ref response');return object;}catch(error){if(error.status===404)return null;throw error;}};
  const requireTagAbsent=async phase=>{const actual=await readTag();if(actual)throw Error('Occupied Git tag during '+phase);await onState({tagAbsence:{phase,result:'absent'}});};
  let ownedId;const owned=release=>{if(release.tag_name!==intent.tag||release.target_commitish!==intent.sourceCommit||release.body!==intent.body||!release.prerelease||(!Number.isSafeInteger(release.id)||release.id<=0)||ownedId!==undefined&&release.id!==ownedId)throw Error('Release intent identity mismatch');ownedId=release.id;return release;};
- await requireCandidateReleaseAbsent(github,repository,intent.tag);
+ await requireCandidateReleaseAbsent(github,repository,intent.tag,visibility);
  await requireTagAbsent('before-create');
- let release;try{release=owned((await github.rest.repos.createRelease({...repository,tag_name:intent.tag,target_commitish:intent.sourceCommit,name:intent.name,body:intent.body,prerelease:true,draft:true,make_latest:'false'})).data);}catch(error){try{const candidates=await candidateReleases(github,repository,intent.tag);if(candidates.length!==1||candidates[0].draft!==true)throw Error('Ambiguous draft creation outcome');release=owned(candidates[0]);await onState({reconciliation:{phase:'create',releaseId:release.id,status:error.status??null,result:'exact owned draft retained'}});}catch{throw error;}}
+ let release;try{release=owned((await github.rest.repos.createRelease({...repository,tag_name:intent.tag,target_commitish:intent.sourceCommit,name:intent.name,body:intent.body,prerelease:true,draft:true,make_latest:'false'})).data);}catch(error){try{const candidates=await candidateReleases(github,repository,intent.tag,visibility);if(candidates.length!==1||candidates[0].draft!==true)throw Error('Ambiguous draft creation outcome');release=owned(candidates[0]);await onState({reconciliation:{phase:'create',releaseId:release.id,status:error.status??null,result:'exact owned draft retained'}});}catch{throw error;}}
  if(!release.draft)throw Error('Created release is already published; do not upload');
  await onState({releaseId:release.id,publicationState:'draft'});
  // GitHub draft creation does not supply an owned tag-creation receipt. A tag visible now is occupied, even at the desired SHA.

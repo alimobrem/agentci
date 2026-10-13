@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "result": "PASS bounded hardened-main token integration; no remaining concrete reviewed-source blocker",
+  "sourceCommit": "1b475210a21a37305137317cf8221750b6df3e68",
+  "sourceTree": "828dd3572a7bb9569ce9b2bac2c7641a77186cf8",
+  "actualBaseCommit": "a33747e2bfba12a919198fe50bb6d2ea5d254e81",
+  "sourceBindings": [
+    {
+      "path": "scripts/development-release.mjs",
+      "sha256": "f3ad776908c0c25184769185c1b900859142eab0cbcd2f3f02cb4b6b611ba73e"
+    },
+    {
+      "path": "scripts/lib/immutable-release-publication.mjs",
+      "sha256": "ca679f42f8c1e4b63759a78f421232aa3ca405ce4f2aa1a9b5e017e28bd4e348"
+    },
+    {
+      "path": "tests/development-release-execution.test.ts",
+      "sha256": "fed0f125f3c5e2ab598538ebe9687eb2a815af62309ef269e5a0be647fc9cb76"
+    },
+    {
+      "path": "tests/immutable-release-publication.test.ts",
+      "sha256": "75df79a2cbb999fb578b4ce418042a0c6817c2eaa36c7c993eb15c019e84157a"
+    }
+  ],
+  "exactPriorReviewedCode": "All4runtime/test blobs byteexactea057840285fdab569511b4806a278d66c651c40; oldbranch ledger/workflows not wholesale applied",
+  "independentFocused": {
+    "passed": 32,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 25010.254895,
+    "path": "/workspace/scratch/dev3-token-hardened-independent-1b475210-focused.log",
+    "sha256": "8481ba8302704f14a43d0d7c79d1643b0ce6041efe6090090cc5fee120b551ea"
+  },
+  "reviewedBoundaries": [
+    "Grant privatelyWeakMap-branded exact frozenobject; spread/JSON clone untrusted",
+    "Constructor reads exact Git HEAD and immutable source workflow then compares checked out bytes",
+    "Trusted main Actions event/repo/ref/source/job/command/contentswrite and unique exact token injection required",
+    "Actual Octokit.auth installation token fingerprint mustmatch private grant; OAuth/mismatch/foreignrepo denied before listing",
+    "Genericfalse/missingpush denied; trusted installation mode uses observedpush diagnostic metadata",
+    "Pagination/list403/duplicate/foreigndraft/occupiedtag/race/lostACK/final asset/tag binding retain failclosed contract",
+    "No rawtoken or private tokenDigest output; synthetic generated authentication only tested"
+  ],
+  "preservation": {
+    "existingAcceptanceRecordsUnchanged": 151,
+    "baseTasks": 139,
+    "tasksNow": 140,
+    "other138TaskObjectsUnchanged": true,
+    "onlyChangedExistingTask": "M3-R1-PUB-DIAG-1 accepted observed actualGET",
+    "importedOriginalTask": "M3-R1-PUB-TOKEN-2",
+    "baseEventPrefixPreserved": true,
+    "allDBHardeningScriptsTestsUnchanged": true,
+    "allWorkflowsReleasesDeployUnchanged": true,
+    "all18GatesPendingUnchanged": true
+  },
+  "limits": [
+    "Local synthetic actualscript/Octokit fixtures; fresh hosted installation draft visibility remains unproved",
+    "Parent exacthead source/actual artifact review plus full freshCI required before activation",
+    "Unmatched historicalalert remains open; this review does not classify it",
+    "No credentials/access read or changed; no remote writes, merge/publication/descriptor change",
+    "Reused untrackednode_modules; no fresh download/install claim"
+  ]
+}

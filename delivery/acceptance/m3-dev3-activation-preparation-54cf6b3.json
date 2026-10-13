@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-R1-ACT-3",
+  "scope": "LOCAL SOFTWARE PREPARATION of owner-approved corrected dev.3 activation; no remote publication",
+  "recordedAt": "2026-10-12T02:10:45.524274+00:00",
+  "sourceCommit": "54cf6b34f010cab49ab366f907fbf68b7bca1c59",
+  "sourceTree": "15310f6e0d41e2be4ddeb865eff86bc81ec5d5da",
+  "baseCommit": "109c42b675e9af1ac11bf48d2b4c279c93c380c7",
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/development-candidate.yaml",
+      "sha256": "54f7c80a5b1d49c5260fa86271256dd7ba6851664e4a089a0ae3eb42ac1eebda"
+    },
+    {
+      "path": "deploy/reproduction.compose.yaml",
+      "sha256": "40a2de23a862a1dd4839dbc112c1f4c60a2dbf21c635ac5c528c8758bf5210a4"
+    },
+    {
+      "path": "deploy/reviewer.compose.yaml",
+      "sha256": "f0e28aea5d2c06ae29299e22fe6c2784aa5fb78a2b0717a897f4566854a4a0b3"
+    },
+    {
+      "path": "docs/phases/m3-customer-acceptance-preparation.md",
+      "sha256": "2911e3b56e9aba98424e9573839c68aba38581b97b4d7c38e317fc511db5753a"
+    },
+    {
+      "path": "docs/phases/m3-development-candidate.md",
+      "sha256": "9043795f7fc5f82cf2012ac0187358eb53a826be3c766ddbb7a0383aa8c30b81"
+    },
+    {
+      "path": "npm-shrinkwrap.json",
+      "sha256": "01dbe4e372c600aaf4e418f06087adfeade85205e6c5b08cbb9b5c1b0012888c"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "01dbe4e372c600aaf4e418f06087adfeade85205e6c5b08cbb9b5c1b0012888c"
+    },
+    {
+      "path": "package.json",
+      "sha256": "ab7d330bf38c96f7cd1a3419822466bf3ffa5c780264233681b7ccef38a07f86"
+    },
+    {
+      "path": "packages/version.ts",
+      "sha256": "856ed4088f4965b7f7d3782c91024f1ab8ce2ab64f92ac661ef0de92091f5ee3"
+    },
+    {
+      "path": "releases/m3-development-candidate.json",
+      "sha256": "711f3b03df5058de36bc0571ca5ab03a4831646fb3016f6459cb05fe69dd6b24"
+    },
+    {
+      "path": "scripts/lib/customer-publication-assets.mjs",
+      "sha256": "223fb8cf11016fa256bcfbf16de57f6d528a979ebfc986eb8294a5cb0367249b"
+    },
+    {
+      "path": "scripts/lib/development-artifacts.mjs",
+      "sha256": "cf9f1f30ecf776a83ae8133afcba8b7afc4859cf97fbc1820c0e74f7260f27c1"
+    },
+    {
+      "path": "scripts/m3-customer-live-demo.mjs",
+      "sha256": "7eeac0d1112fbfd0e92e46dd6171898baadeccf5069bf4a8e15965466043fbbd"
+    },
+    {
+      "path": "scripts/m3-customer-live-observe.mjs",
+      "sha256": "47a5f132ad7f7691fc162f4b0567dd9def947f2906c0c73871f93d596f920fcf"
+    },
+    {
+      "path": "specs/api/openapi.json",
+      "sha256": "2b499e9ce86e8c9ab1521324ffcbb22555d944219f666c57e5ec4d00ea6f24b1"
+    },
+    {
+      "path": "tests/development-artifacts.test.ts",
+      "sha256": "076fbf44b8487ae585dacce0ebcbe44dc5c428c19b5c87370df92af66a525f4c"
+    },
+    {
+      "path": "tests/development-release-execution.test.ts",
+      "sha256": "d94e0cf6c5f5249fc18fcc69fc374f3c549f6daea02ac3352be4af309da583c9"
+    },
+    {
+      "path": "tests/immutable-release-publication.test.ts",
+      "sha256": "83582be2e02def796fa3dcb7419db423bd206cb10fe9cafcb1ecfae0f3555af2"
+    },
+    {
+      "path": "tests/integration/reproduction-deployment.test.ts",
+      "sha256": "fc8d866a47da48c5ca80135e4a9dfb750027e84609a07455dafb4e2b424a85ed"
+    },
+    {
+      "path": "tests/published-package-preparation.test.ts",
+      "sha256": "3038b98f6d48be09cba08374444546668ce5062bd01aec31308b3584ef1b849b"
+    }
+  ],
+  "checks": [
+    {
+      "name": "build-and-compiledCLI",
+      "result": "passed",
+      "path": "/workspace/scratch/dev3-activation-build.log",
+      "sha256": "66e5d27725c2798dbf68d5741bf6090c2a2ac6bb13209896a7fce271cd27e772"
+    },
+    {
+      "name": "focused19",
+      "result": "passed",
+      "path": "/workspace/scratch/dev3-activation-focused.log",
+      "sha256": "96f68f929b3c89f303681782a6af27d2238ce2f4a4540304c692ee7c870626e0"
+    },
+    {
+      "name": "fast10-45.83s",
+      "result": "passed",
+      "path": "/workspace/scratch/dev3-activation-fast.log",
+      "sha256": "d277846e691344877ee4c20ebcbd0cc906afa03b5f0fc42305120ce71fab0a80"
+    },
+    {
+      "name": "fast-report479unit",
+      "result": "passed",
+      "path": "/workspace/scratch/dev3-activation-fast-report.json",
+      "sha256": "ba4749a4b707ab3b65ee72ce5e41e6ebf30c12375ba21eb01c10c9fa44f26bc0"
+    },
+    {
+      "name": "M1M2-api-compatibility-negatives",
+      "result": "passed",
+      "path": "/workspace/scratch/dev3-activation-api-compat.log",
+      "sha256": "3355e8638f12279b5eed0eda226da3f02147a53f3fdb6391ca064f28c5c4e6e5"
+    },
+    {
+      "name": "workflow-lint",
+      "result": "passed",
+      "path": "/workspace/scratch/dev3-activation-workflows.log",
+      "sha256": "ac98e827708aafdae3b7fa4ffba0b502f5553388772a78dc8b87061af4e2214b"
+    },
+    {
+      "name": "actual-npm12-root-pack",
+      "result": "passed",
+      "path": "/workspace/scratch/dev3-activation-actual-pack.json",
+      "sha256": "aeabfd33a8ce4f575b19de11d9c222485e493094b40455c36c54256a7c499ffb"
+    },
+    {
+      "name": "actual-pack-version-three-adapters",
+      "result": "passed",
+      "path": "/workspace/scratch/dev3-activation-actual-pack-validation.log",
+      "sha256": "67acd43bf33b61d6fefc5b77b7924a2f873afe3b913f96f63ea9a7f01dfafe51"
+    }
+  ],
+  "sourceQualification": "Build/19focused/479unit/10fast45.83s/APIcompat/workflowlint ran on61c4b52. Final54cf6 differs ONLY one currentcustomer documentation version label. All runtime/config/test blobs identical; independent19focused+compiledCLI confirmation onfinal54cf6. No unchangedfullfast repeated for documentation-only correction.",
+  "checkoutQualification": "Fast report dirty:true from untracked node_modules symlink; tracked implementation committed beforechecks and unchanged afterward. No clean-checkout claim.",
+  "independentReview": {
+    "path": "/workspace/scratch/dev3-activation-independent-review-20261012.json",
+    "sha256": "bd32cbea0cfd0c365ffb561cc5ac852a8da41fcdb5291926a42d33498e7d9467",
+    "result": "No remaining blocker for prospective local preparation/draft CI"
+  },
+  "availability": {
+    "path": "/workspace/scratch/dev3-activation-availability-readonly.json",
+    "sha256": "967cce3fe1a8e858738f4dbd42318a38fefc2fee66f1652c64a2784670fd6882",
+    "result": "Work GitHub tag/release GET404",
+    "qualification": "Point-in-time only; all6 GHCR tags/permissions/token availability require actualhostedpreflight"
+  },
+  "locks": "Root package-lock and shrinkwrap bytes identical; only package/root version fields changed, dependencies unchanged",
+  "packageQualification": "Actual npm12 root archive manifest/compiledversion/allthreeprovider files inspected. Ordinarynpm12pack excludes locks; real dev3assemble fixture verifies existing explicitlockrestoration. Initial ad-hoc probe assumed legacyarrayoutput, corrected with existingnormalizePackOutput without changingimplementation. No public/native download acceptance claimed.",
+  "activationDescriptor": "Fixed4fields schemaVersion/version/repository/publication; actualmergedsource github.sha supplies final source, no selfreference",
+  "preserved": "Occupiedfaileddev2release/tag/images/history unchanged, immutableordering repairlogic unchanged, M2defaults/releasedAPIbaselines and alltask/eventhistory retained. Currentpublication and customer fixedconsumer versionpins coherentlydev3.",
+  "fullHostedCI": "required-beforemerge; repair actualmerge/review then retarget/exacttreechecks beforeactivationmerge",
+  "publication": "not performed by worker",
+  "nativePublicationAndAnonymousDownloads": "unverified",
+  "AppAndLiveCustomerAcceptance": "unverified; ownersecretentryunconfirmed",
+  "externallyReachableEndpoint": "unverified",
+  "milestoneGates": "all18 M3 gates pending; M0-M10order/all3adapters/observedrate/descriptiveWilson/sole inaccessibleprovider exception unchanged",
+  "remoteActions": "HarmlessWorkGET only; no writes"
+}
