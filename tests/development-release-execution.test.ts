@@ -200,7 +200,7 @@ test('actual Actions false-push preflight inventories authenticated releases and
   const record=JSON.parse(await readFile(join(f.root,'development-assets/publication-attempt.json'),'utf8'));assert.equal(record.result,'passed');assert.equal(record.releaseId,null);assert.deepEqual(record.uploadedAssets,[]);assert.ok(!JSON.stringify(record).includes(f.token));
  }finally{await rm(f.root,{recursive:true,force:true});}
 });
-test('actual Actions mode rejects OAuth-shaped substituted authentication before public empty listing',async()=>{
+test('actual Actions mode rejects matching OAuth-shaped authentication before public empty listing',async()=>{
  const f=await fixture();try{
   const result=f.execute('preflight',{MOCK_RELEASE_MODE:'preflight',GITHUB_ACTOR:'synthetic-actor',GITHUB_TOKEN:'synthetic-oauth-token'});assert.equal(result.status,1);
   const requests=(await readFile(join(f.root,'rest.jsonl'),'utf8')).trim().split('\n').map(line=>JSON.parse(line));assert.ok(requests.every(r=>r.method==='GET'&&new URL(r.url).pathname==='/repos/alimobrem/agentci'));

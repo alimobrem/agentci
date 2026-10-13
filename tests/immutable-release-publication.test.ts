@@ -72,3 +72,15 @@ test('installation mode retains paginated occupied drafts and API denial or ambi
  }
  }finally{await f.close();}
 });
+test('real Octokit token B cannot use source-bound token A inventory context even when both classify as installation',async()=>{
+ const f=await actionsFixture();try{
+  const grant=await actionsDraftVisibility(f.environment,f.options);
+  const tokenB='ghs_'+randomBytes(20).toString('hex');assert.notEqual(tokenB,f.environment.GITHUB_TOKEN);
+  const api=new Octokit({auth:tokenB});let listed=0;
+  api.rest.repos.get=(async()=>({data:{full_name:'alimobrem/agentci',permissions:{push:true}}})) as any;
+  api.rest.repos.listReleases=(async()=>{listed++;return{data:[]};}) as any;
+  const authentication=await api.auth() as {tokenType?:unknown};assert.equal(authentication.tokenType,'installation');
+  await assert.rejects(requireCandidateReleaseAbsent(api,{owner:'alimobrem',repo:'agentci'},intent.tag,grant),/authentication differs/);
+  assert.equal(listed,0);
+ }finally{await f.close();}
+});
