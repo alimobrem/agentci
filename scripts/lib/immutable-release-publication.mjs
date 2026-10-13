@@ -29,7 +29,9 @@ export async function candidateReleases(github,repository,tag,visibility){
   const bound=visibility&&typeof visibility==='object'?actionsVisibility.get(visibility):null;
   if(!bound||visibility.mode!=='trusted-actions-installation'||visibility.repository!==bound.repository||visibility.sourceCommit!==bound.sourceCommit||visibility.job!==bound.job||bound.repository!==repository.owner+'/'+repository.repo||access.data.full_name!==bound.repository||typeof github.auth!=='function')throw Error('Authenticated Actions installation visibility required for draft inventory');
   const authentication=await github.auth();
-  if(authentication?.type!=='token'||authentication.tokenType!=='installation'||typeof authentication.token!=='string'||tokenDigest(authentication.token)!==bound.tokenDigest)throw Error('Actions installation authentication differs from committed token injection');
+  if(authentication?.type!=='token'||typeof authentication.token!=='string'||tokenDigest(authentication.token)!==bound.tokenDigest)throw Error('Actions installation authentication differs from committed token injection');
+  // tokenType is a client format heuristic. The exact committed Actions token
+  // injection and private credential binding establish this mode, not its label.
   // User-style push metadata is diagnostic only in this separately validated mode.
  }else if(push!==true)throw Error('Authenticated push visibility required for draft inventory');
  const matches=[];const ids=new Set();

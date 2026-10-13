@@ -200,10 +200,11 @@ test('actual Actions false-push preflight inventories authenticated releases and
   const record=JSON.parse(await readFile(join(f.root,'development-assets/publication-attempt.json'),'utf8'));assert.equal(record.result,'passed');assert.equal(record.releaseId,null);assert.deepEqual(record.uploadedAssets,[]);assert.ok(!JSON.stringify(record).includes(f.token));
  }finally{await rm(f.root,{recursive:true,force:true});}
 });
-test('actual Actions mode rejects matching OAuth-shaped authentication before public empty listing',async()=>{
- const f=await fixture();try{
-  const result=f.execute('preflight',{MOCK_RELEASE_MODE:'preflight',GITHUB_ACTOR:'synthetic-actor',GITHUB_TOKEN:'synthetic-oauth-token'});assert.equal(result.status,1);
-  const requests=(await readFile(join(f.root,'rest.jsonl'),'utf8')).trim().split('\n').map(line=>JSON.parse(line));assert.ok(requests.every(r=>r.method==='GET'&&new URL(r.url).pathname==='/repos/alimobrem/agentci'));
-  const record=JSON.parse(await readFile(join(f.root,'development-assets/publication-attempt.json'),'utf8'));assert.match(record.failure.message,/authentication differs/);assert.equal(record.releaseId,null);assert.deepEqual(record.uploadedAssets,[]);
- }finally{await rm(f.root,{recursive:true,force:true});}
+test('actual Actions exact binding treats stateless and opaque matching credentials independently of client classification',async()=>{
+ const encode=(v:unknown)=>Buffer.from(JSON.stringify(v)).toString('base64url'),stateless='ghs_123_'+encode({alg:'RS256',typ:'JWT'})+'.'+encode({synthetic:true})+'.synthetic_signature';
+ for(const token of [stateless,'synthetic-opaque-token']){const f=await fixture();try{
+  const result=f.execute('preflight',{MOCK_RELEASE_MODE:'preflight',GITHUB_ACTOR:'synthetic-actor',GITHUB_TOKEN:token});assert.equal(result.status,0,result.stderr);
+  const requests=(await readFile(join(f.root,'rest.jsonl'),'utf8')).trim().split('\n').map(line=>JSON.parse(line));assert.ok(requests.every(r=>['GET','HEAD'].includes(r.method)));assert.ok(requests.some(r=>r.url.includes('/releases?per_page=100&page=1')));assert.equal(requests.filter(r=>r.method==='HEAD'&&r.url.startsWith('https://ghcr.io/v2/')).length,6);
+  const bytes=await readFile(join(f.root,'development-assets/publication-attempt.json'),'utf8'),record=JSON.parse(bytes);assert.equal(record.result,'passed');assert.equal(record.releaseId,null);assert.deepEqual(record.uploadedAssets,[]);assert.ok(!bytes.includes(token));
+ }finally{await rm(f.root,{recursive:true,force:true});}}
 });

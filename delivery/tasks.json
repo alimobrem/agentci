@@ -3341,17 +3341,40 @@
         "SPEC-40-051"
       ],
       "dependsOn": [],
-      "status": "blocked",
+      "status": "done",
       "startedAt": "2026-10-13T01:17:25.172Z",
-      "completedAt": null,
+      "completedAt": "2026-10-13T01:44:30.890Z",
       "acceptance": [
         {
           "text": "Owner-approved standalone diagnostic retains only allowlisted auth type/tokenType and tokenPresent/tokenMatches booleans plus existing repository capability evidence. No token bytes/prefixes/digests/raw response, JWT claim parsing, publication guard changes, permission changes or publication retry. Real locked-Octokit stateless-format and true bind-A/authenticate-B regressions; applicable checks, exact draft CI and independent source/artifact review before approved diagnostic merge/run. Preserve failed38321652532 and all native/download/M3 gates.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dev3-auth-diagnostic-terminal-9f1d1288.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-R1-PUB-TOKEN-3",
+      "title": "Use exact trusted Actions credential binding instead of client token classification",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [
+        "M3-R1-PUB-DIAG-2"
+      ],
+      "status": "blocked",
+      "startedAt": "2026-10-13T01:58:16.588Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Owner-approved narrow repair removes only installation tokenType heuristic in separately source-bound trusted Actions mode. Preserve auth type/token presence/exact digest match/private binding/source/job/workflow/injection/grants; no prefix/claim parsing, no generic push fallback, no collision/API ambiguity relaxation. Real locked-Octokit stateless match/mismatch, invalid/forged context and occupied/inconclusive zero-write regressions; applicable checks, full CI and independent exact-source/artifact review before approved merge and dev3 retry. Preserve failed candidates; real anonymous native AMD64/ARM64 image/package downloads and final retained evidence required, all M3 gates remain pending.",
           "status": "pending",
           "evidence": []
         }
       ],
-      "blockedReason": "Implemented approved allowlisted diagnostic; exact runtime11e3 real-Octokit classification and true A/B regressions,539unit/34focused/10fast/API/lint passed. Pending exact draft hostedCI and independent parent source/artifact review before owner-approved diagnostic merge/run. Publication guard and retry remain paused."
+      "blockedReason": "Approved narrow repair808fd matches exact trusted Actions credential without client installation classification;541unit/36focused/10fast/API/lint passed. Pending exact draft fullCI and independent parent source/artifact clearance before descriptor-triggered same-identity dev3 retry. Native publication/anonymous downloads/final retained evidence remain required; collision guards fail closed."
     }
   ]
 }
