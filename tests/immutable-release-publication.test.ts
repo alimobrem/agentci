@@ -27,11 +27,11 @@ test('only404 proves absent tag; malformed200 ref aborts before create or upload
 
 const actionsEnvironment={GITHUB_ACTIONS:'true',GITHUB_REPOSITORY:'alimobrem/agentci',GITHUB_REF:'refs/heads/main',GITHUB_EVENT_NAME:'push',GITHUB_WORKFLOW_REF:'alimobrem/agentci/.github/workflows/development-candidate.yaml@refs/heads/main',GITHUB_JOB:'preflight'};
 const actionsWorkflow={jobs:{preflight:{permissions:{contents:'write'},steps:[{run:'node scripts/development-release.mjs preflight',env:{GITHUB_TOKEN:'${{ secrets.GITHUB_TOKEN }}'}}]},'release-candidate':{permissions:{contents:'write'},steps:[{run:'node scripts/development-release.mjs publish',env:{GITHUB_TOKEN:'${{ secrets.GITHUB_TOKEN }}'}}]}}};
-async function actionsFixture(workflow:any=actionsWorkflow){
+async function actionsFixture(workflow:any=actionsWorkflow,token='ghs_'+randomBytes(20).toString('hex')){
  const root=await mkdtemp(join(tmpdir(),'actions-installation-contract-')),path=join(root,'.github/workflows/development-candidate.yaml');
  await mkdir(dirname(path),{recursive:true});await writeFile(path,stringify(workflow));
  execFileSync('git',['init','--quiet'],{cwd:root});execFileSync('git',['add','.github/workflows/development-candidate.yaml'],{cwd:root});execFileSync('git',['-c','user.name=Synthetic acceptance','-c','user.email=synthetic@example.invalid','-c','commit.gpgsign=false','commit','--quiet','-m','Synthetic source'],{cwd:root});
- const source=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),token='ghs_'+randomBytes(20).toString('hex');
+ const source=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
  const environment={...actionsEnvironment,GITHUB_SHA:source,GITHUB_WORKFLOW_SHA:source,GITHUB_TOKEN:token},options={cwd:root,command:'preflight'};
  return{root,path,environment,options,authentication:new Octokit({auth:token}).auth,close:()=>rm(root,{recursive:true,force:true})};
 }
@@ -54,13 +54,36 @@ test('missing or foreign Actions context, committed grants, operations and token
  const bad=await actionsFixture(workflow);try{await assert.rejects(actionsDraftVisibility(bad.environment,bad.options));}finally{await bad.close();}
  }
 });
-test('installation mode rejects forged branding, foreign identity, OAuth or mismatched actual authentication before listing',async()=>{
+test('installation mode rejects forged branding, foreign identity, invalid type or mismatched actual authentication before listing',async()=>{
  const f=await actionsFixture();try{const repository={owner:'alimobrem',repo:'agentci'},grant=await actionsDraftVisibility(f.environment,f.options);
- for(const mode of ['forged','spread','repository','oauth','token','auth-error']){
- let listed=0;const api={...transport(),auth:async()=>mode==='auth-error'?Promise.reject(Error('authentication unavailable')):{type:'token',tokenType:mode==='oauth'?'oauth':'installation',token:mode==='token'?'foreign synthetic token':f.environment.GITHUB_TOKEN}};
+ for(const mode of ['forged','spread','repository','type','token','missing-token','empty-token','auth-error']){
+ let listed=0;const api={...transport(),auth:async()=>mode==='auth-error'?Promise.reject(Error('authentication unavailable')):{type:mode==='type'?'invalid':'token',tokenType:'installation',token:mode==='token'?'foreign synthetic token':mode==='missing-token'?undefined:mode==='empty-token'?'':f.environment.GITHUB_TOKEN}};
  api.rest.repos.get=async()=>({data:{full_name:mode==='repository'?'other/repository':'alimobrem/agentci',permissions:{push:true}}} as any);api.rest.repos.listReleases=async()=>{listed++;return{data:[]}};
  await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag,mode==='forged'?JSON.parse(JSON.stringify(grant)):mode==='spread'?{...grant}:grant));assert.equal(listed,0);assert.equal(api.calls.length,0);
  }
+ }finally{await f.close();}
+});
+const syntheticStateless=()=>{const encode=(v:unknown)=>Buffer.from(JSON.stringify(v)).toString('base64url');return 'ghs_123_'+encode({alg:'RS256',typ:'JWT'})+'.'+encode({synthetic:randomBytes(8).toString('hex')})+'.synthetic_signature';};
+test('real Octokit stateless matching token uses only source-bound authenticated inventory; mismatching and forged contexts fail before listing',async()=>{
+ const f=await actionsFixture(actionsWorkflow,syntheticStateless());try{
+  const grant=await actionsDraftVisibility(f.environment,f.options),repository={owner:'alimobrem',repo:'agentci'};
+  for(const mode of ['matching','mismatching','forged','spread']){
+   const actual=new Octokit({auth:mode==='mismatching'?syntheticStateless():f.environment.GITHUB_TOKEN});const auth=await actual.auth() as {type?:unknown;tokenType?:unknown};assert.equal(auth.type,'token');assert.equal(auth.tokenType,'app');
+   const api={...transport(),auth:actual.auth};let listed=0;api.rest.repos.get=async()=>({data:{full_name:'alimobrem/agentci',permissions:{push:false}}} as any);api.rest.repos.listReleases=async()=>{listed++;return{data:[]};};
+   if(mode==='matching'){await requireCandidateReleaseAbsent(api,repository,intent.tag,grant);assert.equal(listed,1);}else{await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag,mode==='forged'?JSON.parse(JSON.stringify(grant)):mode==='spread'?{...grant}:grant));assert.equal(listed,0);}
+   assert.equal(api.calls.length,0);await assert.rejects(requireCandidateReleaseAbsent(api,repository,intent.tag),/push visibility/);
+  }
+  for(const patch of [{GITHUB_JOB:'images'},{GITHUB_REF:'refs/pull/96/merge'},{GITHUB_WORKFLOW_SHA:'f'.repeat(40)},{GITHUB_REPOSITORY:'other/repository'},{GITHUB_TOKEN:''}])await assert.rejects(actionsDraftVisibility({...f.environment,...patch},f.options));
+ }finally{await f.close();}
+});
+test('matching real Octokit stateless auth preserves occupied and inconclusive zero-write release guards',async()=>{
+ const f=await actionsFixture(actionsWorkflow,syntheticStateless());try{
+  const grant=await actionsDraftVisibility(f.environment,f.options),repository={owner:'alimobrem',repo:'agentci'};
+  for(const mode of ['occupied','denied','unavailable','malformed','duplicate']){
+   const api={...transport(),auth:f.authentication};let listed=0;api.rest.repos.get=async()=>({data:{full_name:'alimobrem/agentci',permissions:{push:false}}} as any);
+   api.rest.repos.listReleases=async(input:any)=>{listed++;if(mode==='denied'||mode==='unavailable')throw Object.assign(Error('unavailable'),{status:mode==='denied'?403:503});if(mode==='malformed')return{data:{}} as any;return{data:mode==='occupied'?[{id:101,tag_name:intent.tag,draft:true}]:input.page===1?Array.from({length:100},(_,i)=>({id:i+1,tag_name:'other'})):[{id:1,tag_name:'other'}]};};
+   await assert.rejects(publishDraftAssets(api,repository,intent,assets,()=>{},grant));assert.ok(listed>0);assert.equal(api.calls.length,0);
+  }
  }finally{await f.close();}
 });
 test('installation mode retains paginated occupied drafts and API denial or ambiguity before writes',async()=>{

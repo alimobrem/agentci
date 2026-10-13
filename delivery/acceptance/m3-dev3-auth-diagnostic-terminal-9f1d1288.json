@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "kind": "approved-read-only-auth-diagnostic-terminal-observation",
+  "actualMerge": "9f1d1288c229b989c4eadda05a220cc833b05584",
+  "tree": "11a5ca21b8959775748e0d4815760b5f918f798a",
+  "parents": [
+    "2d2dabf00b01c743d92145ef89575df8c31e69cf",
+    "8676601e5a31b738e5694f9abef6668af67dec60"
+  ],
+  "pullRequest": 95,
+  "approvedHead": "8676601e5a31b738e5694f9abef6668af67dec60",
+  "parentClearance": {
+    "actualArtifactId": 11783437765,
+    "zipSha256": "9869c8966078d475a99768669925af241baa33dce495d9f43ef49c57c9ca6ea6",
+    "unit": 539,
+    "integration": 197,
+    "readers": 14,
+    "client": 11,
+    "qualification": "Parent independently inspected actual premerge source/artifact and cleared exact merge; cloud worker did not download that ZIP."
+  },
+  "diagnostic": {
+    "runId": 38333225237,
+    "attempt": 1,
+    "jobId": 115087450267,
+    "status": "completed",
+    "conclusion": "success",
+    "sourceCommit": "9f1d1288c229b989c4eadda05a220cc833b05584",
+    "url": "https://github.com/alimobrem/agentci/actions/runs/38333225237",
+    "safeLogObservation": {
+      "schemaVersion": 2,
+      "result": "observed",
+      "sourceCommit": "9f1d1288c229b989c4eadda05a220cc833b05584",
+      "runId": "38333225237",
+      "attempt": "1",
+      "httpStatus": 200,
+      "authentication": {
+        "authType": "token",
+        "authTokenType": "app",
+        "tokenPresent": true,
+        "tokenMatches": true
+      },
+      "capability": {
+        "permissionsObject": true,
+        "pushFieldPresent": true,
+        "pushType": "boolean",
+        "pushBoolean": false,
+        "repositoryMatches": true
+      }
+    },
+    "artifact": {
+      "id": 11783657017,
+      "name": "development-token-diagnostic",
+      "zipDigest": "sha256:080f3896c0d036e6d67b8f742b47e0a13c57d45d71a7798f62522f7ccd478355",
+      "sizeInBytes": 466,
+      "actualBytesInspectedByCloudWorker": false,
+      "connectorDownloadReferenceReturned": true,
+      "cloudDownloadUnavailable": true,
+      "parentActualBytesInspected": true,
+      "jsonSha256": "79a9733bc379f8fbd64adb32a4b19f7ad29e0a6e3a5b396cf1a18a1a1de8084a",
+      "parentReview": "Actual ZIP and JSON verified against digest/source/run/attempt and allowlist; type token, classification app, token present/matches true; no credential leak."
+    }
+  },
+  "inferenceLimits": "Parent actual ZIP inspection confirms current source-bound diagnostic classification app and exact injected credential match. No token prefix or JWT claims recorded; original failed attempt preserved. Diagnostic accepted; proposed bounded trusted-Actions classification predicate repair and dev.3 retry await separate owner approval.",
+  "publication": {
+    "retried": false,
+    "guardChanged": false,
+    "permissionsChanged": false,
+    "identityChanged": false,
+    "all18M3GatesPending": true,
+    "historicalGitGuardianIncidentOpen": true
+  },
+  "nextStep": "Await owner approval relayed by parent before implementing, publishing or retrying proposed trusted-Actions predicate repair. Preserve exact type/token-presence/digest equality/private-source-binding and all generic push/collision/API/native/download/M3 gates."
+}
