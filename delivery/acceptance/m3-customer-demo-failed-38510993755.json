@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "result": "temporary-customer-demo-terminal-failure-preserved",
+  "source": "0c30b461cc7942734220b3ae894c20e0186917d5",
+  "sourceTree": "1d6d8222656575ef6d1a58d5c69c2aae7715ce2e",
+  "run": {
+    "id": 38510993755,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "failure",
+    "url": "https://github.com/alimobrem/agentci/actions/runs/38510993755"
+  },
+  "failedStep": "Execute downloaded exact-source temporary customer demo",
+  "scenarioAcceptance": "unverified-not-passed",
+  "underlyingCause": "Original worker stderr is unavailable. Independent read-only exact-package/session-builder reproduction found missing worker runner pin causing EvalPlanConfigurationError before database startup once base runtime config loads; consistent with observed worker exit but not a recovered original error.",
+  "sanitizedLogFacts": {
+    "genericDemoFailure": true,
+    "cleanupUnverifiedMessage": false,
+    "infrastructureRecoveryMessage": false,
+    "explicitPackageFailure": false
+  },
+  "cleanupMetadata": {
+    "postgresqlStep": "success",
+    "temporalStep": "success",
+    "artifactUploads": "success",
+    "qualification": "Parent independent actual-artifact audit verified owned zero teardown, DB private-file removal and Temporal zero. Cloud does not claim its own byte read."
+  },
+  "artifacts": [
+    {
+      "id": 11869818526,
+      "name": "customer-ci-database-cleanup",
+      "zipSha256": "8dd5768a95cdd3ffc55255922fd4c4e49c0f2452ab2ba34e8ccb45343c744c4d",
+      "size": 428,
+      "expiresAt": "2027-01-12T04:21:49Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "id": 11869603768,
+      "name": "temporary-customer-demo",
+      "zipSha256": "eef74ef62f3c8c2f7db64f87210357cbfb010f7fe4b8e51af32d547fa6bbebfe",
+      "size": 450,
+      "expiresAt": "2027-01-12T04:21:49Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "id": 11869509008,
+      "name": "customer-ci-infrastructure-cleanup",
+      "zipSha256": "c615f4a3b49ad4a3727386d280f7c27a7d9f4b4f31d9eb89ccb944a81b6a701b",
+      "size": 902,
+      "expiresAt": "2027-01-12T04:21:49Z",
+      "actualBytesVerifiedInCloud": false
+    }
+  ],
+  "artifactAccess": "Sanctioned connector file references were returned, but cloud download failed. No alternative credentials/access path attempted.",
+  "observedChecksAfterTerminal": {
+    "seeded": [],
+    "fixed": [],
+    "qualification": "Read-only current-head observation after terminal attempt; not a substitute for retained internal operation evidence."
+  },
+  "postmergeCI": {
+    "verify": {
+      "id": 38510993746,
+      "status": "completed",
+      "conclusion": "success",
+      "independentArtifactAudit": {
+        "reportedBy": "parent independent reviewer",
+        "artifactId": 11870466491,
+        "sha256": "3f162c610099f4a32cf5777c8098b322f8bc1083c561765cedc1a1bdf24208b5",
+        "result": "passed",
+        "actualBytesVerifiedInCloud": false
+      }
+    },
+    "dashboard": {
+      "id": 38510993787,
+      "conclusion": "success"
+    },
+    "advisory": {
+      "id": 38510993727,
+      "conclusion": "success"
+    },
+    "requiredScan": {
+      "id": 38510993767,
+      "conclusion": "success"
+    }
+  },
+  "retryPolicy": "No scenario rerun or changed source until failed attempt/cleanup artifacts establish the cause and appropriate bounded correction is reviewed.",
+  "approvalAndMerge": "Initial auto-review rejection retained; one parent-requested identical retry with verbatim owner authorization succeeded. No alternate route/guard change.",
+  "phaseLimits": {
+    "all18M3Gates": "pending",
+    "threeAdaptersAndM0M10": "preserved",
+    "providerException": "Only inaccessible external provider validation",
+    "HTTPSOIDCFinalRelease": "separate"
+  },
+  "independentActualArtifactAudit": {
+    "reportedBy": "parent independent reviewer",
+    "allThreeExpectedHashes": "verified",
+    "apiStarted": true,
+    "workerStarted": true,
+    "workerExitCode": 1,
+    "apiCleanupExitCode": 0,
+    "operationCount": 0,
+    "scenariosProgressed": false,
+    "ownedAssertions": 0,
+    "ownedProcesses": 0,
+    "ownedEvaluatorContainers": 0,
+    "databasePrivateFilesRemoved": true,
+    "temporalRemaining": 0,
+    "teardownReady": "verified-owned-zero bound to run38510993755 attempt1/source0c30b461",
+    "rawWorkerDiagnostic": "not retained"
+  }
+}

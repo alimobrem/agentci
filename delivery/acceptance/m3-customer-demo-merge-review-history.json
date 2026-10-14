@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "result": "initial-auto-review-rejection-preserved-one-authorized-identical-retry-merged",
+  "pullRequest": 98,
+  "head": "c10c898c73cb31aea0d2e01903bc39731907770f",
+  "tree": "1d6d8222656575ef6d1a58d5c69c2aae7715ce2e",
+  "testedMerge": "0d484963abc6c6b967a2e103eea9539aba26a5b4",
+  "unchangedMain": "a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a",
+  "mergeRequest": {
+    "route": "Work GitHub connector",
+    "method": "merge",
+    "expectedHead": "c10c898c73cb31aea0d2e01903bc39731907770f",
+    "attempts": 2,
+    "retries": 1
+  },
+  "rejection": {
+    "content": [
+      {
+        "type": "text",
+        "text": "This action was rejected due to unacceptable risk.\nReason: Merging PR #98 irreversibly changes the repository’s default branch and triggers customer-activation workflows using the saved customer key; the available user text authorizes M3 work and an earlier preflight merge, but not this exact activation merge and its side effects.\nDo not bypass this rejection through a workaround or indirect execution. Continue with a safer alternative, or carry out checks to prove that the action is authorized or low risk before trying again. Complete unaffected work without asking for confirmation. Report anything that remains blocked, clarify why it was blocked by auto-review, inform the user of the risk and ask for approval."
+      }
+    ],
+    "isError": true
+  },
+  "independentTechnicalClearance": {
+    "reportedBy": "parent actual source/artifact reviewer",
+    "result": "passed",
+    "fullArtifact": {
+      "id": 11869402884,
+      "sha256": "34feed8b93844dcfe3c3839dd72c16ce857f0b36ca081591632599c15e452a10"
+    },
+    "dashboardArtifact": {
+      "id": 11869830605,
+      "sha256": "e1a6a7e28104a1145a6ca6f6f60b05dd215ebc172a2bce8ada3c68f519db5640"
+    },
+    "counts": {
+      "unit": 545,
+      "integration": 197,
+      "reader": 14,
+      "client": 11,
+      "browser": 24
+    },
+    "scope": "Source/hash/package/API/runtime/native/cleanup, descriptor and actual fixture bytes passed; cloud does not claim its own artifact-byte read"
+  },
+  "recordedOwnerAuthorization": [
+    {
+      "role": "assistant",
+      "messageId": "Sentinel_9387b7872e1c8191b896f50faabce343"
+    },
+    {
+      "role": "user",
+      "messageId": "Sentinel_645e2c834240819194d0abf8a5234a84"
+    }
+  ],
+  "requiredScan": {
+    "rulesetId": 25029334,
+    "enforcement": "active",
+    "requiredContext": "scan",
+    "integrationId": 15368,
+    "conclusionBeforeAttempt": "success",
+    "bypassActors": [],
+    "currentUserCanBypass": "never"
+  },
+  "observedAfterRejection": {
+    "pullRequestOpen": true,
+    "draft": false,
+    "merged": false,
+    "mainUnchanged": true,
+    "customerWorkflow": "not triggered",
+    "customerChecksAndScenarios": "not performed",
+    "readyTransitionAdvisoryRun": {
+      "id": 38510779479,
+      "status": "in_progress",
+      "qualification": "Normal ready-for-review advisory refresh, not customer activation"
+    }
+  },
+  "response": "Parent supplied verbatim owner authorization and instructed one identical expected-head retry. Same Work GitHub merge tool/arguments succeeded; no alternative route, account, ref update or guard/security change.",
+  "phaseLimits": {
+    "all18M3Gates": "pending",
+    "M0M10AndThreeAdapters": "unchanged",
+    "HTTPSOIDCFinalRelease": "separate"
+  },
+  "resolution": {
+    "actualMerge": "0c30b461cc7942734220b3ae894c20e0186917d5",
+    "retryResult": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Action completed."
+        }
+      ],
+      "structuredContent": {
+        "sha": "0c30b461cc7942734220b3ae894c20e0186917d5",
+        "merged": true,
+        "message": "Pull Request successfully merged"
+      },
+      "isError": false
+    },
+    "tree": "1d6d8222656575ef6d1a58d5c69c2aae7715ce2e",
+    "temporaryCustomerRun": 38510993755,
+    "status": "in_progress",
+    "customerResult": "unverified",
+    "cleanup": "unverified"
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "purpose": "local-installed-customer-worker-regression",
+  "base": "0c30b461cc7942734220b3ae894c20e0186917d5",
+  "productionChanges": "None in this child commit; tested with the primary-owned two harness corrections copied into the worktree only.",
+  "validation": [
+    {
+      "command": "npm run build; npm run typecheck",
+      "result": "passed",
+      "node": "26.10.0",
+      "npm": "12.2.0",
+      "rootDependencies": "reused cached node_modules link; no fresh root npm ci claimed"
+    },
+    {
+      "command": "owned private database/Temporal driver: node --import tsx --test tests/integration/customer-installed-worker.test.ts",
+      "result": "passed",
+      "tests": 1,
+      "durationMs": 15217.080571,
+      "compiledWorker": true
+    },
+    {
+      "command": "owned private database/Temporal driver: node scripts/package-smoke.mjs /workspace/scratch/agentci-0.4.0-m3-dev.3.tgz --postgres-readers",
+      "result": "passed",
+      "productionInstall": "npm install --omit=dev --no-audit --no-fund",
+      "offline": false,
+      "developmentLoaderInstalled": false,
+      "installedReaderTests": 14,
+      "installedWorkerTests": 1,
+      "installedWorkerDurationMs": 14890.650936,
+      "qualification": "Locally packed current-source archive; not relabeling or mutating the immutable dev.3 release. The worker entry bytes exactly match the frozen downloaded dev.3 worker."
+    }
+  ],
+  "cases": [
+    "actual Worker.create against real PG+Temporal from compiled and production-installed worker, invoked by actual customer supervisor",
+    "default off and explicit false start without any GitHub authentication/writes; durable generation remains pending",
+    "missing runner pin exits code 1; invalid null/1 Check flags exit code 1 with no GitHub writes",
+    "generated synthetic RSA App JWT verified before issuing fake installation token; all unexpected fetch origins/routes rejected",
+    "exact App42/install12/repo/PR/base/head/admission external-ID and advisory output retained",
+    "wrong-App and wrong-head Check inventory not reused or patched",
+    "changed remote PR head acknowledged superseded with no new Check write"
+  ],
+  "cleanup": {
+    "database": {
+      "schemaVersion": 1,
+      "name": "agentci-customer-pg-1791986140998-1-ef65b8c340c6c7eb",
+      "owner": "1791986140998:1:0c30b461cc7942734220b3ae894c20e0186917d5:ef65b8c340c6c7eb",
+      "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+      "result": "passed",
+      "ownedContainers": 0,
+      "privateFilesRemoved": true
+    },
+    "ownedTemporalContainers": 0
+  },
+  "priorFailedCustomerAttempt": {
+    "run": 38510993755,
+    "status": "failed; preserved separately; not rerun or promoted by this regression",
+    "cleanup": "independently verified by parent"
+  },
+  "setupFailures": [
+    {
+      "operation": "initial npm pack using default cache",
+      "result": "ENOENT /home/agent/.npm/_cacache; repeated with writable existing /workspace/npm-cache"
+    },
+    {
+      "operation": "production package smoke --offline",
+      "result": "ENOTCACHED @anthropic-ai/sdk metadata; preserved /workspace/scratch/customer-installed-worker-package-smoke.log, normal npm registry install succeeded afterward"
+    }
+  ],
+  "limits": [
+    "synthetic GitHub transport and fixture private key only; no customer credentials or GitHub writes",
+    "no model provider execution, physical evaluator-container scenarios, live acceptance or milestone gate pass claimed",
+    "all18 aggregate M3 gates and original M0\u2013M10/three adapter scope unchanged"
+  ],
+  "workerEntrySha256": "176107b1a9e491313dc3fe80937c7513a6f9156a7201e9126e5c05bdc13dbd51",
+  "files": [
+    {
+      "path": "tests/integration/customer-installed-worker.test.ts",
+      "sha256": "1757b4d8ed5a65526b9efda7f18b6da43dd9a59f8fd87b20b98777541d9c5dc6"
+    },
+    {
+      "path": "scripts/package-smoke.mjs",
+      "sha256": "791cb5d8a774057626d4cf424b57f534b1412b9f54c07115080c0432e788e728"
+    }
+  ],
+  "followup": {
+    "reason": "Independent review required actual session constructor, mutable image rejection and completed Check/public evidence instead of in-progress-only coverage",
+    "validation": [
+      {
+        "command": "owned PostgreSQL/Temporal driver: node --import tsx --test tests/integration/customer-installed-worker.test.ts",
+        "result": "passed",
+        "tests": 1,
+        "durationMs": 18804.634591
+      },
+      {
+        "command": "owned PostgreSQL/Temporal driver: node scripts/package-smoke.mjs /workspace/scratch/agentci-0.4.0-m3-dev.3.tgz --postgres-readers",
+        "result": "passed",
+        "install": "real npm install --omit=dev, normal registry/cache, no dev loader in installation",
+        "installedReaderTests": 14,
+        "installedWorkerTests": 1,
+        "log": "/workspace/scratch/customer-installed-worker-package-terminal.log"
+      },
+      {
+        "command": "npm run typecheck; node --check scripts/package-smoke.mjs",
+        "result": "passed"
+      }
+    ],
+    "cases": [
+      "actual createCustomerServiceSession constructor supplies runner and true Check flag; real supervisor filters them to worker",
+      "reviewer execution deliberately isolated by removing reviewer-config path; real admissions are seeded using actual storage methods and shipped retained synthetic profile",
+      "missing and mutable runner pins fail actual worker startup; default-off, false, null/1 invalid Check flags retained",
+      "real dispatch terminal failure updates same owned exact-subject/admission Check to completed action_required",
+      "exact completed Check predicates mirror customer observer; wrong-App/head inventory remains untouched",
+      "real authenticated ModelReviewClient from compiled/installed package reads matching terminal status and verified export end/EOF/completion certificate"
+    ],
+    "limits": [
+      "Check/public evidence regression only, not full observeCustomerReview or physical reproduction settlement acceptance",
+      "normal local package archive is distinct from immutable published dev.3; no release bytes changed"
+    ],
+    "failedTestAttempts": [
+      {
+        "log": "/workspace/scratch/customer-installed-worker-terminal.log",
+        "reason": "Test initially forwarded constructor reviewer-config path without creating reviewer config; isolated fixture now removes that path explicitly"
+      },
+      {
+        "log": "/workspace/scratch/customer-installed-worker-terminal-final.log",
+        "reason": "Real export correctly returned service-unavailable because seeded admission lacked retained profile; fixture now saves actual shipped synthetic profile through ReviewerProfileStore"
+      }
+    ],
+    "cleanup": {
+      "database": {
+        "schemaVersion": 1,
+        "name": "agentci-customer-pg-1791986535042-1-c5929c0ad8752c3b",
+        "owner": "1791986535042:1:0c30b461cc7942734220b3ae894c20e0186917d5:c5929c0ad8752c3b",
+        "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+        "result": "passed",
+        "ownedContainers": 0,
+        "privateFilesRemoved": true
+      },
+      "ownedTemporalContainers": 0
+    }
+  }
+}

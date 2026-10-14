@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "mode": "read-only-exact-package-scheduler-opt-in-reproduction",
+  "harnessSource": "0c30b461cc7942734220b3ae894c20e0186917d5",
+  "packageSource": "2b8eb75aadd604ebafe97ec06a3359734c4f20d2",
+  "supervisorDropsExplicitFlag": true,
+  "missingFlagReturnsNull": true,
+  "falseReturnsNull": true,
+  "nonBooleanTextRejected": true,
+  "storageCallsBeforeExplicitTrue": 0,
+  "explicitTrueReachesStorageReadiness": true,
+  "stubbedConnectCalls": 1,
+  "githubCalls": 0,
+  "actualDatabaseCalls": 0,
+  "credentialsRead": false,
+  "checkWrites": 0,
+  "moduleSha256": "004ffeca9ce0f0687100aea96d9bddead80ff7b33f922ac2f2f8a59181064aa5",
+  "initialProbe": "Initial query-only stub lacked connect; no positive readiness claim. Corrected connect stub stops before real DB access.",
+  "qualification": "Control-flow reproduction only. Explicit true enters outbox readiness and is deliberately stopped by a stub; no installed-worker Check publication or scenario acceptance established."
+}

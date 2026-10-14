@@ -2,8 +2,9 @@ import {spawn} from 'node:child_process';
 import {once} from 'node:events';
 import {resolve,join} from 'node:path';
 const controllerKeys=['PATH','HOME','DATABASE_URL','TEMPORAL_ADDRESS','TEMPORAL_NAMESPACE','AGENTCI_REPOSITORY','AGENTCI_ORGANIZATION_ID','AGENTCI_PUBLIC_URL','GITHUB_APP_ID','GITHUB_INSTALLATION_ID','GITHUB_PRIVATE_KEY_FILE','GITHUB_WEBHOOK_SECRET','AGENTCI_EVIDENCE_TOKEN','AGENTCI_OPERATOR_TOKEN','AGENTCI_CURSOR_KEY','AGENTCI_PORT','AGENTCI_REVIEWER_CONFIG_FILE','AGENTCI_REPRODUCTION_CATALOG_FILE','AGENTCI_REPRODUCTION_CATALOG_DIGEST','AGENTCI_REPRODUCTION_CONFIG_REVISION','AGENTCI_REPRODUCTION_CONFIG_DIGEST'];
+const workerKeys=[...controllerKeys,'AGENTCI_EVAL_RUNNER_IMAGE','AGENTCI_MODEL_REVIEW_CHECKS'];
 const evaluatorKeys=['PATH','HOME','AGENTCI_REPOSITORY','AGENTCI_ORGANIZATION_ID','AGENTCI_EVAL_DATABASE_URL','PGUSER','PGPASSWORD','TEMPORAL_ADDRESS','TEMPORAL_NAMESPACE','AGENTCI_CONTAINER_ENGINE','AGENTCI_EVAL_RUNNER_IMAGE','AGENTCI_EVAL_ENGINES_IMAGE','AGENTCI_EVAL_PROVIDERS_FILE','DOCKER_HOST','CONTAINER_HOST'];
-export function customerRuntimeEnvironment(kind,values){if(!['api','worker','evaluator','operator'].includes(kind))throw Error('Unknown owned runtime role');const allowed=kind==='evaluator'?evaluatorKeys:controllerKeys;return Object.fromEntries(allowed.filter(key=>values[key]!==undefined).map(key=>[key,values[key]]));}
+export function customerRuntimeEnvironment(kind,values){if(!['api','worker','evaluator','operator'].includes(kind))throw Error('Unknown owned runtime role');const allowed=kind==='evaluator'?evaluatorKeys:kind==='worker'?workerKeys:controllerKeys;return Object.fromEntries(allowed.filter(key=>values[key]!==undefined).map(key=>[key,values[key]]));}
 /** Supervisor owns only processes it spawned. It never forwards child output into artifacts. */
 export class CustomerRuntimeProcesses{
  constructor(root,node=process.execPath){this.root=resolve(root);this.node=node;this.children=new Map();this.events=[];}

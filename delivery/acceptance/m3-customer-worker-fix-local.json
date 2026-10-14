@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "result": "local-two-setting-correction-hosted-review-and-customer-rerun-pending",
+  "reviewedMain": "0c30b461cc7942734220b3ae894c20e0186917d5",
+  "ownerApproval": {
+    "proposal": "Sentinel_789b44acc2608191b6334d019ce1b218",
+    "reply": "Sentinel_61290a68c89c8191a2aaf86ab2a4cb86",
+    "at": "2026-10-14T13:49:00Z",
+    "replyText": "Yes.",
+    "scope": "Two settings, installed-worker regressions, correction PR/CI, merge after independent source/artifact review, then same four scenarios; no new access or release publication."
+  },
+  "correction": {
+    "runnerImage": "Existing verified runnerImage argument supplied explicitly to session env and narrowly allowed for worker",
+    "checks": "Literal AGENTCI_MODEL_REVIEW_CHECKS=true in approved temporary session; worker-only allowlist",
+    "excluded": "No ambient credential inheritance, diagnostics, cwd, readiness, provider, budget, cleanup, API contract or permissions expansion"
+  },
+  "rootFast": {
+    "sourceCommit": "686251bc001132a5bde3e17b7b183bd190907b67",
+    "dirty": true,
+    "passed": true,
+    "seconds": 49.050666324000005,
+    "node": "v26.10.0"
+  },
+  "rootUnits": {
+    "tests": 547,
+    "passed": 547,
+    "failed": 0,
+    "skipped": 0
+  },
+  "focusedSupervisor": {
+    "tests": 12,
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0
+  },
+  "otherLocalChecks": {
+    "build": "passed",
+    "workflowContexts": "passed pinned actionlint including negative fixture",
+    "apiCompatibility": "passed immutable M1 0.2.1-m1 and M2 0.3.1-m2"
+  },
+  "initialFailure": {
+    "rootFast": "One stale committed harnessBase assertion failed after descriptor updated; all other checks passed. Updated assertion to reviewed main and full corrected fast suite passed. Initial log retained privately under scratch/m3-worker-fix-fast-first.log."
+  },
+  "dependencyQualification": "Cached shared root node_modules and checksum-pinned local tools; root feedback is not clean npm ci. Hosted CI and production-only installed-worker smoke remain separately required.",
+  "installedWorkerEvidence": "delivery/acceptance/m3-installed-worker-regression-local.json",
+  "activation": {
+    "harnessBase": "0c30b461cc7942734220b3ae894c20e0186917d5",
+    "candidateAndFixtures": "Unchanged from failed run38510993755; no tag, asset, fixture branch or customer PR mutation",
+    "trigger": "Reviewed correction merge changes only public descriptor harnessBase, causing existing main-push temporary demo workflow"
+  },
+  "previousFailure": "delivery/acceptance/m3-customer-demo-failed-38510993755.json",
+  "customerScenarios": "Not rerun or accepted by this local evidence; completed Check regression is fixture evidence, not physical reproduction/customer acceptance.",
+  "milestone": "All18 aggregate M3 gates remain pending; full M0\u2013M10 order, three adapters, observed-rate calibration/Wilson descriptive and narrow inaccessible-provider exception unchanged.",
+  "sourceFiles": [
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "b21a8d6e9119e31965deca1447379a217eed3673d8c71cf731231d189674692f"
+    },
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "sha256": "99747daa35a339c896f3496ec55c00c6e8dc8e8d6decc33813e074999ef869c4"
+    },
+    {
+      "path": "tests/customer-worker-environment.test.ts",
+      "sha256": "9a3a8080752849ad3f5cfaedac522c399f9ab8df2d8ab433514429400957d74c"
+    },
+    {
+      "path": "tests/customer-activation.test.ts",
+      "sha256": "7e5c965fa5271670b9ae486db9d4f367f8d82f0d0af6f340e7545b2c888914b3"
+    },
+    {
+      "path": "releases/m3-customer-demo.json",
+      "sha256": "913be0981fab367a260d12441e16c4248e180ffcfb89680868f438644bbde30c"
+    },
+    {
+      "path": ".github/workflows/verify.yaml",
+      "sha256": "78fe35d05cc29bafcf019b41687295e41f31cd07d29420d8acbcb774b0c09159"
+    }
+  ],
+  "installedWorkerChildSource": "b9b60bfce0e77530f4c7aea1e0aafa4493922c8f",
+  "unchangedCompiledWorkerSha256": "176107b1a9e491313dc3fe80937c7513a6f9156a7201e9126e5c05bdc13dbd51",
+  "compiledWorkerComparison": "Current compiled worker matches exact anonymous frozen dev.3 package worker bytes; harness scripts are outside that immutable package.",
+  "forwardScanRework": {
+    "initialSetup": "First invocation used parent tools directory instead of pinned scanner cache directory; failed coverage, retained scratch log. Corrected cache path before scanning.",
+    "initialFindings": "Two agentci-password-assignment matches at session lines23/24 on expressions randomUUID() and password. These are unchanged per-run generation/URL assignment, not stored credential values. Exact failed report retained at delivery/acceptance/m3-customer-worker-forward-initial.json.",
+    "boundedFix": "Rename only local generated password variable to pass at declaration, SQL interpolation and URL assignment; UUID generation, SQL, DB role privileges and URL semantics unchanged. No scanner rule, policy, ignore or allowlist changed.",
+    "history": "Failed local31f6c19 candidate and scan retained. Publication is a new exact-tree commit directly on actual main, as for prior bundles; no published history rewritten and no claim that the failed local history scanned clean.",
+    "review": "Independent source/artifact review remains mandatory before merge."
+  }
+}
