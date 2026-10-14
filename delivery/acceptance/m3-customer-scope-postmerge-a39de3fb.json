@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "result": "scope-only-hosted-run-and-postmerge-ci-independently-audited-passed",
+  "actualMerge": "a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a",
+  "tree": "b20539d1c943ab59a508a0fee524243ac22e079b",
+  "parents": [
+    "2652ee15b3214a3cc246cbf69f6ca01f8319a36c",
+    "bedb5a4e5d736db74c643f731fb6b8731a3cf57e"
+  ],
+  "approvedHead": "bedb5a4e5d736db74c643f731fb6b8731a3cf57e",
+  "reviewedTestMerge": "8f331a2fc46313ac02bc0468b4364026ae95e081",
+  "expectedRepository": "alimobrem/agentci-onboarding-demo",
+  "observedPublicLogResult": {
+    "schemaVersion": 1,
+    "result": "installation-scope-passed",
+    "repository": "***/***-***",
+    "appId": 5182307,
+    "installationId": 167710386,
+    "serviceSource": "a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a",
+    "permissions": {
+      "contents": "read",
+      "pull_requests": "read",
+      "metadata": "read",
+      "checks": "write"
+    },
+    "fixtureHeads": "not-yet-validated",
+    "liveScenarioExecution": "unverified"
+  },
+  "repositoryQualification": "Cloud log repository field remains masked and local artifact download unavailable. Parent independently audited actual scope and postmerge artifacts and reported pass for the bound expected repository/App/install/minimal permissions.",
+  "scopeWorkflow": {
+    "runId": 38490343015,
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "artifactId": 11861024489,
+    "artifactZipSha256": "5af2491e38a82e971ac6bec37ddac5bad6de8d3d4574417608a7f90af0ecfbac",
+    "artifactBytes": "unverified-cloud-sanctioned-file-reference-unavailable",
+    "independentArtifactAudit": "passed-parent-actual-scope-and-postmerge-audit"
+  },
+  "authorization": [
+    {
+      "role": "assistant",
+      "messageId": "Sentinel_8621364e0b2c8191a71c6511990f545b"
+    },
+    {
+      "role": "user",
+      "messageId": "Sentinel_a72005c9588c8191b21d7c047eff7bff"
+    }
+  ],
+  "mergeAttempt": {
+    "result": "success",
+    "method": "merge",
+    "expectedHead": "bedb5a4e5d736db74c643f731fb6b8731a3cf57e",
+    "route": "Work GitHub connector",
+    "bypass": false
+  },
+  "requiredScan": {
+    "rulesetId": 25029334,
+    "enforcement": "active",
+    "branch": "refs/heads/main",
+    "context": "scan",
+    "integrationId": 15368,
+    "bypassActors": [],
+    "currentUserCanBypass": "never",
+    "premergeScanRunId": 38463826251,
+    "conclusion": "success"
+  },
+  "independentPremergeAudit": {
+    "artifactId": 11848896453,
+    "zipSha256": "262faee2880a2cb3bac6fb5cf830f0a0561aa2d37af1454ba2e663b3aa3b9460",
+    "reportedBy": "parent independent reviewer",
+    "result": "passed",
+    "unit": 544,
+    "integration": 197,
+    "reader": 14,
+    "client": 11
+  },
+  "scopeLimits": {
+    "appSlug": "unverified",
+    "fixtureHeads": "not-yet-validated",
+    "liveScenarioExecution": "unverified",
+    "customerMutations": "none",
+    "accessChanges": "none",
+    "providerValidation": "approved inaccessible-provider exception remains explicit",
+    "all18M3Gates": "pending",
+    "M0throughM10": "preserved"
+  },
+  "completedPostmergeRuns": [
+    {
+      "runId": 38490342967,
+      "attempt": 1,
+      "name": "Verify",
+      "head": "a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "runId": 38490342992,
+      "attempt": 1,
+      "name": "Forward secret protection",
+      "head": "a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "runId": 38490343015,
+      "attempt": 1,
+      "name": "Customer installation scope",
+      "head": "a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "runId": 38490342966,
+      "attempt": 1,
+      "name": "Dashboard Verify",
+      "head": "a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "runId": 38490342971,
+      "attempt": 1,
+      "name": "AgentCI advisory review",
+      "head": "a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "artifacts": [
+    {
+      "runId": 38490343015,
+      "id": 11861024489,
+      "name": "customer-installation-scope",
+      "digest": "sha256:5af2491e38a82e971ac6bec37ddac5bad6de8d3d4574417608a7f90af0ecfbac",
+      "size": 436,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342966,
+      "id": 11861094361,
+      "name": "dashboard-fixture-verification-38490342966-1",
+      "digest": "sha256:210b0e343b1e7770c611204f13470af7dae305e4a44d33c979939cd56a8eaef7",
+      "size": 404028,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342992,
+      "id": 11861810112,
+      "name": "forward-secret-metadata",
+      "digest": "sha256:a38d3fce23ba47c81ee05f35ff5f3bda98f628249f53b41eab3688bdfa5051b4",
+      "size": 728,
+      "expiresAt": "2026-10-28T00:28:21Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342971,
+      "id": 11861722115,
+      "name": "alimobrem~agentci~QWYEH5.dockerbuild",
+      "digest": "sha256:0b35ebdc10be7eed9105fdff260ce731636e8ffd469a53abdb067735dec2e0ef",
+      "size": 44775,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342971,
+      "id": 11861672253,
+      "name": "agentci-evidence-38490342971-1",
+      "digest": "sha256:69c84f35820646da2c0e1ffc844dfa7a5031045b58ed5747a4b9ca8cdc921f04",
+      "size": 41632,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342971,
+      "id": 11861652392,
+      "name": "alimobrem~agentci~4B0EA9.dockerbuild",
+      "digest": "sha256:338476f326ce2950014b3c6c2f8e7913da92c7139f89a3ec7de52c2ae0d4b82a",
+      "size": 44733,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342971,
+      "id": 11861587548,
+      "name": "advisory-ci-database-cleanup",
+      "digest": "sha256:184bf14a1725997c89626e0fcc3f1dd5f33f8dd5929f4fa6f36c8834e9240a52",
+      "size": 409,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342967,
+      "id": 11862325590,
+      "name": "alimobrem~agentci~DKT8SI.dockerbuild",
+      "digest": "sha256:669b4c5b5169da12d0d51964bf9ca2afd91aa44e10f6b97c480d94102ba52c80",
+      "size": 39603,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342967,
+      "id": 11862225833,
+      "name": "alimobrem~agentci~T7SMQJ.dockerbuild",
+      "digest": "sha256:39cea186586e25d7f4b3e27887bcd6fcbf512e76e3ecf9e6aff803d972e8f714",
+      "size": 39578,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342967,
+      "id": 11862205858,
+      "name": "alimobrem~agentci~017MRB.dockerbuild",
+      "digest": "sha256:7d3745c0e033cab24db70cb2764cf2b7dbf5d723bf860caa60add44a10bb4de3",
+      "size": 44021,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342967,
+      "id": 11862180897,
+      "name": "alimobrem~agentci~CEB6VH.dockerbuild",
+      "digest": "sha256:c20c5acabbded18fa5de43ec7e53ce4bc1ddcecb3db7dafea48b3b015e30362c",
+      "size": 35133,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342967,
+      "id": 11862180879,
+      "name": "alimobrem~agentci~EEXP1K.dockerbuild",
+      "digest": "sha256:3c9bfa2cd31d9ffccbfa9c52079016a183e8c48a98c3a4ca13de85e932fe73b0",
+      "size": 33476,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342967,
+      "id": 11861981105,
+      "name": "alimobrem~agentci~I40TEG.dockerbuild",
+      "digest": "sha256:05c804928d238f9e7b44b53d73a6d36f3cc57617163a6077292b299dc2f5aa46",
+      "size": 38389,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342967,
+      "id": 11861976146,
+      "name": "m1-verification",
+      "digest": "sha256:2478439f5a8890354ff9c7b6d7aa7b463d29491aa5352cfe3a0ea97c2006b9f1",
+      "size": 1594364,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    },
+    {
+      "runId": 38490342967,
+      "id": 11860679939,
+      "name": "fast-feedback",
+      "digest": "sha256:6f32d71482d254cc6257efdb609cb0addb53eda10a183e3752e37b0a27bd9e3f",
+      "size": 21502,
+      "expiresAt": "2027-01-12T00:28:09Z",
+      "actualBytesVerifiedInCloud": false
+    }
+  ],
+  "remaining": [
+    "App slug remains unverified by existing numeric identity guard",
+    "Fixture heads and four live customer scenarios remain unverified",
+    "Externally reachable customer endpoint/reliable every-PR and authenticated UI acceptance",
+    "Final milestone release/downloads/demo/closure; all18M3gates pending"
+  ],
+  "parentAuditConfirmation": {
+    "sourceThread": "01a10eeb-def7-7746-9dca-d0699432f035",
+    "statement": "Independent PR97 actual scope and postmerge audit passed; record that, with slug/fixture/scenario limitations.",
+    "cloudByteVerification": "not claimed"
+  }
+}

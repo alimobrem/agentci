@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "result": "exact-trusted-fixture-bytes-published-live-scenarios-unverified",
+  "harnessBase": "a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a",
+  "repository": "alimobrem/agentci-onboarding-demo",
+  "publicationRoute": "Work GitHub connector",
+  "collisionCheck": "All three proposed branches absent before creation; create-ref only, no overwrite",
+  "demoMainBefore": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+  "existingPRsBefore": [
+    {
+      "number": 3,
+      "baseRef": "main",
+      "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+      "headRef": "demo/m2-released-0.3.1",
+      "headSha": "a8f76e71b46ac58dd12dbe86ebb5532ec89bdfd9",
+      "state": "open"
+    },
+    {
+      "number": 2,
+      "baseRef": "main",
+      "baseSha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+      "headRef": "demo/m2-behavior-regression",
+      "headSha": "6e0fe2c11d7cfd22d59893bc317098340badc3d4",
+      "state": "open"
+    },
+    {
+      "number": 1,
+      "baseRef": "main",
+      "baseSha": "694456b234ac4974b03b0e898d983fd582ec7f31",
+      "headRef": "demo/production-permission",
+      "headSha": "2178f602bf9259c070870e0083b6e22cd4e825b3",
+      "state": "open"
+    }
+  ],
+  "fixtures": {
+    "base": {
+      "sha": "04f11298c020e853fd0098fb5d92c7529630f300",
+      "tree": "db19b43e4570fc8c7a8a3d3593b3c15699dc419e",
+      "parent": "5b3e64451fbde278391fa2f4106f7ae649fde3e1",
+      "branch": "demo/m3-base"
+    },
+    "seeded": {
+      "sha": "62342e933e902b188b4b87dfa44575cf409ae7d4",
+      "tree": "8e4f96248b5eea318bc47a0a49e88570724551f1",
+      "parent": "04f11298c020e853fd0098fb5d92c7529630f300",
+      "branch": "demo/m3-seeded"
+    },
+    "fixed": {
+      "sha": "3c12571ec6f4578d19876ce27cf56c842c3abf97",
+      "tree": "78d99783b3d739ebe32b31fc53b705c68863aa47",
+      "parent": "04f11298c020e853fd0098fb5d92c7529630f300",
+      "branch": "demo/m3-fixed"
+    }
+  },
+  "subjects": [
+    {
+      "kind": "seeded",
+      "pullRequest": 4,
+      "baseSha": "04f11298c020e853fd0098fb5d92c7529630f300",
+      "headSha": "62342e933e902b188b4b87dfa44575cf409ae7d4"
+    },
+    {
+      "kind": "fixed",
+      "pullRequest": 5,
+      "baseSha": "04f11298c020e853fd0098fb5d92c7529630f300",
+      "headSha": "3c12571ec6f4578d19876ce27cf56c842c3abf97"
+    }
+  ],
+  "fixtureBytes": {
+    "base": {
+      "app.mjs": {
+        "content": "export function allowed(ns){return ns==='safe';}",
+        "sha": "dc91ef0aebf20c2ce12e994fd9c67a0dfc729791",
+        "sha256": "98625299679acdfd0bfa740dd4229408176851a58d3ae17b41650f19a85703cf"
+      },
+      "repro.mjs": {
+        "content": "import{writeFileSync}from'node:fs';import{allowed}from'./app.mjs';if(process.argv.includes('--recovery-pause'))await new Promise(r=>setTimeout(r,10000));writeFileSync('repro.json',JSON.stringify({schemaVersion:'v1alpha1',results:[{scenario:'namespace-bypass',status:allowed('other')?'passed':'failed'}]}));process.exitCode=allowed('other')?0:1;",
+        "sha": "0eec3fabc13120ec0211076fab13df179c8b353d",
+        "sha256": "b78aa559995c16a77a4f6cf57798a469fe93bbe13d28e36a59a50d5be1cddc22"
+      }
+    },
+    "seeded": {
+      "app.mjs": {
+        "content": "export function allowed(ns){return true;}",
+        "sha": "ad070b6349ebdcd58325df9110aa475d17a2c779",
+        "sha256": "e010847838be98c8bda2c3876a2cc38d9d693711f3352b528968b5ccb56d1937"
+      },
+      "repro.mjs": {
+        "content": "process.exit(0);",
+        "sha": "c73ce926cd25e4d29e6003e08faadc91b2d395fc",
+        "sha256": "17323d72475e41c4f9343f336328489038724e5bfc1c7e80326a67bf26977956"
+      }
+    },
+    "fixed": {
+      "app.mjs": {
+        "content": "export function allowed(ns){return ns==='safe';}",
+        "sha": "dc91ef0aebf20c2ce12e994fd9c67a0dfc729791",
+        "sha256": "98625299679acdfd0bfa740dd4229408176851a58d3ae17b41650f19a85703cf"
+      },
+      "repro.mjs": {
+        "content": "process.exit(0);",
+        "sha": "c73ce926cd25e4d29e6003e08faadc91b2d395fc",
+        "sha256": "17323d72475e41c4f9343f336328489038724e5bfc1c7e80326a67bf26977956"
+      }
+    }
+  },
+  "authority": [
+    {
+      "role": "assistant",
+      "messageId": "Sentinel_9387b7872e1c8191b896f50faabce343"
+    },
+    {
+      "role": "user",
+      "messageId": "Sentinel_645e2c834240819194d0abf8a5234a84"
+    }
+  ],
+  "scope": "Three new fixture branches and two draft PRs only. No demo main or existing PR mutation, new credentials/access/paid services/persistent hosting. Scoped Checks and temporary scenario services are approved only through reviewed activation.",
+  "limitations": {
+    "scopePreflight": "Independently audited passed for numeric App/install/minimal selected-repository scope",
+    "appSlug": "unverified",
+    "actualScenarioExecution": "unverified",
+    "HTTPSAndOIDC": "separate",
+    "M3Release": "not complete",
+    "threeAdapters": "required",
+    "providerException": "Only inaccessible external provider validation may remain explicitly deferred/unverified after all other applicable gates pass",
+    "calibration": "observed rate chosen; Wilson descriptive"
+  },
+  "preservationRecheck": {
+    "existingPRs": "All original PR base/head/state values unchanged",
+    "existingBranches": "All four original branch refs unchanged",
+    "newBranches": [
+      {
+        "name": "demo/m3-base",
+        "sha": "04f11298c020e853fd0098fb5d92c7529630f300"
+      },
+      {
+        "name": "demo/m3-fixed",
+        "sha": "3c12571ec6f4578d19876ce27cf56c842c3abf97"
+      },
+      {
+        "name": "demo/m3-seeded",
+        "sha": "62342e933e902b188b4b87dfa44575cf409ae7d4"
+      }
+    ]
+  }
+}
