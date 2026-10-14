@@ -3518,14 +3518,16 @@
         "SPEC-40-050",
         "SPEC-40-051"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-14T03:56:33.100Z",
-      "completedAt": null,
+      "completedAt": "2026-10-14T04:02:06.171Z",
       "acceptance": [
         {
           "text": "Port only preserved history/export UI and local dashboard packaging/license qualification onto a39de3fb; validate retained-read privacy/navigation tests, packaging regressions, typecheck and production build. Keep live OIDC, actual UBI/native/image scan and unresolved notice/declaration items explicitly unverified; no aggregate gate closure.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dashboard-current-local-3335901.json"
+          ]
         }
       ]
     },
@@ -3536,14 +3538,16 @@
         "SPEC-40-050",
         "SPEC-40-051"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-14T03:59:09.288Z",
-      "completedAt": null,
+      "completedAt": "2026-10-14T04:02:07.263Z",
       "acceptance": [
         {
           "text": "Plain production standalone exposes redacted no-store process liveness and rejects readiness when setup/config/admissions are invalid; configured fixture readiness succeeds without backend mutations or secret/config disclosure. Probe makes no upstream availability or deployed readiness claim. Docker healthcheck uses readiness. Sessions and pending logins remain documented process-local.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dashboard-current-local-3335901.json"
+          ]
         }
       ]
     },
@@ -3563,14 +3567,16 @@
         "SPEC-33.1-011",
         "SPEC-33.1-012"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-14T04:00:29.264Z",
-      "completedAt": null,
+      "completedAt": "2026-10-14T04:02:08.359Z",
       "acceptance": [
         {
           "text": "Document all eleven initial PR view clauses with source contracts, current supported UI, explicit missing bindings/data and required acceptance; preserve unavailable states and report backend/config gaps before expansion. Mapping does not close implementation or milestone requirements.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "docs/phases/m3-dashboard-pr-view-contract-map.md"
+          ]
         }
       ]
     }
