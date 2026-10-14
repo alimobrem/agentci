@@ -1,6 +1,6 @@
 import {readFile,readdir,writeFile} from 'node:fs/promises';import {join} from 'node:path';import {pathToFileURL} from 'node:url';import {randomUUID} from 'node:crypto';import {hostname} from 'node:os';import {setTimeout as delay} from 'node:timers/promises';import {execFile} from 'node:child_process';import {promisify} from 'node:util';import {Pool} from 'pg';import {Client,Connection,WorkflowNotFoundError} from '@temporalio/client';
 import {ownedCustomerReservation,reserveOwnedCustomerIntent,reconcileCustomerReservation} from './customer-owned-reservations.mjs';import {CustomerRuntimeProcesses,customerCleanupPhases,customerCleanupItems} from './customer-runtime-processes.mjs';import {compileCustomerApproval,customerAuthorityDocuments} from './customer-approved-catalog.mjs';import {CustomerEvaluatorContainer,validateCustomerRunnerInspection,customerContainerInspectionFormat,parseCustomerInspection} from './customer-evaluator-container.mjs';import {observeCustomerReview} from './customer-live-observations.mjs';
-import {customerAbort,customerDiagnostics,customerDiagnosticFacts} from './customer-diagnostics.mjs';
+import {customerAbort,customerDiagnostics,customerDiagnosticFacts,customerDiagnosticError} from './customer-diagnostics.mjs';
 import {customerRecoveryOwner} from './customer-recovery-owner.mjs';
 import {verifyCustomerCancelledUnitAbsence} from './customer-physical-evidence.mjs';
 const execute=promisify(execFile);
@@ -24,9 +24,9 @@ export async function createCustomerServiceSession({root,privateRoot,keyPath,git
  const journal=customerDiagnostics(()=>customerDiagnosticFacts(runtime,evaluator),diagnosticIdentity);
  const recovery=customerRecoveryOwner({pool,runtime,evaluator,connection:()=>connection,journal});
  const assertActive=signal=>{customerAbort(signal);if(recovery.quiesced)throw Error('Customer recovery requires external reconciliation');};
- const note=async(phase,outcome,status,signal)=>{journal.record(phase,outcome,status);if(!signal?.aborted)await recovery.diagnostic(options=>session.onDiagnostic?.(options));};
+ const note=async(phase,outcome,status,signal,error)=>{journal.record(phase,outcome,status,customerDiagnosticError(error),phase==='reservation'&&outcome!=='started'?reservations.at(-1)?.request.operationId:undefined);if(!signal?.aborted)await recovery.diagnostic(options=>session.onDiagnostic?.(options));};
  const ensureApi=async(signal)=>{assertActive(signal);await runtime.ensure('api',env,{signal});await waitCustomerObservation(()=>client.profiles({signal}),value=>Array.isArray(value.profiles),{signal,timeoutMs:30000,guard:()=>{assertActive(signal);if(!runtime.isAlive('api'))throw Error('Owned API exited');}});};
- const session={scope,client,env,runtime,evaluator,approved,production,reservations,diagnosticsSnapshot:()=>journal.snapshot(),
+ const session={scope,namespace,client,env,runtime,evaluator,approved,production,reservations,diagnosticsSnapshot:()=>journal.snapshot(),
   async initialize(){
    for(const file of (await readdir(join(root,'deploy/migrations'))).filter(name=>name.endsWith('.sql')).sort())await pool.query(await readFile(join(root,'deploy/migrations',file),'utf8'));
    const config=JSON.parse(await readFile(join(root,'deploy/reviewers.synthetic.example.json'),'utf8'));config.profiles[0].id='synthetic-customer';config.profiles[0].selection=[{kind:'source',side:'head',path:'app.mjs'}];config.providers[0].scenario='proposed-defect';await writeFile(env.AGENTCI_REVIEWER_CONFIG_FILE,JSON.stringify(config),{mode:0o600});
@@ -116,6 +116,6 @@ export async function createCustomerServiceSession({root,privateRoot,keyPath,git
  session.quiesce=options=>closed?Promise.resolve():recovery.quiesce(options);
  session.forceQuiesce=()=>recovery.force();
  const phases={initialize:'initialize',review:'review',unsupported:'unsupported',approve:'approval',reserve:'reservation',startConsumer:'consumer',settled:'settlement',physical:'physical',active:'active',killAndRecover:'recovery',verifyCheckpoint:'recovery',observe:'observation',reconcileIntent:'reconciliation'};
- for(const [name,phase] of Object.entries(phases)){const method=session[name];session[name]=async(...args)=>{assertActive();await note(phase,'started');assertActive();try{const value=await method(...args);assertActive();await note(phase,'passed');return value;}catch(error){await note(phase,'failed');const failure=Error('Customer phase failed: '+phase);if(error?.customerRecoveryRequired)failure.customerRecoveryRequired=true;throw failure;}};}
+ for(const [name,phase] of Object.entries(phases)){const method=session[name];session[name]=async(...args)=>{assertActive();await note(phase,'started');assertActive();try{const value=await method(...args);assertActive();await note(phase,'passed');return value;}catch(error){await note(phase,'failed',undefined,undefined,error);const failure=Error('Customer phase failed: '+phase);if(error?.customerRecoveryRequired)failure.customerRecoveryRequired=true;throw failure;}};}
  return session;
 }

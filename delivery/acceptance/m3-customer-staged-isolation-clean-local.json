@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "baseSource": "9efcdedfe6f20667608fd80b1eccc141dc5df4a1",
+  "preservedOldPR": 104,
+  "preservedOldHead": "578710fae1dfab535a76e71fce913cf1032b7235",
+  "preservedCancelledRun": {
+    "id": 38652682207,
+    "cleanup": "unverified",
+    "artifactId": 11935208300,
+    "sha256": "799b89161fc50226933018b16fda5ba013ad0af3ec3e66d0e8f3fdb2fd91df37"
+  },
+  "activeRunUntouched": 38653505988,
+  "correction": {
+    "file": "tests/customer-isolated-database.test.ts",
+    "sha256": "e1a8fc8f3298357d3dd7b54981d10081f612e74c17a5ac9a45c6f4d355e92537",
+    "rule": "agentci-url-userinfo",
+    "construction": "Synthetic URL credentials constructed at runtime; secret-exclusion assertions retained.",
+    "knownPatternCheck": "passed under unchanged rule",
+    "fullPinnedScanner": "not run locally; Linux x64 only",
+    "history": "Fresh main-based commit of corrected net changes, with no old feature commits as parents; old branch and PR retained."
+  },
+  "local": {
+    "focused": 40,
+    "passed": 40,
+    "skipped": 0,
+    "correctedFixtureRepeated": 5,
+    "fast": {
+      "tests": 588,
+      "passed": 573,
+      "failed": 9,
+      "skipped": 6,
+      "otherStagesPassed": 9,
+      "qualification": "Previously reproduced Mac platform failures; no waiver."
+    },
+    "types": "passed",
+    "reconciliation": "passed"
+  },
+  "publicationPlan": {
+    "newBranch": "codex/customer-staged-isolation-clean",
+    "newPRBase": "main",
+    "preservePR104": true,
+    "cancelOrModifyOldRun": false,
+    "concurrency": "Verify and Dashboard groups include github.ref; separate PR ref avoids cancellation of PR104.",
+    "merge": "Only after new exact-head scanner/real-runtime CI and independent actual-artifact review."
+  },
+  "scannerRulesUnchanged": true,
+  "customerAcceptance": "pending",
+  "M3Acceptance": "pending"
+}

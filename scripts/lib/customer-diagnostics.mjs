@@ -4,6 +4,12 @@ const processStates=new Set(['absent','starting','running','exited','unverified'
 const evaluatorPhases=new Set(['not-started','creating','identifying','inspecting','starting','running','stopping','removed','unverified']);
 const commands=new Set(['create','ps','inspect','start','kill','rm']);
 const failures=new Set(['none','buffer-limit','deadline','not-found','command-failed','unverified']);
+const clientErrors=new Set(['invalid-request','unauthorized','forbidden','review-denied','reproduction-denied','not-found','method-not-allowed','idempotency-conflict','version-conflict','review-not-complete','invalid-transition','approval-conflict','body-too-large','response-too-large','unsupported-media-type','unsupported-content-encoding','service-unavailable','invalid-response','timeout','network-error','aborted']);
+export function customerDiagnosticError(error){
+ if(error===undefined)return undefined;
+ // Never copy message, body, cause, URL, headers or an arbitrary error object.
+ return {code:clientErrors.has(error?.code)?error.code:'unclassified',status:[400,401,403,404,405,409,413,415,503].includes(error?.status)?error.status:null};
+}
 const integer=(value,min,max)=>Number.isSafeInteger(value)&&value>=min&&value<=max?value:null;
 /** Projection is constructed field by field. No error, environment, path, output,
  * arbitrary label, or caller-supplied object can enter the retained journal. */
@@ -24,9 +30,11 @@ export function customerDiagnosticIdentity(value){
 export function customerDiagnostics(facts,identity){
  const binding=customerDiagnosticIdentity(identity);
  const events=[];let sequence=0,dropped=0;
- return {record(phase,outcome,status){
+ return {record(phase,outcome,status,error,operationId){
   if(!phases.has(phase)||!outcomes.has(outcome))throw Error('Invalid customer diagnostic classification');
   const event={sequence:++sequence,phase,outcome,...facts()};
+  if(error!==undefined)event.error=customerDiagnosticError(error);
+  if(typeof operationId==='string'&&/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(operationId))event.operationId=operationId;
   if(status){event.status={dispatch:['queued','bound','dispatched','settled','unavailable'].includes(status.dispatch)?status.dispatch:'unavailable',cancelRequested:status.cancelRequested===true,settlement:['receipt-retained','never-staged','superseded'].includes(status.settlement)?status.settlement:null};}
   if(events.length===256){events.shift();dropped++;}events.push(event);
  },snapshot(){return {schemaVersion:1,identity:structuredClone(binding),events:structuredClone(events),dropped};}};
