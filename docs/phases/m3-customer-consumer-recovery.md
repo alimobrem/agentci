@@ -154,3 +154,38 @@ Original PR head `09848b0` passed all four hosted CI runs. Those attempts remain
 retained, and do not clear these independent review blockers. The changed head
 requires its own full CI and parent independent source and actual-artifact review
 before merge. Customer retry and release authorization remain separate.
+
+## Hosted staged-cancellation rework
+
+Verify `38607627341` attempt 1 at `6ce846de9d8437c7d98336d44e78c4ad3b2fd9c1`
+failed its mandatory integration gate: 205 of 206 tests passed. The staged race
+reached genuine `receipt-retained` settlement before physical-proof capture
+failed. Installed package and later runtime/native/image checks were skipped;
+artifact `11917057349` is partial, not full acceptance. The failed attempt remains
+in `delivery/runs/38607627341-attempt-1.json`. Its swallowed underlying exception
+cannot be reconstructed from that log.
+
+A deterministic real PostgreSQL/Temporal reproduction holds the actual staging
+activity after its SQL commit and before its return, requests public cancellation,
+then releases that timing barrier. No unit, result or receipt is fabricated. The
+old harness fails with the same observation pattern; bounded diagnostics show
+the exact unit workflow is absent while exact cleanup is completed. A staged
+row alone did not establish child scheduling. This proves the local boundary
+defect and supports, but does not prove, the hosted failure's underlying predicate.
+
+The harness now treats this as `NOT_STARTED` with a null child run only after
+exact Temporal NotFound, a cancelled retained unit with zero trials, authenticated
+cancellation/receipt settlement, and the exact closed parent run's complete
+history proving that child was never scheduled. Exact completed cleanup with
+matching task queue/memo/result and actual zero-container inventory remain
+mandatory. A missing child in a completed-parent execution, a scheduled child,
+an unavailable history, wrong identity or nonzero trials still fails closed.
+Existing child workflows must retain their actual run and terminal state.
+Regressions explicitly cover cancellation both before and after child scheduling;
+the cancellation and shutdown budgets are unchanged. No physical assertion
+execution is claimed for either zero-trial case.
+
+This follow-up changes only harness evidence and tests. The previously proposed
+dispatcher source correction and distinct-candidate publication remain held for
+separate scope authorization. Existing release identities, activation descriptors,
+permissions and four customer scenario obligations are unchanged.

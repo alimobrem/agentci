@@ -3218,6 +3218,28 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-07d-2-ci-staged-recovery",
+          "status": "in-progress",
+          "startedAt": "2026-10-14T17:53:57.670Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Preserve failed Verify38607627341 attempt1 and diagnose exact staged terminal cleanup failure using actual retained workflow and owned-resource evidence; retain original-cause uncertainty.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-staged-pre-child-hosted-rework.json"
+              ]
+            },
+            {
+              "text": "Harness/test-only repair passes targeted real PostgreSQL/Temporal and installed regression without weakening resource/identity proofs or enlarging deadlines; changed-head hosted CI and independent review remain required.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -3580,6 +3602,12 @@
         {
           "path": "delivery/acceptance/m3-customer-terminal-lifetime-regression-0dddc59.json",
           "sha256": "8994fb308e8e3c6766216e61ab351c934e40d891bc98e8dc6691b55ca5ae9be4",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-staged-pre-child-hosted-rework.json",
+          "sha256": "ae4b79008c1de722d59c40ae6311073e2442f546324d3c9487d9b718a3331076",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
