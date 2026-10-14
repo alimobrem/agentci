@@ -263,3 +263,6 @@ main>section a{display:inline-block;color:var(--cyan);margin-top:16px}
 .queue-panel{margin-bottom:16px}
 .finding-top{margin-bottom:16px}
 }
+
+/* Hidden verification caches must never be exposed by layout styles. */
+[data-session-content][hidden]{display:none!important}

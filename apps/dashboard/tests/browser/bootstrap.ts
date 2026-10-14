@@ -15,12 +15,16 @@ const sessions=new Sessions(1800000,()=>Date.now()+(expired?1800001:0));
 const samePrincipal=(subject:string)=>({issuer:'https://id.fixture.example',subject,organizationId:admission.subject.organizationId,repositories:[admission.subject.repository]});
 const alice=sessions.create(samePrincipal('alice')),charlie=sessions.create(samePrincipal('charlie')),dana=sessions.create(samePrincipal('dana')),sameAccount=sessions.create(samePrincipal('alice')),erin=sessions.create(samePrincipal('erin'));
 const historyUser=sessions.create(samePrincipal('history')),exportUser=sessions.create(samePrincipal('export')),logoutUser=sessions.create(samePrincipal('logout')),historyLogout=sessions.create(samePrincipal('history-logout'));
+const revalidationUser=sessions.create(samePrincipal('revalidation'));
 const bob=sessions.create({issuer:'https://id.fixture.example',subject:'bob',organizationId:'00000000-0000-4000-8000-000000000099',repositories:['other/repo']});
 const backend=createServer((request,response)=>{
  const send=(value:unknown)=>response.end(JSON.stringify(value));
  if(request.url==='/fixture'){response.setHeader('content-type','application/json');send({state,reads,mutations,pending:held.length,findingReads,activeFindingReads,abortedFindingReads,activeRetainedReads,abortedRetainedReads,historyReads,exportReads});return;}
  if(request.url?.startsWith('/fixture/state/')){state=request.url.split('/').pop()!;response.end();return;}
  if(request.url==='/fixture/release'||request.url==='/fixture/revoke-inflight'){if(request.url.endsWith('revoke-inflight'))sessions.revoke(charlie.id);for(const item of held.splice(0))item.response.end(item.raw?'':JSON.stringify(item.value));state='queued';response.end();return;}
+ if(request.url==='/fixture/change-admission'){(globalThis as any).agentciDashboardRuntime.reviews[admission.id].admission={...structuredClone(admission),subject:{...admission.subject,headSha:'d'.repeat(40)}};response.end();return;}
+ if(request.url==='/fixture/restore-admission'){(globalThis as any).agentciDashboardRuntime.reviews[admission.id].admission=admission;response.end();return;}
+ if(request.url==='/fixture/revoke-revalidation'){sessions.revoke(revalidationUser.id);response.end();return;}
  if(request.url==='/fixture/revoke-export'){sessions.revoke(exportUser.id);response.end();return;}
  if(request.url==='/fixture/revoke-history'){sessions.revoke(historyUser.id);response.end();return;}
  if(request.url==='/fixture/expire-logout'){sessions.revoke(logoutUser.id);response.end();return;}
@@ -65,4 +69,4 @@ const backend=createServer((request,response)=>{
  send(value);
 });backend.listen(0,'127.0.0.1');await once(backend,'listening');const backendOrigin=`http://127.0.0.1:${(backend.address() as {port:number}).port}`;
 (globalThis as any).agentciDashboardRuntime={origin:process.env.UI_FIXTURE_ORIGIN,sessions,login:{begin(){throw Error('test-only-login-unavailable');},finish(){throw Error('test-only-login-unavailable');}},reviews:{[admission.id]:{admission,apiOrigin:backendOrigin,readToken:token},[second.id]:{admission:second,apiOrigin:backendOrigin,readToken:token}}};
-await writeFile(process.env.UI_FIXTURE_HANDSHAKE!,JSON.stringify({alice,bob,charlie,dana,sameAccount,erin,historyUser,exportUser,logoutUser,historyLogout,protocolFinding:protocol.first.event.finding.id,retained:retained.records.map(r=>({id:r.event.finding.id,digest:r.digest})),reviewId:admission.id,secondReviewId:second.id,backendOrigin}),{mode:0o600});
+await writeFile(process.env.UI_FIXTURE_HANDSHAKE!,JSON.stringify({alice,bob,charlie,dana,sameAccount,erin,revalidationUser,historyUser,exportUser,logoutUser,historyLogout,protocolFinding:protocol.first.event.finding.id,retained:retained.records.map(r=>({id:r.event.finding.id,digest:r.digest})),reviewId:admission.id,secondReviewId:second.id,backendOrigin}),{mode:0o600});
