@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "purpose": "real-installed-staged-terminal-read-regression",
+  "base": "addf1f88624298b9c445df63e60be3fa88742c6e",
+  "state": "blocked before staged cancellation; no acceptance claimed",
+  "observations": {
+    "realSessionInitializeReviewApproveReserve": "passed",
+    "scopedWorkerReadiness": "passed",
+    "retainedOperations": 1,
+    "dispatchIntents": 1,
+    "dispatchStates": 1,
+    "dispatchLeaseLive": true,
+    "binding": false,
+    "attempts": 0,
+    "jobs": 0,
+    "units": 0,
+    "blockedGitHubRoutes": 0,
+    "installedStoreGet": "passed",
+    "initialDescribeFailure": "WorkflowNotFoundError (expected for absent deterministic workflow)",
+    "bindFailure": "DOMException/DataCloneError before SQL"
+  },
+  "isolatedReadOnlyReproduction": {
+    "rejected": true,
+    "classification": "DataCloneError",
+    "constructor": "DOMException",
+    "sqlTouched": false
+  },
+  "sourceCause": "Actual main passes shouldStop callback in dispatcher options; dispatcher forwards whole options to store.bind; bind structuredClone(options) rejects the callback. Proposed explicit projection is primary-owned, not applied here.",
+  "moduleSha256": "02e3efce90a0bbca99abaec8b3039cfc8d5a3d35aa451d9f498ad1b63c781ab3",
+  "frozenDownloadedDev3Module": "independently byte-identical to local compiled dispatcher; no immutable bytes changed",
+  "regressionPlan": "Actual controller stages real unit, public cancellation becomes durable, real restricted installed evaluator executes cancelled-unit/owned cleanup activities, genuine authenticated terminal settlement races initial cleanup read; evaluator readiness alone becomes unavailable while actual Docker inventory remains available. No manufactured unit/receipt/trial or physical assertion-execution claim.",
+  "diagnosticInstrumentation": "Temporary delegate-only type/SQLSTATE diagnostics removed from final test source after identifying the blocker. No raw SDK error/body/env or credentials retained.",
+  "cleanup": {
+    "database": {
+      "schemaVersion": 1,
+      "name": "agentci-customer-pg-1791997474079-1-94e0c5c79c7760c9",
+      "owner": "1791997474079:1:addf1f88624298b9c445df63e60be3fa88742c6e:94e0c5c79c7760c9",
+      "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+      "result": "passed",
+      "ownedContainers": 0,
+      "privateFilesRemoved": true
+    },
+    "ownedTemporalContainers": 0
+  },
+  "logs": [
+    {
+      "path": "/workspace/scratch/customer-installed-terminal-beforefix.log",
+      "sha256": "db7d6b9d0b21f6a0a3933e4a0f559d14abbbe90c97c4a00540dd57514af35758"
+    },
+    {
+      "path": "/workspace/scratch/customer-installed-terminal-stage-diagnostic2.log",
+      "sha256": "1eccf9e3081e7259e7f409eb4f17b0735f4e6a7bbbaa9b85c92e6b8b323fc2f4"
+    },
+    {
+      "path": "/workspace/scratch/customer-installed-terminal-boundary-diagnostic.log",
+      "sha256": "44667ac5364c81155b7a293f6dc530a5451d13b5188cf095171a595bab866c97"
+    }
+  ],
+  "gates": "All18 aggregate M3 gates and full M0\u2013M10/three-adapter scope unchanged; current regression task remains blocked."
+}

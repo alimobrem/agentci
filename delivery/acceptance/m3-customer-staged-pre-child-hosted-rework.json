@@ -1,0 +1,235 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Hosted staged-cancellation harness rework; no merge/release/customer-rerun authorization inferred",
+  "observedAt": "2026-10-14T18:04:08.182551+00:00",
+  "sourceCommit": "8125024cf8af1b15bf4e1bbbf4c86e245899077e",
+  "sourceBindings": [
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "sha256": "a70825afcfbe652fe444898b629043d0df3363d41e5d771ceb4597599d598717",
+      "bytes": 25621
+    },
+    {
+      "path": "scripts/lib/customer-physical-evidence.mjs",
+      "sha256": "cac0e09a0ccb3e60c0d7fd1e925692ad36ee3bf3afb42221415fba06a4500b7e",
+      "bytes": 1133
+    },
+    {
+      "path": "tests/integration/customer-installed-recovery.test.ts",
+      "sha256": "ccf8e7ba47c4bef3084ae7870c030e29cce4a583dccc8915fab6e972076ecd9f",
+      "bytes": 19559
+    },
+    {
+      "path": "tests/customer-physical-evidence.test.ts",
+      "sha256": "c542b9b7a864a61c29e5089b90230354b693872c8fe047e2590be4462e97e528",
+      "bytes": 2243
+    }
+  ],
+  "failedCI": {
+    "head": "6ce846de9d8437c7d98336d44e78c4ad3b2fd9c1",
+    "run": 38607627341,
+    "attempt": 1,
+    "job": 116002466755,
+    "conclusion": "failure",
+    "integration": {
+      "tests": 206,
+      "passed": 205,
+      "failed": 1,
+      "skipped": 0,
+      "failedTestDurationMs": 27554.242879
+    },
+    "failedObservation": {
+      "initialDispatch": "dispatched",
+      "terminalDispatch": "settled",
+      "settlement": "receipt-retained",
+      "cleanupStatus": null,
+      "ownedContainers": null,
+      "unneededEvaluatorStarts": 0
+    },
+    "underlyingException": "Swallowed by phase wrapper; not recovered. It is not proven which predicate threw in this hosted run.",
+    "laterGates": "Installed package smoke and following runtime/native/image scan checks skipped; partial artifact is not acceptance.",
+    "artifact": {
+      "id": 11917057349,
+      "node_id": "MDg6QXJ0aWZhY3QxMTkxNzA1NzM0OQ==",
+      "name": "m1-verification",
+      "size_in_bytes": 23182,
+      "url": "https://api.github.com/repos/alimobrem/agentci/actions/artifacts/11917057349",
+      "archive_download_url": "https://api.github.com/repos/alimobrem/agentci/actions/artifacts/11917057349/zip",
+      "expired": false,
+      "digest": "sha256:06e722ca8c4fba052a0d3ca5edee87ad88ac9b1c26c5864dba31a679d7591310",
+      "created_at": "2026-10-14T17:41:26Z",
+      "updated_at": "2026-10-14T17:41:26Z",
+      "expires_at": "2027-01-12T17:33:18Z",
+      "workflow_run": {
+        "id": 38607627341,
+        "repository_id": 1403618690,
+        "head_repository_id": 1403618690,
+        "head_branch": "cloud/m3-customer-recovery-fix",
+        "head_sha": "6ce846de9d8437c7d98336d44e78c4ad3b2fd9c1"
+      }
+    },
+    "artifactQualification": "API identity and parent-reported four-file partial inventory; no local actual-ZIP audit claimed",
+    "record": "delivery/runs/38607627341-attempt-1.json",
+    "otherRuns": [
+      38607627422,
+      38607623444,
+      38607623414,
+      38607674989,
+      38607675022
+    ],
+    "cache": "unknown"
+  },
+  "localCausalProof": {
+    "failingHarness": "a6ff6b6be7e822b943879015a80d1ad409acb4bd",
+    "timing": "Test-only preload calls real installed ReproductionEvalStore.committed, holds its successfully committed activity return, then authentic public cancellation becomes durable before release. No manufactured SQL unit, result, receipt or Temporal history.",
+    "confirmedRed": {
+      "testDurationMs": 23908.718321,
+      "unitWorkflow": "NOT_FOUND",
+      "cleanupWorkflow": "COMPLETED",
+      "terminalDispatch": "settled",
+      "settlement": "receipt-retained",
+      "unneededEvaluatorStarts": 0
+    },
+    "cause": "Old harness unconditionally described a unit child although cancellation can validly precede child scheduling after staging. Exact child NotFound throws before physical proof returns.",
+    "hostedInference": "Same observation pattern and a reachable valid scheduling race; not proof of the missing hosted thrown predicate or original38580528645 cause."
+  },
+  "correction": {
+    "scope": "Harness helpers, tests, documentation and delivery evidence only; no further dispatcher/package source edit",
+    "absenceRequirements": [
+      "Exact SDK WorkflowNotFoundError only; other errors remain failures",
+      "Actual retained unit matches authenticated receipt and is cancelled with zero trials",
+      "Authenticated cancellation and closed exact parent run",
+      "Complete contiguous parent history starts at event1 and ends with matching cancelled/terminated event; no initiation for exact unit child",
+      "Exact cleanup workflow/type/task queue/memo/completed run and result match retained unit",
+      "Actual zero owned assertion-container inventory, plus normal evaluator/controller cleanup"
+    ],
+    "retainedRepresentation": {
+      "unitWorkflowState": "NOT_STARTED",
+      "unitRunId": null,
+      "physicalTrials": 0
+    },
+    "existingChild": "Actual workflow/run/type/queue/memo/terminal state still required; completed-parent execution cannot waive child existence",
+    "budgets": "Original 120s test /30s close /30s observation bounds retained; no production cleanup/shutdown bound increase"
+  },
+  "validation": {
+    "fast": {
+      "checks": 10,
+      "unitTests": 558,
+      "passed": true,
+      "seconds": 53.61,
+      "dependencies": "Cached node_modules symlink; not clean npm ci"
+    },
+    "absenceNegatives": {
+      "tests": 2,
+      "passed": 2,
+      "scope": "Wrong parent/cancellation/unit state, nonzero trials, incomplete/gapped/oversize history and exact scheduled child reject"
+    },
+    "typecheck": "Initial strict-index fixture error retained in log; one non-null assertion fixed it; corrected typecheck passed",
+    "productionInstall": {
+      "archive": {
+        "path": "/workspace/scratch/customer-ci-staged-unpublished-source/agentci-0.4.0-m3-dev.3.tgz",
+        "sha256": "2d0189f1172ef961b1c1f82881a878d3fbad2dd9470e0dd1e813d53ef823f9ba",
+        "bytes": 805325
+      },
+      "archiveSourceCommit": "8d16160c04dc228630ca74674c20a6e1ba62673c",
+      "qualification": "Unpublished local diagnostic pack using existing manifest version; distinct bytes from immutable dev.3. Later8125024 changes only negative unit-fixture TypeScript assertion; runtime and installed regression byte-identical. No publication/relabel/replacement.",
+      "install": "Fresh npm install --omit=dev, online; no development loader in production install",
+      "readers": 14,
+      "workerAndRecovery": 7,
+      "failed": 0,
+      "skipped": 0,
+      "workerAndRecoveryDurationMs": 107507.071178,
+      "afterChild": {
+        "durationMs": 27671.676704,
+        "state": "CANCELLED",
+        "realRunRetained": true,
+        "cleanupStatus": "COMPLETED",
+        "ownedContainers": 0,
+        "unneededEvaluatorStarts": 0
+      },
+      "beforeChild": {
+        "durationMs": 26882.855862,
+        "state": "NOT_STARTED",
+        "realRunRetained": false,
+        "cleanupStatus": "COMPLETED",
+        "ownedContainers": 0,
+        "unneededEvaluatorStarts": 0
+      }
+    },
+    "build": "passed"
+  },
+  "fixtureHealth": {
+    "running": true,
+    "exitCode": 0,
+    "oomKilled": false,
+    "uptimeMs": 128369,
+    "scannerWindowObserved": true
+  },
+  "fixtureCleanup": {
+    "database": {
+      "schemaVersion": 1,
+      "name": "agentci-customer-pg-1792000873058-1-529dae684147a312",
+      "owner": "1792000873058:1:8d16160c04dc228630ca74674c20a6e1ba62673c:529dae684147a312",
+      "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+      "result": "passed",
+      "ownedContainers": 0,
+      "privateFilesRemoved": true
+    },
+    "ownedTemporalContainers": 0
+  },
+  "localTopology": "Same pinned owned Temporal; only temporary internal loopback NO_PROXY qualification from prior proof retained; no global/external/credential/permission changes.",
+  "logs": [
+    {
+      "path": "/workspace/scratch/customer-ci-staged-before-child-red.log",
+      "sha256": "d49f50cf1af765d5eb2a540d83aa7adc8361ec5063ef01f59aeeadab7b088c3c",
+      "bytes": 1376
+    },
+    {
+      "path": "/workspace/scratch/customer-ci-staged-before-child-confirmed-red.log",
+      "sha256": "75f19d122ce348e436eb2084e3fc6360e4d12912e4d42f1b54fc10c877b9f5fe",
+      "bytes": 1400
+    },
+    {
+      "path": "/workspace/scratch/customer-ci-staged-both-green.log",
+      "sha256": "245eaf1c4c4b331131805c132fc44082bb497d2d705b2619a217e73f6b4903cc",
+      "bytes": 797
+    },
+    {
+      "path": "/workspace/scratch/customer-ci-staged-production-install.log",
+      "sha256": "d2c737113f9d0eff6d1a8e0037ddab3be4e15d39577e39385b55f4c60f629909",
+      "bytes": 4640
+    },
+    {
+      "path": "/workspace/scratch/customer-ci-staged-final-fast.log",
+      "sha256": "32d808ef28ff10f0833176a76596ba549c1ecef8d27990505fd238e280789c92",
+      "bytes": 456
+    },
+    {
+      "path": "/workspace/scratch/customer-ci-staged-final-typecheck.log",
+      "sha256": "8c1e80b0232edcbc08657c1ad31766f32a67c005684222dba5a8d9f0b95ea8a3",
+      "bytes": 171
+    },
+    {
+      "path": "/workspace/scratch/customer-ci-staged-corrected-typecheck.log",
+      "sha256": "24891980e1a4e24b0fa42dfc3ba5d72e0d18f079385b15c0fc688b5779456ff9",
+      "bytes": 76
+    },
+    {
+      "path": "/workspace/scratch/customer-ci-staged-final-absence-negatives.log",
+      "sha256": "c03f35870e64a1a7f2e3de34d7dcd2fcd4218c4352fac57f40fc914526c841fe",
+      "bytes": 335
+    },
+    {
+      "path": "/workspace/scratch/customer-ci-staged-build.log",
+      "sha256": "d60a7eb92fec7deb71f3c94a12912094e692e522e6ab46e5f19f44234abb2533",
+      "bytes": 119
+    }
+  ],
+  "holds": {
+    "merge": "Parent independent changed-head source/full CI/actual artifact clearance required",
+    "dispatcherAndNewCandidate": "Expanded authorization pending Sentinel_52f8e53da6b08191b79f041275b8a149; one-line previously proposed dispatcher source unchanged this follow-up",
+    "release": "Existing immutable dev.3 and release/activation descriptors unchanged; no release/candidate workflow triggered",
+    "customer": "No customer rerun",
+    "milestone": "All18 M3 aggregate gates remain pending; full M0-M10 order/three adapters/observed-rate calibration preserved; only agreed inaccessible external-provider exception"
+  }
+}

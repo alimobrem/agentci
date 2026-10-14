@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "result": "BLOCKER concrete owned execFile child lost after AbortError",
+  "sourceCommit": "d57a611832f0e50e6e176b3047f32151b4f9e799",
+  "sourceTree": "443517fe57b67c623a7fc4805e79b7859ed46ab9",
+  "sourceBindings": [
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "480ce79c948bf7e042241e55f6342500ab1c088d880ebe8ae4d103b335046f40"
+    },
+    {
+      "path": "scripts/lib/customer-evaluator-container.mjs",
+      "sha256": "9e38684976c977cfd988be2db30a135c704767c66690ff75fc78019510d399f9"
+    },
+    {
+      "path": "scripts/lib/customer-recovery-owner.mjs",
+      "sha256": "3f65782886133579b34e8c643d0701cacf74f28fa0062a6280b56a33079a4e96"
+    }
+  ],
+  "finding": {
+    "severity": "P2",
+    "primaryLocation": "scripts/lib/customer-runtime-processes.mjs:11",
+    "samePatternLocation": "scripts/lib/customer-evaluator-container.mjs:20",
+    "cause": "Promise rejection from execFile AbortSignal is not process exit. Removingregistry onreject/finally loses still-live ignoringTERM ownedchild before forceStop/forceCommands; can leave harness/resource lifecycle unbounded despite quiescence.",
+    "actualReproduction": {
+      "node": "pinned26.10",
+      "abortErrorCode": "ABORT_ERR",
+      "promiseSettled": true,
+      "registrySize": 0,
+      "ownedChildAliveBeforeForce": true,
+      "ownedChildAliveAfterForce": true,
+      "scope": "actualNodechild ignoringTERM; noDocker/DB/keys",
+      "probeCleanup": "ownedchild explicitlySIGKILLed and closeawaited"
+    }
+  },
+  "recommendedRepair": [
+    "Retain liveChildProcess ownership until actualexit/close, independentfromcommandPromise settlement",
+    "Boundedjoin uses actual exitpromise/certificate rather than settledexecFilePromise",
+    "Track ENOENT/noPID case safely without leakingregistry",
+    "Actual ignoringTERM regressions for runtimeand evaluator, abortthen forcekill/proveactualexit; no false owned0",
+    "If commandstillcannotquiesce finalentrypointfallback retainsunverified and exits1"
+  ],
+  "otherReview": "Data-only dispatchbind projection isnarrow and excludes shouldStop whilepreserving taskQueue/evalTaskQueue/config; doesnotpatchimmutabledev3. No additionalconcrete issuefoundyet inthatline.",
+  "evidence": {
+    "path": "/workspace/scratch/customer-recovery-independent-command-registry-abort-20261014.log",
+    "sha256": "e17190855f683d7b86a5619d29e6453e4b40305f3002698d1b766c8b2cf686b0"
+  },
+  "qualification": [
+    "Paused finalsourcePASS/focused22acceptance untilcorrectednewsource; existing553/fullfast cannotprovecombinedmissingregression",
+    "Read-only no sourceedits/remoteactions/secrets/Mac",
+    "Actualpublishedasset stagebug and newcandidateauthorization remainseparateparentdecision"
+  ]
+}

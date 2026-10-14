@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "purpose": "original-main-evaluator-inspection-local-reproduction",
+  "source": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6",
+  "image": "ghcr.io/alimobrem/agentci-eval-worker@sha256:73e81034b28de46d2dbab1607979ae9d5de2430f1daf7680fe85904e547bab18",
+  "startPassed": false,
+  "events": [
+    {
+      "command": "create",
+      "result": "passed",
+      "stdoutBytes": 65
+    },
+    {
+      "command": "inspect",
+      "result": "failed",
+      "category": "buffer-limit",
+      "stdoutBytes": 8192
+    },
+    {
+      "command": "ps",
+      "result": "passed",
+      "stdoutBytes": 65
+    },
+    {
+      "command": "ps",
+      "result": "passed",
+      "stdoutBytes": 65
+    },
+    {
+      "command": "inspect",
+      "result": "failed",
+      "category": "buffer-limit",
+      "stdoutBytes": 8192
+    }
+  ],
+  "ownedContainers": 0,
+  "privateFilesRemoved": true,
+  "taskOwnedPulledImageRemoved": true,
+  "qualification": "Local original harness and actual pinned public evaluator image with dummy unreachable loopback endpoints, no credentials. Not evidence of the original hosted failure trigger. Only command kinds, bounded failure category and byte counts retained; diagnostic fixture cleanup independently checked exact name/image/owner before removal."
+}

@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "result": "PASS independent operator-drain correction and reviewed recovery-source binding",
+  "sourceCommit": "9f8222745b4cdc70e8c41662e74bf7e3beb4b948",
+  "sourceTree": "b04464cf391f551e57d544c02759290876d77856",
+  "operatorFixCommit": "65a05e2e71818456013a483abb67dd551c0f7811",
+  "sourceBindings": [
+    {
+      "path": "scripts/lib/customer-diagnostics.mjs",
+      "sha256": "b729374af011a5d86735694173f626ba73716695259e4fc9abb4bef056048166"
+    },
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "2b012c99baf88105448e3e61f0e0733c577de7257ce00a852727ce8a8d1dee29"
+    },
+    {
+      "path": "scripts/lib/customer-evaluator-container.mjs",
+      "sha256": "397a28a106a9a1fcae9954743a9a04187668a725cb06edf89dbbff750ab3cbe1"
+    },
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "sha256": "47aa47937df4947f44906067160137c49fa6c176806a57aade80384472764947"
+    },
+    {
+      "path": "scripts/lib/customer-owned-reservations.mjs",
+      "sha256": "de0c6162e4f7e04a7689f09c16c3daf3531222ac5a7bed8c7007b4d4e1f928b5"
+    },
+    {
+      "path": "scripts/m3-customer-live-demo.mjs",
+      "sha256": "9e7e7f1f4656207d403dd6e3d31498a745616d00a16a96053795d964ed751ca2"
+    },
+    {
+      "path": "tests/customer-diagnostics.test.ts",
+      "sha256": "1645368b76e2c08bc59457d2b9e73d1e3761a5d1914e6431c9e68affe6902ed7"
+    },
+    {
+      "path": "tests/customer-runtime-processes.test.ts",
+      "sha256": "39c2820fdd44324a8cb9656fcf0fb847d7f5c0c4b7408fe0adb3ae3c3b20b491"
+    },
+    {
+      "path": "tests/customer-evaluator-container.test.ts",
+      "sha256": "c862a792f1d5130113e11293c79ee50ede95aa5720afecde36deb47d6c6ad7da"
+    },
+    {
+      "path": "tests/integration/customer-container-inspection.test.ts",
+      "sha256": "0a8a4d5441206db211d62b389ae43134394dddb171913fbec8221ef17106dc6d"
+    },
+    {
+      "path": "docs/phases/m3-customer-consumer-recovery.md",
+      "sha256": "75a60b008671e3d6bd2592ab605fb32edc3a508432282c2db91e58acbbfa97f1"
+    }
+  ],
+  "review": "Operator waitsclose before finishing/destroying stdout, so bounded applyAuthority parses fullydrained acknowledgement; other runtime roles keep exitobserved shutdown. Existing5/15s stop and30s authority deadlines preserved. No prior actualfailure reproduced or claimed.",
+  "independentValidation": {
+    "finalFocused": {
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 10406.713367,
+      "includesNewOperatorAcknowledgementTest": true
+    },
+    "additionalActualChildProbe": {
+      "passed": 5,
+      "fixture": "immediateexit with many stdoutchunks/boundedJSON parsed; noDB/credentials",
+      "ownedRemaining": 0
+    },
+    "cachedDockerProjection": "Previous actualcachedPG1pass proof remainsvalid, evaluatorinspection bytes unchanged"
+  },
+  "evidence": [
+    {
+      "path": "/workspace/scratch/customer-recovery-independent-operator-close-focused-20261014.log",
+      "sha256": "6b466a100b1ece86bb772d161118aafbf4706f6e151ff3a713079b48a44f346b"
+    },
+    {
+      "path": "/workspace/scratch/customer-recovery-independent-operator-final19-20261014.log",
+      "sha256": "70c32fc6bbf50d1ea8adfd4ffbf05eca250241fd983d9d8eea9bf73f49a737f5"
+    },
+    {
+      "path": "/workspace/scratch/customer-recovery-independent-operator-authority-probe-20261014.log",
+      "sha256": "8b72351add9d7a42077e6f23cb00cce73c4d9f2a4d0d43d3dcd069aa5293418f"
+    },
+    {
+      "path": "/workspace/scratch/customer-recovery-independent-wip-review-20261014.json",
+      "sha256": "66a22535a3b50941ad3cc789a7a74b178351cd482ed25bc9d936701eaae104d3"
+    },
+    {
+      "path": "/workspace/scratch/customer-recovery-independent-retention-addendum-20261014.json",
+      "sha256": "31f5539483c85c8b10477ee5a8c841e3e7b41e1833ae4aa6e9ee26ff83a362aa"
+    }
+  ],
+  "qualification": [
+    "Prior18repeat began before newtestdiscovery; final19 independently rerun and bound exactcommittedruntime/test bytes",
+    "Merged9f installed4/package-smoke additions not claimed independently executedbythisreview; delegatedworkerretains qualification",
+    "No remaining concrete blocker found in examined recoverysource/abort/ownership/redaction/cleanup",
+    "Actuallargepublished evaluator consumerreadiness and fourlivecustomer retry remainrequired; Running is livenessonly",
+    "Full exactsourceCI and parentactualartifactreview requiredbeforemerge",
+    "No keys/Mac/remoteactions/sourceedits/largeimagepull/newpermissions"
+  ]
+}

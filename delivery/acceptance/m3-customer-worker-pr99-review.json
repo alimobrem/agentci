@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "purpose": "pr99-source-bound-independent-review-checkpoint",
+  "result": "all-six-hosted-runs-passed-independent-source-and-actual-byte-review-pending",
+  "pullRequest": 99,
+  "head": "1f7b2deff4f24a44a392409b64ae23a3552b9155",
+  "parent": "0c30b461cc7942734220b3ae894c20e0186917d5",
+  "tree": "3b7f08f3c440a807284f4da42330bad7728798f3",
+  "testedMerge": "904293e54061a26ea389cc13bf5911dd1171b2f2",
+  "testedMergeTree": "3b7f08f3c440a807284f4da42330bad7728798f3",
+  "changedFiles": 29,
+  "localPublicationCommit": "30c9ff03d78dce6fe6e3d9634106d4ff012f96c5",
+  "localImplementationHistory": "9b671c6 (preserves earlier31f6c19 failed forward scan; no published history rewrite)",
+  "localFast": {
+    "source": "30c9ff03d78dce6fe6e3d9634106d4ff012f96c5",
+    "tree": "3b7f08f3c440a807284f4da42330bad7728798f3",
+    "passed": true,
+    "seconds": 48.768272143000004,
+    "tests": 547,
+    "failed": 0,
+    "skipped": 0,
+    "dirtyQualification": "Only untracked cached node_modules symlink; source tree exact. Not clean npm ci."
+  },
+  "publicationForwardScan": {
+    "policyCommit": "30c9ff03d78dce6fe6e3d9634106d4ff012f96c5",
+    "harnessSha256": "64be7dc608da3e9ee0056724d1dac3e6742f60f9a4723e67a14b94ed9496dcc2",
+    "schema": "agentci-sensitive-forward-v1",
+    "baseCommit": "0c30b461cc7942734220b3ae894c20e0186917d5",
+    "headCommit": "30c9ff03d78dce6fe6e3d9634106d4ff012f96c5",
+    "headTree": "3b7f08f3c440a807284f4da42330bad7728798f3",
+    "scannerVersion": "8.30.1",
+    "binarySha256": "88f91962aa2f93ac6ab281d553b9e125f5197bbbce38f9f2437f7299c32e5509",
+    "upstreamPolicySha256": "e163e53b9e7e8a8511e77271e2b323ed057759542a6d988258afe3a1fa329caf",
+    "policySha256": "719492eab4c71b1c762b518f4e63ffe8e2a1201f2d77c14b7c32608073f9921d",
+    "introducedCommitCount": 1,
+    "selectedBlobCount": 29,
+    "introducedReferenceCount": 29,
+    "findings": [],
+    "status": "no-new-change-findings",
+    "scope": "Introduced commits HEAD ^ BASE, parent-relative changed regular file blobs, and changed HEAD blobs vs BASE. No historical-clean assertion; deleted pre-base data and unchanged historical findings are outside this gate."
+  },
+  "exactFrozenPackageRegression": {
+    "archive": "agentci-0.4.0-m3-dev.3.tgz",
+    "sha256": "ae9a50f2f64922feab6952dac157e5649fbc6c81f9246d84f178a75762763465",
+    "result": "passed",
+    "tests": 1,
+    "milliseconds": 19073.070614,
+    "harnessTree": "3b7f08f3c440a807284f4da42330bad7728798f3",
+    "qualification": "Actual anonymously downloaded package bytes extracted unchanged, cached dependencies linked for this additional run; separate production-only local packed-package install passed earlier. Synthetic signed App transport and owned real PG/Temporal; fixture Check/public-client evidence, not physical customer acceptance.",
+    "cleanup": {
+      "database": {
+        "schemaVersion": 1,
+        "name": "agentci-customer-pg-1791987095609-1-7292467d10d3f74e",
+        "owner": "1791987095609:1:1f7b2deff4f24a44a392409b64ae23a3552b9155:7292467d10d3f74e",
+        "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+        "result": "passed",
+        "ownedContainers": 0,
+        "privateFilesRemoved": true
+      },
+      "ownedTemporalContainers": 0
+    }
+  },
+  "artifactAccess": {
+    "dashboardArtifact": 11902126861,
+    "metadataDigest": "sha256:3d640b97b71e2454d5358a007b665289ec04cd0d7350f1014b8013ae529d5e4b",
+    "download": "Work connector returned sanctioned ZIP reference; cloud urllib URLError. No alternate credentials or access path tried. Parent actual-byte review required; metadata hash is not actual ZIP inspection."
+  },
+  "remoteChanges": "Work-only29blob uploads, exact tree/commit, new branch and draftPR99; one early body correction preserves uncertainty about original worker error. No merge, fixture mutation, key/access change, asset/tag/release mutation or customer rerun.",
+  "bodyEditRuns": "Preserve both advisory and scan runs from PR creation and early body correction; no claim duplicate pending run passed.",
+  "remaining": "Parent independent source and actual artifact ZIP/JSON audit before approved merge, then actual same four customer scenarios with retained cleanup. PR remains draft, main remains0c30b461, no customer rerun yet. All18 aggregate M3 gates remain pending.",
+  "hostedEvidence": "delivery/acceptance/m3-customer-worker-pr99-hosted.json",
+  "artifactEvidence": "delivery/acceptance/m3-customer-worker-pr99-artifacts.json",
+  "requiredCheck": {
+    "ruleset": 25029334,
+    "enforcement": "active",
+    "context": "scan",
+    "integrationId": 15368,
+    "bypassActors": [],
+    "exactHeadPassed": true
+  },
+  "ciCollection": {
+    "completedAttempts": 6,
+    "cohort": "optimized",
+    "cache": "unknown",
+    "method": "Delivery CLI using read-only captured Work GitHub run/jobs metadata adapter; no auth or network in adapter."
+  }
+}
