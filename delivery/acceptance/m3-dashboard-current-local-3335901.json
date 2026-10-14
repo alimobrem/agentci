@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "scope": "Local bounded dashboard port, retained history/export, configuration-only health probes and JavaScript standalone package qualification; no full UI/M3 acceptance",
+  "baseCommit": "a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a",
+  "runtimeSourceCommit": "3335901148bc29244996f1cfea50cf75edb8d200",
+  "runtimeSourceTree": "886b12ec73bc3ea260ddc06186c4f4957e023d80",
+  "sources": [
+    {
+      "path": ".dockerignore",
+      "sha256": "32996a106b267d11f4e927d5a22e8e139c9233c6f4b7a16ac21566ff96a1b0ee"
+    },
+    {
+      "path": "Dockerfile",
+      "sha256": "0ffd2b3cff798bf9925db7f7ab161fa622d71769a69f86f18143aab05173b253"
+    },
+    {
+      "path": "apps/dashboard/app/api/reviews/[id]/export/route.ts",
+      "sha256": "f26d2eae3fc2098d63b60a15a974e6f8dce81c09ea2205de24d04297cecb29f5"
+    },
+    {
+      "path": "apps/dashboard/app/api/reviews/[id]/findings/[findingId]/history/route.ts",
+      "sha256": "f9b73dbbb797bf3006e9dddfcc38a605ee9ea7e04d451e850f7c456d2bc8e27a"
+    },
+    {
+      "path": "apps/dashboard/app/livez/route.ts",
+      "sha256": "4c775b43d71a647b7a9ea6a041f9f3bd6bda8fbb9761672871b8c6a41ed3b013"
+    },
+    {
+      "path": "apps/dashboard/app/page.tsx",
+      "sha256": "0f6f0b2ca8cffd06d1be41dd51ba5b317c13752764c285c0bfe4b3069cf2dc52"
+    },
+    {
+      "path": "apps/dashboard/app/readyz/route.ts",
+      "sha256": "1a0184d75cdb8a0ae6ea18137cc899496894b06670043dfc3e676b2f45b61706"
+    },
+    {
+      "path": "apps/dashboard/components/retained-reader.tsx",
+      "sha256": "7e10a72e9b1f24e55c54be0809d830f257c3414f05f50a3038bd64c8f8271484"
+    },
+    {
+      "path": "apps/dashboard/components/review-detail.tsx",
+      "sha256": "f6147c10a3a36e3be17e5cf79266d9f9516a459925eab0b0392240ab2da8986c"
+    },
+    {
+      "path": "apps/dashboard/components/review-loader.tsx",
+      "sha256": "a14a4283231f1c100e9648355d897d6300df3a2e4f14fa970a8687918733880b"
+    },
+    {
+      "path": "apps/dashboard/lib/protected-retained-route.ts",
+      "sha256": "d4d227a48bf533a7d36915148bf840ee9bb3467455657df9657eee6e264ce62c"
+    },
+    {
+      "path": "apps/dashboard/lib/retained-envelope.ts",
+      "sha256": "a2359489a364fc65f97e13f20c6a5a241875c1f0b852eb5534187c5816ebd7e8"
+    },
+    {
+      "path": "apps/dashboard/lib/retained-reads.ts",
+      "sha256": "e25030063ae1bb7955deaf81130d9c8ab28b17f0cb9bb20c1a7da4d25a1afd8e"
+    },
+    {
+      "path": "apps/dashboard/lib/runtime.ts",
+      "sha256": "b3323b6feadb902d3b37aec623036336e8972c165822ccb6a74acfc02ec537ef"
+    },
+    {
+      "path": "apps/dashboard/tests/browser/bootstrap.ts",
+      "sha256": "b732aaf47676bf0d496892d766f4dd5633cbba5655b7fcc7994943f438928d1a"
+    },
+    {
+      "path": "apps/dashboard/tests/browser/check.mjs",
+      "sha256": "0fb9df69dc7d4e3fd1a622cb2a467839e3f8a3794e5a29d1617f4f982d5a6cd3"
+    },
+    {
+      "path": "apps/dashboard/tests/helpers/retained-finding.ts",
+      "sha256": "187103463ba5e7aa046cee9b0c0a1905ac97376504de336ca94467b801ae0fec"
+    },
+    {
+      "path": "apps/dashboard/tests/helpers/retained-protocol.ts",
+      "sha256": "61f64dda9ea334fa3e2d16de836b039ee0e83e4ff867a6be991290a23a9d2e9d"
+    },
+    {
+      "path": "apps/dashboard/tests/retained-reads.test.ts",
+      "sha256": "50bdead5c7f8875421f0ebec2f0783de09b4488c5d8a20101c2a3ea4fa6dcd7c"
+    },
+    {
+      "path": "docs/m3-dashboard-history-export-local.md",
+      "sha256": "0003a3f335bd6bd74a03f3d888eaa6803efb7937875ea59235e4949ac987b35a"
+    },
+    {
+      "path": "docs/phases/m3-dashboard-local-preparation.md",
+      "sha256": "b217023d75cdae94fb006641aeb041a4e888f8e6fe770a0cb8f4f2e0af215807"
+    },
+    {
+      "path": "scripts/dashboard-license-inventory.mjs",
+      "sha256": "cd0b6c394f9f5429ab1750aedb7809638eb53d53fda6e3d9d84a42201f6175fc"
+    },
+    {
+      "path": "scripts/dashboard-production-trace.mjs",
+      "sha256": "37680a5fe06dc4b6e01b22f1e8306bc2f24427262e543871e45e29604fa05de3"
+    },
+    {
+      "path": "scripts/dashboard-standalone-qualification.mjs",
+      "sha256": "d7cabee014452a430a9cc6041b106182aaca6714f3a00c651186dde99c963a06"
+    },
+    {
+      "path": "scripts/lib/dashboard-ci-evidence.mjs",
+      "sha256": "1d617d2097a97a3a05959607893d52ca318e2c8a44cb94541289ab1b6317d679"
+    },
+    {
+      "path": "tests/dashboard-packaging.test.ts",
+      "sha256": "3346b6fa8abc710055624ea0abc2e504b0a638f6d0bfaec4215e9690fc839a59"
+    }
+  ],
+  "localResults": {
+    "rootSdkBuild": "passed",
+    "packagingTests": 13,
+    "uiUnitTests": 20,
+    "uiTypecheck": "passed",
+    "productionNextBuild": "passed",
+    "productionBrowserChecks": 38,
+    "backendMutations": 0,
+    "runtimeStandaloneFiles": 3815,
+    "runtimeStandaloneOwnedProcessesRemaining": 0,
+    "runtimeStandalonePrivatePathsRemoved": true,
+    "packageManifests": 208,
+    "noticeCopies": 331,
+    "unresolvedNoticeDeclarationItems": 22
+  },
+  "dependencyQualification": {
+    "root": "Exact cached installed dependencies first linked for root build/tests; owned copy before second production build/trace/license/runtime qualification. Not fresh root npm ci.",
+    "ui": "Locked npm ci using pinned cache with prefer-offline; esbuild postinstall blocked by npm policy; actual build/test commands passed.",
+    "node": "26.10.0",
+    "npm": "12.2.0",
+    "browser": "System Chromium151.0.7922.173; not hosted Playwright browser bootstrap"
+  },
+  "preservedFailedAttempts": [
+    "First local task CLI invocation lacked root tsx; dependency link restored.",
+    "Initial task requirement typo SPEC-33-034 rejected by CLI before start; corrected to valid existing requirements.",
+    "Initial standalone trace and notice inventory rejected shared root dependency symlink; no passing claim. Retried unchanged qualification tools with owned copied cached modules and rebuilt output.",
+    "Initial source scan was supplied a nonexistent full SHA and failed closed before coverage; retried using actual git rev-parse HEAD."
+  ],
+  "evidence": [
+    {
+      "path": "/workspace/scratch/dashboard-remaining-current-packaging.log",
+      "sha256": "fc0a76f857fbb79c917311d8b4563eea21af3ac052879dc700a2e5c791cd786b"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-remaining-current-unit.log",
+      "sha256": "3e929f33505279ac7a4f5cf7333212ab85e38843b8b5feb64ea38edefd2ee662"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-remaining-current-types.log",
+      "sha256": "ede264564d22ba889a85acdd1b230c2b814e18b2f3f1d0177b5b4e7d7867480c"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-remaining-current-build.log",
+      "sha256": "d11bb2d1debb63d056f0546dfb95c38f3be6e9972598b458f8bce87f374e993c"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-remaining-current-browser.log",
+      "sha256": "215136ff64c469e960862c0f84377c5f2be2191042e5a816e0d0626d78f56842"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-remaining-current-health-browser.log",
+      "sha256": "ca780f80bc148fef5cca9ef1e9de78f1de747d8233d67a724a5a31a38ae13d12"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-remaining-current-trace.log",
+      "sha256": "c6ef9ea29f9636d46cd9aa965f3a1ab06fe2be6125d2cdd1dad55a12c04db4ca"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-remaining-current-standalone/report.json",
+      "sha256": "d0a111360f74d3a2a31345332336010c1c3fef1f64bf14e2ab57e34974c70abf"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-remaining-current-standalone/files.json",
+      "sha256": "8a7bbe6c0e3da8430026d7b01b60e45546ddce86aa4c8647030d3912fa04d9b0"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-remaining-current-standalone/dashboard-standalone.tar.gz",
+      "sha256": "d21f5a3b2c35b731d8608a7dd0e3bcc3b967d3f385dedb83385fa0bfbc60856d"
+    },
+    {
+      "path": "delivery/acceptance/m3-dashboard-current-license-inventory-3335901.json",
+      "sha256": "2265407c7e785e0d81acf9b3412d878253cbc5ee1407a74c8621e0d8e2262b6c"
+    },
+    {
+      "path": "delivery/acceptance/m3-dashboard-current-browser-3335901.json",
+      "sha256": "9ca95924fb2761c38c29e49b2b32f08a3e9eb9e2fef7fd2df1ec335c1dd5cef5"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-remaining-current-forward.json",
+      "sha256": "d79a01e43bd6af7593a863a818ec341afb8800100d2b42f7148c15734bcfdaf5"
+    }
+  ],
+  "prViewRequirementMap": "docs/phases/m3-dashboard-pr-view-contract-map.md",
+  "remaining": [
+    "Exact-source hosted CI and independent review for this unpublished local candidate.",
+    "Full SPEC33.1-002 through012 original PR-view scope; explicit subject-bound analysis/comparison bindings and authoritative intent/disagreement contracts are absent; existing count warning/hardcoded unavailable are not substitutes.",
+    "Real repeated/interrupted OIDC login and failed-callback Back/Forward; actual browser file-download interruption.",
+    "Native UBI image build/startup/shutdown/UID1001, image Trivy/OS/RPM/Node inventory and ARM64; no pull retried.",
+    "22 actual runtime declaration/notice issues; descriptor provenance is not legal clearance.",
+    "Live HTTPS/OIDC/customer acceptance, final release identity/downloads/released-build demo."
+  ],
+  "invariants": [
+    "All18aggregateM3gatespending; M0\u2013M10 order preserved.",
+    "Three adapters remain required; observed-rate calibration chosen and Wilson descriptive; no new quality threshold.",
+    "Only inaccessible externalmodelprovider tests qualify for the approved explicit defer/unverified exception.",
+    "No remote writes, deployment, provisioning, credentials/access changes or immutable release mutation."
+  ],
+  "sourceForwardScan": {
+    "baseCommit": "a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a",
+    "headCommit": "2079b9d8835ad439bd067ed6a5639b5137867b32",
+    "introducedCommits": 3,
+    "selectedBlobs": 38,
+    "findings": 0
+  },
+  "preservedExistingTaskObjects": 149
+}

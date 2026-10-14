@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "05c76f6bb3a3fb9a0fa51cf19975d1d63c3197f8",
+  "sourceTree": "7f48aee670f22a807d5068e0d74bd31e4245e0a2",
+  "basePRHead": "46e69e2126e8a3bcdc7c156eff91a2c1ae39ca27",
+  "scope": "P2 introduced workflow state loss during healthy session checks; content remains hidden/inert while pending and invalidation destroys state",
+  "reproduction": {
+    "result": "failed as expected on prior production app",
+    "assertion": "Download verified snapshot disappears after held focus revalidation returns same binding/positive TTL"
+  },
+  "checks": {
+    "build": "passed",
+    "types": "passed through production build",
+    "unit": {
+      "passed": 21,
+      "failed": 0
+    },
+    "browser": {
+      "passed": 45,
+      "failed": 0,
+      "checks": [
+        "isolated standalone without test bootstrap/configuration fails closed",
+        "redacted process liveness and local configuration readiness reject unconfigured setup",
+        "failed callback Back/Forward and repeated unavailable login remain unauthenticated without private review data",
+        "healthy focus and actual 30-second poll conceal pending content then preserve exact-view filter, disclosure, verified export and history without backend refetch",
+        "in-flight history and export survive concealed healthy revalidation, retain their buffers and finish only through verified final page/end/EOF",
+        "unavailable, actual revocation and account change discard concealed cached proofs/filter and abort retained sockets; renewed valid access cannot restore invalidated state",
+        "same-session RSC change of exact admission destroys old retained proofs before a mismatched upstream subject fails closed",
+        "anonymous view and direct data route denied",
+        "authenticated original-admission detail mobile/unknown evidence",
+        "authorized local filtering preserves exact selected detail and empty state; queue navigation and Back restore correct subjects",
+        "focus revalidation hides protected content before asynchronous session response",
+        "server remaining TTL hides expired content independently of browser wall clock",
+        "Radix keyboard focus and tabs",
+        "cross tenant direct route and account view isolated",
+        "cross origin logout CSRF denied",
+        "malformed503/unavailable503/backendcredential502/notfound404/incomplete409/bounded413 distinguished from session expiry",
+        "cancel intent cannot assert cleanup",
+        "browser Back restores Summary and Forward restores exact focused retained Evidence target without backend mutations",
+        "retained finding reference activates Evidence tab and exact focused target, including direct hash reload",
+        "nonempty primary view close and active session revocation abort backend finding sockets before release without next reads or mutations",
+        "completed refusal displays exact subject/profile/role coverage without inferred clean review",
+        "rapid exact-review navigation discards obsolete first-subject response",
+        "closing a view with an active read never requests backend cancellation/mutation",
+        "history completes only after contiguous final-page watermark, distinct from summary-pinned evidence",
+        "changed history watermark discards provisional pages and never presents complete timeline",
+        "valid alternate finding history chain must match the exact summary-pinned version and digest",
+        "fully verified export after actual EOF enables exact nonempty NDJSON download without credentials",
+        "actual browser Blob download cancellation request records observed result without inferring upstream interruption",
+        "truncated/trailing/wrong-digest/wrong-identity/invalid-UTF8 exports never enable verified download",
+        "valid export end on open socket remains provisional and Stop read aborts upstream before EOF",
+        "nonempty history/export close/revoke/logout/account-change abort upstream sockets without next page, late completion or mutations",
+        "fresh retained-read session TTL subtracts complete round trip before any upstream read",
+        "fresh session verification unavailable is distinct from session expiry",
+        "full client read deadline bounds a held fresh-session response before export traversal",
+        "delayed expired fresh-session response cannot release an already verified export download",
+        "account change after verified export denies download on fresh session binding check",
+        "private evidence caching and browser credential absence",
+        "revoked session during backend read cannot deliver evidence",
+        "logout then Back cannot show retained account detail",
+        "RSC refreshed session-binding props cannot expose children before verifying new binding",
+        "same-browser account change/restoration cannot reveal prior tenant cached detail",
+        "strict production admission rejects extra private sentinel before SSR/RSC/client props or backend access",
+        "session expiry during provisional history and export aborts both upstream sockets and never enables download",
+        "real synthetic server-session expiry hides review and distinguishes retained evidence",
+        "zero AgentCI API mutations"
+      ],
+      "backendMutations": 0
+    }
+  },
+  "security": [
+    "Old server expiry deadline stays active during stalled verification",
+    "No child cache before initial verification or after unavailable/revoked/changed/expired result",
+    "Exact admission included in parent view key; changed subject cannot restore prior proof",
+    "Existing protected-route, retained-reader, stale-response, EOF/history and tenant checks retained"
+  ],
+  "limits": [
+    "Synthetic fixtures only; no live OIDC/customer/production claims",
+    "No milestone release gate closure"
+  ]
+}

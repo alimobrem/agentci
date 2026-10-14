@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "scope": "Local existing-contract OIDC protocol and production browser callback/download interruption fixture qualification; no product/API/config expansion or fullM3gateclosure",
+  "baseCommit": "97665f64a2c7eeca9950bfb90cb1ec42723ab245",
+  "testedSourceCommit": "d68a6ec4031ac2668852954b3b603f613e99d5a1",
+  "testedSourceTree": "201e763c85db8f2fe7084acca6de92dd0a183f23",
+  "taskId": "M3-07-ui-login-interruption-local",
+  "preservedBaseTaskObjects": 152,
+  "sources": [
+    {
+      "path": "apps/dashboard/tests/oidc.test.ts",
+      "sha256": "0e671f1cfc087e2a264f74a3515aae016c99f94c1f0d85d99f7ad49334f9758a"
+    },
+    {
+      "path": "apps/dashboard/tests/browser/check.mjs",
+      "sha256": "10ebf8d515c6209579027b3b8f72a5fde33959df03eb24e776a103294c8fb6b4"
+    },
+    {
+      "path": "scripts/lib/dashboard-ci-evidence.mjs",
+      "sha256": "cf56bb3d9ed5d413512e99cb7753a8f6157e093c8f4955284a18d49ce871e387"
+    }
+  ],
+  "results": {
+    "uiTests": 21,
+    "oidcTests": 5,
+    "sdkBuild": "passed",
+    "productionNextBuild": "passed",
+    "uiTypecheck": "passed",
+    "productionBrowserChecks": 40,
+    "backendMutations": 0,
+    "blobCancellation": {
+      "requested": true,
+      "observedFailure": "canceled",
+      "cancellationObserved": true,
+      "scope": "Fully verified buffered Blob; no upstream network transfer remains to interrupt"
+    }
+  },
+  "buildQualification": "Production build performed at ba47bd3; d68a6ec changes only browser test and required evidence strings. All production/UI/SDK runtime files identical. Browser result binds d68a6ec exact tests/tree.",
+  "environment": {
+    "node": "26.10.0",
+    "npm": "12.2.0",
+    "browser": "System Chromium151.0.7922.173",
+    "dependencies": "Cached root installed modules linked; locked UI npm ci prefer-offline with esbuild postinstall blocked by npm policy. No new dependency versions."
+  },
+  "evidence": [
+    {
+      "path": "/workspace/scratch/dashboard-login-install.log",
+      "sha256": "66e055f658ed0ecc636c98bae66645a94dced933b2f7169d18709b0c6e9dab98"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-login-unit.log",
+      "sha256": "1ae0028e556b3a7b090e3bff12850254f034c228528d305c7db9b62dabff3a2f"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-login-unit-after-sdk.log",
+      "sha256": "7fe42cd72ad6ac989bf7a71ac1d414ea610d52cd41eab743fc50e6132715190f"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-login-sdk-build.log",
+      "sha256": "d60a7eb92fec7deb71f3c94a12912094e692e522e6ab46e5f19f44234abb2533"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-login-production-build.log",
+      "sha256": "4e17429d3d928d8debde4b1a4e100bd7d21d9bc2bf32929b59691cd58d3fe6de"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-login-types.log",
+      "sha256": "ede264564d22ba889a85acdd1b230c2b814e18b2f3f1d0177b5b4e7d7867480c"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-login-browser.log",
+      "sha256": "d18244535ee6eb6f66dfb8875ad3c3110309765f8e324e5f0efeb99a7038bb9f"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-login-browser-initial-result.json",
+      "sha256": "c41e6ad973e5cf9ef2b49954c502dba18f0f8d9afc51f1b0a272e4b4eec4536f"
+    },
+    {
+      "path": "/workspace/scratch/dashboard-login-browser-cancellation.log",
+      "sha256": "e39d2ef705d394d16cfb52353255d6eeff3b766bb4d13a483b4ef99573282771"
+    },
+    {
+      "path": "delivery/acceptance/m3-dashboard-login-browser-d68a6ec.json",
+      "sha256": "f7c130ece6a1623ffcd2088d9f57d65ffd48968cfa53f882ab6cba5fb71eed2b"
+    }
+  ],
+  "preservedFailedAttempt": "Initial full UI invocation before SDK generation stalled/finally failed with pending promises; owned runner terminated and children observed defunct, no live owned runner. Proper post-SDK full21tests passed. Original failed output retained.",
+  "remaining": [
+    "Live identity provider/browser end-to-end login and deployed HTTPS/customer acceptance. Browser callback fixture intentionally uses unavailable login while signed protocol tests run separately.",
+    "Locked hosted browser bootstrap, exact-source independent review and full original UI acceptance.",
+    "SPEC33 intent/disagreement retained source and subject-bound analysis/comparison configuration/read-contract design remains unchanged.",
+    "Actual native UBI registryForbidden recorded separately in62ac905; native/image/OS/RPM checks remain unverified.",
+    "22runtime notice/declaration flags unresolved; all18M3gatespending; final release/download/released-build demo open."
+  ],
+  "noRemoteWrites": true
+}

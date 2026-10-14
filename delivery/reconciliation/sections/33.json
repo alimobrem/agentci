@@ -164,11 +164,59 @@
         "note": "Approved M3 initial PR dashboard; later views implemented with their domain boundaries"
       },
       "mappingAuthority": "review-reconciliation",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-07-ui-pr-contract-map",
+          "status": "done",
+          "startedAt": "2026-10-14T04:00:29.264Z",
+          "completedAt": "2026-10-14T04:02:08.359Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Document all eleven initial PR view clauses with source contracts, current supported UI, explicit missing bindings/data and required acceptance; preserve unavailable states and report backend/config gaps before expansion. Mapping does not close implementation or milestone requirements.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-pr-view-contract-map.md"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-cyberpunk-local",
+          "status": "done",
+          "startedAt": "2026-10-14T21:46:57.105Z",
+          "completedAt": "2026-10-14T21:54:57.334Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Functional authorized queue filtering, responsive dark reviewer shell, explicit execution/evidence/claim distinctions, finding-first summary, readable history and secondary export/provenance; no new backend data or authority. Exact production build/type/unit/browser checks preserve login interruption, repeated navigation, revocation, stale/aborted reads, history pinning and export EOF protections; inspect actual desktop/mobile synthetic screenshots.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-ui-revalidation-05c76f6.json"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-dashboard-pr-view-contract-map.md",
+          "sha256": "057f166ac193b9949688400a74b494a7037e9abbcdcf1830597f967514bb19bd",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-ui-revalidation-05c76f6.json",
+          "sha256": "c56e50c034ac10a73f90dc4682d20a98bc33ea6b749407778b4bb0685c5e301b",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -177,10 +225,7 @@
       "owner": "AgentCI maintainers",
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
-      "reconciliationGaps": [
-        "no-row-evidence",
-        "no-task-or-operation-link"
-      ]
+      "reconciliationGaps": []
     },
     {
       "requirementId": "SPEC-33.1-003",
@@ -213,11 +258,59 @@
         "note": "Approved M3 initial PR dashboard; later views implemented with their domain boundaries"
       },
       "mappingAuthority": "review-reconciliation",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-07-ui-pr-contract-map",
+          "status": "done",
+          "startedAt": "2026-10-14T04:00:29.264Z",
+          "completedAt": "2026-10-14T04:02:08.359Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Document all eleven initial PR view clauses with source contracts, current supported UI, explicit missing bindings/data and required acceptance; preserve unavailable states and report backend/config gaps before expansion. Mapping does not close implementation or milestone requirements.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-pr-view-contract-map.md"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-cyberpunk-local",
+          "status": "done",
+          "startedAt": "2026-10-14T21:46:57.105Z",
+          "completedAt": "2026-10-14T21:54:57.334Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Functional authorized queue filtering, responsive dark reviewer shell, explicit execution/evidence/claim distinctions, finding-first summary, readable history and secondary export/provenance; no new backend data or authority. Exact production build/type/unit/browser checks preserve login interruption, repeated navigation, revocation, stale/aborted reads, history pinning and export EOF protections; inspect actual desktop/mobile synthetic screenshots.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-ui-revalidation-05c76f6.json"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-dashboard-pr-view-contract-map.md",
+          "sha256": "057f166ac193b9949688400a74b494a7037e9abbcdcf1830597f967514bb19bd",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-ui-revalidation-05c76f6.json",
+          "sha256": "c56e50c034ac10a73f90dc4682d20a98bc33ea6b749407778b4bb0685c5e301b",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -226,10 +319,7 @@
       "owner": "AgentCI maintainers",
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
-      "reconciliationGaps": [
-        "no-row-evidence",
-        "no-task-or-operation-link"
-      ]
+      "reconciliationGaps": []
     },
     {
       "requirementId": "SPEC-33.1-004",
@@ -262,11 +352,36 @@
         "note": "Approved M3 initial PR dashboard; later views implemented with their domain boundaries"
       },
       "mappingAuthority": "review-reconciliation",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-07-ui-pr-contract-map",
+          "status": "done",
+          "startedAt": "2026-10-14T04:00:29.264Z",
+          "completedAt": "2026-10-14T04:02:08.359Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Document all eleven initial PR view clauses with source contracts, current supported UI, explicit missing bindings/data and required acceptance; preserve unavailable states and report backend/config gaps before expansion. Mapping does not close implementation or milestone requirements.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-pr-view-contract-map.md"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-dashboard-pr-view-contract-map.md",
+          "sha256": "057f166ac193b9949688400a74b494a7037e9abbcdcf1830597f967514bb19bd",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -275,10 +390,7 @@
       "owner": "AgentCI maintainers",
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
-      "reconciliationGaps": [
-        "no-row-evidence",
-        "no-task-or-operation-link"
-      ]
+      "reconciliationGaps": []
     },
     {
       "requirementId": "SPEC-33.1-005",
@@ -311,11 +423,36 @@
         "note": "Approved M3 initial PR dashboard; later views implemented with their domain boundaries"
       },
       "mappingAuthority": "review-reconciliation",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-07-ui-pr-contract-map",
+          "status": "done",
+          "startedAt": "2026-10-14T04:00:29.264Z",
+          "completedAt": "2026-10-14T04:02:08.359Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Document all eleven initial PR view clauses with source contracts, current supported UI, explicit missing bindings/data and required acceptance; preserve unavailable states and report backend/config gaps before expansion. Mapping does not close implementation or milestone requirements.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-pr-view-contract-map.md"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-dashboard-pr-view-contract-map.md",
+          "sha256": "057f166ac193b9949688400a74b494a7037e9abbcdcf1830597f967514bb19bd",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -324,10 +461,7 @@
       "owner": "AgentCI maintainers",
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
-      "reconciliationGaps": [
-        "no-row-evidence",
-        "no-task-or-operation-link"
-      ]
+      "reconciliationGaps": []
     },
     {
       "requirementId": "SPEC-33.1-006",
@@ -360,11 +494,36 @@
         "note": "Approved M3 initial PR dashboard; later views implemented with their domain boundaries"
       },
       "mappingAuthority": "review-reconciliation",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-07-ui-pr-contract-map",
+          "status": "done",
+          "startedAt": "2026-10-14T04:00:29.264Z",
+          "completedAt": "2026-10-14T04:02:08.359Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Document all eleven initial PR view clauses with source contracts, current supported UI, explicit missing bindings/data and required acceptance; preserve unavailable states and report backend/config gaps before expansion. Mapping does not close implementation or milestone requirements.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-pr-view-contract-map.md"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-dashboard-pr-view-contract-map.md",
+          "sha256": "057f166ac193b9949688400a74b494a7037e9abbcdcf1830597f967514bb19bd",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -373,10 +532,7 @@
       "owner": "AgentCI maintainers",
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
-      "reconciliationGaps": [
-        "no-row-evidence",
-        "no-task-or-operation-link"
-      ]
+      "reconciliationGaps": []
     },
     {
       "requirementId": "SPEC-33.1-007",
@@ -409,11 +565,36 @@
         "note": "Approved M3 initial PR dashboard; later views implemented with their domain boundaries"
       },
       "mappingAuthority": "review-reconciliation",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-07-ui-pr-contract-map",
+          "status": "done",
+          "startedAt": "2026-10-14T04:00:29.264Z",
+          "completedAt": "2026-10-14T04:02:08.359Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Document all eleven initial PR view clauses with source contracts, current supported UI, explicit missing bindings/data and required acceptance; preserve unavailable states and report backend/config gaps before expansion. Mapping does not close implementation or milestone requirements.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-pr-view-contract-map.md"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-dashboard-pr-view-contract-map.md",
+          "sha256": "057f166ac193b9949688400a74b494a7037e9abbcdcf1830597f967514bb19bd",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -422,10 +603,7 @@
       "owner": "AgentCI maintainers",
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
-      "reconciliationGaps": [
-        "no-row-evidence",
-        "no-task-or-operation-link"
-      ]
+      "reconciliationGaps": []
     },
     {
       "requirementId": "SPEC-33.1-008",
@@ -458,11 +636,36 @@
         "note": "Approved M3 initial PR dashboard; later views implemented with their domain boundaries"
       },
       "mappingAuthority": "review-reconciliation",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-07-ui-pr-contract-map",
+          "status": "done",
+          "startedAt": "2026-10-14T04:00:29.264Z",
+          "completedAt": "2026-10-14T04:02:08.359Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Document all eleven initial PR view clauses with source contracts, current supported UI, explicit missing bindings/data and required acceptance; preserve unavailable states and report backend/config gaps before expansion. Mapping does not close implementation or milestone requirements.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-pr-view-contract-map.md"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-dashboard-pr-view-contract-map.md",
+          "sha256": "057f166ac193b9949688400a74b494a7037e9abbcdcf1830597f967514bb19bd",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -471,10 +674,7 @@
       "owner": "AgentCI maintainers",
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
-      "reconciliationGaps": [
-        "no-row-evidence",
-        "no-task-or-operation-link"
-      ]
+      "reconciliationGaps": []
     },
     {
       "requirementId": "SPEC-33.1-009",
@@ -507,11 +707,36 @@
         "note": "Approved M3 initial PR dashboard; later views implemented with their domain boundaries"
       },
       "mappingAuthority": "review-reconciliation",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-07-ui-pr-contract-map",
+          "status": "done",
+          "startedAt": "2026-10-14T04:00:29.264Z",
+          "completedAt": "2026-10-14T04:02:08.359Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Document all eleven initial PR view clauses with source contracts, current supported UI, explicit missing bindings/data and required acceptance; preserve unavailable states and report backend/config gaps before expansion. Mapping does not close implementation or milestone requirements.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-pr-view-contract-map.md"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-dashboard-pr-view-contract-map.md",
+          "sha256": "057f166ac193b9949688400a74b494a7037e9abbcdcf1830597f967514bb19bd",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -520,10 +745,7 @@
       "owner": "AgentCI maintainers",
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
-      "reconciliationGaps": [
-        "no-row-evidence",
-        "no-task-or-operation-link"
-      ]
+      "reconciliationGaps": []
     },
     {
       "requirementId": "SPEC-33.1-010",
@@ -556,11 +778,36 @@
         "note": "Approved M3 initial PR dashboard; later views implemented with their domain boundaries"
       },
       "mappingAuthority": "review-reconciliation",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-07-ui-pr-contract-map",
+          "status": "done",
+          "startedAt": "2026-10-14T04:00:29.264Z",
+          "completedAt": "2026-10-14T04:02:08.359Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Document all eleven initial PR view clauses with source contracts, current supported UI, explicit missing bindings/data and required acceptance; preserve unavailable states and report backend/config gaps before expansion. Mapping does not close implementation or milestone requirements.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-pr-view-contract-map.md"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-dashboard-pr-view-contract-map.md",
+          "sha256": "057f166ac193b9949688400a74b494a7037e9abbcdcf1830597f967514bb19bd",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -569,10 +816,7 @@
       "owner": "AgentCI maintainers",
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
-      "reconciliationGaps": [
-        "no-row-evidence",
-        "no-task-or-operation-link"
-      ]
+      "reconciliationGaps": []
     },
     {
       "requirementId": "SPEC-33.1-011",
@@ -605,11 +849,36 @@
         "note": "Approved M3 initial PR dashboard; later views implemented with their domain boundaries"
       },
       "mappingAuthority": "review-reconciliation",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-07-ui-pr-contract-map",
+          "status": "done",
+          "startedAt": "2026-10-14T04:00:29.264Z",
+          "completedAt": "2026-10-14T04:02:08.359Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Document all eleven initial PR view clauses with source contracts, current supported UI, explicit missing bindings/data and required acceptance; preserve unavailable states and report backend/config gaps before expansion. Mapping does not close implementation or milestone requirements.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-pr-view-contract-map.md"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-dashboard-pr-view-contract-map.md",
+          "sha256": "057f166ac193b9949688400a74b494a7037e9abbcdcf1830597f967514bb19bd",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -618,10 +887,7 @@
       "owner": "AgentCI maintainers",
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
-      "reconciliationGaps": [
-        "no-row-evidence",
-        "no-task-or-operation-link"
-      ]
+      "reconciliationGaps": []
     },
     {
       "requirementId": "SPEC-33.1-012",
@@ -654,11 +920,36 @@
         "note": "Approved M3 initial PR dashboard; later views implemented with their domain boundaries"
       },
       "mappingAuthority": "review-reconciliation",
-      "implementationTasks": [],
+      "implementationTasks": [
+        {
+          "id": "M3-07-ui-pr-contract-map",
+          "status": "done",
+          "startedAt": "2026-10-14T04:00:29.264Z",
+          "completedAt": "2026-10-14T04:02:08.359Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Document all eleven initial PR view clauses with source contracts, current supported UI, explicit missing bindings/data and required acceptance; preserve unavailable states and report backend/config gaps before expansion. Mapping does not close implementation or milestone requirements.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-pr-view-contract-map.md"
+              ]
+            }
+          ]
+        }
+      ],
       "api": [],
       "testReferences": [],
       "plannedPRs": [],
-      "evidence": [],
+      "evidence": [
+        {
+          "path": "docs/phases/m3-dashboard-pr-view-contract-map.md",
+          "sha256": "057f166ac193b9949688400a74b494a7037e9abbcdcf1830597f967514bb19bd",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        }
+      ],
       "verification": {
         "currentCandidate": "not-run",
         "historicalClaim": "no-tested-claim",
@@ -667,10 +958,7 @@
       "owner": "AgentCI maintainers",
       "blocker": "Clause-level ownership/test/evidence reconciliation remains open where links are absent",
       "rerunTrigger": "Changed relevant implementation, contract, verifier, policy, provider access or release candidate",
-      "reconciliationGaps": [
-        "no-row-evidence",
-        "no-task-or-operation-link"
-      ]
+      "reconciliationGaps": []
     },
     {
       "requirementId": "SECTION-33.2",
