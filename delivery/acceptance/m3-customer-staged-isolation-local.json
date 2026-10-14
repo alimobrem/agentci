@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "baseSource": "9efcdedfe6f20667608fd80b1eccc141dc5df4a1",
+  "implementationFiles": [
+    {
+      "path": ".github/workflows/verify.yaml",
+      "bytes": 9758,
+      "sha256": "a1263fdbe0b8f815c29045d7e467092dbb51eaf9438c884c250acd9831353c20"
+    },
+    {
+      "path": "scripts/customer-dev4-scope-regression.mjs",
+      "bytes": 11281,
+      "sha256": "53cd1e6caa56687ed4da76e054ad7c8d2364996918422d1caa07e3b612fbee6a"
+    },
+    {
+      "path": "scripts/lib/customer-session-owner.mjs",
+      "bytes": 3285,
+      "sha256": "aeafac6b766ed708e5a8308396fa455045acd7faaec00d32611dfbe640f69c06"
+    },
+    {
+      "path": "scripts/lib/customer-isolated-database.mjs",
+      "bytes": 1807,
+      "sha256": "38d1b40ddd12b880ccb6a9f67a35642214dbca1213b59e815688135c2773e331"
+    },
+    {
+      "path": "scripts/lib/customer-diagnostics.mjs",
+      "bytes": 4802,
+      "sha256": "4226aa6636d966d34e0708e831a98a5d0e5bdf17da42df2a1236b7220dd8417e"
+    },
+    {
+      "path": "scripts/lib/customer-four-scenarios.mjs",
+      "bytes": 5900,
+      "sha256": "3005e4c261f2327af60e1cc15dcd786bfbe3cf2dd412d7437fcc7cd40a459af3"
+    },
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "bytes": 25812,
+      "sha256": "51ea375a21ab3aabf7c6f2a1521edf7c2e1caf0cade2eb59b57df43d2422d4d9"
+    },
+    {
+      "path": "scripts/m3-customer-live-demo.mjs",
+      "bytes": 8665,
+      "sha256": "0ab49cb74bc81ced51288830cf0a0352d5076c6f6f3a78140e7e2b8b86274faa"
+    },
+    {
+      "path": "scripts/verification-summary.mjs",
+      "bytes": 4003,
+      "sha256": "a877079ef8e7b755e930d1e4ee47c09cc28610c50ce8ba0b86b6c348f52d740e"
+    },
+    {
+      "path": "tests/customer-diagnostics.test.ts",
+      "bytes": 3933,
+      "sha256": "12465eb2c8c9942425b5b965289b357872847d9e786b7b04ff69d18234f01297"
+    },
+    {
+      "path": "tests/customer-four-scenarios.test.ts",
+      "bytes": 3364,
+      "sha256": "4c1cf6fab31c48227af371aebf2f9f2c47c7afb0352caf9a13fb86cf324ebe14"
+    },
+    {
+      "path": "tests/customer-session-owner.test.ts",
+      "bytes": 3875,
+      "sha256": "661f8a7c2aa7d203c6d52c221f3a4cb747cf48d062620e504f06e0492594ce21"
+    },
+    {
+      "path": "tests/helpers/customer-recovery-transport.mjs",
+      "bytes": 4916,
+      "sha256": "3354f82a0c4b5f092714d19ed793c8cf849d76984319aa12c498a08ea20f546c"
+    }
+  ],
+  "failedCustomer": {
+    "runId": 38649564609,
+    "attempt": 1,
+    "source": "9efcdedfe6f20667608fd80b1eccc141dc5df4a1",
+    "originalAPIRejectionCode": "not-retained; structural attempt-budget conflict independently established",
+    "artifactIds": [
+      11934012609,
+      11934042444,
+      11933887839
+    ],
+    "preserved": true
+  },
+  "local": {
+    "node": "v26.10.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "focused": {
+      "tests": 32,
+      "passed": 32,
+      "failed": 0,
+      "skipped": 0
+    },
+    "fast": {
+      "tests": 580,
+      "passed": 565,
+      "failed": 9,
+      "skipped": 6,
+      "otherStagesPassed": 9,
+      "qualification": "Same nine Mac platform failures previously reproduced on unchanged main; no failure waiver."
+    },
+    "types": "passed",
+    "workflows": "passed",
+    "generatedPreloadSyntax": "passed",
+    "installedDev4Regression": "not executed: requires real Linux PostgreSQL/Temporal/Docker; local Docker socket access denied"
+  },
+  "hostedRoute": {
+    "workflow": "Verify",
+    "step": "Immutable dev.4 customer scope and staged cancellation regression",
+    "command": "node scripts/ci-database.mjs run node scripts/customer-dev4-scope-regression.mjs",
+    "requires": "Existing owned CI PostgreSQL and Temporal, anonymous immutable dev.4 package/native assets; generated-key GitHub transport, no real App keys or GitHub writes.",
+    "artifact": ".agentci/artifacts/customer-dev4-scope-regression.json",
+    "manifest": "scripts/verification-summary.mjs requires passed source-bound physical and cleanup proof"
+  },
+  "scope": {
+    "sameFixture": true,
+    "maxAttemptsUnchanged": 3,
+    "productModulesUnchanged": true,
+    "realAppPermissionsUnchanged": true,
+    "releaseAssetsUnchanged": true,
+    "newRemotePR": false,
+    "customerRerun": false,
+    "M3Acceptance": "pending"
+  }
+}
