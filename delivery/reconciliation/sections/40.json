@@ -6719,14 +6719,43 @@
         },
         {
           "id": "M3-07d-2-scope-activation",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-13T20:29:00.835Z",
-          "completedAt": null,
+          "completedAt": "2026-10-14T03:54:03.680Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Public scope-only descriptor binds reviewed main ancestor, separate customer App 5182307 and installation 167710386 exclusively to alimobrem/agentci-onboarding-demo. Existing guard validates actual key/App/install/minimal permissions before fixture mutation. Preserve all other gates; local descriptor/negative contract checks, exact-source hosted CI and independent review before activation. Actual hosted read-only scope result required before task completion; secret presence alone is not validity.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-scope-postmerge-a39de3fb.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07d-2-demo-activation",
+          "status": "in-progress",
+          "startedAt": "2026-10-14T03:53:48.236Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Three collision-checked new demo fixture branches and two PRs use exact trusted customerFixtureFiles() bytes; preserve demo main and existing PRs 1-3; retain exact public branch/tree/PR/base/head identities.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-fixtures-a39de3fb.json"
+              ]
+            },
+            {
+              "text": "Public activation descriptor binds reviewed harness ancestor, separate customer App/install, exact immutable dev.3 package/native evidence hashes and actual fixture subjects. Applicable local and four hosted CI gates plus parent independent exact-source/artifact review precede approved activation merge; retain failures and scope qualifications.",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Actual installed-release temporary workflow retains unsupported unconfirmed claim, seeded physical reproduction, fixed non-reproduction without altering original receipt, failure/restart/cancellation/recovery and verified owned cleanup. Scoped demo Checks and temporary services only; no new credentials/access/paid/persistent services. Retain exact-source terminal results and independently validated evidence. HTTPS/OIDC and all aggregate M3 release gates remain separate.",
               "status": "pending",
               "evidence": []
             }
@@ -6905,6 +6934,18 @@
         {
           "path": "delivery/acceptance/m3-dashboard-actual-planner-main-binding-28b4ad4.json",
           "sha256": "28eda5f19e29f3f4c1ca6b5e6ee93bb0d4fa53c0b86b335846dc7d87c2ce47e1",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-scope-postmerge-a39de3fb.json",
+          "sha256": "d5c80f9e1cce37b5a6c85ca28973a9ddc65bd873e19b0a87ca4036411ec2f133",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-fixtures-a39de3fb.json",
+          "sha256": "2637b8c11de8eaf36e2d18caa9b0112de75a33d17f6553f909bddc55b66695f8",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -7617,14 +7658,43 @@
         },
         {
           "id": "M3-07d-2-scope-activation",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-13T20:29:00.835Z",
-          "completedAt": null,
+          "completedAt": "2026-10-14T03:54:03.680Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Public scope-only descriptor binds reviewed main ancestor, separate customer App 5182307 and installation 167710386 exclusively to alimobrem/agentci-onboarding-demo. Existing guard validates actual key/App/install/minimal permissions before fixture mutation. Preserve all other gates; local descriptor/negative contract checks, exact-source hosted CI and independent review before activation. Actual hosted read-only scope result required before task completion; secret presence alone is not validity.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-scope-postmerge-a39de3fb.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07d-2-demo-activation",
+          "status": "in-progress",
+          "startedAt": "2026-10-14T03:53:48.236Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Three collision-checked new demo fixture branches and two PRs use exact trusted customerFixtureFiles() bytes; preserve demo main and existing PRs 1-3; retain exact public branch/tree/PR/base/head identities.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-fixtures-a39de3fb.json"
+              ]
+            },
+            {
+              "text": "Public activation descriptor binds reviewed harness ancestor, separate customer App/install, exact immutable dev.3 package/native evidence hashes and actual fixture subjects. Applicable local and four hosted CI gates plus parent independent exact-source/artifact review precede approved activation merge; retain failures and scope qualifications.",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Actual installed-release temporary workflow retains unsupported unconfirmed claim, seeded physical reproduction, fixed non-reproduction without altering original receipt, failure/restart/cancellation/recovery and verified owned cleanup. Scoped demo Checks and temporary services only; no new credentials/access/paid/persistent services. Retain exact-source terminal results and independently validated evidence. HTTPS/OIDC and all aggregate M3 release gates remain separate.",
               "status": "pending",
               "evidence": []
             }
@@ -7803,6 +7873,18 @@
         {
           "path": "delivery/acceptance/m3-dashboard-actual-planner-main-binding-28b4ad4.json",
           "sha256": "28eda5f19e29f3f4c1ca6b5e6ee93bb0d4fa53c0b86b335846dc7d87c2ce47e1",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-scope-postmerge-a39de3fb.json",
+          "sha256": "d5c80f9e1cce37b5a6c85ca28973a9ddc65bd873e19b0a87ca4036411ec2f133",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-fixtures-a39de3fb.json",
+          "sha256": "2637b8c11de8eaf36e2d18caa9b0112de75a33d17f6553f909bddc55b66695f8",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

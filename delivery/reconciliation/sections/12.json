@@ -3083,6 +3083,33 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07d-2-demo-activation",
+          "status": "in-progress",
+          "startedAt": "2026-10-14T03:53:48.236Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Three collision-checked new demo fixture branches and two PRs use exact trusted customerFixtureFiles() bytes; preserve demo main and existing PRs 1-3; retain exact public branch/tree/PR/base/head identities.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-fixtures-a39de3fb.json"
+              ]
+            },
+            {
+              "text": "Public activation descriptor binds reviewed harness ancestor, separate customer App/install, exact immutable dev.3 package/native evidence hashes and actual fixture subjects. Applicable local and four hosted CI gates plus parent independent exact-source/artifact review precede approved activation merge; retain failures and scope qualifications.",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Actual installed-release temporary workflow retains unsupported unconfirmed claim, seeded physical reproduction, fixed non-reproduction without altering original receipt, failure/restart/cancellation/recovery and verified owned cleanup. Scoped demo Checks and temporary services only; no new credentials/access/paid/persistent services. Retain exact-source terminal results and independently validated evidence. HTTPS/OIDC and all aggregate M3 release gates remain separate.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -3391,6 +3418,12 @@
         {
           "path": "delivery/acceptance/m3-reproduction-consumer-merged.json",
           "sha256": "04f16dae1b8fda828d7ec2cc459c517291c36f968f01101191e3111edfcfb1b9",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-fixtures-a39de3fb.json",
+          "sha256": "2637b8c11de8eaf36e2d18caa9b0112de75a33d17f6553f909bddc55b66695f8",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
