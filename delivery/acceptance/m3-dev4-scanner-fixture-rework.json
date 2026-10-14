@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "purpose": "PR101 mandatory scanner regression fixture correction only; full changed-head CI and parent review still required",
+  "observedAt": "2026-10-14T19:28:08.624625+00:00",
+  "codeSource": "4778cc33d9669f4fab33136b72a9ca58618830b4",
+  "codeTree": "9c6db0688c08b0ed31e1ab4c7e24b2e8e97c304f",
+  "candidateVersion": "0.4.0-m3-dev.4",
+  "sourceBindings": [
+    {
+      "path": "tests/sensitive-forward.test.ts",
+      "sha256": "654706ecf9d2ceb9370427cf216fd3a679d7541eee476dd92380b1f4bb6d00b6",
+      "bytes": 13835
+    },
+    {
+      "path": "scripts/security/scan-forward.mjs",
+      "sha256": "64be7dc608da3e9ee0056724d1dac3e6742f60f9a4723e67a14b94ed9496dcc2",
+      "bytes": 9551
+    },
+    {
+      "path": "scripts/security/gitleaks.toml",
+      "sha256": "479c71c32b3ab3342975d55ca98022fc1e1ec7c909b9da418c39e7fcc10a7f7a",
+      "bytes": 496
+    },
+    {
+      "path": "scripts/security/install-gitleaks.mjs",
+      "sha256": "12c9034deb529ca452e50132baac2ee949deb12f4841513f587f16f994c96807",
+      "bytes": 3827
+    }
+  ],
+  "failedCI": {
+    "run": 38622670778,
+    "attempt": 1,
+    "head": "a9afe24d141cb3dad6d0629d233bbf3143320d6d",
+    "job": 116053862960,
+    "conclusion": "failure",
+    "tests": 558,
+    "passed": 557,
+    "failed": 1,
+    "location": "tests/sensitive-forward.test.ts:25:303; missing package-lock.json path finding",
+    "fastSeconds": 78.21,
+    "artifact": {
+      "id": 11921724548,
+      "sha256": "2ac9dd7c342d93d5eb20e86ffdf82b8b4687b099b63f9647fb6a0ef4157a8aa8",
+      "bytes": 22805,
+      "qualification": "Partial metadata identity only; no actual artifact ZIP inspection claimed here. Runtime/integration/package/native gates were skipped."
+    },
+    "record": "delivery/runs/38622670778-attempt-1.json",
+    "otherExactHeadRuns": {
+      "fastFeedback": "Separate job in same Verify passed",
+      "dashboard": 38622670528,
+      "advisory": 38622670764,
+      "dedicatedScan": 38622670680,
+      "conclusion": "all success; does not replace failed mandatory Verify"
+    },
+    "cache": "unknown"
+  },
+  "causalFindings": {
+    "customRule": "agentci-password-assignment expects whitespace/:/= immediately after password; quoted JSON key has closing quote first, so that rule does not match it.",
+    "genericRule": "Pinned upstream generic-api-key requires Shannon entropy >=3.5 and rejects matching stopwords, including hex-compatible dead/feed. Unconstrained random hex does not guarantee these preconditions.",
+    "controlledActualScanner": {
+      "results": [
+        {
+          "case": "below-entropy",
+          "entropy": 0,
+          "packageLockFinding": false,
+          "tomlFinding": true,
+          "rules": [
+            {
+              "rule": "agentci-password-assignment",
+              "path": ".gitleaks.toml"
+            }
+          ],
+          "policySha256": "719492eab4c71b1c762b518f4e63ffe8e2a1201f2d77c14b7c32608073f9921d",
+          "scannerVersion": "8.30.1",
+          "scannerBinarySha256": "88f91962aa2f93ac6ab281d553b9e125f5197bbbce38f9f2437f7299c32e5509",
+          "rawValuesRetained": false
+        },
+        {
+          "case": "above-entropy-stopword",
+          "entropy": 3.9617666049245948,
+          "packageLockFinding": false,
+          "tomlFinding": true,
+          "rules": [
+            {
+              "rule": "agentci-password-assignment",
+              "path": ".gitleaks.toml"
+            }
+          ],
+          "policySha256": "719492eab4c71b1c762b518f4e63ffe8e2a1201f2d77c14b7c32608073f9921d",
+          "scannerVersion": "8.30.1",
+          "scannerBinarySha256": "88f91962aa2f93ac6ab281d553b9e125f5197bbbce38f9f2437f7299c32e5509",
+          "rawValuesRetained": false
+        },
+        {
+          "case": "balanced-no-hex-stopword",
+          "entropy": 4,
+          "packageLockFinding": true,
+          "tomlFinding": true,
+          "rules": [
+            {
+              "rule": "agentci-password-assignment",
+              "path": ".gitleaks.toml"
+            },
+            {
+              "rule": "generic-api-key",
+              "path": "package-lock.json"
+            }
+          ],
+          "policySha256": "719492eab4c71b1c762b518f4e63ffe8e2a1201f2d77c14b7c32608073f9921d",
+          "scannerVersion": "8.30.1",
+          "scannerBinarySha256": "88f91962aa2f93ac6ab281d553b9e125f5197bbbce38f9f2437f7299c32e5509",
+          "rawValuesRetained": false
+        }
+      ]
+    },
+    "probeSource": {
+      "path": "/workspace/scratch/dev4-scanner-fixture-causal-probe-v2.mjs",
+      "sha256": "0db2fa2d702e32cdacd5ed26ac777ebce17e966e9e92170c3717cc9a4a28ff15",
+      "bytes": 2611
+    },
+    "limit": "Original hosted random fixture was intentionally not retained. Exact entropy/stopword predicate for that run is unknown. Proven reachable test-fixture assumption explains same observation; version pins/policy/runtime cause is not established. This is separate from original customer38580528645 failure."
+  },
+  "correction": {
+    "testOnly": "Keep original private generated JSON password and add a credentialed resolved URL using existing non-entropy agentci-url-userinfo rule; require BOTH exact package-lock path and exact URL rule.",
+    "generatedPrecondition": "Digit prefix prevents global repeated-letter allowlist from suppressing first-test fixture; added low-entropy case uses numeric characters for same reason.",
+    "newRegression": "Two actual Git introduction commits exercise generated entropy0 and stopword password values in package-lock JSON/URL and .gitleaks.toml assignment; exact path/rule/commit and redaction required for each.",
+    "preserved": [
+      "Intermediate add/delete and binary blobs",
+      "Generated RSA private-key and URL detection",
+      "Inline gitleaks:allow and repository-config bypass rejection",
+      "Lockfile and .gitleaks global path exclusion removal",
+      "Unchanged history exclusion and reintroduction/divergent-head scope",
+      "Path-conditioned/rename/file-directory epochs",
+      "Invalid UTF8/BOM/symlink/shallow/missing-head fail-closed coverage",
+      "Tool/archive/upstream-policy integrity negatives",
+      "Redaction; no raw generated values or reports retained"
+    ],
+    "unchanged": "Scanner wrapper/rules/tool/policy pins/limits/workflows/candidate version/publication contract/runtime/API/permissions all unchanged by this follow-up."
+  },
+  "validation": {
+    "focused": {
+      "tests": 7,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 8421.609684
+    },
+    "fast": {
+      "checks": 10,
+      "unitTests": 559,
+      "passed": true,
+      "seconds": 48.917152597,
+      "dependencyQualification": "Existing cached node_modules symlink and checksum-verified pinned tool caches; not clean npmci"
+    },
+    "previousLocalFocusedFailure": {
+      "log": {
+        "path": "/workspace/scratch/dev4-scanner-fixture-focused.log",
+        "sha256": "3951ebab3e0c29923517a5aa55515358c820bf99224ddb4b737f4d9a1e0432ab",
+        "bytes": 1683
+      },
+      "cause": "Initial added entropy0 case could be repeated letters, which global pinned allowlist legitimately removes. Numeric entropy0 fixture and digit-prefixed first fixture satisfy that precondition without policy changes."
+    },
+    "inheritedInstalledProof": "delivery/acceptance/m3-dev4-preparation-local.json; production code/version/locks unchanged this follow-up, not a replacement for fresh full hosted gates"
+  },
+  "logs": [
+    {
+      "path": "/workspace/scratch/dev4-scanner-fixture-corrected-focused.log",
+      "sha256": "8e4bef085eab4fb9b7b7c483902b7f3fb2120cfb12d6bd56cd2b1964bd76d110",
+      "bytes": 944
+    },
+    {
+      "path": "/workspace/scratch/dev4-scanner-fixture-fast.log",
+      "sha256": "b6b852ac3c527e3c50d535916f3ff283b10e12ea26b1dc2f527439a3b776906e",
+      "bytes": 456
+    },
+    {
+      "path": "/workspace/scratch/dev4-scanner-fixture-causal-probe-v2.log",
+      "sha256": "761487ef75af8b43e3673592ef02450af2083d628d865bdfe4f4789798bc4068",
+      "bytes": 1241
+    }
+  ],
+  "parentPostmergePR100Audit": {
+    "source": "adf66a6033a4c2d81c43d40cb8f66da255095e5f",
+    "artifact": 11921634430,
+    "sha256": "424e511539a0a107e8e38d7e34c59ebb0e1db3f0a40b10684a505cb1694151b7",
+    "scope": "Parent independently reports identities/hashes/runtime/cleanup passed; not claimed as this collector actual-ZIP audit or new PR101 acceptance"
+  },
+  "holds": {
+    "mergePublication": "Exact new PR101 source/full hosted CI/independent actual-artifact clearance required before descriptor merge activates publication",
+    "customer": "Activation and reruns remain held until new candidate publication/native anonymous downloads and independent evidence review",
+    "preservation": "Occupied dev.3 assets and historical failures unchanged; all18 M3 aggregate gates/fullM0-M10/three adapters/observed-rate calibration unchanged; no new permissions/credentials/paid/persistent services"
+  }
+}

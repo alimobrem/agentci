@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Scoped local customer recovery validation, not customer or milestone acceptance",
+  "base": "372aedb4a3aac0c288db314120dbae915ca5df60",
+  "ownerAuthorization": {
+    "proposal": "Sentinel_62008bec6cfc8191955a87e12f2acef5",
+    "reply": "Sentinel_97e73167863881919d9be20c096d59c8",
+    "at": "2026-10-14T16:08:00Z",
+    "text": "yes fix it please"
+  },
+  "toolchain": {
+    "node": "26.10.0",
+    "npm": "12.2.0",
+    "dependencies": "existing cache symlink, not clean npm ci; production package and hosted clean installs separate"
+  },
+  "checks": [
+    {
+      "log": "customer-recovery-unit-first.log",
+      "sha256": "d0933d876a7cc69a86b085a284ae5f3e3b80a278da378527c8aa199bd3f8d638",
+      "result": "failed",
+      "passed": 48,
+      "failed": 1,
+      "reason": "Prior deadline test expected late cleanup to advance; corrected abort fence and assertion."
+    },
+    {
+      "log": "customer-recovery-focused-second.log",
+      "sha256": "61d8a5c2a810c4119385918f076ba445336d8b4cb997858fa79a4e9d55fb4104",
+      "result": "passed",
+      "passed": 51,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "log": "customer-recovery-check-fast-first.log",
+      "sha256": "d3023df7fa92f1291cdd93052989b0509531df77035b85aad9d7c81ce74cd92d",
+      "result": "failed",
+      "reason": "Missing pinned cached gitleaks tool; uncached public download unavailable; four scanner tests failed closed."
+    },
+    {
+      "log": "customer-recovery-check-fast-cached.log",
+      "sha256": "0ba1d1b1d0069390b5315f7a477e06a000465e3d1ff20963d4dc8f1b5800f1ae",
+      "result": "passed",
+      "checks": 10,
+      "unitTests": 549,
+      "seconds": 47.92,
+      "qualification": "Before additional engine error-redaction case; final full check required."
+    },
+    {
+      "log": "customer-recovery-api-compat.log",
+      "sha256": "a7d3bfd7f268130e7a7813a59b983e95515c7a6ab39c1e1fe18c090684ebd325",
+      "result": "failed",
+      "reason": "oasdiff cache absent and public GitHub DNS EAI_AGAIN; no contract result inferred."
+    },
+    {
+      "log": "customer-recovery-api-compat-cached.log",
+      "sha256": "3355e8638f12279b5eed0eda226da3f02147a53f3fdb6391ca064f28c5c4e6e5",
+      "result": "passed",
+      "baselines": [
+        "M1 0.2.1-m1",
+        "M2 0.3.1-m2"
+      ],
+      "negativeEndpointRemoval": "rejected"
+    },
+    {
+      "log": "customer-recovery-workflows.log",
+      "sha256": "ac98e827708aafdae3b7fa4ffba0b502f5553388772a78dc8b87061af4e2214b",
+      "result": "passed"
+    },
+    {
+      "log": "customer-recovery-core-final.log",
+      "sha256": "c5f6448a66c31252a4c993cec3e2a31964d0e5c26af295c4f7f953ba819bae14",
+      "result": "passed",
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "log": "customer-recovery-entry-final.log",
+      "sha256": "cdab0bbe0ac8c68a753f5a2c46c8ef5a4616bfbdc67ce3c5c62eca364a0ecd57",
+      "result": "passed",
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "log": "customer-recovery-check-fast-final.log",
+      "sha256": "b78b5fb3a9f0f9248e6ebc6a3747897216c2a3c2acc6453e3cfc737d9020d04b",
+      "result": "passed",
+      "checks": 10,
+      "unitTests": 551,
+      "seconds": 47.399791920999995,
+      "sourceCommit": "9f8222745b4cdc70e8c41662e74bf7e3beb4b948",
+      "dirty": true,
+      "qualification": "Cached dependency symlink remains untracked; final hosted clean npm ci separate."
+    }
+  ],
+  "remaining": [
+    "Exact-source full hosted CI",
+    "Independent frozen source and actual artifact review before merge",
+    "Same four customer scenarios and actual published evaluator execution/cleanup",
+    "All aggregate M3 gates remain pending; no M4 progression"
+  ],
+  "sourceCommit": "9f8222745b4cdc70e8c41662e74bf7e3beb4b948",
+  "links": {
+    "priorActualArtifactAudit": "delivery/acceptance/m3-customer-recovery-parent-audit-38580528645.json",
+    "actualPublishedImageOriginalInspectionReproduction": "delivery/acceptance/m3-customer-evaluator-inspection-reproduction.json",
+    "installedRecovery": "delivery/acceptance/m3-installed-recovery-regression-local.json",
+    "independentSource": "delivery/acceptance/m3-customer-recovery-independent-source.json"
+  },
+  "forwardSource": {
+    "proof": "delivery/acceptance/m3-customer-recovery-forward-source.json",
+    "findings": 0,
+    "introducedCommits": 7,
+    "blobs": 51,
+    "qualification": "Before operator acknowledgement fix and regression merge; final frozen scan still required."
+  },
+  "failedInvocation": {
+    "tool": "scan-forward",
+    "result": "rejected-precondition",
+    "reason": "Initial abbreviated commit arguments rejected; rerun used exact 40-character source IDs."
+  },
+  "productionInstalledGate": {
+    "proof": "delivery/acceptance/m3-installed-recovery-regression-local.json",
+    "readerPassed": 14,
+    "workerRecoveryPassed": 5,
+    "skipped": 0,
+    "qualification": "Local packed production install with synthetic GitHub, owned PG/Temporal and qualified internal loopback proxy exclusion. No physical customer acceptance."
+  },
+  "finalSourceReview": {
+    "proof": "delivery/acceptance/m3-customer-recovery-independent-source.json",
+    "sourceCommit": "9f8222745b4cdc70e8c41662e74bf7e3beb4b948",
+    "focusedTestsPassed": 19,
+    "actualOperatorProbesPassed": 5,
+    "qualification": "Production/test source bytes unchanged after9f822; docs add local topology evidence and tracking records advance."
+  }
+}

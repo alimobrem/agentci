@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "source": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6",
+  "tree": "3b7f08f3c440a807284f4da42330bad7728798f3",
+  "ordinaryPostMergeCI": [
+    {
+      "id": 38580528396,
+      "name": "Verify",
+      "attempt": 1,
+      "conclusion": "success",
+      "head": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6"
+    },
+    {
+      "id": 38580528422,
+      "name": "Dashboard Verify",
+      "attempt": 1,
+      "conclusion": "success",
+      "head": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6"
+    },
+    {
+      "id": 38580528520,
+      "name": "Forward secret protection",
+      "attempt": 1,
+      "conclusion": "success",
+      "head": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6"
+    },
+    {
+      "id": 38580528635,
+      "name": "AgentCI advisory review",
+      "attempt": 1,
+      "conclusion": "success",
+      "head": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6"
+    }
+  ],
+  "readyTransitionAdvisory": {
+    "id": 38580491138,
+    "conclusion": "success",
+    "head": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+  },
+  "fullVerificationArtifact": [
+    {
+      "id": 11903496727,
+      "name": "m1-verification",
+      "digest": "sha256:1a5f80961a5b6ad937fe71684c287120072f216256deec577b52812b6c40b3eb",
+      "size": 1598599,
+      "expires": "2027-01-12T14:26:28Z",
+      "inspection": "metadata only in cloud; actual ZIP audit remains separate"
+    }
+  ],
+  "fixturePreservation": [
+    {
+      "branch": "main",
+      "sha": "5b3e64451fbde278391fa2f4106f7ae649fde3e1"
+    },
+    {
+      "pr": 4,
+      "state": "open",
+      "draft": true,
+      "base": "04f11298c020e853fd0098fb5d92c7529630f300",
+      "head": "62342e933e902b188b4b87dfa44575cf409ae7d4"
+    },
+    {
+      "pr": 5,
+      "state": "open",
+      "draft": true,
+      "base": "04f11298c020e853fd0098fb5d92c7529630f300",
+      "head": "3c12571ec6f4578d19876ce27cf56c842c3abf97"
+    }
+  ],
+  "observedCustomerChecks": [
+    [
+      {
+        "id": 115909668968,
+        "status": "completed",
+        "conclusion": "neutral",
+        "head": "62342e933e902b188b4b87dfa44575cf409ae7d4",
+        "externalId": "agentci:model-review:4:04f11298c020e853fd0098fb5d92c7529630f300:62342e933e902b188b4b87dfa44575cf409ae7d4:6933b922-8f80-46c3-8769-2117fd362d8b",
+        "created": "2026-10-14T14:27:57Z"
+      },
+      {
+        "id": 115909552397,
+        "status": "completed",
+        "conclusion": "neutral",
+        "head": "62342e933e902b188b4b87dfa44575cf409ae7d4",
+        "externalId": "agentci:model-review:4:04f11298c020e853fd0098fb5d92c7529630f300:62342e933e902b188b4b87dfa44575cf409ae7d4:291e8839-9e10-44b9-9615-e2e5ad662fac",
+        "created": "2026-10-14T14:27:44Z"
+      }
+    ],
+    []
+  ],
+  "customerRun": {
+    "id": 38580528645,
+    "attempt": 1,
+    "status": "still executing at last read; no final scenario or cleanup claim"
+  },
+  "priorAttempt": "38510993755 remains retained; no overwrite or retroactive promotion",
+  "scope": "No additional source edits, credential/access changes, fixture mutations, release publication, workflow dispatch/rerun or cancellation after reviewed merge."
+}

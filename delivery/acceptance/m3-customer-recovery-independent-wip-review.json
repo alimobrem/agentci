@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "review": "Independent read-only WIP customer consumer recovery architecture/security review",
+  "result": "No concrete remaining reviewed-source blocker; final frozen source/installed acceptance/hosted review pending",
+  "baseCommit": "372aedb4a3aac0c288db314120dbae915ca5df60",
+  "sourceBindingsAtReview": [
+    {
+      "path": "scripts/lib/customer-diagnostics.mjs",
+      "sha256": "b729374af011a5d86735694173f626ba73716695259e4fc9abb4bef056048166"
+    },
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "bb4540a00944a8d17f335002858ccc7bc6262217df3bac14222cacfb83a81f1f"
+    },
+    {
+      "path": "scripts/lib/customer-evaluator-container.mjs",
+      "sha256": "397a28a106a9a1fcae9954743a9a04187668a725cb06edf89dbbff750ab3cbe1"
+    },
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "sha256": "47aa47937df4947f44906067160137c49fa6c176806a57aade80384472764947"
+    },
+    {
+      "path": "scripts/lib/customer-owned-reservations.mjs",
+      "sha256": "de0c6162e4f7e04a7689f09c16c3daf3531222ac5a7bed8c7007b4d4e1f928b5"
+    },
+    {
+      "path": "scripts/m3-customer-live-demo.mjs",
+      "sha256": "9e7e7f1f4656207d403dd6e3d31498a745616d00a16a96053795d964ed751ca2"
+    },
+    {
+      "path": "tests/customer-diagnostics.test.ts",
+      "sha256": "1645368b76e2c08bc59457d2b9e73d1e3761a5d1914e6431c9e68affe6902ed7"
+    },
+    {
+      "path": "tests/customer-runtime-processes.test.ts",
+      "sha256": "42dfc8979b8382c228645f1753f63ae72c05e8e345872d001641910f1ad0c4e5"
+    },
+    {
+      "path": "tests/customer-evaluator-container.test.ts",
+      "sha256": "c862a792f1d5130113e11293c79ee50ede95aa5720afecde36deb47d6c6ad7da"
+    },
+    {
+      "path": "tests/integration/customer-container-inspection.test.ts",
+      "sha256": "0a8a4d5441206db211d62b389ae43134394dddb171913fbec8221ef17106dc6d"
+    },
+    {
+      "path": "docs/phases/m3-customer-consumer-recovery.md",
+      "sha256": "75a60b008671e3d6bd2592ab605fb32edc3a508432282c2db91e58acbbfa97f1"
+    }
+  ],
+  "independentExecution": {
+    "unitFocused": {
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 10287.724989
+    },
+    "actualCachedDockerProjection": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 1421.321152,
+      "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+      "imageId": "sha256:c293117fcecda7344b5480222e813b9f673d7abd69b1dd95eff239b768b04f59",
+      "checks": "Actual large label exceeds original8192 cap; projection excludes envvalues/unrelatedlabel, ownership exact; foreign runner rejected; exactownedcontainerremoved and0verified"
+    }
+  },
+  "reviewed": [
+    "Field-by-field bounded diagnostic projection excludes raw errors/output/env/path/arbitrarylabels",
+    "Dockerselectedinspection preservesexactimage/name/owner/isolation while filteringenvvalues",
+    "LostACK reconciles scoped immutableintent afterAPIdrain and DBadvisorylock; uncertainwork not relabeledabsent",
+    "Durable cancellation precedes restoring drainedworker; PIDlivenessplus exactnamespace/taskqueue Temporalidentity beforecachedsettlementconsumer",
+    "Signal gates worker/API restarts/evaluator commands/status/cancellation; transactionabortdestroysownedconnection; phases/items retainonlycompletedwork",
+    "Bounded failedrecovery quiesces ownedcontroller/evaluator and closes ownconnections while preservingkey/infrastructure and unresolvedcleanup; laterclose failspromptly",
+    "Exceptionsredacted and failedstartupdiagnostics remainunverified; terminalsettlementdigest retained onlyfromauthenticatedstatus"
+  ],
+  "clarifications": [
+    "No allowlistmissingorganizationfinding: requiredAGENTCI_ORGANIZATION_ID alreadyexistsbase, earlier initialobservation corrected",
+    "EvaluatorimmediateState.Running iscontainerliveness only; no actualpublishedconsumerpoller/readiness claim",
+    "profiles signal currentlyignoredbyfrozenclient butreadonlyrequestbounded30s and postreadabort/quiesceguardprevents lateadvancement"
+  ],
+  "evidence": [
+    {
+      "path": "/workspace/scratch/customer-recovery-independent-wip-focused-20261014.log",
+      "sha256": "0d1be4e253e1a44edcda9dcc93fdb70b50a9c855edfa0803e875a7ac5f8e724a"
+    },
+    {
+      "path": "/workspace/scratch/customer-recovery-independent-docker-projection-20261014.log",
+      "sha256": "de2a9a3bbc108b9af390aa29b81fd4f0be5879d042fdab2814b788b76eb53ee1"
+    }
+  ],
+  "remaining": [
+    "Worktree uncommitted; testcounts WIP only until exactfrozenbinding/rechecks",
+    "Otherworker owns realproductioninstalled4recoveryregressions; not repeated/claimedindependenthere",
+    "Actualpublishedlargeevalimage readiness/execution+samefourcustomerretry remainpending; no8GBrepull attempted",
+    "Actualsource/fullhostedCI and parentactualartifactreview requiredbeforemerge",
+    "Original385805 failurecause not uniquelyidentified; originalactualimageinspectoverflow provesreachabledefect only",
+    "No sourceedits/remoteactions/newcredentials/realkeyreads/Macactivity"
+  ]
+}

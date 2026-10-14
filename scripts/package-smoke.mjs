@@ -12,7 +12,7 @@ const expectedVersion = JSON.parse(await readFile(new URL('../package.json', imp
 const arguments_ = process.argv.slice(2);
 const offline = arguments_.includes('--offline');
 const postgresReaders = arguments_.includes('--postgres-readers');
-if(postgresReaders&&!process.env.AGENTCI_TEST_DATABASE_URL)throw new Error('--postgres-readers requires AGENTCI_TEST_DATABASE_URL; never silently skip');
+if(postgresReaders&&(!process.env.AGENTCI_TEST_DATABASE_URL||!process.env.AGENTCI_TEST_TEMPORAL_ADDRESS))throw new Error('--postgres-readers requires AGENTCI_TEST_DATABASE_URL and AGENTCI_TEST_TEMPORAL_ADDRESS for installed worker acceptance; never silently skip');
 const archive = resolve(arguments_.find(argument => !argument.startsWith('--')) ?? `releases/agentci-${expectedVersion}.tgz`);
 const root = await mkdtemp(join(tmpdir(), 'agentci-package-'));
 try {
@@ -37,7 +37,9 @@ try {
     try{await readFile(join(root,'node_modules/tsx/package.json'));throw new Error('Development test loader entered production installation');}catch(error){if(error.code!=='ENOENT')throw error;}
     console.log(JSON.stringify({acceptance:'installed-v2-reader',version:expectedVersion,install:'npm install --omit=dev',offline,developmentLoaderInstalled:false,publicExport:'agentci/client'}));
     execFileSync(process.execPath,['--import','tsx','--test',resolve('tests/integration/reproduction-installed-reader.test.ts'),resolve('tests/integration/reproduction-http.test.ts'),resolve('tests/integration/reproduction-operator.test.ts'),resolve('tests/integration/reproduction-deployment.test.ts')],{env:{...process.env,AGENTCI_TEST_CLIENT_PACKAGE_ROOT:installedRoot},stdio:'inherit',timeout:60000});
-    console.log('Installed public v2 reader and deployment-operator apply/CAS/revocation passed against real PostgreSQL, plus real Compose rendering of installed opt-in files; reader HTTP authenticated, no Temporal or provider credentials.');
+    console.log(JSON.stringify({acceptance:'installed-customer-worker-and-recovery',version:expectedVersion,install:'npm install --omit=dev',offline,developmentLoaderInstalled:false,entry:'dist/apps/worker/main.js',infrastructure:'real owned PostgreSQL and Temporal',github:'signed synthetic fixture transport; no real GitHub writes'}));
+    execFileSync(process.execPath,['--import','tsx','--test','--test-concurrency=1',resolve('tests/integration/customer-installed-worker.test.ts'),resolve('tests/integration/customer-installed-recovery.test.ts')],{env:{...process.env,AGENTCI_TEST_CLIENT_PACKAGE_ROOT:installedRoot},stdio:'inherit',timeout:180000});
+    console.log('Installed public v2 reader and deployment-operator apply/CAS/revocation passed against real PostgreSQL, plus real Compose rendering of installed opt-in files; reader HTTP authenticated; worker startup, scoped advisory Check and acknowledged-reservation recovery acceptance additionally used real Temporal with synthetic App transport and no provider credentials.');
   }
   const {validateModelRequest}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/request.js')).href);
   const {validateModelResponse}=await import(pathToFileURL(join(installedRoot,'dist/packages/providers/response.js')).href);

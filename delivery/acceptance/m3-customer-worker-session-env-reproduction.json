@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "mode": "exact-harness-builder-and-exact-downloaded-package-pure-config",
+  "sessionBuilderOmittedRunnerPin": true,
+  "supervisorAlsoDropsSuppliedPin": true,
+  "failure": {
+    "name": "EvalPlanConfigurationError",
+    "message": "Invalid operator eval provenance or budget"
+  },
+  "explicitDigestPinAccepted": true,
+  "apiOrWorkerStarted": false,
+  "githubRequests": 0,
+  "realCredentialsRead": false,
+  "databaseOrTemporalConnectionsAttempted": false,
+  "qualification": "Actual session builder executed only through construction, never initialize/review. No original worker stderr exists; deterministic configuration failure is reproduced independently.",
+  "localConstructionCleanup": {
+    "processes": 0,
+    "evaluator": 0,
+    "assertions": 0
+  }
+}

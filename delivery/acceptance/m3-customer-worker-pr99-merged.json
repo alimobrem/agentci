@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "pr": 99,
+  "reviewedHead": "1f7b2deff4f24a44a392409b64ae23a3552b9155",
+  "tree": "3b7f08f3c440a807284f4da42330bad7728798f3",
+  "merge": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6",
+  "mergeParents": [
+    "0c30b461cc7942734220b3ae894c20e0186917d5",
+    "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+  ],
+  "independentReview": {
+    "source": "Parent clearance from source thread01a10eeb-def7-7746-9dca-d0699432f035 after actual Work GitHub ZIP download/audit",
+    "result": "passed source, CI, runtime/native/API/hashes/cleanup; no blocker to approved merge and samefour scenarios; not customer acceptance",
+    "counts": {
+      "unit": 547,
+      "integration": 198,
+      "reader": 14,
+      "productionInstalledWorker": 1,
+      "client": 11,
+      "browser": 24
+    },
+    "artifacts": [
+      {
+        "id": 11901638795,
+        "sha256": "943fc2f7699ab520df39843b59506edfa3e51dd5782ce6c0837696944e689219"
+      },
+      {
+        "id": 11902606432,
+        "sha256": "7e6f7c6b99197c9ade1583dc35c9d58d8d661c4878610b5084d95c7129e24e4c"
+      },
+      {
+        "id": 11902126861,
+        "sha256": "3d640b97b71e2454d5358a007b665289ec04cd0d7350f1014b8013ae529d5e4b"
+      }
+    ],
+    "workerSha256": "176107b1a9e491313dc3fe80937c7513a6f9156a7201e9126e5c05bdc13dbd51"
+  },
+  "authorization": {
+    "proposal": "Sentinel_789b44acc2608191b6334d019ce1b218",
+    "userReply": "Sentinel_61290a68c89c8191a2aaf86ab2a4cb86",
+    "at": "2026-10-14T13:49:00Z",
+    "text": "Yes.",
+    "scope": "Two settings, installed-worker regressions, merge afterCI/independent review, rerun same customer scenarios; no new permissions or release publication"
+  },
+  "mergeExecution": {
+    "account": "Work alimobrem",
+    "markReady": "succeeded unchanged head",
+    "mergeCalls": 1,
+    "expectedHead": "1f7b2deff4f24a44a392409b64ae23a3552b9155",
+    "method": "merge",
+    "result": "merged true; successful first call; no denial or alternate route"
+  },
+  "spawnedRuns": [
+    {
+      "id": 38580528645,
+      "name": "Temporary customer demo",
+      "head": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6",
+      "statusAtInitialRead": "in_progress"
+    },
+    {
+      "id": 38580528635,
+      "name": "AgentCI advisory review",
+      "head": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6",
+      "statusAtInitialRead": "pending"
+    },
+    {
+      "id": 38580528520,
+      "name": "Forward secret protection",
+      "head": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6",
+      "statusAtInitialRead": "in_progress"
+    },
+    {
+      "id": 38580528422,
+      "name": "Dashboard Verify",
+      "head": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6",
+      "statusAtInitialRead": "in_progress"
+    },
+    {
+      "id": 38580528396,
+      "name": "Verify",
+      "head": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6",
+      "statusAtInitialRead": "in_progress"
+    },
+    {
+      "id": 38580491138,
+      "name": "AgentCI advisory review",
+      "head": "1f7b2deff4f24a44a392409b64ae23a3552b9155",
+      "statusAtInitialRead": "in_progress"
+    }
+  ],
+  "remaining": "Monitor same fourcustomer scenarios andcleanup toterminal; all18 aggregateM3 gates remainpending."
+}

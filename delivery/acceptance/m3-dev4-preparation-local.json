@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Distinct dev.4 preparation and local validation only; exact source CI/independent review must precede publication activation",
+  "observedAt": "2026-10-14T19:16:44.138343+00:00",
+  "version": "0.4.0-m3-dev.4",
+  "base": "adf66a6033a4c2d81c43d40cb8f66da255095e5f",
+  "codeSource": "202a507a683e5796d9bd5b0aef0145a8c5330f50",
+  "codeTree": "c45d08f99a309541c02dfa4c49265990f79f8331",
+  "authorizationAndParentReview": "delivery/acceptance/m3-pr100-owner-review-merge.json",
+  "sourceBindings": [
+    {
+      "path": "package.json",
+      "sha256": "7f9ce4021241de8aadc8ceac71af26fbf17b1d4e738d6fe344548bff781df397",
+      "bytes": 2679
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "25c61ea8bd23bf690a0cabffea8c220bd657069e8bc0885d1cd09dea10022a38",
+      "bytes": 240006
+    },
+    {
+      "path": "npm-shrinkwrap.json",
+      "sha256": "25c61ea8bd23bf690a0cabffea8c220bd657069e8bc0885d1cd09dea10022a38",
+      "bytes": 240006
+    },
+    {
+      "path": "packages/version.ts",
+      "sha256": "bc296c2e3d7b5f71f8d2a60dd78ba9ec01562e3d455f6456130a987c4858ec0c",
+      "bytes": 41
+    },
+    {
+      "path": "specs/api/openapi.json",
+      "sha256": "91c1dc961e17b75915cb0a4ce392d51f56e11383dda9d1c6f1684270dd935211",
+      "bytes": 215988
+    },
+    {
+      "path": ".github/workflows/development-candidate.yaml",
+      "sha256": "78ddc07fa06fa8b9f31fa4a3ea78619ff2d941228f1f0856331306b87afee2f0",
+      "bytes": 7924
+    },
+    {
+      "path": "releases/m3-development-candidate.json",
+      "sha256": "f646613edbc68fd062dabe673b4aa7a43591387e34df6be3100b51f57aa72f0f",
+      "bytes": 217
+    },
+    {
+      "path": "deploy/reviewer.compose.yaml",
+      "sha256": "8a341583e5537503601078b18f73449c7e9a615f6b26e5488092eeb774d62f54",
+      "bytes": 1141
+    },
+    {
+      "path": "deploy/reproduction.compose.yaml",
+      "sha256": "aa26e3a6c2fa3385c30c8b24901ea35d282581adc29836bae2982b43e7c4a5e9",
+      "bytes": 2337
+    },
+    {
+      "path": "scripts/lib/development-artifacts.mjs",
+      "sha256": "1cbc0549290fdc584ba96d095d3294fc21a8718dbd133f19d344af87c839a5de",
+      "bytes": 10845
+    },
+    {
+      "path": "scripts/lib/customer-publication-assets.mjs",
+      "sha256": "4da194944d7cf59c9b16432ad85b801439a2052abd702bc54af2c75ea7e013a4",
+      "bytes": 2314
+    },
+    {
+      "path": "scripts/m3-customer-live-demo.mjs",
+      "sha256": "182ab12887c17f914e771d39b0e5fe97a3ffc397adce6cb15e1aadf30797e538",
+      "bytes": 7231
+    },
+    {
+      "path": "scripts/m3-customer-live-observe.mjs",
+      "sha256": "12d60f00f44fd2586d518b4b7ec80fa598bde692b395640738d9f8e15ad10711",
+      "bytes": 4399
+    },
+    {
+      "path": "tests/development-artifacts.test.ts",
+      "sha256": "bb0b3d736bda318fb7c0264157fcd0abbd64dfb56d4d7eedc5aa1606cae177e4",
+      "bytes": 8924
+    },
+    {
+      "path": "tests/development-release-execution.test.ts",
+      "sha256": "6801c4c3beb2632649549e3288af3b343eee6b2e65e0a566148197730c35cb39",
+      "bytes": 33930
+    },
+    {
+      "path": "tests/published-package-preparation.test.ts",
+      "sha256": "1f15e599c71c67d71258c8daa90b36c5defb913943e7b36b48573eaa7ed46437",
+      "bytes": 4133
+    },
+    {
+      "path": "tests/integration/reproduction-deployment.test.ts",
+      "sha256": "3acefbb3b087e74ec7b62fdcdbd577857b2a4b424ffa268608f19bbf689f4f06",
+      "bytes": 5594
+    }
+  ],
+  "scope": {
+    "identity": "Package, runtime, equal locks, current OpenAPI info.version, development workflow/descriptor, opt-in overlays and trusted customer download helpers select dev.4. No API schema/endpoint or compatibility baseline change.",
+    "productionCorrection": "Inherited exact reviewed dispatcher/recovery code from merged PR100; no new production logic correction.",
+    "publicationContract": "All six roles, native AMD64/ARM64, source/run/attempt/image/package manifest/hash binding, authenticated fail-closed destination preflight and anonymous downloaded package/image verification unchanged. Existing vulnerability qualifications remain; no vulnerability disposal claim.",
+    "activation": "Merging this descriptor on main is the publication push trigger. Parent exact new head/tree/full CI/actual-artifact review required first. Final publication source equals reviewed preparation merge SHA, unknown until merge. No candidate publication workflow has been triggered by this preparation.",
+    "unchanged": [
+      "Existing dev.3 release/tag/assets and historical records",
+      "Customer demo/installation descriptors and exact PR4/PR5 subjects",
+      "App/access/credentials/permissions and paid/persistent service scope",
+      "Released base deployment M2",
+      "All18 aggregate M3 gates, full M0-M10 order, all three adapters and observed-rate calibration"
+    ]
+  },
+  "availability": {
+    "publicReleaseList": "No published dev.4 in Work GitHub release listing",
+    "matchingTagRefs": "Empty exact dev.4 tag-ref listing observed",
+    "qualification": "Not full destination absence proof. Authenticated Actions preflight must independently reject occupied or inconclusive draft release/tag/all-six image destinations before publication."
+  },
+  "validation": {
+    "build": "passed",
+    "fast": {
+      "checks": 10,
+      "unitTests": 558,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 49.8,
+      "dependencies": "Existing cached node_modules symlink, not clean npm ci"
+    },
+    "workflowLint": "Pinned actionlint positive and invalid-context negative passed",
+    "apiCompatibility": "Immutable M1 0.2.1-m1 and M2 0.3.1-m2 plus negative removals passed; baselines unchanged",
+    "productionInstall": {
+      "archive": {
+        "path": "/workspace/scratch/dev4-preparation-unpublished-source/agentci-0.4.0-m3-dev.4.tgz",
+        "sha256": "553aec20558c6c347a0daa15183911b58c0322fc7a943b25c9a460aabd9032c6",
+        "bytes": 806509
+      },
+      "source": "202a507a683e5796d9bd5b0aef0145a8c5330f50",
+      "qualification": "Unpublished local diagnostic pack; not the eventual immutable publication asset or source-provenance manifest. Fresh online npm install --omit=dev; no development loader in production install.",
+      "readers": 14,
+      "readerDurationMs": 4255.525783,
+      "workerAndRecovery": 7,
+      "workerAndRecoveryDurationMs": 97842.44149,
+      "failed": 0,
+      "skipped": 0,
+      "afterChild": {
+        "childState": "CANCELLED",
+        "actualChildRun": true,
+        "cleanup": "COMPLETED",
+        "ownedContainers": 0,
+        "unneededEvaluatorStarts": 0
+      },
+      "beforeChild": {
+        "childState": "NOT_STARTED",
+        "actualChildRun": false,
+        "cleanup": "COMPLETED",
+        "ownedContainers": 0,
+        "unneededEvaluatorStarts": 0
+      },
+      "claimLimit": "Signed synthetic transport and owned PostgreSQL/Temporal; no actual customer scenario or physical assertion execution acceptance"
+    },
+    "sourceScan": {
+      "policyCommit": "202a507a683e5796d9bd5b0aef0145a8c5330f50",
+      "harnessSha256": "64be7dc608da3e9ee0056724d1dac3e6742f60f9a4723e67a14b94ed9496dcc2",
+      "schema": "agentci-sensitive-forward-v1",
+      "baseCommit": "adf66a6033a4c2d81c43d40cb8f66da255095e5f",
+      "headCommit": "202a507a683e5796d9bd5b0aef0145a8c5330f50",
+      "headTree": "c45d08f99a309541c02dfa4c49265990f79f8331",
+      "scannerVersion": "8.30.1",
+      "binarySha256": "88f91962aa2f93ac6ab281d553b9e125f5197bbbce38f9f2437f7299c32e5509",
+      "upstreamPolicySha256": "e163e53b9e7e8a8511e77271e2b323ed057759542a6d988258afe3a1fa329caf",
+      "policySha256": "719492eab4c71b1c762b518f4e63ffe8e2a1201f2d77c14b7c32608073f9921d",
+      "introducedCommitCount": 1,
+      "selectedBlobCount": 26,
+      "introducedReferenceCount": 27,
+      "findings": [],
+      "status": "no-new-change-findings",
+      "scope": "Introduced commits HEAD ^ BASE, parent-relative changed regular file blobs, and changed HEAD blobs vs BASE. No historical-clean assertion; deleted pre-base data and unchanged historical findings are outside this gate."
+    }
+  },
+  "fixtureHealth": {
+    "running": true,
+    "exitCode": 0,
+    "oomKilled": false,
+    "uptimeMs": 117847,
+    "scannerWindowObserved": true
+  },
+  "fixtureCleanup": {
+    "database": {
+      "schemaVersion": 1,
+      "name": "agentci-customer-pg-1792005178896-1-195d664ff504405b",
+      "owner": "1792005178896:1:202a507a683e5796d9bd5b0aef0145a8c5330f50:195d664ff504405b",
+      "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+      "result": "passed",
+      "ownedContainers": 0,
+      "privateFilesRemoved": true
+    },
+    "ownedTemporalContainers": 0
+  },
+  "topologyQualification": "Only the owned temporary Temporal container retains prior loopback NO_PROXY qualification; no global/external/authentication config changes.",
+  "failedLocalAttempts": [
+    {
+      "log": {
+        "path": "/workspace/scratch/dev4-preparation-fast.log",
+        "sha256": "6083ec82dbd29e8f48200808cb6a8cd587ced1a37f752ddc5ae5609cd14c511e",
+        "bytes": 60638
+      },
+      "cause": "Current OpenAPI info.version pin initially stale; aligned version metadata only. Four scanner fixtures also lacked pinned cache in new worktree."
+    },
+    {
+      "log": {
+        "path": "/workspace/scratch/dev4-preparation-corrected-fast.log",
+        "sha256": "8ec451887ab4e1eb456db32f8f1b6bb1e629fef6b7fe1afaa85710d6f172c1f6",
+        "bytes": 60151
+      },
+      "cause": "Pinned scanner cache copy landed one nested directory too deep; corrected ignored cache placement, retained strict checks."
+    },
+    {
+      "log": {
+        "path": "/workspace/scratch/dev4-preparation-workflows.log",
+        "sha256": "a8e3b4add64bd48a32a3ba89ab1d823687df289cf6ec40fa39a894b030e9ab0c",
+        "bytes": 449
+      },
+      "cause": "Pinned actionlint download encountered DNS EAI_AGAIN; reused existing pinned archive, verified by unchanged SHA guard. Oasdiff likewise reused pinned archive."
+    }
+  ],
+  "logs": [
+    {
+      "path": "/workspace/scratch/dev4-preparation-corrected-build.log",
+      "sha256": "0e2e39537cea17ef2c08a0af4380ba77fc7f946e7db627ba72167f240082c7f4",
+      "bytes": 119
+    },
+    {
+      "path": "/workspace/scratch/dev4-preparation-final-fast.log",
+      "sha256": "12eab129f0ad58cacf596879e8f1c083a25d98efc33bff92768d4c5894b8c8b1",
+      "bytes": 456
+    },
+    {
+      "path": "/workspace/scratch/dev4-preparation-final-workflows.log",
+      "sha256": "91b1794c4d30ae45e57007a8412647276b20fe1ac9c622c2faee40d378966565",
+      "bytes": 214
+    },
+    {
+      "path": "/workspace/scratch/dev4-preparation-final-compat.log",
+      "sha256": "fc691233e650df5db95dec42711a8ad501f78d3639aca049a1a27f156a5b0957",
+      "bytes": 198
+    },
+    {
+      "path": "/workspace/scratch/dev4-preparation-production-install.log",
+      "sha256": "25c053caa6a0ffe1ad83cb3da3b63c0958a8f5d21b64a83a1379580635af84bc",
+      "bytes": 4636
+    }
+  ],
+  "nextGates": [
+    "Draft preparation PR exact head/tree, fresh full hosted CI and independent actual-artifact review",
+    "Merge reviewed descriptor only after clearance, then authenticated destination preflight/publication all six roles and exact-source assets",
+    "Both native cohorts anonymous package/image downloads and existing runtime/security/hash/installed acceptance, preserve any failures/occupied identities",
+    "Independently validate retained publication/download evidence, then separate exact customer activation change and same four scenarios",
+    "Complete remaining dashboard/M3 milestone acceptance/publication/demo/release obligations; no M3 completion claim"
+  ]
+}

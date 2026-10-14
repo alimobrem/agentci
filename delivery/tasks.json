@@ -3500,12 +3500,335 @@
         "SPEC-40-050",
         "SPEC-40-051"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-13T20:29:00.835Z",
-      "completedAt": null,
+      "completedAt": "2026-10-14T03:54:03.680Z",
       "acceptance": [
         {
           "text": "Public scope-only descriptor binds reviewed main ancestor, separate customer App 5182307 and installation 167710386 exclusively to alimobrem/agentci-onboarding-demo. Existing guard validates actual key/App/install/minimal permissions before fixture mutation. Preserve all other gates; local descriptor/negative contract checks, exact-source hosted CI and independent review before activation. Actual hosted read-only scope result required before task completion; secret presence alone is not validity.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-scope-postmerge-a39de3fb.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07d-2-demo-activation",
+      "title": "Execute approved temporary four-scenario customer acceptance",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SPEC-12.3-001"
+      ],
+      "status": "blocked",
+      "startedAt": "2026-10-14T03:53:48.236Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Three collision-checked new demo fixture branches and two PRs use exact trusted customerFixtureFiles() bytes; preserve demo main and existing PRs 1-3; retain exact public branch/tree/PR/base/head identities.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-fixtures-a39de3fb.json"
+          ]
+        },
+        {
+          "text": "Public activation descriptor binds reviewed harness ancestor, separate customer App/install, exact immutable dev.3 package/native evidence hashes and actual fixture subjects. Applicable local and four hosted CI gates plus parent independent exact-source/artifact review precede approved activation merge; retain failures and scope qualifications.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-demo-merge-0c30b461.json"
+          ]
+        },
+        {
+          "text": "Actual installed-release temporary workflow retains unsupported unconfirmed claim, seeded physical reproduction, fixed non-reproduction without altering original receipt, failure/restart/cancellation/recovery and verified owned cleanup. Scoped demo Checks and temporary services only; no new credentials/access/paid/persistent services. Retain exact-source terminal results and independently validated evidence. HTTPS/OIDC and all aggregate M3 release gates remain separate.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "blockedReason": "Run38580528645 on reviewed mergeee69dcb cancelled after controller failure and unverified owned cleanup; both infrastructure cleanup steps failed. Retained three artifact IDs/hashes and fixed log timestamps require parent actual ZIP/operation-journal audit. All ordinary postmerge CI passed; no scenario or cleanup acceptance and no blind rerun."
+    },
+    {
+      "id": "M3-07d-2-worker-startup-pin",
+      "title": "Correct customer worker runner provenance and explicit demo Check opt-in",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SPEC-12.3-001"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-14T13:52:17.770Z",
+      "completedAt": "2026-10-14T14:27:19.488Z",
+      "acceptance": [
+        {
+          "text": "Before changing source, reproduce missing runner-image failure and disabled model-review Check scheduler with exact anonymous dev.3 package and real session builder/filter, without credentials or service connections. Proposed correction supplies only verified native runner digest and explicit demo-only AGENTCI_MODEL_REVIEW_CHECKS=true through narrowly worker-scoped filtering. No ambient credentials, default image, permissions, budgets, provider or separation changes.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-worker-session-env-reproduction.json"
+          ]
+        },
+        {
+          "text": "Meaningful role-filter/session-builder/exact installed worker regressions cover missing/valid runner pin, mutable image rejection, Check flag off/false/exact true/invalid values, actual subject/App-bound advisory Check observation, hostile ambient settings and excluded secrets. Preserve existing discarded child output, process/readiness and fail-closed cleanup behavior; no API/operator/evaluator Check enablement, new diagnostics/cwd/runtime expansion or permission change in this two-setting correction.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-installed-worker-regression-local.json"
+          ]
+        },
+        {
+          "text": "Applicable local checks, exact-source hosted CI and independent source/artifact review precede any corrected activation retry. Preserve failed run38510993755 and independently verified cleanup, frozen dev.3 assets and fixture PR identities. Actual four-scenario acceptance remains unverified until a successful retained execution; no aggregate M3 closure inferred.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-worker-pr99-merged.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07-installed-worker-regression",
+      "title": "Exercise installed customer worker startup and scoped advisory Check capability",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-14T14:00:54.953Z",
+      "completedAt": "2026-10-14T14:03:17.772Z",
+      "acceptance": [
+        {
+          "text": "Actual compiled/production-installed worker starts against owned PostgreSQL and Temporal through the filtered customer environment, publishes only exact App/subject/admission advisory Checks under explicit opt-in and preserves disabled/invalid and changed-subject protections",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-installed-worker-regression-local.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07d-2-consumer-recovery",
+      "title": "Recover scoped customer settlement consumer and bound failed cleanup",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SPEC-12.3-001"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-14T16:10:06.409Z",
+      "completedAt": "2026-10-14T19:12:08.913Z",
+      "acceptance": [
+        {
+          "text": "Preserve independent actual artifact audit for38580528645 and distinguish initiating failure from reachable recovery gaps. Durably request owned cancellation before restoring a drained consumer, then restore and verify exact scoped settlement consumer for settlement, including stale dead-worker map entries and evaluator startup failure after acknowledged reservation. No release, permission, provider, threshold or API contract changes.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-recovery-local.json"
+          ]
+        },
+        {
+          "text": "Bound recovery and failed cleanup without abandoning live asynchronous actions or manufacturing owned-zero/settlement proof. Stop only owned controller resources after a bounded failed recovery, retain recovery evidence/private state, fail closed on foreign or unverifiable evaluator/assertion resources and do not permit cancelled outcomes alone. Retain only allowlisted phase/process-exit/evaluator-state/status diagnostics with no raw errors, env values, credentials or paths.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-recovery-independent-source.json"
+          ]
+        },
+        {
+          "text": "Real production-installed-package regressions prove evaluator-start failure after acknowledged reservation, dead worker during cancellation, stalled cleanup and foreign/unverifiable resources. Applicable local and exact-source hosted CI plus independent source/actual-artifact review precede merge and same four-scenario customer retry. No aggregateM3 acceptance inferred.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-pr100-owner-review-merge.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07-installed-recovery-regression",
+      "title": "Exercise installed customer session reservation cleanup and fail-closed recovery",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-14T16:14:00.218Z",
+      "completedAt": "2026-10-14T16:44:40.295Z",
+      "acceptance": [
+        {
+          "text": "Real installed session initialization/review/approval/reservation survives evaluator startup failure and dead settlement consumer, bounds stalled cleanup with abort, and rejects foreign or unverifiable owned resources without claiming physical scenario acceptance",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-installed-recovery-regression-local.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07d-2-review-recovery",
+      "title": "Correct independently reviewed terminal-settlement race and bound lifetime shutdown",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SPEC-12.3-001"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-14T16:58:44.844Z",
+      "completedAt": "2026-10-14T19:12:03.607Z",
+      "acceptance": [
+        {
+          "text": "Read authenticated terminal status before recovering consumers; staged cancellation settled between reads is retained without unnecessary evaluator startup, while actual owned assertion-container zero checks remain mandatory. Real installed-package regression required.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-recovery-parent-review-rework.json"
+          ]
+        },
+        {
+          "text": "Bound the complete lifetime timeout, owned-resource quiescence and pending-work join. Abort/fence late actions, terminate only owned handles/processes when cooperation fails, retain explicit unverified recovery/private state and prove actual child-process exit through withCustomerServiceLifetime. No abandoned late cleanup or false owned-zero proof.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-recovery-parent-review-rework.json"
+          ]
+        },
+        {
+          "text": "Preserve cause uncertainty and local-only Temporal topology qualification. Bind diagnostics to credential-free exact harness/run/candidate identity. Relevant local tests, exact changed-head hosted CI and parent independent source/actual-artifact clearance precede merge; no aggregate M3 acceptance.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-pr100-owner-review-merge.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07-terminal-lifetime-child-regression",
+      "title": "Prove terminal lifetime recovery exits an actual owned harness process",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SPEC-12.3-001"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-14T17:05:43.152Z",
+      "completedAt": "2026-10-14T17:14:04.217Z",
+      "acceptance": [
+        {
+          "text": "Actual child execution through production withCustomerServiceLifetime, recovery owner, cleanup phases, terminal exit and synthetic-key lifecycle uses real owned PostgreSQL and Temporal; noncooperative callbacks cannot act after bounded exit1. No teardown-ready or owned-zero proof is emitted; owned worker dies, foreign sentinel lives and private key/database state remain until parent cleanup. Source-bound local-only tests/typecheck/evidence required; no App/provider/live or M3 acceptance.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-terminal-lifetime-regression-0dddc59.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07-installed-terminal-recovery-regression",
+      "title": "Retain actual staged cancellation settlement when evaluator readiness becomes unavailable",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-14T18:00:56.447Z",
+      "completedAt": "2026-10-14T19:12:06.453Z",
+      "acceptance": [
+        {
+          "text": "Actual installed API/controller stages and durably cancels a real unit; restricted installed evaluator produces authentic terminal settlement, and cleanup retains it across a stale initial read/evaluator-unavailable race while independently proving owned-container zero",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-staged-pre-child-hosted-rework.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07-reproduction-dispatch-callback",
+      "title": "Keep controller stop callback outside immutable reproduction binding data",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-14T17:08:07.351Z",
+      "completedAt": "2026-10-14T17:17:52.627Z",
+      "acceptance": [
+        {
+          "text": "Actual dispatch with shouldStop callback binds cloned data-only options and persists real PostgreSQL attempt/Temporal run; compiled/unpublished-source installed staged-cancellation path progresses without modifying frozen dev.3 assets",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-installed-staged-terminal-source-acceptance.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07d-2-ci-staged-recovery",
+      "title": "Diagnose and repair hosted staged cancellation recovery regression without weakening resource proofs",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SPEC-12.3-001"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-14T17:53:57.670Z",
+      "completedAt": "2026-10-14T19:12:05.504Z",
+      "acceptance": [
+        {
+          "text": "Preserve failed Verify38607627341 attempt1 and diagnose exact staged terminal cleanup failure using actual retained workflow and owned-resource evidence; retain original-cause uncertainty.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-staged-pre-child-hosted-rework.json"
+          ]
+        },
+        {
+          "text": "Harness/test-only repair passes targeted real PostgreSQL/Temporal and installed regression without weakening resource/identity proofs or enlarging deadlines; changed-head hosted CI and independent review remain required.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-pr100-owner-review-merge.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-R1-DEV4-PREP",
+      "title": "Prepare distinct dev.4 candidate from reviewed recovery source without changing publication contract",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SECTION-12.3",
+        "SECTION-12.5"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-14T19:08:00.095Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Owner authorization and independent PR100 source/artifact clearance retained; new version aligns package/locks/runtime/opt-in deployment/publication and customer helpers without changing six-role native or anonymous-download contract, permissions, occupied dev.3 assets or customer activation.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dev4-preparation-local.json"
+          ]
+        },
+        {
+          "text": "Relevant local/full hosted CI and independent exact head/tree and actual-artifact review precede descriptor merge/publication; preflight rejects occupied/inconclusive destinations. Preserve failures and all M3 customer/release gates.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M3-R1-DEV4-SCANNER-FIXTURE",
+      "title": "Remove random entropy uncertainty from mandatory scanner path regression without weakening policy",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SECTION-12.3"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-14T19:22:22.920Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Preserve failed Verify38622670778 attempt1 and its exact-head evidence; reproduce missing synthetic package-lock finding with unchanged pinned policy and distinguish original hosted value uncertainty from proven fixture defect.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dev4-scanner-fixture-rework.json"
+          ]
+        },
+        {
+          "text": "Private generated fixture satisfies the pinned rule preconditions deterministically, with prior binary/intermediate/path/inline-config/redaction/negative checks retained. Focused/full local and new-head hosted checks plus independent review required; no scanner rules or gate weakening and no publication.",
           "status": "pending",
           "evidence": []
         }

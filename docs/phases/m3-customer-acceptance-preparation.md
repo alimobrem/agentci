@@ -9,7 +9,7 @@ Run from the exact service source with Node26.10/npm12.2, installed development
 test dependencies and existing isolated loopback PostgreSQL/Temporal:
 
 ```sh
-node scripts/m3-customer-local-preparation.mjs /path/to/agentci-0.4.0-m3-dev.1.tgz --offline
+node scripts/m3-customer-local-preparation.mjs /path/to/agentci-0.4.0-m3-dev.3.tgz --offline
 ```
 
 Set `AGENTCI_TEST_DATABASE_URL` and `AGENTCI_TEST_TEMPORAL_ADDRESS` privately.
@@ -30,7 +30,9 @@ keep the dogfood App limited to `alimobrem/agentci`. Metadata-only environment
 inspection currently finds no configured App IDs/key-file path, deployment tokens
 or provider keys in this executor. This does not establish that Apps or credentials
 are unavailable elsewhere, nor does the Work GitHub connection prove deployment
-App readiness. Do not search secret contents or print credentials.
+App readiness. The later scope-only run recorded below has now independently
+validated the saved separate key/App/install scope. Do not search secret contents
+or print credentials.
 
 Bounded customer fixture branches/commits/PR updates through Work GitHub and
 scoped Check writes are now explicitly authorized. Separate customer credential
@@ -68,8 +70,9 @@ GitHub environment or PAT is needed. The owner supplies the public numeric App
 ID and installation ID separately. The actual App and installation must grant
 Contents, Pull requests and Metadata **read**, Checks **write**, and no additional
 permissions, and select only `alimobrem/agentci-onboarding-demo`. Do not reuse the
-original dogfood App or its secret. IDs are currently unknown; they are not
-inferred from the existing Work GitHub connection.
+original dogfood App or its secret. Public App `5182307` and installation
+`167710386` were supplied separately and accepted by the scope-only guard; they
+are not inferred from the Work GitHub connection.
 
 The workflow's `fixtures` input has this public shape (placeholders must be
 replaced with actual connector-verified public PR and full commit identities):
@@ -110,10 +113,10 @@ provider exception is unchanged.
 ## Current temporary demo driver preparation
 
 The owner has separately approved entering the customer App key into the named
-repository Actions secret. Entry remains owner-controlled and unobserved here.
-Historical public references App `5182307` / installation `167710386` are not
-verified current identities or defaults: the actual key/App/install/scope guard
-must confirm supplied IDs before use.
+repository Actions secret. The owner saved it privately; scope-only run
+`38490343015` has now passed independent artifact review for App `5182307` /
+installation `167710386` and the exact selected repository/minimal permissions.
+The App slug and actual fixture/scenario execution are separately unverified.
 
 `Customer installation scope` (`customer-installation-scope.yaml`) performs only
 App/install/repository reads without requiring existing fixture PRs. Run that
@@ -170,7 +173,7 @@ retains public operation evidence, and does not become a passing demo result.
 The workflow runner remains temporary; this introduces no persistent access.
 
 Local compiler, supervisor, archive/install and isolation-guard tests are
-preparation evidence only. Actual App-authenticated execution is still pending.
+preparation evidence only. Actual App-authenticated scenario execution is still pending.
 Runner-local URLs leave external customer endpoint acceptance unverified. No
 persistent deployment, paid service, broader App permissions, provider exemption
 or phase-order change is introduced. The existing 18 M3 gates remain open.
@@ -178,8 +181,8 @@ or phase-order change is introduced. The existing 18 M3 gates remain open.
 For cloud independence, reviewed main push activations are also supported:
 `releases/m3-customer-installation.json` runs the scope-only stage, and
 `releases/m3-customer-demo.json` runs the exact-fixture demo after Work GitHub
-publication. The demo descriptor remains absent until scope validation and fixture
-publication. The scope descriptor is introduced separately for review before activation.
+publication. Scope validation passed and fixture publication is now recorded below.
+Each activation descriptor is reviewed separately before its main merge.
 The scope descriptor has `schemaVersion: 1`, purpose
 `approved-demo-installation-scope`, full reviewed `harnessBase`, and public `scope`
 (repository/App/install IDs only). The demo descriptor uses purpose
@@ -209,9 +212,9 @@ review precede the separately authorized activation merge. A real hosted
 `installation-scope-passed` result is required before fixture publication. The
 guard verifies numeric App identity and permissions; it does not verify the App
 slug. Expected slug `agentci-onboarding-demo` remains separately unverified.
-Missing, invalid, broader or mismatched credentials fail closed. All customer
-execution, external endpoint, authenticated dashboard, milestone release and
-aggregate M3 acceptance gates remain pending.
+Missing, invalid, broader or mismatched credentials fail closed. Actual customer execution, external endpoint, authenticated dashboard, milestone
+release and aggregate M3 acceptance gates remain pending until their own evidence
+is accepted.
 
 The forward CI database cleanup replaces this workflow's committed credential with an independently generated 256-bit password for each attempt. PostgreSQL starts during a step after private credential generation, using the existing pinned image, a private environment file and a random host port bound explicitly to `127.0.0.1`. The runner registers masks for the password and derived URL. Only the private state-file path is exported through `GITHUB_ENV`; the demo controller reads that file in its own Node process, without putting a password in process arguments or exporting a credential value to later steps. Private directories/files use `0700`/`0600` and stay outside workspace archives/artifact paths.
 
@@ -220,3 +223,39 @@ Startup verifies the exact task-owned name, label, image and loopback port using
 Unresolved, cancelled, malformed or foreign evidence fails closed and retains owned database/Temporal/private state for bounded recovery while the runner exists; no persistent recovery beyond the ephemeral runner lifetime is claimed. Cleanup errors remain public nonsecret evidence.
 
 Local physical tests cover real authentication, wrong-password rejection, selected inspection and removal after an actual create whose response is lost; local guard tests cover private permissions, argument/environment isolation and failure paths. Hosted CI and independent review remain necessary. This forward change does not rotate unrelated keys, rewrite historical commits, claim that no credential was reused elsewhere, or close any customer, endpoint, release or M3 milestone gate.
+
+## Reviewed temporary scenario activation preparation
+
+PR #97 merged as `a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a`.
+Its scope-only run `38490343015` and all four postmerge CI workflows passed;
+parent independent actual-scope/postmerge artifact review also passed. The guard
+verified numeric App `5182307`, installation `167710386`, minimal permissions and
+only the selected demo repository. It does not verify App slug. Scope validation
+performed no fixture or Check writes and did not execute the scenarios.
+
+The separately owner-approved fixture publication uses only exact
+`customerFixtureFiles()` bytes. New branch `demo/m3-base` is commit
+`04f11298c020e853fd0098fb5d92c7529630f300`. Seeded PR #4 has head
+`62342e933e902b188b4b87dfa44575cf409ae7d4`; fixed PR #5 has head
+`3c12571ec6f4578d19876ce27cf56c842c3abf97`. Both target that new base,
+not demo main. All preexisting branch refs and PRs 1–3 were rechecked unchanged.
+The head assertion harness is deliberately trivial; only the trusted base
+assertion may establish reproduction. These are synthetic acceptance subjects,
+not evidence of live model review quality.
+
+The proposed `releases/m3-customer-demo.json` binds these exact public subjects,
+the reviewed harness ancestor `a39de3fb`, separate App/install and four immutable
+checksums from `v0.4.0-m3-dev.3`, source
+`2b8eb75aadd604ebafe97ec06a3359734c4f20d2`. All five public candidate assets
+were anonymously downloaded again and matched their verified hashes. Current
+harness/dashboard code is separate from this frozen downloaded candidate.
+
+The owner approved a temporary four-scenario run, scoped demo Checks and owned
+service cleanup. Activation merge follows exact-source four-gate CI and parent
+independent source/artifact review. Publication of this draft alone runs no
+customer scenario. Actual unsupported/seeded/fixed/restart/cancellation results
+remain unverified until the triggered workflow and retained cleanup evidence are
+accepted. No new credentials, access, paid service or persistent hosting is
+introduced. HTTPS/OIDC, final `0.4.0-m3` release/download/demo/closure, all three
+adapters, full M0–M10 order and the narrow inaccessible-provider exception remain
+separate and unchanged.

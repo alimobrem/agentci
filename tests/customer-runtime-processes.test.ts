@@ -39,7 +39,7 @@ test('cleanup retry retains successful phases and joins concurrent close calls',
 });
 test('deadline retains key while an in-flight cleanup phase still owns live dependencies',async()=>{
  const root=await mkdtemp(join(tmpdir(),'customer-recovery-deadline-'));let keyPath='',poolClosed=false,closedCallback=false,release:any;const blocked=new Promise(resolve=>{release=resolve;});let session:any;
- try{await assert.rejects(withCustomerKey('-----BEGIN PRIVATE KEY-----\nSENTINEL\n-----END PRIVATE KEY-----',root,async(path:string)=>{keyPath=path;session={close:customerCleanupPhases([['assertionContainers',async()=>{await blocked;assert.match(await readFile(path,'utf8'),/SENTINEL/);assert.equal(poolClosed,false);return {ownedAssertionContainers:0};}],['databasePool',async()=>{poolClosed=true;}]])};return withCustomerServiceLifetime(session,async()=>{},async()=>{closedCallback=true;},{timeoutMs:10});}),(error:any)=>error.customerRecoveryRequired===true);assert.match(await readFile(keyPath,'utf8'),/SENTINEL/);assert.equal(poolClosed,false);assert.equal(closedCallback,false);release();await session.close();assert.equal(poolClosed,true);assert.match(await readFile(keyPath,'utf8'),/SENTINEL/);}finally{release?.();await rm(root,{recursive:true,force:true});}
+ try{await assert.rejects(withCustomerKey('-----BEGIN PRIVATE KEY-----\nSENTINEL\n-----END PRIVATE KEY-----',root,async(path:string)=>{keyPath=path;session={close:customerCleanupPhases([['assertionContainers',async()=>{await blocked;assert.match(await readFile(path,'utf8'),/SENTINEL/);assert.equal(poolClosed,false);return {ownedAssertionContainers:0};}],['databasePool',async()=>{poolClosed=true;}]])};return withCustomerServiceLifetime(session,async()=>{},async()=>{closedCallback=true;},{timeoutMs:10});}),(error:any)=>error.customerRecoveryRequired===true);assert.match(await readFile(keyPath,'utf8'),/SENTINEL/);assert.equal(poolClosed,false);assert.equal(closedCallback,false);release();await assert.rejects(session.close(),(error:any)=>error.customerRecoveryRequired===true);assert.equal(poolClosed,false,'aborted in-flight work cannot advance to dependency disposal');await session.close();assert.equal(poolClosed,true);assert.match(await readFile(keyPath,'utf8'),/SENTINEL/);}finally{release?.();await rm(root,{recursive:true,force:true});}
 });
 // @ts-ignore Exact per-reservation cleanup used by the real session.
 import {customerCleanupItems} from '../scripts/lib/customer-runtime-processes.mjs';
@@ -47,4 +47,29 @@ test('later lost ACK cleanup resumes at owned intent instead of replaying earlie
  const earlier={},lost={};let earlierCalls=0,lostCalls=0,apiRunning=true,poolClosed=false;
  const clear=customerCleanupItems([earlier,lost],async(intent:object)=>{assert.equal(poolClosed,false);if(intent===earlier){earlierCalls++;assert.equal(apiRunning,true);}else{lostCalls++;if(lostCalls===1){apiRunning=false;throw Error('pool.connect failed after API drain');}apiRunning=true;}});
  const close=customerCleanupPhases([['assertionContainers',clear],['databasePool',async()=>{poolClosed=true;}]]);await assert.rejects(close());assert.equal(poolClosed,false);await close();assert.equal(earlierCalls,1);assert.equal(lostCalls,2);assert.equal(poolClosed,true);
+});
+
+test('ensure replaces a retained exited worker and an aborted recovery cannot launch it again',async()=>{
+ const root=await mkdtemp(join(tmpdir(),'customer-exited-ensure-')),runtime=new CustomerRuntimeProcesses(root);
+ try{await mkdir(join(root,'dist/apps/worker'),{recursive:true});await writeFile(join(root,'dist/apps/worker/main.js'),'process.exit(7);');const first=await runtime.start('worker',{PATH:process.env.PATH});await runtime.children.get('worker').exited;assert.equal(runtime.children.has('worker'),true);assert.equal(runtime.isAlive('worker'),false);assert.equal(runtime.state('worker').code,7);
+ await writeFile(join(root,'dist/apps/worker/main.js'),'setInterval(()=>{},1000);');const second=await runtime.ensure('worker',{PATH:process.env.PATH});assert.notEqual(first,second);assert.equal(runtime.isAlive('worker'),true);await runtime.stop('worker','SIGKILL');const controller=new AbortController();controller.abort();await assert.rejects(runtime.ensure('worker',{PATH:process.env.PATH},{signal:controller.signal}),/aborted/);assert.equal(runtime.children.size,0);
+ }finally{await runtime.close();await rm(root,{recursive:true,force:true});}
+});
+
+test('owned operator drains its authority acknowledgement before completion',async()=>{
+ const root=await mkdtemp(join(tmpdir(),'customer-operator-output-')),runtime=new CustomerRuntimeProcesses(root),digest='sha256:'+'a'.repeat(64);
+ try{await mkdir(join(root,'dist/cmd/reproduction-operator'),{recursive:true});await writeFile(join(root,'dist/cmd/reproduction-operator/main.js'),`process.stdout.end(JSON.stringify({applied:{revision:1,digest:${JSON.stringify(digest)}}}));`);const applied=await runtime.applyAuthority(join(root,'authority.json'),digest,'initial',{PATH:process.env.PATH,AGENTCI_REPRODUCTION_CONFIG_REVISION:'1'});assert.deepEqual(applied,{revision:1,digest});assert.equal(runtime.children.size,0);
+ }finally{await runtime.close();await rm(root,{recursive:true,force:true});}
+});
+
+test('failed quiescence forces the owned terminal path without reporting cleanup success',async()=>{
+ let forced=0,terminal=0,closed=false;
+ await assert.rejects(withCustomerServiceLifetime({close:async()=>{throw Error('unresolved cleanup');},quiesce:async()=>{throw Error('owned shutdown unverified');},forceQuiesce:()=>{forced++;}},async()=>{},async()=>{closed=true;},{timeoutMs:100,shutdownTimeoutMs:50,onUnquiesced:()=>{terminal++;throw Error('terminal persistence failed');}}),(error:any)=>error.customerRecoveryRequired===true);
+ assert.equal(forced,1);assert.equal(terminal,1);assert.equal(closed,false);
+});
+
+test('aborted command ownership lasts until actual TERM-ignoring child exit',async()=>{
+ const {execFile}=await import('node:child_process'),{promisify}=await import('node:util'),execute=promisify(execFile),root=await mkdtemp(join(tmpdir(),'customer-command-abort-')),runtime=new CustomerRuntimeProcesses(root);let child:any;
+ try{const ready=join(root,'ready'),script=join(root,'command.mjs');await writeFile(script,`import {writeFileSync} from 'node:fs';process.on('SIGTERM',()=>{});writeFileSync(${JSON.stringify(ready)},String(process.pid));setInterval(()=>{},1000);`);const controller=new AbortController(),pending=runtime.trackCommand(execute(process.execPath,[script],{signal:controller.signal}));child=pending.child;const deadline=Date.now()+3000;while(Date.now()<deadline){try{await readFile(ready);break;}catch{await new Promise(resolve=>setTimeout(resolve,10));}}await readFile(ready);controller.abort();await assert.rejects(pending,(error:any)=>error.code==='ABORT_ERR');assert.equal(runtime.commands.size,1,'rejected promise cannot erase a live child');assert.doesNotThrow(()=>process.kill(child.pid,0));runtime.forceStop();await runtime.close();assert.equal(runtime.commands.size,0);assert.throws(()=>process.kill(child.pid,0),(error:any)=>error.code==='ESRCH');
+ }finally{if(child&&child.exitCode===null&&child.signalCode===null)child.kill('SIGKILL');await runtime.close();await rm(root,{recursive:true,force:true});}
 });

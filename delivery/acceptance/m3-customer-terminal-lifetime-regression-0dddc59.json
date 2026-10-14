@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-07-terminal-lifetime-child-regression",
+  "observedAt": "2026-10-14T17:13:55.386124+00:00",
+  "scope": "Local regression only; no App, provider, live customer, hosted CI, release or M3 gate acceptance",
+  "sourceCommit": "0dddc59722486788b7c11e87180bed400c133fb4",
+  "sourceTree": "da33faacf955e59700218d7122bdf41d3e680363",
+  "sourceQualification": "Tests executed on byte-identical owned source before source commit; actual execution includes the explicitly hash-bound uncommitted parent production overlay. This commit alone does not contain production fixes. node_modules is an owned untracked dependency symlink; no clean-install claim.",
+  "baseCommit": "df2f4bc5466f1846f8f91053cc813fac7dce26e6",
+  "sourceBindings": [
+    {
+      "path": "tests/helpers/customer-terminal-lifetime-child.mjs",
+      "sha256": "7620189bcb52e00e6cc61aa7507f102f9af6cd77daa8477523212d8ab77d0cf6",
+      "ownership": "test source committed"
+    },
+    {
+      "path": "tests/integration/customer-terminal-lifetime.test.ts",
+      "sha256": "fa54e9e37020da692bd2b7dc4e7156ecbf39bf2dda41d4bbcd2d764ff05cd7f5",
+      "ownership": "test source committed"
+    },
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "480ce79c948bf7e042241e55f6342500ab1c088d880ebe8ae4d103b335046f40",
+      "ownership": "parent production overlay; intentionally uncommitted"
+    },
+    {
+      "path": "scripts/lib/customer-diagnostics.mjs",
+      "sha256": "319ec9dd7aa936ff39b5986002915d74e48f2872b75d13cb6470849c3f241b33",
+      "ownership": "parent production overlay; intentionally uncommitted"
+    },
+    {
+      "path": "scripts/lib/customer-recovery-owner.mjs",
+      "sha256": "3f65782886133579b34e8c643d0701cacf74f28fa0062a6280b56a33079a4e96",
+      "ownership": "parent production overlay; intentionally uncommitted"
+    },
+    {
+      "path": "scripts/lib/customer-terminal-recovery.mjs",
+      "sha256": "b3d32dc7ba6061d4bea85cac2282b83f89047c90ad55326982a1fa80b5fa5641",
+      "ownership": "parent production overlay; intentionally uncommitted"
+    },
+    {
+      "path": "scripts/lib/customer-acceptance-preflight.mjs",
+      "sha256": "629e6eb803d310b230026016dc67f4ea50328d802cfcf802149ab52fbb973215",
+      "ownership": "unchanged base dependency"
+    },
+    {
+      "path": "scripts/lib/customer-ci-database.mjs",
+      "sha256": "f670cd2c17722c97e1ee09a6845946066459539b9634da0f282b6ca7a1e9d924",
+      "ownership": "unchanged base dependency"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "01dbe4e372c600aaf4e418f06087adfeade85205e6c5b08cbb9b5c1b0012888c",
+      "ownership": "unchanged base dependency"
+    }
+  ],
+  "checks": [
+    {
+      "path": "/workspace/scratch/customer-terminal-lifetime-final2-20261014.log",
+      "sha256": "efa2bb19d399f233d97d6abd9f6abccd6a1c78c527481a4401f9556574f9d398",
+      "result": "passed",
+      "qualification": "Current production overlay; 2 actual children"
+    },
+    {
+      "path": "/workspace/scratch/customer-terminal-lifetime-final2-types-20261014.log",
+      "sha256": "24891980e1a4e24b0fa42dfc3ba5d72e0d18f079385b15c0fc688b5779456ff9",
+      "result": "passed",
+      "qualification": "Current production overlay; TypeScript"
+    }
+  ],
+  "priorAttempts": [
+    {
+      "path": "/workspace/scratch/customer-terminal-lifetime-first-20261014.log",
+      "sha256": "c51b11e41b4fe9a1b4f42cfb800a09f142ec13954b9ff9ee3282a8a6edeb7f72",
+      "result": "historical-passed",
+      "qualification": "Earlier test timing before first-cleanup marker and watchdog"
+    },
+    {
+      "path": "/workspace/scratch/customer-terminal-lifetime-final-20261014.log",
+      "sha256": "05c12ffaaa5a195021b24918b122a5f9fe09938f7afb2963e1ffb94f6c007e07",
+      "result": "historical-passed",
+      "qualification": "Same owned test sources; superseded parent runtime/owner overlay"
+    },
+    {
+      "path": "/workspace/scratch/customer-terminal-lifetime-types-20261014.log",
+      "sha256": "24891980e1a4e24b0fa42dfc3ba5d72e0d18f079385b15c0fc688b5779456ff9",
+      "result": "historical-passed",
+      "qualification": "Superseded parent runtime/owner overlay"
+    }
+  ],
+  "observations": [
+    {
+      "fixture": "actual-terminal-lifetime",
+      "persistFailure": false,
+      "cleanupTimeoutMs": 150,
+      "shutdownTimeoutMs": 250,
+      "elapsedMs": 408,
+      "exitCode": 1,
+      "watchdogExpired": false,
+      "ownedWorkerDead": true,
+      "foreignSentinelAlive": true,
+      "privateKeyRetained": true,
+      "databaseRetained": true,
+      "noLateActions": true,
+      "terminalResult": "recovery-required-unverified",
+      "childOutputBytes": 0,
+      "childOutputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "fixture": "actual-terminal-lifetime",
+      "persistFailure": true,
+      "cleanupTimeoutMs": 150,
+      "shutdownTimeoutMs": 250,
+      "elapsedMs": 407,
+      "exitCode": 1,
+      "watchdogExpired": false,
+      "ownedWorkerDead": true,
+      "foreignSentinelAlive": true,
+      "privateKeyRetained": true,
+      "databaseRetained": true,
+      "noLateActions": true,
+      "terminalResult": "persistence-threw",
+      "childOutputBytes": 0,
+      "childOutputSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "fixtureContract": {
+    "cleanupTimeoutMs": 150,
+    "shutdownTimeoutMs": 250,
+    "elapsedAssertionMs": 2500,
+    "childOuterWatchdogMs": 8000,
+    "deliberateLateCallbackMs": 4000,
+    "timingOrigin": "First invocation of the actual cleanup phase, after lifetime cleanup begins; excludes PostgreSQL/Temporal/key startup. These are operational regression fixture bounds, not new product acceptance thresholds.",
+    "actualResources": [
+      "Owned authenticated PostgreSQL and Pool.query(SELECT pg_sleep(8)); active backend query observed before lifetime",
+      "Real Temporal Connection, high-level close intentionally hung while actual client.close remains usable",
+      "Actual CustomerRuntimeProcesses owned long-running worker",
+      "Unregistered healthy foreign process sentinel",
+      "Actual synthetic-key withCustomerKey private lifecycle"
+    ],
+    "parentCleanup": "After assertions, parent test terminates only fixture-owned processes/containers, removes owned volumes and private fixture paths. Zero retained customer evidence is never asserted.",
+    "notClaimed": [
+      "Server-side cancellation of the already-running read-only PostgreSQL statement",
+      "Actual evaluator container recovery: evaluator has no resources in this fixture",
+      "Fast-failing quiescence branch: these cases exercise noncooperative diagnostic and Temporal close",
+      "All applicable parent integration, hosted CI, exact-head artifact review, live customer or milestone gates"
+    ]
+  },
+  "result": "passed-local-regression",
+  "remainingBlockers": [
+    "Parent must integrate the exact bound production helpers together with these tests and run applicable exact-source checks; this isolated source commit intentionally excludes those helpers.",
+    "No release/customer/M3 gate is closed by this record."
+  ]
+}

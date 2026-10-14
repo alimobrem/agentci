@@ -505,7 +505,13 @@
 {"at":"2026-10-13T18:30:09.571Z","task":"M3-07-ui-pr88-refresh-dev3","action":"start","sourceCommit":"fd76cdd82f254f1b16df13328cfd8f145db1e208","details":null}
 {"at":"2026-10-13T18:38:05.624Z","task":"M3-07-ui-pr88-refresh-dev3","action":"block","sourceCommit":"76f8a098934032514bfc9550ee7de6599be9ad5b","details":"Approved existingPR88 refreshed with non-destructive main2b integration; local76f8 passed543rootunit/17UIunit/24production browser checks/10fast51.39s/SDK+UIbuild/audit0/API/lint. ActualSDKlink points to combinedworktree; systemChromium151 local qualified. Pending exact refreshed head fullVerify/DashboardVerify/scanner/advisory and independent actual-source/artifact review before owner-approved merge; no deployment or unrelated unpublished UI features."}
 {"at":"2026-10-13T20:29:00.835Z","task":"M3-07d-2-scope-activation","action":"start","sourceCommit":"2652ee15b3214a3cc246cbf69f6ca01f8319a36c","details":null}
+{"at":"2026-10-14T00:37:03.482Z","task":"M3-07d-2-scope-activation","action":"block","sourceCommit":"a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a","details":"Scope-only hosted run and all five postmerge CI workflows passed. Independent postmerge scope/full/dashboard artifact-byte audit remains pending; sanctioned artifact download unavailable from cloud executor. No customer mutations or aggregate M3 closure claimed."}
+{"at":"2026-10-14T03:53:48.236Z","task":"M3-07d-2-demo-activation","action":"start","sourceCommit":"8ffc9fd9987ef83fa0f08a02b80ea9db199d35ec","details":null}
+{"at":"2026-10-14T03:54:02.459Z","task":"M3-07d-2-scope-activation","action":"start","sourceCommit":"8ffc9fd9987ef83fa0f08a02b80ea9db199d35ec","details":null}
+{"at":"2026-10-14T03:54:03.118Z","task":"M3-07d-2-scope-activation","action":"accept","sourceCommit":"8ffc9fd9987ef83fa0f08a02b80ea9db199d35ec","details":null}
+{"at":"2026-10-14T03:54:03.680Z","task":"M3-07d-2-scope-activation","action":"done","sourceCommit":"8ffc9fd9987ef83fa0f08a02b80ea9db199d35ec","details":null}
 {"at":"2026-10-14T03:56:33.100Z","task":"M3-07-ui-remaining-current","action":"start","sourceCommit":"a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a","details":null}
+{"at":"2026-10-14T03:58:54.737Z","task":"M3-07d-2-demo-activation","action":"accept","sourceCommit":"f0e63ac82a50d35b9f6ff75a83830f8eee244760","details":null}
 {"at":"2026-10-14T03:59:09.288Z","task":"M3-07-ui-local-health","action":"start","sourceCommit":"376296035708fd1fb8b8b12977ecc51a5c1f63f6","details":null}
 {"at":"2026-10-14T04:00:29.264Z","task":"M3-07-ui-pr-contract-map","action":"start","sourceCommit":"3335901148bc29244996f1cfea50cf75edb8d200","details":null}
 {"at":"2026-10-14T04:02:05.620Z","task":"M3-07-ui-remaining-current","action":"accept","sourceCommit":"2079b9d8835ad439bd067ed6a5639b5137867b32","details":null}
@@ -514,9 +520,65 @@
 {"at":"2026-10-14T04:02:07.263Z","task":"M3-07-ui-local-health","action":"done","sourceCommit":"2079b9d8835ad439bd067ed6a5639b5137867b32","details":null}
 {"at":"2026-10-14T04:02:07.820Z","task":"M3-07-ui-pr-contract-map","action":"accept","sourceCommit":"2079b9d8835ad439bd067ed6a5639b5137867b32","details":null}
 {"at":"2026-10-14T04:02:08.359Z","task":"M3-07-ui-pr-contract-map","action":"done","sourceCommit":"2079b9d8835ad439bd067ed6a5639b5137867b32","details":null}
+{"at":"2026-10-14T04:23:22.684Z","task":"M3-07d-2-demo-activation","action":"accept","sourceCommit":"0c30b461cc7942734220b3ae894c20e0186917d5","details":null}
+{"at":"2026-10-14T04:29:20.204Z","task":"M3-07d-2-demo-activation","action":"block","sourceCommit":"0c30b461cc7942734220b3ae894c20e0186917d5","details":"Temporary customer run38510993755 attempt1 failed in downloaded-package execution. PG/Temporal cleanup steps and artifact uploads succeeded, but actual scenario/cleanup JSON bytes are unavailable to cloud executor and require parent read before diagnosis/retry. No scenarios accepted; postmerge Verify still running."}
 {"at":"2026-10-14T04:33:47.337Z","task":"M3-07-ui-login-interruption-local","action":"start","sourceCommit":"97665f64a2c7eeca9950bfb90cb1ec42723ab245","details":null}
+{"at":"2026-10-14T04:37:02.168Z","task":"M3-07d-2-demo-activation","action":"start","sourceCommit":"d70f0e0db035be2bed24478d3d696bb6655f28b9","details":null}
+{"at":"2026-10-14T04:37:02.714Z","task":"M3-07d-2-demo-activation","action":"block","sourceCommit":"d70f0e0db035be2bed24478d3d696bb6655f28b9","details":"Failed attempt38510993755 and owned cleanup independently audited. Exact package/session-builder read-only reproduction proves missing worker runner pin and supervisor filtering defect; original stderr unavailable. Proposed bounded correction/regressions pending review; no workflow rerun or scenario pass. All ordinary postmerge CI passed."}
 {"at":"2026-10-14T04:37:28.344Z","task":"M3-07-ui-login-interruption-local","action":"accept","sourceCommit":"d68a6ec4031ac2668852954b3b603f613e99d5a1","details":null}
 {"at":"2026-10-14T04:37:28.889Z","task":"M3-07-ui-login-interruption-local","action":"done","sourceCommit":"d68a6ec4031ac2668852954b3b603f613e99d5a1","details":null}
+{"at":"2026-10-14T13:52:06.416Z","task":"M3-07-installed-worker-regression","action":"start","sourceCommit":"0c30b461cc7942734220b3ae894c20e0186917d5","details":null}
+{"at":"2026-10-14T13:52:17.770Z","task":"M3-07d-2-worker-startup-pin","action":"start","sourceCommit":"063b50e059006f0bc18a14a6f4314eb9a69b48f3","details":null}
+{"at":"2026-10-14T13:57:03.495Z","task":"M3-07-installed-worker-regression","action":"accept","sourceCommit":"0c30b461cc7942734220b3ae894c20e0186917d5","details":null}
+{"at":"2026-10-14T13:57:04.059Z","task":"M3-07-installed-worker-regression","action":"done","sourceCommit":"0c30b461cc7942734220b3ae894c20e0186917d5","details":null}
+{"at":"2026-10-14T13:57:59.153Z","task":"M3-07-installed-worker-regression","action":"accept","sourceCommit":"0c30b461cc7942734220b3ae894c20e0186917d5","details":null}
+{"at":"2026-10-14T14:00:37.075Z","task":"M3-07d-2-worker-startup-pin","action":"accept","sourceCommit":"686251bc001132a5bde3e17b7b183bd190907b67","details":null}
+{"at":"2026-10-14T14:00:54.953Z","task":"M3-07-installed-worker-regression","action":"reopen","sourceCommit":"b5a5e83d07ccf440709842565968d10a9d1ee5a1","details":"Independent review requested actual session-constructor environment, mutable pin rejection and terminal Check/public evidence coverage; original completed regression retained"}
+{"at":"2026-10-14T14:03:17.223Z","task":"M3-07-installed-worker-regression","action":"accept","sourceCommit":"b5a5e83d07ccf440709842565968d10a9d1ee5a1","details":null}
+{"at":"2026-10-14T14:03:17.772Z","task":"M3-07-installed-worker-regression","action":"done","sourceCommit":"b5a5e83d07ccf440709842565968d10a9d1ee5a1","details":null}
+{"at":"2026-10-14T14:03:52.513Z","task":"M3-07d-2-worker-startup-pin","action":"accept","sourceCommit":"686251bc001132a5bde3e17b7b183bd190907b67","details":null}
+{"at":"2026-10-14T14:27:18.837Z","task":"M3-07d-2-worker-startup-pin","action":"accept","sourceCommit":"cb32770c13e86380a301e28eca808f5284257065","details":null}
+{"at":"2026-10-14T14:27:19.488Z","task":"M3-07d-2-worker-startup-pin","action":"done","sourceCommit":"cb32770c13e86380a301e28eca808f5284257065","details":null}
+{"at":"2026-10-14T14:27:20.170Z","task":"M3-07d-2-demo-activation","action":"start","sourceCommit":"cb32770c13e86380a301e28eca808f5284257065","details":null}
+{"at":"2026-10-14T14:58:56.318Z","task":"M3-07d-2-demo-activation","action":"block","sourceCommit":"dcdca0d9208a0f5c021595f9a6e249e9cc37a72e","details":"Run38580528645 on reviewed mergeee69dcb cancelled after controller failure and unverified owned cleanup; both infrastructure cleanup steps failed. Retained three artifact IDs/hashes and fixed log timestamps require parent actual ZIP/operation-journal audit. All ordinary postmerge CI passed; no scenario or cleanup acceptance and no blind rerun."}
+{"at":"2026-10-14T16:10:06.409Z","task":"M3-07d-2-consumer-recovery","action":"start","sourceCommit":"49e927e7d7fe80c3399b484a07205c3b4618ad9d","details":null}
+{"at":"2026-10-14T16:14:00.218Z","task":"M3-07-installed-recovery-regression","action":"start","sourceCommit":"372aedb4a3aac0c288db314120dbae915ca5df60","details":null}
+{"at":"2026-10-14T16:42:30.926Z","task":"M3-07d-2-consumer-recovery","action":"accept","sourceCommit":"9f8222745b4cdc70e8c41662e74bf7e3beb4b948","details":null}
+{"at":"2026-10-14T16:42:31.489Z","task":"M3-07d-2-consumer-recovery","action":"accept","sourceCommit":"9f8222745b4cdc70e8c41662e74bf7e3beb4b948","details":null}
+{"at":"2026-10-14T16:43:06.153Z","task":"M3-07d-2-consumer-recovery","action":"accept","sourceCommit":"9f8222745b4cdc70e8c41662e74bf7e3beb4b948","details":null}
+{"at":"2026-10-14T16:44:39.747Z","task":"M3-07-installed-recovery-regression","action":"accept","sourceCommit":"79899b14e9230f9326f18a4f00c1fb2bbbdfa01e","details":null}
+{"at":"2026-10-14T16:44:40.295Z","task":"M3-07-installed-recovery-regression","action":"done","sourceCommit":"79899b14e9230f9326f18a4f00c1fb2bbbdfa01e","details":null}
+{"at":"2026-10-14T16:58:10.320Z","task":"M3-07-installed-terminal-recovery-regression","action":"start","sourceCommit":"addf1f88624298b9c445df63e60be3fa88742c6e","details":null}
+{"at":"2026-10-14T16:58:44.844Z","task":"M3-07d-2-review-recovery","action":"start","sourceCommit":"c751b8a871112c955182735916e3e4e96cd4a180","details":null}
+{"at":"2026-10-14T16:58:45.409Z","task":"M3-07d-2-consumer-recovery","action":"block","sourceCommit":"c751b8a871112c955182735916e3e4e96cd4a180","details":"Parent independent review found terminal-status recovery race and unbounded quiescence/join; rework tracked in M3-07d-2-review-recovery, prior local acceptance does not override blockers."}
+{"at":"2026-10-14T17:05:43.152Z","task":"M3-07-terminal-lifetime-child-regression","action":"start","sourceCommit":"df2f4bc5466f1846f8f91053cc813fac7dce26e6","details":null}
+{"at":"2026-10-14T17:06:09.254Z","task":"M3-07-installed-terminal-recovery-regression","action":"block","sourceCommit":"addf1f88624298b9c445df63e60be3fa88742c6e","details":"Actual installed controller cannot stage: shouldStop callback forwarded into structuredClone in ReproductionDispatchStore.bind throws DataCloneError before SQL; awaiting primary production-source correction and explicit frozen-release disposition. No substitute units or receipts."}
+{"at":"2026-10-14T17:08:07.351Z","task":"M3-07-reproduction-dispatch-callback","action":"start","sourceCommit":"54ee3c8606edf9b186ed43fc4d1d826b2c1ea3fe","details":null}
+{"at":"2026-10-14T17:08:25.172Z","task":"M3-07-installed-terminal-recovery-regression","action":"start","sourceCommit":"54ee3c8606edf9b186ed43fc4d1d826b2c1ea3fe","details":null}
+{"at":"2026-10-14T17:14:03.408Z","task":"M3-07-terminal-lifetime-child-regression","action":"accept","sourceCommit":"0dddc59722486788b7c11e87180bed400c133fb4","details":null}
+{"at":"2026-10-14T17:14:04.217Z","task":"M3-07-terminal-lifetime-child-regression","action":"done","sourceCommit":"0dddc59722486788b7c11e87180bed400c133fb4","details":null}
+{"at":"2026-10-14T17:17:50.906Z","task":"M3-07-installed-terminal-recovery-regression","action":"accept","sourceCommit":"70c0ab1772764fbc1469a0470e346626c852115f","details":null}
+{"at":"2026-10-14T17:17:51.473Z","task":"M3-07-installed-terminal-recovery-regression","action":"done","sourceCommit":"70c0ab1772764fbc1469a0470e346626c852115f","details":null}
+{"at":"2026-10-14T17:17:52.048Z","task":"M3-07-reproduction-dispatch-callback","action":"accept","sourceCommit":"70c0ab1772764fbc1469a0470e346626c852115f","details":null}
+{"at":"2026-10-14T17:17:52.627Z","task":"M3-07-reproduction-dispatch-callback","action":"done","sourceCommit":"70c0ab1772764fbc1469a0470e346626c852115f","details":null}
+{"at":"2026-10-14T17:27:50.277Z","task":"M3-07d-2-review-recovery","action":"accept","sourceCommit":"731de18752a2cfdf679575bad99ab527cefdd75d","details":null}
+{"at":"2026-10-14T17:27:50.830Z","task":"M3-07d-2-review-recovery","action":"accept","sourceCommit":"731de18752a2cfdf679575bad99ab527cefdd75d","details":null}
+{"at":"2026-10-14T17:53:57.670Z","task":"M3-07d-2-ci-staged-recovery","action":"start","sourceCommit":"a6ff6b6be7e822b943879015a80d1ad409acb4bd","details":null}
+{"at":"2026-10-14T18:00:56.447Z","task":"M3-07-installed-terminal-recovery-regression","action":"reopen","sourceCommit":"a6ff6b6be7e822b943879015a80d1ad409acb4bd","details":"Verify38607627341 attempt1 exposed legitimate pre-child staged cancellation rejected by harness physical proof; local evidence retained, hosted rework required"}
+{"at":"2026-10-14T18:04:17.227Z","task":"M3-07d-2-ci-staged-recovery","action":"accept","sourceCommit":"8125024cf8af1b15bf4e1bbbf4c86e245899077e","details":null}
+{"at":"2026-10-14T18:04:17.816Z","task":"M3-07-installed-terminal-recovery-regression","action":"accept","sourceCommit":"8125024cf8af1b15bf4e1bbbf4c86e245899077e","details":null}
+{"at":"2026-10-14T19:08:00.095Z","task":"M3-R1-DEV4-PREP","action":"start","sourceCommit":"adf66a6033a4c2d81c43d40cb8f66da255095e5f","details":null}
+{"at":"2026-10-14T19:12:02.629Z","task":"M3-07d-2-review-recovery","action":"accept","sourceCommit":"adf66a6033a4c2d81c43d40cb8f66da255095e5f","details":null}
+{"at":"2026-10-14T19:12:03.607Z","task":"M3-07d-2-review-recovery","action":"done","sourceCommit":"adf66a6033a4c2d81c43d40cb8f66da255095e5f","details":null}
+{"at":"2026-10-14T19:12:04.578Z","task":"M3-07d-2-ci-staged-recovery","action":"accept","sourceCommit":"adf66a6033a4c2d81c43d40cb8f66da255095e5f","details":null}
+{"at":"2026-10-14T19:12:05.504Z","task":"M3-07d-2-ci-staged-recovery","action":"done","sourceCommit":"adf66a6033a4c2d81c43d40cb8f66da255095e5f","details":null}
+{"at":"2026-10-14T19:12:06.453Z","task":"M3-07-installed-terminal-recovery-regression","action":"done","sourceCommit":"adf66a6033a4c2d81c43d40cb8f66da255095e5f","details":null}
+{"at":"2026-10-14T19:12:07.270Z","task":"M3-07d-2-consumer-recovery","action":"start","sourceCommit":"adf66a6033a4c2d81c43d40cb8f66da255095e5f","details":null}
+{"at":"2026-10-14T19:12:07.959Z","task":"M3-07d-2-consumer-recovery","action":"accept","sourceCommit":"adf66a6033a4c2d81c43d40cb8f66da255095e5f","details":null}
+{"at":"2026-10-14T19:12:08.913Z","task":"M3-07d-2-consumer-recovery","action":"done","sourceCommit":"adf66a6033a4c2d81c43d40cb8f66da255095e5f","details":null}
+{"at":"2026-10-14T19:16:44.655Z","task":"M3-R1-DEV4-PREP","action":"accept","sourceCommit":"202a507a683e5796d9bd5b0aef0145a8c5330f50","details":null}
+{"at":"2026-10-14T19:22:22.920Z","task":"M3-R1-DEV4-SCANNER-FIXTURE","action":"start","sourceCommit":"75bf019173f2382b4a57d35066ff5b2d981aa5c3","details":null}
+{"at":"2026-10-14T19:28:15.383Z","task":"M3-R1-DEV4-SCANNER-FIXTURE","action":"accept","sourceCommit":"4778cc33d9669f4fab33136b72a9ca58618830b4","details":null}
 {"at":"2026-10-14T20:28:05.589Z","task":"M3-07-ui-cyberpunk-local","action":"start","sourceCommit":"9670066cc49d914ed95441a57cb4ba659006abd7","details":null}
 {"at":"2026-10-14T20:43:45.901Z","task":"M3-07-ui-cyberpunk-local","action":"accept","sourceCommit":"d78113b46648af50cefde6a75eab0df658938678","details":null}
 {"at":"2026-10-14T20:43:46.054Z","task":"M3-07-ui-cyberpunk-local","action":"done","sourceCommit":"d78113b46648af50cefde6a75eab0df658938678","details":null}

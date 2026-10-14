@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Retain owner authorization, parent independent review and exact reviewed PR100 merge; not milestone closure",
+  "observedAt": "2026-10-14T19:10:51.036797+00:00",
+  "ownerAuthorization": {
+    "proposal": "Sentinel_52f8e53da6b08191b79f041275b8a149",
+    "reply": "Sentinel_191ed7cd94a881919f5d46a5e2b2acb4",
+    "at": "2026-10-14T19:05:00Z",
+    "answer": "yes",
+    "approvedScope": "Include dispatcher fix in PR100; merge after CI and independent review; publish a distinctly versioned development candidate/all six images, verify anonymous downloads and rerun customer acceptance; leave occupied dev.3 unchanged",
+    "limits": "No new credentials/access permissions/paid/persistent services; exact candidate preparation review before publication."
+  },
+  "parentIndependentReview": {
+    "sourceThread": "01a10eeb-def7-7746-9dca-d0699432f035",
+    "state": "passed as reported by parent; actual ZIP inspection performed there, not newly claimed by this collector",
+    "head": "48e621f80c13b7e33fd9a181ad6ca3e449057794",
+    "tree": "8cbff5841c57a49eb3c6a3fdb2ce99c97dba925c",
+    "testMerge": "1d2a852c40e0f0abf12c39880c3f67841118bef5",
+    "artifacts": [
+      {
+        "id": 11917834779,
+        "sha256": "b656d32496178970aae73890cebf84c30abbdde6e134789e541a44cc759220aa",
+        "scope": "full Verify"
+      },
+      {
+        "id": 11917862461,
+        "sha256": "dd97b4a9caad42d3f0bcd70017f9c1ebca9f21e0e9210b37b24e6d3c20830c50",
+        "scope": "scanner"
+      },
+      {
+        "id": 11919050439,
+        "sha256": "2428526059f53e2a18ed45aec275ee8e82221d647418971a51d8de6167817080",
+        "scope": "dashboard"
+      }
+    ],
+    "validation": {
+      "unit": 558,
+      "integration": 207,
+      "installedReaders": 14,
+      "installedWorkerRecovery": 7,
+      "installedClient": 11,
+      "skipped": 0,
+      "proofs": "Both scheduling boundaries, bounded terminal lifetime, exact ownership/settlement/zero resources, API/runtime/native/hash proofs verified"
+    }
+  },
+  "merge": {
+    "repository": "alimobrem/agentci",
+    "pr": 100,
+    "account": "Work",
+    "expectedHead": "48e621f80c13b7e33fd9a181ad6ca3e449057794",
+    "sha": "adf66a6033a4c2d81c43d40cb8f66da255095e5f",
+    "tree": "8cbff5841c57a49eb3c6a3fdb2ce99c97dba925c",
+    "result": "Pull Request successfully merged",
+    "rule": "Required scan from Actions15368; no bypass"
+  },
+  "preservation": {
+    "failedVerify": "delivery/runs/38607627341-attempt-1.json",
+    "originalHostedCause": "Unknown; reachable reproduced defects are not sole initiating cause proof",
+    "priorCustomerCleanup": "38580528645 remains recovery-required-or-unverified",
+    "milestone": "All18 M3 aggregate gates pending; M0-M10 order and all three adapters unchanged"
+  }
+}

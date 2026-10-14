@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "purpose": "approved-temporary-four-scenario-demo",
+  "harnessBase": "0c30b461cc7942734220b3ae894c20e0186917d5",
+  "candidate": {
+    "releaseSource": "2b8eb75aadd604ebafe97ec06a3359734c4f20d2",
+    "packageManifestSha256": "fd978f63931063effcdd4ec2268caf9f54eb55e38905fe993be8f29f1d6d4322",
+    "packageSha256": "ae9a50f2f64922feab6952dac157e5649fbc6c81f9246d84f178a75762763465",
+    "imagesManifestSha256": "ef1c8dfe02aeed56e1d629bfc022b65ff47046bbe8e238275dc0befb5e8487c9",
+    "publicationEvidenceSha256": "23b64a533466d96058058cc95f55ed67e39dac4743f65235ed71a7541d1ff801"
+  },
+  "fixtures": {
+    "repository": "alimobrem/agentci-onboarding-demo",
+    "appId": 5182307,
+    "installationId": 167710386,
+    "subjects": [
+      {
+        "kind": "seeded",
+        "pullRequest": 4,
+        "baseSha": "04f11298c020e853fd0098fb5d92c7529630f300",
+        "headSha": "62342e933e902b188b4b87dfa44575cf409ae7d4"
+      },
+      {
+        "kind": "fixed",
+        "pullRequest": 5,
+        "baseSha": "04f11298c020e853fd0098fb5d92c7529630f300",
+        "headSha": "3c12571ec6f4578d19876ce27cf56c842c3abf97"
+      }
+    ]
+  }
+}

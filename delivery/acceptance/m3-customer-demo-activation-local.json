@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "result": "local-activation-preparation-passed-hosted-and-scenarios-pending",
+  "reviewedHarness": "a39de3fb9e0d4e9beb8343d7e436c2325e9b1b6a",
+  "fast": {
+    "sourceCommit": "dcce485fb991bcc0a4b91d171cb11a4812446cfe",
+    "dirty": true,
+    "passed": true,
+    "seconds": 51.646829727
+  },
+  "rootUnitCounts": {
+    "tests": 545,
+    "pass": 545,
+    "fail": 0,
+    "skipped": 0
+  },
+  "focusedCustomerChecks": {
+    "passed": 40,
+    "failed": 0,
+    "skipped": 0,
+    "finalCurrentInputsLog": "Local private scratch only; terminal counts retained here"
+  },
+  "apiCompatibility": "Passed immutable released M1 and M2 baselines",
+  "initialReconciliationCheck": "Stale after fixture acceptance updated ledger; regenerated current snapshots and --check passed. No gate promotion.",
+  "dependencyQualification": "Cached root node_modules and checksum-pinned local tools, not clean npm ci",
+  "anonymousCandidateProof": "delivery/acceptance/m3-customer-demo-candidate-downloads.json",
+  "fixtureProof": "delivery/acceptance/m3-customer-fixtures-a39de3fb.json",
+  "runtimeInputs": [
+    {
+      "path": "releases/m3-customer-demo.json",
+      "sha256": "38c34aa834beb8c361df25820491ad412ea09f162435976a33291c4bffd60712"
+    },
+    {
+      "path": "tests/customer-activation.test.ts",
+      "sha256": "f37666a8510673e682b8a06776f9028543fbbb2b9d84feeaad8fc4159a530491"
+    },
+    {
+      "path": "scripts/lib/customer-approved-catalog.mjs",
+      "sha256": "7fc3f7977a1f9b68a7b081bc5844ac8efb5c50d1dbebd1dbd562ba0497ada0ac"
+    },
+    {
+      "path": "scripts/lib/customer-activation.mjs",
+      "sha256": "5e590ceac3819c4474d641b12e665f4f91d4fe4e862a95307e25b2a01d1e9555"
+    },
+    {
+      "path": ".github/workflows/customer-live-demo.yaml",
+      "sha256": "80f400fb0499935ef7365494a1ed05ddc12c8fe2ac81be700d21ccfd038bea26"
+    }
+  ],
+  "sourceQualification": "Fast run binds its recorded earlier source; later changes are evidence/docs/reconciliation only. Final current focused checks pass; exact final hosted source acceptance remains required.",
+  "remaining": [
+    "Four exact-source hosted CI gates",
+    "Parent independent exact-source/artifact review before activation merge",
+    "Actual temporary customer scenario, Checks and owned cleanup terminal acceptance",
+    "HTTPS/OIDC and final M3 release/demo/closure remain separate"
+  ]
+}

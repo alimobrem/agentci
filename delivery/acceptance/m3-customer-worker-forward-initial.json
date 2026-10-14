@@ -1,0 +1,37 @@
+{
+  "policyCommit": "31f6c19801c2ddd537b2b462b1c441f268315ab6",
+  "harnessSha256": "64be7dc608da3e9ee0056724d1dac3e6742f60f9a4723e67a14b94ed9496dcc2",
+  "schema": "agentci-sensitive-forward-v1",
+  "baseCommit": "0c30b461cc7942734220b3ae894c20e0186917d5",
+  "headCommit": "31f6c19801c2ddd537b2b462b1c441f268315ab6",
+  "headTree": "928b5f5228d538fc95c1dbdf27e60d29cf2e73a5",
+  "scannerVersion": "8.30.1",
+  "binarySha256": "88f91962aa2f93ac6ab281d553b9e125f5197bbbce38f9f2437f7299c32e5509",
+  "upstreamPolicySha256": "e163e53b9e7e8a8511e77271e2b323ed057759542a6d988258afe3a1fa329caf",
+  "policySha256": "719492eab4c71b1c762b518f4e63ffe8e2a1201f2d77c14b7c32608073f9921d",
+  "introducedCommitCount": 7,
+  "selectedBlobCount": 48,
+  "introducedReferenceCount": 60,
+  "findings": [
+    {
+      "fingerprint": "20ed4d8838ea90bbbdc7f0177d2e29c7be72bcbd569295cb69947fdf7b095aaa",
+      "rule": "agentci-password-assignment",
+      "path": "scripts/lib/customer-service-session.mjs",
+      "line": 24,
+      "commit": "31f6c19801c2ddd537b2b462b1c441f268315ab6",
+      "blob": "aa34ec3dae524f862dc63b8accf6599e1fd0e0ca",
+      "disposition": "unresolved"
+    },
+    {
+      "fingerprint": "7c4ca7408b8cf8af6e42f902308182ea2c5c7c5725a8151bc27282202ca2a8d8",
+      "rule": "agentci-password-assignment",
+      "path": "scripts/lib/customer-service-session.mjs",
+      "line": 23,
+      "commit": "31f6c19801c2ddd537b2b462b1c441f268315ab6",
+      "blob": "aa34ec3dae524f862dc63b8accf6599e1fd0e0ca",
+      "disposition": "unresolved"
+    }
+  ],
+  "status": "new-change-findings",
+  "scope": "Introduced commits HEAD ^ BASE, parent-relative changed regular file blobs, and changed HEAD blobs vs BASE. No historical-clean assertion; deleted pre-base data and unchanged historical findings are outside this gate."
+}

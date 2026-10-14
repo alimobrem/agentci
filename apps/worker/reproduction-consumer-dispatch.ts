@@ -22,7 +22,7 @@ export async function dispatchAdmittedReproductions(store:ReproductionDispatchPo
    let observed:Awaited<ReturnType<typeof observeReproductionRun>>;
    try{observed=await observeReproductionRun(store,client,entry);}catch(error){
     if(!(error instanceof WorkflowNotFoundError))throw error;
-    entry=await store.bind(entry,options);await store.renew(entry);
+    entry=await store.bind(entry,{taskQueue:options.taskQueue,evalTaskQueue:options.evalTaskQueue,config:options.config});await store.renew(entry);
     // A timed-out/lost start may nevertheless succeed. Always resolve its deterministic ID before ack.
     try{await reproductionRpc(client,()=>client.workflow.start('reproduceAdmittedFinding',{args:[entry!.operationId,entry!.attempt!.token],workflowId:entry!.workflowId,taskQueue:options.taskQueue,workflowIdReusePolicy:'REJECT_DUPLICATE',workflowExecutionTimeout:options.timeoutMs,memo:reproductionStartMemo(entry!)}));}catch{ /* describe below is the sole authority for an ambiguous start */ }
     observed=await observeReproductionRun(store,client,entry);
