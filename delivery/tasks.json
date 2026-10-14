@@ -3510,6 +3510,24 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M3-07-ui-remaining-current",
+      "title": "Port isolated dashboard retained reads and package qualification onto verified current main",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-14T03:56:33.100Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Port only preserved history/export UI and local dashboard packaging/license qualification onto a39de3fb; validate retained-read privacy/navigation tests, packaging regressions, typecheck and production build. Keep live OIDC, actual UBI/native/image scan and unresolved notice/declaration items explicitly unverified; no aggregate gate closure.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

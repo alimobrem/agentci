@@ -102,6 +102,44 @@ COPY --chown=1001:0 LICENSE ./LICENSE
 USER 1001
 STOPSIGNAL SIGTERM
 
+# Local M3 dashboard packaging only; no publication workflow or release role activation.
+FROM build AS dashboard-build
+# Build-time declarations are required by Next; only locked production SDK dependencies ship.
+COPY --from=dependencies /app/node_modules /app/node_modules
+COPY scripts/dashboard-production-trace.mjs /app/scripts/dashboard-production-trace.mjs
+ENV NEXT_TELEMETRY_DISABLED=1
+RUN test "$(node --version)" = "v26.10.0" && test "$(npm --version)" = "12.2.0" && \
+    npm ci --prefix apps/dashboard --no-audit --no-fund && npm run build --prefix apps/dashboard && \
+    npm prune --omit=dev --no-audit --no-fund && \
+    node scripts/dashboard-production-trace.mjs apps/dashboard/.next/standalone
+COPY LICENSE /app/LICENSE
+COPY scripts/dashboard-license-inventory.mjs /app/scripts/dashboard-license-inventory.mjs
+RUN node scripts/dashboard-license-inventory.mjs --root /app --standalone /app/apps/dashboard/.next/standalone --output /app/dashboard-licenses
+
+FROM node AS dashboard
+ARG SOURCE_COMMIT
+ARG DASHBOARD_LOCK_SHA256
+ARG ROOT_LOCK_SHA256
+ARG DASHBOARD_VERSION=0.0.0-local-m3
+LABEL org.opencontainers.image.title="AgentCI dashboard local qualification" \
+      org.opencontainers.image.revision=$SOURCE_COMMIT \
+      org.agentci.dashboard.lock-sha256=$DASHBOARD_LOCK_SHA256 \
+      org.agentci.root.lock-sha256=$ROOT_LOCK_SHA256 \
+      org.agentci.dashboard.version=$DASHBOARD_VERSION
+ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 HOSTNAME=0.0.0.0 PORT=3000
+USER 0
+RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx
+WORKDIR /app
+COPY --from=dashboard-build --chown=1001:0 /app/apps/dashboard/.next/standalone ./
+COPY --from=dashboard-build --chown=1001:0 /app/apps/dashboard/.next/static ./apps/dashboard/.next/static
+COPY --from=dashboard-build /app/dashboard-licenses /licenses/dashboard
+COPY --from=node /usr/local/LICENSE /licenses/Node-LICENSE
+COPY LICENSE /licenses/AgentCI-MIT.txt
+USER 1001
+EXPOSE 3000
+STOPSIGNAL SIGTERM
+CMD ["node", "apps/dashboard/server.js"]
+
 FROM runtime AS api
 EXPOSE 3000
 HEALTHCHECK --interval=10s --timeout=3s --start-period=15s CMD node -e "fetch('http://127.0.0.1:3000/readyz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
