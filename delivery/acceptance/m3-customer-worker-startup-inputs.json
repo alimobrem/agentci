@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "result": "read-only-configuration-defect-reproduced",
+  "harnessSource": "0c30b461cc7942734220b3ae894c20e0186917d5",
+  "packageSource": "2b8eb75aadd604ebafe97ec06a3359734c4f20d2",
+  "platform": "Linux x86_64",
+  "node": "v26.10.0",
+  "inputs": [
+    {
+      "role": "package archive",
+      "path": "/workspace/scratch/customer-demo-candidate-assets/agentci-0.4.0-m3-dev.3.tgz",
+      "sha256": "ae9a50f2f64922feab6952dac157e5649fbc6c81f9246d84f178a75762763465"
+    },
+    {
+      "role": "exact packaged worker",
+      "path": "/workspace/scratch/customer-worker-startup-inspection/package/dist/apps/worker/main.js",
+      "sha256": "176107b1a9e491313dc3fe80937c7513a6f9156a7201e9126e5c05bdc13dbd51"
+    },
+    {
+      "role": "exact packaged policy",
+      "path": "/workspace/scratch/customer-worker-startup-inspection/package/dist/packages/evals/orchestration.js",
+      "sha256": "18b3500d29adb8d22f4df93a3f6746c7c20995f08bb14cfd9a7bd9df6f89fdd5"
+    },
+    {
+      "role": "harness session builder",
+      "path": "scripts/lib/customer-service-session.mjs",
+      "sha256": "c82fe6c4c488f56e2d20666e05405debb959d8e52493a396b238464c5b5fb469"
+    },
+    {
+      "role": "harness supervisor",
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "234647fb21ca056c53bce9a3040702313cf8b199bfa1442cb0e3c3c7ff1dd858"
+    }
+  ],
+  "verifier": "Real harness session construction without initialize, filtered worker environment and exact downloaded package controllerEvalPolicy",
+  "dependencies": "Existing cached root node_modules link; no fresh production install claimed",
+  "codeChange": "None; only evidence/docs/planned-task ledger",
+  "failureClassification": "Worker startup configuration, not package download. Original worker stderr not recovered.",
+  "replay": "Construct createCustomerServiceSession against the extracted verified package with no-key placeholder, disconnected loopback URLs and verified public runner/evaluator pins; do not initialize. Apply customerRuntimeEnvironment(worker,session.env), then installed controllerEvalPolicy. Observe missing pin error; add the verified pin explicitly and observe policy acceptance. Close session and remove private scratch root."
+}

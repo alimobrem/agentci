@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "mode": "read-only-exact-package-pure-configuration-reproduction",
+  "packageSource": "2b8eb75aadd604ebafe97ec06a3359734c4f20d2",
+  "harnessSource": "0c30b461cc7942734220b3ae894c20e0186917d5",
+  "supervisorDropsRunnerImage": true,
+  "observed": {
+    "name": "EvalPlanConfigurationError",
+    "message": "Invalid operator eval provenance or budget"
+  },
+  "withExplicitVerifiedPin": {
+    "accepted": true,
+    "providers": [],
+    "maxUnits": 128,
+    "maxTotalTrials": 2000
+  },
+  "credentialsRead": false,
+  "servicesStarted": false,
+  "remoteMutations": false,
+  "qualification": "Demonstrates a necessary startup failure from source/configuration, not the missing original worker stderr; no scenario acceptance claimed."
+}
