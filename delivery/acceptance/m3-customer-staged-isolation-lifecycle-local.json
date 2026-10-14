@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "baseSource": "b76c62dd4770546704ef2711d37be8332515b812",
+  "implementationFiles": [
+    {
+      "path": "scripts/lib/customer-isolated-database.mjs",
+      "bytes": 3368,
+      "sha256": "858ef5314d2823e809d264cf8c404d146b66de21c8cd233a9dbe67220c89b415"
+    },
+    {
+      "path": "scripts/lib/customer-owned-namespace.mjs",
+      "bytes": 2531,
+      "sha256": "2af4f2d8dcfcc21fe6105f911fd33fa5d154b090e3b5f2178f7d0cbc7d50d58b"
+    },
+    {
+      "path": "scripts/lib/customer-session-owner.mjs",
+      "bytes": 4154,
+      "sha256": "aa3743861bcaa8c06762ddd978e53fd85aed19be69d29fdd98860e1abcf118d9"
+    },
+    {
+      "path": "scripts/m3-customer-live-demo.mjs",
+      "bytes": 8687,
+      "sha256": "2ad43d23d98f932f2d31abc7da55a7c0c56d4006ac8840b48ec2817be2a8a893"
+    },
+    {
+      "path": "scripts/customer-dev4-scope-regression.mjs",
+      "bytes": 11734,
+      "sha256": "30dc95df26bfc7ab4123dc13c0022b7903e76e50d4dc3fb4c35e0702e850307c"
+    },
+    {
+      "path": "tests/customer-isolated-database.test.ts",
+      "bytes": 4584,
+      "sha256": "73a8fa37d6c192a7ba86f01de821626ee15d85e4dd5ff0888f6d97dc02ae87de"
+    },
+    {
+      "path": "tests/customer-owned-namespace.test.ts",
+      "bytes": 3429,
+      "sha256": "306a93cb3c1db2d2f0547c76d71c9566aace6b6911b73b13d4224f65004dd4ac"
+    }
+  ],
+  "reviewRework": [
+    "Latch idle admin pool errors and retain ambiguous database ownership for bounded recovery.",
+    "Only confirmed CREATE acknowledgement permits owner-checked disposal; explicit rejection and uncertain outcome cannot authorize DROP.",
+    "Bound and own namespace connect/raw registration RPC/shutdown; fence late work.",
+    "Bound and handle regression observer pool errors."
+  ],
+  "controlledChecks": {
+    "tests": 40,
+    "passed": 40,
+    "failed": 0,
+    "skipped": 0,
+    "cases": [
+      "idle pool disconnect",
+      "ambiguous CREATE",
+      "foreign same-admin duplicate CREATE preservation",
+      "confirmed successful cleanup",
+      "borrowed client quiescence",
+      "stalled namespace RPC with owned database cleanup",
+      "late connection without namespace request or session construction",
+      "confirmed namespace transport close"
+    ]
+  },
+  "localFast": {
+    "tests": 588,
+    "passed": 573,
+    "failed": 9,
+    "skipped": 6,
+    "otherStagesPassed": 9,
+    "qualification": "Same previously reproduced Mac platform failures; no waiver."
+  },
+  "types": "passed",
+  "workflows": "passed",
+  "realRuntime": "unverified locally; required hosted Linux regression",
+  "failedRunPreserved": 38649564609,
+  "originalRejectionCode": "not-retained",
+  "M3Acceptance": "pending",
+  "realAppPermissionsUnchanged": true,
+  "candidateAndFixturesUnchanged": true
+}

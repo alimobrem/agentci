@@ -103,6 +103,10 @@ jobs:
           node scripts/ci-database.mjs run npm run test:integration
         env:
           AGENTCI_TEST_TEMPORAL_ADDRESS: 127.0.0.1:7233
+      - name: Immutable dev.4 customer scope and staged cancellation regression
+        run: node scripts/ci-database.mjs run node scripts/customer-dev4-scope-regression.mjs
+        env:
+          AGENTCI_TEST_TEMPORAL_ADDRESS: 127.0.0.1:7233
       - name: Package smoke and installed PostgreSQL readers
         run: mkdir -p releases && npm pack --pack-destination releases && node scripts/ci-database.mjs run node scripts/package-smoke.mjs --postgres-readers && node scripts/ci-database.mjs run node scripts/reproduction-client-package-smoke.mjs
         env:
@@ -185,4 +189,5 @@ jobs:
             .agentci/artifacts/image-smoke-cleanup.json
             .agentci/artifacts/image-smoke.json
             .agentci/artifacts/eval-worker-image-smoke.json
+            .agentci/artifacts/customer-dev4-scope-regression.json
             .agentci/artifacts/native-provenance-*.json

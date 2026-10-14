@@ -1,6 +1,6 @@
 /** Trusted orchestrator. Session methods execute real installed production services;
  * callers retain public observations and separate physical/owned-cleanup evidence. */
-export async function runCustomerFourScenarios(session,onProgress=async()=>{}){
+export async function runCustomerFourScenarios(session,onProgress=async()=>{},{createStagedSession}={}){
  const evidence={schemaVersion:1,repository:session.scope.repository,mode:'temporary-synthetic-customer-demo',scenarios:[],customerEndpointAcceptance:'unverified',M3MilestoneAcceptance:'pending'};
  await session.initialize();await onProgress(evidence);
  // Observe the unsupported proposal before granting any assertion approval.
@@ -19,10 +19,16 @@ export async function runCustomerFourScenarios(session,onProgress=async()=>{}){
  const recoveryReview=await session.review('fixed'),recoveryApproval=await session.approve(recoveryReview,{recovery:true}),recoveryReference=await session.reserve(recoveryReview,recoveryApproval);await session.startConsumer();const killed=await session.killAndRecover(recoveryReference);evidence.failureProgress.processDeath=killed;await onProgress(evidence);const recovered=await session.settled(recoveryReview,recoveryReference);
  const recoveryPhysical=await session.physical(recoveryApproval,recoveryReference,recovered),recovery=await session.verifyCheckpoint(killed,recoveryPhysical),recoveryPublic=await session.observe(recoveryReview,'failure-restart-recovery',recoveryReference);evidence.failureProgress.recovery={public:recoveryPublic,physical:recoveryPhysical,processDeath:recovery};await onProgress(evidence);
  // Cancellation after a real runner is observed must retain actual execution/cleanup facts.
- const activeReview=await session.review('fixed'),activeApproval=await session.approve(activeReview,{recovery:true}),activeReference=await session.reserve(activeReview,activeApproval);await session.startConsumer();const active=await session.active(activeReference);await session.client.cancelReproduction(activeReview.admission,activeReference);const activeStatus=await session.settled(activeReview,activeReference);
+ if(typeof createStagedSession!=='function')throw Error('Separately owned staged-cancellation session required');
+ const staged=await createStagedSession();
+ if(staged.scope.organizationId===session.scope.organizationId||staged.scope.repository!==session.scope.repository||staged.namespace===session.namespace)throw Error('Distinct customer staged scope and namespace required');
+ await staged.initialize();
+ const activeReview=await staged.review('fixed');
+ if(session.production.canonical({...activeReview.admission.subject,organizationId:session.scope.organizationId})!==session.production.canonical(fixed.admission.subject))throw Error('Staged cancellation changed approved fixed fixture');
+ const activeApproval=await staged.approve(activeReview,{recovery:true}),activeReference=await staged.reserve(activeReview,activeApproval);await staged.startConsumer();const active=await staged.active(activeReference);await staged.client.cancelReproduction(activeReview.admission,activeReference);const activeStatus=await staged.settled(activeReview,activeReference);
  if(!activeStatus.receipt||activeStatus.nonExecution)throw Error('Staged cancellation lost actual execution evidence');
- const activePhysical=await session.physical(activeApproval,activeReference,activeStatus);
- evidence.scenarios.push({id:'failure-restart-recovery',neverStaged,recovery:{public:recoveryPublic,physical:recoveryPhysical,processDeath:recovery},stagedCancellation:{active,public:await session.observe(activeReview,'failure-restart-recovery',activeReference),physical:activePhysical}});delete evidence.failureProgress;await onProgress(evidence);
+ const activePhysical=await staged.physical(activeApproval,activeReference,activeStatus);
+ evidence.scenarios.push({id:'failure-restart-recovery',neverStaged,recovery:{public:recoveryPublic,physical:recoveryPhysical,processDeath:recovery},stagedCancellation:{scope:staged.scope,namespace:staged.namespace,active,public:await staged.observe(activeReview,'failure-restart-recovery',activeReference),physical:activePhysical}});delete evidence.failureProgress;await onProgress(evidence);
  if(JSON.stringify((await session.client.reproductionStatus(seeded.admission,seededReference)).receipt)!==originalReceipt)throw Error('Fixed or recovery observation changed original confirmed receipt');
  evidence.originalConfirmedReceiptImmutable=true;await onProgress(evidence);return evidence;
 }

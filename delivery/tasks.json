@@ -3944,6 +3944,36 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M3-07d-staged-scope-isolation",
+      "title": "Isolate owned customer staged cancellation within immutable dev.4 budget",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SPEC-12.3-001"
+      ],
+      "status": "blocked",
+      "startedAt": "2026-10-14T22:55:33.886Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Same approved PR5 fixture staged cancellation uses a different owned organization and Temporal namespace; preserve primary histories, three-attempt limits and verified cleanup of both scopes.",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Allowlisted diagnostic code/status excludes error bodies, credentials and arbitrary text; mandatory real PostgreSQL/Temporal installed-dev.4 regression proves same-scope fourth rejection without writes and isolated physical cancellation.",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Applicable local and exact-source hosted CI plus independent review precede remote change/merge/retry; failed customer run38649564609 and immutable dev.4 remain preserved.",
+          "status": "pending",
+          "evidence": []
+        }
+      ],
+      "blockedReason": "Corrected net changes prepared on a fresh main-based branch to remove introduced static synthetic URL userinfo without scanner exceptions. Original PR104/heads and cancelled run38652682207 cleanup-unverified evidence remain preserved; active run38653505988 is untouched. Full pinned scanner, real-runtime exact-head CI and parent review are required before merge/rerun."
     }
   ]
 }

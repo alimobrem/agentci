@@ -1,6 +1,13 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 // @ts-ignore Trusted harness diagnostics projection.
-import {customerDiagnosticFacts,customerDiagnostics,customerAbort,customerDiagnosticIdentity} from '../scripts/lib/customer-diagnostics.mjs';
+import {customerDiagnosticFacts,customerDiagnostics,customerAbort,customerDiagnosticIdentity,customerDiagnosticError} from '../scripts/lib/customer-diagnostics.mjs';
+test('client code/status projection retains bounded rejection identity and excludes arbitrary error contents',()=>{
+ const secret='PRIVATE-SENTINEL-BODY',operationId='11111111-1111-4111-8111-111111111111',journal=customerDiagnostics(()=>({}));
+ const error={code:'approval-conflict',status:409,message:secret,body:secret,cause:secret,headers:{authorization:secret}};
+ assert.deepEqual(customerDiagnosticError(error),{code:'approval-conflict',status:409});journal.record('reservation','failed',undefined,error,operationId);
+ assert.deepEqual(journal.snapshot().events[0],{sequence:1,phase:'reservation',outcome:'failed',error:{code:'approval-conflict',status:409},operationId});
+ journal.record('reservation','failed',undefined,{code:secret,status:599},secret);assert.deepEqual(journal.snapshot().events[1].error,{code:'unclassified',status:null});assert.ok(!JSON.stringify(journal.snapshot()).includes(secret));
+});
 test('customer diagnostic journal retains only allowlisted facts and bounds repeated observations',()=>{
  const secret='PRIVATE-SENTINEL-OUTPUT';
  const state={state:'exited',pid:123,code:1,signal:'SIGKILL',stderr:secret,env:{TOKEN:secret},error:secret};
