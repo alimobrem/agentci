@@ -137,6 +137,7 @@ COPY --from=node /usr/local/LICENSE /licenses/Node-LICENSE
 COPY LICENSE /licenses/AgentCI-MIT.txt
 USER 1001
 EXPOSE 3000
+HEALTHCHECK --interval=10s --timeout=3s --start-period=15s CMD node -e "fetch('http://127.0.0.1:3000/readyz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 STOPSIGNAL SIGTERM
 CMD ["node", "apps/dashboard/server.js"]
 

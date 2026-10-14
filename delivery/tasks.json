@@ -3528,6 +3528,24 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M3-07-ui-local-health",
+      "title": "Expose redacted local dashboard liveness and configured readiness for packaging",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-14T03:59:09.288Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Plain production standalone exposes redacted no-store process liveness and rejects readiness when setup/config/admissions are invalid; configured fixture readiness succeeds without backend mutations or secret/config disclosure. Probe makes no upstream availability or deployed readiness claim. Docker healthcheck uses readiness. Sessions and pending logins remain documented process-local.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
