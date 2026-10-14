@@ -6,7 +6,7 @@ import {tmpdir} from 'node:os';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import {ModelReviewExportVerifier} from '../../../../dist/packages/reviewers/export.js';
-const openExport=async(page)=>{const disclosure=page.locator('details[data-export]');if(await disclosure.count()&&!await disclosure.evaluate(el=>el.open))await disclosure.locator('summary').click();};
+const openExport=async(page)=>{const disclosure=page.locator('details[data-export]');await disclosure.waitFor({state:'attached'});if(!await disclosure.evaluate(el=>el.open))await disclosure.locator('summary').click();};
 const root=path.resolve(import.meta.dirname,'../..'),output=path.resolve(process.env.AGENTCI_UI_ARTIFACT_DIR??path.join(root,'../../.agentci/artifacts/dashboard-browser'));await mkdir(output,{recursive:true});
 const sourceCommit=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();const sourceTree=execFileSync('git',['rev-parse','HEAD^{tree}'],{cwd:root,encoding:'utf8'}).trim();
 const privateDir=await mkdtemp(path.join(tmpdir(),'agentci-ui-test-')),handshake=path.join(privateDir,'handshake.json'),origin='http://127.0.0.1:38641';
