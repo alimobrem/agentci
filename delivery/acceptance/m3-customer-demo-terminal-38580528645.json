@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "run": 38580528645,
+  "attempt": 1,
+  "source": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6",
+  "tree": "3b7f08f3c440a807284f4da42330bad7728798f3",
+  "result": "cancelled-customer-and-cleanup-acceptance-unverified",
+  "job": {
+    "id": 115908908581,
+    "started": "2026-10-14T14:26:31Z",
+    "completed": "2026-10-14T14:56:56Z",
+    "conclusion": "cancelled",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:26:32Z",
+        "completed": "2026-10-14T14:26:33Z"
+      },
+      {
+        "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:26:33Z",
+        "completed": "2026-10-14T14:26:36Z"
+      },
+      {
+        "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:26:36Z",
+        "completed": "2026-10-14T14:26:44Z"
+      },
+      {
+        "name": "Run npm install --global npm@12.2.0",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:26:44Z",
+        "completed": "2026-10-14T14:26:46Z"
+      },
+      {
+        "name": "Run npm ci && npm run build",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:26:46Z",
+        "completed": "2026-10-14T14:26:54Z"
+      },
+      {
+        "name": "Validate public candidate/fixture inputs",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:26:54Z",
+        "completed": "2026-10-14T14:26:54Z"
+      },
+      {
+        "name": "Start owned PostgreSQL with per-run private credentials",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:26:54Z",
+        "completed": "2026-10-14T14:27:02Z"
+      },
+      {
+        "name": "Start owned temporary Temporal",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:27:02Z",
+        "completed": "2026-10-14T14:27:04Z"
+      },
+      {
+        "name": "Execute downloaded exact-source temporary customer demo",
+        "status": "completed",
+        "conclusion": "cancelled",
+        "started": "2026-10-14T14:27:04Z",
+        "completed": "2026-10-14T14:56:48Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:56:48Z",
+        "completed": "2026-10-14T14:56:49Z"
+      },
+      {
+        "name": "Stop owned PostgreSQL and remove private credentials",
+        "status": "completed",
+        "conclusion": "failure",
+        "started": "2026-10-14T14:56:49Z",
+        "completed": "2026-10-14T14:56:49Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:56:49Z",
+        "completed": "2026-10-14T14:56:51Z"
+      },
+      {
+        "name": "Stop owned temporary Temporal and public scratch",
+        "status": "completed",
+        "conclusion": "failure",
+        "started": "2026-10-14T14:56:51Z",
+        "completed": "2026-10-14T14:56:51Z"
+      },
+      {
+        "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:56:51Z",
+        "completed": "2026-10-14T14:56:52Z"
+      },
+      {
+        "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+        "status": "completed",
+        "conclusion": "skipped",
+        "started": "2026-10-14T14:56:52Z",
+        "completed": "2026-10-14T14:56:52Z"
+      },
+      {
+        "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:56:52Z",
+        "completed": "2026-10-14T14:56:52Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "started": "2026-10-14T14:56:52Z",
+        "completed": "2026-10-14T14:56:52Z"
+      }
+    ]
+  },
+  "fixedLogEvents": [
+    {
+      "at": "2026-10-14T14:30:26.9098938Z",
+      "marker": "Customer live demo failed; no customer or milestone acceptance claimed."
+    },
+    {
+      "at": "2026-10-14T14:32:26.9105751Z",
+      "marker": "Customer owned cleanup remains unverified; retained operation evidence requires recovery."
+    },
+    {
+      "at": "2026-10-14T14:32:26.9124815Z",
+      "marker": "Infrastructure teardown requires recovery; owned dependencies and private database state retained for bounded in-run recovery."
+    }
+  ],
+  "logQualification": "Only exact fixed generic markers and timestamps retained from decoded completed Work GitHub job logs. No raw stdout/stderr, key/config/env values or exception data retained. Underlying execution error unavailable; cancellation cause not independently established by available annotation API (read unavailable). Job elapsed30m25s against configured30minute bound.",
+  "artifacts": [
+    {
+      "id": 11905560060,
+      "name": "customer-ci-infrastructure-cleanup",
+      "size": 311,
+      "digest": "sha256:abc4ebffd423b08a197921bf855074dbeba84e26bb31a9812002063ad2c272d3",
+      "expires": "2027-01-12T14:26:28Z",
+      "inspection": "Work metadata; parent actual ZIP/JSON inspection required"
+    },
+    {
+      "id": 11905515075,
+      "name": "customer-ci-database-cleanup",
+      "size": 311,
+      "digest": "sha256:21662d4150a84653a771367499e6c5c71d7237d867b811d4f57d9f0bfd904676",
+      "expires": "2027-01-12T14:26:28Z",
+      "inspection": "Work metadata; parent actual ZIP/JSON inspection required"
+    },
+    {
+      "id": 11905380223,
+      "name": "temporary-customer-demo",
+      "size": 7719,
+      "digest": "sha256:229b466dc2308b81ee517b3f858a211ea9f54fbb0391ef27f64a88bd21c85086",
+      "expires": "2027-01-12T14:26:28Z",
+      "inspection": "Work metadata; parent actual ZIP/JSON inspection required"
+    }
+  ],
+  "observedCustomerChecks": [
+    [
+      {
+        "id": 115909668968,
+        "status": "completed",
+        "conclusion": "neutral",
+        "head": "62342e933e902b188b4b87dfa44575cf409ae7d4",
+        "externalId": "agentci:model-review:4:04f11298c020e853fd0098fb5d92c7529630f300:62342e933e902b188b4b87dfa44575cf409ae7d4:6933b922-8f80-46c3-8769-2117fd362d8b",
+        "created": "2026-10-14T14:27:57Z"
+      },
+      {
+        "id": 115909552397,
+        "status": "completed",
+        "conclusion": "neutral",
+        "head": "62342e933e902b188b4b87dfa44575cf409ae7d4",
+        "externalId": "agentci:model-review:4:04f11298c020e853fd0098fb5d92c7529630f300:62342e933e902b188b4b87dfa44575cf409ae7d4:291e8839-9e10-44b9-9615-e2e5ad662fac",
+        "created": "2026-10-14T14:27:44Z"
+      }
+    ],
+    []
+  ],
+  "checkQualification": "Separate App5182307 completed two exact seeded-head advisory Checks. These are public review observations, not physical reproduction or full scenario acceptance. Fixed-head Check inventory was empty at that read.",
+  "cleanup": "Both infrastructure cleanup steps failed. Controller explicitly reported owned cleanup unverified and recovery required. No owned-zero, private-file removal, Temporal zero or teardown-ready claim for this attempt.",
+  "ordinaryPostmergeCI": "All4 ordinary workflows passed; completed metadata and ready-transition advisory retained separately in delivery/runs.",
+  "previousFailedAttempt": "38510993755 remains retained with its separately verified cleanup; that cleanup does not prove cleanup for38580528645.",
+  "scope": "One approved merge, no manual dispatch/rerun/cancel, no additional runtime source edits, access/credential/permission changes, fixture mutations or release publication.",
+  "nextStep": "Parent independently audit three retained ZIPs, especially partial scenario and operation journal, then source-bound reproduction of first failure and bounded failure-exit/recovery behavior. Fixed markers preceded cancellation by24minutes; surviving handles/recovery wait is a hypothesis, not established sole cause. Preserve fail-closed cleanup; no blind rerun or acceptance waiver.",
+  "milestone": "All18 aggregateM3 gates remainpending; fullM0–M10 order/three adapters/observed-rate calibration/Wilson descriptive/narrow inaccessible-provider exception unchanged."
+}

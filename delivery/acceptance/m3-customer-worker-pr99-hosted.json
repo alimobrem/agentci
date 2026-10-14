@@ -1,0 +1,250 @@
+{
+  "runs": [
+    {
+      "id": 38578191472,
+      "name": "Forward secret protection",
+      "event": "pull_request_target",
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "head": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 38578191591,
+      "name": "AgentCI advisory review",
+      "event": "pull_request_target",
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "head": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 38578150847,
+      "name": "Dashboard Verify",
+      "event": "pull_request",
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "head": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 38578150649,
+      "name": "AgentCI advisory review",
+      "event": "pull_request_target",
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "head": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 38578150646,
+      "name": "Forward secret protection",
+      "event": "pull_request_target",
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "head": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 38578150639,
+      "name": "Verify",
+      "event": "pull_request",
+      "attempt": 1,
+      "status": "completed",
+      "conclusion": "success",
+      "head": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    }
+  ],
+  "checks": [
+    {
+      "id": 115902938571,
+      "name": "agentci/evals",
+      "status": "completed",
+      "conclusion": "neutral",
+      "appId": 5179954,
+      "headSha": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 115901746474,
+      "name": "review",
+      "status": "completed",
+      "conclusion": "success",
+      "appId": 15368,
+      "headSha": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 115901657806,
+      "name": "agentci/review",
+      "status": "completed",
+      "conclusion": "neutral",
+      "appId": 5179954,
+      "headSha": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 115900764921,
+      "name": "scan",
+      "status": "completed",
+      "conclusion": "success",
+      "appId": 15368,
+      "headSha": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 115900622748,
+      "name": "review",
+      "status": "completed",
+      "conclusion": "success",
+      "appId": 15368,
+      "headSha": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 115900622537,
+      "name": "scan",
+      "status": "completed",
+      "conclusion": "success",
+      "appId": 15368,
+      "headSha": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 115900620330,
+      "name": "dashboard",
+      "status": "completed",
+      "conclusion": "success",
+      "appId": 15368,
+      "headSha": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 115900620279,
+      "name": "fast-feedback",
+      "status": "completed",
+      "conclusion": "success",
+      "appId": 15368,
+      "headSha": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    },
+    {
+      "id": 115900619711,
+      "name": "contracts-and-runtime",
+      "status": "completed",
+      "conclusion": "success",
+      "appId": 15368,
+      "headSha": "1f7b2deff4f24a44a392409b64ae23a3552b9155"
+    }
+  ],
+  "decodedLogFacts": {
+    "runtime": {
+      "job": 115900619711,
+      "counts": [
+        {
+          "name": "tests",
+          "value": 198
+        },
+        {
+          "name": "pass",
+          "value": 198
+        },
+        {
+          "name": "fail",
+          "value": 0
+        },
+        {
+          "name": "skipped",
+          "value": 0
+        },
+        {
+          "name": "tests",
+          "value": 14
+        },
+        {
+          "name": "pass",
+          "value": 14
+        },
+        {
+          "name": "fail",
+          "value": 0
+        },
+        {
+          "name": "skipped",
+          "value": 0
+        },
+        {
+          "name": "tests",
+          "value": 1
+        },
+        {
+          "name": "pass",
+          "value": 1
+        },
+        {
+          "name": "fail",
+          "value": 0
+        },
+        {
+          "name": "skipped",
+          "value": 0
+        },
+        {
+          "name": "tests",
+          "value": 11
+        },
+        {
+          "name": "pass",
+          "value": 11
+        },
+        {
+          "name": "fail",
+          "value": 0
+        },
+        {
+          "name": "skipped",
+          "value": 0
+        }
+      ],
+      "installedWorkerPasses": 2,
+      "installedWorkerMarkers": [
+        {
+          "acceptance": "installed-customer-worker",
+          "version": "0.4.0-m3-dev.3",
+          "install": "npm install --omit=dev",
+          "developmentLoaderInstalled": false,
+          "entry": "dist/apps/worker/main.js",
+          "github": "signed synthetic fixture transport; no real GitHub writes"
+        }
+      ],
+      "verificationSources": [
+        "904293e54061a26ea389cc13bf5911dd1171b2f2"
+      ]
+    },
+    "dashboard": {
+      "job": 115900620330,
+      "browserPassed": [],
+      "counts": [
+        {
+          "name": "tests",
+          "value": 17
+        },
+        {
+          "name": "pass",
+          "value": 17
+        },
+        {
+          "name": "fail",
+          "value": 0
+        },
+        {
+          "name": "skipped",
+          "value": 0
+        }
+      ]
+    },
+    "fast": {
+      "job": 115900620279,
+      "counts": [],
+      "fast": [
+        {
+          "seconds": 50.5,
+          "checks": 10
+        }
+      ]
+    }
+  },
+  "qualification": "Decoded completed job logs supply only bounded counts/markers; artifact ZIP bytes remain uninspected in cloud."
+}

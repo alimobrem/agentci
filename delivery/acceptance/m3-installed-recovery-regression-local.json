@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "purpose": "installed-customer-recovery-regression",
+  "base": "372aedb4a3aac0c288db314120dbae915ca5df60",
+  "state": "local compiled and production-installed regression gates passed with explicitly qualified owned-loopback test topology",
+  "primaryRuntimeSource": "9f8222745b4cdc70e8c41662e74bf7e3beb4b948",
+  "productionEditsInThisCommit": false,
+  "tests": {
+    "compiledRecovery": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 37848.135001,
+      "log": "/workspace/scratch/customer-installed-recovery-final.log"
+    },
+    "productionInstall": {
+      "command": "npm install --omit=dev; package-smoke --postgres-readers",
+      "installedReaderPassed": 14,
+      "recoveryPassed": 4,
+      "existingWorkerPassed": true,
+      "combinedGate": "passed; 5 tests, 0 failures/skips, 55833.162588ms",
+      "log": "/workspace/scratch/customer-installed-recovery-loopback-topology.log",
+      "qualification": "Temporary test-owned Temporal only: same pinned image/command and 1GiB memory; no CPU cap to match Verify, HTTP_PROXY unchanged, NO_PROXY/no_proxy explicitly restricted to approved 127.0.0.1,localhost,0.0.0.0 for internal self-dial. No host/global proxy, external domains, credentials or workflow configuration changed."
+    },
+    "typecheck": "passed"
+  },
+  "cases": [
+    "Actual installed session.initialize/review/approve/reserve acknowledges a genuine API/DB reservation before injected evaluator startup failure; close restores installed worker and retains never-staged settlement with no receipt/unit",
+    "Actual settlement worker SIGKILL at cancellation boundary is replaced and cancellation reaches never-staged settlement",
+    "Actual authenticated prior queued snapshot is replayed to stall observations; abort bounds polling, private fixture key and retained reservation remain, quiescence stops owned processes and second close fails recovery-required",
+    "Real test-owned cached-image container impersonates evaluator name/owner with wrong image; cleanup refuses deletion; unavailable engine remains failure and owned retry succeeds after explicit test-owner correction"
+  ],
+  "syntheticBoundary": {
+    "github": "strict generated-RSA App JWT plus installation-token transport; genuine trusted-catalog Git blob hashes; unknown routes/origins rejected",
+    "infrastructure": "owned loopback PostgreSQL databases and Temporal namespaces",
+    "credentials": "synthetic private fixture keys only; no customer credentials or remote GitHub mutations",
+    "privateFixtureDeletion": "test owner removes synthetic private files only after assertions; no production credential deletion claim"
+  },
+  "failuresRetained": [
+    {
+      "log": "/workspace/scratch/customer-installed-recovery-focused.log",
+      "classification": "Strict test fixture initially omitted installation/PR metadata required by actual reservation guard"
+    },
+    {
+      "log": "/workspace/scratch/customer-installed-recovery-reservation-diagnostic2.log",
+      "classification": "Strict fixture required installation token on App-JWT-only installation metadata endpoint; corrected by actual generated JWT signature verification"
+    },
+    {
+      "log": "/workspace/scratch/customer-installed-recovery-package.log",
+      "classification": "Stalled assertion wrongly included preabort worker startup time; corrected to bound actual abort-to-rejection. Later fixture Temporal unavailable; exact cause for this attempt unverified"
+    },
+    {
+      "log": "/workspace/scratch/customer-installed-recovery-package-final.log",
+      "classification": "Recovery4 passed; existing worker lost Temporal before readiness. Owned Temporal exited2, OOMKilledfalse. Subsequent controlled diagnostic reproduced server nil-pointer panic in internal Go SDK worker/scanner; no sole original customer failure cause inferred"
+    }
+  ],
+  "serviceDiagnostic": {
+    "panic": true,
+    "classifications": [
+      "invalid memory address",
+      "nil pointer dereference"
+    ],
+    "stackFunctions": [
+      "go.temporal.io/sdk/internal.NewWorker",
+      "go.temporal.io/sdk/worker.New",
+      "go.temporal.io/server/common/sdk.",
+      "go.temporal.io/server/service/worker/scanner.",
+      "go.temporal.io/server/service/worker.",
+      "go.temporal.io/server/common/backoff.ThrottleRetryContext"
+    ],
+    "rawLogsRetained": false
+  },
+  "controlledExperiment": {
+    "state": "passed after scoped loopback topology correction",
+    "cpuOnlyExperiment": {
+      "result": "combined gate failed; recovery4 passed, existingworker lost Temporal",
+      "log": "/workspace/scratch/customer-installed-recovery-workflow-equivalent.log",
+      "health": {
+        "running": false,
+        "exitCode": 2,
+        "oomKilled": false
+      },
+      "classification": "CPU cap removal alone did not resolve the internal Go SDK/scanner nil-pointer panic"
+    },
+    "finalChange": "Only temporary Temporalcontainer NO_PROXY/no_proxy set to 127.0.0.1,localhost,0.0.0.0; automatic HTTP_PROXY unchanged; same pinned image/command/1GiB memory, no CPU cap",
+    "finalHealth": {
+      "running": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "uptimeMs": 75733,
+      "scannerWindowObserved": true
+    },
+    "finalDiagnostic": {
+      "running": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "uptimeMs": 75746,
+      "scannerWindowObserved": true,
+      "panic": false,
+      "classifications": [],
+      "stackFunctions": [],
+      "rawLogsRetained": false
+    },
+    "cleanup": {
+      "database": {
+        "schemaVersion": 1,
+        "name": "agentci-customer-pg-1791996171722-1-a2a1984672a3f4a4",
+        "owner": "1791996171722:1:79899b14e9230f9326f18a4f00c1fb2bbbdfa01e:a2a1984672a3f4a4",
+        "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+        "result": "passed",
+        "ownedContainers": 0,
+        "privateFilesRemoved": true
+      },
+      "ownedTemporalContainers": 0
+    },
+    "causalLimit": "Controlled local result supports internal self-dial proxy topology explanation; does not prove the sole cause of the original hosted customer failure."
+  },
+  "limits": [
+    "Not full physical customer success/failure/recovery acceptance or full staged assertion-container cleanup",
+    "Parent separately owns actual projected-container large-output/foreign-runner guard integration coverage",
+    "No immutable release bytes or publication changed",
+    "All18 M3 aggregate gates and original M0\u2013M10/three-adapter scope remain unchanged"
+  ],
+  "files": [
+    {
+      "path": "tests/integration/customer-installed-recovery.test.ts",
+      "sha256": "f9670d53fee81d02a8de7a21b5cfe43d63d7149b7834dfda73f9b56b16520058"
+    },
+    {
+      "path": "tests/helpers/customer-recovery-transport.mjs",
+      "sha256": "0abe4b3e4ddcc8d2fbb819f7f835b2781a75f392a6f71ee2aad1709d93218277"
+    },
+    {
+      "path": "scripts/package-smoke.mjs",
+      "sha256": "f102c3272f054a31a47877170ed4498ff757a80000fc5ce818e3e56ba76964d4"
+    }
+  ],
+  "testedPrimaryRuntime": [
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "2b012c99baf88105448e3e61f0e0733c577de7257ce00a852727ce8a8d1dee29"
+    },
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "sha256": "47aa47937df4947f44906067160137c49fa6c176806a57aade80384472764947"
+    },
+    {
+      "path": "scripts/lib/customer-evaluator-container.mjs",
+      "sha256": "397a28a106a9a1fcae9954743a9a04187668a725cb06edf89dbbff750ab3cbe1"
+    },
+    {
+      "path": "scripts/lib/customer-owned-reservations.mjs",
+      "sha256": "de0c6162e4f7e04a7689f09c16c3daf3531222ac5a7bed8c7007b4d4e1f928b5"
+    },
+    {
+      "path": "scripts/lib/customer-diagnostics.mjs",
+      "sha256": "b729374af011a5d86735694173f626ba73716695259e4fc9abb4bef056048166"
+    }
+  ],
+  "logHashes": [
+    {
+      "path": "/workspace/scratch/customer-installed-recovery-final.log",
+      "sha256": "154fbf6c63ab7a5126a89140938233fea1b9afbf27b39a17740e516b6b70b19d"
+    },
+    {
+      "path": "/workspace/scratch/customer-installed-recovery-package-final.log",
+      "sha256": "922bba9525e8f3063fdc2d64beb4875be71f3ec45a702f0fa1b91fabc4b8d99b"
+    },
+    {
+      "path": "/workspace/scratch/customer-installed-recovery-workflow-equivalent.log",
+      "sha256": "709e1f8394212ddd5f9fbb44ab908f1442cf88dd4b03ee138404d3bf414de7a5"
+    },
+    {
+      "path": "/workspace/scratch/customer-installed-recovery-loopback-topology.log",
+      "sha256": "339a8c6b31f998580f430ee7618439c2a700a29628ef72b867a29e435d9eeef0"
+    }
+  ],
+  "regressionAcceptance": "Only this small local installed-recovery test task; parent correction PR/full hosted CI/independent review/customer scenarios remain separate.",
+  "localArchive": {
+    "path": "/workspace/scratch/customer-installed-recovery-package/agentci-0.4.0-m3-dev.3.tgz",
+    "sha256": "a0393d9b867bfb45999c1a36274e92221fd048a58f9a469621638e8f5560482d",
+    "bytes": 799866,
+    "manifestName": "agentci",
+    "manifestVersion": "0.4.0-m3-dev.3",
+    "manifestSha256": "ab7d330bf38c96f7cd1a3419822466bf3ffa5c780264233681b7ccef38a07f86",
+    "compiledWorkerSha256": "176107b1a9e491313dc3fe80937c7513a6f9156a7201e9126e5c05bdc13dbd51",
+    "qualification": "Locally packed trusted source archive used for real production-only installation; distinct from immutable anonymously downloaded dev.3 asset. No release publication or mutation."
+  },
+  "installIdentity": {
+    "verification": "Existing package-smoke installedManifest check required exact name/version before invoking tests and rejected installed tsx; versioned public CLI and installed runtime/schema/provider fixtures also passed.",
+    "name": "agentci",
+    "version": "0.4.0-m3-dev.3",
+    "productionDependenciesOnly": true,
+    "developmentLoaderInstalled": false,
+    "workerEntry": "dist/apps/worker/main.js",
+    "sourceFallback": false,
+    "logSha256": "339a8c6b31f998580f430ee7618439c2a700a29628ef72b867a29e435d9eeef0"
+  }
+}

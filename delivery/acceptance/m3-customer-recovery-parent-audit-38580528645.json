@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "purpose": "preserve-parent-independent-actual-ZIP-audit-and-read-only-source-findings",
+  "run": 38580528645,
+  "attempt": 1,
+  "source": "ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6",
+  "tree": "3b7f08f3c440a807284f4da42330bad7728798f3",
+  "priorTerminalEvidence": "delivery/acceptance/m3-customer-demo-terminal-38580528645.json",
+  "independentAudit": {
+    "authority": "Parent source thread01a10eeb-def7-7746-9dca-d0699432f035 supplied actual Work GitHub ZIP audit; cloud is preserving that audit, not claiming it independently downloaded ZIP bytes.",
+    "customerArtifact": {
+      "id": 11905380223,
+      "sha256": "229b466dc2308b81ee517b3f858a211ea9f54fbb0391ef27f64a88bd21c85086",
+      "verified": "Unsupported scenario completed seven synthetic roles, authenticated export and exact neutral Check115909552397 from separateApp5182307 on PR4 admission/base/head. Seeded reservation acknowledged. No terminal seeded/fixed/recovery evidence.",
+      "acknowledgedReservation": "19103fa5-67ee-4571-b911-34c3bf529fbd"
+    },
+    "cleanupArtifacts": [
+      {
+        "id": 11905515075,
+        "sha256": "21662d4150a84653a771367499e6c5c71d7237d867b811d4f57d9f0bfd904676"
+      },
+      {
+        "id": 11905560060,
+        "sha256": "abc4ebffd423b08a197921bf855074dbeba84e26bb31a9812002063ad2c272d3"
+      }
+    ],
+    "cleanupVerdict": "Both establish only recovery-required-or-unverified; no owned-zero or private-file disposal proof.",
+    "postmergeVerify": {
+      "id": 11903496727,
+      "sha256": "1a5f80961a5b6ad937fe71684c287120072f216256deec577b52812b6c40b3eb",
+      "verdict": "Independent identity/hash/runtime/native/API/cleanup checks passed."
+    }
+  },
+  "readOnlySourceFindings": [
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "lines": [
+        40,
+        45,
+        70
+      ],
+      "fact": "Approval drains worker; startConsumer starts evaluator before worker; reservation cleanup restores API as needed but does not restore worker before cancellation/settlement wait. Evaluator-start failure can leave acknowledged reservation without settlement consumer.",
+      "limit": "Reachable path, not proved original trigger."
+    },
+    {
+      "paths": [
+        "scripts/lib/customer-runtime-processes.mjs",
+        "scripts/lib/customer-service-session.mjs"
+      ],
+      "fact": "Exited children remain in supervisor children map until stop removes them. startConsumer tests map membership rather than live process state. A dead recorded worker can therefore suppress restart even when evaluator startup succeeds. Cleanup likewise does not establish a live scoped settlement consumer.",
+      "limit": "Source-confirmed recovery gap; no evidence that the failed run actually took this path."
+    },
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "lines": [
+        37,
+        50,
+        52
+      ],
+      "fact": "Promise.race deadline does not cancel underlying session.close; cleanup phases retain in-flight state and dependencies when earlier phase fails. Retry bound alone is not proof all underlying work stopped."
+    },
+    {
+      "paths": [
+        "scripts/m3-customer-live-demo.mjs",
+        "scripts/lib/customer-acceptance-preflight.mjs",
+        "scripts/lib/customer-infrastructure-teardown.mjs"
+      ],
+      "fact": "Recovery error retains private key directory; controller leaves session/dependencies in place and sets process.exitCode. Private-root/package removal requires teardownReady; infrastructure requires exact identity/owned-zero proof and accepts only success/failure outcomes before reading proof.",
+      "limit": "Confirms intended retention and a reachable live-handle failure-exit path, not actual resource inventory or post-run private-file disposal. Accepting cancelled alone would not supply missing cleanup proof."
+    }
+  ],
+  "causeAndExposure": "Original execution trigger remains unproven. No new evidence establishes credential disclosure or actual post-run resource inventory. Source retention paths and parent actual cleanup verdict prevent any claim of zero resources/private-file disposal; runner cancellation is not substituted for application cleanup proof.",
+  "proposedRepairPendingApproval": {
+    "proposal": "Sentinel_62008bec6cfc8191955a87e12f2acef5",
+    "status": "Owner reply pending per parent instruction; do not implement/publish/rerun.",
+    "scope": "Restore and verify scoped settlement consumer; bounded recovery retaining ownership and settlement proofs; allowlisted phase/process-exit/evaluator-state/status diagnostics; real installed-package tests for evaluator-start failure after reservation, dead worker during cancellation, stalled cleanup and foreign/unverifiable resources."
+  },
+  "actionsThisCheckpoint": "Source reads plus preservation of parent audit only. No runtime/workflow/test implementation, service launches, remote writes, workflow dispatch/rerun, permission/credential/access changes or release publication.",
+  "milestone": "No scenario aggregation or M3 gate promotion. Preserve all18 pending aggregategates, fullM0\u2013M10 order, three adapters, observed-rate calibration/Wilson descriptive and narrow inaccessible-provider exception.",
+  "sourceFiles": [
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "sha256": "99747daa35a339c896f3496ec55c00c6e8dc8e8d6decc33813e074999ef869c4"
+    },
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "b21a8d6e9119e31965deca1447379a217eed3673d8c71cf731231d189674692f"
+    },
+    {
+      "path": "scripts/lib/customer-acceptance-preflight.mjs",
+      "sha256": "629e6eb803d310b230026016dc67f4ea50328d802cfcf802149ab52fbb973215"
+    },
+    {
+      "path": "scripts/lib/customer-infrastructure-teardown.mjs",
+      "sha256": "fe987e772127dc29dabadeb2d4d6698d4a61be8fccbc2273a57279f58042a300"
+    },
+    {
+      "path": "scripts/m3-customer-live-demo.mjs",
+      "sha256": "2e000180c874c3df7900f30a8bf8c363c56345c74dc7c2321b7e7e6bb23d9fb4"
+    }
+  ]
+}

@@ -9,4 +9,4 @@ export async function reserveOwnedCustomerIntent(client,intent,production,record
  await record(intent);const reference=await client.reserveReproduction(intent.review.admission,intent.review.current.id,intent.request);
  if(production.canonical(reference)!==production.canonical(intent.reference))throw Error('Owned reservation acknowledgement identity mismatch');intent.acknowledged=true;await record(intent);return reference;
 }
-export async function reconcileCustomerReservation(client,intent){const status=await client.reproductionStatus(intent.review.admission,intent.reference);intent.acknowledged=true;intent.recoveredAcknowledgement=true;return status;}
+export async function reconcileCustomerReservation(client,intent,options={}){const status=await client.reproductionStatus(intent.review.admission,intent.reference,options);intent.acknowledged=true;intent.recoveredAcknowledgement=true;return status;}
