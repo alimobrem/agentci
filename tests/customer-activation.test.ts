@@ -20,9 +20,15 @@ test('committed demo activation binds actual fixture subjects and immutable cand
  validateCustomerInputs(input.fixtures);
  assert.deepEqual(input.fixtures.subjects,fixtures.subjects);
  assert.equal(input.fixtures.serviceSource,'a'.repeat(40));
- assert.equal(input.releaseSource,'2b8eb75aadd604ebafe97ec06a3359734c4f20d2');
- for(const [key,file] of [['packageManifestSha256','package-manifest.json'],['packageSha256','agentci-0.4.0-m3-dev.3.tgz'],['imagesManifestSha256','images.json'],['publicationEvidenceSha256','publication-evidence.tgz']]){
-  const downloads=JSON.parse(await readFile('delivery/acceptance/m3-customer-demo-candidate-downloads.json','utf8'));
+ // Independently audited dev.4 release constants; never derive expectations from the descriptor under test.
+ assert.equal(input.releaseSource,'6caeb54767e56b9b2375a256bab127014d99d41a');
+ const downloads=JSON.parse(await readFile('delivery/acceptance/m3-customer-demo-dev4-candidate-downloads.json','utf8'));
+ assert.equal(downloads.source,'6caeb54767e56b9b2375a256bab127014d99d41a');
+ assert.equal(downloads.releaseId,413149405);
+ assert.equal(downloads.tag,'v0.4.0-m3-dev.4');
+ const auditedHashes={"agentci-0.4.0-m3-dev.4.tgz":"e68608ea8539fe686791c37e51c5754b43a5c78bca31ad1b1b4cd22d70cfdbff","images.json":"d2dc4f7360b743306916415dfd2250b1e6a73c68f380a3008d33cc062570355e","package-manifest.json":"09e25cbfa25f349e7e2a1756d3b4c87b66bffd3b4be51199f293cf69880f33cf","publication-evidence.tgz":"0aeaa8b2f99f6884f2b787baba2b0adffe636606bd0f55e6baabe734bd9ce4a7"};
+ for(const [file,sha256] of Object.entries(auditedHashes))assert.equal(downloads.assets.find((asset:any)=>asset.name===file)?.sha256,sha256);
+ for(const [key,file] of [['packageManifestSha256','package-manifest.json'],['packageSha256','agentci-0.4.0-m3-dev.4.tgz'],['imagesManifestSha256','images.json'],['publicationEvidenceSha256','publication-evidence.tgz']]){
   assert.equal(input[key],downloads.assets.find((asset:any)=>asset.name===file)?.sha256);
  }
  for(const bad of [{...descriptor,purpose:'publish'},{...descriptor,candidate:{...descriptor.candidate,privateKey:'sentinel'}},{...descriptor,fixtures:{...descriptor.fixtures,serviceSource:'b'.repeat(40)}}])assert.throws(()=>customerActivationInput('demo',bad,'a'.repeat(40)),/required/);
