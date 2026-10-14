@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "d78113b46648af50cefde6a75eab0df658938678",
+  "sourceTree": "4ac00c80206ca35c7dc57b233cdd963922a139be",
+  "baseCommit": "9670066cc49d914ed95441a57cb4ba659006abd7",
+  "scope": "Owner-authorized local cyberpunk visual redesign of existing functional dashboard; synthetic fixtures only",
+  "runtime": {
+    "node": "26.10.0",
+    "npm": "12.2.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "checks": {
+    "productionBuild": "passed",
+    "typecheck": "passed",
+    "dashboardUnit": {
+      "passed": 21,
+      "failed": 0
+    },
+    "productionBrowser": {
+      "passed": 41,
+      "failed": 0,
+      "browser": "155.0.8059.79",
+      "checks": [
+        "isolated standalone without test bootstrap/configuration fails closed",
+        "redacted process liveness and local configuration readiness reject unconfigured setup",
+        "failed callback Back/Forward and repeated unavailable login remain unauthenticated without private review data",
+        "anonymous view and direct data route denied",
+        "authenticated original-admission detail mobile/unknown evidence",
+        "authorized local filtering preserves exact selected detail and empty state; queue navigation and Back restore correct subjects",
+        "focus revalidation hides protected content before asynchronous session response",
+        "server remaining TTL hides expired content independently of browser wall clock",
+        "Radix keyboard focus and tabs",
+        "cross tenant direct route and account view isolated",
+        "cross origin logout CSRF denied",
+        "malformed503/unavailable503/backendcredential502/notfound404/incomplete409/bounded413 distinguished from session expiry",
+        "cancel intent cannot assert cleanup",
+        "browser Back restores Summary and Forward restores exact focused retained Evidence target without backend mutations",
+        "retained finding reference activates Evidence tab and exact focused target, including direct hash reload",
+        "nonempty primary view close and active session revocation abort backend finding sockets before release without next reads or mutations",
+        "completed refusal displays exact subject/profile/role coverage without inferred clean review",
+        "rapid exact-review navigation discards obsolete first-subject response",
+        "closing a view with an active read never requests backend cancellation/mutation",
+        "history completes only after contiguous final-page watermark, distinct from summary-pinned evidence",
+        "changed history watermark discards provisional pages and never presents complete timeline",
+        "valid alternate finding history chain must match the exact summary-pinned version and digest",
+        "fully verified export after actual EOF enables exact nonempty NDJSON download without credentials",
+        "actual browser Blob download cancellation request records observed result without inferring upstream interruption",
+        "truncated/trailing/wrong-digest/wrong-identity/invalid-UTF8 exports never enable verified download",
+        "valid export end on open socket remains provisional and Stop read aborts upstream before EOF",
+        "nonempty history/export close/revoke/logout/account-change abort upstream sockets without next page, late completion or mutations",
+        "fresh retained-read session TTL subtracts complete round trip before any upstream read",
+        "fresh session verification unavailable is distinct from session expiry",
+        "full client read deadline bounds a held fresh-session response before export traversal",
+        "delayed expired fresh-session response cannot release an already verified export download",
+        "account change after verified export denies download on fresh session binding check",
+        "private evidence caching and browser credential absence",
+        "revoked session during backend read cannot deliver evidence",
+        "logout then Back cannot show retained account detail",
+        "RSC refreshed session-binding props cannot expose children before verifying new binding",
+        "same-browser account change/restoration cannot reveal prior tenant cached detail",
+        "strict production admission rejects extra private sentinel before SSR/RSC/client props or backend access",
+        "session expiry during provisional history and export aborts both upstream sockets and never enables download",
+        "real synthetic server-session expiry hides review and distinguishes retained evidence",
+        "zero AgentCI API mutations"
+      ],
+      "backendMutations": 0
+    },
+    "repositoryFast": {
+      "passed": false,
+      "failedTests": [
+        "✖ actual trusted child gets ephemeral DB environment without credential argv and both output channels are redacted",
+        "✖ signal cancellation forwards to the trusted child and withholds unfinished credential output before owned cleanup",
+        "✖ fast exit and missing executable remain observed while running-journal write is delayed",
+        "✖ ignored cancellation kills owned processes; output failure retains unresolved command recovery",
+        "✖ destination failure plus detached stdout writer never certifies closure or artifact safety",
+        "✖ actual finalizer rejects corrupt package/native cohorts before REST writes and retains valid evidence",
+        "✖ real Node reporter rejects missing, skipped, failed and cancelled source suites",
+        "✖ actual factored package installs remain verified and caller failure cleanup removes both roots",
+        "✖ wrong public archive bytes fail before any npm execution"
+      ],
+      "nonTestChecks": [
+        {
+          "name": "types",
+          "exitCode": 0
+        },
+        {
+          "name": "api",
+          "exitCode": 0
+        },
+        {
+          "name": "contract-evals",
+          "exitCode": 0
+        },
+        {
+          "name": "risk-evals",
+          "exitCode": 0
+        },
+        {
+          "name": "project",
+          "exitCode": 0
+        },
+        {
+          "name": "status",
+          "exitCode": 0
+        },
+        {
+          "name": "delivery",
+          "exitCode": 0
+        },
+        {
+          "name": "phase-plan",
+          "exitCode": 0
+        },
+        {
+          "name": "native-inputs",
+          "exitCode": 0
+        }
+      ],
+      "baselineCommit": "9670066cc49d914ed95441a57cb4ba659006abd7",
+      "baselineHasSameFailures": true
+    }
+  },
+  "screenshots": [
+    {
+      "path": ".agentci/artifacts/dashboard-cyberpunk/cyberpunk-d78113b-desktop-summary.jpg",
+      "bytes": 101605,
+      "sha256": "44cf1e02f0e32afb3f06d92bfc452516294802b18f45779841b7a6b761570883"
+    },
+    {
+      "path": ".agentci/artifacts/dashboard-cyberpunk/cyberpunk-d78113b-history.jpg",
+      "bytes": 124203,
+      "sha256": "4d01cd3005939a4924789edf0ab587f024b5ac0bec867a37a20ee191450267c0"
+    },
+    {
+      "path": ".agentci/artifacts/dashboard-cyberpunk/cyberpunk-d78113b-mobile-summary.jpg",
+      "bytes": 64810,
+      "sha256": "22a4c9402682d1341f723f953fc824cc5544086c5d4aa8fa15fd4f601829b9bf"
+    },
+    {
+      "path": ".agentci/artifacts/dashboard-cyberpunk/cyberpunk-d78113b-overview.jpg",
+      "bytes": 71099,
+      "sha256": "dbd7a7cf3b7cfa5be70d717825f9abea0c96fb9c0195cc791b82177100bef286"
+    },
+    {
+      "path": ".agentci/artifacts/dashboard-cyberpunk/cyberpunk-d78113b-verified-export.jpg",
+      "bytes": 130705,
+      "sha256": "b8c3862e910e75bc7a7293d9a83bcc36d95ac3ddc2d52084d89c7f5d5d1db474"
+    }
+  ],
+  "limits": [
+    "Synthetic sessions and backend; no live OIDC/provider/customer acceptance claimed",
+    "Existing nine root fast-check failures reproduce unchanged on transferred baseline; full Linux/package/release checks remain required",
+    "Buffered export semantics preserved; verified end and EOF required before download; no streaming download claim",
+    "Library prepared-upload helper unavailable during delivery; new screenshots preserved locally",
+    "No remote PR, merge, deployment, release or customer mutations; no milestone gates closed"
+  ]
+}

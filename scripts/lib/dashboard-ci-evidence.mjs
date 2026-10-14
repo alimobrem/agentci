@@ -22,6 +22,22 @@ export const requiredBrowserCases = [
   "same-browser account change/restoration cannot reveal prior tenant cached detail",
   "strict production admission rejects extra private sentinel before SSR/RSC/client props or backend access",
   "real synthetic server-session expiry hides review and distinguishes retained evidence",
+  "history completes only after contiguous final-page watermark, distinct from summary-pinned evidence",
+  "changed history watermark discards provisional pages and never presents complete timeline",
+  "fully verified export after actual EOF enables exact nonempty NDJSON download without credentials",
+  "truncated/trailing/wrong-digest/wrong-identity/invalid-UTF8 exports never enable verified download",
+  "valid export end on open socket remains provisional and Stop read aborts upstream before EOF",
+  "nonempty history/export close/revoke/logout/account-change abort upstream sockets without next page, late completion or mutations",
+  "account change after verified export denies download on fresh session binding check",
+  "session expiry during provisional history and export aborts both upstream sockets and never enables download",
+  "valid alternate finding history chain must match the exact summary-pinned version and digest",
+  "fresh retained-read session TTL subtracts complete round trip before any upstream read",
+  "fresh session verification unavailable is distinct from session expiry",
+  "full client read deadline bounds a held fresh-session response before export traversal",
+  "delayed expired fresh-session response cannot release an already verified export download",
+  "redacted process liveness and local configuration readiness reject unconfigured setup",
+  "failed callback Back/Forward and repeated unavailable login remain unauthenticated without private review data",
+  "actual browser Blob download cancellation request records observed result without inferring upstream interruption",
   "zero AgentCI API mutations"
 ];
 export function dashboardBrowserVerified(browser,scope){return !!browser&&browser.sourceCommit===scope.sourceCommit&&browser.sourceTree===scope.sourceTree&&browser.runId===scope.runId&&browser.runAttempt===scope.runAttempt&&browser.backendMutations===0&&browser.liveOidc===false&&browser.liveCustomer===false&&Array.isArray(browser.checks)&&requiredBrowserCases.every(name=>browser.checks.includes(name));}

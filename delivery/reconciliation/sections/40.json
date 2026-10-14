@@ -7008,6 +7008,74 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07-ui-remaining-current",
+          "status": "done",
+          "startedAt": "2026-10-14T03:56:33.100Z",
+          "completedAt": "2026-10-14T04:02:06.171Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Port only preserved history/export UI and local dashboard packaging/license qualification onto a39de3fb; validate retained-read privacy/navigation tests, packaging regressions, typecheck and production build. Keep live OIDC, actual UBI/native/image scan and unresolved notice/declaration items explicitly unverified; no aggregate gate closure.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-current-local-3335901.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-local-health",
+          "status": "done",
+          "startedAt": "2026-10-14T03:59:09.288Z",
+          "completedAt": "2026-10-14T04:02:07.263Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Plain production standalone exposes redacted no-store process liveness and rejects readiness when setup/config/admissions are invalid; configured fixture readiness succeeds without backend mutations or secret/config disclosure. Probe makes no upstream availability or deployed readiness claim. Docker healthcheck uses readiness. Sessions and pending logins remain documented process-local.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-current-local-3335901.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-login-interruption-local",
+          "status": "done",
+          "startedAt": "2026-10-14T04:33:47.337Z",
+          "completedAt": "2026-10-14T04:37:28.889Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Exercise existing actual signed OIDC protocol for repeated/interrupted transactions and state/transaction confusion; production browser failed callback Back/Forward must remain unauthenticated without cached private evidence. Verify preserved retained-read expiry cases. Assess actual Blob download cancellation honestly without inventing a streaming transfer contract. No real issuer, credentials, API/config expansion, remote writes or native/live gate closure.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-login-local-d68a6ec.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-cyberpunk-local",
+          "status": "done",
+          "startedAt": "2026-10-14T21:46:57.105Z",
+          "completedAt": "2026-10-14T21:54:57.334Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Functional authorized queue filtering, responsive dark reviewer shell, explicit execution/evidence/claim distinctions, finding-first summary, readable history and secondary export/provenance; no new backend data or authority. Exact production build/type/unit/browser checks preserve login interruption, repeated navigation, revocation, stale/aborted reads, history pinning and export EOF protections; inspect actual desktop/mobile synthetic screenshots.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-ui-revalidation-05c76f6.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -7278,6 +7346,24 @@
         {
           "path": "delivery/acceptance/m3-dev4-scanner-fixture-rework.json",
           "sha256": "56fbceca417468751446afd2cb9ac9c67baf29061040ad6c30933cc5c44936c2",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dashboard-current-local-3335901.json",
+          "sha256": "5f496e2a222b1e24780ef6035de56aa3d0f2db63f9d7a9fc1e95dfd91940a77e",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dashboard-login-local-d68a6ec.json",
+          "sha256": "d78b4922ece38621fea604527485e5ac3bfeef2e8d541a593c21d402fad9fe8b",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-ui-revalidation-05c76f6.json",
+          "sha256": "c56e50c034ac10a73f90dc4682d20a98bc33ea6b749407778b4bb0685c5e301b",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -8284,6 +8370,74 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-07-ui-remaining-current",
+          "status": "done",
+          "startedAt": "2026-10-14T03:56:33.100Z",
+          "completedAt": "2026-10-14T04:02:06.171Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Port only preserved history/export UI and local dashboard packaging/license qualification onto a39de3fb; validate retained-read privacy/navigation tests, packaging regressions, typecheck and production build. Keep live OIDC, actual UBI/native/image scan and unresolved notice/declaration items explicitly unverified; no aggregate gate closure.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-current-local-3335901.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-local-health",
+          "status": "done",
+          "startedAt": "2026-10-14T03:59:09.288Z",
+          "completedAt": "2026-10-14T04:02:07.263Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Plain production standalone exposes redacted no-store process liveness and rejects readiness when setup/config/admissions are invalid; configured fixture readiness succeeds without backend mutations or secret/config disclosure. Probe makes no upstream availability or deployed readiness claim. Docker healthcheck uses readiness. Sessions and pending logins remain documented process-local.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-current-local-3335901.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-login-interruption-local",
+          "status": "done",
+          "startedAt": "2026-10-14T04:33:47.337Z",
+          "completedAt": "2026-10-14T04:37:28.889Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Exercise existing actual signed OIDC protocol for repeated/interrupted transactions and state/transaction confusion; production browser failed callback Back/Forward must remain unauthenticated without cached private evidence. Verify preserved retained-read expiry cases. Assess actual Blob download cancellation honestly without inventing a streaming transfer contract. No real issuer, credentials, API/config expansion, remote writes or native/live gate closure.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-login-local-d68a6ec.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-ui-cyberpunk-local",
+          "status": "done",
+          "startedAt": "2026-10-14T21:46:57.105Z",
+          "completedAt": "2026-10-14T21:54:57.334Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Functional authorized queue filtering, responsive dark reviewer shell, explicit execution/evidence/claim distinctions, finding-first summary, readable history and secondary export/provenance; no new backend data or authority. Exact production build/type/unit/browser checks preserve login interruption, repeated navigation, revocation, stale/aborted reads, history pinning and export EOF protections; inspect actual desktop/mobile synthetic screenshots.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-ui-revalidation-05c76f6.json"
+              ]
+            }
+          ]
         }
       ],
       "api": [
@@ -8554,6 +8708,24 @@
         {
           "path": "delivery/acceptance/m3-dev4-scanner-fixture-rework.json",
           "sha256": "56fbceca417468751446afd2cb9ac9c67baf29061040ad6c30933cc5c44936c2",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dashboard-current-local-3335901.json",
+          "sha256": "5f496e2a222b1e24780ef6035de56aa3d0f2db63f9d7a9fc1e95dfd91940a77e",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dashboard-login-local-d68a6ec.json",
+          "sha256": "d78b4922ece38621fea604527485e5ac3bfeef2e8d541a593c21d402fad9fe8b",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-ui-revalidation-05c76f6.json",
+          "sha256": "c56e50c034ac10a73f90dc4682d20a98bc33ea6b749407778b4bb0685c5e301b",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
