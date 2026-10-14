@@ -5,7 +5,7 @@ import {readFile,writeFile,mkdir,mkdtemp,rm} from 'node:fs/promises';
 import {join} from 'node:path';import {tmpdir} from 'node:os';import {pathToFileURL} from 'node:url';
 import {randomUUID,generateKeyPairSync,createHash} from 'node:crypto';import {execFileSync} from 'node:child_process';
 import {createServer} from 'node:net';import {once} from 'node:events';import {Pool} from 'pg';
-import {Connection} from '@temporalio/client';import Long from 'long';import {Octokit} from '@octokit/rest';
+import {ownedCustomerNamespace} from './lib/customer-owned-namespace.mjs';import {Octokit} from '@octokit/rest';
 import {preparePublishedPackage} from './published-package-smoke.mjs';import {customerPublicationAssets} from './lib/customer-publication-assets.mjs';
 import {ownedCustomerDatabase} from './lib/customer-isolated-database.mjs';import {customerSessionOwner} from './lib/customer-session-owner.mjs';
 import {createCustomerServiceSession} from './lib/customer-service-session.mjs';import {withCustomerServiceLifetime} from './lib/customer-runtime-processes.mjs';
@@ -16,12 +16,12 @@ const databaseUrl=process.env.AGENTCI_TEST_DATABASE_URL,address=process.env.AGEN
 if(process.platform!=='linux'||!databaseUrl||!address)throw Error('Real Linux PostgreSQL/Temporal installed-dev.4 regression required; never skip');
 const harnessSource=execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8',env:{PATH:process.env.PATH}}).trim(),arch=process.arch==='x64'?'amd64':process.arch;
 const owner=customerSessionOwner(),primaryDatabase=ownedCustomerDatabase(databaseUrl);
-let prepared,privateRoot,pool,cleanup,proof={schemaVersion:1,result:'failed-or-unverified',harnessSource,candidate,qualification:'GitHub and App signatures use an owned synthetic transport; PostgreSQL, Temporal, installed production services and the isolated assertion container are real.'};
+let prepared,privateRoot,pool,readFailure=false,cleanup,proof={schemaVersion:1,result:'failed-or-unverified',harnessSource,candidate,qualification:'GitHub and App signatures use an owned synthetic transport; PostgreSQL, Temporal, installed production services and the isolated assertion container are real.'};
 const sessionEvidence=()=>owner.snapshot().map(({label,scope,namespace,operations,diagnostics,cleanup})=>({label,scope,namespace,operations,diagnostics,cleanup}));
 try{
  prepared=await preparePublishedPackage({version:'0.4.0-m3-dev.4',sourceCommit:candidate.releaseSource,arch,manifestSha256:candidate.packageManifestSha256,packageSha256:candidate.packageSha256});
  const publication=await customerPublicationAssets(prepared,candidate),role=kind=>{const value=publication.trusted.images.find(i=>i.role===kind);if(!value?.platforms.includes('linux/'+arch))throw Error('Verified native role required');return value.image;};
- privateRoot=await mkdtemp(join(tmpdir(),'agentci-dev4-scope-regression-'));await primaryDatabase.initialize();pool=new Pool({connectionString:primaryDatabase.url,max:1,statement_timeout:10000,query_timeout:10000});
+ privateRoot=await mkdtemp(join(tmpdir(),'agentci-dev4-scope-regression-'));await primaryDatabase.initialize();pool=new Pool({connectionString:primaryDatabase.url,max:1,connectionTimeoutMillis:5000,statement_timeout:10000,query_timeout:10000});pool.on('error',()=>{readFailure=true;});pool.on('connect',client=>client.on('error',()=>{readFailure=true;}));
  const baseSha='04f11298c020e853fd0098fb5d92c7529630f300',headSha='3c12571ec6f4578d19876ce27cf56c842c3abf97',keys=generateKeyPairSync('rsa',{modulusLength:2048}),keyPath=join(privateRoot,'synthetic-key.pem'),fixturePath=join(privateRoot,'transport.json');
  await writeFile(keyPath,keys.privateKey.export({type:'pkcs8',format:'pem'}),{mode:0o600});await writeFile(fixturePath,JSON.stringify({publicKey:keys.publicKey.export({type:'spki',format:'pem'}).toString(),events:join(privateRoot,'transport-events.jsonl'),pullRequest:5,baseSha,headSha,snapshots:{[baseSha]:customerFixtureFiles('base'),[headSha]:customerFixtureFiles('fixed')}}),{mode:0o600});
  const preload=join(privateRoot,'preload.mjs'),wrapper=join(privateRoot,'node'),reservationErrors=join(privateRoot,'reservation-errors.jsonl');
@@ -31,14 +31,15 @@ try{
  await writeFile(wrapper,'#!/bin/sh\nexec '+quote(process.execPath)+' --import '+quote(preload)+' "$@"\n',{mode:0o700});
  const github=new Octokit({auth:'fixture-recovery-token',request:{fetch:customerRecoveryTransport(fixturePath)},log:{debug(){},info(){},warn(){},error(){}}}),fixtures={repository:'alimobrem/agentci-onboarding-demo',appId:42,installationId:12,subjects:[{kind:'fixed',pullRequest:5,baseSha,headSha}]};
  async function create(label,db){
-  const namespace='customer-scope-regression-'+randomUUID(),connection=await Connection.connect({address});try{await connection.workflowService.registerNamespace({namespace,workflowExecutionRetentionPeriod:{seconds:Long.fromNumber(86400)}});}finally{await connection.close();}
+  const resource=owner.registerNamespace(ownedCustomerNamespace(address)),namespace=await resource.initialize();
   const portProbe=createServer();portProbe.listen(0,'127.0.0.1');await once(portProbe,'listening');const port=portProbe.address().port;await new Promise(resolve=>portProbe.close(resolve));
   const sessionRoot=await mkdtemp(join(privateRoot,label+'-')),session=owner.register(label,await createCustomerServiceSession({root:prepared.installedRoot,privateRoot:sessionRoot,keyPath,github,fixtures,databaseUrl:db.url,temporalAddress:address,namespace,port,runnerImage:role('eval-runner'),evaluatorImage:role('eval-worker')}));
   session.runtime.node=wrapper;return session;
  }
  const primary=await create('primary',primaryDatabase);
- const counts=async()=>{const values=[];for(const table of ['agentci_finding_events','agentci_reproduction_plans','agentci_reproduction_operations','agentci_reproduction_dispatch_intents'])values.push(Number((await pool.query(`SELECT count(*) FROM ${table}`)).rows[0].count));return values;};
- const retained=async()=>JSON.stringify((await pool.query('SELECT finding_id,version,digest,event FROM agentci_finding_events ORDER BY finding_id,version')).rows);
+ const read=async(sql)=>{if(readFailure)throw Error('Owned regression observer requires recovery');const result=await pool.query(sql);if(readFailure)throw Error('Owned regression observer requires recovery');return result;};
+ const counts=async()=>{const values=[];for(const table of ['agentci_finding_events','agentci_reproduction_plans','agentci_reproduction_operations','agentci_reproduction_dispatch_intents'])values.push(Number((await read(`SELECT count(*) FROM ${table}`)).rows[0].count));return values;};
+ const retained=async()=>JSON.stringify((await read('SELECT finding_id,version,digest,event FROM agentci_finding_events ORDER BY finding_id,version')).rows);
  await withCustomerServiceLifetime(owner,async()=>{
   await primary.initialize();
   // All three cancelled plans count across separate admissions for one finding.
@@ -57,7 +58,9 @@ try{
 }catch(error){proof.error=customerDiagnosticError(error);process.exitCode=1;
 }finally{
  if(!cleanup)try{await withCustomerServiceLifetime(owner,async()=>{},async value=>{cleanup=value;});}catch{process.exitCode=1;}
- proof.sessions=sessionEvidence();proof.ownedDatabases=owner.databaseSnapshot();proof.cleanup=[];
+ proof.sessions=sessionEvidence();proof.ownedDatabases=owner.databaseSnapshot();proof.ownedNamespaces=owner.namespaceSnapshot();proof.cleanup=[];
  try{await pool?.end();if(!cleanup)throw Error('Owned sessions require recovery');proof.cleanup.push(...cleanup.isolatedDatabases,await primaryDatabase.close());proof.ownedCleanup=cleanup;await prepared?.cleanup();if(privateRoot)await rm(privateRoot,{recursive:true,force:true});}catch{proof.result='failed-or-unverified';process.exitCode=1;}
+ proof.primaryDatabase={name:primaryDatabase.name,state:primaryDatabase.state()};
+ if(readFailure){proof.result='failed-or-unverified';proof.observerPoolFailureLatched=true;process.exitCode=1;}
  await mkdir('.agentci/artifacts',{recursive:true});await writeFile('.agentci/artifacts/customer-dev4-scope-regression.json',JSON.stringify(proof,null,2)+'\n');
 }

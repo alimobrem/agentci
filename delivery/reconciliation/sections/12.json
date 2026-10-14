@@ -3308,7 +3308,7 @@
           "status": "blocked",
           "startedAt": "2026-10-14T22:55:33.886Z",
           "completedAt": null,
-          "blockedReason": "Local harness preparation complete; 32 focused checks pass. Mandatory real PostgreSQL/Temporal installed-dev.4 regression awaits hosted Linux execution because Mac Docker access is denied. Parent exact-source review required before any new remote PR. Preserve run38649564609 and its unknown original API rejection code; no customer acceptance or M3 closure inferred.",
+          "blockedReason": "Three independent PR104 lifecycle findings corrected locally: idle-pool failure latch, confirmed CREATE ownership only, and bounded owned namespace RPC/connection shutdown. 40 focused checks pass; exact-head hosted runtime CI and parent independent review remain required. Original run38649564609 and unknown original API rejection remain preserved; no customer or M3 acceptance inferred.",
           "deferral": null,
           "acceptance": [
             {
@@ -3724,7 +3724,7 @@
         },
         {
           "task": "M3-07d-staged-scope-isolation",
-          "reason": "Local harness preparation complete; 32 focused checks pass. Mandatory real PostgreSQL/Temporal installed-dev.4 regression awaits hosted Linux execution because Mac Docker access is denied. Parent exact-source review required before any new remote PR. Preserve run38649564609 and its unknown original API rejection code; no customer acceptance or M3 closure inferred.",
+          "reason": "Three independent PR104 lifecycle findings corrected locally: idle-pool failure latch, confirmed CREATE ownership only, and bounded owned namespace RPC/connection shutdown. 40 focused checks pass; exact-head hosted runtime CI and parent independent review remain required. Original run38649564609 and unknown original API rejection remain preserved; no customer or M3 acceptance inferred.",
           "deferral": null
         }
       ],
