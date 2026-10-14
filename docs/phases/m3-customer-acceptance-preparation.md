@@ -178,7 +178,8 @@ or phase-order change is introduced. The existing 18 M3 gates remain open.
 For cloud independence, reviewed main push activations are also supported:
 `releases/m3-customer-installation.json` runs the scope-only stage, and
 `releases/m3-customer-demo.json` runs the exact-fixture demo after Work GitHub
-publication. These descriptor files are deliberately absent during preparation.
+publication. The demo descriptor remains absent until scope validation and fixture
+publication. The scope descriptor is introduced separately for review before activation.
 The scope descriptor has `schemaVersion: 1`, purpose
 `approved-demo-installation-scope`, full reviewed `harnessBase`, and public `scope`
 (repository/App/install IDs only). The demo descriptor uses purpose
@@ -190,6 +191,27 @@ Actions logs/artifacts before connector fixture writes. No secret API, PAT bridg
 customer fixture write permissions or manual workflow-dispatch tool is assumed.
 Activation requires reviewed prep/CI, actual owner key entry, approved metadata
 and parent publication; merging preparation alone starts no customer workflow.
+
+## Scope activation after dashboard integration
+
+The proposed `releases/m3-customer-installation.json` binds the reviewed dashboard
+main ancestor `2652ee15b3214a3cc246cbf69f6ca01f8319a36c`, separate App `5182307`,
+installation `167710386`, and only `alimobrem/agentci-onboarding-demo`. These IDs
+are expected inputs, not a claim of current authenticated identity. The owner
+has saved the separate named Actions secret; its value is never inspected here.
+Key presence does not establish validity. The trusted main push supplies its own
+service source and verifies that the reviewed ancestor belongs to that history.
+
+This descriptor's main merge triggers only the existing read-only App,
+installation and selected-repository guard. It writes no customer branches, PRs
+or Checks and does not run the temporary demo. Exact-source CI and independent
+review precede the separately authorized activation merge. A real hosted
+`installation-scope-passed` result is required before fixture publication. The
+guard verifies numeric App identity and permissions; it does not verify the App
+slug. Expected slug `agentci-onboarding-demo` remains separately unverified.
+Missing, invalid, broader or mismatched credentials fail closed. All customer
+execution, external endpoint, authenticated dashboard, milestone release and
+aggregate M3 acceptance gates remain pending.
 
 The forward CI database cleanup replaces this workflow's committed credential with an independently generated 256-bit password for each attempt. PostgreSQL starts during a step after private credential generation, using the existing pinned image, a private environment file and a random host port bound explicitly to `127.0.0.1`. The runner registers masks for the password and derived URL. Only the private state-file path is exported through `GITHUB_ENV`; the demo controller reads that file in its own Node process, without putting a password in process arguments or exporting a credential value to later steps. Private directories/files use `0700`/`0600` and stay outside workspace archives/artifact paths.
 
