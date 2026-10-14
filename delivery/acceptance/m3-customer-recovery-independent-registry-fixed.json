@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "result": "PASS bounded registry corrective delta; frozen commit/externalacceptance stillpending",
+  "baseCommit": "731de18752a2cfdf679575bad99ab527cefdd75d",
+  "sourceBindingsAtReview": [
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "6c569b25fec870cc53c21bd0d1525f10a18d9098a13a8194b7e1c3819739e6f9"
+    },
+    {
+      "path": "scripts/lib/customer-evaluator-container.mjs",
+      "sha256": "2bef6ee2d96e1fa175657cfeb1c58f4b840e70b13c5e9f6754f4fb7bd4bd9012"
+    },
+    {
+      "path": "scripts/lib/customer-recovery-owner.mjs",
+      "sha256": "3f65782886133579b34e8c643d0701cacf74f28fa0062a6280b56a33079a4e96"
+    },
+    {
+      "path": "scripts/lib/customer-terminal-recovery.mjs",
+      "sha256": "b3d32dc7ba6061d4bea85cac2282b83f89047c90ad55326982a1fa80b5fa5641"
+    },
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "sha256": "4d900cfe80001f3f447bd9f869a3833001678e346a1db439390f8ddab4753518"
+    },
+    {
+      "path": "scripts/lib/customer-diagnostics.mjs",
+      "sha256": "319ec9dd7aa936ff39b5986002915d74e48f2872b75d13cb6470849c3f241b33"
+    },
+    {
+      "path": "scripts/m3-customer-live-demo.mjs",
+      "sha256": "ccaf2d6e5daaf43505ef715e210d36a86af14f2bbd0214886e4742da526db514"
+    },
+    {
+      "path": "tests/customer-diagnostics.test.ts",
+      "sha256": "8085879444194434d8e8114822d7d0670103ec9c9e85fc305b55eed608092a0a"
+    },
+    {
+      "path": "tests/customer-runtime-processes.test.ts",
+      "sha256": "742f5af2d3f2244d09d35c059ec5720eae0791d19afb732a0851392732d4234d"
+    },
+    {
+      "path": "tests/customer-evaluator-container.test.ts",
+      "sha256": "4b57db108451cd71764b4bf961f0b1c37f0830106e8eb4979747177110ff6979"
+    },
+    {
+      "path": "apps/worker/reproduction-consumer-dispatch.ts",
+      "sha256": "b6c95e9f85189aa1baeb6c354b217f10df130932db85dff1182ecb1f70f1c651"
+    }
+  ],
+  "closedFinding": {
+    "originalProof": "/workspace/scratch/customer-recovery-independent-registry-blocker-d57a611.json",
+    "originalProofSha256": "8aecbfaa2b30d5d2ba812078b35f25c75a6f61d283c22bb41bf940e1760d5820",
+    "fix": "Shared trackCustomerCommand retains actualexitpromise and liveChildProcess afterAbortError. Removesonlydead child/noPIDspawnfailure; closeCustomerCommands SIGKILLs ownedchildren then boundedactualexitjoin. Both supervisor/evaluator usehelper; no promise-rejection deathcertificate."
+  },
+  "independentFocused": {
+    "passed": 24,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 10337.767869,
+    "actualTERMignoreCases": [
+      "runtime abortedexecFile retainedthenkilled/reaped",
+      "evaluator fakeDockerNode ignoringTERM retainedthenkilled/reaped"
+    ],
+    "unknownCreateCase": "Emptyinventory withcreationAmbiguous rejects; no falseownedzero"
+  },
+  "additionalReview": [
+    "creationAmbiguouslatchedbeforeactualcreate, clearedonlyvalidreplyID or exactnamedlabelimageownedreconcile",
+    "EagerPGreleaseoriginalblocker remainsfixed; borrower-onlyrelease",
+    "Status-firstsettlement stillskipsunneededconsumer/evaluatoronterminalproof; physicalzero checks retained",
+    "Data-only dispatchbindingprojection preserves3requiredfields and excludescontrolfunction; actualimmutabledev3 unaffected",
+    "Boundedterminalforceexit remainsentrypoint-only; unverified/privatepaths retained nozero receipt"
+  ],
+  "evidence": [
+    {
+      "path": "/workspace/scratch/customer-recovery-independent-registry-fixed24-20261014.log",
+      "sha256": "2c42a0518f530006a12542464ff7ad27dad366faa10c4b5055da771457f8f340"
+    },
+    {
+      "path": "/workspace/scratch/customer-recovery-independent-command-registry-abort-20261014.log",
+      "sha256": "e17190855f683d7b86a5619d29e6453e4b40305f3002698d1b766c8b2cf686b0"
+    }
+  ],
+  "qualification": [
+    "CurrentWIP notfinalfrozenbinding; rootmaycommitunchangedbytes thenverifyhashes",
+    "Fullcurrentexacthelper PG/Temporal actualharness2 + compiled/installedstaged1 tests are separatelyagent/rootowned and not independentlyrepeatedhere",
+    "CurrentfullCI/parentactualZIP required beforemerge",
+    "Existingimmutabledev3DataClonebug prohibits claiminglivecustomerretryfixed; correctedcandidate authorization separate",
+    "No sourceedits/remoteactions/keys/Mac/newrelease"
+  ]
+}

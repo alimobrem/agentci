@@ -15,7 +15,7 @@ test('committed scope activation pins the separate customer installation without
 test('committed demo activation binds actual fixture subjects and immutable candidate without widening authority',async()=>{
  const descriptor=JSON.parse(await readFile('releases/m3-customer-demo.json','utf8'));
  const fixtures=JSON.parse(await readFile('delivery/acceptance/m3-customer-fixtures-a39de3fb.json','utf8'));
- assert.equal(descriptor.harnessBase,'ee69dcb318e778ecbabfa3ad3171e1de2f6c91d6');
+ assert.equal(descriptor.harnessBase,'0c30b461cc7942734220b3ae894c20e0186917d5');
  const input=customerActivationInput('demo',descriptor,'a'.repeat(40));
  validateCustomerInputs(input.fixtures);
  assert.deepEqual(input.fixtures.subjects,fixtures.subjects);

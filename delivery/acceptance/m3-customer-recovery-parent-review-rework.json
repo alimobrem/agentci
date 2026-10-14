@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "purpose": "PR100 parent-review rework, local validation only; merge/new-head hosted and actual-artifact review pending",
+  "observedAt": "2026-10-14T17:27:49.691062+00:00",
+  "sourceCommit": "731de18752a2cfdf679575bad99ab527cefdd75d",
+  "sourceTree": "c46d5e0379228e24c5e61abb1e14991cbb633b6b",
+  "sourceBindings": [
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "6c569b25fec870cc53c21bd0d1525f10a18d9098a13a8194b7e1c3819739e6f9"
+    },
+    {
+      "path": "scripts/lib/customer-evaluator-container.mjs",
+      "sha256": "2bef6ee2d96e1fa175657cfeb1c58f4b840e70b13c5e9f6754f4fb7bd4bd9012"
+    },
+    {
+      "path": "scripts/lib/customer-recovery-owner.mjs",
+      "sha256": "3f65782886133579b34e8c643d0701cacf74f28fa0062a6280b56a33079a4e96"
+    },
+    {
+      "path": "scripts/lib/customer-terminal-recovery.mjs",
+      "sha256": "b3d32dc7ba6061d4bea85cac2282b83f89047c90ad55326982a1fa80b5fa5641"
+    },
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "sha256": "4d900cfe80001f3f447bd9f869a3833001678e346a1db439390f8ddab4753518"
+    },
+    {
+      "path": "scripts/lib/customer-diagnostics.mjs",
+      "sha256": "319ec9dd7aa936ff39b5986002915d74e48f2872b75d13cb6470849c3f241b33"
+    },
+    {
+      "path": "scripts/m3-customer-live-demo.mjs",
+      "sha256": "ccaf2d6e5daaf43505ef715e210d36a86af14f2bbd0214886e4742da526db514"
+    },
+    {
+      "path": "apps/worker/reproduction-consumer-dispatch.ts",
+      "sha256": "b6c95e9f85189aa1baeb6c354b217f10df130932db85dff1182ecb1f70f1c651"
+    },
+    {
+      "path": "tests/integration/customer-installed-recovery.test.ts",
+      "sha256": "1bd5179a3606e9aad8ec4d22a612dffe06d3a5c8d00c3556a1bb057b16956e40"
+    },
+    {
+      "path": "tests/integration/customer-terminal-lifetime.test.ts",
+      "sha256": "fa54e9e37020da692bd2b7dc4e7156ecbf39bf2dda41d4bbcd2d764ff05cd7f5"
+    },
+    {
+      "path": "tests/helpers/customer-terminal-lifetime-child.mjs",
+      "sha256": "7620189bcb52e00e6cc61aa7507f102f9af6cd77daa8477523212d8ab77d0cf6"
+    }
+  ],
+  "parentBlockers": [
+    {
+      "finding": "Terminal status hidden behind evaluator recovery",
+      "localCorrection": "Authenticated status first; recover only while unsettled and reread; mandatory exact owned assertion inventory remains",
+      "proof": "delivery/acceptance/m3-installed-staged-terminal-source-acceptance.json"
+    },
+    {
+      "finding": "Quiescence awaited before final budget and unbounded callback/connection awaits",
+      "localCorrection": "Final deadline armed before quiescence/join; fence/abort own work, close own network handles; trusted entrypoint atomically persists unverified state and exits1 if quiescence fails or stalls, even persistence failure",
+      "proof": "delivery/acceptance/m3-customer-terminal-lifetime-regression-0dddc59.json"
+    },
+    {
+      "finding": "Eager PG release caused double release after pool.query error",
+      "localCorrection": "Borrower retains release ownership; force only own transport close; real pool.query child tests pass"
+    },
+    {
+      "finding": "AbortError erased live command from ownership registry",
+      "localCorrection": "Shared registry retains actual process exit/close promise; real TERM-ignore runtime/evaluator regressions pass; unresolved create cannot claim empty inventory as owned-zero",
+      "proof": "delivery/acceptance/m3-customer-recovery-independent-registry-fixed.json"
+    }
+  ],
+  "diagnosticsIdentity": "Strict public harness source/run/attempt and candidate source/package/manifest/image/publication hash projection; no arbitrary environment/error values",
+  "newProductionDefect": {
+    "proof": "delivery/acceptance/m3-installed-terminal-recovery-blocker.json",
+    "fix": "Only taskQueue/evalTaskQueue/config forwarded to bind; shouldStop function excluded from structuredClone",
+    "immutableDev3": "Still unchanged and affected; actual dispatch module byte match verified",
+    "sourceCauseLimit": "Does not recover original hosted exception or establish sole initiating cause; reproduced inspection failure can precede dispatch"
+  },
+  "validation": {
+    "fastChecks": 10,
+    "unitTests": 556,
+    "fastSeconds": 47.470020701,
+    "dependencyQualification": "Existing cached node_modules symlink, not clean npm ci",
+    "independentFocused": 24,
+    "productionInstall": {
+      "readers": 14,
+      "workerAndRecovery": 6,
+      "proof": "delivery/acceptance/m3-installed-staged-terminal-source-acceptance.json",
+      "qualification": "Full installed gate and its original helper hashes retained; latest six-helper compiled staged followup separately qualified"
+    },
+    "currentRegistrySourceIntegration": {
+      "terminalLifetimeChildren": 2,
+      "stagedCancellation": 1,
+      "qualification": "Both executed byte-identical source before731de18 record commit. Child tests assert actual post-cleanup bounded exit/private-key+DB retention/owned worker dead/foreign alive/no late success; no OS termination or server SQL cancellation claim. Staged cancellation retains authentic receipt, cleanup COMPLETED/0trials/0owned/unneeded evaluator starts0."
+    },
+    "build": "passed",
+    "compatibility": "immutable M1/M2 and endpoint-removal negatives passed",
+    "workflows": "passed"
+  },
+  "currentStagedFixtureHealth": {
+    "running": true,
+    "exitCode": 0,
+    "oomKilled": false,
+    "uptimeMs": 65677,
+    "scannerWindowObserved": true
+  },
+  "currentStagedFixtureCleanup": {
+    "database": {
+      "schemaVersion": 1,
+      "name": "agentci-customer-pg-1791998638505-1-55df682ff77545ca",
+      "owner": "1791998638505:1:d57a611832f0e50e6e176b3047f32151b4f9e799:55df682ff77545ca",
+      "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+      "result": "passed",
+      "ownedContainers": 0,
+      "privateFilesRemoved": true
+    },
+    "ownedTemporalContainers": 0
+  },
+  "logs": [
+    {
+      "name": "customer-recovery-reviewed-final-fast.log",
+      "sha256": "1eb7cbd134fc4acb7882ad1d2fe5f13dd4c23473325028f60dac40dab8afd843"
+    },
+    {
+      "name": "customer-command-ownership-correction.log",
+      "sha256": "4ffc6502783f44d2c6d3a7cab5f2af622edd0bd448e860c7209c7471c4c54d8d"
+    },
+    {
+      "name": "customer-review-ownership-final-lifetime.log",
+      "sha256": "bb6ebf9c05f7af0d3e3c7f287759d31846b68637b5a50995ce5f46da7c3bfbaf"
+    },
+    {
+      "name": "customer-review-ownership-final-staged.log",
+      "sha256": "d35c3d2693ce4ed8de6dccb29a4c988f83474b3a57fec78a8ea9a0781a962279"
+    },
+    {
+      "name": "customer-recovery-reviewed-build.log",
+      "sha256": "d60a7eb92fec7deb71f3c94a12912094e692e522e6ab46e5f19f44234abb2533"
+    },
+    {
+      "name": "customer-recovery-reviewed-compat.log",
+      "sha256": "3355e8638f12279b5eed0eda226da3f02147a53f3fdb6391ca064f28c5c4e6e5"
+    },
+    {
+      "name": "customer-recovery-reviewed-workflows.log",
+      "sha256": "ac98e827708aafdae3b7fa4ffba0b502f5553388772a78dc8b87061af4e2214b"
+    }
+  ],
+  "originalHeadCI": {
+    "head": "09848b0c66058ecee6aa7c4af32406653c398c0d",
+    "runs": [
+      38601689221,
+      38601689286,
+      38601689357,
+      38601689475
+    ],
+    "conclusion": "all success; completed attempts retained via delivery CLI, cache unknown",
+    "qualification": "Does not clear independent review blockers or validate changed head; no actual ZIP audit claimed here"
+  },
+  "publicationHold": {
+    "merge": "Parent exact new-head source/full-CI/actual-artifact clearance required",
+    "customerRetry": "Automatic descriptor change reverted to main bytes; no main merge trigger included. Corrected immutable candidate publication decision and gates required before same four scenarios. No assets patched/published.",
+    "milestone": "All18 M3 gates pending; fullM0-M10/threeadapters/narrowproviderexception/observedratecalibration retained."
+  }
+}

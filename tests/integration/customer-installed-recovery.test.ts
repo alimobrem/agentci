@@ -43,7 +43,7 @@ test('installed cancellation recovers a worker killed at the settlement boundary
  const f=await fixture(),{session}=f;let killed=false,finalStatus:any;
  try{
   await session.initialize();const review=await session.review('seeded'),approval=await session.approve(review);await session.reserve(review,approval);
-  const settled=session.settled.bind(session);session.settled=async(...args:any[])=>{if(!killed){assert.equal(session.runtime.isAlive('worker'),true);await session.runtime.stop('worker','SIGKILL');killed=true;}return settled(...args);};
+  const ensure=session.runtime.ensure.bind(session.runtime);session.runtime.ensure=async(role:string,...args:any[])=>{const pid=await ensure(role,...args);if(role==='worker'&&!killed){const owned=session.runtime.children.get('worker');owned.child.kill('SIGKILL');await owned.exited;killed=true;}return pid;};
   const status=session.client.reproductionStatus.bind(session.client);session.client.reproductionStatus=async(...args:any[])=>{const value=await status(...args);if(value.dispatch.state==='settled')finalStatus=value;return value;};
   const cleanup=await session.close({signal:AbortSignal.timeout(30000)});assert.equal(killed,true);assert.equal(finalStatus.settlement.kind,'never-staged');assert.equal(finalStatus.receipt,null);assert.equal(cleanup.controllerProcesses.ownedProcessesRemaining,0);assert.ok(cleanup.controllerProcesses.events.some((event:any)=>event.role==='worker'&&event.signal==='SIGKILL'));assert.ok(cleanup.controllerProcesses.events.filter((event:any)=>event.role==='worker'&&event.event==='started').length>=3);
  }finally{await f.cleanup();}
@@ -73,4 +73,42 @@ test('foreign evaluator identity and unverifiable engine state retain failure an
   const command=session.evaluator.command.bind(session.evaluator);try{session.evaluator.command=async()=>{throw Error('Synthetic engine unavailable');};await assert.rejects(session.close(),(error:any)=>error.customerRecoveryRequired===true);await access(f.keyPath);}finally{session.evaluator.command=command;}
   const cleanup=await session.close();assert.equal(cleanup.evaluator.ownedEvaluatorContainers,0);assert.equal(cleanup.controllerProcesses.ownedProcessesRemaining,0);
  }finally{if(created){assert.equal(databaseCommand(['inspect','--format','{{index .Config.Labels "agentci.test.owner"}}',name]),owner);databaseCommand(['rm','--force','--volumes',name]);}await f.cleanup();}
+});
+
+test('actual staged cancellation settlement survives evaluator loss between cleanup status reads',{timeout:120000},async()=>{
+ const f=await fixture(),{session}=f;
+ // @ts-expect-error trusted operational supervisor, actual compiled evaluator entry
+ const {CustomerRuntimeProcesses}=await import('../../scripts/lib/customer-runtime-processes.mjs');
+ const executor=new CustomerRuntimeProcesses(root);let terminal:any,initial:any,physical:any,readRace=false,unneededStarts=0;
+ const wait=async(read:()=>Promise<any>,accept:(value:any)=>boolean,label:string)=>{const end=Date.now()+30000;while(Date.now()<end){const value=await read();if(accept(value))return value;await new Promise(resolve=>setTimeout(resolve,100));}throw Error('Installed staged cancellation deadline: '+label);};
+ try{
+  await session.initialize();const review=await session.review('seeded'),approval=await session.approve(review),reference=await session.reserve(review,approval);
+  await session.ensureSettlementConsumer();
+  const units=()=>f.pool.query('SELECT u.id,u.status FROM agentci_eval_jobs j JOIN agentci_eval_units u ON u.job_id=j.id WHERE j.source_operation_id=$1',[reference.operationId]).then(result=>result.rows);
+  const staged=await wait(units,rows=>rows.length===1,'real staged unit');assert.equal(staged.length,1);assert.equal(session.evaluator.creationAttempted,false);
+  await session.client.cancelReproduction(review.admission,reference);await wait(units,rows=>rows.length===1&&rows[0].status==='cancelled','irreversible real unit cancellation');
+  const status=session.client.reproductionStatus.bind(session.client);
+  session.client.reproductionStatus=async(...args:any[])=>{
+   const actual=await status(...args);
+   if(!readRace){
+    assert.notEqual(actual.dispatch.state,'settled','the first cleanup read must genuinely precede settlement');initial=actual;readRace=true;
+    // Start the real restricted evaluator only after cancellation is durable.
+    // Its actual cleanup activities inspect the real engine; no assertion image
+    // is pulled or executed and no SQL unit/result/receipt is manufactured.
+    await executor.start('evaluator',session.evalEnv);
+    terminal=await wait(()=>status(review.admission,reference),(value:any)=>value.dispatch.state==='settled'&&!!value.settlement,'authenticated terminal settlement');
+    physical=await session.physical(approval,reference,terminal);await executor.close();
+    const unavailable=async()=>{unneededStarts++;throw Error('Synthetic evaluator readiness unavailable after genuine terminal settlement');};session.evaluator.ensureRunning=unavailable;session.evaluator.start=unavailable;
+    return actual; // Genuine stale read races with the now-authenticated terminal state.
+   }
+   return actual;
+  };
+  // Docker remains real and available throughout the terminal-read race.
+  const cleanup=await session.close({signal:AbortSignal.timeout(30000)});
+  assert.equal(readRace,true);assert.notEqual(initial.dispatch.state,'settled');assert.equal(terminal.dispatch.state,'settled');assert.equal(terminal.settlement.kind,'receipt-retained');assert.ok(terminal.receipt);assert.equal(terminal.nonExecution,null);assert.equal(unneededStarts,0);
+  assert.equal(physical.ownedContainers,0);assert.equal(physical.cleanupStatus,'COMPLETED');assert.ok(physical.cleanupRunId);assert.equal(cleanup.assertionContainers.ownedAssertionContainers,0);assert.equal(cleanup.controllerProcesses.ownedProcessesRemaining,0);assert.equal(cleanup.evaluator.ownedEvaluatorContainers,0);
+  const {execFileSync}=await import('node:child_process');assert.equal(execFileSync('docker',['ps','--all','--quiet','--filter','label=agentci.purpose=eval-runner','--filter','label=agentci.eval.unit='+staged[0].id],{env:{PATH:process.env.PATH},encoding:'utf8'}).trim(),'','real owned assertion inventory remains mandatory');
+  assert.equal((await f.pool.query('SELECT count(*) FROM agentci_eval_trials')).rows[0].count,'0','staged cancellation is not a physical assertion execution claim');
+  const row=(await f.pool.query('SELECT settlement FROM agentci_reproduction_dispatch_state WHERE operation_id=$1',[reference.operationId])).rows[0];const {findingId,...retained}=row.settlement;assert.equal(findingId,reference.finding.id);assert.deepEqual(retained,terminal.settlement);
+ }finally{console.log(JSON.stringify({acceptance:'installed-staged-terminal-race',initialDispatch:initial?.dispatch.state??null,terminalDispatch:terminal?.dispatch.state??null,settlement:terminal?.settlement?.kind??null,cleanupStatus:physical?.cleanupStatus??null,ownedContainers:physical?.ownedContainers??null,unneededEvaluatorStarts:unneededStarts}));await executor.close();await f.cleanup();}
 });

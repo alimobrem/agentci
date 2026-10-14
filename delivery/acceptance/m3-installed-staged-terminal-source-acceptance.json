@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "purpose": "actual installed unpublished-source staged cancellation and terminal-read regression",
+  "state": "passed for exact source/archive/helper bindings below; frozen released dev.3 remains unchanged and affected",
+  "sourceCommit": "70c0ab1772764fbc1469a0470e346626c852115f",
+  "newArchive": {
+    "path": "/workspace/scratch/customer-terminal-unpublished-source/agentci-0.4.0-m3-dev.3.tgz",
+    "sha256": "672ea8b6e62359c4191738f983265d5d89865809eb8201f1fb7d6000560c0303",
+    "bytes": 802711,
+    "name": "agentci",
+    "manifestVersion": "0.4.0-m3-dev.3",
+    "manifestSha256": "ab7d330bf38c96f7cd1a3419822466bf3ffa5c780264233681b7ccef38a07f86",
+    "dispatcherSha256": "ca766b849636f330fc7af43dae7d1b9f03016d294e8ada7457e7d753937caeb1",
+    "identityQualification": "Locally packed unpublished SOURCE candidate with same current manifest version; distinctly not the immutable published dev.3 asset. No publication or frozen-byte mutation."
+  },
+  "compiledRegressions": {
+    "tests": 2,
+    "pass": 2,
+    "skip": 0,
+    "durationMs": 24010.365245,
+    "log": "/workspace/scratch/customer-installed-terminal-source-final.log"
+  },
+  "productionInstall": {
+    "command": "npm install --omit=dev then package-smoke --postgres-readers",
+    "freshInstall": true,
+    "installedDevelopmentLoader": false,
+    "sourceModuleFallback": false,
+    "readerPassed": 14,
+    "workerAndRecoveryPassed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "runtimeSuiteDurationMs": 76718.066777,
+    "log": "/workspace/scratch/customer-installed-terminal-unpublished-package.log",
+    "stagedRace": {
+      "durationMs": 23211.52283,
+      "initialDispatch": "dispatched",
+      "terminalDispatch": "settled",
+      "settlement": "receipt-retained",
+      "cleanupWorkflow": "COMPLETED",
+      "ownedAssertions": 0,
+      "unneededEvaluatorStarts": 0,
+      "physicalAssertionTrials": 0
+    }
+  },
+  "proofBoundaries": [
+    "Actual API review/approval/reservation and controller stage; no fake SQL units/receipts/results",
+    "Public cancellation irreversibly cancels real unit before actual restricted installed eval-worker starts; actual eval cleanup activities, workflow run IDs and authenticated terminal receipt are checked",
+    "Evaluator readiness/start alone becomes unavailable between genuine initial and subsequent terminal status reads; ordinary Docker inventory remains available and owned-resource zero is independently checked",
+    "Zero trials describes staged cancellation; it is not physical assertion execution/four customer scenario acceptance",
+    "Callback regression supplies real shouldStop while actualStore.bind persists SQL attempt and actual Temporal run/lost-ack identity"
+  ],
+  "temporalHealth": {
+    "running": true,
+    "exitCode": 0,
+    "oomKilled": false,
+    "uptimeMs": 97017,
+    "scannerWindowObserved": true
+  },
+  "cleanup": {
+    "database": {
+      "schemaVersion": 1,
+      "name": "agentci-customer-pg-1791997852160-1-453d30fee6b4c90e",
+      "owner": "1791997852160:1:70c0ab1772764fbc1469a0470e346626c852115f:453d30fee6b4c90e",
+      "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+      "result": "passed",
+      "ownedContainers": 0,
+      "privateFilesRemoved": true
+    },
+    "ownedTemporalContainers": 0
+  },
+  "localTopologyQualification": "Temporary Temporal only uses approved internal NO_PROXY/no_proxy=127.0.0.1,localhost,0.0.0.0; automatic HTTP_PROXY unchanged. No host/global/external network config changes. Same pinned Temporal command/image, 1GiB memory and workflow-equivalent CPU configuration.",
+  "sourceFiles": [
+    {
+      "path": "apps/worker/reproduction-consumer-dispatch.ts",
+      "sha256": "b6c95e9f85189aa1baeb6c354b217f10df130932db85dff1182ecb1f70f1c651"
+    },
+    {
+      "path": "tests/integration/reproduction-consumer-temporal.test.ts",
+      "sha256": "8be19aaeb24e8f23584c7c6496ea932e2957de9ed1361fa595d848739924d62e"
+    },
+    {
+      "path": "tests/integration/customer-installed-recovery.test.ts",
+      "sha256": "1bd5179a3606e9aad8ec4d22a612dffe06d3a5c8d00c3556a1bb057b16956e40"
+    }
+  ],
+  "testedPrimaryHelperFiles": [
+    {
+      "path": "scripts/lib/customer-service-session.mjs",
+      "sha256": "218f9ebf3874e910fb14614de3481d176bdbae74cab6e9e2843e15b955098ca6"
+    },
+    {
+      "path": "scripts/lib/customer-runtime-processes.mjs",
+      "sha256": "74244112723667a632554281f9a627900d55163d63e1112ac5729b31141c90d4"
+    },
+    {
+      "path": "scripts/lib/customer-evaluator-container.mjs",
+      "sha256": "397a28a106a9a1fcae9954743a9a04187668a725cb06edf89dbbff750ab3cbe1"
+    },
+    {
+      "path": "scripts/lib/customer-diagnostics.mjs",
+      "sha256": "319ec9dd7aa936ff39b5986002915d74e48f2872b75d13cb6470849c3f241b33"
+    },
+    {
+      "path": "scripts/lib/customer-recovery-owner.mjs",
+      "sha256": "065d43aaf3571daa4d01da2e47bdae341e4b0a6b28dc55a087ce1bfa27b7ba8b"
+    },
+    {
+      "path": "scripts/lib/customer-terminal-recovery.mjs",
+      "sha256": "b3d32dc7ba6061d4bea85cac2282b83f89047c90ad55326982a1fa80b5fa5641"
+    }
+  ],
+  "logs": [
+    {
+      "path": "/workspace/scratch/customer-installed-terminal-source-final.log",
+      "sha256": "6ff7c7c7c2b2ed828b05767943e5f45427e90413ee96c4b69175599363445538"
+    },
+    {
+      "path": "/workspace/scratch/customer-installed-terminal-unpublished-package.log",
+      "sha256": "dd6fd1ba3ba1144b50d51660da76647ca762cfd8a6b0fa4294499d29d9ad7d18"
+    }
+  ],
+  "priorFailures": "Preserved m3-installed-terminal-recovery-blocker.json and m3-installed-terminal-source-progress.json; original frozen dispatcher DataCloneError and earlier API-vs-DB projection assertion are not erased.",
+  "publicationHold": "Parent must approve/dispose a new immutable candidate before customer retry. No customer workflow retry or asset publication performed. All18 M3 gates/M0\u2013M10/three adapters unchanged.",
+  "latestHelperFollowup": {
+    "qualification": "Compiled new SOURCE staged case only against latest primary helpers; does not replace or rebind the preceding exact installed-package pass. Full combined hosted gate remains required on integrated head.",
+    "command": "node /workspace/scratch/customer-installed-terminal-driver.mjs --import tsx --test --test-name-pattern 'actual staged cancellation settlement' tests/integration/customer-installed-recovery.test.ts",
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "testDurationMs": 23961.410381,
+    "suiteDurationMs": 24322.196496,
+    "log": "/workspace/scratch/customer-installed-terminal-latest-helpers.log",
+    "logSha256": "e75881a56522fa56ce24e27e89c90ee472d7bd7e97dc05d2e3de039a91bc3ef8",
+    "helperFiles": [
+      {
+        "path": "scripts/lib/customer-service-session.mjs",
+        "sha256": "4d900cfe80001f3f447bd9f869a3833001678e346a1db439390f8ddab4753518"
+      },
+      {
+        "path": "scripts/lib/customer-runtime-processes.mjs",
+        "sha256": "480ce79c948bf7e042241e55f6342500ab1c088d880ebe8ae4d103b335046f40"
+      },
+      {
+        "path": "scripts/lib/customer-evaluator-container.mjs",
+        "sha256": "9e38684976c977cfd988be2db30a135c704767c66690ff75fc78019510d399f9"
+      },
+      {
+        "path": "scripts/lib/customer-diagnostics.mjs",
+        "sha256": "319ec9dd7aa936ff39b5986002915d74e48f2872b75d13cb6470849c3f241b33"
+      },
+      {
+        "path": "scripts/lib/customer-recovery-owner.mjs",
+        "sha256": "3f65782886133579b34e8c643d0701cacf74f28fa0062a6280b56a33079a4e96"
+      },
+      {
+        "path": "scripts/lib/customer-terminal-recovery.mjs",
+        "sha256": "b3d32dc7ba6061d4bea85cac2282b83f89047c90ad55326982a1fa80b5fa5641"
+      }
+    ],
+    "driverSha256": "b65dee7ff98bae0caff00b0ba274c14bdea629f58fd744eb2641062a110b84fe",
+    "temporalHealth": {
+      "running": true,
+      "exitCode": 0,
+      "oomKilled": false,
+      "uptimeMs": 66165,
+      "scannerWindowObserved": true
+    },
+    "cleanup": {
+      "database": {
+        "schemaVersion": 1,
+        "name": "agentci-customer-pg-1791998128051-1-bdcd44f063c89b10",
+        "owner": "1791998128051:1:70c0ab1772764fbc1469a0470e346626c852115f:bdcd44f063c89b10",
+        "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873",
+        "result": "passed",
+        "ownedContainers": 0,
+        "privateFilesRemoved": true
+      },
+      "ownedTemporalContainers": 0
+    }
+  }
+}

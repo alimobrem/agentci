@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "purpose": "source-only reproduction dispatcher correction and real staged terminal-read regression",
+  "state": "compiled source regressions passed; real npm-installed source-candidate acceptance pending",
+  "base": "addf1f88624298b9c445df63e60be3fa88742c6e",
+  "change": "Project only taskQueue/evalTaskQueue/config into ReproductionDispatchStore.bind. shouldStop remains local dispatcher control flow and never enters cloned binding data.",
+  "compiledValidation": {
+    "tests": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "log": "/workspace/scratch/customer-installed-terminal-source-final.log",
+    "durationMs": 24010.365245,
+    "stagedRace": {
+      "initialDispatch": "dispatched",
+      "terminalDispatch": "settled",
+      "settlement": "receipt-retained",
+      "cleanupStatus": "COMPLETED",
+      "ownedContainers": 0,
+      "unneededEvaluatorStarts": 0,
+      "trials": 0
+    },
+    "callbackDispatch": "Actual shouldStop callback plus data-only actualStore.bind, real SQL attempt and Temporal lost-ack reconciliation"
+  },
+  "priorFailure": {
+    "log": "/workspace/scratch/customer-installed-terminal-source-fix.log",
+    "classification": "Real staged terminal proof and cleanup passed; test initially compared database settlement findingId field to narrower public projection. Corrected to assert findingId separately and compare remaining fields."
+  },
+  "frozenRelease": {
+    "unchanged": true,
+    "dispatcherSha256": "02e3efce90a0bbca99abaec8b3039cfc8d5a3d35aa451d9f498ad1b63c781ab3",
+    "limitation": "Frozen dev.3 remains unable to stage through the actual main shouldStop path. New-source archive is local/unpublished only; parent must decide new immutable candidate publication before customer retry."
+  },
+  "newCompiledDispatcherSha256": "ca766b849636f330fc7af43dae7d1b9f03016d294e8ada7457e7d753937caeb1",
+  "sourceFiles": [
+    {
+      "path": "apps/worker/reproduction-consumer-dispatch.ts",
+      "sha256": "b6c95e9f85189aa1baeb6c354b217f10df130932db85dff1182ecb1f70f1c651"
+    },
+    {
+      "path": "tests/integration/reproduction-consumer-temporal.test.ts",
+      "sha256": "8be19aaeb24e8f23584c7c6496ea932e2957de9ed1361fa595d848739924d62e"
+    },
+    {
+      "path": "tests/integration/customer-installed-recovery.test.ts",
+      "sha256": "1bd5179a3606e9aad8ec4d22a612dffe06d3a5c8d00c3556a1bb057b16956e40"
+    }
+  ],
+  "limits": [
+    "No fake SQL units/results/receipts; staged cancellation with zero trials does not claim physical assertion execution",
+    "All Docker inventory/resource guards remain active; only evaluator readiness/start becomes unavailable after authentic terminal settlement",
+    "Primary-owned status-first/owner changes copied uncommitted for validation; excluded from this child commit",
+    "No immutable asset/image mutation, release publication, customer workflow retry or permissions/credentials change",
+    "M0\u2013M10/three-adapter scope and all18 aggregate M3 gates remain unchanged"
+  ]
+}

@@ -88,11 +88,69 @@ route, authentication, workflow or server feature changed. Failed attempts remai
 retained in the regression proof.
 
 Applicable local checks and exact-source hosted CI, then independent source and
-actual artifact review, must pass before merge. The descriptor keeps the frozen
-dev.3 assets and PR4/PR5 fixture subjects, binding the reviewed `ee69dcb` harness
-ancestor for the same approved retry. All aggregate M3 gates remain pending.
+actual artifact review, must pass before merge. The frozen dev.3 assets and PR4/PR5 fixture subjects remain unchanged. The
+automatic retry descriptor change has been removed from this correction: a
+separately verified production dispatch defect in dev.3 requires a corrected
+candidate decision before the customer retry. No known-broken immutable asset is
+patched or silently substituted. All aggregate M3 gates remain pending.
 Dashboard, HTTPS/OIDC, license inventory, durable evidence, final immutable release,
 anonymous downloads and released-build demo obligations remain in milestone order.
 All three adapters and observed-rate calibration/Wilson descriptive treatment are
 preserved; only inaccessible external-provider tests have the owner-approved
 explicit deferral exception.
+
+
+## Independent review corrections
+
+Parent review of PR #100 superseded the earlier local review on two concrete
+points. Terminal status must be read before recovering either consumer: a staged
+cancellation can settle between observations, so an unavailable evaluator must not
+hide authentic terminal evidence. Polling now reads authenticated status first,
+recovers consumers only while unsettled and reads again. Existing exact unit and
+owned assertion-container zero checks remain mandatory. The installed regression
+uses real staging, cancellation, restricted evaluator cleanup and authenticated
+receipt-retained settlement, with zero trials and no execution-success claim.
+
+The original final join timer did not cover quiescence. The corrected lifetime
+arms a final shutdown deadline before quiescence and joins pending cleanup and
+callbacks under that deadline. Session ownership is latched before abort; tracked
+own PostgreSQL transports and the own gRPC client are closed, and any late pool
+connection is closed too. Borrowers retain responsibility for `release()`; stealing
+that release caused a reproduced double-release crash and was removed. Owned
+controller and Docker command subprocesses are explicitly tracked for termination.
+An AbortError is not a process-death certificate: command ownership persists until
+actual exit/close, and TERM-ignoring command regressions cover both supervisors.
+An unresolved create outcome also cannot turn empty inventory into owned-zero
+proof; it remains recovery required until exact ownership is reconciled.
+Quiescence invokes no new diagnostic callback. Its fast failure or deadline expiry
+uses an explicit trusted-entrypoint fallback: force only owned handles, persist
+allowlisted unverified evidence synchronously with atomic replacement, then exit
+that harness process with status 1 even if persistence fails. Private recovery
+state remains retained, and no teardown-ready or owned-zero receipt is created.
+The default budgets are up to 120 seconds for cleanup plus 10 seconds for final
+shutdown; no operating-system or uninterruptible-I/O termination guarantee is
+claimed. Two real PostgreSQL/Temporal subprocess cases test lifetime timeout,
+stalled query/SDK close/diagnostic callback, retained key/database, dead owned child,
+live foreign sentinel and no late phase, including persistence failure.
+
+The diagnostic snapshot additionally carries validated public harness source,
+GitHub run/attempt and candidate source/package/manifest/image/publication hashes.
+This binds failure artifacts without copying environment values or credentials.
+
+The staged test also found a separate, concrete production defect: dispatch passed
+its `shouldStop` function into `ReproductionDispatchStore.bind`, which uses
+`structuredClone`. The actual frozen dev.3 dispatch module reproduces
+`DataCloneError` before SQL binding. Its source fix projects only the data fields
+`taskQueue`, `evalTaskQueue` and `config`. A real database/Temporal regression now
+supplies the callback, and a distinctly identified unpublished locally packed
+source candidate passes installed staging and cancellation. The public dev.3
+archive/image is unchanged and still contains this defect. Corrected candidate
+publication requires the separate authorization and publication gates; this PR
+cannot establish a successful customer retry on the original frozen asset.
+This does not recover the original hosted exception or prove its sole cause:
+the reproduced inspection failure can occur before the worker reaches dispatch.
+
+Original PR head `09848b0` passed all four hosted CI runs. Those attempts remain
+retained, and do not clear these independent review blockers. The changed head
+requires its own full CI and parent independent source and actual-artifact review
+before merge. Customer retry and release authorization remain separate.

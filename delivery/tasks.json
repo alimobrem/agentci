@@ -3610,7 +3610,7 @@
         "SPEC-40-051",
         "SPEC-12.3-001"
       ],
-      "status": "in-progress",
+      "status": "blocked",
       "startedAt": "2026-10-14T16:10:06.409Z",
       "completedAt": null,
       "acceptance": [
@@ -3633,7 +3633,8 @@
           "status": "pending",
           "evidence": []
         }
-      ]
+      ],
+      "blockedReason": "Parent independent review found terminal-status recovery race and unbounded quiescence/join; rework tracked in M3-07d-2-review-recovery, prior local acceptance does not override blockers."
     },
     {
       "id": "M3-07-installed-recovery-regression",
@@ -3651,6 +3652,100 @@
           "status": "passed",
           "evidence": [
             "delivery/acceptance/m3-installed-recovery-regression-local.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07d-2-review-recovery",
+      "title": "Correct independently reviewed terminal-settlement race and bound lifetime shutdown",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SPEC-12.3-001"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-14T16:58:44.844Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Read authenticated terminal status before recovering consumers; staged cancellation settled between reads is retained without unnecessary evaluator startup, while actual owned assertion-container zero checks remain mandatory. Real installed-package regression required.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-recovery-parent-review-rework.json"
+          ]
+        },
+        {
+          "text": "Bound the complete lifetime timeout, owned-resource quiescence and pending-work join. Abort/fence late actions, terminate only owned handles/processes when cooperation fails, retain explicit unverified recovery/private state and prove actual child-process exit through withCustomerServiceLifetime. No abandoned late cleanup or false owned-zero proof.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-recovery-parent-review-rework.json"
+          ]
+        },
+        {
+          "text": "Preserve cause uncertainty and local-only Temporal topology qualification. Bind diagnostics to credential-free exact harness/run/candidate identity. Relevant local tests, exact changed-head hosted CI and parent independent source/actual-artifact clearance precede merge; no aggregate M3 acceptance.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M3-07-terminal-lifetime-child-regression",
+      "title": "Prove terminal lifetime recovery exits an actual owned harness process",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SPEC-12.3-001"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-14T17:05:43.152Z",
+      "completedAt": "2026-10-14T17:14:04.217Z",
+      "acceptance": [
+        {
+          "text": "Actual child execution through production withCustomerServiceLifetime, recovery owner, cleanup phases, terminal exit and synthetic-key lifecycle uses real owned PostgreSQL and Temporal; noncooperative callbacks cannot act after bounded exit1. No teardown-ready or owned-zero proof is emitted; owned worker dies, foreign sentinel lives and private key/database state remain until parent cleanup. Source-bound local-only tests/typecheck/evidence required; no App/provider/live or M3 acceptance.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-customer-terminal-lifetime-regression-0dddc59.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07-installed-terminal-recovery-regression",
+      "title": "Retain actual staged cancellation settlement when evaluator readiness becomes unavailable",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-14T16:58:10.320Z",
+      "completedAt": "2026-10-14T17:17:51.473Z",
+      "acceptance": [
+        {
+          "text": "Actual installed API/controller stages and durably cancels a real unit; restricted installed evaluator produces authentic terminal settlement, and cleanup retains it across a stale initial read/evaluator-unavailable race while independently proving owned-container zero",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-installed-staged-terminal-source-acceptance.json"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "M3-07-reproduction-dispatch-callback",
+      "title": "Keep controller stop callback outside immutable reproduction binding data",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "done",
+      "startedAt": "2026-10-14T17:08:07.351Z",
+      "completedAt": "2026-10-14T17:17:52.627Z",
+      "acceptance": [
+        {
+          "text": "Actual dispatch with shouldStop callback binds cloned data-only options and persists real PostgreSQL attempt/Temporal run; compiled/unpublished-source installed staged-cancellation path progresses without modifying frozen dev.3 assets",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-installed-staged-terminal-source-acceptance.json"
           ]
         }
       ]

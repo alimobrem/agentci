@@ -536,3 +536,18 @@
 {"at":"2026-10-14T16:43:06.153Z","task":"M3-07d-2-consumer-recovery","action":"accept","sourceCommit":"9f8222745b4cdc70e8c41662e74bf7e3beb4b948","details":null}
 {"at":"2026-10-14T16:44:39.747Z","task":"M3-07-installed-recovery-regression","action":"accept","sourceCommit":"79899b14e9230f9326f18a4f00c1fb2bbbdfa01e","details":null}
 {"at":"2026-10-14T16:44:40.295Z","task":"M3-07-installed-recovery-regression","action":"done","sourceCommit":"79899b14e9230f9326f18a4f00c1fb2bbbdfa01e","details":null}
+{"at":"2026-10-14T16:58:44.844Z","task":"M3-07d-2-review-recovery","action":"start","sourceCommit":"c751b8a871112c955182735916e3e4e96cd4a180","details":null}
+{"at":"2026-10-14T16:58:45.409Z","task":"M3-07d-2-consumer-recovery","action":"block","sourceCommit":"c751b8a871112c955182735916e3e4e96cd4a180","details":"Parent independent review found terminal-status recovery race and unbounded quiescence/join; rework tracked in M3-07d-2-review-recovery, prior local acceptance does not override blockers."}
+{"at":"2026-10-14T17:05:43.152Z","task":"M3-07-terminal-lifetime-child-regression","action":"start","sourceCommit":"df2f4bc5466f1846f8f91053cc813fac7dce26e6","details":null}
+{"at":"2026-10-14T17:14:03.408Z","task":"M3-07-terminal-lifetime-child-regression","action":"accept","sourceCommit":"0dddc59722486788b7c11e87180bed400c133fb4","details":null}
+{"at":"2026-10-14T17:14:04.217Z","task":"M3-07-terminal-lifetime-child-regression","action":"done","sourceCommit":"0dddc59722486788b7c11e87180bed400c133fb4","details":null}
+{"at":"2026-10-14T16:58:10.320Z","task":"M3-07-installed-terminal-recovery-regression","action":"start","sourceCommit":"addf1f88624298b9c445df63e60be3fa88742c6e","details":null}
+{"at":"2026-10-14T17:06:09.254Z","task":"M3-07-installed-terminal-recovery-regression","action":"block","sourceCommit":"addf1f88624298b9c445df63e60be3fa88742c6e","details":"Actual installed controller cannot stage: shouldStop callback forwarded into structuredClone in ReproductionDispatchStore.bind throws DataCloneError before SQL; awaiting primary production-source correction and explicit frozen-release disposition. No substitute units or receipts."}
+{"at":"2026-10-14T17:08:07.351Z","task":"M3-07-reproduction-dispatch-callback","action":"start","sourceCommit":"54ee3c8606edf9b186ed43fc4d1d826b2c1ea3fe","details":null}
+{"at":"2026-10-14T17:08:25.172Z","task":"M3-07-installed-terminal-recovery-regression","action":"start","sourceCommit":"54ee3c8606edf9b186ed43fc4d1d826b2c1ea3fe","details":null}
+{"at":"2026-10-14T17:17:50.906Z","task":"M3-07-installed-terminal-recovery-regression","action":"accept","sourceCommit":"70c0ab1772764fbc1469a0470e346626c852115f","details":null}
+{"at":"2026-10-14T17:17:51.473Z","task":"M3-07-installed-terminal-recovery-regression","action":"done","sourceCommit":"70c0ab1772764fbc1469a0470e346626c852115f","details":null}
+{"at":"2026-10-14T17:17:52.048Z","task":"M3-07-reproduction-dispatch-callback","action":"accept","sourceCommit":"70c0ab1772764fbc1469a0470e346626c852115f","details":null}
+{"at":"2026-10-14T17:17:52.627Z","task":"M3-07-reproduction-dispatch-callback","action":"done","sourceCommit":"70c0ab1772764fbc1469a0470e346626c852115f","details":null}
+{"at":"2026-10-14T17:27:50.277Z","task":"M3-07d-2-review-recovery","action":"accept","sourceCommit":"731de18752a2cfdf679575bad99ab527cefdd75d","details":null}
+{"at":"2026-10-14T17:27:50.830Z","task":"M3-07d-2-review-recovery","action":"accept","sourceCommit":"731de18752a2cfdf679575bad99ab527cefdd75d","details":null}

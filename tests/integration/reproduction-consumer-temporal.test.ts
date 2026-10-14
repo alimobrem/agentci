@@ -12,12 +12,13 @@ async function fixture(){const f=await reproductionStagingFixture();const connec
  return {...f,store,client,options,async dispose(){const r=await store.get(f.selector.operationId);if(r)try{await client.workflow.getHandle(r.workflowId).terminate('Owned fixture cleanup');}catch{}await connection.close();await f.close();}};
  }catch(e){await connection.close();await f.close();throw e;}}
 test('real Temporal start survives lost database acknowledgement and reuses exact run/memo',{timeout:30000},async()=>{const f=await fixture();try{
- const port={claim:f.store.claim.bind(f.store),bind:f.store.bind.bind(f.store),attempts:f.store.attempts.bind(f.store),get:f.store.get.bind(f.store),renew:f.store.renew.bind(f.store),release:f.store.release.bind(f.store),adoptObservedRun:async()=>{throw Error('fixture lost acknowledgement');}};
- await assert.rejects(dispatchAdmittedReproductions(port,f.client,f.options),/reproduction-dispatch-unavailable/);
+ const options={...f.options,shouldStop:()=>false};
+ const port={claim:f.store.claim.bind(f.store),bind:async(entry:Parameters<typeof f.store.bind>[0],binding:Parameters<typeof f.store.bind>[1])=>{assert.deepEqual(Object.keys(binding).sort(),['config','evalTaskQueue','taskQueue']);return f.store.bind(entry,binding);},attempts:f.store.attempts.bind(f.store),get:f.store.get.bind(f.store),renew:f.store.renew.bind(f.store),release:f.store.release.bind(f.store),adoptObservedRun:async()=>{throw Error('fixture lost acknowledgement');}};
+ await assert.rejects(dispatchAdmittedReproductions(port,f.client,options),/reproduction-dispatch-unavailable/);
  const pending=(await f.store.get(f.selector.operationId))!;assert.equal(pending.runId,null);const remote=await f.client.workflow.getHandle(pending.workflowId).describe();assert.equal(remote.type,'reproduceAdmittedFinding');
- await f.pool.query("UPDATE agentci_reproduction_dispatch_state SET lease_until=clock_timestamp()-interval '1 second'");await dispatchAdmittedReproductions(f.store,f.client,f.options);
+ await f.pool.query("UPDATE agentci_reproduction_dispatch_state SET lease_until=clock_timestamp()-interval '1 second'");await dispatchAdmittedReproductions(f.store,f.client,options);
  const saved=(await f.store.get(f.selector.operationId))!;assert.equal(saved.runId,remote.runId);assert.equal(saved.attempt!.token,remote.memo!.startAttemptToken);assert.equal((await f.store.attempts(saved.operationId)).length,1);
- await dispatchAdmittedReproductions(f.store,f.client,f.options);assert.equal((await f.store.get(saved.operationId))!.runId,remote.runId);
+ await dispatchAdmittedReproductions(f.store,f.client,options);assert.equal((await f.store.get(saved.operationId))!.runId,remote.runId);
  }finally{await f.dispose();}});
 test('late old-lease Temporal start after NotFound and new binding safely adopts its original attempt',{timeout:30000},async()=>{const f=await fixture();try{
  const a=await f.store.bind((await f.store.claim())!,f.options);await f.store.release(a,0);let won:string|undefined;

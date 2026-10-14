@@ -6813,10 +6813,10 @@
         },
         {
           "id": "M3-07d-2-consumer-recovery",
-          "status": "in-progress",
+          "status": "blocked",
           "startedAt": "2026-10-14T16:10:06.409Z",
           "completedAt": null,
-          "blockedReason": null,
+          "blockedReason": "Parent independent review found terminal-status recovery race and unbounded quiescence/join; rework tracked in M3-07d-2-review-recovery, prior local acceptance does not override blockers.",
           "deferral": null,
           "acceptance": [
             {
@@ -6853,6 +6853,86 @@
               "status": "passed",
               "evidence": [
                 "delivery/acceptance/m3-installed-recovery-regression-local.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07d-2-review-recovery",
+          "status": "in-progress",
+          "startedAt": "2026-10-14T16:58:44.844Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Read authenticated terminal status before recovering consumers; staged cancellation settled between reads is retained without unnecessary evaluator startup, while actual owned assertion-container zero checks remain mandatory. Real installed-package regression required.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-recovery-parent-review-rework.json"
+              ]
+            },
+            {
+              "text": "Bound the complete lifetime timeout, owned-resource quiescence and pending-work join. Abort/fence late actions, terminate only owned handles/processes when cooperation fails, retain explicit unverified recovery/private state and prove actual child-process exit through withCustomerServiceLifetime. No abandoned late cleanup or false owned-zero proof.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-recovery-parent-review-rework.json"
+              ]
+            },
+            {
+              "text": "Preserve cause uncertainty and local-only Temporal topology qualification. Bind diagnostics to credential-free exact harness/run/candidate identity. Relevant local tests, exact changed-head hosted CI and parent independent source/actual-artifact clearance precede merge; no aggregate M3 acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07-terminal-lifetime-child-regression",
+          "status": "done",
+          "startedAt": "2026-10-14T17:05:43.152Z",
+          "completedAt": "2026-10-14T17:14:04.217Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Actual child execution through production withCustomerServiceLifetime, recovery owner, cleanup phases, terminal exit and synthetic-key lifecycle uses real owned PostgreSQL and Temporal; noncooperative callbacks cannot act after bounded exit1. No teardown-ready or owned-zero proof is emitted; owned worker dies, foreign sentinel lives and private key/database state remain until parent cleanup. Source-bound local-only tests/typecheck/evidence required; no App/provider/live or M3 acceptance.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-terminal-lifetime-regression-0dddc59.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-installed-terminal-recovery-regression",
+          "status": "done",
+          "startedAt": "2026-10-14T16:58:10.320Z",
+          "completedAt": "2026-10-14T17:17:51.473Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Actual installed API/controller stages and durably cancels a real unit; restricted installed evaluator produces authentic terminal settlement, and cleanup retains it across a stale initial read/evaluator-unavailable race while independently proving owned-container zero",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-installed-staged-terminal-source-acceptance.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-reproduction-dispatch-callback",
+          "status": "done",
+          "startedAt": "2026-10-14T17:08:07.351Z",
+          "completedAt": "2026-10-14T17:17:52.627Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Actual dispatch with shouldStop callback binds cloned data-only options and persists real PostgreSQL attempt/Temporal run; compiled/unpublished-source installed staged-cancellation path progresses without modifying frozen dev.3 assets",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-installed-staged-terminal-source-acceptance.json"
               ]
             }
           ]
@@ -7086,6 +7166,24 @@
           "sha256": "7624feca30133b515cf99b382d1165106a4b5d56a26032c26b7d1de9c8882f28",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-recovery-parent-review-rework.json",
+          "sha256": "082624b75cecb5acae7e6c5a5fdf396bff65b4b4df1b58e8f4a4363423279781",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-terminal-lifetime-regression-0dddc59.json",
+          "sha256": "8994fb308e8e3c6766216e61ab351c934e40d891bc98e8dc6691b55ca5ae9be4",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-installed-staged-terminal-source-acceptance.json",
+          "sha256": "a10180f8f4367f71b092989489311391cb4f1f1edb227704e0dc780a268b7c25",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
       ],
       "verification": {
@@ -7128,6 +7226,11 @@
         {
           "task": "M3-07d-2-demo-activation",
           "reason": "Run38580528645 on reviewed mergeee69dcb cancelled after controller failure and unverified owned cleanup; both infrastructure cleanup steps failed. Retained three artifact IDs/hashes and fixed log timestamps require parent actual ZIP/operation-journal audit. All ordinary postmerge CI passed; no scenario or cleanup acceptance and no blind rerun.",
+          "deferral": null
+        },
+        {
+          "task": "M3-07d-2-consumer-recovery",
+          "reason": "Parent independent review found terminal-status recovery race and unbounded quiescence/join; rework tracked in M3-07d-2-review-recovery, prior local acceptance does not override blockers.",
           "deferral": null
         }
       ],
@@ -7895,10 +7998,10 @@
         },
         {
           "id": "M3-07d-2-consumer-recovery",
-          "status": "in-progress",
+          "status": "blocked",
           "startedAt": "2026-10-14T16:10:06.409Z",
           "completedAt": null,
-          "blockedReason": null,
+          "blockedReason": "Parent independent review found terminal-status recovery race and unbounded quiescence/join; rework tracked in M3-07d-2-review-recovery, prior local acceptance does not override blockers.",
           "deferral": null,
           "acceptance": [
             {
@@ -7935,6 +8038,86 @@
               "status": "passed",
               "evidence": [
                 "delivery/acceptance/m3-installed-recovery-regression-local.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07d-2-review-recovery",
+          "status": "in-progress",
+          "startedAt": "2026-10-14T16:58:44.844Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Read authenticated terminal status before recovering consumers; staged cancellation settled between reads is retained without unnecessary evaluator startup, while actual owned assertion-container zero checks remain mandatory. Real installed-package regression required.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-recovery-parent-review-rework.json"
+              ]
+            },
+            {
+              "text": "Bound the complete lifetime timeout, owned-resource quiescence and pending-work join. Abort/fence late actions, terminate only owned handles/processes when cooperation fails, retain explicit unverified recovery/private state and prove actual child-process exit through withCustomerServiceLifetime. No abandoned late cleanup or false owned-zero proof.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-recovery-parent-review-rework.json"
+              ]
+            },
+            {
+              "text": "Preserve cause uncertainty and local-only Temporal topology qualification. Bind diagnostics to credential-free exact harness/run/candidate identity. Relevant local tests, exact changed-head hosted CI and parent independent source/actual-artifact clearance precede merge; no aggregate M3 acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-07-terminal-lifetime-child-regression",
+          "status": "done",
+          "startedAt": "2026-10-14T17:05:43.152Z",
+          "completedAt": "2026-10-14T17:14:04.217Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Actual child execution through production withCustomerServiceLifetime, recovery owner, cleanup phases, terminal exit and synthetic-key lifecycle uses real owned PostgreSQL and Temporal; noncooperative callbacks cannot act after bounded exit1. No teardown-ready or owned-zero proof is emitted; owned worker dies, foreign sentinel lives and private key/database state remain until parent cleanup. Source-bound local-only tests/typecheck/evidence required; no App/provider/live or M3 acceptance.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-terminal-lifetime-regression-0dddc59.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-installed-terminal-recovery-regression",
+          "status": "done",
+          "startedAt": "2026-10-14T16:58:10.320Z",
+          "completedAt": "2026-10-14T17:17:51.473Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Actual installed API/controller stages and durably cancels a real unit; restricted installed evaluator produces authentic terminal settlement, and cleanup retains it across a stale initial read/evaluator-unavailable race while independently proving owned-container zero",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-installed-staged-terminal-source-acceptance.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07-reproduction-dispatch-callback",
+          "status": "done",
+          "startedAt": "2026-10-14T17:08:07.351Z",
+          "completedAt": "2026-10-14T17:17:52.627Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Actual dispatch with shouldStop callback binds cloned data-only options and persists real PostgreSQL attempt/Temporal run; compiled/unpublished-source installed staged-cancellation path progresses without modifying frozen dev.3 assets",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-installed-staged-terminal-source-acceptance.json"
               ]
             }
           ]
@@ -8168,6 +8351,24 @@
           "sha256": "7624feca30133b515cf99b382d1165106a4b5d56a26032c26b7d1de9c8882f28",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-recovery-parent-review-rework.json",
+          "sha256": "082624b75cecb5acae7e6c5a5fdf396bff65b4b4df1b58e8f4a4363423279781",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-customer-terminal-lifetime-regression-0dddc59.json",
+          "sha256": "8994fb308e8e3c6766216e61ab351c934e40d891bc98e8dc6691b55ca5ae9be4",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-installed-staged-terminal-source-acceptance.json",
+          "sha256": "a10180f8f4367f71b092989489311391cb4f1f1edb227704e0dc780a268b7c25",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
       ],
       "verification": {
@@ -8210,6 +8411,11 @@
         {
           "task": "M3-07d-2-demo-activation",
           "reason": "Run38580528645 on reviewed mergeee69dcb cancelled after controller failure and unverified owned cleanup; both infrastructure cleanup steps failed. Retained three artifact IDs/hashes and fixed log timestamps require parent actual ZIP/operation-journal audit. All ordinary postmerge CI passed; no scenario or cleanup acceptance and no blind rerun.",
+          "deferral": null
+        },
+        {
+          "task": "M3-07d-2-consumer-recovery",
+          "reason": "Parent independent review found terminal-status recovery race and unbounded quiescence/join; rework tracked in M3-07d-2-review-recovery, prior local acceptance does not override blockers.",
           "deferral": null
         }
       ],

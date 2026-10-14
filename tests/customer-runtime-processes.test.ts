@@ -61,3 +61,15 @@ test('owned operator drains its authority acknowledgement before completion',asy
  try{await mkdir(join(root,'dist/cmd/reproduction-operator'),{recursive:true});await writeFile(join(root,'dist/cmd/reproduction-operator/main.js'),`process.stdout.end(JSON.stringify({applied:{revision:1,digest:${JSON.stringify(digest)}}}));`);const applied=await runtime.applyAuthority(join(root,'authority.json'),digest,'initial',{PATH:process.env.PATH,AGENTCI_REPRODUCTION_CONFIG_REVISION:'1'});assert.deepEqual(applied,{revision:1,digest});assert.equal(runtime.children.size,0);
  }finally{await runtime.close();await rm(root,{recursive:true,force:true});}
 });
+
+test('failed quiescence forces the owned terminal path without reporting cleanup success',async()=>{
+ let forced=0,terminal=0,closed=false;
+ await assert.rejects(withCustomerServiceLifetime({close:async()=>{throw Error('unresolved cleanup');},quiesce:async()=>{throw Error('owned shutdown unverified');},forceQuiesce:()=>{forced++;}},async()=>{},async()=>{closed=true;},{timeoutMs:100,shutdownTimeoutMs:50,onUnquiesced:()=>{terminal++;throw Error('terminal persistence failed');}}),(error:any)=>error.customerRecoveryRequired===true);
+ assert.equal(forced,1);assert.equal(terminal,1);assert.equal(closed,false);
+});
+
+test('aborted command ownership lasts until actual TERM-ignoring child exit',async()=>{
+ const {execFile}=await import('node:child_process'),{promisify}=await import('node:util'),execute=promisify(execFile),root=await mkdtemp(join(tmpdir(),'customer-command-abort-')),runtime=new CustomerRuntimeProcesses(root);let child:any;
+ try{const ready=join(root,'ready'),script=join(root,'command.mjs');await writeFile(script,`import {writeFileSync} from 'node:fs';process.on('SIGTERM',()=>{});writeFileSync(${JSON.stringify(ready)},String(process.pid));setInterval(()=>{},1000);`);const controller=new AbortController(),pending=runtime.trackCommand(execute(process.execPath,[script],{signal:controller.signal}));child=pending.child;const deadline=Date.now()+3000;while(Date.now()<deadline){try{await readFile(ready);break;}catch{await new Promise(resolve=>setTimeout(resolve,10));}}await readFile(ready);controller.abort();await assert.rejects(pending,(error:any)=>error.code==='ABORT_ERR');assert.equal(runtime.commands.size,1,'rejected promise cannot erase a live child');assert.doesNotThrow(()=>process.kill(child.pid,0));runtime.forceStop();await runtime.close();assert.equal(runtime.commands.size,0);assert.throws(()=>process.kill(child.pid,0),(error:any)=>error.code==='ESRCH');
+ }finally{if(child&&child.exitCode===null&&child.signalCode===null)child.kill('SIGKILL');await runtime.close();await rm(root,{recursive:true,force:true});}
+});
