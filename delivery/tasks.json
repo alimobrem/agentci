@@ -3609,14 +3609,16 @@
         "SPEC-33.1-002",
         "SPEC-33.1-003"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-14T20:28:05.589Z",
-      "completedAt": null,
+      "completedAt": "2026-10-14T20:43:46.054Z",
       "acceptance": [
         {
           "text": "Functional authorized queue filtering, responsive dark reviewer shell, explicit execution/evidence/claim distinctions, finding-first summary, readable history and secondary export/provenance; no new backend data or authority. Exact production build/type/unit/browser checks preserve login interruption, repeated navigation, revocation, stale/aborted reads, history pinning and export EOF protections; inspect actual desktop/mobile synthetic screenshots.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-ui-cyberpunk-d78113b.json"
+          ]
         }
       ]
     }
