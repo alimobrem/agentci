@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {IMAGE_ROLES} from '../image-publication.mjs';
 import {validateNativeReceipts,verifyAssembledIndex,bindNativeImage,bindNativeScan} from '../native-publication.mjs';
 
-export const DEVELOPMENT_VERSION='0.4.0-m3-dev.3';
+export const DEVELOPMENT_VERSION='0.4.0-m3-dev.4';
 export const SERVICE_REPOSITORY='alimobrem/agentci';
 export const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
 export function candidateIdentity(version,sourceCommit){

@@ -17,7 +17,7 @@ try{
  const input=JSON.parse(await readFile(process.argv[2],'utf8'));await requireCustomerActivation('demo',input);const fixtures=validateCustomerInputs(input.fixtures);if(fixtures.serviceSource!==process.env.GITHUB_SHA||execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8',env:{PATH:process.env.PATH}}).trim()!==fixtures.serviceSource)throw Error('Trusted harness source mismatch');
  const arch=process.arch==='x64'?'amd64':process.arch;
  // Anonymous bytes and both actual production installs are verified before a key file/config exists.
- prepared=await preparePublishedPackage({version:'0.4.0-m3-dev.3',sourceCommit:input.releaseSource,arch,manifestSha256:input.packageManifestSha256,packageSha256:input.packageSha256});
+ prepared=await preparePublishedPackage({version:'0.4.0-m3-dev.4',sourceCommit:input.releaseSource,arch,manifestSha256:input.packageManifestSha256,packageSha256:input.packageSha256});
  const {trusted,images,publication}=await customerPublicationAssets(prepared,input);
  const role=kind=>{const image=trusted.images.find(value=>value.role===kind);if(!image||!image.platforms.includes('linux/'+arch))throw Error('Required native artifact missing');return image.image;};
  privateRoot=await mkdtemp(join(process.env.RUNNER_TEMP??tmpdir(),'agentci-customer-runtime-'));

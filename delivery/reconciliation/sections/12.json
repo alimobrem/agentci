@@ -2322,6 +2322,50 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-R1-DEV4-PREP",
+          "status": "in-progress",
+          "startedAt": "2026-10-14T19:08:00.095Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Owner authorization and independent PR100 source/artifact clearance retained; new version aligns package/locks/runtime/opt-in deployment/publication and customer helpers without changing six-role native or anonymous-download contract, permissions, occupied dev.3 assets or customer activation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dev4-preparation-local.json"
+              ]
+            },
+            {
+              "text": "Relevant local/full hosted CI and independent exact head/tree and actual-artifact review precede descriptor merge/publication; preflight rejects occupied/inconclusive destinations. Preserve failures and all M3 customer/release gates.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-R1-DEV4-SCANNER-FIXTURE",
+          "status": "in-progress",
+          "startedAt": "2026-10-14T19:22:22.920Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Preserve failed Verify38622670778 attempt1 and its exact-head evidence; reproduce missing synthetic package-lock finding with unchanged pinned policy and distinguish original hosted value uncertainty from proven fixture defect.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dev4-scanner-fixture-rework.json"
+              ]
+            },
+            {
+              "text": "Private generated fixture satisfies the pinned rule preconditions deterministically, with prior binary/intermediate/path/inline-config/redaction/negative checks retained. Focused/full local and new-head hosted checks plus independent review required; no scanner rules or gate weakening and no publication.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -2888,6 +2932,18 @@
           "sha256": "5dc0d3e085f968951254b4b20818366244f3eec143fa0606cb92544deac601f8",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dev4-preparation-local.json",
+          "sha256": "3bdcea95258f228a23b13ccab0fba3284a6f22c1c515223a9a14b6666ad27ca5",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dev4-scanner-fixture-rework.json",
+          "sha256": "56fbceca417468751446afd2cb9ac9c67baf29061040ad6c30933cc5c44936c2",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
       ],
       "verification": {
@@ -3146,10 +3202,10 @@
         },
         {
           "id": "M3-07d-2-consumer-recovery",
-          "status": "blocked",
+          "status": "done",
           "startedAt": "2026-10-14T16:10:06.409Z",
-          "completedAt": null,
-          "blockedReason": "Parent independent review found terminal-status recovery race and unbounded quiescence/join; rework tracked in M3-07d-2-review-recovery, prior local acceptance does not override blockers.",
+          "completedAt": "2026-10-14T19:12:08.913Z",
+          "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
@@ -3168,16 +3224,18 @@
             },
             {
               "text": "Real production-installed-package regressions prove evaluator-start failure after acknowledged reservation, dead worker during cancellation, stalled cleanup and foreign/unverifiable resources. Applicable local and exact-source hosted CI plus independent source/actual-artifact review precede merge and same four-scenario customer retry. No aggregateM3 acceptance inferred.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-pr100-owner-review-merge.json"
+              ]
             }
           ]
         },
         {
           "id": "M3-07d-2-review-recovery",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-14T16:58:44.844Z",
-          "completedAt": null,
+          "completedAt": "2026-10-14T19:12:03.607Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
@@ -3197,8 +3255,10 @@
             },
             {
               "text": "Preserve cause uncertainty and local-only Temporal topology qualification. Bind diagnostics to credential-free exact harness/run/candidate identity. Relevant local tests, exact changed-head hosted CI and parent independent source/actual-artifact clearance precede merge; no aggregate M3 acceptance.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-pr100-owner-review-merge.json"
+              ]
             }
           ]
         },
@@ -3221,9 +3281,9 @@
         },
         {
           "id": "M3-07d-2-ci-staged-recovery",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-14T17:53:57.670Z",
-          "completedAt": null,
+          "completedAt": "2026-10-14T19:12:05.504Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
@@ -3236,8 +3296,10 @@
             },
             {
               "text": "Harness/test-only repair passes targeted real PostgreSQL/Temporal and installed regression without weakening resource/identity proofs or enlarging deadlines; changed-head hosted CI and independent review remain required.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-pr100-owner-review-merge.json"
+              ]
             }
           ]
         }
@@ -3594,6 +3656,12 @@
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
+          "path": "delivery/acceptance/m3-pr100-owner-review-merge.json",
+          "sha256": "53ffb59f7fbc926ca852e86e8cc83676ccd928aed54764e09b44d5d86b535299",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
           "path": "delivery/acceptance/m3-customer-recovery-parent-review-rework.json",
           "sha256": "082624b75cecb5acae7e6c5a5fdf396bff65b4b4df1b58e8f4a4363423279781",
           "availability": "present",
@@ -3627,11 +3695,6 @@
         {
           "task": "M3-07d-2-demo-activation",
           "reason": "Run38580528645 on reviewed mergeee69dcb cancelled after controller failure and unverified owned cleanup; both infrastructure cleanup steps failed. Retained three artifact IDs/hashes and fixed log timestamps require parent actual ZIP/operation-journal audit. All ordinary postmerge CI passed; no scenario or cleanup acceptance and no blind rerun.",
-          "deferral": null
-        },
-        {
-          "task": "M3-07d-2-consumer-recovery",
-          "reason": "Parent independent review found terminal-status recovery race and unbounded quiescence/join; rework tracked in M3-07d-2-review-recovery, prior local acceptance does not override blockers.",
           "deferral": null
         }
       ],
@@ -4832,6 +4895,28 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-R1-DEV4-PREP",
+          "status": "in-progress",
+          "startedAt": "2026-10-14T19:08:00.095Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Owner authorization and independent PR100 source/artifact clearance retained; new version aligns package/locks/runtime/opt-in deployment/publication and customer helpers without changing six-role native or anonymous-download contract, permissions, occupied dev.3 assets or customer activation.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dev4-preparation-local.json"
+              ]
+            },
+            {
+              "text": "Relevant local/full hosted CI and independent exact head/tree and actual-artifact review precede descriptor merge/publication; preflight rejects occupied/inconclusive destinations. Preserve failures and all M3 customer/release gates.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -5299,6 +5384,12 @@
         {
           "path": "delivery/acceptance/m3-customer-driver-repaired-software-preparation-852421f.json",
           "sha256": "5dc0d3e085f968951254b4b20818366244f3eec143fa0606cb92544deac601f8",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dev4-preparation-local.json",
+          "sha256": "3bdcea95258f228a23b13ccab0fba3284a6f22c1c515223a9a14b6666ad27ca5",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

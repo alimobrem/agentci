@@ -31,7 +31,7 @@ test('Compose API and consumer share pinned read-only authority while released d
   const merged=render(true);
   for(const role of ['api','worker']){
    const service=merged.services[role];
-   assert.equal(service.image,`agentci-${role}:0.4.0-m3-dev.3`);
+   assert.equal(service.image,`agentci-${role}:0.4.0-m3-dev.4`);
    for(const key of ['AGENTCI_REPRODUCTION_CATALOG_DIGEST','AGENTCI_REPRODUCTION_CONFIG_REVISION','AGENTCI_REPRODUCTION_CONFIG_DIGEST','AGENTCI_CURSOR_KEY'])assert.equal(service.environment[key],values[key as keyof typeof values]);
    assert.equal(service.environment.AGENTCI_REPRODUCTION_CATALOG_FILE,'/run/agentci/reproduction-catalog.json');
    const mount=service.volumes.find((v:any)=>v.target==='/run/agentci/reproduction-catalog.json');
