@@ -2344,6 +2344,28 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-R1-DEV4-SCANNER-FIXTURE",
+          "status": "in-progress",
+          "startedAt": "2026-10-14T19:22:22.920Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Preserve failed Verify38622670778 attempt1 and its exact-head evidence; reproduce missing synthetic package-lock finding with unchanged pinned policy and distinguish original hosted value uncertainty from proven fixture defect.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dev4-scanner-fixture-rework.json"
+              ]
+            },
+            {
+              "text": "Private generated fixture satisfies the pinned rule preconditions deterministically, with prior binary/intermediate/path/inline-config/redaction/negative checks retained. Focused/full local and new-head hosted checks plus independent review required; no scanner rules or gate weakening and no publication.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -2914,6 +2936,12 @@
         {
           "path": "delivery/acceptance/m3-dev4-preparation-local.json",
           "sha256": "3bdcea95258f228a23b13ccab0fba3284a6f22c1c515223a9a14b6666ad27ca5",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dev4-scanner-fixture-rework.json",
+          "sha256": "56fbceca417468751446afd2cb9ac9c67baf29061040ad6c30933cc5c44936c2",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

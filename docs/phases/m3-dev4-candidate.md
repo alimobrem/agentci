@@ -48,3 +48,31 @@ dashboard, and all aggregate M3 publication/demo/release gates remain separate.
 This candidate is not the final M3 milestone release and does not close M3 or
 advance M4. Preserve full M0–M10 order, all three adapters and observed-rate
 calibration; only the agreed inaccessible external-provider exception applies.
+
+## Scanner fixture rework before publication
+
+Verify `38622670778` attempt 1 at preparation head
+`a9afe24d141cb3dad6d0629d233bbf3143320d6d` failed before runtime, integration
+and package gates: one of 558 unit tests expected a finding for generated JSON
+`package-lock.json` password data. The independent fast-feedback job, dedicated
+scan, dashboard and advisory passed. The failed attempt and partial verification
+artifact remain retained; those passing checks do not replace full Verify.
+
+The custom password-assignment rule does not match a quoted JSON key. Detection
+of that example depends on the pinned upstream generic rule's entropy and
+stopword heuristics, which unconstrained random hex does not always satisfy.
+Controlled actual-scanner probes reproduce both a below-threshold miss and an
+above-threshold stopword miss while the same values in assignment syntax are
+detected. The original hosted random value was intentionally not retained, so
+which predicate rejected it remains unknown. This fixture assumption is separate
+from the candidate's version changes and the earlier customer failure.
+
+Keep the generated JSON password and add a credentialed `resolved` URL; assert
+the exact existing non-entropy URL rule on that exact lockfile path. A digit
+prefix excludes the pinned repeated-letter global allowlist. Additional actual
+CLI cases verify both low-entropy and stopword values in the otherwise excluded
+lockfile and `.gitleaks.toml` paths. Original intermediate add/delete, binary
+blob/private-key, inline/repository-config bypass, redaction, divergent-head,
+path-conditioned and fail-closed coverage checks remain. Scanner wrapper, policy,
+tool/upstream pins, limits and negative-test gates are unchanged. Exact changed
+head full CI and independent review still precede publication activation.

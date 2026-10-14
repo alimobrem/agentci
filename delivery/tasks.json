@@ -3807,6 +3807,32 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M3-R1-DEV4-SCANNER-FIXTURE",
+      "title": "Remove random entropy uncertainty from mandatory scanner path regression without weakening policy",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SECTION-12.3"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-14T19:22:22.920Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Preserve failed Verify38622670778 attempt1 and its exact-head evidence; reproduce missing synthetic package-lock finding with unchanged pinned policy and distinguish original hosted value uncertainty from proven fixture defect.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dev4-scanner-fixture-rework.json"
+          ]
+        },
+        {
+          "text": "Private generated fixture satisfies the pinned rule preconditions deterministically, with prior binary/intermediate/path/inline-config/redaction/negative checks retained. Focused/full local and new-head hosted checks plus independent review required; no scanner rules or gate weakening and no publication.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
