@@ -37,6 +37,7 @@ export const requiredBrowserCases = [
   "delayed expired fresh-session response cannot release an already verified export download",
   "redacted process liveness and local configuration readiness reject unconfigured setup",
   "failed callback Back/Forward and repeated unavailable login remain unauthenticated without private review data",
+  "actual browser Blob download cancellation request records observed result without inferring upstream interruption",
   "zero AgentCI API mutations"
 ];
 export function dashboardBrowserVerified(browser,scope){return !!browser&&browser.sourceCommit===scope.sourceCommit&&browser.sourceTree===scope.sourceTree&&browser.runId===scope.runId&&browser.runAttempt===scope.runAttempt&&browser.backendMutations===0&&browser.liveOidc===false&&browser.liveCustomer===false&&Array.isArray(browser.checks)&&requiredBrowserCases.every(name=>browser.checks.includes(name));}
