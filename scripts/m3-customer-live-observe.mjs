@@ -16,7 +16,7 @@ try{
  const [inputPath,manifestPath,installedRoot]=process.argv.slice(2),input=JSON.parse(await readFile(inputPath,'utf8')),fixtures=validateCustomerInputs(input.fixtures);
  if(fixtures.serviceSource!==process.env.GITHUB_SHA||execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8',env:{PATH:process.env.PATH}}).trim()!==fixtures.serviceSource)throw Error('Trusted harness source mismatch');
  const manifestBytes=await readFile(manifestPath);if(hash(manifestBytes)!==process.env.PACKAGE_MANIFEST_SHA256)throw Error('Pinned package manifest mismatch');
- const manifest=validatePackageManifest(JSON.parse(manifestBytes),{version:'0.4.0-m3-dev.3',sourceCommit:input.releaseSource});
+ const manifest=validatePackageManifest(JSON.parse(manifestBytes),{version:'0.4.0-m3-dev.4',sourceCommit:input.releaseSource});
  const root=resolve(installedRoot);
  for(const file of manifest.files){const parts=file.path.split('/');let current=root;for(const part of parts){current=join(current,part);const info=await lstat(current);if(info.isSymbolicLink())throw Error('Package symlinks rejected');}if(!(await lstat(current)).isFile())throw Error('Package file required');}
  await verifyPackageFiles(root,manifest);
