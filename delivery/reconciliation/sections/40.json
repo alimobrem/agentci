@@ -7062,16 +7062,18 @@
         },
         {
           "id": "M3-07-ui-cyberpunk-local",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-14T21:46:57.105Z",
-          "completedAt": null,
+          "completedAt": "2026-10-14T21:54:57.334Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Functional authorized queue filtering, responsive dark reviewer shell, explicit execution/evidence/claim distinctions, finding-first summary, readable history and secondary export/provenance; no new backend data or authority. Exact production build/type/unit/browser checks preserve login interruption, repeated navigation, revocation, stale/aborted reads, history pinning and export EOF protections; inspect actual desktop/mobile synthetic screenshots.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-ui-revalidation-05c76f6.json"
+              ]
             }
           ]
         }
@@ -7356,6 +7358,12 @@
         {
           "path": "delivery/acceptance/m3-dashboard-login-local-d68a6ec.json",
           "sha256": "d78b4922ece38621fea604527485e5ac3bfeef2e8d541a593c21d402fad9fe8b",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-ui-revalidation-05c76f6.json",
+          "sha256": "c56e50c034ac10a73f90dc4682d20a98bc33ea6b749407778b4bb0685c5e301b",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -8416,16 +8424,18 @@
         },
         {
           "id": "M3-07-ui-cyberpunk-local",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-14T21:46:57.105Z",
-          "completedAt": null,
+          "completedAt": "2026-10-14T21:54:57.334Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Functional authorized queue filtering, responsive dark reviewer shell, explicit execution/evidence/claim distinctions, finding-first summary, readable history and secondary export/provenance; no new backend data or authority. Exact production build/type/unit/browser checks preserve login interruption, repeated navigation, revocation, stale/aborted reads, history pinning and export EOF protections; inspect actual desktop/mobile synthetic screenshots.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-ui-revalidation-05c76f6.json"
+              ]
             }
           ]
         }
@@ -8710,6 +8720,12 @@
         {
           "path": "delivery/acceptance/m3-dashboard-login-local-d68a6ec.json",
           "sha256": "d78b4922ece38621fea604527485e5ac3bfeef2e8d541a593c21d402fad9fe8b",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-ui-revalidation-05c76f6.json",
+          "sha256": "c56e50c034ac10a73f90dc4682d20a98bc33ea6b749407778b4bb0685c5e301b",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
