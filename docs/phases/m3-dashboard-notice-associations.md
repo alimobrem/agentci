@@ -92,3 +92,23 @@ Forty focused tests and root typecheck pass. Five exact-parent/summary regressio
 against preserved old source in valid owned scratch controls. Final local fast feedback
 runs625 root tests:610 pass,9 existing Mac/native-only/reporter failures,6 skip; all other
 nine stages pass. No dependency versions or publisher/isolation controls changed.
+
+Head5809ba2's Verify38673919265 attempt1 also passed hosted root/API feedback but failed
+`node scripts/reconcile-acceptance.mjs --check`; downstream integration/package/runtime
+steps were skipped and cleanup was not started. This second failure was a staging error:
+three task JSON Unicode escape serializations were changed in the working copy but not
+committed, while the snapshot hashed that working copy. JSON values and captured gate
+history were unchanged. A fresh Git archive of5809ba2 reproduces the exact stale-snapshot
+error. Its failed run is preserved in `delivery/runs/38673919265-attempt-1.json`.
+The repair stages every modified tracking input, regenerates last, and requires the full
+workflow reconciliation/history command to pass in a fresh committed-source archive.
+Earlier native/Dashboard evidence does not establish skipped downstream acceptance.
+
+A further focused internal review found current-schema malformed receipt fields could
+fall through legacy defaults. Schema3 now requires its own nonnull licensing review,
+association and notice-count fields; provided null/undefined values reject for legacy
+too. Unknown schema versions, malformed association arrays and inconsistent associated
+notice counts reject. Genuinely absent legacy fields retain compatibility defaults.
+Forty-one focused regressions and root typecheck pass. Latest local fast feedback runs626
+root tests:611 pass,9 existing Mac/native-only/reporter failures,6 skip; nine other stages
+pass. Full hosted CI and independent actual-artifact review remain pending on the new head.
