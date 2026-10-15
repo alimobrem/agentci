@@ -125,6 +125,21 @@ cleanup receipts show zero owned resources with private files removed. Subsequen
 diagnostic instrumentation retains only a typed failed observer snapshot; it does
 not loosen the success oracle, establish an eight-case pass or enable drainage.
 
+The [diagnostic attempt](../../delivery/acceptance/m3-dashboard-authenticated-characterization-attempt-38822151809.json)
+retains a valid typed absent-CA observation on both architectures. Each shows an
+issuer TLS attempt/failure with no HTTP exchange, but an empty presented leaf DER
+hash array. This proves the rejected invariant; the receipts do not prove why the
+capture was empty. An earlier live socket certificate observation remains subject
+to the same strict hash requirement and actual hosted feasibility checks.
+The issuer-only hook uses Node's documented server `keylog` event to reach that
+live socket; it never reads, hashes, stores, emits or outputs the event's secret
+line argument. Only the existing bounded public DER-hash observer receives the
+socket. Existing secure-connection and TLS-error observers remain in place, with
+no configured-certificate fallback or key-log file/trace option. Node documents
+that [socket certificate access can return undefined after destruction](https://nodejs.org/api/tls.html#tlssocketgetx509certificate);
+that is a lifecycle explanation consistent with this missing observation, not a
+new fact established by the failed receipts.
+
 Success requires zero owned app/helper containers, networks and volumes, no
 orphan fixture/client processes, and independently checked removal of private
 config/key/temp files. Failed execution and recovery remain labeled as failures;

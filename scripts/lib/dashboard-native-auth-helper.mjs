@@ -87,6 +87,13 @@ export function captureAuthCertificateHash(peer,socket,crypto,remote=false){
  }catch{return false;}
 }
 
+/** Node's documented server event exposes the live socket earlier than close-generated errors.
+ * The first argument contains secrets: never inspect, hash, store, emit or output it. Only socket DER is observed.
+ */
+export function bindAuthEarlyCertificateCapture(server,peer,crypto){
+ server.on('keylog',(_discardedLine,socket)=>{captureAuthCertificateHash(peer,socket,crypto);});
+}
+
 async function runAuthHelper(crypto,http,https){
  const ORIGIN='https://dashboard.fixture.invalid:3000',ISSUER='https://127.0.0.3:4443';
  const UUID=/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
@@ -115,7 +122,7 @@ async function runAuthHelper(crypto,http,https){
  const state={schemaVersion:1,observerId:config.observerId,trustCase:config.trustCase,ready:false,stage:'starting',caSha256:hash(config.caPem),certificates,authentication:{started:false,complete:false,authenticated:false,stage:'not-started',anonymousStatus:0,loginStatus:0,loginResponseComplete:false,callbackStatus:0,sessionStatus:0,callbackOriginMatched:false,transactionCookieIssued:false,sessionCookieIssued:false,transactionCookieAttributes:null,sessionCookieAttributes:null,baseline:null,failedProtectedStatus:0,failureCode:null},held:null,peers:{frontend:peer(),issuer:{...peer(),discoveryRequests:0,authorizationRequests:0,tokenRequests:0,jwksRequests:0},backend:{...peer(),authorizedReads:0,rejectedReads:0}},proxy:{requests:0,errors:0,timeouts:0,responseOrigin:'upstream-only'},shutdownRequested:false};
  let sessionCookie='',busy=false,heldResponse=null,watchdog=null,clientRequest=null;
  const sockets=new Set(),servers=[];
- const bindTls=(server,name)=>{servers.push(server);server.on('connection',socket=>{state.peers[name].tlsAttempts++;if(sockets.size>=64){socket.destroy();return;}sockets.add(socket);socket.on('error',()=>{});socket.once('close',()=>sockets.delete(socket));});server.on('secureConnection',socket=>{state.peers[name].tlsEstablished++;captureAuthCertificateHash(state.peers[name],socket,crypto);});server.on('tlsClientError',(error,socket)=>{state.peers[name].tlsFailures++;captureAuthCertificateHash(state.peers[name],socket,crypto);const code=safeError(error);if(!state.peers[name].tlsErrorCodes.includes(code)&&state.peers[name].tlsErrorCodes.length<8)state.peers[name].tlsErrorCodes.push(code);});};
+ const bindTls=(server,name)=>{servers.push(server);if(name==='issuer')bindAuthEarlyCertificateCapture(server,state.peers[name],crypto);server.on('connection',socket=>{state.peers[name].tlsAttempts++;if(sockets.size>=64){socket.destroy();return;}sockets.add(socket);socket.on('error',()=>{});socket.once('close',()=>sockets.delete(socket));});server.on('secureConnection',socket=>{state.peers[name].tlsEstablished++;captureAuthCertificateHash(state.peers[name],socket,crypto);});server.on('tlsClientError',(error,socket)=>{state.peers[name].tlsFailures++;captureAuthCertificateHash(state.peers[name],socket,crypto);const code=safeError(error);if(!state.peers[name].tlsErrorCodes.includes(code)&&state.peers[name].tlsErrorCodes.length<8)state.peers[name].tlsErrorCodes.push(code);});};
  const json=(res,status,value)=>{const body=JSON.stringify(value);if(Buffer.byteLength(body)>32768)throw Error('fixture-public-bound');res.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});res.end(body);};
  const readBody=async req=>{let body=Buffer.alloc(0);for await(const chunk of req){body=Buffer.concat([body,chunk]);if(body.length>16384)throw Error('fixture-body-bound');}return body.toString('utf8');};
  const privateHeaders=headers=>headers['cache-control']==='private, no-store, max-age=0'&&headers.pragma==='no-cache'&&String(headers.vary??'').toLowerCase().split(',').map(s=>s.trim()).includes('cookie');
@@ -208,5 +215,6 @@ export const AUTH_HELPER_SOURCE=[
  'const projectAuthResponse='+projectAuthResponse.toString()+';',
  'const authHelperLookup='+authHelperLookup.toString()+';',
  'const captureAuthCertificateHash='+captureAuthCertificateHash.toString()+';',
+ 'const bindAuthEarlyCertificateCapture='+bindAuthEarlyCertificateCapture.toString()+';',
  '('+runAuthHelper.toString()+')(crypto,http,https).catch(()=>{process.exitCode=1;process.stderr.write("fixture-helper-failed\\n");process.exit(1);});'
 ].join('\n');

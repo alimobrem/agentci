@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import * as crypto from 'node:crypto';
 import {readFile} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
+import {EventEmitter} from 'node:events';
 // @ts-ignore Fixed source is shared verbatim with the hosted synthetic helper.
-import {AUTH_HELPER_SOURCE,createIssuerProtocol,authHelperCookie,authHelperLookup,projectAuthResponse,captureAuthCertificateHash} from '../scripts/lib/dashboard-native-auth-helper.mjs';
+import {AUTH_HELPER_SOURCE,createIssuerProtocol,authHelperCookie,authHelperLookup,projectAuthResponse,captureAuthCertificateHash,bindAuthEarlyCertificateCapture} from '../scripts/lib/dashboard-native-auth-helper.mjs';
 
 const issuer='https://127.0.0.3:4443',origin='https://dashboard.fixture.invalid:3000';
 const clientId='synthetic-client',clientSecret='private-synthetic-client-secret',subject='synthetic-owner';
@@ -84,10 +85,32 @@ test('actual TLS socket certificate observer records only bounded DER hashes and
  for(const value of ['other DER','third DER'])captureAuthCertificateHash(peer,{getCertificate:()=>({raw:Buffer.from(value)})},crypto);assert.equal(peer.presentedCertificateSha256s.length,2);
 });
 
+test('early issuer event ignores a poison secret argument and hashes only actual socket DER before later close',()=>{
+ const server=new EventEmitter(),peer={presentedCertificateSha256s:[],clientObservedCertificateSha256s:[]},raw=Buffer.from('public issuer DER fixture'),expected=crypto.createHash('sha256').update(raw).digest('hex');
+ let touched=0,closed=false;const updates:unknown[]=[];
+ const poison=new Proxy(Object.create(null),{get(){touched++;throw Error('secret argument accessed');},ownKeys(){touched++;throw Error('secret argument enumerated');},getOwnPropertyDescriptor(){touched++;throw Error('secret argument inspected');}});
+ const observedCrypto={createHash(algorithm:string){assert.equal(algorithm,'sha256');const digest=crypto.createHash(algorithm);return {update(value:unknown){updates.push(value);assert.equal(value,raw);digest.update(value as Buffer);return {digest(encoding:'hex'){return digest.digest(encoding);}};}};}};
+ const socket={getX509Certificate:()=>closed?undefined:{raw},getCertificate:()=>closed?null:{raw}};
+ bindAuthEarlyCertificateCapture(server,peer,observedCrypto);assert.equal(server.listenerCount('keylog'),1);
+ server.emit('keylog',poison,socket);server.emit('keylog',poison,socket);assert.deepEqual(peer.presentedCertificateSha256s,[expected]);
+ closed=true;assert.equal(captureAuthCertificateHash(peer,socket,observedCrypto),false);server.emit('keylog',poison,socket);
+ assert.deepEqual(peer.presentedCertificateSha256s,[expected]);assert.equal(updates.length,2);assert.equal(touched,0);assert.equal(JSON.stringify(peer).includes(raw.toString()),false);
+});
+
+test('early event with no live socket certificate cannot manufacture a hash from configured metadata or its secret argument',()=>{
+ const server=new EventEmitter(),peer={presentedCertificateSha256s:[],clientObservedCertificateSha256s:[]};let hashes=0,touched=0;
+ const poison=new Proxy(Object.create(null),{get(){touched++;throw Error('secret coercion/access');},ownKeys(){touched++;throw Error('secret enumeration');}});
+ bindAuthEarlyCertificateCapture(server,peer,{createHash(){hashes++;throw Error('unexpected hash');}});
+ server.emit('keylog',poison,{getX509Certificate:()=>undefined,getCertificate:()=>null,configuredCertificate:{raw:Buffer.from('configured certificate is not an observation')}});
+ server.emit('keylog',poison,{getX509Certificate(){throw Error('already closed');}});
+ assert.deepEqual(peer,{presentedCertificateSha256s:[],clientObservedCertificateSha256s:[]});assert.equal(hashes,0);assert.equal(touched,0);
+});
+
 test('fixed helper source parses without execution and keeps TLS/forwarding/watchdog boundaries explicit',()=>{
  const result=spawnSync(process.execPath,['--check','--input-type=module'],{input:AUTH_HELPER_SOURCE,encoding:'utf8'});assert.equal(result.status,0,result.stderr);
  for(const text of ['rejectUnauthorized:true','ca:config.caPem','lookup:authHelperLookup',"host:'127.0.0.1',port:3000", "'x-forwarded-proto':'https'", "finishBackend('watchdog'),7000", "state.proxy.timeouts++", "state.held.backendReadOrdinal=state.peers.backend.authorizedReads",'fixture-helper-failed'])assert.equal(AUTH_HELPER_SOURCE.includes(text),true,text);
- for(const forbidden of ['rejectUnauthorized:false','checkServerIdentity:','NODE_TLS_REJECT_UNAUTHORIZED','NODE_EXTRA_CA_CERTS','agentciDashboardRuntime','process.env','writeFile','createSecureContext','process.on(\'SIGTERM\'','caPrivateKey','caKeyPem'])assert.equal(AUTH_HELPER_SOURCE.includes(forbidden),false,forbidden);
+ for(const forbidden of ['rejectUnauthorized:false','checkServerIdentity:','NODE_TLS_REJECT_UNAUTHORIZED','NODE_EXTRA_CA_CERTS','agentciDashboardRuntime','process.env','writeFile','createSecureContext','process.on(\'SIGTERM\'','caPrivateKey','caKeyPem','--tls-keylog','--trace-tls','enableTrace','SSLKEYLOGFILE'])assert.equal(AUTH_HELPER_SOURCE.includes(forbidden),false,forbidden);
+ assert.ok(AUTH_HELPER_SOURCE.includes("if(name==='issuer')bindAuthEarlyCertificateCapture(server,state.peers[name],crypto)"));
  assert.match(AUTH_HELPER_SOURCE,/https\.createServer\(\{key:config\.issuer\.keyPem,cert:config\.issuer\.certPem\}/);
  assert.ok(AUTH_HELPER_SOURCE.length<65536);
 });
