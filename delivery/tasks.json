@@ -4190,6 +4190,33 @@
           ]
         }
       ]
+    },
+    {
+      "id": "M3-dashboard-native-authenticated-drain",
+      "title": "Verify native authenticated API drainage with an explicitly bounded synthetic TLS and OIDC fixture",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SPEC-33.1-001"
+      ],
+      "dependsOn": [
+        "M3-dashboard-native-active-drain"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-15T16:30:51.292Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Actual unmodified dashboard image/plain Node PID1 on native AMD64 and ARM64 completes genuine synthetic HTTPS OIDC login/callback/session and a scoped API200; a held production read drains through SIGTERM with complete expected body, ordered framework cleanup, exit143 and independently verified owned cleanup. The explicitly approved ephemeral CA/helper topology is qualified separately from default production and live/browser acceptance.",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Exact strict fixture/default validators reject TLS bypasses, unrelated trust and command overrides; actual wrong-CA/hostname/expired-certificate authentication failures and real SIGKILL/unsupported abrupt143 interruption controls are retained with bounded source/image/runtime/certificate observations and no private fixture material in public artifacts. All original release qualifications remain open.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

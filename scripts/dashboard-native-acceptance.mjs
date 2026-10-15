@@ -1,4 +1,5 @@
 import {ABRUPT143_COMMAND,nativeDrainFixture,nativeDrainCheckpoint,runNativePublicDrain,validateNativePublicDrain} from './lib/dashboard-native-drain.mjs';
+import {runNativeAuthenticatedCharacterization} from './lib/dashboard-native-authenticated-runner.mjs';
 import {scannerRunArgs,SCANNER_SCRATCH_BYTES} from './lib/dashboard-scan-controls.mjs';
 import {dashboardScanFailure} from './lib/dashboard-scan-failure.mjs';
 import {dashboardShutdownMarkers} from './lib/dashboard-shutdown.mjs';
@@ -18,7 +19,7 @@ if(process.argv[2]==='source'){
  const imageRef=process.argv[3],source=await sourceIdentity();if(!/^agentci-dashboard:ci-[1-9][0-9]*-[1-9][0-9]*-(amd64|arm64)$/.test(imageRef)||imageRef!==`agentci-dashboard:ci-${source.runId}-${source.attempt}-${arch}`)throw Error('Exact owned image tag required');
  const daemon=JSON.parse(engine(['info','--format','{"os":{{json .OSType}},"arch":{{json .Architecture}}}']));if(daemon.os!=='linux'||({x86_64:'amd64',aarch64:'arm64',amd64:'amd64',arm64:'arm64'})[daemon.arch]!==arch)throw Error('Native daemon/host architecture mismatch');
  const rawImage=JSON.parse(engine(['image','inspect',imageRef]))[0],image=validateDashboardImage(rawImage,source);await save('image.json',image);
- const owner='agentci-smoke-'+randomBytes(8).toString('hex'),directory=await mkdtemp(join(process.env.RUNNER_TEMP??tmpdir(),'agentci-image-smoke-')),state=await registerImageSmokeState(directory,owner),anonymous={},shutdown=[];let publicDrain,runtime,rpmPackages,licenseInventory,scan,stage='prepare',receipt,summary,cancelled=false;
+ const owner='agentci-smoke-'+randomBytes(8).toString('hex'),directory=await mkdtemp(join(process.env.RUNNER_TEMP??tmpdir(),'agentci-image-smoke-')),state=await registerImageSmokeState(directory,owner),anonymous={},shutdown=[];let publicDrain,authenticated,runtime,rpmPackages,licenseInventory,scan,stage='prepare',receipt,summary,cancelled=false;
  const cancel=()=>{cancelled=true;};process.on('SIGINT',cancel);process.on('SIGTERM',cancel);const docker=args=>{if(cancelled)throw Error('Native qualification cancelled');return engine(args);};
  const probe=(name,code)=>JSON.parse(docker(['exec',name,'node','--input-type=module','-e',code]));
  try{
@@ -59,6 +60,8 @@ if(process.argv[2]==='source'){
    else{drainControls[mode]=observed;await save('public-drain.json',{result:'incomplete-or-unverified',...drainControls});}
    }catch(error){if(drainProgress.at(-1)?.step!=='failed')await progress(nativeDrainCheckpoint(mode,'failed',{lastObservedStep:drainProgress.at(-1)?.step,failureBoundary}));throw error;}
   }
+  stage='authenticated-characterization';
+  authenticated=await runNativeAuthenticatedCharacterization({engine:(args,options)=>{if(cancelled)throw Error('Native qualification cancelled');return engine(args,options);},image,rawImage,source,owner,directory,save});
   stage='pinned-image-scan';
   const archive=join(directory,'dashboard.tar'),cache=join(directory,'trivy-cache');await mkdir(cache,{mode:0o700});docker(['image','save','--output',archive,image.id]);await chmod(archive,0o644);
   const cacheFs=await statfs(cache);await save('scan-storage.json',{source,imageId:image.id,tmp:{pathClass:'tmp',declaredCapacityBytes:SCANNER_SCRATCH_BYTES,observedAvailableBytes:null,observation:'explicit tmpfs bound; free/used not retained'},cache:{pathClass:'cache',capacityBytes:cacheFs.blocks*cacheFs.bsize,availableBytes:cacheFs.bavail*cacheFs.bsize,usedBytes:(cacheFs.blocks-cacheFs.bfree)*cacheFs.bsize,observation:'statfs of the exact owned bind source before scan'},rawPaths:'withheld'});
@@ -70,6 +73,6 @@ if(process.argv[2]==='source'){
   try{receipt=await cleanupImageSmokeState(state);}catch{receipt={schemaVersion:1,result:'recovery-required-or-unverified',owner,privateState:'retain for owned recovery'};process.exitCode=1;}await save('cleanup.json',receipt);
  }
  await new Promise(r=>setImmediate(r));if(cancelled)process.exitCode=1;process.off('SIGINT',cancel);process.off('SIGTERM',cancel);
- if(!process.exitCode){summary=dashboardNativeSummary({source,arch,image,runtime,anonymous,shutdown,publicDrain,licenseInventory,rpmPackages,scan,cleanup:receipt});await save('result.json',summary);}
+ if(!process.exitCode){summary=dashboardNativeSummary({source,arch,image,runtime,anonymous,shutdown,publicDrain,authenticated,licenseInventory,rpmPackages,scan,cleanup:receipt});await save('result.json',summary);}
 
 }else throw Error('Use source ARCH or qualify OWNED_IMAGE_TAG');

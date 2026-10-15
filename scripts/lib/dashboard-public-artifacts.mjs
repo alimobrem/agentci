@@ -1,8 +1,9 @@
 import {mkdir, mkdtemp, readdir, lstat, readFile, writeFile, rename} from 'node:fs/promises';
 import {join, dirname} from 'node:path';
 import {createHash} from 'node:crypto';
+import {assertPublicAuthenticatedArtifact} from './dashboard-native-authenticated-evidence.mjs';
 
-const allowed = new Set(['source.json','image.json','anonymous.json','shutdown.json','public-drain.json','public-drain-progress.json','runtime-files.json','rpm-inventory.json','scan.json','scan-policy.json','scan-execution-failure.json','scan-storage.json','failure.json','cleanup.json','result.json']);
+const allowed = new Set(['source.json','image.json','anonymous.json','shutdown.json','public-drain.json','public-drain-progress.json','authenticated-drain.json','authenticated-drain-progress.json','runtime-files.json','rpm-inventory.json','scan.json','scan-policy.json','scan-execution-failure.json','scan-storage.json','failure.json','cleanup.json','result.json']);
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 export async function publishDashboardArtifacts(staging, destination, {maxBytes=32*1024*1024, maxFiles=10000, recovery}={}) {
   // Uploads see only a completed, bounded publication directory. Staging is never uploaded.
@@ -20,6 +21,11 @@ export async function publishDashboardArtifacts(staging, destination, {maxBytes=
         if(!info.isFile()||(!allowed.has(name)&&!name.startsWith('licenses/'))||info.size>maxBytes-total||files.length>=maxFiles) throw Error('Rejected artifact');
         const bytes=await readFile(path);
         if(bytes.length!==info.size||bytes.length>maxBytes-total) throw Error('Changed artifact');
+        if(name==='authenticated-drain.json'||name==='authenticated-drain-progress.json'){
+          const value=JSON.parse(bytes.toString('utf8'));assertPublicAuthenticatedArtifact(name,value);
+          // Only serializer-produced JSON is copied. Parsed validation alone cannot detect an overwritten private duplicate key.
+          if(!bytes.equals(Buffer.from(JSON.stringify(value)+'\n'))&&!bytes.equals(Buffer.from(JSON.stringify(value,null,2)+'\n')))throw Error('Rejected noncanonical authenticated artifact');
+        }
         total+=bytes.length;
         await mkdir(dirname(join(temporary,name)),{recursive:true});
         await writeFile(join(temporary,name),bytes);

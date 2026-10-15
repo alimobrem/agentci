@@ -16,3 +16,26 @@ export const dashboardShutdownSourceProbe=String.raw`
 import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import {createRequire} from 'node:module';
 const require=createRequire('/app/apps/dashboard/package.json'),handler=require.resolve('next/dist/server/lib/start-server'),pkg=require('next/package.json');if(!handler.startsWith('/app/'))throw Error('Framework source outside final app');
 console.log(JSON.stringify({nextVersion:pkg.version,handlerPath:path.relative('/app',handler),handlerSha256:crypto.createHash('sha256').update(fs.readFileSync(handler)).digest('hex'),node:process.version,pid1Executable:fs.readlinkSync('/proc/1/exe'),pid1ExecutableSha256:crypto.createHash('sha256').update(fs.readFileSync('/proc/1/exe')).digest('hex'),probeNodeExecutableSha256:crypto.createHash('sha256').update(fs.readFileSync(process.execPath)).digest('hex'),pid1Command:fs.readFileSync('/proc/1/cmdline','utf8').split('\0').filter(Boolean),pid1Uid:Number(fs.readFileSync('/proc/1/status','utf8').match(/^Uid:\s+(\d+)/m)?.[1]),manualSignalOverride:process.env.NEXT_MANUAL_SIG_HANDLE!==undefined,nodeOptionsOverride:process.env.NODE_OPTIONS!==undefined,nodePathOverride:process.env.NODE_PATH!==undefined}));`;
+/** Pure selected-name projection, also embedded verbatim into the final-image probe. */
+export function dashboardTrustEnvironmentProjection(environment){
+ const unsupported=/^(?:NODE_(?:OPTIONS|PATH|TLS_REJECT_UNAUTHORIZED|USE_SYSTEM_CA|USE_OPENSSL_CA|USE_BUNDLED_CA|USE_ENV_PROXY|REDIRECT_WARNINGS)|NEXT_MANUAL_SIG_HANDLE|SSL_CERT_(?:FILE|DIR)|OPENSSL_(?:CONF|MODULES)|SSLKEYLOGFILE|CURL_CA_BUNDLE|REQUESTS_CA_BUNDLE|(?:HTTP|HTTPS|ALL|NO)_PROXY|GLOBAL_AGENT_.*|npm_config_(?:proxy|https_proxy|noproxy|cafile|strict_ssl))$/i;
+ return {extraCaConfigured:environment.NODE_EXTRA_CA_CERTS!==undefined,extraCaPathMatchesFixture:environment.NODE_EXTRA_CA_CERTS==='/run/agentci-fixture-ca.pem',unsupportedTrustEnvironmentNames:Object.keys(environment).filter(key=>unsupported.test(key)).sort()};
+}
+/** Mount observations expose only facts about the two fixed allowed destinations. */
+export function dashboardTrustMountProjection(text,stats){
+ if(typeof text!=='string'||Buffer.byteLength(text)>1024*1024)throw Error('Mount observation bound');
+ const selected={ca:[],tmp:[]};
+ for(const line of text.split('\n')){const parts=line.split(' - ');if(parts.length!==2)continue;const before=parts[0].split(' '),after=parts[1].split(' '),destination=before[4];if(destination==='/run/agentci-fixture-ca.pem')selected.ca.push({options:before[5].split(',')});if(destination==='/tmp')selected.tmp.push({options:before[5].split(','),type:after[0]});}
+ if(selected.ca.length>1||selected.tmp.length!==1)throw Error('Ambiguous fixed mount observation');
+ const ca=selected.ca[0],tmp=selected.tmp[0],bytes=Number(stats?.bsize)*Number(stats?.blocks);
+ if(!Number.isSafeInteger(bytes)||bytes<0||Number(stats?.type)!==0x01021994)throw Error('Fixed tmpfs observation unavailable');
+ return {caMount:{present:!!ca,readOnly:!!ca&&ca.options.includes('ro')&&!ca.options.includes('rw')},tmpfs:{filesystem:tmp.type==='tmpfs'?'tmpfs':'other',sizeBytes:bytes,noexec:tmp.options.includes('noexec'),nosuid:tmp.options.includes('nosuid'),nodev:tmp.options.includes('nodev'),writable:tmp.options.includes('rw')&&!tmp.options.includes('ro')}};
+}
+/** Inspect only a fixed public certificate and selected override names; never emit config, environment values or certificate bytes. */
+export const dashboardAuthenticatedTrustProbe=String.raw`
+import fs from 'node:fs';import crypto from 'node:crypto';
+const file='/run/agentci-fixture-ca.pem',projection=${dashboardTrustEnvironmentProjection.toString()},mountProjection=${dashboardTrustMountProjection.toString()};
+let fixtureCa=null;
+try{const info=fs.lstatSync(file);if(!info.isFile()||info.isSymbolicLink()||info.size<1||info.size>8192)throw Error('Public fixture certificate boundary');const bytes=fs.readFileSync(file);if(bytes.length!==info.size)throw Error('Public fixture certificate changed');const text=bytes.toString('utf8');if(!/^-----BEGIN CERTIFICATE-----\r?\n[A-Za-z0-9+/=\r\n]+\r?\n-----END CERTIFICATE-----\s*$/.test(text))throw Error('Public fixture certificate only');const cert=new crypto.X509Certificate(bytes);if(!cert.ca)throw Error('Public fixture CA required');fixtureCa={sha256:crypto.createHash('sha256').update(bytes).digest('hex'),bytes:bytes.length,certificateOnly:true,ca:true,validFrom:cert.validFrom,validTo:cert.validTo};}catch(error){if(error.code!=='ENOENT')throw Error('Public fixture certificate observation failed');}
+const mounts=mountProjection(fs.readFileSync('/proc/self/mountinfo','utf8'),fs.statfsSync('/tmp'));
+console.log(JSON.stringify({...projection(process.env),...mounts,fixtureCa}));`;
