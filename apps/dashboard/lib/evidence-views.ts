@@ -1,0 +1,14 @@
+import type {AgentCIClient,ModelReviewExportFrame} from 'agentci/client';
+type Semantic=Awaited<ReturnType<AgentCIClient['evidence']>>;
+type Comparison=Awaited<ReturnType<AgentCIClient['evalComparison']>>;
+type Reviewer=Extract<ModelReviewExportFrame,{type:'reviewer'}>['data'];
+export function semanticView(record:Semantic){return {availability:'retained' as const,id:record.id,digest:record.digest,analysis:record.analysis};}
+export function comparisonView(record:Comparison){const c=record.comparison;return {availability:'retained' as const,id:record.id,digest:record.digest,reviewId:c.reviewId,attemptId:c.attemptId,state:c.summary.state,outcome:c.summary.outcome,paired:c.summary.comparisons,coverageGaps:c.coverageGaps,selectionGaps:c.selectionGaps,executionGaps:c.summary.executionGaps,suiteChanges:c.suiteChanges,units:c.units.map(u=>({id:u.id,suite:u.suite,revision:u.revision,side:u.side,assertionSide:u.assertionSide,model:u.model,status:u.status,trials:u.trials,passRate:u.passRate,maxCriticalFailures:u.maxCriticalFailures,scenarios:u.result?.scenarios.map(s=>({id:s.id,status:s.status,passed:s.passed,failed:s.failed,errors:s.errors,skipped:s.skipped,criticalFailures:s.criticalFailures,passRate:s.passRate,confidenceInterval:s.confidenceInterval}))??[]}))};}
+export function reviewerView({result:r,digest}:Reviewer){
+ const output=r.proposal?.output as {findings?:unknown[]}|undefined;
+ const claims=(Array.isArray(output?.findings)?output.findings:[]).map(value=>{const f=value as {category:string;severity:string;claim:string;evidence:unknown[]};return {category:f.category,severity:f.severity,claim:f.claim,evidence:f.evidence};});
+ // Deliberately omit provider text, prompts, configuration and usage envelopes.
+ return {role:r.role,provider:r.provider,model:r.model,status:r.status,mode:r.mode,requestId:r.requestId,attemptId:r.attemptId,contextDigest:r.contextDigest,digest,claims};
+}
+export type EvidenceViews={intent:{availability:'unavailable';reason:string};semantic:ReturnType<typeof semanticView>|{availability:'unavailable';reason:string};comparison:ReturnType<typeof comparisonView>|{availability:'unavailable';reason:string};reviewers:{availability:'unavailable';reason:string}|{availability:'verified-complete';snapshotDigest:string;endDigest:string;missingRoles:{requestId:string;role:string}[];items:ReturnType<typeof reviewerView>[];semanticAgreement:'not-established'}};
+export function unavailableViews():EvidenceViews{return {intent:{availability:'unavailable',reason:'No retained intent-analysis contract is available.'},semantic:{availability:'unavailable',reason:'Retained semantic evidence or its trusted binding is unavailable.'},comparison:{availability:'unavailable',reason:'Retained comparison or its trusted comparison/attempt bindings are unavailable.'},reviewers:{availability:'unavailable',reason:'Complete retained reviewer export is unverified; missing or partial roles do not establish consensus.'}};}

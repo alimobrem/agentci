@@ -1,3 +1,4 @@
+import type {ResponseReadBudget} from './read-budget.ts';
 import {validateFindingDispositionRequest,operatorDispositionReceipt,operatorDispositionReceiptId,type FindingDispositionRequest} from '../findings/disposition-transport.ts';
 import {validateFindingReproductionRequest,type FindingReproductionRequest,validateFindingReproductionAccepted,validateFindingReproductionStatus,validateFindingReproductionCancellation,type ReproductionReference,type FindingReproductionStatus,type FindingReproductionCancellation} from '../findings/reproduction-transport.ts';
 import {setTimeout as delay} from 'node:timers/promises';
@@ -26,6 +27,7 @@ export interface ModelReviewClientOptions {
   maxAttempts?: number;
   /** Aggregate consumed response-body byte budget across every read on this instance. */
   maxReadBytes?: number;
+  readBudget?:ResponseReadBudget;
 }
 const failures: Record<number, readonly string[]> = {
   400: ['invalid-request', 'invalid-cursor'], 401: ['unauthorized'], 403: ['forbidden', 'review-denied','reproduction-denied'],
@@ -46,6 +48,7 @@ export class ModelReviewClient {
   #maxAttempts: number;
   #maxReadBytes?:number;
   #readBytes=0;
+  #sharedReadBudget?:ResponseReadBudget;
   #readBudgetController=new AbortController();
   constructor(options: ModelReviewClientOptions) {
     try {
@@ -64,11 +67,13 @@ export class ModelReviewClient {
     if (!Number.isSafeInteger(this.#maxAttempts) || this.#maxAttempts < 1 || this.#maxAttempts > 3) throw new AgentCIError('invalid-attempts');
     if(options.maxReadBytes!==undefined&&(!Number.isSafeInteger(options.maxReadBytes)||options.maxReadBytes<1||options.maxReadBytes>MAX_MODEL_EXPORT_BYTES))throw new AgentCIError('invalid-request');
     this.#maxReadBytes=options.maxReadBytes;
+    if(options.readBudget!==undefined&&typeof options.readBudget.consume!=='function')throw new AgentCIError('invalid-request');
+    this.#sharedReadBudget=options.readBudget;
   }
   private admission(value: unknown): ReviewAdmissionRequest {
     try {return validateReviewAdmission(value);} catch {throw new AgentCIError('invalid-request');}
   }
-  private consumeReadBytes(size:number){if(this.#maxReadBytes!==undefined){this.#readBytes+=size;if(this.#readBytes>this.#maxReadBytes){this.#readBudgetController.abort();throw new AgentCIError('response-too-large');}}}
+  private consumeReadBytes(size:number){try{this.#sharedReadBudget?.consume(size);}catch(error){this.#readBudgetController.abort();throw error;}if(this.#maxReadBytes!==undefined){this.#readBytes+=size;if(this.#readBytes>this.#maxReadBytes){this.#readBudgetController.abort();throw new AgentCIError('response-too-large');}}}
   private async body(response: Response, maximum: number, read=false): Promise<unknown> {
     if (!/^application\/json(?:;|$)/i.test(response.headers.get('content-type') ?? '')) {
       await response.body?.cancel(); throw new AgentCIError('invalid-response');
