@@ -4100,6 +4100,35 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M3-dashboard-intent-contract",
+      "title": "Retain exact-subject declared intent and display it through authorized bounded reads",
+      "requirementIds": [
+        "SPEC-33.1-002",
+        "SPEC-40-015",
+        "SPEC-40-020"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-15T14:05:55.282Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Separate immutable versioned intent contract, source binding, authenticated API/client and storage roundtrip preserve legacy digests and reject conflicting identity/content",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Dashboard renders declared intent safely even without completed summary and cancels bounded reads across session/navigation changes",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Exact committed archive reconciliation, full hosted CI and independent review pass; M3 qualifications remain open",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

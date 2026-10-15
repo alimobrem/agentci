@@ -1,3 +1,5 @@
+import {validateIntentRecord,type IntentRecord,type IntentSubject} from '../review/intent.ts';
+export type {IntentRecord,IntentSubject} from '../review/intent.ts';
 import type {ResponseReadBudget} from './read-budget.ts';
 export type {ResponseReadBudget} from './read-budget.ts';
 import {equalUuid} from '../identity/uuid.ts';
@@ -54,6 +56,11 @@ export class AgentCIClient {
     const value = await this.get('/readyz', false);
     if (!value || value.status !== 'ready' || Object.keys(value).length !== 1) throw new AgentCIError('invalid-response');
     return value;
+  }
+  async intent(id:string,expected:IntentSubject&{digest:string},options:{signal?:AbortSignal}={}):Promise<IntentRecord|undefined>{
+    if(!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(id)||!/^sha256:[a-f0-9]{64}$/.test(expected.digest))throw new AgentCIError('invalid-request');
+    let value;try{value=await this.get(`/v1/evidence/${id}/intent`,true,options.signal);}catch(error){if(error instanceof AgentCIError&&error.status===404)return undefined;throw error;}
+    try{return validateIntentRecord(value,{...expected,reviewId:id});}catch{throw new AgentCIError('invalid-intent');}
   }
   async evidence(id: string, expected: ReviewIdentity, options:{signal?:AbortSignal}={}): Promise<EvidenceRecord> {
     if (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(id)) throw new AgentCIError('invalid-evidence-id');

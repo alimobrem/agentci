@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "v1alpha1",
+  "reviewId": "11111111-1111-4111-8111-111111111111",
+  "subject": {
+    "organizationId": "00000000-0000-4000-8000-000000000001",
+    "repository": "example/repo",
+    "pullRequest": 7,
+    "baseSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "headSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "summary": "Synthetic declared intent fixture; not execution evidence.",
+  "classification": "asserted",
+  "source": {
+    "kind": "repository-declaration",
+    "path": ".agentci/intent.json",
+    "gitSha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "blobSha": "f99f77c095740d44f09b273c5197b8c2f7f3be4d",
+    "contentDigest": "sha256:35c5351e68bac791d0e54f96345098c8430d21c8dc20983d7da721bfbb0cb69b",
+    "bytes": 99,
+    "content": "{\"schemaVersion\":\"v1alpha1\",\"summary\":\"Synthetic declared intent fixture; not execution evidence.\"}"
+  },
+  "producer": {
+    "name": "agentci",
+    "version": "0.4.0-m3-dev.4"
+  },
+  "digest": "sha256:1c321d7039e21c1ecc4c289f9d2e5a49b121d252c4dcb98bb7cc67d3b111fd4f"
+}

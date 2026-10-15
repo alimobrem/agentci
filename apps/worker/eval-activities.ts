@@ -82,6 +82,7 @@ export function createEvalReviewActivities(client:Octokit,store:Store,evals:Eval
         const base=await readSnapshot(job.repository,job.baseSha),head=await readSnapshot(job.repository,job.headSha);
         const plan=planComparison({repository:job.repository,base,head}),units=compileEvalUnits(plan,base,head,policy);
         const review=await store.save(plan.analysis,job.pullRequest);
+        await store.saveIntent(review,head);
         const comparison=await evals.stage(review.id,attemptId,base,head,units,{suiteChanges:plan.suiteChanges,coverageGaps:plan.coverageGaps,selectionGaps:plan.selectionGaps});
         return {reviewId:review.id,comparisonId:comparison.id,unitIds:comparison.unitIds};
       }catch(error){

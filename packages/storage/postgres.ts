@@ -1,3 +1,6 @@
+import {retainIntent} from './intent.ts';
+import {validateIntentRecord,INTENT_PATH,type IntentRecord} from '../review/intent.ts';
+import type {Snapshot} from '../review/types.ts';
 import { Pool } from 'pg';
 import { randomUUID } from 'node:crypto';
 import { canonical, digest } from '../review/engine.ts';
@@ -68,6 +71,18 @@ export class Store {
     const record = inserted.rows[0] ?? (await this.pool.query('SELECT id,digest,evidence,analysis FROM agentci_reviews WHERE repository=$1 AND pull_request=$2 AND base_sha=$3 AND head_sha=$4', [analysis.repository, pullRequest, analysis.baseSha, analysis.headSha])).rows[0];
     if (record.digest !== hash) throw new Error('Immutable evidence conflict');
     return record;
+  }
+  async saveIntent(evidence:EvidenceRecord,head:Snapshot){
+    if(!Object.hasOwn(head.files,INTENT_PATH))return undefined;
+    const captured={sha:head.sha,files:{[INTENT_PATH]:head.files[INTENT_PATH]!}},expected=structuredClone(evidence),saved=await this.evidence(expected.id);
+    if(!saved||canonical(saved)!==canonical(expected))throw Error('intent-identity-mismatch');
+    return retainIntent(this.pool,this.organizationId,this.repository,saved,captured);
+  }
+  async intent(id:string):Promise<IntentRecord|undefined>{
+    const evidence=await this.evidence(id);if(!evidence)return;
+    const row=(await this.pool.query('SELECT record,digest FROM agentci_review_intents WHERE review_id=$1 AND organization_id=$2 AND repository=$3',[id,this.organizationId,this.repository])).rows[0];
+    if(!row)return;
+    return validateIntentRecord(row.record,{reviewId:evidence.id,organizationId:this.organizationId,repository:this.repository,pullRequest:evidence.evidence.subject.pullRequest,baseSha:evidence.analysis.baseSha,headSha:evidence.analysis.headSha,digest:row.digest});
   }
   async evidence(id: string): Promise<EvidenceRecord | undefined> {
     const result = await this.pool.query('SELECT id,digest,evidence,analysis FROM agentci_reviews WHERE id=$1 AND repository=$2', [id, this.repository]);

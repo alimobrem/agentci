@@ -1,3 +1,4 @@
+import {validateIntentRecord} from '../packages/review/intent.ts';
 import {reproductionOpenApiSchemas} from '../packages/findings/reproduction-transport-schema.ts';
 import {modelReviewExportOpenApiSchemas} from '../packages/reviewers/export-schema.ts';
 import {ModelReviewExportVerifier} from '../packages/reviewers/export.ts';
@@ -13,6 +14,9 @@ import {validateExportFrame} from '../packages/evals/export.ts';
 await SwaggerParser.validate(new URL('../specs/api/openapi.json', import.meta.url).pathname);
 const contract = JSON.parse(await readFile(new URL('../specs/api/openapi.json', import.meta.url), 'utf8'));
 for(const [name,schema] of Object.entries({...modelReviewOpenApiSchemas,...findingOpenApiSchemas,...modelReviewExportOpenApiSchemas,...reproductionOpenApiSchemas}))deepStrictEqual(contract.components.schemas[name],schema,`API transport schema drift: ${name}`);
+const {$schema:intentSchemaVersion,...intentSchema}=JSON.parse(await readFile(new URL('../packages/review/intent.schema.json',import.meta.url),'utf8'));
+deepStrictEqual(contract.components.schemas.IntentRecord,intentSchema,'API and intent schema drift');
+validateIntentRecord(JSON.parse(await readFile(new URL('../specs/api/fixtures/review-intent.json',import.meta.url),'utf8')));
 const { $schema, ...analysis } = JSON.parse(await readFile(new URL('../packages/review/analysis.schema.json', import.meta.url), 'utf8'));
 deepStrictEqual(contract.components.schemas.Analysis, analysis, 'API and domain analysis schemas must not drift');
 deepStrictEqual(contract.components.schemas.EvalComparison,evalOpenApiSchema(JSON.parse(await readFile(new URL('../packages/evals/json/eval-comparison.schema.json',import.meta.url),'utf8'))),'API and domain comparison schemas must not drift');

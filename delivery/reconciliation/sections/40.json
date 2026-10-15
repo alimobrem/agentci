@@ -940,6 +940,31 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-dashboard-intent-contract",
+          "status": "in-progress",
+          "startedAt": "2026-10-15T14:05:55.282Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Separate immutable versioned intent contract, source binding, authenticated API/client and storage roundtrip preserve legacy digests and reject conflicting identity/content",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Dashboard renders declared intent safely even without completed summary and cancels bounded reads across session/navigation changes",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Exact committed archive reconciliation, full hosted CI and independent review pass; M3 qualifications remain open",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -947,7 +972,7 @@
           "operationId": "healthz",
           "path": "/healthz",
           "map": "specs/api/operations.json",
-          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
+          "mapDigest": "55e375538965a16a073664991f7e8dff108fcc11602bcdb8f5a9a63b1a94e93f",
           "tests": [
             "tests/control-api.test.ts"
           ],
@@ -959,7 +984,7 @@
           "operationId": "readyz",
           "path": "/readyz",
           "map": "specs/api/operations.json",
-          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
+          "mapDigest": "55e375538965a16a073664991f7e8dff108fcc11602bcdb8f5a9a63b1a94e93f",
           "tests": [
             "tests/control-api.test.ts",
             "tests/client.test.ts"
@@ -974,7 +999,7 @@
           "operationId": "ingestGitHubWebhook",
           "path": "/v1/webhooks/github",
           "map": "specs/api/operations.json",
-          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
+          "mapDigest": "55e375538965a16a073664991f7e8dff108fcc11602bcdb8f5a9a63b1a94e93f",
           "tests": [
             "tests/control-api.test.ts",
             "tests/integration/m1.test.ts"
@@ -998,7 +1023,7 @@
       "evidence": [
         {
           "path": "apps/control/server.ts",
-          "sha256": "5f5db7ac40485b0d378f7cacfd91154deb367fbb5c2b83dad6172139bf34c1e5",
+          "sha256": "78ddefc7ea17e8f472309afb53749faaee3de8c86ca0035ce181d2b47a1ee99f",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -1457,7 +1482,7 @@
         },
         {
           "path": "apps/worker/activities.ts",
-          "sha256": "26dfc120b1ff9a0a137a61f081bee0a5230076f96163ee8b30be5ef71aca66ae",
+          "sha256": "22cc3373977d852655f2929f457d6c1df9c5e6f142186914b77dd767f7c696fb",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -1634,6 +1659,31 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-dashboard-intent-contract",
+          "status": "in-progress",
+          "startedAt": "2026-10-15T14:05:55.282Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Separate immutable versioned intent contract, source binding, authenticated API/client and storage roundtrip preserve legacy digests and reject conflicting identity/content",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Dashboard renders declared intent safely even without completed summary and cancels bounded reads across session/navigation changes",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Exact committed archive reconciliation, full hosted CI and independent review pass; M3 qualifications remain open",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -1641,7 +1691,7 @@
           "operationId": "getEvidence",
           "path": "/v1/evidence/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
+          "mapDigest": "55e375538965a16a073664991f7e8dff108fcc11602bcdb8f5a9a63b1a94e93f",
           "tests": [
             "tests/control-api.test.ts",
             "tests/integration/m1.test.ts",
@@ -1654,19 +1704,37 @@
             "unsupported method",
             "Agent client consumes the contracted operation; evidence checks exact identity and canonical digest"
           ]
+        },
+        {
+          "operationId": "getReviewIntent",
+          "path": "/v1/evidence/{id}/intent",
+          "map": "specs/api/operations.json",
+          "mapDigest": "55e375538965a16a073664991f7e8dff108fcc11602bcdb8f5a9a63b1a94e93f",
+          "tests": [
+            "tests/intent.test.ts",
+            "tests/integration/intent-storage.test.ts"
+          ],
+          "scenarios": [
+            "exact scoped immutable declared intent and original byte/blob/content/digest binding",
+            "authorization precedes ID lookup; missing capture unavailable; query and malformed identity rejected",
+            "all identity/digest/source corruption and oversized UTF8 fail closed",
+            "genuine PostgreSQL/API/SDK roundtrip, idempotent duplicate, immutable conflict and old evidence digest unchanged"
+          ]
         }
       ],
       "testReferences": [
         "tests/control-api.test.ts",
         "tests/integration/m1.test.ts",
         "tests/client.test.ts",
+        "tests/intent.test.ts",
+        "tests/integration/intent-storage.test.ts",
         "tests/dogfood.test.ts"
       ],
       "plannedPRs": [],
       "evidence": [
         {
           "path": "packages/storage/postgres.ts",
-          "sha256": "4fdb27d83748153de8e1a63ff14dd399a025d0ebcefbc0b9b508ed2851bdc797",
+          "sha256": "23ab32b2e725465d728e6d0d83b850053729e9163e123442a331fa9b71878ccd",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -3520,7 +3588,7 @@
           "operationId": "getEvalComparison",
           "path": "/v1/eval-comparisons/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
+          "mapDigest": "55e375538965a16a073664991f7e8dff108fcc11602bcdb8f5a9a63b1a94e93f",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/integration/eval-storage.test.ts"
@@ -3540,7 +3608,7 @@
           "operationId": "exportEvalComparison",
           "path": "/v1/eval-comparisons/{id}/export",
           "map": "specs/api/operations.json",
-          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
+          "mapDigest": "55e375538965a16a073664991f7e8dff108fcc11602bcdb8f5a9a63b1a94e93f",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/eval-export.test.ts",
@@ -5066,7 +5134,7 @@
           "operationId": "getEvalComparison",
           "path": "/v1/eval-comparisons/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
+          "mapDigest": "55e375538965a16a073664991f7e8dff108fcc11602bcdb8f5a9a63b1a94e93f",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/integration/eval-storage.test.ts"
@@ -5086,7 +5154,7 @@
           "operationId": "exportEvalComparison",
           "path": "/v1/eval-comparisons/{id}/export",
           "map": "specs/api/operations.json",
-          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
+          "mapDigest": "55e375538965a16a073664991f7e8dff108fcc11602bcdb8f5a9a63b1a94e93f",
           "tests": [
             "tests/eval-comparison-api.test.ts",
             "tests/eval-export.test.ts",
@@ -5910,7 +5978,7 @@
           "operationId": "getFindingReproduction",
           "path": "/v1/finding-reproductions/{id}",
           "map": "specs/api/operations.json",
-          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
+          "mapDigest": "55e375538965a16a073664991f7e8dff108fcc11602bcdb8f5a9a63b1a94e93f",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
             "tests/reproduction-transport.test.ts",
@@ -5931,7 +5999,7 @@
           "operationId": "cancelFindingReproduction",
           "path": "/v1/finding-reproductions/{id}/cancellation",
           "map": "specs/api/operations.json",
-          "mapDigest": "0afdf9bac3d05b03d25c65e6f32590a0e4a6f3cae671c1afbc1168a54bb1b33e",
+          "mapDigest": "55e375538965a16a073664991f7e8dff108fcc11602bcdb8f5a9a63b1a94e93f",
           "tests": [
             "tests/integration/reproduction-http.test.ts",
             "tests/reproduction-transport.test.ts",
