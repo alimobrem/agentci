@@ -1,7 +1,12 @@
 const hash=value=>typeof value==='string'&&/^[a-f0-9]{64}$/.test(value);
 const fail=()=>{throw Error('Dashboard native evidence does not match the exact source/runtime contract');};
+export async function retainDashboardShutdown(receipts, record, save) {
+ receipts.push({...record});
+ await save('shutdown.json',receipts);
+ if(record.exitCode!==0||record.running!==false||record.oomKilled!==false)throw Error('Unclean dashboard shutdown');
+}
 export function validateDashboardImage(image,expected){
- if(image?.Os!=='linux'||image.Architecture!==expected.arch||!/^sha256:[a-f0-9]{64}$/.test(image.Id)||!['1001','1001:0'].includes(image.Config?.User)||JSON.stringify(image.Config?.Cmd)!==JSON.stringify(['node','apps/dashboard/server.js']))fail();
+ if((image?.Config?.Entrypoint!=null&&JSON.stringify(image.Config.Entrypoint)!=='[]')||image?.Os!=='linux'||image.Architecture!==expected.arch||!/^sha256:[a-f0-9]{64}$/.test(image.Id)||!['1001','1001:0'].includes(image.Config?.User)||JSON.stringify(image.Config?.Cmd)!==JSON.stringify(['node','apps/dashboard/server.js']))fail();
  const labels=image.Config.Labels??{};
  for(const [key,value] of [['org.opencontainers.image.revision',expected.sourceCommit],['org.agentci.dashboard.lock-sha256',expected.dashboardLockSha256],['org.agentci.root.lock-sha256',expected.rootLockSha256],['org.agentci.dashboard.version',expected.dashboardVersion]])if(labels[key]!==value)fail();
  const env=(image.Config.Env??[]).map(v=>v.split('=')[0]);if(env.some(k=>/^(?:AGENTCI_DASHBOARD_CONFIG|NEXT_PUBLIC_|NODE_OPTIONS$|NODE_PATH$|GITHUB_|AGENTCI_(?:EVIDENCE|OPERATOR)_TOKEN)/.test(k)))fail();
@@ -18,7 +23,7 @@ export function validateDashboardAnonymous(record,mode){
 }
 export function validateDashboardContainer(record,image,owner){
  const h=record?.HostConfig,c=record?.Config;
- if(record?.Image!==image.id||c?.Labels?.['agentci.image-smoke.owner']!==owner||!['1001','1001:0'].includes(c.User)||h?.NetworkMode!=='none'||h.ReadonlyRootfs!==true||!h.CapDrop?.includes('ALL')||!h.SecurityOpt?.includes('no-new-privileges')||h.PidsLimit!==128||h.Memory!==512*1024*1024||h.NanoCpus!==1000000000||(record.Mounts??[]).some(m=>m.Type!=='tmpfs'||m.Destination!=='/tmp'))fail();
+ if(record?.Image!==image.id||c?.Labels?.['agentci.image-smoke.owner']!==owner||!['1001','1001:0'].includes(c.User)||h?.NetworkMode!=='none'||h.ReadonlyRootfs!==true||!h.CapDrop?.includes('ALL')||(h.CapAdd!=null&&(!Array.isArray(h.CapAdd)||h.CapAdd.length!==0))||h.Privileged!==false||!h.SecurityOpt?.includes('no-new-privileges')||h.PidsLimit!==128||h.Memory!==512*1024*1024||h.NanoCpus!==1000000000||(record.Mounts??[]).some(m=>m.Type!=='tmpfs'||m.Destination!=='/tmp'))fail();
  return {imageId:record.Image,user:c.User,network:h.NetworkMode,readOnly:h.ReadonlyRootfs,capabilitiesDropped:true,noNewPrivileges:true,pids:h.PidsLimit,memoryBytes:h.Memory,nanoCpus:h.NanoCpus,credentialOrSocketMounts:0};
 }
 export function dashboardNativeSummary({source,arch,image,runtime,anonymous,shutdown,licenseInventory,rpmPackages,scan,cleanup}){

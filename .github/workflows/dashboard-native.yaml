@@ -20,6 +20,8 @@ on:
       - scripts/check-scan.mjs
       - .github/workflows/dashboard-native.yaml
   workflow_dispatch:
+env:
+  DOCKER_BUILD_RECORD_UPLOAD: "false"
 permissions:
   contents: read
 concurrency:
@@ -74,6 +76,9 @@ jobs:
         env:
           AGENTCI_IMAGE_SMOKE_OUTCOME: ${{ steps.runtime.outcome }}
         run: node scripts/image-smoke-cleanup.mjs
+      - name: Publish only bounded allowlisted public evidence
+        if: always()
+        run: node scripts/dashboard-public-artifacts.mjs
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
         with:
@@ -81,6 +86,4 @@ jobs:
           retention-days: 7
           include-hidden-files: true
           if-no-files-found: error
-          path: |
-            .agentci/artifacts/dashboard-native/
-            .agentci/artifacts/image-smoke-cleanup.json
+          path: .agentci/artifacts/dashboard-native-public/

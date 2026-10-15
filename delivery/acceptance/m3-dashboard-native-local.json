@@ -5,18 +5,18 @@
   "files": [
     {
       "path": ".github/workflows/dashboard-native.yaml",
-      "bytes": 3379,
-      "sha256": "bc5646d6b91147f6e69929b844411e1d8292c27a65ddad4fadc1223e37da7ae4"
+      "bytes": 3500,
+      "sha256": "3974b3866deaf29326a202b593af70c1653079213646cf7bf72b620acbec1b9c"
     },
     {
       "path": "scripts/dashboard-native-acceptance.mjs",
-      "bytes": 11007,
-      "sha256": "68decdbe44c337d4e5dbebd2a7e841862edbf7efe871430812e5764a04810ecd"
+      "bytes": 10260,
+      "sha256": "7f6911968e97947b63ad26c48821b9be350f4e55e9b5a1bde819496a59de142d"
     },
     {
       "path": "scripts/lib/dashboard-native-evidence.mjs",
-      "bytes": 4436,
-      "sha256": "d70272cd8bff00ab083aaacfa3af537885a1fc4430d8300f138e1201c44951ed"
+      "bytes": 4867,
+      "sha256": "91ab91373283c020e25e898e3db4f82db232ac671c0c5b28b09c5d76ab11b64f"
     },
     {
       "path": "scripts/lib/dashboard-native-probes.mjs",
@@ -25,8 +25,23 @@
     },
     {
       "path": "tests/dashboard-native-evidence.test.ts",
-      "bytes": 5340,
-      "sha256": "4748a88fd26913a06eb32ac4b226b3985bc45cbc82fcd469d428df9fe0eb09f5"
+      "bytes": 6065,
+      "sha256": "e8c4de2cf8baf68352fc70b133dacd3bea265d20cb7683fa43d91ba8feab16b1"
+    },
+    {
+      "path": "scripts/dashboard-public-artifacts.mjs",
+      "bytes": 362,
+      "sha256": "e629358f3b32754bff927b31392387e69ca025d4a949481fe766d5d55bf64ca5"
+    },
+    {
+      "path": "scripts/lib/dashboard-public-artifacts.mjs",
+      "bytes": 2911,
+      "sha256": "79aa6259f5419a9f3681e241109e280af33873ab2cb3d8763ada19f427926f64"
+    },
+    {
+      "path": "tests/dashboard-public-artifacts.test.ts",
+      "bytes": 2719,
+      "sha256": "bbe454235151061211215d1081e457173bb7ea3954f4f0b3632a694a223901e1"
     }
   ],
   "local": {
@@ -34,21 +49,22 @@
     "platform": "darwin",
     "arch": "arm64",
     "focused": {
-      "tests": 18,
-      "passed": 18,
+      "tests": 14,
+      "passed": 14,
       "failed": 0,
-      "skipped": 0
+      "skipped": 0,
+      "scope": "Native validators, retained failed shutdown states and public artifact failure boundary; original13 packaging checks unchanged."
     },
     "types": "passed",
     "workflows": "passed",
     "generatedProbeSyntax": "passed",
     "fast": {
-      "tests": 593,
-      "passed": 578,
+      "tests": 601,
+      "passed": 586,
       "failed": 9,
       "skipped": 6,
       "otherStagesPassed": 9,
-      "qualification": "Previously reproduced Mac platform failures; no waiver."
+      "qualification": "Existing nine Mac/Linux/native/reporter qualification failures; sandbox-denied first run retained separately; final additional shutdown regression passed in focused suite."
     }
   },
   "hosted": {
@@ -73,5 +89,17 @@
     "frozenCandidateAssets": "unchanged",
     "newDeploymentOrCredentials": false,
     "aggregateM3Gates": "all18 pending"
+  },
+  "reviewRepairs": {
+    "boundedUpload": "Only atomic bounded allowlisted public promotion or bounded static failure receipt uploaded; staging excluded. Cap includes manifest.",
+    "dockerBuildRecordUpload": false,
+    "perModeShutdownReceipt": "Persisted before strict exit-zero/OOM/running validation; no exit143 waiver.",
+    "validators": [
+      "No Config.Entrypoint wrapper",
+      "No CapAdd",
+      "Privileged must be false"
+    ],
+    "previousNativeAttempts": "Both architectures failed unconfigured shutdown; recovery passed; previous missing exit/OOM/running cause remains unverified.",
+    "sourceObservation": "Installed Next implementation closes listeners then exits143 on SIGTERM; not proof of previous actual image shutdown state."
   }
 }
