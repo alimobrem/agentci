@@ -4100,6 +4100,31 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M3-dashboard-native-component-notices",
+      "title": "Retain authentic observed-runtime and native component notices with explicit provenance gaps",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-15T14:08:07.417Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Recover only authentic exact-file observed-runtime and exact-version native root notices, bound to archive/runtime/source evidence; retain version discrepancies and all unresolved metadata, notice-completeness and source-obligation qualifications.",
+          "status": "passed",
+          "evidence": [
+            "docs/phases/m3-dashboard-notice-gaps.md"
+          ]
+        },
+        {
+          "text": "Test altered version/source/runtime/notice evidence and existing containment boundaries; pass clean committed-archive reconciliation, exact-head hosted native CI and independent review before merge.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
