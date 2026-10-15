@@ -943,26 +943,32 @@
         },
         {
           "id": "M3-dashboard-intent-contract",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-15T14:05:55.282Z",
-          "completedAt": null,
+          "completedAt": "2026-10-15T15:36:07.260Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Separate immutable versioned intent contract, source binding, authenticated API/client and storage roundtrip preserve legacy digests and reject conflicting identity/content",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+              ]
             },
             {
               "text": "Dashboard renders declared intent safely even without completed summary and cancels bounded reads across session/navigation changes",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+              ]
             },
             {
               "text": "Exact committed archive reconciliation, full hosted CI and independent review pass; M3 qualifications remain open",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+              ]
             }
           ]
         }
@@ -1054,6 +1060,12 @@
         {
           "path": "tests/onboarding.test.ts",
           "sha256": "4a25a2a4ab80b50bc6b7a50ddf8ba2a3084281f22cef7865d4def9a19373d0d1",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dashboard-approved-bundle-completion.json",
+          "sha256": "f5bd1c21f5f87d47deda57db98a92c57286616248f1e9f89f1e47fa8e8e5f746",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -1662,26 +1674,32 @@
         },
         {
           "id": "M3-dashboard-intent-contract",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-15T14:05:55.282Z",
-          "completedAt": null,
+          "completedAt": "2026-10-15T15:36:07.260Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Separate immutable versioned intent contract, source binding, authenticated API/client and storage roundtrip preserve legacy digests and reject conflicting identity/content",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+              ]
             },
             {
               "text": "Dashboard renders declared intent safely even without completed summary and cancels bounded reads across session/navigation changes",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+              ]
             },
             {
               "text": "Exact committed archive reconciliation, full hosted CI and independent review pass; M3 qualifications remain open",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+              ]
             }
           ]
         }
@@ -1783,6 +1801,12 @@
         {
           "path": "releases/m1-onboarding-demo.json",
           "sha256": "f9169c71db05221b362b7e389d99381c2bab577ec52e7b2f8f39f71ffc45a584",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dashboard-approved-bundle-completion.json",
+          "sha256": "f5bd1c21f5f87d47deda57db98a92c57286616248f1e9f89f1e47fa8e8e5f746",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -7278,9 +7302,9 @@
         },
         {
           "id": "M3-dashboard-native-component-notices",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-15T14:08:07.417Z",
-          "completedAt": null,
+          "completedAt": "2026-10-15T15:36:07.701Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
@@ -7293,28 +7317,34 @@
             },
             {
               "text": "Test altered version/source/runtime/notice evidence and existing containment boundaries; pass clean committed-archive reconciliation, exact-head hosted native CI and independent review before merge.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+              ]
             }
           ]
         },
         {
           "id": "M3-dashboard-native-active-drain",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-15T14:08:35.017Z",
-          "completedAt": null,
+          "completedAt": "2026-10-15T15:36:08.348Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Actual default dashboard image on both native architectures holds production public login TLS error-path request through SIGTERM, completes expected403 after loopback socket release, and retains source/runtime/isolation/cleanup-bound proof; authenticated API200 drain remains unverified.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+              ]
             },
             {
-              "text": "Real SIGKILL interrupts held request, unsupported abrupt143 receipts are rejected, and public proof is bounded with no certificates, trust settings, runtime hooks, credentials, host ports or release activation.",
-              "status": "pending",
-              "evidence": []
+              "text": "Real SIGKILL interrupts the held request; the explicitly unsupported abrupt143 negative command is rejected by production validation and the graceful oracle. Public proof is bounded; the production image/default command and positive process use no runtime hooks, certificates, trust changes, real/live credentials, host ports or release activation. The documented negative-only handler command is used solely to demonstrate rejection.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+              ]
             }
           ]
         }
@@ -7629,6 +7659,12 @@
         {
           "path": "docs/phases/m3-dashboard-notice-gaps.md",
           "sha256": "93d902a656f541e7500d3f303a68c071981a2a7c006d6c5fc78f8da03c70a551",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dashboard-approved-bundle-completion.json",
+          "sha256": "f5bd1c21f5f87d47deda57db98a92c57286616248f1e9f89f1e47fa8e8e5f746",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -8837,9 +8873,9 @@
         },
         {
           "id": "M3-dashboard-native-component-notices",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-15T14:08:07.417Z",
-          "completedAt": null,
+          "completedAt": "2026-10-15T15:36:07.701Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
@@ -8852,28 +8888,34 @@
             },
             {
               "text": "Test altered version/source/runtime/notice evidence and existing containment boundaries; pass clean committed-archive reconciliation, exact-head hosted native CI and independent review before merge.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+              ]
             }
           ]
         },
         {
           "id": "M3-dashboard-native-active-drain",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-15T14:08:35.017Z",
-          "completedAt": null,
+          "completedAt": "2026-10-15T15:36:08.348Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Actual default dashboard image on both native architectures holds production public login TLS error-path request through SIGTERM, completes expected403 after loopback socket release, and retains source/runtime/isolation/cleanup-bound proof; authenticated API200 drain remains unverified.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+              ]
             },
             {
-              "text": "Real SIGKILL interrupts held request, unsupported abrupt143 receipts are rejected, and public proof is bounded with no certificates, trust settings, runtime hooks, credentials, host ports or release activation.",
-              "status": "pending",
-              "evidence": []
+              "text": "Real SIGKILL interrupts the held request; the explicitly unsupported abrupt143 negative command is rejected by production validation and the graceful oracle. Public proof is bounded; the production image/default command and positive process use no runtime hooks, certificates, trust changes, real/live credentials, host ports or release activation. The documented negative-only handler command is used solely to demonstrate rejection.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+              ]
             }
           ]
         }
@@ -9188,6 +9230,12 @@
         {
           "path": "docs/phases/m3-dashboard-notice-gaps.md",
           "sha256": "93d902a656f541e7500d3f303a68c071981a2a7c006d6c5fc78f8da03c70a551",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-dashboard-approved-bundle-completion.json",
+          "sha256": "f5bd1c21f5f87d47deda57db98a92c57286616248f1e9f89f1e47fa8e8e5f746",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

@@ -1,0 +1,1080 @@
+{
+  "schemaVersion": 1,
+  "status": "accepted-narrow-task-evidence",
+  "scope": "Canonical evidence for completing only the three named narrow dashboard tasks after source-bound independent review and accepted postmerge receipts. Aggregate M3 and release acceptance remain open.",
+  "canonicalRecordPath": "delivery/acceptance/m3-dashboard-approved-bundle-completion.json",
+  "finalSource": {
+    "sourceCommit": "8c32582080ec3780141c75bab49f46f7618d02ca",
+    "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+    "acceptanceStatus": "exact-head implementation review and final postmerge actual-artifact inspection accepted",
+    "codeUnchangedByThisRecord": true
+  },
+  "preservationBaseline": {
+    "sourceCommit": "8c32582080ec3780141c75bab49f46f7618d02ca",
+    "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+    "taskCount": 174,
+    "requirementCount": 1346,
+    "aggregateM3Gates": {
+      "count": 18,
+      "pending": 18
+    },
+    "files": [
+      {
+        "path": "delivery/tasks.json",
+        "sha256": "052be2f5db51e64229f07a50200b8f15c246750e52b864cfc424ecb54a5dceb3",
+        "bytes": 176352
+      },
+      {
+        "path": "delivery/task-events.jsonl",
+        "sha256": "666ed43792b5f4ad3fcf24a24735847d2bbd47c0fa2741d6697eca7a76a96061",
+        "bytes": 115769
+      },
+      {
+        "path": "specs/requirements.yaml",
+        "sha256": "241e6f1468dd96ab8dda0395b57f7d429b3049aaef835160117b1d854e3415f5",
+        "bytes": 445765
+      },
+      {
+        "path": "releases/m3-gates.json",
+        "sha256": "5922b1a7ddc2cdec873026b8329d35ddb39f5b4a556bfecc2d7accecc45b02c0",
+        "bytes": 3750
+      }
+    ],
+    "oldEventLines": 638,
+    "ciAttemptRecordsTree": "0e13a890a3232b88186a3e2e9f810367accae92c",
+    "rules": [
+      "Retain every original task and its order. Change only selected pending acceptance entries and final task status/completion timestamps, plus the explicit criterion clarification below.",
+      "Preserve the already-passed notice criterion0 evidence unchanged.",
+      "Preserve all existing event bytes as an exact prefix; append six acceptance and three completion observations using the existing delivery CLI.",
+      "Preserve failed/canceled attempts, original startedAt values, source requirement inventory and gate ledger.",
+      "No fabricated or backdated event timestamps and no unrelated intervention or synthetic amendment event."
+    ]
+  },
+  "criterionAmendmentHistory": [
+    {
+      "status": "explicit-clarification-before-CLI-acceptance",
+      "task": "M3-dashboard-native-active-drain",
+      "criterionIndex": 1,
+      "original": {
+        "sourceCommit": "81ecdc858a43b18cbd7b4e334b1fefa0cf075ce9",
+        "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+        "path": "delivery/tasks.json",
+        "text": "Real SIGKILL interrupts held request, unsupported abrupt143 receipts are rejected, and public proof is bounded with no certificates, trust settings, runtime hooks, credentials, host ports or release activation."
+      },
+      "reason": "The original blanket runtime-hooks wording predates the documented unsupported negative-only handler command. Production image/default command and positive process remain hook-free. The negative command exists solely to demonstrate production-validator and graceful-oracle rejection; no production runtime constraint is waived. Owned synthetic canary configuration remains present; the credential exclusion concerns real/live credentials.",
+      "implementationEvidence": {
+        "pullRequest": "https://github.com/alimobrem/agentci/pull/111",
+        "sourceCommit": "81ecdc858a43b18cbd7b4e334b1fefa0cf075ce9",
+        "path": "docs/phases/m3-dashboard-native-active-drain.md"
+      },
+      "eventHandling": "Existing CLI has no amendment transition. Retain exact old text/source and reason here, clarify only this current criterion, then use the supported accept/done events.",
+      "clarifiedText": "Real SIGKILL interrupts the held request; the explicitly unsupported abrupt143 negative command is rejected by production validation and the graceful oracle. Public proof is bounded; the production image/default command and positive process use no runtime hooks, certificates, trust changes, real/live credentials, host ports or release activation. The documented negative-only handler command is used solely to demonstrate rejection."
+    }
+  ],
+  "implementationReceipts": {
+    "notices": {
+      "pullRequest": "https://github.com/alimobrem/agentci/pull/113",
+      "mergeCommit": "677ba7f8fc209c050c33c1e14fd4ad41d794b376",
+      "sourceTree": "7c22401d0e2c7184fba2f19318c571e22fe1df1c",
+      "independentReview": "Coordinating reviewer reported exact-head and actual-artifact clearance before merge.",
+      "postmergeVerify": {
+        "runId": "38752884327",
+        "attempt": 1,
+        "runUrl": "https://github.com/alimobrem/agentci/actions/runs/38752884327",
+        "artifactId": 11982663197,
+        "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38752884327/artifacts/11982663197",
+        "zipSha256": "48b73a2fae0f14a7beb17c8cf3d7c65430c3f0ac6d7248ac62c346ff488b4270",
+        "sourceCommit": "677ba7f8fc209c050c33c1e14fd4ad41d794b376",
+        "sourceTree": "7c22401d0e2c7184fba2f19318c571e22fe1df1c",
+        "platform": "linux/amd64",
+        "manifest": {
+          "path": ".agentci/artifacts/verification.json",
+          "sha256": "22646fe5688f81f745ad377850ccbcf5651bf0afaad8caca21620cadfd518a90",
+          "verifiedIndexedMembers": 11,
+          "verifiedIndexedBytes": 9645321
+        },
+        "verifier": {
+          "revision": "677ba7f8fc209c050c33c1e14fd4ad41d794b376",
+          "basis": "Exact committed verifier inputs at the recorded revision; selected inputs additionally hashed.",
+          "inputs": [
+            {
+              "path": "scripts/verification-summary.mjs",
+              "sha256": "a877079ef8e7b755e930d1e4ee47c09cc28610c50ce8ba0b86b6c348f52d740e"
+            },
+            {
+              "path": "scripts/image-smoke.mjs",
+              "sha256": "35dbfd45e364d7f8cafd3f6ae2f2a5030ae610e37f966f099ffa2f3c1ad28b77"
+            },
+            {
+              "path": "scripts/eval-worker-image-smoke.mjs",
+              "sha256": "f835d2d75037fd54a95e67b2f5ee656fe2ec0f264d81a3ea66ef98b35c42ebf0"
+            }
+          ]
+        },
+        "result": "passed-actual-artifact-inspection",
+        "compiledRuntimeScope": [
+          "Legacy comparison API/client database evidence and compiled snapshot export/client completion.",
+          "Signed delivery and non-root persistent Temporal startup/restart/graceful shutdown.",
+          "Separate native eval-worker workflow and isolated-child runtime."
+        ],
+        "compiledBothProducerIntentPath": "not established by this runtime receipt",
+        "candidatePackage": {
+          "path": "releases/agentci-0.4.0-m3-dev.4.tgz",
+          "sha256": "0b67aa18fa77ff45b70793ee2a233b1f5f54eb0b60f2f92ae2bb299d6572b550",
+          "npmShrinkwrapRetained": false,
+          "acceptanceScope": "Production-install smoke; no locked-root candidate install claim.",
+          "intentSpecificInstalledCoverage": "not established by this receipt"
+        }
+      },
+      "postmergeDashboard": {
+        "runId": "38752884325",
+        "attempt": 1,
+        "runUrl": "https://github.com/alimobrem/agentci/actions/runs/38752884325",
+        "artifactId": 11982152501,
+        "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38752884325/artifacts/11982152501",
+        "zipSha256": "2ebc2d9e0b76b86578623fc9f2f40d53055d1b8c584dc3eeffbbb3d88722d4da",
+        "sourceCommit": "677ba7f8fc209c050c33c1e14fd4ad41d794b376",
+        "sourceTree": "7c22401d0e2c7184fba2f19318c571e22fe1df1c",
+        "platform": "linux/amd64",
+        "manifest": {
+          "path": "ci-receipt.json",
+          "sha256": "32e3c91c47ed0e2921357cb4d8887b2b57c38b8a63611f14f96970d2a3a91d65",
+          "verifiedIndexedMembers": 23,
+          "verifiedIndexedBytes": 2106737
+        },
+        "verifier": {
+          "revision": "677ba7f8fc209c050c33c1e14fd4ad41d794b376",
+          "basis": "Exact committed verifier inputs at the recorded revision; selected inputs additionally hashed.",
+          "inputs": [
+            {
+              "path": "scripts/dashboard-ci-receipt.mjs",
+              "sha256": "dd51c313b4b064d062c455cee4e9ba69ada916c1ef5832ba5b3dfbf9b760cce7"
+            },
+            {
+              "path": "scripts/lib/dashboard-ci-evidence.mjs",
+              "sha256": "cf56bb3d9ed5d413512e99cb7753a8f6157e093c8f4955284a18d49ce871e387"
+            },
+            {
+              "path": "scripts/lib/dashboard-shutdown.mjs",
+              "sha256": "f964c1227dc8c85558c508165f52d049255f807ff5238f285e170e4234367791"
+            }
+          ]
+        },
+        "result": "passed-actual-artifact-inspection"
+      },
+      "native": {
+        "scope": "premerge reviewed tree; no postmerge native dispatch",
+        "candidateCommit": "835deb14ef2cadf192f28e010a04b94c08dcfbe8",
+        "sourceCommit": "9a82afb55537e70de6849a81e67c4c95b86ee0f0",
+        "sourceTree": "7c22401d0e2c7184fba2f19318c571e22fe1df1c",
+        "artifacts": [
+          {
+            "runId": "38750436824",
+            "attempt": 1,
+            "runUrl": "https://github.com/alimobrem/agentci/actions/runs/38750436824",
+            "artifactId": 11981092031,
+            "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38750436824/artifacts/11981092031",
+            "zipSha256": "08240b53d97b237744a09ae148ccfca891ebb283c0a70a3fc8e6437c4915d31e",
+            "sourceCommit": "9a82afb55537e70de6849a81e67c4c95b86ee0f0",
+            "sourceTree": "7c22401d0e2c7184fba2f19318c571e22fe1df1c",
+            "platform": "linux/amd64",
+            "manifest": {
+              "path": "artifact-manifest.json",
+              "sha256": "225a4edb12f70e5d8933a22612e7f5f3ed6e7a306bf750951fcc6f5970857f02",
+              "verifiedIndexedMembers": 375,
+              "verifiedIndexedBytes": 4015573
+            },
+            "verifier": {
+              "revision": "677ba7f8fc209c050c33c1e14fd4ad41d794b376",
+              "basis": "Exact committed verifier inputs at the recorded revision; selected inputs additionally hashed.",
+              "inputs": [
+                {
+                  "path": "scripts/dashboard-native-acceptance.mjs",
+                  "sha256": "daaf700503dd41222379816b854cd5ef89694a89ace48b0ff7f005f7066f197d"
+                },
+                {
+                  "path": "scripts/lib/dashboard-native-evidence.mjs",
+                  "sha256": "cae38366a57375b913516d2217096d43e6af6f0dd51ba28701d1965d3f7a718d"
+                },
+                {
+                  "path": "scripts/dashboard-notice-associations.mjs",
+                  "sha256": "e537def7347519e31f6a4e9e1fd7274f419b3a11282f4150d01d68e26ab47766"
+                }
+              ],
+              "sourceReceiptCommit": "9a82afb55537e70de6849a81e67c4c95b86ee0f0",
+              "qualification": "Temporary merge-ref source identity is retained from the actual receipt; verifier inputs are read from the merged commit with the identical full Git tree. No local inspection of an absent temporary commit object is claimed."
+            },
+            "result": "passed-actual-artifact-inspection"
+          },
+          {
+            "runId": "38750436824",
+            "attempt": 1,
+            "runUrl": "https://github.com/alimobrem/agentci/actions/runs/38750436824",
+            "artifactId": 11981775934,
+            "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38750436824/artifacts/11981775934",
+            "zipSha256": "88dc9aa402abfe923797248b58112657119319929ef21fc0df56b61f5b4bdc54",
+            "sourceCommit": "9a82afb55537e70de6849a81e67c4c95b86ee0f0",
+            "sourceTree": "7c22401d0e2c7184fba2f19318c571e22fe1df1c",
+            "platform": "linux/arm64",
+            "manifest": {
+              "path": "artifact-manifest.json",
+              "sha256": "299bf9833cad32e574a1d59160073ecffaa30c263c11505c009141fcb7e1f75c",
+              "verifiedIndexedMembers": 375,
+              "verifiedIndexedBytes": 4016321
+            },
+            "verifier": {
+              "revision": "677ba7f8fc209c050c33c1e14fd4ad41d794b376",
+              "basis": "Exact committed verifier inputs at the recorded revision; selected inputs additionally hashed.",
+              "inputs": [
+                {
+                  "path": "scripts/dashboard-native-acceptance.mjs",
+                  "sha256": "daaf700503dd41222379816b854cd5ef89694a89ace48b0ff7f005f7066f197d"
+                },
+                {
+                  "path": "scripts/lib/dashboard-native-evidence.mjs",
+                  "sha256": "cae38366a57375b913516d2217096d43e6af6f0dd51ba28701d1965d3f7a718d"
+                },
+                {
+                  "path": "scripts/dashboard-notice-associations.mjs",
+                  "sha256": "e537def7347519e31f6a4e9e1fd7274f419b3a11282f4150d01d68e26ab47766"
+                }
+              ],
+              "sourceReceiptCommit": "9a82afb55537e70de6849a81e67c4c95b86ee0f0",
+              "qualification": "Temporary merge-ref source identity is retained from the actual receipt; verifier inputs are read from the merged commit with the identical full Git tree. No local inspection of an absent temporary commit object is claimed."
+            },
+            "result": "passed-actual-artifact-inspection"
+          }
+        ]
+      },
+      "observedResults": {
+        "rootTests": {
+          "passed": 641,
+          "failed": 0,
+          "skipped": 0
+        },
+        "browserChecks": 50,
+        "backendMutations": 0,
+        "packages": 208,
+        "directNotices": 331,
+        "associatedNotices": 25,
+        "associations": 17,
+        "metadataIssues": 4,
+        "provenanceAndLicensingReviewItems": 3,
+        "nativeComponentCoverage": {
+          "status": "partial",
+          "covered": 3,
+          "declared": 28
+        },
+        "inventoryStatus": "inventory-with-review-items",
+        "nativeOwnedCleanup": "Passed: zero owned containers/networks/volumes and private files removed."
+      },
+      "otherPostmergeRuns": [
+        {
+          "runId": "38752884202",
+          "kind": "scanner",
+          "result": "success"
+        },
+        {
+          "runId": "38752884589",
+          "kind": "advisory",
+          "result": "success"
+        }
+      ]
+    },
+    "intent": {
+      "pullRequest": "https://github.com/alimobrem/agentci/pull/112",
+      "mergeCommit": "08da48cabaf7413fb1c0cf914796162312e7d8d7",
+      "sourceTree": "7fc6efafa82a093fc17d39c5c2f2094ca71faf8f",
+      "independentReview": "Coordinating reviewer reported exact-head and actual-artifact clearance before merge.",
+      "postmergeVerify": {
+        "runId": "38756001558",
+        "attempt": 1,
+        "runUrl": "https://github.com/alimobrem/agentci/actions/runs/38756001558",
+        "artifactId": 11985170411,
+        "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38756001558/artifacts/11985170411",
+        "zipSha256": "56dc510a35c3a36fd25d617d94ee784c6dfd1701c4dbf52f4af50f4fe1b9de5f",
+        "sourceCommit": "08da48cabaf7413fb1c0cf914796162312e7d8d7",
+        "sourceTree": "7fc6efafa82a093fc17d39c5c2f2094ca71faf8f",
+        "platform": "linux/amd64",
+        "manifest": {
+          "path": ".agentci/artifacts/verification.json",
+          "sha256": "4e44898db7b3a0eed96399ee63b6f2299493a023396e3bc943d043cd7d56f802",
+          "verifiedIndexedMembers": 11,
+          "verifiedIndexedBytes": 9651910
+        },
+        "verifier": {
+          "revision": "08da48cabaf7413fb1c0cf914796162312e7d8d7",
+          "basis": "Exact committed verifier inputs at the recorded revision; selected inputs additionally hashed.",
+          "inputs": [
+            {
+              "path": "scripts/verification-summary.mjs",
+              "sha256": "a877079ef8e7b755e930d1e4ee47c09cc28610c50ce8ba0b86b6c348f52d740e"
+            },
+            {
+              "path": "scripts/image-smoke.mjs",
+              "sha256": "35dbfd45e364d7f8cafd3f6ae2f2a5030ae610e37f966f099ffa2f3c1ad28b77"
+            },
+            {
+              "path": "scripts/eval-worker-image-smoke.mjs",
+              "sha256": "f835d2d75037fd54a95e67b2f5ee656fe2ec0f264d81a3ea66ef98b35c42ebf0"
+            }
+          ]
+        },
+        "result": "passed-actual-artifact-inspection",
+        "compiledRuntimeScope": [
+          "Legacy comparison API/client database evidence and compiled snapshot export/client completion.",
+          "Signed delivery and non-root persistent Temporal startup/restart/graceful shutdown.",
+          "Separate native eval-worker workflow and isolated-child runtime."
+        ],
+        "compiledBothProducerIntentPath": "not established by this runtime receipt",
+        "candidatePackage": {
+          "path": "releases/agentci-0.4.0-m3-dev.4.tgz",
+          "sha256": "5f5459194625fe3e9e81d7e61bb729120063505347d862e6fc32db51d662b3c7",
+          "npmShrinkwrapRetained": false,
+          "acceptanceScope": "Production-install smoke; no locked-root candidate install claim.",
+          "intentSpecificInstalledCoverage": "not established by this receipt"
+        }
+      },
+      "postmergeDashboard": {
+        "runId": "38756001539",
+        "attempt": 1,
+        "runUrl": "https://github.com/alimobrem/agentci/actions/runs/38756001539",
+        "artifactId": 11982944304,
+        "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38756001539/artifacts/11982944304",
+        "zipSha256": "84bdcf533e4d6017b93b142416a0451bbcc0e0c96a1ae4f8edd0963840386db6",
+        "sourceCommit": "08da48cabaf7413fb1c0cf914796162312e7d8d7",
+        "sourceTree": "7fc6efafa82a093fc17d39c5c2f2094ca71faf8f",
+        "platform": "linux/amd64",
+        "manifest": {
+          "path": "ci-receipt.json",
+          "sha256": "de3941d3d1f37baf90d79782eee149b65c9d68921ffd0d6b9e2f59f031c971de",
+          "verifiedIndexedMembers": 24,
+          "verifiedIndexedBytes": 2313880
+        },
+        "verifier": {
+          "revision": "08da48cabaf7413fb1c0cf914796162312e7d8d7",
+          "basis": "Exact committed verifier inputs at the recorded revision; selected inputs additionally hashed.",
+          "inputs": [
+            {
+              "path": "scripts/dashboard-ci-receipt.mjs",
+              "sha256": "dd51c313b4b064d062c455cee4e9ba69ada916c1ef5832ba5b3dfbf9b760cce7"
+            },
+            {
+              "path": "scripts/lib/dashboard-ci-evidence.mjs",
+              "sha256": "cf56bb3d9ed5d413512e99cb7753a8f6157e093c8f4955284a18d49ce871e387"
+            },
+            {
+              "path": "scripts/lib/dashboard-shutdown.mjs",
+              "sha256": "f964c1227dc8c85558c508165f52d049255f807ff5238f285e170e4234367791"
+            }
+          ]
+        },
+        "result": "passed-actual-artifact-inspection"
+      },
+      "observedResults": {
+        "rootTests": {
+          "passed": 650,
+          "failed": 0,
+          "skipped": 0
+        },
+        "integrationTests": {
+          "passed": 208,
+          "failed": 0,
+          "skipped": 0
+        },
+        "dashboardUnitTests": 32,
+        "browserChecks": 53,
+        "backendMutations": 0,
+        "sourceImportedIntegration": "Genuine PostgreSQL/API/SDK and M1/M2 producer intent integration uses source imports.",
+        "compiledRuntime": "Legacy comparison/export and eval-worker runtime; no separate compiled both-producer intent path established.",
+        "installedPackageReaderSmoke": "Separate actual installed-package reader smoke; intent-specific installed coverage is not established by the bounded receipt.",
+        "cleanup": "Current-run database and image cleanup passed with zero owned resources and private files removed. Framework shutdown records private-file removal. No separate explicit browser-private-directory removal receipt."
+      },
+      "otherPostmergeRuns": [
+        {
+          "runId": "38756001621",
+          "kind": "scanner",
+          "result": "success"
+        },
+        {
+          "runId": "38756001631",
+          "kind": "advisory",
+          "result": "success"
+        }
+      ]
+    },
+    "nativeActiveDrain": {
+      "pullRequest": "https://github.com/alimobrem/agentci/pull/111",
+      "mergeCommit": "8c32582080ec3780141c75bab49f46f7618d02ca",
+      "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+      "premerge": {
+        "schemaVersion": 1,
+        "scope": "reviewed-premerge immutable software evidence; not postmerge source or live acceptance",
+        "candidateCommit": "81ecdc858a43b18cbd7b4e334b1fefa0cf075ce9",
+        "sourceCommit": "bb3436da9392adddfc49d6c815c324cd34c3e7e6",
+        "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+        "artifacts": [
+          {
+            "artifactId": 11982914425,
+            "runId": "38756388285",
+            "attempt": "1",
+            "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38756388285/artifacts/11982914425",
+            "zipSha256": "85ede92fe522b8bf2f681aaa565dcc2df92ef22dae83e12fd803418e251814c1",
+            "manifestPath": "artifact-manifest.json",
+            "manifestSha256": "01c9d0500303a2e0d810005ba275fbb4c5c6f254edf16fdb27b54f74b67abb85",
+            "verifiedIndexedMembers": 377,
+            "verifiedIndexedBytes": 4042059,
+            "platform": "linux/amd64",
+            "sourceCommit": "bb3436da9392adddfc49d6c815c324cd34c3e7e6",
+            "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+            "verifier": {
+              "revision": "8c32582080ec3780141c75bab49f46f7618d02ca",
+              "basis": "Exact committed verifier inputs at the recorded revision; selected inputs additionally hashed.",
+              "inputs": [
+                {
+                  "path": "scripts/dashboard-native-acceptance.mjs",
+                  "sha256": "90b2e1a4c114c0de19231d6c6ae3b9487c2d4f62229368bde59adc869f46fef7"
+                },
+                {
+                  "path": "scripts/lib/dashboard-native-evidence.mjs",
+                  "sha256": "bbfc4448b672aa592d5541955d6c4cb38adc9c95bc94a2ec737247c1a89b32ad"
+                },
+                {
+                  "path": "scripts/lib/dashboard-native-drain.mjs",
+                  "sha256": "dc486fbdea00d820c928e147a9161ed0c62c6e18c946b4f81ea4b5112fe22f51"
+                }
+              ],
+              "sourceReceiptCommit": "bb3436da9392adddfc49d6c815c324cd34c3e7e6",
+              "qualification": "Temporary merge-ref source identity is retained from the actual receipt; verifier inputs are read from the merged commit with the identical full Git tree. No local inspection of an absent temporary commit object is claimed."
+            },
+            "result": "passed-actual-artifact-inspection"
+          },
+          {
+            "artifactId": 11983009226,
+            "runId": "38756388285",
+            "attempt": "1",
+            "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38756388285/artifacts/11983009226",
+            "zipSha256": "fde4908ff829ab2825a6a7adb4567fd70814efcd7f223fdadf873521a5ce6dba",
+            "manifestPath": "artifact-manifest.json",
+            "manifestSha256": "67b0b62ba65052f4ee83517b8cda1ae80f477e16f3ebee4bfa777b10c9089d21",
+            "verifiedIndexedMembers": 377,
+            "verifiedIndexedBytes": 4042814,
+            "platform": "linux/arm64",
+            "sourceCommit": "bb3436da9392adddfc49d6c815c324cd34c3e7e6",
+            "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+            "verifier": {
+              "revision": "8c32582080ec3780141c75bab49f46f7618d02ca",
+              "basis": "Exact committed verifier inputs at the recorded revision; selected inputs additionally hashed.",
+              "inputs": [
+                {
+                  "path": "scripts/dashboard-native-acceptance.mjs",
+                  "sha256": "90b2e1a4c114c0de19231d6c6ae3b9487c2d4f62229368bde59adc869f46fef7"
+                },
+                {
+                  "path": "scripts/lib/dashboard-native-evidence.mjs",
+                  "sha256": "bbfc4448b672aa592d5541955d6c4cb38adc9c95bc94a2ec737247c1a89b32ad"
+                },
+                {
+                  "path": "scripts/lib/dashboard-native-drain.mjs",
+                  "sha256": "dc486fbdea00d820c928e147a9161ed0c62c6e18c946b4f81ea4b5112fe22f51"
+                }
+              ],
+              "sourceReceiptCommit": "bb3436da9392adddfc49d6c815c324cd34c3e7e6",
+              "qualification": "Temporary merge-ref source identity is retained from the actual receipt; verifier inputs are read from the merged commit with the identical full Git tree. No local inspection of an absent temporary commit object is claimed."
+            },
+            "result": "passed-actual-artifact-inspection"
+          },
+          {
+            "artifactId": 11983672625,
+            "runId": "38756387584",
+            "attempt": "1",
+            "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38756387584/artifacts/11983672625",
+            "zipSha256": "c57b70b967e879061157b9049e0132f9410859f1d635ce19feb859ec3bee5858",
+            "manifestPath": "ci-receipt.json",
+            "manifestSha256": "47ea541b8db3da1112372cdade77e09dedb2220090451506e10443a259c88af4",
+            "verifiedIndexedMembers": 24,
+            "verifiedIndexedBytes": 2315840,
+            "platform": "linux/amd64",
+            "sourceCommit": "bb3436da9392adddfc49d6c815c324cd34c3e7e6",
+            "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+            "verifier": {
+              "revision": "8c32582080ec3780141c75bab49f46f7618d02ca",
+              "basis": "Exact committed verifier inputs at the recorded revision; selected inputs additionally hashed.",
+              "inputs": [
+                {
+                  "path": "scripts/dashboard-ci-receipt.mjs",
+                  "sha256": "dd51c313b4b064d062c455cee4e9ba69ada916c1ef5832ba5b3dfbf9b760cce7"
+                },
+                {
+                  "path": "scripts/lib/dashboard-ci-evidence.mjs",
+                  "sha256": "cf56bb3d9ed5d413512e99cb7753a8f6157e093c8f4955284a18d49ce871e387"
+                },
+                {
+                  "path": "scripts/lib/dashboard-shutdown.mjs",
+                  "sha256": "f964c1227dc8c85558c508165f52d049255f807ff5238f285e170e4234367791"
+                }
+              ],
+              "sourceReceiptCommit": "bb3436da9392adddfc49d6c815c324cd34c3e7e6",
+              "qualification": "Temporary merge-ref source identity is retained from the actual receipt; verifier inputs are read from the merged commit with the identical full Git tree. No local inspection of an absent temporary commit object is claimed."
+            },
+            "result": "passed-actual-artifact-inspection"
+          },
+          {
+            "runId": "38756387778",
+            "attempt": 1,
+            "runUrl": "https://github.com/alimobrem/agentci/actions/runs/38756387778",
+            "artifactId": 11983977953,
+            "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38756387778/artifacts/11983977953",
+            "zipSha256": "1d22e13bfe620ecff333b945cd3205864509c1e91daf41ef95e91317a7928709",
+            "sourceCommit": "bb3436da9392adddfc49d6c815c324cd34c3e7e6",
+            "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+            "platform": "linux/amd64",
+            "manifest": {
+              "path": ".agentci/artifacts/verification.json",
+              "sha256": "6646ae705d4d4e94edf48e54f6ed7a35cc7aa823e65532833cf14a4506601c57",
+              "verifiedIndexedMembers": 11,
+              "verifiedIndexedBytes": 9653876
+            },
+            "verifier": {
+              "revision": "8c32582080ec3780141c75bab49f46f7618d02ca",
+              "basis": "Exact committed verifier inputs at the recorded revision; selected inputs additionally hashed.",
+              "inputs": [
+                {
+                  "path": "scripts/verification-summary.mjs",
+                  "sha256": "a877079ef8e7b755e930d1e4ee47c09cc28610c50ce8ba0b86b6c348f52d740e"
+                },
+                {
+                  "path": "scripts/image-smoke.mjs",
+                  "sha256": "35dbfd45e364d7f8cafd3f6ae2f2a5030ae610e37f966f099ffa2f3c1ad28b77"
+                },
+                {
+                  "path": "scripts/eval-worker-image-smoke.mjs",
+                  "sha256": "f835d2d75037fd54a95e67b2f5ee656fe2ec0f264d81a3ea66ef98b35c42ebf0"
+                }
+              ],
+              "sourceReceiptCommit": "bb3436da9392adddfc49d6c815c324cd34c3e7e6",
+              "qualification": "Temporary merge-ref source identity is retained from the actual receipt; verifier inputs are read from the merged commit with the identical full Git tree. No local inspection of an absent temporary commit object is claimed."
+            },
+            "result": "passed-actual-artifact-inspection",
+            "compiledRuntimeScope": [
+              "Legacy comparison API/client database evidence and compiled snapshot export/client completion.",
+              "Signed delivery and non-root persistent Temporal startup/restart/graceful shutdown.",
+              "Separate native eval-worker workflow and isolated-child runtime."
+            ],
+            "compiledBothProducerIntentPath": "not established by this runtime receipt",
+            "candidatePackage": {
+              "path": "releases/agentci-0.4.0-m3-dev.4.tgz",
+              "sha256": "cac17bf766a213f31fd5cc4f2f1fbb569152b9f228d1316a112d9590e048d41d",
+              "npmShrinkwrapRetained": false,
+              "acceptanceScope": "Production-install smoke; no locked-root candidate install claim.",
+              "intentSpecificInstalledCoverage": "not established by this receipt"
+            }
+          }
+        ],
+        "verification": "outer ZIP digests plus every indexed member; native production/runtime/shutdown/public-drain validators, Dashboard browser/standalone-shutdown validators, full Verify runtime/cleanup projection",
+        "priorFailedNativeRuns": [
+          "38749492560",
+          "38749787911"
+        ],
+        "priorFailedRecords": [
+          "delivery/runs/38749492560-attempt-1.json",
+          "delivery/runs/38749787911-attempt-1.json"
+        ],
+        "criterion1Clarification": "Real SIGKILL interrupts the held request; the explicitly unsupported abrupt143 negative command is rejected by production validation and the graceful oracle. Public proof is bounded; the production image/default command and positive process use no runtime hooks, certificates, trust changes, real/live credentials, host ports or release activation. The documented negative-only handler command is used solely to demonstrate rejection.",
+        "nativeAuthenticatedApi200": "unverified",
+        "liveOIDC": "unverified",
+        "releaseComplete": false
+      },
+      "observedPremergeResults": {
+        "rootTests": {
+          "passed": 659,
+          "failed": 0,
+          "skipped": 0
+        },
+        "browserChecks": 53,
+        "nativePlatforms": [
+          "linux/amd64",
+          "linux/arm64"
+        ],
+        "positive": "Actual unchanged UBI/plain-Node production POST /auth/login TLS discovery error path held through SIGTERM. Loopback socket release produced complete exact403 body with private caching/no cookie, ordered framework markers and143 without OOM/force/timeout.",
+        "negative": "Real SIGKILL137 interrupts the held request. Separate unsupported negative-only handler produces actual abrupt143 and is rejected by production command and behavioral validators.",
+        "nativeAuthenticatedApi200": "unverified",
+        "responseObservationLimit": "Complete-body observer is inside the owned container network namespace; no independently timed remote-byte-consumption-before-final-log claim.",
+        "cleanup": "Native source/runtime/isolation/scan and zero owned-resource cleanup passed on both architectures."
+      },
+      "postmerge": {
+        "status": "accepted-actual-postmerge-artifacts",
+        "sourceCommit": "8c32582080ec3780141c75bab49f46f7618d02ca",
+        "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+        "verify": {
+          "runId": "38759067335",
+          "attempt": 1,
+          "runUrl": "https://github.com/alimobrem/agentci/actions/runs/38759067335",
+          "artifactId": 11985950978,
+          "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38759067335/artifacts/11985950978",
+          "zipSha256": "cf023cad51f3168a77fe7db81124f7207c4b667d46f361a78209e9f83cd3afc9",
+          "sourceCommit": "8c32582080ec3780141c75bab49f46f7618d02ca",
+          "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+          "platform": "linux/amd64",
+          "manifest": {
+            "path": ".agentci/artifacts/verification.json",
+            "sha256": "0ea11c11c9eb24091f22bcc828361074745d7941aebb239b06d1d639dc710612",
+            "verifiedIndexedMembers": 11,
+            "verifiedIndexedBytes": 9653876
+          },
+          "verifier": {
+            "revision": "8c32582080ec3780141c75bab49f46f7618d02ca",
+            "basis": "Exact committed verifier inputs at the recorded revision; selected inputs additionally hashed.",
+            "inputs": [
+              {
+                "path": "scripts/verification-summary.mjs",
+                "sha256": "a877079ef8e7b755e930d1e4ee47c09cc28610c50ce8ba0b86b6c348f52d740e"
+              },
+              {
+                "path": "scripts/image-smoke.mjs",
+                "sha256": "35dbfd45e364d7f8cafd3f6ae2f2a5030ae610e37f966f099ffa2f3c1ad28b77"
+              },
+              {
+                "path": "scripts/eval-worker-image-smoke.mjs",
+                "sha256": "f835d2d75037fd54a95e67b2f5ee656fe2ec0f264d81a3ea66ef98b35c42ebf0"
+              }
+            ]
+          },
+          "result": "passed-actual-artifact-inspection",
+          "compiledRuntimeScope": [
+            "Legacy comparison API/client database evidence and compiled snapshot export/client completion.",
+            "Signed delivery and non-root persistent Temporal startup/restart/graceful shutdown.",
+            "Separate native eval-worker workflow and isolated-child runtime."
+          ],
+          "compiledBothProducerIntentPath": "not established by this runtime receipt",
+          "candidatePackage": {
+            "path": "releases/agentci-0.4.0-m3-dev.4.tgz",
+            "sha256": "cac17bf766a213f31fd5cc4f2f1fbb569152b9f228d1316a112d9590e048d41d",
+            "npmShrinkwrapRetained": false,
+            "acceptanceScope": "Production-install smoke; no locked-root candidate install claim.",
+            "intentSpecificInstalledCoverage": "not established by this receipt"
+          }
+        },
+        "dashboard": {
+          "runId": "38759067524",
+          "attempt": 1,
+          "runUrl": "https://github.com/alimobrem/agentci/actions/runs/38759067524",
+          "artifactId": 11984128780,
+          "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38759067524/artifacts/11984128780",
+          "zipSha256": "badf54ed042a6cb33a00b7be3e50ebce58790fb53ff535264fec550154e32924",
+          "sourceCommit": "8c32582080ec3780141c75bab49f46f7618d02ca",
+          "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+          "platform": "linux/amd64",
+          "manifest": {
+            "path": "ci-receipt.json",
+            "sha256": "63a780fd8ed38efe27110f2b4668911523aa79bf0bda05f550b0986ffa88f374",
+            "verifiedIndexedMembers": 24,
+            "verifiedIndexedBytes": 2313880
+          },
+          "verifier": {
+            "revision": "8c32582080ec3780141c75bab49f46f7618d02ca",
+            "basis": "Exact committed verifier inputs at the recorded revision; selected inputs additionally hashed.",
+            "inputs": [
+              {
+                "path": "scripts/dashboard-ci-receipt.mjs",
+                "sha256": "dd51c313b4b064d062c455cee4e9ba69ada916c1ef5832ba5b3dfbf9b760cce7"
+              },
+              {
+                "path": "scripts/lib/dashboard-ci-evidence.mjs",
+                "sha256": "cf56bb3d9ed5d413512e99cb7753a8f6157e093c8f4955284a18d49ce871e387"
+              },
+              {
+                "path": "scripts/lib/dashboard-shutdown.mjs",
+                "sha256": "f964c1227dc8c85558c508165f52d049255f807ff5238f285e170e4234367791"
+              }
+            ]
+          },
+          "result": "passed-actual-artifact-inspection"
+        },
+        "scanner": {
+          "runId": "38759067098",
+          "result": "success"
+        },
+        "advisory": {
+          "runId": "38759067415",
+          "result": "success"
+        },
+        "observedResults": {
+          "rootTests": {
+            "passed": 659,
+            "failed": 0,
+            "skipped": 0
+          },
+          "browserChecks": 53,
+          "backendMutations": 0,
+          "standaloneSyntheticApi200Shutdown": "passed, separately scoped from native authenticated200",
+          "compiledRuntime": "passed: existing generic comparison/export and eval-worker checks; no separate compiled both-producer intent path",
+          "nativeProvenance": "matched exact source pins and exercised image IDs",
+          "serviceScans": [
+            {
+              "role": "api",
+              "inventoryPresent": true,
+              "fixableHighCritical": 0,
+              "retainedQualificationFindings": [
+                {
+                  "id": "GHSA-2mjx-qc3c-rqvc",
+                  "package": "rustls",
+                  "severity": "MEDIUM",
+                  "fixedVersionPresent": true
+                }
+              ]
+            },
+            {
+              "role": "worker",
+              "inventoryPresent": true,
+              "fixableHighCritical": 0,
+              "retainedQualificationFindings": [
+                {
+                  "id": "GHSA-2mjx-qc3c-rqvc",
+                  "package": "rustls",
+                  "severity": "MEDIUM",
+                  "fixedVersionPresent": true
+                }
+              ]
+            },
+            {
+              "role": "eval-worker",
+              "inventoryPresent": true,
+              "fixableHighCritical": 0,
+              "retainedQualificationFindings": [
+                {
+                  "id": "GHSA-2mjx-qc3c-rqvc",
+                  "package": "rustls",
+                  "severity": "MEDIUM",
+                  "fixedVersionPresent": true
+                }
+              ]
+            },
+            {
+              "role": "eval-runner",
+              "inventoryPresent": true,
+              "fixableHighCritical": 0,
+              "retainedQualificationFindings": []
+            },
+            {
+              "role": "eval-engines",
+              "inventoryPresent": true,
+              "fixableHighCritical": 0,
+              "retainedQualificationFindings": [
+                {
+                  "id": "CVE-2026-85393",
+                  "package": "node-forge",
+                  "severity": "HIGH",
+                  "fixedVersionPresent": false
+                }
+              ]
+            },
+            {
+              "role": "eval-agentci",
+              "inventoryPresent": true,
+              "fixableHighCritical": 0,
+              "retainedQualificationFindings": [
+                {
+                  "id": "GHSA-2mjx-qc3c-rqvc",
+                  "package": "rustls",
+                  "severity": "MEDIUM",
+                  "fixedVersionPresent": true
+                }
+              ]
+            }
+          ],
+          "databaseAndImageCleanup": "passed: zero owned resources and private files removed",
+          "evalWorkerCleanupQualification": "passed receipt is emitted only after source-defined finally cleanup; no numeric standalone cleanup receipt"
+        },
+        "producerIntegrationScope": {
+          "postmergeSpecificMarkers": "No final8c per-scenario markers are observed or claimed. Two bounded job-log clients exited1 with0bytes; a separate status-only probe returned200. No cause or permission denial is established; this collection limitation does not change successful product/CI results.",
+          "reusedImmutableSourceEvidence": [
+            {
+              "sourceCommit": "81ecdc858a43b18cbd7b4e334b1fefa0cf075ce9",
+              "sourceTree": "2da5ee3d9c931f672682bf1595bf73173e88aaed",
+              "runSourceCommit": "bb3436da9392adddfc49d6c815c324cd34c3e7e6",
+              "runId": "38756387778",
+              "scope": "Independently reviewed genuine source-import PostgreSQL/API/SDK integration for both M1/M2 intent producers at the exact reviewed tree."
+            },
+            {
+              "sourceCommit": "08da48cabaf7413fb1c0cf914796162312e7d8d7",
+              "sourceTree": "7fc6efafa82a093fc17d39c5c2f2094ca71faf8f",
+              "runId": "38756001558",
+              "scope": "208 passed genuine source-import PostgreSQL/API/SDK integration tests, including both M1/M2 intent producers."
+            }
+          ],
+          "limits": "Source-import integration, compiled generic runtime, and installed package reader smoke are distinct proof scopes; no intent-specific installed or compiled both-producer release path is inferred."
+        }
+      }
+    }
+  },
+  "residualQualifications": {
+    "dependencyMetadata": [
+      "Babel bundle missing declaration",
+      "Babel bundle missing full notice",
+      "client-only missing notice",
+      "Unistore missing full notice"
+    ],
+    "separateReviewItems": [
+      "Nodable published3.1.0 versus immutable upstream manifest3.0.0 remains unresolved despite exact six-JS-file runtime mapping plus published manifest guard.",
+      "Native full component copyright/license notice completeness remains unverified. Authentic recovered cgif/highway/zlib-ng notices cover3 of28 declared components only.",
+      "Native redistribution, source and relinking obligations remain pending. Static linkage and modified Rust workspace resolution prevent complete build/legal closure."
+    ],
+    "nativeEvidence": "Native authenticated API200 drain, successful live OIDC/token/customer operation and independent remote consumed-before-log timing remain unverified. Standalone synthetic API200 proof remains separately scoped.",
+    "releasePackage": "Each source-specific candidate TGZ above omits package/npm-shrinkwrap.json despite the package files listing it. Production-install smoke is not a locked-root install; intent-specific installed or compiled both-producer release acceptance is not inferred.",
+    "frozenDev4Regression": {
+      "scope": "Separate immutable release regression only; lockedRootInstall:true cannot be transferred to current candidate TGZs.",
+      "sourceCommit": "6caeb54767e56b9b2375a256bab127014d99d41a",
+      "packageSha256": "e68608ea8539fe686791c37e51c5754b43a5c78bca31ad1b1b4cd22d70cfdbff",
+      "manifestSha256": "09e25cbfa25f349e7e2a1756d3b4c87b66bffd3b4be51199f293cf69880f33cf",
+      "imagesManifestSha256": "d2dc4f7360b743306916415dfd2250b1e6a73c68f380a3008d33cc062570355e",
+      "publicationEvidenceSha256": "0aeaa8b2f99f6884f2b787baba2b0adffe636606bd0f55e6baabe734bd9ce4a7"
+    },
+    "canceledIntentAttempt": {
+      "runId": "38749967274",
+      "status": "canceled historical attempt",
+      "cleanupDisposition": "recovery-required-or-unverified; successful later per-run cleanup does not prove removal of earlier resources",
+      "artifactId": 11981711403,
+      "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38749967274/artifacts/11981711403",
+      "zipSha256": "06539e7ec8beebbf2e54193b8357310883d4428297211d5508d89afc94edff07",
+      "qualification": "Historical canceled attempt; retained artifact does not establish full completion or cleanup. Later successful cleanup does not establish removal of this earlier run resources.",
+      "sourceCommit": "d06576882959e5de90dad71977fcd20425705372",
+      "sourceTree": null,
+      "sourceTreeQualification": "not retained in this partial artifact; not invented",
+      "zipMembers": 4
+    },
+    "failedNativeAttempts": [
+      {
+        "runId": "38749492560",
+        "attempt": 1,
+        "record": "delivery/runs/38749492560-attempt-1.json",
+        "sha256": "150b3d4dbcd9079c971a8394e7c4fd607e91ed0332f18e986daffcd371b3f574",
+        "qualification": "Original manual-flag negative stayed running without cleanup markers and with incomplete request. Nonterminal Docker ExitCode0 is not a completed exit. Abrupt143 expectation failed; image scans were not reached; owned zero-resource cleanup passed. Preserve as failed."
+      },
+      {
+        "runId": "38749787911",
+        "attempt": 1,
+        "record": "delivery/runs/38749787911-attempt-1.json",
+        "sha256": "c031c2ec4f5e400dbac055eed4639b7bb0f1b1752720c273c97af12c86880096",
+        "qualification": "Original manual-flag negative stayed running without cleanup markers and with incomplete request. Nonterminal Docker ExitCode0 is not a completed exit. Abrupt143 expectation failed; image scans were not reached; owned zero-resource cleanup passed. Preserve as failed."
+      }
+    ],
+    "unchangedPriorQualifications": [
+      "Existing rustls MEDIUM and node-forge HIGH service scan qualifications remain recorded, with exact findings retained in the final postmerge scan projection above.",
+      "No new live customer activation, publication, deployment, hosting, cluster, access, credential or cost action is established.",
+      "All1,346 original requirements and all18 aggregate M3 gates remain as recorded. Three narrow task completions do not complete M3 or a release.",
+      "Frozen dev.3 and dev.4 artifacts remain unchanged."
+    ]
+  },
+  "recordedAt": "2026-10-15T15:35:39.544508+00:00",
+  "selectedTaskBaseline": [
+    {
+      "id": "M3-dashboard-intent-contract",
+      "title": "Retain exact-subject declared intent and display it through authorized bounded reads",
+      "requirementIds": [
+        "SPEC-33.1-002",
+        "SPEC-40-015",
+        "SPEC-40-020"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-15T14:05:55.282Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Separate immutable versioned intent contract, source binding, authenticated API/client and storage roundtrip preserve legacy digests and reject conflicting identity/content",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Dashboard renders declared intent safely even without completed summary and cancels bounded reads across session/navigation changes",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Exact committed archive reconciliation, full hosted CI and independent review pass; M3 qualifications remain open",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M3-dashboard-native-component-notices",
+      "title": "Retain authentic observed-runtime and native component notices with explicit provenance gaps",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-15T14:08:07.417Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Recover only authentic exact-file observed-runtime and exact-version native root notices, bound to archive/runtime/source evidence; retain version discrepancies and all unresolved metadata, notice-completeness and source-obligation qualifications.",
+          "status": "passed",
+          "evidence": [
+            "docs/phases/m3-dashboard-notice-gaps.md"
+          ]
+        },
+        {
+          "text": "Test altered version/source/runtime/notice evidence and existing containment boundaries; pass clean committed-archive reconciliation, exact-head hosted native CI and independent review before merge.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M3-dashboard-native-active-drain",
+      "title": "Retain native active public request drain proof without changing runtime trust",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SPEC-33.1-001"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-15T14:08:35.017Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Actual default dashboard image on both native architectures holds production public login TLS error-path request through SIGTERM, completes expected403 after loopback socket release, and retains source/runtime/isolation/cleanup-bound proof; authenticated API200 drain remains unverified.",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Real SIGKILL interrupts held request, unsupported abrupt143 receipts are rejected, and public proof is bounded with no certificates, trust settings, runtime hooks, credentials, host ports or release activation.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    }
+  ],
+  "trackingOnlyCompletion": {
+    "status": "tracking-only scope; transitions recorded by existing CLI in the task/event ledgers",
+    "preserveNoticeCriterion0": true,
+    "evidenceReuse": {
+      "policy": "docs/delivery-workflow.md#reuse-verified-immutable-evidence",
+      "sourceCommit": "8c32582080ec3780141c75bab49f46f7618d02ca",
+      "policyFileSha256": "779cb95372529fe99c6e87a8c6902277c169d07853394bd73205609152d9ca62",
+      "scope": "Reuse only exact immutable source/digest/platform/verifier/observations for ledger-only follow-up. Required hosted checks still run. Unchanged binaries are not rerun solely for status bookkeeping."
+    },
+    "taskTransitions": [
+      {
+        "action": "accept",
+        "task": "M3-dashboard-intent-contract",
+        "criterionIndex": 0,
+        "evidence": "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+      },
+      {
+        "action": "accept",
+        "task": "M3-dashboard-intent-contract",
+        "criterionIndex": 1,
+        "evidence": "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+      },
+      {
+        "action": "accept",
+        "task": "M3-dashboard-intent-contract",
+        "criterionIndex": 2,
+        "evidence": "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+      },
+      {
+        "action": "done",
+        "task": "M3-dashboard-intent-contract"
+      },
+      {
+        "action": "accept",
+        "task": "M3-dashboard-native-component-notices",
+        "criterionIndex": 1,
+        "evidence": "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+      },
+      {
+        "action": "done",
+        "task": "M3-dashboard-native-component-notices"
+      },
+      {
+        "action": "accept",
+        "task": "M3-dashboard-native-active-drain",
+        "criterionIndex": 0,
+        "evidence": "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+      },
+      {
+        "action": "accept",
+        "task": "M3-dashboard-native-active-drain",
+        "criterionIndex": 1,
+        "evidence": "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+      },
+      {
+        "action": "done",
+        "task": "M3-dashboard-native-active-drain"
+      }
+    ],
+    "changedFiles": [
+      "delivery/acceptance/m3-dashboard-approved-bundle-completion.json",
+      "delivery/tasks.json",
+      "delivery/task-events.jsonl",
+      "delivery/reconciliation/sections/33.json",
+      "delivery/reconciliation/sections/40.json",
+      "delivery/reconciliation/requirement-test-evidence.json"
+    ],
+    "externalPreflight": "Final ledger commit/tree, task Git-object hash, canonical record hash and clean committed-archive check belong in the external post-commit preflight proof; this record does not contain its own hash or a future ledger commit ID."
+  },
+  "criterionEvidence": [
+    {
+      "task": "M3-dashboard-intent-contract",
+      "criterionIndex": 0,
+      "evidence": [
+        "implementationReceipts.intent.postmergeVerify",
+        "implementationReceipts.intent.observedResults.sourceImportedIntegration",
+        "implementationReceipts.nativeActiveDrain.postmerge.producerIntegrationScope"
+      ],
+      "scope": "Versioned exact-subject contract, storage/API/client roundtrip and conflict rejection; genuine source-import integration only."
+    },
+    {
+      "task": "M3-dashboard-intent-contract",
+      "criterionIndex": 1,
+      "evidence": [
+        "implementationReceipts.intent.postmergeDashboard",
+        "implementationReceipts.nativeActiveDrain.postmerge.dashboard"
+      ],
+      "scope": "Escaped attributed declared intent without summary; bounded cancellation/session/navigation synthetic browser coverage."
+    },
+    {
+      "task": "M3-dashboard-intent-contract",
+      "criterionIndex": 2,
+      "evidence": [
+        "implementationReceipts.intent",
+        "implementationReceipts.nativeActiveDrain.postmerge"
+      ],
+      "scope": "Original exact-source committed-archive reconciliation, independently reviewed implementation, hosted checks and actual postmerge artifacts. Aggregate release limitations remain."
+    },
+    {
+      "task": "M3-dashboard-native-component-notices",
+      "criterionIndex": 1,
+      "evidence": [
+        "implementationReceipts.notices.native",
+        "implementationReceipts.notices.postmergeVerify",
+        "implementationReceipts.notices.observedResults"
+      ],
+      "scope": "Altered source/runtime/metadata/notice and containment negative controls, including partial-evidence collector/summary refusal; exact AMD64/ARM64 artifacts and independent review. Existing criterion0 evidence is preserved unchanged."
+    },
+    {
+      "task": "M3-dashboard-native-active-drain",
+      "criterionIndex": 0,
+      "evidence": [
+        "implementationReceipts.nativeActiveDrain.premerge",
+        "implementationReceipts.nativeActiveDrain.observedPremergeResults",
+        "implementationReceipts.nativeActiveDrain.postmerge"
+      ],
+      "scope": "Both native architectures qualify the public login TLS-error path only; no authenticated native200/live acceptance."
+    },
+    {
+      "task": "M3-dashboard-native-active-drain",
+      "criterionIndex": 1,
+      "evidence": [
+        "criterionAmendmentHistory",
+        "implementationReceipts.nativeActiveDrain.premerge",
+        "implementationReceipts.nativeActiveDrain.observedPremergeResults",
+        "residualQualifications.failedNativeAttempts"
+      ],
+      "scope": "Real137 and unsupported negative-only abrupt143 rejection, bounded proof and unchanged production/positive process. Preserve failed earlier attempts."
+    }
+  ]
+}
