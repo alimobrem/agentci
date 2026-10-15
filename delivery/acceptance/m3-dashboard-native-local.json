@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "baseSource": "64dcc40d1bb9e74ed54fe042cfc2ab7e8ec8196f",
+  "scope": "Optional native qualification preparation; not actual image execution or license/legal/live/release acceptance",
+  "files": [
+    {
+      "path": ".github/workflows/dashboard-native.yaml",
+      "bytes": 3500,
+      "sha256": "3974b3866deaf29326a202b593af70c1653079213646cf7bf72b620acbec1b9c"
+    },
+    {
+      "path": "scripts/dashboard-native-acceptance.mjs",
+      "bytes": 11620,
+      "sha256": "daaf700503dd41222379816b854cd5ef89694a89ace48b0ff7f005f7066f197d"
+    },
+    {
+      "path": "scripts/lib/dashboard-native-evidence.mjs",
+      "bytes": 5417,
+      "sha256": "316623076780afe82008e3bc3da485baffe7e458cae40408173325643006d7d0"
+    },
+    {
+      "path": "scripts/lib/dashboard-native-probes.mjs",
+      "bytes": 5503,
+      "sha256": "30e7dd73454ab07bb422822b517010e2c5c6650965b34b00665412b4a00df422"
+    },
+    {
+      "path": "tests/dashboard-native-evidence.test.ts",
+      "bytes": 7091,
+      "sha256": "9e202be1f748608cc4799196b17e0dd7c541d71c787607db47ab1953cffe76b3"
+    },
+    {
+      "path": "scripts/dashboard-public-artifacts.mjs",
+      "bytes": 362,
+      "sha256": "e629358f3b32754bff927b31392387e69ca025d4a949481fe766d5d55bf64ca5"
+    },
+    {
+      "path": "scripts/lib/dashboard-public-artifacts.mjs",
+      "bytes": 2961,
+      "sha256": "ce1f8bb3f5ba73cce58e3ec2c5bf621ad4d5ac5bce3cd8e6cd0b9164c748671b"
+    },
+    {
+      "path": "tests/dashboard-public-artifacts.test.ts",
+      "bytes": 2719,
+      "sha256": "bbe454235151061211215d1081e457173bb7ea3954f4f0b3632a694a223901e1"
+    },
+    {
+      "path": ".github/workflows/dashboard-verify.yaml",
+      "bytes": 3849,
+      "sha256": "feea035faa957f8b7844484b339a91a94cf0a4a60d6574c615799f1150f4a048"
+    },
+    {
+      "path": "scripts/dashboard-ci-receipt.mjs",
+      "bytes": 3246,
+      "sha256": "dd51c313b4b064d062c455cee4e9ba69ada916c1ef5832ba5b3dfbf9b760cce7"
+    },
+    {
+      "path": "scripts/lib/dashboard-shutdown.mjs",
+      "bytes": 5588,
+      "sha256": "f964c1227dc8c85558c508165f52d049255f807ff5238f285e170e4234367791"
+    },
+    {
+      "path": "tests/dashboard-shutdown.test.ts",
+      "bytes": 5054,
+      "sha256": "e11e95414ddf14cb3b7728ffb978ec20f4d523341d88cf208543c2a96d2fa4d2"
+    },
+    {
+      "path": "apps/dashboard/tests/browser/shutdown.mjs",
+      "bytes": 5788,
+      "sha256": "954db4de5c562b1da813c7e8786c34466eecf7ac16857e30107bf9760333ba28"
+    },
+    {
+      "path": "scripts/lib/dashboard-scan-failure.mjs",
+      "bytes": 2844,
+      "sha256": "d58d74c7e73369c29e9880b34cc088ddd7a528948b48f668a02a22171fef0c06"
+    },
+    {
+      "path": "tests/dashboard-scan-failure.test.ts",
+      "bytes": 2210,
+      "sha256": "45928680bc7c4865ed1c75b678b9f3a52fd13ad0975a74ca6c220aea6b6a8065"
+    },
+    {
+      "path": "apps/dashboard/tests/ci-receipt.test.ts",
+      "bytes": 4255,
+      "sha256": "ca85ecabfeea056523218500752572824e7783f5bd7d07ca8c53b87e2a920cfe"
+    },
+    {
+      "path": "scripts/lib/dashboard-scan-controls.mjs",
+      "bytes": 1172,
+      "sha256": "79b9cb663245bb1917623d9a5cd99c2cbe918c20ec4e92841ba26b0d6120f5ba"
+    },
+    {
+      "path": "tests/dashboard-scan-controls.test.ts",
+      "bytes": 1879,
+      "sha256": "626a0cd8ff2a4fb0840d8a52263e0e2ea6b2693aaed41580f2194d1161f35453"
+    }
+  ],
+  "local": {
+    "node": "v26.10.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "focused": {
+      "tests": 22,
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Native/shutdown/bounded publication/diagnostics and bounded scratch/isolation/socket/mount-injection guards."
+    },
+    "types": "passed",
+    "workflows": "passed",
+    "generatedProbeSyntax": "passed",
+    "fast": {
+      "tests": 610,
+      "passed": 595,
+      "failed": 9,
+      "skipped": 6,
+      "otherStagesPassed": 9,
+      "qualification": "Existing reproduced Mac qualifications; no waiver. Final socket-input guard additionally passed focused/type verification."
+    },
+    "productionFrameworkActiveDrain": {
+      "sourceCommit": "36860ae5204bc448962ce02e876a1fa622fbdda0",
+      "sourceTree": "578247e65bea0e9e89a4a066dd79638f1fc1da41",
+      "cases": [
+        "actual API held through SIGTERM and complete200 response after upstream release",
+        "SIGKILL interrupts response without cleanup markers",
+        "abrupt SIGTERM/143 interrupts response without cleanup markers"
+      ],
+      "result": "passed synthetic production-framework fixture checks; not native active request acceptance",
+      "receipt": "delivery/acceptance/m3-dashboard-shutdown-local.json"
+    }
+  },
+  "hosted": {
+    "runners": [
+      "ubuntu-24.04",
+      "ubuntu-24.04-arm"
+    ],
+    "emulation": false,
+    "push": false,
+    "realCredentials": false,
+    "artifactMaxBytesPerArchitecture": 33554432,
+    "retentionDays": 7,
+    "rawImageArchiveUpload": false,
+    "expected": "Native final image execution and actual file/package/RPM/Node/notice/scan/cleanup artifacts with exact source and lock identities"
+  },
+  "qualifications": {
+    "nativeRuntime": "unverified until hosted",
+    "noticeCompleteness": "Pending current regenerated inventory; historical22 items preserved, no borrowed licenses or legal clearance",
+    "liveOIDC": "unverified",
+    "completeOriginalPRView": "pending explicit analysis/comparison bindings and retained intent contract; reviewer claims available only from verified export",
+    "sixRoleReleaseContracts": "unchanged",
+    "frozenCandidateAssets": "unchanged",
+    "newDeploymentOrCredentials": false,
+    "aggregateM3Gates": "all18 pending",
+    "nativeActiveRequestDrain": "unverified; actual native configuration modes exercise idle termination only"
+  },
+  "reviewRepairs": {
+    "boundedUpload": "Only atomic bounded allowlisted public promotion or bounded static failure receipt uploaded; staging excluded. Cap includes manifest.",
+    "dockerBuildRecordUpload": false,
+    "perModeShutdownReceipt": "Persisted before strict source/version/locks/image/SIGTERM/bounded/ordered-marker/error/leak validation; no global143 allowance.",
+    "validators": [
+      "No Config.Entrypoint wrapper",
+      "No CapAdd",
+      "Privileged must be false"
+    ],
+    "previousNativeAttempts": "Both architectures failed unconfigured shutdown; recovery passed; previous missing exit/OOM/running cause remains unverified.",
+    "sourceObservation": "Official integrity-verified Next16.4.0 handler matches installed bytes; source-bound behavioral oracle replaces historical exit-zero premise without modifying production code."
+  },
+  "hostedPreviousAttempt": {
+    "head": "f2579a465960e43cf4f244cebc583c0b4c8d39e8",
+    "nativeRun": "38664591769",
+    "result": "scanner-execution-failed-before-report/policy; cause unavailable because old stderr discarded",
+    "bothArchitectures": [
+      "all3 idle shutdown modes source/locks/image/pinned-handler/ordered markers qualified",
+      "runtime/native sharp and package/RPM/notices inventories retained",
+      "zero owned containers/networks/volumes/private fixture removal proved"
+    ],
+    "packageCount": 208,
+    "noticeCount": 331,
+    "rpmCount": 101,
+    "unresolvedNoticeReviewItems": 22,
+    "legalClearance": "not-claimed",
+    "dashboardRun": "38664591766",
+    "dashboardFailure": "required tenth shutdown-stage receipt fixture mismatch; repaired locally with missing-stage and invalid-proof negatives"
+  },
+  "diagnosticCorrection": {
+    "maxReceiptBytes": 4096,
+    "classificationInput": "stderr prefix, maximum128KiB",
+    "rawDiagnostics": "withheld",
+    "retained": "source/image/scanner identity, channel counts/hashes and fixed enum observations; unknown/multiple remain ambiguous",
+    "scannerArgsNetworkMountsPermissionsDigestPolicy": "unchanged",
+    "scratchSpaceLead": "unconfirmed pending actual new receipt; no scratch/security/egress change"
+  },
+  "scratchCapacityTest": {
+    "sourceTag": "Trivy v0.75.0",
+    "sourceCommit": "591e9799316a602e703f0b484f6c6d7b234ec8f3",
+    "sourcePaths": [
+      "pkg/db/db.go",
+      "pkg/oci/artifact.go",
+      "pkg/x/os/os.go"
+    ],
+    "databaseTempPath": "Go os.TempDir via xos.MkdirTemp empty parent; cache-dir does not relocate download temp",
+    "observations": "Both38666100888 architectures reported space exhaustion during database download; failing filesystem not retained",
+    "change": "Existing scanner /tmp tmpfs128MiB to explicit1GiB only",
+    "reason": "Bounded source-supported hypothesis test, not confirmed root-cause attribution",
+    "unchanged": [
+      "rw/noexec/nosuid/nodev",
+      "non-root/read-only root/capdrop/no-new-privileges",
+      "same2 archive/cache mounts and scanner/digest/timeout/network/policy",
+      "owned cleanup"
+    ],
+    "safeStorageEvidence": "Declared tmp capacity distinct from unknown observed free; numeric statfs capacity/free/usage of exact cache bind source; fixed tmp/cache/unknown failure buckets",
+    "legalClearance": "not-claimed",
+    "unresolvedNoticeReviewItems": 22
+  }
+}
