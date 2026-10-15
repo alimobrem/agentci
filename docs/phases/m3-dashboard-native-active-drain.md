@@ -30,15 +30,37 @@ fails rather than treating a sent response as a consumed response.
 
 Two independent native controls start fresh owned containers. SIGKILL must
 interrupt the held real request with exit 137 and no cleanup markers. A separately
-labeled **unsupported manual-signal configuration** sets only Next's existing
-`NEXT_MANUAL_SIG_HANDLE=1` in its negative container, with the same image/plain
-Node command and all other isolation controls unchanged. Ordinary SIGTERM must
-produce actual abrupt 143, an interrupted request and no cleanup markers. Both the
-production configuration validator and the separate response/marker behavioral
-oracle reject this control; exit 143 alone is insufficient. The positive and
-SIGKILL containers retain the production signal environment. No handler is
-injected or patched and no exit code is rewritten.
+labeled **unsupported signal-handler command** uses this exact negative-only
+command before importing the same generated server from the same image:
 
+```text
+node --input-type=module -e "process.on('SIGTERM',()=>process.exit(143));await import('./apps/dashboard/server.js');"
+```
+
+Ordinary SIGTERM must produce actual abrupt 143, an interrupted request and no
+cleanup markers. The production command validator must reject that command;
+the separate response/marker behavioral oracle also rejects the observed result.
+All remaining native UID, image/source/runtime, isolation and resource checks
+remain required. Positive and SIGKILL containers retain the original plain Node
+command and production signal environment. No handler is injected into the image
+or positive process, no production framework source is patched, and no exit code
+is rewritten in retained evidence. The negative command is an intentionally
+ungraceful fixture and cannot qualify as production runtime configuration.
+
+Preserved native attempts 38749492560 and 38749787911 tested a narrower manual-flag
+negative before this command correction. Their actual public login drain and
+SIGKILL observations passed, but the manual-flag PID1 process remained running
+with no markers and an incomplete request. Docker's nonterminal ExitCode field 0
+is not an observed completed exit. The abrupt 143 expectation failed and image
+scanning was not reached. Both architectures' actual artifacts and successful
+owned zero-resource cleanup are preserved. The implementation does not force or
+reinterpret those prior states as abrupt 143. The new command fixture supplies a
+separate, explicitly unsupported negative execution; hosted evidence is pending.
+
+`public-drain-progress.json` retains bounded, explicitly partial observations at
+readiness, fixture, request hold, signal, release and stop boundaries, including
+known observations before rethrow. It omits raw errors, diagnostics, response
+bodies and configuration. Partial progress cannot satisfy the success oracle.
 `public-drain.json` is retained before validation, including failed controls, and
 is included in the existing bounded 32 MiB allowlisted public artifact archive.
 The final result requires this proof as well as all three existing idle modes,
