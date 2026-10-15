@@ -266,3 +266,7 @@ main>section a{display:inline-block;color:var(--cyan);margin-top:16px}
 
 /* Hidden verification caches must never be exposed by layout styles. */
 [data-session-content][hidden]{display:none!important}
+/* Existing proof cards also host the bounded original PR evidence views. */
+[data-evidence-views]{min-width:0;overflow-wrap:anywhere}
+[data-evidence-views] .source-locations li{align-items:flex-start}
+[data-evidence-views] .source-locations li>div{min-width:0}

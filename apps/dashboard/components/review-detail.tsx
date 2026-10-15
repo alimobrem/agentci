@@ -1,3 +1,4 @@
+import {EvidenceViewsPanel} from './evidence-views';
 import {RetainedReader} from './retained-reader';
 import {ProofValue} from './proof-value';
 import {ReviewTabs} from './ui/tabs';
@@ -12,6 +13,7 @@ export function ReviewDetail({data,viewBinding=''}:{data:Awaited<ReturnType<type
   <p className="cancellation-note">Cancellation: {data.status.execution.cancelRequested?'Requested; cleanup is not established by cancellation intent':'Not requested'}</p></div>
   <ReviewTabs summary={<>
    <div className="assessment-note"><span className="assessment-mark" aria-hidden="true">!</span><div><span className="eyebrow">ASSESSMENT</span><p>Risk: {confirmed?'Confirmed findings require assessment':'No confirmed findings in retained evidence; this is not a passing status'}</p><small>Model disagreement: not established by this API summary.</small></div></div>
+   <EvidenceViewsPanel views={data.views}/>
    <div className="section-heading"><h3>Retained findings</h3><span>{data.findings.length.toString().padStart(2,'0')} IN THIS REVIEW</span></div>
    {!data.findings.length&&<p className="empty-state">No retained findings available. Missing evidence does not establish success.</p>}
    <ul className="finding-list">{data.findings.map((f,index)=><li key={f.digest} className="finding-card"><div className="finding-top"><span className="finding-index">F / {(index+1).toString().padStart(2,'0')}</span><h3 className="finding-state" data-severity={f.event.finding.severity}>{f.event.finding.severity} · {f.event.finding.state}</h3></div><h4>{f.event.finding.claim}</h4><p className="finding-qualification">{f.event.finding.state==='confirmed'?'Claim confirmed; assess retained evidence and any fix separately.':'Claim confirmation is not established by this finding state.'}</p><div className="finding-footer"><p>Sources: {f.event.finding.sources.map(s=>`${s.provider}/${s.model}`).join(', ')}</p><a className="evidence-action" aria-label="Retained evidence reference" href={`#evidence-${f.event.finding.id.replace('sha256:','')}`}><span>Retained evidence reference</span><strong>Inspect evidence <span aria-hidden="true">↗</span></strong></a></div></li>)}</ul>
