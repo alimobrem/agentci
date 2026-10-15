@@ -94,6 +94,14 @@ export function bindAuthEarlyCertificateCapture(server,peer,crypto){
  server.on('keylog',(_discardedLine,socket)=>{captureAuthCertificateHash(peer,socket,crypto);});
 }
 
+/** Publish elapsed hold facts only. A late release remains >=6000ms even if capped at the public 30000ms bound. */
+export function authHoldTiming(startedAt,releasedAt,now){
+ if(startedAt===null)return {heldAgeMs:0,backendHoldMs:null};
+ if(!Number.isFinite(startedAt)||!Number.isFinite(now)||now<startedAt||releasedAt!==null&&(!Number.isFinite(releasedAt)||releasedAt<startedAt||releasedAt>now))throw Error('fixture-monotonic-clock-invalid');
+ const elapsed=Math.min(30000,Math.ceil((releasedAt??now)-startedAt));
+ return {heldAgeMs:elapsed,backendHoldMs:releasedAt===null?null:elapsed};
+}
+
 async function runAuthHelper(crypto,http,https){
  const ORIGIN='https://dashboard.fixture.invalid:3000',ISSUER='https://127.0.0.3:4443';
  const UUID=/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/;
@@ -120,7 +128,7 @@ async function runAuthHelper(crypto,http,https){
  const issuerProtocol=createIssuerProtocol({clientId:config.clientId,clientSecret:config.clientSecret,subject:config.principal.subject},crypto);
  const peer=()=>({tlsAttempts:0,tlsEstablished:0,tlsFailures:0,tlsErrorCodes:[],httpRequests:0,presentedCertificateSha256s:[],clientObservedCertificateSha256s:[]});
  const state={schemaVersion:1,observerId:config.observerId,trustCase:config.trustCase,ready:false,stage:'starting',caSha256:hash(config.caPem),certificates,authentication:{started:false,complete:false,authenticated:false,stage:'not-started',anonymousStatus:0,loginStatus:0,loginResponseComplete:false,callbackStatus:0,sessionStatus:0,callbackOriginMatched:false,transactionCookieIssued:false,sessionCookieIssued:false,transactionCookieAttributes:null,sessionCookieAttributes:null,baseline:null,failedProtectedStatus:0,failureCode:null},held:null,peers:{frontend:peer(),issuer:{...peer(),discoveryRequests:0,authorizationRequests:0,tokenRequests:0,jwksRequests:0},backend:{...peer(),authorizedReads:0,rejectedReads:0}},proxy:{requests:0,errors:0,timeouts:0,responseOrigin:'upstream-only'},shutdownRequested:false};
- let sessionCookie='',busy=false,heldResponse=null,watchdog=null,clientRequest=null;
+ let sessionCookie='',busy=false,heldResponse=null,watchdog=null,clientRequest=null,backendHeldAt=null,backendReleasedAt=null;
  const sockets=new Set(),servers=[];
  const bindTls=(server,name)=>{servers.push(server);if(name==='issuer')bindAuthEarlyCertificateCapture(server,state.peers[name],crypto);server.on('connection',socket=>{state.peers[name].tlsAttempts++;if(sockets.size>=64){socket.destroy();return;}sockets.add(socket);socket.on('error',()=>{});socket.once('close',()=>sockets.delete(socket));});server.on('secureConnection',socket=>{state.peers[name].tlsEstablished++;captureAuthCertificateHash(state.peers[name],socket,crypto);});server.on('tlsClientError',(error,socket)=>{state.peers[name].tlsFailures++;captureAuthCertificateHash(state.peers[name],socket,crypto);const code=safeError(error);if(!state.peers[name].tlsErrorCodes.includes(code)&&state.peers[name].tlsErrorCodes.length<8)state.peers[name].tlsErrorCodes.push(code);});};
  const json=(res,status,value)=>{const body=JSON.stringify(value);if(Buffer.byteLength(body)>32768)throw Error('fixture-public-bound');res.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});res.end(body);};
@@ -151,9 +159,9 @@ async function runAuthHelper(crypto,http,https){
   else json(res,404,{error:'not_found'});
  }catch{json(res,400,{error:'invalid_grant'});}});
  bindTls(issuerServer,'issuer');
- const finishBackend=reason=>{if(!state.held||!heldResponse||state.held.released)return false;state.held.released=true;state.held.releaseReason=reason;state.held.backendPending=false;clearTimeout(watchdog);if(reason==='explicit'){heldResponse.writeHead(200,{'content-type':'application/json'});heldResponse.end(JSON.stringify(config.status));}else{state.held.watchdogFired=reason==='watchdog';heldResponse.destroy();clientRequest?.destroy(Object.assign(Error('fixture-interrupted'),{code:'ECONNRESET'}));}heldResponse=null;return true;};
+ const finishBackend=reason=>{if(!state.held||!heldResponse||state.held.released)return false;backendReleasedAt=performance.now();state.held.released=true;state.held.releaseReason=reason;state.held.backendPending=false;clearTimeout(watchdog);if(reason==='explicit'){heldResponse.writeHead(200,{'content-type':'application/json'});heldResponse.end(JSON.stringify(config.status));}else{state.held.watchdogFired=reason==='watchdog';heldResponse.destroy();clientRequest?.destroy(Object.assign(Error('fixture-interrupted'),{code:'ECONNRESET'}));}heldResponse=null;return true;};
  const backendServer=https.createServer({key:config.backend.keyPem,cert:config.backend.certPem},(req,res)=>{state.peers.backend.httpRequests++;if(req.method!=='GET'||req.url!==`/v1/model-reviews/${config.admission.id}`||req.headers.authorization!==`Bearer ${config.readToken}`){state.peers.backend.rejectedReads++;json(res,403,{error:{code:'review-denied'}});return;}state.peers.backend.authorizedReads++;
-  if(state.held?.requestStarted&&!state.held.backendObserved){state.held.backendObserved=true;state.held.backendPending=true;state.held.backendReadOrdinal=state.peers.backend.authorizedReads;heldResponse=res;watchdog=setTimeout(()=>finishBackend('watchdog'),7000);res.once('close',()=>{if(state.held&&!state.held.released){state.held.backendPending=false;state.held.backendClientDisconnected=true;}});return;}
+  if(state.held?.requestStarted&&!state.held.backendObserved){const held=state.held;backendHeldAt=performance.now();held.backendObserved=true;held.backendPending=true;held.backendReadOrdinal=state.peers.backend.authorizedReads;heldResponse=res;watchdog=setTimeout(()=>finishBackend('watchdog'),7000);res.once('close',()=>{if(state.held===held&&!held.released){held.backendPending=false;held.backendClientDisconnected=true;}});return;}
   res.writeHead(200,{'content-type':'application/json'});res.end(JSON.stringify(config.status));
  });
  bindTls(backendServer,'backend');
@@ -184,10 +192,11 @@ async function runAuthHelper(crypto,http,https){
   finally{a.complete=true;busy=false;}
  };
  const hold=async id=>{
+  backendHeldAt=null;backendReleasedAt=null;
   state.held={id,observerId:config.observerId,requestStarted:true,requestPending:true,backendObserved:false,backendPending:false,backendReadOrdinal:0,backendClientDisconnected:false,released:false,releaseReason:null,watchdogFired:false,response:null};state.stage='held-request-started';
   const response=await request(ORIGIN+`/api/reviews/${config.admission.id}`,{cookie:sessionCookie});state.held.response=projection(response);state.held.requestPending=false;state.stage=response.complete?'held-response-complete':'held-response-interrupted';
  };
- const snapshot=()=>({...state,issuerProtocol:issuerProtocol.stats()});
+ const snapshot=()=>({...state,held:state.held?{...state.held,...authHoldTiming(backendHeldAt,backendReleasedAt,performance.now())}:null,issuerProtocol:issuerProtocol.stats()});
  const control=http.createServer((req,res)=>{
   try{
    const url=new URL(req.url,'http://127.0.0.5:4444');
@@ -216,5 +225,6 @@ export const AUTH_HELPER_SOURCE=[
  'const authHelperLookup='+authHelperLookup.toString()+';',
  'const captureAuthCertificateHash='+captureAuthCertificateHash.toString()+';',
  'const bindAuthEarlyCertificateCapture='+bindAuthEarlyCertificateCapture.toString()+';',
+ 'const authHoldTiming='+authHoldTiming.toString()+';',
  '('+runAuthHelper.toString()+')(crypto,http,https).catch(()=>{process.exitCode=1;process.stderr.write("fixture-helper-failed\\n");process.exit(1);});'
 ].join('\n');

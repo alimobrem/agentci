@@ -6,7 +6,7 @@ import{dashboardLicenseInventory}from'../scripts/dashboard-license-inventory.mjs
 import{noticeSourceTree}from'../scripts/dashboard-notice-associations.mjs';
 // @ts-ignore Exact-source optional native qualification validators.
 import {publicDrain} from './helpers/dashboard-native-proof.ts';
-import {authenticatedCharacterization} from './helpers/dashboard-native-authenticated-proof.ts';
+import {authenticatedCharacterization,authenticatedDrain} from './helpers/dashboard-native-authenticated-proof.ts';
 // @ts-ignore Exact-source optional native qualification validators.
 import {retainDashboardShutdown,validateDashboardImage,validateDashboardRuntime,validateDashboardAnonymous,validateDashboardContainer,dashboardNativeSummary,validateDashboardAuthenticatedContainer,validateDashboardAuthenticatedAbruptContainer,validateDashboardAuthenticatedTlsFailureContainer,validateDashboardAuthenticatedHelper,DASHBOARD_FIXTURE_CA_PATH,DASHBOARD_FIXTURE_HOST} from '../scripts/lib/dashboard-native-evidence.mjs';
 // @ts-ignore Source-bound final-image probe and explicit unsupported negative command.
@@ -21,7 +21,7 @@ const goodShutdown=(mode:string)=>({mode,source:{...source,imageId:'sha256:'+sha
 const runtime=()=>({uid:1001,pid1Uid:1001,arch:'x64',node:'v26.10.0',rootPackage:{name:'agentci',version:source.rootVersion},dashboardPackage:{name:'@agentci/dashboard',version:source.dashboardVersion},sharp:{pngBytes:90},nodeBinarySha256:sha,nodeLicenseSha256:sha,files:[{}],staticAssets:[{}],privatePaths:[],developmentLoaders:[],escapingLinks:[]});
 const anonymous=(configured=true)=>({live:200,ready:configured?200:503,session:401,review:configured?401:503,history:configured?401:503,export:configured?401:503,logout:403,canaryInResponses:false,canaryInStaticAssets:false,privateCacheHeaders:true,upstreamAvailabilityVerified:false});
 
-const nativeInput=()=> ({source,arch:'amd64',image:validateDashboardImage(rawImage(),source),runtime:runtime(),anonymous:{configured:anonymous(),unconfigured:anonymous(false),malformed:anonymous(false)},publicDrain:publicDrain(),authenticated:authenticatedCharacterization(),shutdown:['configured','unconfigured','malformed'].map(mode=>goodShutdown(mode)),rpmPackages:[{name:'node-runtime'}],licenseInventory:{packages:[],issues:[{kind:'missing-license-notice'}],packageCount:1,noticeCount:0,status:'inventory-with-review-items'},scan:{result:'passed-policy'},cleanup:{result:'passed',ownedContainers:0,ownedNetworks:0,ownedVolumes:0,privateFilesRemoved:true}});
+const nativeInput=()=> ({source,arch:'amd64',image:validateDashboardImage(rawImage(),source),runtime:runtime(),anonymous:{configured:anonymous(),unconfigured:anonymous(false),malformed:anonymous(false)},publicDrain:publicDrain(),authenticated:authenticatedDrain(),shutdown:['configured','unconfigured','malformed'].map(mode=>goodShutdown(mode)),rpmPackages:[{name:'node-runtime'}],licenseInventory:{packages:[],issues:[{kind:'missing-license-notice'}],packageCount:1,noticeCount:0,status:'inventory-with-review-items'},scan:{result:'passed-policy'},cleanup:{result:'passed',ownedContainers:0,ownedNetworks:0,ownedVolumes:0,privateFilesRemoved:true}});
 test('actual collector and native summary keep partial notice completeness pending with zero metadata gaps',async()=>{
  const base=await mkdtemp(join(tmpdir(),'agentci-partial-notice-e2e-')),root=join(base,'source'),standalone=join(base,'runtime'),output=join(base,'licenses'),digest=(b:string)=>createHash('sha256').update(b).digest('hex'),path='node_modules/native/package.json',native=JSON.stringify({name:'native',version:'1.0.0',license:'MIT'}),versions=JSON.stringify({alpha:'2.0.0',beta:'3.0.0',gamma:'4.0.0'}),notice='Synthetic authentic alpha notice\n';
  try{
@@ -57,19 +57,26 @@ test('native qualification requires independently observed zero owned containers
  }
 });
 
-test('native summary requires exact source/image authenticated characterization without advancing held, live or release claims',()=>{
+test('native summary requires exact full source/image authenticated drain while retaining separate characterization and live/release limits',()=>{
  const input=nativeInput(),report=dashboardNativeSummary(input);
  assert.deepEqual(report.shutdownQualification.authenticatedCharacterization,{result:'synthetic-authenticated-characterization-qualified',stage:'characterization',authenticatedApiDrain:'unverified',liveOIDCAcceptance:'unverified',browserSecureCookieAcceptance:'unverified',productionDefaultEnvironmentQualification:false});
- assert.equal(report.shutdownQualification.authenticatedApiDrain,'unverified');assert.equal(report.shutdownQualification.activePublicRequest.result,'source-bound-native-active-public-error-path-drain-qualified');assert.equal(report.liveOIDCAcceptance,'unverified');assert.equal(report.releaseAcceptance,'pending');assert.equal(report.publication,'not-performed');assert.equal(report.licenseInventory.legalClearance,'not-claimed');assert.equal(Object.hasOwn(report,'authenticated'),false);
- for(const authenticated of[undefined,null,{result:'synthetic-authenticated-characterization-qualified'}])assert.throws(()=>dashboardNativeSummary({...input,authenticated}));
+ assert.equal(report.shutdownQualification.authenticatedApiDrain,'source-bound-native-qualified');assert.equal(report.shutdownQualification.authenticatedActiveRequest.result,'synthetic-authenticated-native-active-request-drain-qualified');assert.equal(report.shutdownQualification.activePublicRequest.result,'source-bound-native-active-public-error-path-drain-qualified');assert.equal(report.liveOIDCAcceptance,'unverified');assert.equal(report.releaseAcceptance,'pending');assert.equal(report.publication,'not-performed');assert.equal(report.licenseInventory.legalClearance,'not-claimed');assert.equal(Object.hasOwn(report,'authenticated'),false);
+ for(const authenticated of[undefined,null,authenticatedCharacterization(),{result:'synthetic-authenticated-characterization-qualified'}])assert.throws(()=>dashboardNativeSummary({...input,authenticated}));
+ assert.throws(()=>dashboardNativeSummary({...input,runtime:{...input.runtime,nodeBinarySha256:'e'.repeat(64)}}));
  for(const [field,value]of Object.entries({sourceCommit:'e'.repeat(40),sourceTree:'e'.repeat(40),candidateCommit:'e'.repeat(40),runId:'12346',attempt:'2',arch:'arm64',rootVersion:'0.4.1',dashboardVersion:'0.0.1',rootLockSha256:'e'.repeat(64),dashboardLockSha256:'e'.repeat(64),imageId:'sha256:'+'e'.repeat(64)})){
-  const authenticated=authenticatedCharacterization({[field]:value});assert.doesNotThrow(()=>validateNativeAuthenticatedEvidence(authenticated,authenticated.source));assert.throws(()=>dashboardNativeSummary({...input,authenticated}));
+  const authenticated=authenticatedDrain({[field]:value});assert.doesNotThrow(()=>validateNativeAuthenticatedEvidence(authenticated,authenticated.source));assert.throws(()=>dashboardNativeSummary({...input,authenticated}));
  }
 });
 test('native summary rejects authenticated drainage overclaims, absent control evidence and partial observations',()=>{
- for(const mutate of[(r:any)=>r.stage='full',(r:any)=>r.authenticatedApiDrain='verified',(r:any)=>r.cases.pop(),(r:any)=>r.cases[0].beforeStop.held={id:'00000001-1111-4111-8111-111111111111'},(r:any)=>r.cases[0].beforeStop.authentication.baseline.status=403,(r:any)=>r.cases[0].appTrust.caMount.readOnly=false,(r:any)=>r.cases[0].observerAfterExit.running=false,(r:any)=>r.result='partial-observations-not-qualification']){
+ for(const mutate of[(r:any)=>r.stage='full',(r:any)=>r.authenticatedApiDrain='verified',(r:any)=>r.signalCases.pop(),(r:any)=>r.characterization.cases[0].beforeStop.held={id:'00000001-1111-4111-8111-111111111111'},(r:any)=>r.signalCases[0].baseline.authentication.baseline.status=403,(r:any)=>r.signalCases[0].appTrust.caMount.readOnly=false,(r:any)=>r.signalCases[0].observerAfterExit.running=false,(r:any)=>r.result='partial-observations-not-qualification']){
   const input=nativeInput();mutate(input.authenticated);assert.throws(()=>dashboardNativeSummary(input));
  }
+});
+test('coordinated all-case base-environment substitution cannot detach full authenticated proof from the actual immutable image',()=>{
+ const input=nativeInput(),changed=structuredClone(input.authenticated),substitution='e'.repeat(64);
+ for(const item of [...changed.characterization.cases,...changed.signalCases])for(const container of [item.appContainer,item.helperContainer])container.baseEnvironmentSha256=substitution;
+ assert.doesNotThrow(()=>validateNativeAuthenticatedEvidence(changed,changed.source));assert.throws(()=>dashboardNativeSummary({...input,authenticated:changed}));
+ assert.throws(()=>dashboardNativeSummary({...input,image:{...input.image,runtimeEnvironmentSha256:substitution}}));
 });
 
 test('unsupported shutdown states are retained before source-bound rejection',async()=>{

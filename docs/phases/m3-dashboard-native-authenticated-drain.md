@@ -73,10 +73,12 @@ live-provider acceptance.
 Absent-CA, wrong-CA, wrong-hostname and expired-certificate controls use fresh
 application/helper instances. They must observe actual authentication failure,
 no issued session and denied protected reads; cached discovery, JWKS or a prior
-session cannot satisfy a control. TLS strictness and code/client/PKCE/replay
-failures need meaningful observed controls, not only schema rejection. Pair each
-TLS negative with a fresh successful positive and demonstrate that it reached the
-intended TLS listener; generic403 from startup failure is insufficient.
+session cannot satisfy a control. Pair each TLS negative with a fresh successful
+positive and demonstrate that it reached the intended TLS listener; generic403
+from startup failure is insufficient. Native receipts observe the genuine
+successful PKCE/client-authenticated exchange and these TLS negatives. Pure
+protocol behavior tests separately reject a wrong client, wrong verifier and
+code replay; native protocol-adversarial exchanges are not claimed.
 
 ## Held authenticated request and controls
 
@@ -91,9 +93,10 @@ between its upstream timeout/error and the observed client's interruption.
 
 For SIGTERM, the receipt must show the authenticated request held at the exact
 TLS backend before signaling, cleanup started, the app still alive, no finished
-marker and the request still pending for at least 250 ms. Explicit release occurs
-within eight seconds of the hold, before the existing ten-second client timeout.
-A watchdog release or abort cannot qualify. Require the complete expected API200
+marker and the request still pending for at least 300 ms. Explicit release occurs
+within six seconds of the hold, before the helper's seven-second watchdog,
+7.6-second proxy timeout and 7.8-second fixture-client timeout. A watchdog release,
+proxy/client timeout or abort cannot qualify. Require the complete expected API200
 body size/hash, private cache headers, ordered pinned cleanup markers, actual
 exit143, no OOM, force or timeout, and an independently live helper after app
 exit. This is a queued-status read with the real validated subject/schema; it
@@ -104,17 +107,23 @@ Fresh SIGKILL137 and the previously reviewed unsupported abrupt143 command must
 interrupt their own authenticated, demonstrably held requests. The helper must
 remain live to distinguish application interruption from observer failure. Real
 exit/state, incomplete response and absent cleanup completion must cause the
-graceful oracle to reject each control. The abrupt command remains a negative
+graceful behavior predicate to reject each control independently of its mode
+label or command rejection. Observe that interruption before helper shutdown,
+which itself destroys pending requests. The abrupt command remains a negative
 fixture; it cannot qualify as a production configuration.
 
 ## Evidence, recovery and completion
 
 `authenticated-drain-progress.json` is bounded, redacted and explicitly partial.
-`authenticated-drain.json` retains source/tree/candidate/run/attempt, native
+`authenticated-characterization.json` preserves the strict eight-case proof
+before any signal scenario. `authenticated-drain.json` is the mandatory full
+wrapper containing that characterization and all three fresh signal cases; the
+source fixes the full stage, with no environment switch that can skip a case.
+It retains source/tree/candidate/run/attempt, native
 image/runtime, public certificate/peer/fixture identities and observed outcomes
-before validation. Neither file may contain keys, tokens, cookies, private
+before validation. None of the files may contain keys, tokens, cookies, private
 configuration, response bodies, raw environment, stdout/stderr or raw exceptions.
-Both use the existing bounded allowlisted artifact publisher; partial receipts
+All three use the existing bounded allowlisted artifact publisher; partial receipts
 cannot qualify as success.
 
 The [first characterization attempt](../../delivery/acceptance/m3-dashboard-authenticated-characterization-attempt-38820624422.json)
@@ -139,6 +148,15 @@ no configured-certificate fallback or key-log file/trace option. Node documents
 that [socket certificate access can return undefined after destruction](https://nodejs.org/api/tls.html#tlssocketgetx509certificate);
 that is a lifecycle explanation consistent with this missing observation, not a
 new fact established by the failed receipts.
+
+The [third attempt](../../delivery/acceptance/m3-dashboard-authenticated-characterization-attempt-38823741781.json)
+passes the exact committed eight-case characterization oracle on native AMD64
+and ARM64. Both actual archives bind the source, images, runtime, global CA and
+per-peer DER observations. Each architecture records four real synthetic
+login/callback/session/API200 successes and their four fresh paired TLS failures,
+natural helper exits and verified zero-resource/private-file cleanup. These are
+idle-only shutdown cases: held authenticated-request drainage remains unverified
+until the separate three-scenario signal phase passes.
 
 Success requires zero owned app/helper containers, networks and volumes, no
 orphan fixture/client processes, and independently checked removal of private
