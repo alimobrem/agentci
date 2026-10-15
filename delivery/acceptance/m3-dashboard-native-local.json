@@ -10,8 +10,8 @@
     },
     {
       "path": "scripts/dashboard-native-acceptance.mjs",
-      "bytes": 11086,
-      "sha256": "de37f969be6fd307dd44e8b852e92ddc1f7a63ef5bc0afa212f48045d835896e"
+      "bytes": 11545,
+      "sha256": "c6d18f4ce14af425f2f2867dba2a17b6460edf8d84f4d90ccad5a02b78e40d51"
     },
     {
       "path": "scripts/lib/dashboard-native-evidence.mjs",
@@ -35,8 +35,8 @@
     },
     {
       "path": "scripts/lib/dashboard-public-artifacts.mjs",
-      "bytes": 2911,
-      "sha256": "79aa6259f5419a9f3681e241109e280af33873ab2cb3d8763ada19f427926f64"
+      "bytes": 2941,
+      "sha256": "43c85e71f2966f9f18a5d6e1f402a5bf54e62d92512c859be1335ce016ec5702"
     },
     {
       "path": "tests/dashboard-public-artifacts.test.ts",
@@ -50,8 +50,8 @@
     },
     {
       "path": "scripts/dashboard-ci-receipt.mjs",
-      "bytes": 3046,
-      "sha256": "16796f9d2d71efb326a62ba1dfe4bca94274b6cff4a3596f132a00e2d3a3289f"
+      "bytes": 3246,
+      "sha256": "dd51c313b4b064d062c455cee4e9ba69ada916c1ef5832ba5b3dfbf9b760cce7"
     },
     {
       "path": "scripts/lib/dashboard-shutdown.mjs",
@@ -67,6 +67,21 @@
       "path": "apps/dashboard/tests/browser/shutdown.mjs",
       "bytes": 5788,
       "sha256": "954db4de5c562b1da813c7e8786c34466eecf7ac16857e30107bf9760333ba28"
+    },
+    {
+      "path": "scripts/lib/dashboard-scan-failure.mjs",
+      "bytes": 2509,
+      "sha256": "2cf450f864bd07bf03ee6ec9b5f4fe89220a9c0b228ec1f5527eb623d541a7cb"
+    },
+    {
+      "path": "tests/dashboard-scan-failure.test.ts",
+      "bytes": 2210,
+      "sha256": "45928680bc7c4865ed1c75b678b9f3a52fd13ad0975a74ca6c220aea6b6a8065"
+    },
+    {
+      "path": "apps/dashboard/tests/ci-receipt.test.ts",
+      "bytes": 4255,
+      "sha256": "ca85ecabfeea056523218500752572824e7783f5bd7d07ca8c53b87e2a920cfe"
     }
   ],
   "local": {
@@ -74,22 +89,22 @@
     "platform": "darwin",
     "arch": "arm64",
     "focused": {
-      "tests": 18,
-      "passed": 18,
+      "tests": 20,
+      "passed": 20,
       "failed": 0,
       "skipped": 0,
-      "scope": "Native source/runtime/privacy/cleanup validators, bounded publication failure paths and source/attempt-bound idle and active fixture shutdown oracles."
+      "scope": "Native/shutdown/bounded publication plus redacted scanner execution classifiers;21 dashboard unit checks including required/missing stages and invalid proof cases pass."
     },
     "types": "passed",
     "workflows": "passed",
     "generatedProbeSyntax": "passed",
     "fast": {
-      "tests": 606,
-      "passed": 591,
+      "tests": 608,
+      "passed": 593,
       "failed": 9,
       "skipped": 6,
       "otherStagesPassed": 9,
-      "qualification": "Existing independently reproduced Mac/Linux/native/reporter qualification failures; no waiver."
+      "qualification": "Existing independently reproduced Mac qualifications retained; initial new classification-overlap failure separately preserved and corrected."
     },
     "productionFrameworkActiveDrain": {
       "sourceCommit": "36860ae5204bc448962ce02e876a1fa622fbdda0",
@@ -138,5 +153,30 @@
     ],
     "previousNativeAttempts": "Both architectures failed unconfigured shutdown; recovery passed; previous missing exit/OOM/running cause remains unverified.",
     "sourceObservation": "Official integrity-verified Next16.4.0 handler matches installed bytes; source-bound behavioral oracle replaces historical exit-zero premise without modifying production code."
+  },
+  "hostedPreviousAttempt": {
+    "head": "f2579a465960e43cf4f244cebc583c0b4c8d39e8",
+    "nativeRun": "38664591769",
+    "result": "scanner-execution-failed-before-report/policy; cause unavailable because old stderr discarded",
+    "bothArchitectures": [
+      "all3 idle shutdown modes source/locks/image/pinned-handler/ordered markers qualified",
+      "runtime/native sharp and package/RPM/notices inventories retained",
+      "zero owned containers/networks/volumes/private fixture removal proved"
+    ],
+    "packageCount": 208,
+    "noticeCount": 331,
+    "rpmCount": 101,
+    "unresolvedNoticeReviewItems": 22,
+    "legalClearance": "not-claimed",
+    "dashboardRun": "38664591766",
+    "dashboardFailure": "required tenth shutdown-stage receipt fixture mismatch; repaired locally with missing-stage and invalid-proof negatives"
+  },
+  "diagnosticCorrection": {
+    "maxReceiptBytes": 4096,
+    "classificationInput": "stderr prefix, maximum128KiB",
+    "rawDiagnostics": "withheld",
+    "retained": "source/image/scanner identity, channel counts/hashes and fixed enum observations; unknown/multiple remain ambiguous",
+    "scannerArgsNetworkMountsPermissionsDigestPolicy": "unchanged",
+    "scratchSpaceLead": "unconfirmed pending actual new receipt; no scratch/security/egress change"
   }
 }
