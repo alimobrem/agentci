@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2405,7 +2405,7 @@
       "completedAt": "2026-10-06T03:28:34.944Z",
       "acceptance": [
         {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "text": "Preserve every source inventory ID and historical evidence; map all M0–M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
           "status": "passed",
           "evidence": [
             "docs/acceptance-reconciliation.md"
@@ -2708,7 +2708,7 @@
       "completedAt": null,
       "acceptance": [
         {
-          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0\u2013M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
+          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0–M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
           "status": "pending",
           "evidence": []
         }
@@ -4064,6 +4064,38 @@
         },
         {
           "text": "Adversarial unit, real HTTP and production browser checks cover mismatches/outcomes/gaps/inferred versus verified claims, incomplete/corrupt exports and session interruption; preserve cyberpunk history/export UI and no privileged credentials or mutations.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
+    },
+    {
+      "id": "M3-dashboard-notice-associations",
+      "title": "Bind authentic dashboard notice sources to exact runtime packages",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-15T02:37:30.040Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Retain exact-source/hash-bound package-specific notice evidence and declarations without rewriting installed manifests or blanket license inheritance.",
+          "status": "passed",
+          "evidence": [
+            "docs/phases/m3-dashboard-notice-associations.md"
+          ]
+        },
+        {
+          "text": "Regression tests reject changed source/runtime bytes, unrelated README content, incorrect versions and unresolved bundle provenance; preserve all pending legal/native and aggregate M3 gates.",
+          "status": "passed",
+          "evidence": [
+            "docs/phases/m3-dashboard-notice-associations.md"
+          ]
+        },
+        {
+          "text": "Run applicable local, hosted native packaging and independent review before merge; preserve dependency versions, previous attempts and immutable development release.",
           "status": "pending",
           "evidence": []
         }

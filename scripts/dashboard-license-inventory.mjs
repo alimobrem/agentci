@@ -2,8 +2,9 @@ import{readdir,readFile,writeFile,mkdir,lstat,realpath,copyFile}from'node:fs/pro
 import{resolve,relative,dirname,join,isAbsolute,basename}from'node:path';
 import{createHash}from'node:crypto';
 import{fileURLToPath}from'node:url';
+import{applyDashboardNoticeAssociations}from'./dashboard-notice-associations.mjs';
 const digest=b=>createHash('sha256').update(b).digest('hex');
-const inside=(root,path)=>{const r=relative(root,path);return r===''||!r.startsWith('../')&&!isAbsolute(r);};
+const inside=(root,path)=>{const r=relative(root,path);return r===''||r!=='..'&&!r.startsWith('../')&&!isAbsolute(r);};
 const notice=name=>/^(?:licen[sc]e|copying|copyright|notice)(?:[._-].*)?$/i.test(name)||/^.+\.LEGAL\.txt$/i.test(name);
 const descriptorKeys=new Set(['type','main','module','exports','imports','sideEffects','react-native']);
 const isModuleDescriptor=value=>value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length>0&&Object.keys(value).every(key=>descriptorKeys.has(key));
@@ -69,14 +70,16 @@ export async function dashboardLicenseInventory({root,standalone,output}){
   const association={path:pkg.path,ownerPath:owner.path,ownerName:owner.name,ownerVersion:owner.version,sourceManifestSha256:owner.lockedSourceManifestSha256,runtimeManifestSha256:owner.manifestSha256,declaredLicense:owner.declaredLicense,licenseBasis:owner.licenseBasis,notices:owner.notices,qualification:'Identity-free module descriptor bound to exact source/runtime parent manifests and actual parent evidence; no child SPDX declaration or legal clearance inferred'};
   pkg.descriptorEvidence=association;qualifiedDescriptorAssociations.push(association);
  }
+ const noticeAssociations=await applyDashboardNoticeAssociations({root,standalone,output,packages});
+ const associated=new Map(noticeAssociations.map(a=>[a.path,a]));
  const qualified=new Map(qualifiedDescriptorAssociations.map(a=>[a.path,a]));
  const remainingIssues=issues.filter(issue=>{
-  const a=qualified.get(issue.path);if(!a)return true;
-  if(issue.kind==='missing-license-declaration')return !a.declaredLicense;
+  const a=associated.get(issue.path)??qualified.get(issue.path);if(!a)return true;
+  if(issue.kind==='missing-license-declaration')return !(a.associatedDeclaration??a.declaredLicense);
   if(issue.kind==='missing-license-notice')return a.notices.length===0;
   return true;
  });
- const report={schemaVersion:2,scope:'Actual standalone runtime package inventory and locked installed-source notices; SPDX declarations and verified descriptor associations are evidence, not legal approval',rootPackage:{name:rootIdentity.value.name,version:rootIdentity.value.version,sha256:rootIdentity.sha256},dashboardPackage:{name:uiIdentity.value.name,version:uiIdentity.value.version,sha256:uiIdentity.sha256},runtimeFileCount:all.length,packageCount:packages.length,namedPackageCount:packages.filter(p=>p.name!==null).length,moduleDescriptorCount:packages.filter(p=>p.name===null).length,noticeCount:packages.reduce((n,p)=>n+p.notices.length,0),packages,rawMetadataIssues,qualifiedDescriptorAssociations,issues:remainingIssues,status:remainingIssues.length?'inventory-with-review-items':'inventory-complete',platformQualification:'JavaScript runtime trace only; UBI/RPM/Node notices and image/native/security acceptance remain separate'};
+ const report={schemaVersion:3,scope:'Actual standalone runtime package inventory and locked installed-source notices; SPDX declarations and verified descriptor associations are evidence, not legal approval',rootPackage:{name:rootIdentity.value.name,version:rootIdentity.value.version,sha256:rootIdentity.sha256},dashboardPackage:{name:uiIdentity.value.name,version:uiIdentity.value.version,sha256:uiIdentity.sha256},runtimeFileCount:all.length,packageCount:packages.length,namedPackageCount:packages.filter(p=>p.name!==null).length,moduleDescriptorCount:packages.filter(p=>p.name===null).length,noticeCount:packages.reduce((n,p)=>n+p.notices.length,0),associatedNoticeCount:noticeAssociations.reduce((n,a)=>n+a.notices.length,0),packages,rawMetadataIssues,qualifiedDescriptorAssociations,noticeAssociations,licensingReviewItems:noticeAssociations.flatMap(a=>a.pendingReview.map(kind=>({path:a.path,kind}))),licensingReview:'Recovered notices and evidence associations do not decide license compatibility, native redistribution/source obligations or complete bundled-component enumeration; original historical inventories and all aggregate gates remain unchanged.',issues:remainingIssues,status:remainingIssues.length?'inventory-with-review-items':'inventory-complete',platformQualification:'JavaScript runtime trace only; UBI/RPM/Node notices and image/native/security acceptance remain separate'};
  await writeFile(join(output,'inventory.json'),JSON.stringify(report,null,2)+'\n');return report;
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url)){const value=flag=>process.argv[process.argv.indexOf(flag)+1];try{const result=await dashboardLicenseInventory({root:value('--root'),standalone:value('--standalone'),output:value('--output')});console.log(JSON.stringify({status:result.status,packages:result.packageCount,notices:result.noticeCount,reviewItems:result.issues.length}));}catch{console.error('Dashboard license inventory failed; no complete inventory claimed');process.exitCode=1;}}
