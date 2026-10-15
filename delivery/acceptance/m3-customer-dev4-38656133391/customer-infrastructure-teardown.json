@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "result": "teardown-ready",
+  "runId": "38656133391",
+  "attempt": "1",
+  "source": "64dcc40d1bb9e74ed54fe042cfc2ab7e8ec8196f",
+  "postgres": {
+    "schemaVersion": 1,
+    "name": "agentci-customer-pg-38656133391-1-e4ce75a83511c8ef",
+    "owner": "38656133391:1:64dcc40d1bb9e74ed54fe042cfc2ab7e8ec8196f:e4ce75a83511c8ef",
+    "image": "postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873"
+  },
+  "temporal": {
+    "name": "agentci-customer-temporal-38656133391-1",
+    "owner": "38656133391:1",
+    "source": "64dcc40d1bb9e74ed54fe042cfc2ab7e8ec8196f",
+    "image": "temporalio/temporal:latest@sha256:ad4c82c97bd12b417d1ea942610dbcd511afb250c4d5ed26c694009533df447e"
+  },
+  "basis": "verified-owned-zero",
+  "ownedZero": {
+    "assertionContainers": 0,
+    "controllerProcesses": 0,
+    "evaluatorContainers": 0
+  }
+}
