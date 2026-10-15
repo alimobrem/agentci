@@ -1,0 +1,114 @@
+{
+  "runId": 38823741795,
+  "attempt": 1,
+  "conclusion": "success",
+  "cohort": "optimized",
+  "cache": "unknown",
+  "collectedAt": "2026-10-15T23:34:53.203Z",
+  "sourceCommit": "7ca53d6d645cd89476622de4de1a3a005b4eab28",
+  "url": "https://github.com/alimobrem/agentci/actions/runs/38823741795",
+  "event": "pull_request",
+  "jobs": [
+    {
+      "name": "dashboard",
+      "seconds": 164,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 9,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0",
+          "seconds": 3,
+          "conclusion": "success"
+        },
+        {
+          "name": "Install backend dependencies",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build existing validated backend client",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Install locked dashboard dependencies",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Audit dashboard dependencies",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Typecheck dashboard",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Test signed OIDC and scoped contract fixtures",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build production standalone dashboard",
+          "seconds": 27,
+          "conclusion": "success"
+        },
+        {
+          "name": "Install locked Playwright Chromium",
+          "seconds": 22,
+          "conclusion": "success"
+        },
+        {
+          "name": "Test isolated production runtime with synthetic session/backend fixtures",
+          "seconds": 70,
+          "conclusion": "success"
+        },
+        {
+          "name": "Test pinned framework active-request drain and ungraceful controls",
+          "seconds": 11,
+          "conclusion": "success"
+        },
+        {
+          "name": "Retain qualified source and attempt receipt",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}
