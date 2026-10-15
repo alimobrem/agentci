@@ -34,3 +34,6 @@ spec:
     contentCapture: metadata-only
   review:
     requiredCheckName: agentci/review
+  extensions:
+    agentci.io/review:
+      permissions: [permissions/**]
