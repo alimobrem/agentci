@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "scope": "Independently accepted temporary synthetic-customer four-scenario execution and owned recovery; no live endpoint or aggregate M3 acceptance",
+  "harness": {
+    "source": "64dcc40d1bb9e74ed54fe042cfc2ab7e8ec8196f",
+    "tree": "d54fc6f79b1aa94ced2d2927fa262abdc7e67d12",
+    "pullRequest": 105,
+    "reviewedHead": "7f68d228060a686798f53322d22ad73ce7dae57b"
+  },
+  "candidate": {
+    "package": {
+      "publicationRunId": "38627418192",
+      "publicationAttempt": "1",
+      "verificationRunId": "38656133391",
+      "verificationAttempt": "1",
+      "result": "passed",
+      "version": "0.4.0-m3-dev.4",
+      "sourceCommit": "6caeb54767e56b9b2375a256bab127014d99d41a",
+      "platform": "linux/amd64",
+      "anonymous": true,
+      "productionOnly": true,
+      "lockedRootInstall": true,
+      "consumerInstall": true,
+      "packageSha256": "e68608ea8539fe686791c37e51c5754b43a5c78bca31ad1b1b4cd22d70cfdbff",
+      "manifestSha256": "09e25cbfa25f349e7e2a1756d3b4c87b66bffd3b4be51199f293cf69880f33cf",
+      "filesVerified": 547,
+      "node": "v26.10.0"
+    },
+    "imagesManifestSha256": "d2dc4f7360b743306916415dfd2250b1e6a73c68f380a3008d33cc062570355e",
+    "publicationEvidenceSha256": "0aeaa8b2f99f6884f2b787baba2b0adffe636606bd0f55e6baabe734bd9ce4a7",
+    "sourceCommit": "6caeb54767e56b9b2375a256bab127014d99d41a"
+  },
+  "customer": {
+    "repository": "alimobrem/agentci-onboarding-demo",
+    "appId": 5182307,
+    "installationId": 167710386,
+    "subjects": [
+      {
+        "kind": "seeded",
+        "pullRequest": 4,
+        "baseSha": "04f11298c020e853fd0098fb5d92c7529630f300",
+        "headSha": "62342e933e902b188b4b87dfa44575cf409ae7d4"
+      },
+      {
+        "kind": "fixed",
+        "pullRequest": 5,
+        "baseSha": "04f11298c020e853fd0098fb5d92c7529630f300",
+        "headSha": "3c12571ec6f4578d19876ce27cf56c842c3abf97"
+      }
+    ]
+  },
+  "run": {
+    "id": 38656133391,
+    "attempt": 1,
+    "event": "workflow_dispatch",
+    "conclusion": "success",
+    "url": "https://github.com/alimobrem/agentci/actions/runs/38656133391"
+  },
+  "archives": [
+    {
+      "archive": "temporary-customer-demo.zip",
+      "bytes": 76401,
+      "sha256": "f13a577cc63d5507fbfccfdf92dd633140667487e55d7547f4833f5f4ccb48a3",
+      "members": [
+        {
+          "name": "customer-live-demo.json",
+          "bytes": 1059277,
+          "sha256": "f64fdf9406155207b5ce77c72ade1dfb442a43c6a91858bece8f9d50b34a0bf7"
+        }
+      ],
+      "artifactId": 11937570817,
+      "retainedMembersRoot": "delivery/acceptance/m3-customer-dev4-38656133391/"
+    },
+    {
+      "archive": "customer-ci-database-cleanup.zip",
+      "bytes": 426,
+      "sha256": "0c3d02112af0bcd9bf8cde8e3c4a42b5de748ac021f5877bead5807044113809",
+      "members": [
+        {
+          "name": "customer-ci-database-cleanup.json",
+          "bytes": 359,
+          "sha256": "127febfe25dd4dd9c919e9ebbcbeb93ac94b6acdee868ada8ddc19577a10f6d2"
+        }
+      ],
+      "artifactId": 11937217178,
+      "retainedMembersRoot": "delivery/acceptance/m3-customer-dev4-38656133391/"
+    },
+    {
+      "archive": "customer-ci-infrastructure-cleanup.zip",
+      "bytes": 902,
+      "sha256": "059a8b86017f8be141f6edd795058c14bdab391840a8357358577899c03ec174",
+      "members": [
+        {
+          "name": "customer-infrastructure-teardown.json",
+          "bytes": 885,
+          "sha256": "58196701c6fc9c0da1b9f8f832642a42c3f6a1784f71f02c89b34e0901e10848"
+        },
+        {
+          "name": "customer-ci-temporal-cleanup.json",
+          "bytes": 179,
+          "sha256": "2c0008167dd4dfd56e737949161adfb88c1f085dae13fb6eb1da9e5a8da0ac35"
+        }
+      ],
+      "artifactId": 11937032523,
+      "retainedMembersRoot": "delivery/acceptance/m3-customer-dev4-38656133391/"
+    }
+  ],
+  "independentReview": {
+    "authority": "Parent independent source and actual-artifact audit",
+    "confirmed": true,
+    "basis": "Six observations, exports/receipts recomputed; exact harness/dev.4/App/fixtures, seeded/fixed/restart/never-staged/active cancellation and both-scope cleanup validated."
+  },
+  "observations": {
+    "runId": 38656133391,
+    "merge": "64dcc40d1bb9e74ed54fe042cfc2ab7e8ec8196f",
+    "status": "completed-demo-observations",
+    "mode": "temporary-synthetic-customer-demo",
+    "customerEndpointAcceptance": "unverified",
+    "M3MilestoneAcceptance": "pending",
+    "originalConfirmedReceiptImmutable": true,
+    "scenarios": [
+      {
+        "id": "unsupported-claim",
+        "rejection": {
+          "compilerRejected": true,
+          "publicReservationRejected": "service-unavailable",
+          "operationCountBefore": "0",
+          "operationCountAfter": "0",
+          "approval": "none",
+          "executionReceipt": "none"
+        }
+      },
+      {
+        "id": "seeded-defect",
+        "outcome": "reproduced",
+        "cleanupStatus": "completed-unit-teardown",
+        "ownedContainers": 0
+      },
+      {
+        "id": "fixed-result",
+        "outcome": "not-reproduced",
+        "cleanupStatus": "completed-unit-teardown",
+        "ownedContainers": 0
+      },
+      {
+        "id": "failure-restart-recovery"
+      }
+    ],
+    "acceptedEvidenceClaims": [
+      "Six observations and their verified exports/receipts independently audited in the original Actions artifact.",
+      "Never-staged cancellation retained no physical receipt.",
+      "Evaluator restart retained parent/child identities and trial evidence.",
+      "Isolated active cancellation retained a physical receipt and completed its exact cleanup workflow.",
+      "Original confirmed receipt remained immutable.",
+      "Both scopes settled all five operations; isolated database and temporary namespaces were removed, with zero owned services after teardown."
+    ],
+    "cleanup": {
+      "operationCount": 5,
+      "allOperationsAcknowledgedAndSettled": true
+    }
+  },
+  "postmergeVerification": {
+    "run": 38656087116,
+    "conclusion": "success",
+    "artifactId": 11937411971,
+    "zipSha256": "af1fec906d35559b18f77757f2fe7fbc6e21e5ae695d51603590bae67ec02955",
+    "source": "64dcc40d1bb9e74ed54fe042cfc2ab7e8ec8196f",
+    "memberHashesVerified": true,
+    "installedDev4ScopeRegression": "passed"
+  },
+  "preservedAttempts": [
+    {
+      "run": 38510993755,
+      "conclusion": "failure",
+      "note": "Historical worker-startup attempt retained; no deletion/replacement."
+    },
+    {
+      "run": 38580528645,
+      "conclusion": "cancelled",
+      "cleanup": "historical unverified; current success does not retroactively certify disposal."
+    },
+    {
+      "run": 38649564609,
+      "conclusion": "failure",
+      "cleanup": "independently verified owned zero",
+      "originalReservationRejectionCode": "not retained; structural attempt-budget conflict separately established."
+    },
+    {
+      "run": 38652682207,
+      "conclusion": "cancelled",
+      "cleanup": "unverified",
+      "artifactId": 11935208300,
+      "zipSha256": "799b89161fc50226933018b16fda5ba013ad0af3ec3e66d0e8f3fdb2fd91df37"
+    },
+    {
+      "pullRequest": 104,
+      "head": "578710fae1dfab535a76e71fce913cf1032b7235",
+      "note": "Preserved open/unmerged; introduced synthetic URL scanner finding and old history retained."
+    }
+  ],
+  "qualifications": {
+    "reviewerMode": "temporary-synthetic-customer-demo",
+    "customerEndpointAcceptance": "unverified",
+    "M3MilestoneAcceptance": "pending",
+    "liveOIDC": "unverified",
+    "providerAcceptance": "not established by synthetic reviewer execution",
+    "dev3Assets": "immutable unchanged",
+    "allM3AggregateGates": "pending",
+    "originalM0ThroughM10Scope": "unchanged"
+  },
+  "representation": {
+    "kind": "credential-free-derived-acceptance-summary-and-source-references",
+    "originalEvidence": "Detailed customer payload and exact cleanup members remain only in their original existing Actions artifacts. No detailed artifact payload is republished in this branch.",
+    "omittedFields": "Runtime lease identifiers and detailed runtime/customer payload are excluded. Original archive/member hashes identify original artifact bytes only.",
+    "derivationManifest": "delivery/acceptance/m3-customer-dev4-38656133391/derivation-manifest.json"
+  }
+}

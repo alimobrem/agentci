@@ -1,9 +1,8 @@
 # Packaged customer acceptance preparation
 
-M3-07d-2 remains unaccepted: its aggregate transport/Checks dependencies and
-actual customer gates are pending. Child M3-07d-2a prepares an installed-package
-runner and the [four original scenarios](../../specs/fixtures/m3-customer-acceptance.json).
-It reuses existing fixtures and adds no provider, routing policy or approval threshold.
+The temporary dev.4 customer scenarios and owned recovery/cleanup are now independently accepted in [the source-bound acceptance record](m3-customer-dev4-acceptance.md). Live externally reachable endpoint, HTTPS/OIDC dashboard and aggregate M3 gates remain pending. Historical preparation and failed attempts below are retained with their original qualifications.
+
+The following local dev.3 preparation commands document the earlier fixture runner; they are not current dev.4 execution or release acceptance. Actual accepted dev.4 source, candidate hashes and run identities are in the linked record.
 
 Run from the exact service source with Node26.10/npm12.2, installed development
 test dependencies and existing isolated loopback PostgreSQL/Temporal:
