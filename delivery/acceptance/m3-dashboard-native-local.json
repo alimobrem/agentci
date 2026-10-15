@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "baseSource": "64dcc40d1bb9e74ed54fe042cfc2ab7e8ec8196f",
+  "scope": "Optional native qualification preparation; not actual image execution or license/legal/live/release acceptance",
+  "files": [
+    {
+      "path": ".github/workflows/dashboard-native.yaml",
+      "bytes": 3379,
+      "sha256": "bc5646d6b91147f6e69929b844411e1d8292c27a65ddad4fadc1223e37da7ae4"
+    },
+    {
+      "path": "scripts/dashboard-native-acceptance.mjs",
+      "bytes": 11007,
+      "sha256": "68decdbe44c337d4e5dbebd2a7e841862edbf7efe871430812e5764a04810ecd"
+    },
+    {
+      "path": "scripts/lib/dashboard-native-evidence.mjs",
+      "bytes": 4436,
+      "sha256": "d70272cd8bff00ab083aaacfa3af537885a1fc4430d8300f138e1201c44951ed"
+    },
+    {
+      "path": "scripts/lib/dashboard-native-probes.mjs",
+      "bytes": 4166,
+      "sha256": "e83515a378e3412b5d176f3ac30333e0cb3c2843b94927446673e5bfe0017a58"
+    },
+    {
+      "path": "tests/dashboard-native-evidence.test.ts",
+      "bytes": 5340,
+      "sha256": "4748a88fd26913a06eb32ac4b226b3985bc45cbc82fcd469d428df9fe0eb09f5"
+    }
+  ],
+  "local": {
+    "node": "v26.10.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "focused": {
+      "tests": 18,
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0
+    },
+    "types": "passed",
+    "workflows": "passed",
+    "generatedProbeSyntax": "passed",
+    "fast": {
+      "tests": 593,
+      "passed": 578,
+      "failed": 9,
+      "skipped": 6,
+      "otherStagesPassed": 9,
+      "qualification": "Previously reproduced Mac platform failures; no waiver."
+    }
+  },
+  "hosted": {
+    "runners": [
+      "ubuntu-24.04",
+      "ubuntu-24.04-arm"
+    ],
+    "emulation": false,
+    "push": false,
+    "realCredentials": false,
+    "artifactMaxBytesPerArchitecture": 33554432,
+    "retentionDays": 7,
+    "rawImageArchiveUpload": false,
+    "expected": "Native final image execution and actual file/package/RPM/Node/notice/scan/cleanup artifacts with exact source and lock identities"
+  },
+  "qualifications": {
+    "nativeRuntime": "unverified until hosted",
+    "noticeCompleteness": "Pending current regenerated inventory; historical22 items preserved, no borrowed licenses or legal clearance",
+    "liveOIDC": "unverified",
+    "completeOriginalPRView": "pending explicit analysis/comparison bindings and retained intent contract; reviewer claims available only from verified export",
+    "sixRoleReleaseContracts": "unchanged",
+    "frozenCandidateAssets": "unchanged",
+    "newDeploymentOrCredentials": false,
+    "aggregateM3Gates": "all18 pending"
+  }
+}

@@ -1,0 +1,26 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+// @ts-ignore Exact-source optional native qualification validators.
+import {validateDashboardImage,validateDashboardRuntime,validateDashboardAnonymous,validateDashboardContainer,dashboardNativeSummary} from '../scripts/lib/dashboard-native-evidence.mjs';
+const sha='a'.repeat(64),source={sourceCommit:'b'.repeat(40),arch:'amd64',rootLockSha256:sha,dashboardLockSha256:sha,dashboardVersion:'0.0.0-local-m3',rootVersion:'0.4.0-m3-dev.4'};
+const rawImage=()=>({Id:'sha256:'+sha,Os:'linux',Architecture:'amd64',Config:{User:'1001',Cmd:['node','apps/dashboard/server.js'],Env:['NODE_ENV=production'],Labels:{'org.opencontainers.image.revision':source.sourceCommit,'org.agentci.root.lock-sha256':sha,'org.agentci.dashboard.lock-sha256':sha,'org.agentci.dashboard.version':source.dashboardVersion}}});
+const runtime=()=>({uid:1001,pid1Uid:1001,arch:'x64',node:'v26.10.0',rootPackage:{name:'agentci',version:source.rootVersion},dashboardPackage:{name:'@agentci/dashboard',version:source.dashboardVersion},sharp:{pngBytes:90},nodeBinarySha256:sha,nodeLicenseSha256:sha,files:[{}],staticAssets:[{}],privatePaths:[],developmentLoaders:[],escapingLinks:[]});
+const anonymous=(configured=true)=>({live:200,ready:configured?200:503,session:401,review:configured?401:503,history:configured?401:503,export:configured?401:503,logout:403,canaryInResponses:false,canaryInStaticAssets:false,privateCacheHeaders:true,upstreamAvailabilityVerified:false});
+test('native image contract rejects source/lock/arch drift, root user, substituted entrypoint and credential/development environment',()=>{
+ assert.ok(validateDashboardImage(rawImage(),source));
+ for(const mutate of [(v:any)=>v.Architecture='arm64',(v:any)=>v.Config.User='0',(v:any)=>v.Config.Cmd=['npm','start'],(v:any)=>v.Config.Labels['org.opencontainers.image.revision']='c'.repeat(40),(v:any)=>v.Config.Labels['org.agentci.root.lock-sha256']='c'.repeat(64),(v:any)=>v.Config.Env.push('AGENTCI_DASHBOARD_CONFIG=PRIVATE-SENTINEL'),(v:any)=>v.Config.Env.push('NODE_OPTIONS=--import bootstrap')]){const v=rawImage();mutate(v);assert.throws(()=>validateDashboardImage(v,source));}
+});
+test('actual PID1/native binary/package trace evidence cannot be replaced by labels or anonymous liveness',()=>{
+ assert.ok(validateDashboardRuntime(runtime(),source));for(const patch of [{pid1Uid:0},{arch:'arm64'},{node:'v26.9.0'},{privatePaths:['fixture.pem']},{developmentLoaders:['node_modules/tsx']},{escapingLinks:['outside']},{sharp:{pngBytes:0}},{rootPackage:{name:'impostor',version:source.rootVersion}}])assert.throws(()=>validateDashboardRuntime({...runtime(),...patch},source));
+});
+test('configured anonymous denial differs from unavailable configuration; readiness cannot prove upstream availability',()=>{
+ assert.ok(validateDashboardAnonymous(anonymous(),'configured'));for(const mode of ['unconfigured','malformed'])assert.ok(validateDashboardAnonymous(anonymous(false),mode));
+ for(const patch of [{review:200},{export:200},{canaryInResponses:true},{canaryInStaticAssets:true},{privateCacheHeaders:false},{upstreamAvailabilityVerified:true}])assert.throws(()=>validateDashboardAnonymous({...anonymous(),...patch},'configured'));
+});
+test('actual runtime isolation rejects socket mounts, bridged networking, capabilities or root filesystem writes',()=>{
+ const image=validateDashboardImage(rawImage(),source),owner='owned',record={Image:image.id,Config:{User:'1001',Labels:{'agentci.image-smoke.owner':owner}},HostConfig:{NetworkMode:'none',ReadonlyRootfs:true,CapDrop:['ALL'],SecurityOpt:['no-new-privileges'],PidsLimit:128,Memory:512*1024*1024,NanoCpus:1000000000},Mounts:[]};
+ assert.ok(validateDashboardContainer(record,image,owner));for(const patch of [{NetworkMode:'bridge'},{ReadonlyRootfs:false},{CapDrop:[]},{SecurityOpt:[]},{PidsLimit:0}])assert.throws(()=>validateDashboardContainer({...record,HostConfig:{...record.HostConfig,...patch}},image,owner));assert.throws(()=>validateDashboardContainer({...record,Mounts:[{Type:'bind',Destination:'/var/run/docker.sock'}]},image,owner));
+});
+test('native runtime qualification retains license review items and cannot become legal, live OIDC or release acceptance',()=>{
+ const input={source,arch:'amd64',image:validateDashboardImage(rawImage(),source),runtime:runtime(),anonymous:{configured:anonymous(),unconfigured:anonymous(false),malformed:anonymous(false)},shutdown:['configured','unconfigured','malformed'].map(mode=>({mode,exitCode:0,running:false,oomKilled:false})),rpmPackages:[{name:'node-runtime'}],licenseInventory:{packages:[],issues:[{kind:'missing-license-notice'}],packageCount:1,noticeCount:0,status:'inventory-with-review-items'},scan:{result:'passed-policy'},cleanup:{result:'passed',ownedContainers:0,privateFilesRemoved:true}};
+ const report=dashboardNativeSummary(input);assert.equal(report.licenseInventory.noticeCompleteness,'pending-review-items');assert.equal(report.licenseInventory.legalClearance,'not-claimed');assert.equal(report.liveOIDCAcceptance,'unverified');assert.equal(report.releaseAcceptance,'pending');assert.throws(()=>dashboardNativeSummary({...input,shutdown:input.shutdown.map(s=>({...s,exitCode:137}))}));assert.throws(()=>dashboardNativeSummary({...input,cleanup:{...input.cleanup,result:'recovery-required-or-unverified'}}));
+});
