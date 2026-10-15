@@ -117,6 +117,14 @@ configuration, response bodies, raw environment, stdout/stderr or raw exceptions
 Both use the existing bounded allowlisted artifact publisher; partial receipts
 cannot qualify as success.
 
+The [first characterization attempt](../../delivery/acceptance/m3-dashboard-authenticated-characterization-attempt-38820624422.json)
+failed on both native architectures at the first absent-CA authentication control.
+The exact rejected observation was not retained, so its cause remains unproven.
+Both failed artifact archives and their indexed bytes were verified, and both
+cleanup receipts show zero owned resources with private files removed. Subsequent
+diagnostic instrumentation retains only a typed failed observer snapshot; it does
+not loosen the success oracle, establish an eight-case pass or enable drainage.
+
 Success requires zero owned app/helper containers, networks and volumes, no
 orphan fixture/client processes, and independently checked removal of private
 config/key/temp files. Failed execution and recovery remain labeled as failures;

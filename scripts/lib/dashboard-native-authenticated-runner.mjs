@@ -4,7 +4,7 @@ import {join} from 'node:path';
 import {randomBytes,randomUUID,createHash} from 'node:crypto';
 import {createNativeAuthenticatedCertificates,AUTH_TRUST_CASES,AUTH_CA_DESTINATION} from './dashboard-native-auth-certificates.mjs';
 import {AUTH_HELPER_SOURCE,AUTH_ORIGIN,AUTH_ISSUER,AUTH_BACKEND} from './dashboard-native-auth-helper.mjs';
-import {AUTHENTICATED_STAGE,projectAuthenticatedHelperState,validateAuthenticatedCharacterizationObservation,validateNativeAuthenticatedEvidence} from './dashboard-native-authenticated-evidence.mjs';
+import {AUTHENTICATED_STAGE,projectAuthenticatedHelperState,authenticatedFailureObservation,validateAuthenticatedCharacterizationObservation,validateNativeAuthenticatedEvidence} from './dashboard-native-authenticated-evidence.mjs';
 import {validateDashboardContainer,validateDashboardAuthenticatedContainer,validateDashboardAuthenticatedTlsFailureContainer,validateDashboardAuthenticatedHelper} from './dashboard-native-evidence.mjs';
 import {dashboardAuthenticatedTrustProbe,dashboardShutdownSourceProbe} from './dashboard-native-probes.mjs';
 import {dashboardShutdownMarkers,validateDashboardShutdown} from './dashboard-shutdown.mjs';
@@ -104,7 +104,7 @@ export async function runNativeAuthenticatedCharacterization({engine,image,rawIm
    await checkpoint('after-stop',{helperRunning:true});
    record={id,pairedPositiveId,trustCase,defaultProductionValidatorAccepted,appContainer,helperContainer,appRuntime,appTrust,helperTrust,beforeStop,afterStop,shutdown,observerAfterExit:{running:true,queryable:true,observerId}};
    return record;
-  }catch{await checkpoint('failed',authenticatedCheckpointFacts(known));throw failure();}
+  }catch{await checkpoint('failed',{...authenticatedCheckpointFacts(known),...authenticatedFailureObservation(known)});throw failure();}
   finally{
    if(helperId)try{control('/shutdown','POST');}catch{}
    let helperProcessExit=attached?await waitForAuthenticatedHelperClose(attachState,{waitFor}):null;

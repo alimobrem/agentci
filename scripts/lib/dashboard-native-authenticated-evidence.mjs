@@ -41,7 +41,7 @@ const logsSchema=object({markers:array(object({type:choice('started','finished')
 const shutdownSchema=object({mode:choice('configured'),source:sourceSchema,runtime:runtimeSchema,signal:choice('SIGTERM'),stopSucceeded:bool,timeout:bool,forced:bool,exitCode:integer(0,255),running:bool,oomKilled:bool,elapsedMs:integer(0,20000),requestDrain:choice('idle-only'),logs:logsSchema});
 const caseSchema=object({id:uuid,pairedPositiveId:nullable(uuid),trustCase,defaultProductionValidatorAccepted:bool,appContainer:appContainerSchema,helperContainer:helperContainerSchema,appRuntime:runtimeSchema,appTrust:trustSchema,helperTrust:trustSchema,beforeStop:helperStateSchema,afterStop:helperStateSchema,shutdown:shutdownSchema,observerAfterExit:object({running:bool,queryable:bool,observerId:uuid}),helperProcessExit:object({closeObserved:bool,exitCode:integer(0,255),signal:choice(null),forced:bool})});
 const reportSchema=object({schemaVersion:choice(1),stage:choice('characterization'),result:choice('synthetic-authenticated-characterization-qualified'),observedAtMs:time,source:sourceSchema,fixtureSourceSha256:sha,ca:object({sha256:sha,bytes:integer(1,8192)}),certificateBindings:object(Object.fromEntries(['valid',...tlsCases].map(name=>[name,certificatesSchema]))),expectedResponse:object({sha256:sha,bytes:integer(1,262144)}),cases:array(caseSchema,8),authenticatedApiDrain:choice('unverified')});
-const progressSchema=object({schemaVersion:choice(1),stage:choice('characterization'),result:choice('partial-observations-not-qualification'),source:sourceSchema,fixtureSourceSha256:sha,checkpoints:array(object({caseId:nullable(uuid),trustCase:nullable(trustCase),step:choice('prepare','certificates-ready','created','app-ready','helper-ready','authenticated','before-stop','after-stop','complete','failed'),boundary:nullable(choice('prepare','certificates','create','liveness','configuration','helper-start','authentication','stop','observation','oracle')),authenticationComplete:optional(bool),authenticated:optional(bool),loginStatus:optional(integer(0,599)),issuerTlsAttempts:optional(integer()),helperRunning:optional(bool),helperProcessClosed:optional(bool)}),128)});
+const progressSchema=object({schemaVersion:choice(1),stage:choice('characterization'),result:choice('partial-observations-not-qualification'),source:sourceSchema,fixtureSourceSha256:sha,checkpoints:array(object({caseId:nullable(uuid),trustCase:nullable(trustCase),step:choice('prepare','certificates-ready','created','app-ready','helper-ready','authenticated','before-stop','after-stop','complete','failed'),boundary:nullable(choice('prepare','certificates','create','liveness','configuration','helper-start','authentication','stop','observation','oracle')),authenticationComplete:optional(bool),authenticated:optional(bool),loginStatus:optional(integer(0,599)),issuerTlsAttempts:optional(integer()),helperRunning:optional(bool),helperProcessClosed:optional(bool),observerShapeValid:optional(bool),observerSnapshot:optional(helperStateSchema)}),128)});
 
 function matches(schema,value){
  if(schema.kind==='optional')return value===undefined||matches(schema.schema,value);
@@ -66,6 +66,11 @@ function project(schema,value){
 }
 /** Select typed public facts. Freeform stage strings, unknown keys and private values are never retained. */
 export function projectAuthenticatedHelperState(raw){return project(helperStateSchema,raw)??{};}
+/** A failure snapshot records typed observations, never a behavioral qualification or raw diagnostics. */
+export function authenticatedFailureObservation(raw){
+ const observerSnapshot=projectAuthenticatedHelperState(raw);
+ return matches(helperStateSchema,observerSnapshot)?{observerShapeValid:true,observerSnapshot}:{observerShapeValid:false};
+}
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const equalObject=(a,b)=>{if(a===b)return true;if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)!==Array.isArray(b))return false;const keys=Object.keys(a).sort();return same(keys,Object.keys(b).sort())&&keys.every(key=>equalObject(a[key],b[key]));};
 const allTrue=value=>value&&Object.values(value).every(v=>v===true);
@@ -134,6 +139,14 @@ export function assertPublicAuthenticatedArtifact(name,value){
  const limit=name==='authenticated-drain-progress.json'?131072:524288;
  let bytes;try{bytes=Buffer.byteLength(JSON.stringify(value));}catch{fail();}if(bytes>limit)fail();
  if(name==='authenticated-drain.json'){validateNativeAuthenticatedEvidence(value,value.source);return;}
- if(name==='authenticated-drain-progress.json'){if(AUTHENTICATED_STAGE!=='characterization'||!matches(progressSchema,value)||value.fixtureSourceSha256!==hash(AUTH_HELPER_SOURCE))fail();return;}
+ if(name==='authenticated-drain-progress.json'){
+  if(AUTHENTICATED_STAGE!=='characterization'||!matches(progressSchema,value)||value.fixtureSourceSha256!==hash(AUTH_HELPER_SOURCE))fail();
+  for(const checkpoint of value.checkpoints){
+   const hasShape=Object.hasOwn(checkpoint,'observerShapeValid'),hasSnapshot=Object.hasOwn(checkpoint,'observerSnapshot');
+   if((hasShape||hasSnapshot)&&(checkpoint.step!=='failed'||!hasShape||hasSnapshot!==checkpoint.observerShapeValid))fail();
+   if(hasSnapshot&&(checkpoint.trustCase!==checkpoint.observerSnapshot.trustCase||checkpoint.caseId===null))fail();
+  }
+  return;
+ }
  fail();
 }

@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "status": "failed-characterization-not-acceptance",
+  "runId": "38820624422",
+  "attempt": 1,
+  "runUrl": "https://github.com/alimobrem/agentci/actions/runs/38820624422",
+  "candidateCommit": "1d9c83949bd534fe3feb85e8b1e5d2a83c7ed257",
+  "sourceCommit": "e5ea559327a4dd7d0c1136f06f3e341a6e386575",
+  "sourceTree": "c89bc74e283b14ec9dec53dd9112ced92cbc30f7",
+  "verifiedMergeParents": [
+    "bbc887e2afd1bd7f7187bf5844cd9db159d9bb38",
+    "1d9c83949bd534fe3feb85e8b1e5d2a83c7ed257"
+  ],
+  "verifiers": [
+    {
+      "path": "scripts/lib/dashboard-native-authenticated-evidence.mjs",
+      "sourceCommit": "1d9c83949bd534fe3feb85e8b1e5d2a83c7ed257",
+      "sha256": "36927c23b4347061474bf44061859e6563a8982001fdb35c233804af91c4f2d7"
+    },
+    {
+      "path": "scripts/lib/dashboard-native-authenticated-fixture.mjs",
+      "sourceCommit": "1d9c83949bd534fe3feb85e8b1e5d2a83c7ed257",
+      "sha256": "cfdde9a143cd435ffd2cd7e67f09f38743e3709f45eb0af5d1626c69e89e3c40"
+    },
+    {
+      "path": "scripts/lib/dashboard-native-evidence.mjs",
+      "sourceCommit": "1d9c83949bd534fe3feb85e8b1e5d2a83c7ed257",
+      "sha256": "8ca5eaaca940610a631bacb809b81cf01def1d9d4910b08bf7f257093b2e7d75"
+    },
+    {
+      "path": "scripts/lib/dashboard-public-artifacts.mjs",
+      "sourceCommit": "1d9c83949bd534fe3feb85e8b1e5d2a83c7ed257",
+      "sha256": "64bfbf515396f32ac98ba58e3f1113cccb87bef29c211315024e084fa2635f5e"
+    }
+  ],
+  "architectures": [
+    {
+      "arch": "amd64",
+      "archive": {
+        "artifactId": 12012761023,
+        "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38820624422/artifacts/12012761023",
+        "zipSha256": "1fd7e8ffc8a4644dfdfa7e41552db14ba789a6d21badfb221030860837ae2c8d",
+        "zipBytes": 696263,
+        "manifestSha256": "f63928dbf839be6534835d8577d2125e7e64d137d0f6012674c3cc1dc9966768",
+        "verifiedIndexedMembers": 375,
+        "verifiedIndexedBytes": 2026401,
+        "publicBytesIncludingManifest": 2099906,
+        "noExtraUnindexedPayload": true,
+        "boundedPublicationLimitBytes": 33554432,
+        "result": "failed-receipt-bytes-preserved-and-verified"
+      },
+      "source": {
+        "sourceCommit": "e5ea559327a4dd7d0c1136f06f3e341a6e386575",
+        "sourceTree": "c89bc74e283b14ec9dec53dd9112ced92cbc30f7",
+        "candidateCommit": "1d9c83949bd534fe3feb85e8b1e5d2a83c7ed257",
+        "runId": "38820624422",
+        "attempt": "1",
+        "arch": "amd64",
+        "rootVersion": "0.4.0-m3-dev.4",
+        "dashboardVersion": "0.0.0-local-m3",
+        "rootLockSha256": "25c61ea8bd23bf690a0cabffea8c220bd657069e8bc0885d1cd09dea10022a38",
+        "dashboardLockSha256": "f53e726e0ba69f140b82a32338b5bed67fe2651e44e02210cbf48d6b629d24f3"
+      },
+      "imageId": "sha256:34c7dc0600d1337de7e594db89e848bd581c8893a86cd4bb4a6bf4712ea426e7",
+      "retainedPriorScope": "validated-from-retained-receipts-with-current-committed-oracles",
+      "progressObservation": {
+        "validCaseReachedComplete": 1,
+        "firstAbsentCaNegative": {
+          "boundary": "authentication",
+          "authenticationComplete": true,
+          "authenticated": false,
+          "loginStatus": 403,
+          "issuerTlsAttempts": 1
+        },
+        "qualification": "coarse-progress-only; no final per-case/session/API200/DER/helper-exit report is retained"
+      },
+      "cleanup": {
+        "ownedContainers": 0,
+        "ownedNetworks": 0,
+        "ownedVolumes": 0,
+        "privateFilesRemoved": true,
+        "recoveryReceiptMatches": true
+      }
+    },
+    {
+      "arch": "arm64",
+      "archive": {
+        "artifactId": 12013025926,
+        "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38820624422/artifacts/12013025926",
+        "zipSha256": "183cba9c31d2df75df3419148dc8cb29c29f108e9c3b7b016c899d1550bbda99",
+        "zipBytes": 696322,
+        "manifestSha256": "46d5309633d8cc1a86d2eb53779d34687ddba330ac4c759b1cdac2acac6a90db",
+        "verifiedIndexedMembers": 375,
+        "verifiedIndexedBytes": 2026621,
+        "publicBytesIncludingManifest": 2100126,
+        "noExtraUnindexedPayload": true,
+        "boundedPublicationLimitBytes": 33554432,
+        "result": "failed-receipt-bytes-preserved-and-verified"
+      },
+      "source": {
+        "sourceCommit": "e5ea559327a4dd7d0c1136f06f3e341a6e386575",
+        "sourceTree": "c89bc74e283b14ec9dec53dd9112ced92cbc30f7",
+        "candidateCommit": "1d9c83949bd534fe3feb85e8b1e5d2a83c7ed257",
+        "runId": "38820624422",
+        "attempt": "1",
+        "arch": "arm64",
+        "rootVersion": "0.4.0-m3-dev.4",
+        "dashboardVersion": "0.0.0-local-m3",
+        "rootLockSha256": "25c61ea8bd23bf690a0cabffea8c220bd657069e8bc0885d1cd09dea10022a38",
+        "dashboardLockSha256": "f53e726e0ba69f140b82a32338b5bed67fe2651e44e02210cbf48d6b629d24f3"
+      },
+      "imageId": "sha256:847df71feb1ba8ad4456b0ec79d8eed7a88f8fc885f6725827aeb2344b0c0a4f",
+      "retainedPriorScope": "validated-from-retained-receipts-with-current-committed-oracles",
+      "progressObservation": {
+        "validCaseReachedComplete": 1,
+        "firstAbsentCaNegative": {
+          "boundary": "authentication",
+          "authenticationComplete": true,
+          "authenticated": false,
+          "loginStatus": 403,
+          "issuerTlsAttempts": 1
+        },
+        "qualification": "coarse-progress-only; no final per-case/session/API200/DER/helper-exit report is retained"
+      },
+      "cleanup": {
+        "ownedContainers": 0,
+        "ownedNetworks": 0,
+        "ownedVolumes": 0,
+        "privateFilesRemoved": true,
+        "recoveryReceiptMatches": true
+      }
+    }
+  ],
+  "failureBoundary": "Both jobs fail qualification step7 in authenticated-characterization at the first absent-ca negative authentication oracle after one valid-case complete checkpoint. Steps8 owned recovery,9 bounded publication and10 upload succeeded.",
+  "exactRejectedInvariant": "not-retained-and-not-proven",
+  "rootCause": "not-established",
+  "finalCharacterizationReportPresent": false,
+  "allEightPairedCasesQualified": false,
+  "authenticatedApiDrain": "unverified",
+  "scan": "not-reached; no new native scan pass claimed",
+  "nextStep": "Retain a bounded typed failed observer snapshot without changing success guards or enabling the signal phase.",
+  "scope": {
+    "taskId": "M3-dashboard-native-authenticated-drain",
+    "taskStatus": "in-progress",
+    "taskCriteriaPending": 2,
+    "requirements": 1346,
+    "aggregateM3GatesPending": 18
+  },
+  "qualifications": {
+    "metadataIssues": 4,
+    "provenanceAndLicensingReviewItems": 3,
+    "nativeComponents": "partial3/28",
+    "legalClearance": "not-claimed",
+    "liveOIDC": "unverified",
+    "browserSecureCookie": "unverified",
+    "defaultProductionEnvironment": "not-qualified",
+    "M3Gates": "18-pending"
+  },
+  "limitations": [
+    "No final authenticated-drain.json or result.json exists; no complete8-case source/DER/runtime/helper report can be revalidated.",
+    "Exact CA/issuer failure attribution and per-case helper exit facts were not retained beyond coarse progress; no inferred assertion is promoted to a fact.",
+    "Clock-bound final-report validation is unavailable because the final report/observedAtMs is absent.",
+    "Preserved current-committed partial progress validates shape/source/helper hash; it does not prove full characterization.",
+    "Four metadata gaps,three provenance/licensing review items,partial3/28 native notices and live/default-production/browser-cookie/legal qualifications remain."
+  ]
+}

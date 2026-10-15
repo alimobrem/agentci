@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 // @ts-ignore Hosted-native evidence is builtin-only JavaScript.
-import {AUTHENTICATED_STAGE,projectAuthenticatedHelperState,assertPublicAuthenticatedArtifact,validateNativeAuthenticatedEvidence,validateAuthenticatedCharacterizationObservation} from '../scripts/lib/dashboard-native-authenticated-evidence.mjs';
+import {AUTHENTICATED_STAGE,projectAuthenticatedHelperState,authenticatedFailureObservation,assertPublicAuthenticatedArtifact,validateNativeAuthenticatedEvidence,validateAuthenticatedCharacterizationObservation} from '../scripts/lib/dashboard-native-authenticated-evidence.mjs';
 import {authenticatedCharacterization as fixture} from './helpers/dashboard-native-authenticated-proof.ts';
 const sha=(n:number)=>n.toString(16).padStart(64,'0'),uuid=(n:number)=>n.toString(16).padStart(8,'0')+'-1111-4111-8111-111111111111';
 
@@ -45,4 +45,26 @@ test('bounded progress is explicitly partial and rejects unknown/private fields 
  const report=fixture(),progress:any={schemaVersion:1,stage:AUTHENTICATED_STAGE,result:'partial-observations-not-qualification',source:report.source,fixtureSourceSha256:report.fixtureSourceSha256,checkpoints:[{caseId:null,trustCase:null,step:'prepare',boundary:null},{caseId:uuid(1),trustCase:'valid',step:'authenticated',boundary:'authentication',authenticationComplete:true,authenticated:true,loginStatus:303,issuerTlsAttempts:4,helperRunning:true}]};
  assert.doesNotThrow(()=>assertPublicAuthenticatedArtifact('authenticated-drain-progress.json',progress));
  for(const change of [(p:any)=>p.checkpoints[0].stderr='PRIVATE',(p:any)=>p.checkpoints[0].step='PRIVATE',(p:any)=>p.checkpoints[0].loginStatus='PRIVATE',(p:any)=>p.checkpoints=Array(129).fill(p.checkpoints[0]),(p:any)=>p.stage='full',(p:any)=>p.raw='X'.repeat(131073)]){const bad=structuredClone(progress);change(bad);assert.throws(()=>assertPublicAuthenticatedArtifact('authenticated-drain-progress.json',bad));}
+});
+test('failed progress retains a typed rejected observer without weakening the characterization oracle',()=>{
+ const report=fixture(),item=report.cases[1],raw=structuredClone(item.beforeStop);
+ raw.peers.issuer.presentedCertificateSha256s=[];raw.peers.issuer.tlsErrorCodes=[];
+ raw.rawCookie='PRIVATE-COOKIE';raw.authentication.rawToken='PRIVATE-TOKEN';raw.peers.issuer.privateKey='PRIVATE-KEY';
+ const observation=authenticatedFailureObservation(raw);
+ assert.equal(observation.observerShapeValid,true);assert.equal(JSON.stringify(observation).includes('PRIVATE'),false);
+ assert.deepEqual(observation.observerSnapshot.peers.issuer.presentedCertificateSha256s,[]);
+ assert.throws(()=>validateAuthenticatedCharacterizationObservation(observation.observerSnapshot,{trustCase:item.trustCase,ca:report.ca,certificateBindings:report.certificateBindings,expectedResponse:report.expectedResponse}));
+ const progress:any={schemaVersion:1,stage:AUTHENTICATED_STAGE,result:'partial-observations-not-qualification',source:report.source,fixtureSourceSha256:report.fixtureSourceSha256,checkpoints:[{caseId:item.id,trustCase:item.trustCase,step:'failed',boundary:'authentication',...observation}]};
+ assert.doesNotThrow(()=>assertPublicAuthenticatedArtifact('authenticated-drain-progress.json',progress));
+ for(const mutate of [(p:any)=>p.checkpoints[0].step='complete',(p:any)=>p.checkpoints[0].observerShapeValid=false,(p:any)=>delete p.checkpoints[0].observerShapeValid,(p:any)=>delete p.checkpoints[0].observerSnapshot,(p:any)=>p.checkpoints[0].trustCase='valid',(p:any)=>p.checkpoints[0].observerSnapshot.authentication.cookie='PRIVATE-CANARY']){
+  const invalid=structuredClone(progress);mutate(invalid);assert.throws(()=>assertPublicAuthenticatedArtifact('authenticated-drain-progress.json',invalid));
+ }
+ assert.throws(()=>validateNativeAuthenticatedEvidence(progress,report.source));
+});
+test('malformed failed observers retain only an explicit safe shape-invalid flag',()=>{
+ for(const raw of [undefined,null,{}, {authentication:{loginStatus:403,rawCookie:'PRIVATE-CANARY'}}, {...fixture().cases[1].beforeStop,observerId:'PRIVATE-CANARY'}]){
+  assert.deepEqual(authenticatedFailureObservation(raw),{observerShapeValid:false});
+ }
+ const report=fixture(),item=report.cases[1],progress={schemaVersion:1,stage:AUTHENTICATED_STAGE,result:'partial-observations-not-qualification',source:report.source,fixtureSourceSha256:report.fixtureSourceSha256,checkpoints:[{caseId:item.id,trustCase:item.trustCase,step:'failed',boundary:'authentication',observerShapeValid:false}]};
+ assert.doesNotThrow(()=>assertPublicAuthenticatedArtifact('authenticated-drain-progress.json',progress));
 });

@@ -4,6 +4,7 @@ import {mkdtemp,mkdir,writeFile,readFile,readdir,symlink} from 'node:fs/promises
 import {publishDashboardArtifacts} from '../scripts/lib/dashboard-public-artifacts.mjs';
 // @ts-ignore Source-bound fixture identity only; no listener is executed.
 import {AUTH_HELPER_SOURCE} from '../scripts/lib/dashboard-native-auth-helper.mjs';
+import {authenticatedCharacterization} from './helpers/dashboard-native-authenticated-proof.ts';
 async function fixture(){const root=await mkdtemp(join(tmpdir(),'dashboard-public-test-')),staging=join(root,'staging'),destination=join(root,'public');await mkdir(staging);return {root,staging,destination};}
 test('public publication preserves exact member bytes/hashes and counts the manifest inside the cap',async()=>{
  const f=await fixture(),bytes=Buffer.from('{"source":"exact"}\n');await writeFile(join(f.staging,'source.json'),bytes);
@@ -19,6 +20,16 @@ test('authenticated progress publication preserves validated bytes and refuses n
  }
  for(const duplicate of [bytes.replace('"result":','"result":"PRIVATE-CANARY","result":'),bytes.replace('"step":','"step":"PRIVATE-CANARY","step":')]){
   const f=await fixture();await writeFile(join(f.staging,'authenticated-drain-progress.json'),duplicate);assert.equal((await publishDashboardArtifacts(f.staging,f.destination)).result,'withheld');assert.deepEqual(await readdir(f.destination),['publication-failure.json']);assert.equal((await readFile(join(f.destination,'publication-failure.json'),'utf8')).includes('PRIVATE-CANARY'),false);
+ }
+});
+test('public failed observer snapshot remains bounded partial evidence and cannot publish nested private fields',async()=>{
+ const report=authenticatedCharacterization(),item=report.cases[1],observerSnapshot=structuredClone(item.beforeStop);
+ observerSnapshot.peers.issuer.presentedCertificateSha256s=[];
+ const progress={schemaVersion:1,stage:'characterization',result:'partial-observations-not-qualification',source:report.source,fixtureSourceSha256:report.fixtureSourceSha256,checkpoints:[{caseId:item.id,trustCase:item.trustCase,step:'failed',boundary:'authentication',observerShapeValid:true,observerSnapshot}]};
+ const good=await fixture(),bytes=JSON.stringify(progress,null,2)+'\n';await writeFile(join(good.staging,'authenticated-drain-progress.json'),bytes);
+ assert.equal((await publishDashboardArtifacts(good.staging,good.destination)).result,'published');assert.equal(await readFile(join(good.destination,'authenticated-drain-progress.json'),'utf8'),bytes);
+ for(const bad of [(()=>{const value=structuredClone(progress);value.checkpoints[0]!.observerSnapshot.peers.issuer.privateKey='PRIVATE-CANARY';return JSON.stringify(value,null,2)+'\n';})(),bytes.replace('"tlsAttempts":','"tlsAttempts":"PRIVATE-CANARY","tlsAttempts":')]){
+  const f=await fixture();await writeFile(join(f.staging,'authenticated-drain-progress.json'),bad);assert.equal((await publishDashboardArtifacts(f.staging,f.destination)).result,'withheld');assert.deepEqual(await readdir(f.destination),['publication-failure.json']);assert.equal((await readFile(join(f.destination,'publication-failure.json'),'utf8')).includes('PRIVATE-CANARY'),false);
  }
 });
 for(const failure of ['oversized','aggregate','manifest','file-count','symlink','unallowlisted','missing'])test('failed '+failure+' cannot expose partial files through always upload',async()=>{
