@@ -1,12 +1,12 @@
-import {semanticView,comparisonView,reviewerView,unavailableViews} from './evidence-views';
+import {semanticView,comparisonView,reviewerView,unavailableViews,intentView} from './evidence-views';
 import type {ReviewAdmissionRequest} from 'agentci/client';
 import type {Principal} from './session';
 import {authorize} from './session';
-export interface ReviewBinding {admission:ReviewAdmissionRequest;apiOrigin:string;readToken:string;semanticEvidenceId?:string;comparison?:{id:string;attemptId:string};reviewerComparison?:boolean}
+export interface ReviewBinding {admission:ReviewAdmissionRequest;apiOrigin:string;readToken:string;intent?:{evidenceId:string;digest:string};semanticEvidenceId?:string;comparison?:{id:string;attemptId:string};reviewerComparison?:boolean}
 export const DASHBOARD_READ_DEADLINE_MS=15000, MAX_DASHBOARD_BYTES=8*1024*1024, MAX_DASHBOARD_FINDINGS=64;
 /** Operational display limits, not milestone quality/acceptance thresholds. No partial view is certified. */
 export async function readDashboard(principal:Principal,binding:ReviewBinding,callerSignal?:AbortSignal,options:{deadlineMs?:number;maxBytes?:number}={}){
- binding=structuredClone(binding);if(binding.comparison&&!binding.semanticEvidenceId||[binding.semanticEvidenceId,binding.comparison?.id,binding.comparison?.attemptId].some(id=>id!==undefined&&!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(id))||binding.reviewerComparison!==undefined&&typeof binding.reviewerComparison!=='boolean')throw Error('invalid-review-configuration');const admission=binding.admission;authorize(principal,admission.subject.organizationId,admission.subject.repository);
+ binding=structuredClone(binding);if(binding.intent&&(!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(binding.intent.evidenceId)||!/^sha256:[a-f0-9]{64}$/.test(binding.intent.digest))||binding.intent&&binding.semanticEvidenceId&&binding.intent.evidenceId!==binding.semanticEvidenceId||binding.comparison&&!binding.semanticEvidenceId||[binding.semanticEvidenceId,binding.comparison?.id,binding.comparison?.attemptId].some(id=>id!==undefined&&!/^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/.test(id))||binding.reviewerComparison!==undefined&&typeof binding.reviewerComparison!=='boolean')throw Error('invalid-review-configuration');const admission=binding.admission;authorize(principal,admission.subject.organizationId,admission.subject.repository);
  const deadlineMs=options.deadlineMs??DASHBOARD_READ_DEADLINE_MS,maxBytes=options.maxBytes??MAX_DASHBOARD_BYTES;
  if(!Number.isInteger(deadlineMs)||deadlineMs<1||deadlineMs>DASHBOARD_READ_DEADLINE_MS||!Number.isInteger(maxBytes)||maxBytes<1||maxBytes>MAX_DASHBOARD_BYTES)throw Error('invalid-read-budget');
  const budgetController=new AbortController(),signal=AbortSignal.any([AbortSignal.timeout(deadlineMs),budgetController.signal,...(callerSignal?[callerSignal]:[])]);signal.throwIfAborted();
@@ -15,6 +15,11 @@ export async function readDashboard(principal:Principal,binding:ReviewBinding,ca
  const client=new ModelReviewClient({url:binding.apiOrigin,readToken:binding.readToken,maxAttempts:1,timeoutMs:10000,maxReadBytes:maxBytes,readBudget});
  const views=unavailableViews();
  const status=await client.show(admission,{signal});
+ if(binding.intent){
+  const legacy=new AgentCIClient({url:binding.apiOrigin,token:binding.readToken,timeoutMs:10000,readBudget});
+  const record=await legacy.intent(binding.intent.evidenceId,{...admission.subject,digest:binding.intent.digest},{signal});
+  if(record)views.intent=intentView(record);
+ }
  if(!status.summary)return {admission,status,findings:[],views,evidence:'unavailable' as const};
  if(status.summary.summary.findings.length>MAX_DASHBOARD_FINDINGS)throw Object.assign(Error('bounded-dashboard-read'),{code:'response-too-large'});
  const refs=await client.findings(admission,{signal});if(refs.summaryDigest!==status.summary.digest||refs.nextCursor!==null||refs.items.length!==status.summary.summary.findings.length)throw Error('identity-mismatch');if(refs.items.length>MAX_DASHBOARD_FINDINGS)throw Object.assign(Error('bounded-dashboard-read'),{code:'response-too-large'});

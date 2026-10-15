@@ -13,6 +13,7 @@ export function createActivities(client: Octokit, store: Store, config: { appId:
       const base = await remoteSnapshot(client, job.repository, job.baseSha);
       const head = await remoteSnapshot(client, job.repository, job.headSha);
       const record = await store.save(analyze({ repository: job.repository, base, head }), job.pullRequest);
+      await store.saveIntent(record,head);
       return record.id;
     },
     async publish(job: ReviewJob, id: string): Promise<'published' | 'superseded'> {

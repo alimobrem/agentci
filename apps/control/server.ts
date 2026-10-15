@@ -1,3 +1,4 @@
+import {validateIntentRecord} from '../../packages/review/intent.ts';
 import {UnsupportedEvalSource} from '../../packages/evals/source.ts';
 import {modelReviewRoutes,type ModelReviewControl} from './model-reviews.ts';
 import {equalUuid} from '../../packages/identity/uuid.ts';
@@ -11,7 +12,7 @@ import type {EvalStore} from '../../packages/storage/evals.ts';
 import {validateComparisonRecord} from '../../packages/evals/comparison.ts';
 import {frameExport,MAX_EXPORT_FRAME_BYTES,type ExportItem} from '../../packages/evals/export.ts';
 export interface ControlConfig extends WebhookConfig { evidenceToken: string; operatorToken?:string }
-type Storage = Pick<Store, 'ready' | 'recordDelivery' | 'evidence'>;
+type Storage = Pick<Store, 'ready' | 'recordDelivery' | 'evidence'>&Partial<Pick<Store,'intent'|'organizationId'>>;
 const uuid = /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i;
 export function createControlApi(config: ControlConfig, store: Storage, comparisons?:Pick<EvalStore,'comparison'|'ready'|'organizationId'|'repository'>&Partial<Pick<EvalStore,'exportComparison'>>, modelReviews?:ModelReviewControl) {
   if (config.secret.length < 32 || config.evidenceToken.length < 32) throw new Error('Service secrets must have at least 32 characters');
@@ -80,6 +81,20 @@ export function createControlApi(config: ControlConfig, store: Storage, comparis
         const body=JSON.stringify(validated);
         if(Buffer.byteLength(body)>4*1024*1024){reply(413,{error:{code:'comparison-too-large'}});return;}
         res.writeHead(200,{'content-type':'application/json','cache-control':'no-store','x-content-type-options':'nosniff'});res.end(body);return;
+      }
+      const intentMatch=/^\/v1\/evidence\/([^/]+)\/intent$/.exec(path??'');
+      if(intentMatch){
+        if(req.method!=='GET'){res.setHeader('allow','GET');reply(405,{error:{code:'method-not-allowed'}});return;}
+        const actual=Buffer.from(req.headers.authorization??''),expected=Buffer.from(`Bearer ${config.evidenceToken}`);
+        if(actual.length!==expected.length||!timingSafeEqual(actual,expected)){reply(401,{error:{code:'unauthorized'}});return;}
+        if((req.url??'').includes('?')){reply(400,{error:{code:'invalid-request'}});return;}
+        if(!uuid.test(intentMatch[1]!)){reply(400,{error:{code:'invalid-evidence-id'}});return;}
+        if(!store.intent||!store.organizationId)throw Error('Intent storage unavailable');
+        const record=await store.intent(intentMatch[1]!.toLowerCase());
+        if(!record){reply(404,{error:{code:'not-found'}});return;}
+        const validated=validateIntentRecord(record);
+        if(!equalUuid(validated.reviewId,intentMatch[1])||!equalUuid(validated.subject.organizationId,store.organizationId)||validated.subject.repository!==config.repository)throw Error('Intent scope mismatch');
+        reply(200,validated);return;
       }
       const match = /^\/v1\/evidence\/([^/]+)$/.exec(path ?? '');
       if (match) {

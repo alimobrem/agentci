@@ -1,0 +1,21 @@
+import {expect} from '@playwright/test';import assert from 'node:assert/strict';import path from 'node:path';
+export async function checkIntent({make,fixture,origin,checks,output}){
+ const state=async()=>await(await fetch(fixture.backendOrigin+'/fixture')).json(),set=async value=>await fetch(fixture.backendOrigin+'/fixture/state/'+value);
+ await fetch(fixture.backendOrigin+'/fixture/intent-bindings');await set('intent');const flow=await make(fixture.intentUsers[0]);await flow.page.goto(origin+'/?review='+fixture.reviewId);
+ const summary=flow.page.locator('.intent-summary');await expect(summary).toHaveText('Declared fixture intent: preserve café ☕. <script>window.intentExecuted=true</script>');assert.equal(await flow.page.evaluate(()=>window.intentExecuted),undefined);await expect(flow.page.getByText(/Repository-declared intent · asserted/)).toBeVisible();await expect(flow.page.getByText(/Review:/).filter({hasText:'queued'})).toBeVisible();await expect(flow.page.getByText(/Evidence:/).filter({hasText:'unavailable'})).toBeVisible();await flow.page.screenshot({path:path.join(output,'fixture-declared-intent.png'),fullPage:true});checks.push('repository-declared intent is plain escaped text with asserted qualification while queued model evidence stays unavailable');
+ await set('intent-missing');await flow.page.reload();await expect(flow.page.getByText(/No pinned retained repository-declared intent is available/)).toBeVisible();await set('intent-corrupt');await flow.page.reload();await expect(flow.page.getByRole('heading',{name:'Review unavailable',exact:true})).toBeVisible();await expect(summary).toHaveCount(0);await flow.context.close();checks.push('missing declared intent stays unavailable; corrupt pinned record fails entire joined view without partial disclosure');
+ let index=1;
+ for(const action of ['close','account','logout','revoke','navigation','expiry']){
+  const userIndex=index++,held=await make(fixture.intentUsers[userIndex]);await set('intent-held');const before=await state();
+  if(action==='expiry')await held.page.route('**/api/session',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({validForMs:200,viewBinding:fixture.intentUsers[userIndex].viewBinding})}));
+  await held.page.goto(origin+'/?review='+fixture.reviewId);await expect.poll(async()=>(await state()).activeRetainedReads).toBe(1);await expect(held.page.locator('.intent-summary')).toHaveCount(0);
+  if(action==='close')await held.context.close();
+  else if(action==='account'){await held.context.addCookies([{name:'__Host-agentci-session',value:fixture.bob.id,domain:'127.0.0.1',path:'/',secure:true,httpOnly:true,sameSite:'Lax'}]);await held.page.evaluate(()=>window.dispatchEvent(new Event('pageshow')));await expect(held.page.getByRole('heading',{name:'Session changed',exact:true})).toBeVisible();}
+  else if(action==='logout'){await held.page.getByRole('button',{name:'Sign out',exact:true}).click();await expect(held.page.getByRole('heading',{name:'Sign in to view reviews',exact:true})).toBeVisible();}
+  else if(action==='revoke'){await fetch(fixture.backendOrigin+'/fixture/revoke-intent/'+userIndex);await held.page.evaluate(()=>window.dispatchEvent(new Event('focus')));await expect(held.page.getByRole('heading',{name:'Session expired or revoked',exact:true})).toBeVisible();}
+  else if(action==='navigation'){await held.page.goto(origin+'/?review='+fixture.secondReviewId);await expect(held.page.getByRole('heading',{name:/PR 8/})).toBeVisible();}
+  else await expect(held.page.getByRole('heading',{name:'Session expired or revoked',exact:true})).toBeVisible();
+  await expect.poll(async()=>(await state()).activeRetainedReads).toBe(0);assert.equal((await state()).abortedRetainedReads,before.abortedRetainedReads+1);assert.equal((await state()).mutations,0);await fetch(fixture.backendOrigin+'/fixture/release');if(action!=='close'){await expect(held.page.locator('.intent-summary')).toHaveCount(0);await held.context.close();}
+ }
+ checks.push('actual held intent socket aborts on close, account change, logout, revocation, review navigation and session expiry; no late intent or API mutation');await fetch(fixture.backendOrigin+'/fixture/clear-intent-binding');await set('queued');
+}
