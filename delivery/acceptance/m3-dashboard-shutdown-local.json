@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "result": "production-framework-synthetic-active-request-drain-qualified",
+  "scope": "Actual generated production Next server with TEST-ONLY synthetic session/backend preloads and negative controls; no production handler modification, wrapper or exit-code rewriting. Not native container evidence.",
+  "platform": "darwin",
+  "arch": "arm64",
+  "runId": null,
+  "runAttempt": null,
+  "sourceCommit": "36860ae5204bc448962ce02e876a1fa622fbdda0",
+  "sourceTree": "578247e65bea0e9e89a4a066dd79638f1fc1da41",
+  "nextVersion": "16.4.0",
+  "handlerSha256": "af5fd02bb07111f4794f7c7123e7388953bdfb85e131024c85dbc9abbab82d6c",
+  "rootLockSha256": "25c61ea8bd23bf690a0cabffea8c220bd657069e8bc0885d1cd09dea10022a38",
+  "dashboardLockSha256": "f53e726e0ba69f140b82a32338b5bed67fe2651e44e02210cbf48d6b629d24f3",
+  "results": [
+    {
+      "mode": "graceful",
+      "signal": "SIGTERM",
+      "exit": {
+        "code": 143,
+        "signal": null
+      },
+      "elapsedMs": 3282,
+      "heldBeforeRelease": true,
+      "response": {
+        "status": 200,
+        "bytes": 1145,
+        "sha256": "2649aee89d38bd5e8e1fc0b0b8f9d5b7390cd796e2bd3a8294b14ced16220c52",
+        "complete": true
+      },
+      "logs": {
+        "markers": [
+          {
+            "type": "started",
+            "stream": "stderr",
+            "line": 0
+          },
+          {
+            "type": "finished",
+            "stream": "stderr",
+            "line": 1
+          }
+        ],
+        "stdoutSha256": "a39eeb6a4b5d2f18e614dd134cee6e81ffca8b258b0e3b79dec1cced91e5b298",
+        "stderrSha256": "0286f7c4979d63f0fab0740ed6e1b747c8dea5e708617d65a863b34aa099bce6",
+        "cleanupErrors": false,
+        "canaryLeak": false
+      },
+      "result": "active-request-drained-before-framework-exit"
+    },
+    {
+      "mode": "forced",
+      "signal": "SIGKILL",
+      "exit": {
+        "code": null,
+        "signal": "SIGKILL"
+      },
+      "elapsedMs": 12,
+      "heldBeforeRelease": false,
+      "response": {
+        "complete": false
+      },
+      "logs": {
+        "markers": [],
+        "stdoutSha256": "a39eeb6a4b5d2f18e614dd134cee6e81ffca8b258b0e3b79dec1cced91e5b298",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "cleanupErrors": false,
+        "canaryLeak": false
+      },
+      "result": "ungraceful-control-rejected"
+    },
+    {
+      "mode": "abrupt143",
+      "signal": "SIGTERM",
+      "exit": {
+        "code": 143,
+        "signal": null
+      },
+      "elapsedMs": 20,
+      "heldBeforeRelease": false,
+      "response": {
+        "complete": false
+      },
+      "logs": {
+        "markers": [],
+        "stdoutSha256": "365d2b569c68ea40b4efadb73d51d7e112092d73ac764d468bddbf062d0ddf95",
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "cleanupErrors": false,
+        "canaryLeak": false
+      },
+      "result": "ungraceful-control-rejected"
+    }
+  ],
+  "privateFilesRemoved": true,
+  "nativeActiveRequestDrain": "unverified"
+}

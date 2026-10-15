@@ -57,11 +57,15 @@ jobs:
       - name: Test isolated production runtime with synthetic session/backend fixtures
         id: browser
         run: npm run test:browser --prefix apps/dashboard 2>&1 | tee .agentci/artifacts/dashboard-ci/browser.log
+      - name: Test pinned framework active-request drain and ungraceful controls
+        id: shutdown
+        working-directory: apps/dashboard
+        run: node tests/browser/shutdown.mjs 2>&1 | tee ../../.agentci/artifacts/dashboard-ci/shutdown.log
       - name: Retain qualified source and attempt receipt
         if: always()
         env:
           UI_STAGE_OUTCOMES: >-
-            {"rootInstall":"${{ steps.root_install.outcome }}","rootBuild":"${{ steps.root_build.outcome }}","uiInstall":"${{ steps.ui_install.outcome }}","audit":"${{ steps.audit.outcome }}","types":"${{ steps.types.outcome }}","units":"${{ steps.units.outcome }}","build":"${{ steps.build.outcome }}","browserInstall":"${{ steps.browser_install.outcome }}","browser":"${{ steps.browser.outcome }}"}
+            {"rootInstall":"${{ steps.root_install.outcome }}","rootBuild":"${{ steps.root_build.outcome }}","uiInstall":"${{ steps.ui_install.outcome }}","audit":"${{ steps.audit.outcome }}","types":"${{ steps.types.outcome }}","units":"${{ steps.units.outcome }}","build":"${{ steps.build.outcome }}","browserInstall":"${{ steps.browser_install.outcome }}","browser":"${{ steps.browser.outcome }}","shutdown":"${{ steps.shutdown.outcome }}"}
           UI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
         run: node scripts/dashboard-ci-receipt.mjs
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
