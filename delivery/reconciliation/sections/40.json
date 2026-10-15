@@ -7275,6 +7275,28 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-dashboard-native-component-notices",
+          "status": "in-progress",
+          "startedAt": "2026-10-15T14:08:07.417Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Recover only authentic exact-file observed-runtime and exact-version native root notices, bound to archive/runtime/source evidence; retain version discrepancies and all unresolved metadata, notice-completeness and source-obligation qualifications.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-notice-gaps.md"
+              ]
+            },
+            {
+              "text": "Test altered version/source/runtime/notice evidence and existing containment boundaries; pass clean committed-archive reconciliation, exact-head hosted native CI and independent review before merge.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -7581,6 +7603,12 @@
         {
           "path": "docs/phases/m3-dashboard-notice-associations.md",
           "sha256": "ae4efdaf562464a9ecc1ed0ebe172b0e8191dbb55c1b2a5480b86ebc1a927e3f",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-dashboard-notice-gaps.md",
+          "sha256": "93d902a656f541e7500d3f303a68c071981a2a7c006d6c5fc78f8da03c70a551",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -8786,6 +8814,28 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-dashboard-native-component-notices",
+          "status": "in-progress",
+          "startedAt": "2026-10-15T14:08:07.417Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Recover only authentic exact-file observed-runtime and exact-version native root notices, bound to archive/runtime/source evidence; retain version discrepancies and all unresolved metadata, notice-completeness and source-obligation qualifications.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-notice-gaps.md"
+              ]
+            },
+            {
+              "text": "Test altered version/source/runtime/notice evidence and existing containment boundaries; pass clean committed-archive reconciliation, exact-head hosted native CI and independent review before merge.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -9092,6 +9142,12 @@
         {
           "path": "docs/phases/m3-dashboard-notice-associations.md",
           "sha256": "ae4efdaf562464a9ecc1ed0ebe172b0e8191dbb55c1b2a5480b86ebc1a927e3f",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-dashboard-notice-gaps.md",
+          "sha256": "93d902a656f541e7500d3f303a68c071981a2a7c006d6c5fc78f8da03c70a551",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

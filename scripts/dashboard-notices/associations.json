@@ -811,6 +811,81 @@
               "archiveSha256": "e371cb713fc8822c96a0d3fb60a3d092799d0aefab6d7f1fb3b72d8d75f1d109"
             }
           }
+        },
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/cgif-LICENSE",
+          "name": "cgif-LICENSE",
+          "sha256": "7264dede477abab4ac3fe8236beb8153845c04ccd33b18f281085087e219fc6d",
+          "bytes": 1099,
+          "provenance": {
+            "component": {
+              "name": "cgif",
+              "version": "0.5.4"
+            },
+            "url": "https://github.com/dloebl/cgif/blob/2dfb49c22fbe3894e46731f7e3b6ffa84311e44e/LICENSE",
+            "sourceCommit": "2dfb49c22fbe3894e46731f7e3b6ffa84311e44e",
+            "sourceArchive": {
+              "url": "https://codeload.github.com/dloebl/cgif/tar.gz/2dfb49c22fbe3894e46731f7e3b6ffa84311e44e",
+              "sha256": "06d4d712f43439318adc6397b9977fed59249f2f0cd4e44e046e8289fe06b0e2",
+              "bytes": 40017
+            },
+            "buildSelectedTag": {
+              "url": "https://github.com/dloebl/cgif/tree/v0.5.4",
+              "observedCommit": "2dfb49c22fbe3894e46731f7e3b6ffa84311e44e"
+            },
+            "qualification": "Authentic complete upstream root notice file, unchanged. Build-selected release/tag and runtime version binding; no independent binary rebuild or full component copyright coverage claimed."
+          }
+        },
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/highway-LICENSE",
+          "name": "highway-LICENSE",
+          "sha256": "e340270d4f64384569a91d546acb5b094d69ce47f0c015db77abb74dc6f815af",
+          "bytes": 20785,
+          "provenance": {
+            "component": {
+              "name": "highway",
+              "version": "1.4.0"
+            },
+            "url": "https://github.com/google/highway/blob/2607d3b5b0113992fe84d3848859eae13b3b52c1/LICENSE",
+            "sourceCommit": "2607d3b5b0113992fe84d3848859eae13b3b52c1",
+            "sourceArchive": {
+              "url": "https://codeload.github.com/google/highway/tar.gz/2607d3b5b0113992fe84d3848859eae13b3b52c1",
+              "sha256": "741d705781e0b3e406beda8f1f994fbae01321237ce8023a1ad90fbaf7940c25",
+              "bytes": 3692133
+            },
+            "buildSelectedTag": {
+              "url": "https://github.com/google/highway/tree/1.4.0",
+              "observedCommit": "2607d3b5b0113992fe84d3848859eae13b3b52c1"
+            },
+            "qualification": "Authentic complete upstream root notice file, unchanged. Build-selected release/tag and runtime version binding; no independent binary rebuild or full component copyright coverage claimed."
+          }
+        },
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/zlib-ng-LICENSE.md",
+          "name": "zlib-ng-LICENSE.md",
+          "sha256": "6c9f0d975b41afaa34d22f55bb8986ce69e5cb7ad327cb2b28820cd425edf5ee",
+          "bytes": 867,
+          "provenance": {
+            "component": {
+              "name": "zlib-ng",
+              "version": "2.3.3"
+            },
+            "url": "https://github.com/zlib-ng/zlib-ng/blob/12731092979c6d07f42da27da673a9f6c7b13586/LICENSE.md",
+            "sourceCommit": "12731092979c6d07f42da27da673a9f6c7b13586",
+            "sourceArchive": {
+              "url": "https://codeload.github.com/zlib-ng/zlib-ng/tar.gz/12731092979c6d07f42da27da673a9f6c7b13586",
+              "sha256": "a0d2a5d122c84b56a793a1553a9c3327fb2eb7469bf7a86b79e3c7be5d92e8d6",
+              "bytes": 2450038
+            },
+            "buildSelectedTag": {
+              "url": "https://github.com/zlib-ng/zlib-ng/tree/2.3.3",
+              "observedCommit": "12731092979c6d07f42da27da673a9f6c7b13586"
+            },
+            "qualification": "Authentic complete upstream root notice file, unchanged. Build-selected release/tag and runtime version binding; no independent binary rebuild or full component copyright coverage claimed."
+          }
         }
       ],
       "sourceProvenance": [
@@ -838,12 +913,107 @@
           "packaging": "generate_readme copies THIRD-PARTY-NOTICES lines2+ into README Licensing; remove_unused removes original for non-dev packages."
         }
       ],
-      "qualification": "Actual architecture-specific1.3.4 archive, binary/source tree, versions.json and complete upstream README Licensing matrix retained. Matrix/links do not establish complete component copyright/license texts. Native notice completeness, redistribution/source obligations and license compatibility decisions remain pending; no legal approval.",
+      "qualification": "Actual architecture-specific1.3.4 archive, binary/source tree, versions.json and complete upstream README Licensing matrix retained. Authentic full upstream root notice files retained for cgif0.5.4, highway1.4.0 and zlib-ng2.3.3, with immutable source archives/hashes and original build/version evidence. This is partial3-of28 component evidence. Build script statically links dependencies and libvips into libvips-cpp; a .so filename establishes neither replaceability nor source-obligation satisfaction. Complete component/copyright notices, redistribution/relinking/source obligations and compatibility decisions remain pending; no rebuild or legal approval.",
       "evidenceKind": "upstream-licensing-matrix",
       "pendingReview": [
         "native-component-copyright-and-full-license-notice-completeness-unverified",
         "native-redistribution-and-source-obligations-pending"
-      ]
+      ],
+      "supportingEvidence": [
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/build-posix.sh",
+          "name": "build-posix.sh",
+          "sha256": "333031b3b49bf1a16d0b9d6812d98f67c404218932ef8c0b389388524a524b36",
+          "bytes": 23877,
+          "provenance": {
+            "url": "https://github.com/lovell/sharp-libvips/blob/ebb95f8add54eee8bed840e3fb587e4cbec857d7/build/posix.sh",
+            "sourceCommit": "ebb95f8add54eee8bed840e3fb587e4cbec857d7",
+            "qualification": "Original upstream build/version/packaging provenance; retained as evidence only, never executed by notice collection. No reconstruction of actual binary build or legal clearance."
+          }
+        },
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/versions.properties",
+          "name": "versions.properties",
+          "sha256": "c0ad634f7c2ac8994f831dd0bcb5c60043db7ba4ddd9cc2dbc3703b15f4ec7e5",
+          "bytes": 594,
+          "provenance": {
+            "url": "https://github.com/lovell/sharp-libvips/blob/ebb95f8add54eee8bed840e3fb587e4cbec857d7/versions.properties",
+            "sourceCommit": "ebb95f8add54eee8bed840e3fb587e4cbec857d7",
+            "qualification": "Original upstream build/version/packaging provenance; retained as evidence only, never executed by notice collection. No reconstruction of actual binary build or legal clearance."
+          }
+        },
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/populate-npm-workspace.sh",
+          "name": "populate-npm-workspace.sh",
+          "sha256": "a960e41223db945832cd63f92ed38e9c297f58a5f72c6f4adea80f805fc12589",
+          "bytes": 2628,
+          "provenance": {
+            "url": "https://github.com/lovell/sharp-libvips/blob/ebb95f8add54eee8bed840e3fb587e4cbec857d7/populate-npm-workspace.sh",
+            "sourceCommit": "ebb95f8add54eee8bed840e3fb587e4cbec857d7",
+            "qualification": "Original upstream build/version/packaging provenance; retained as evidence only, never executed by notice collection. No reconstruction of actual binary build or legal clearance."
+          }
+        },
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/sharp-libvips-LICENSE",
+          "name": "sharp-libvips-LICENSE",
+          "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+          "bytes": 11357,
+          "provenance": {
+            "url": "https://github.com/lovell/sharp-libvips/blob/ebb95f8add54eee8bed840e3fb587e4cbec857d7/LICENSE",
+            "sourceCommit": "ebb95f8add54eee8bed840e3fb587e4cbec857d7",
+            "qualification": "Original upstream build/version/packaging provenance; retained as evidence only, never executed by notice collection. No reconstruction of actual binary build or legal clearance."
+          }
+        },
+        {
+          "origin": "installed",
+          "path": "apps/dashboard/node_modules/@img/sharp-libvips-linux-x64/versions.json",
+          "name": "package-versions.json",
+          "sha256": "e2611d5d854815a8b33c8a3d2ec649511a9596ccf16844e8eae7cf81e79881c4",
+          "bytes": 596,
+          "provenance": {
+            "url": "https://registry.npmjs.org/@img/sharp-libvips-linux-x64/-/sharp-libvips-linux-x64-1.3.4.tgz#package/versions.json",
+            "integrity": "sha512-GJ//SSXbnwSDes02umB3nDJLFcQzw8a18V8fyhqr6tV515tOEMdImjjxj1AoafMRz56F3PHgftnj1QEKSU1zkw==",
+            "qualification": "Unmodified archive component-version declarations; runtime binary/source projection bound separately. The versions file is not required to be retained in runtime. No reconstructed binary closure or legal clearance."
+          }
+        }
+      ],
+      "componentCoverage": {
+        "status": "partial",
+        "complete": false,
+        "declaredComponentCount": 28,
+        "versions": {
+          "path": "versions.json",
+          "sha256": "e2611d5d854815a8b33c8a3d2ec649511a9596ccf16844e8eae7cf81e79881c4",
+          "retainedEvidence": "package-versions.json"
+        },
+        "components": [
+          {
+            "name": "cgif",
+            "version": "0.5.4",
+            "notices": [
+              "cgif-LICENSE"
+            ]
+          },
+          {
+            "name": "highway",
+            "version": "1.4.0",
+            "notices": [
+              "highway-LICENSE"
+            ]
+          },
+          {
+            "name": "zlib-ng",
+            "version": "2.3.3",
+            "notices": [
+              "zlib-ng-LICENSE.md"
+            ]
+          }
+        ]
+      }
     },
     {
       "path": "apps/dashboard/node_modules/@img/sharp-libvips-linux-arm64/package.json",
@@ -880,6 +1050,81 @@
               "archiveSha256": "495e6c63c797c6b080a9dbd827a8cc0790b77f8f7d5d82f1764dadfc5068a845"
             }
           }
+        },
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/cgif-LICENSE",
+          "name": "cgif-LICENSE",
+          "sha256": "7264dede477abab4ac3fe8236beb8153845c04ccd33b18f281085087e219fc6d",
+          "bytes": 1099,
+          "provenance": {
+            "component": {
+              "name": "cgif",
+              "version": "0.5.4"
+            },
+            "url": "https://github.com/dloebl/cgif/blob/2dfb49c22fbe3894e46731f7e3b6ffa84311e44e/LICENSE",
+            "sourceCommit": "2dfb49c22fbe3894e46731f7e3b6ffa84311e44e",
+            "sourceArchive": {
+              "url": "https://codeload.github.com/dloebl/cgif/tar.gz/2dfb49c22fbe3894e46731f7e3b6ffa84311e44e",
+              "sha256": "06d4d712f43439318adc6397b9977fed59249f2f0cd4e44e046e8289fe06b0e2",
+              "bytes": 40017
+            },
+            "buildSelectedTag": {
+              "url": "https://github.com/dloebl/cgif/tree/v0.5.4",
+              "observedCommit": "2dfb49c22fbe3894e46731f7e3b6ffa84311e44e"
+            },
+            "qualification": "Authentic complete upstream root notice file, unchanged. Build-selected release/tag and runtime version binding; no independent binary rebuild or full component copyright coverage claimed."
+          }
+        },
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/highway-LICENSE",
+          "name": "highway-LICENSE",
+          "sha256": "e340270d4f64384569a91d546acb5b094d69ce47f0c015db77abb74dc6f815af",
+          "bytes": 20785,
+          "provenance": {
+            "component": {
+              "name": "highway",
+              "version": "1.4.0"
+            },
+            "url": "https://github.com/google/highway/blob/2607d3b5b0113992fe84d3848859eae13b3b52c1/LICENSE",
+            "sourceCommit": "2607d3b5b0113992fe84d3848859eae13b3b52c1",
+            "sourceArchive": {
+              "url": "https://codeload.github.com/google/highway/tar.gz/2607d3b5b0113992fe84d3848859eae13b3b52c1",
+              "sha256": "741d705781e0b3e406beda8f1f994fbae01321237ce8023a1ad90fbaf7940c25",
+              "bytes": 3692133
+            },
+            "buildSelectedTag": {
+              "url": "https://github.com/google/highway/tree/1.4.0",
+              "observedCommit": "2607d3b5b0113992fe84d3848859eae13b3b52c1"
+            },
+            "qualification": "Authentic complete upstream root notice file, unchanged. Build-selected release/tag and runtime version binding; no independent binary rebuild or full component copyright coverage claimed."
+          }
+        },
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/zlib-ng-LICENSE.md",
+          "name": "zlib-ng-LICENSE.md",
+          "sha256": "6c9f0d975b41afaa34d22f55bb8986ce69e5cb7ad327cb2b28820cd425edf5ee",
+          "bytes": 867,
+          "provenance": {
+            "component": {
+              "name": "zlib-ng",
+              "version": "2.3.3"
+            },
+            "url": "https://github.com/zlib-ng/zlib-ng/blob/12731092979c6d07f42da27da673a9f6c7b13586/LICENSE.md",
+            "sourceCommit": "12731092979c6d07f42da27da673a9f6c7b13586",
+            "sourceArchive": {
+              "url": "https://codeload.github.com/zlib-ng/zlib-ng/tar.gz/12731092979c6d07f42da27da673a9f6c7b13586",
+              "sha256": "a0d2a5d122c84b56a793a1553a9c3327fb2eb7469bf7a86b79e3c7be5d92e8d6",
+              "bytes": 2450038
+            },
+            "buildSelectedTag": {
+              "url": "https://github.com/zlib-ng/zlib-ng/tree/2.3.3",
+              "observedCommit": "12731092979c6d07f42da27da673a9f6c7b13586"
+            },
+            "qualification": "Authentic complete upstream root notice file, unchanged. Build-selected release/tag and runtime version binding; no independent binary rebuild or full component copyright coverage claimed."
+          }
         }
       ],
       "sourceProvenance": [
@@ -907,12 +1152,107 @@
           "packaging": "generate_readme copies THIRD-PARTY-NOTICES lines2+ into README Licensing; remove_unused removes original for non-dev packages."
         }
       ],
-      "qualification": "Actual architecture-specific1.3.4 archive, binary/source tree, versions.json and complete upstream README Licensing matrix retained. Matrix/links do not establish complete component copyright/license texts. Native notice completeness, redistribution/source obligations and license compatibility decisions remain pending; no legal approval.",
+      "qualification": "Actual architecture-specific1.3.4 archive, binary/source tree, versions.json and complete upstream README Licensing matrix retained. Authentic full upstream root notice files retained for cgif0.5.4, highway1.4.0 and zlib-ng2.3.3, with immutable source archives/hashes and original build/version evidence. This is partial3-of28 component evidence. Build script statically links dependencies and libvips into libvips-cpp; a .so filename establishes neither replaceability nor source-obligation satisfaction. Complete component/copyright notices, redistribution/relinking/source obligations and compatibility decisions remain pending; no rebuild or legal approval.",
       "evidenceKind": "upstream-licensing-matrix",
       "pendingReview": [
         "native-component-copyright-and-full-license-notice-completeness-unverified",
         "native-redistribution-and-source-obligations-pending"
-      ]
+      ],
+      "supportingEvidence": [
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/build-posix.sh",
+          "name": "build-posix.sh",
+          "sha256": "333031b3b49bf1a16d0b9d6812d98f67c404218932ef8c0b389388524a524b36",
+          "bytes": 23877,
+          "provenance": {
+            "url": "https://github.com/lovell/sharp-libvips/blob/ebb95f8add54eee8bed840e3fb587e4cbec857d7/build/posix.sh",
+            "sourceCommit": "ebb95f8add54eee8bed840e3fb587e4cbec857d7",
+            "qualification": "Original upstream build/version/packaging provenance; retained as evidence only, never executed by notice collection. No reconstruction of actual binary build or legal clearance."
+          }
+        },
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/versions.properties",
+          "name": "versions.properties",
+          "sha256": "c0ad634f7c2ac8994f831dd0bcb5c60043db7ba4ddd9cc2dbc3703b15f4ec7e5",
+          "bytes": 594,
+          "provenance": {
+            "url": "https://github.com/lovell/sharp-libvips/blob/ebb95f8add54eee8bed840e3fb587e4cbec857d7/versions.properties",
+            "sourceCommit": "ebb95f8add54eee8bed840e3fb587e4cbec857d7",
+            "qualification": "Original upstream build/version/packaging provenance; retained as evidence only, never executed by notice collection. No reconstruction of actual binary build or legal clearance."
+          }
+        },
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/populate-npm-workspace.sh",
+          "name": "populate-npm-workspace.sh",
+          "sha256": "a960e41223db945832cd63f92ed38e9c297f58a5f72c6f4adea80f805fc12589",
+          "bytes": 2628,
+          "provenance": {
+            "url": "https://github.com/lovell/sharp-libvips/blob/ebb95f8add54eee8bed840e3fb587e4cbec857d7/populate-npm-workspace.sh",
+            "sourceCommit": "ebb95f8add54eee8bed840e3fb587e4cbec857d7",
+            "qualification": "Original upstream build/version/packaging provenance; retained as evidence only, never executed by notice collection. No reconstruction of actual binary build or legal clearance."
+          }
+        },
+        {
+          "origin": "vendored",
+          "path": "evidence/native-components/sharp-libvips-LICENSE",
+          "name": "sharp-libvips-LICENSE",
+          "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+          "bytes": 11357,
+          "provenance": {
+            "url": "https://github.com/lovell/sharp-libvips/blob/ebb95f8add54eee8bed840e3fb587e4cbec857d7/LICENSE",
+            "sourceCommit": "ebb95f8add54eee8bed840e3fb587e4cbec857d7",
+            "qualification": "Original upstream build/version/packaging provenance; retained as evidence only, never executed by notice collection. No reconstruction of actual binary build or legal clearance."
+          }
+        },
+        {
+          "origin": "installed",
+          "path": "apps/dashboard/node_modules/@img/sharp-libvips-linux-arm64/versions.json",
+          "name": "package-versions.json",
+          "sha256": "e2611d5d854815a8b33c8a3d2ec649511a9596ccf16844e8eae7cf81e79881c4",
+          "bytes": 596,
+          "provenance": {
+            "url": "https://registry.npmjs.org/@img/sharp-libvips-linux-arm64/-/sharp-libvips-linux-arm64-1.3.4.tgz#package/versions.json",
+            "integrity": "sha512-Y3dgX/6lE2QhQb+Gxy0WZxfg9MEm/JBjamZpS2IklP7xIQoKN4hzAm7KcMVGtaVDt3neE9OKBC7vAfonA/Lr1A==",
+            "qualification": "Unmodified archive component-version declarations; runtime binary/source projection bound separately. The versions file is not required to be retained in runtime. No reconstructed binary closure or legal clearance."
+          }
+        }
+      ],
+      "componentCoverage": {
+        "status": "partial",
+        "complete": false,
+        "declaredComponentCount": 28,
+        "versions": {
+          "path": "versions.json",
+          "sha256": "e2611d5d854815a8b33c8a3d2ec649511a9596ccf16844e8eae7cf81e79881c4",
+          "retainedEvidence": "package-versions.json"
+        },
+        "components": [
+          {
+            "name": "cgif",
+            "version": "0.5.4",
+            "notices": [
+              "cgif-LICENSE"
+            ]
+          },
+          {
+            "name": "highway",
+            "version": "1.4.0",
+            "notices": [
+              "highway-LICENSE"
+            ]
+          },
+          {
+            "name": "zlib-ng",
+            "version": "2.3.3",
+            "notices": [
+              "zlib-ng-LICENSE.md"
+            ]
+          }
+        ]
+      }
     },
     {
       "path": "apps/dashboard/node_modules/next/dist/compiled/data-uri-to-buffer/package.json",
@@ -1915,6 +2255,151 @@
         }
       ],
       "qualification": "Authentic exact-version component notice with pinned Next source/build/lock provenance; compiled bytes match official immutable Next source. No independent ncc rebuild, complete bundle enumeration or legal clearance claimed."
+    },
+    {
+      "path": "node_modules/@nodable/entities/package.json",
+      "name": "@nodable/entities",
+      "version": "3.1.0",
+      "manifestSha256": "81fc13661f9431f9f72ae5a1723482a1bcb473af463b93ca0b27c42461a6c6c9",
+      "owner": {
+        "path": "node_modules/@nodable/entities/package.json",
+        "name": "@nodable/entities",
+        "version": "3.1.0",
+        "manifestSha256": "81fc13661f9431f9f72ae5a1723482a1bcb473af463b93ca0b27c42461a6c6c9"
+      },
+      "lock": {
+        "path": "npm-shrinkwrap.json",
+        "key": "node_modules/@nodable/entities",
+        "version": "3.1.0",
+        "integrity": "sha512-LsS/DjHr+uDM647Gru/cA8+J3a3HfhttwCKLyuoyN7yXTFCxKBtSgMQBvrW9yNPa2/zDRUNuGPaH5QUFoa4arQ==",
+        "resolved": "https://registry.npmjs.org/@nodable/entities/-/entities-3.1.0.tgz"
+      },
+      "sourceTreeSha256": "e203bf25ebf0cea376368591c5a71563499064e918528b87dc6a67e1f0bf55da",
+      "associatedDeclaration": null,
+      "notices": [
+        {
+          "origin": "vendored",
+          "path": "evidence/nodable-entities/LICENSE",
+          "name": "LICENSE",
+          "sha256": "750cb3fb6362804957ef52caaf9b5c824015be44d494637330d7cd8834d31d40",
+          "bytes": 1064,
+          "provenance": {
+            "url": "https://github.com/nodable/val-parsers/blob/ac48e7ea591da372be023a481875c747535812b3/LICENSE",
+            "sourceCommit": "ac48e7ea591da372be023a481875c747535812b3",
+            "scope": "Authentic repository root notice applies only to independently byte-identical six observed runtime code files; no whole published release equivalence."
+          }
+        }
+      ],
+      "supportingEvidence": [
+        {
+          "origin": "vendored",
+          "path": "evidence/nodable-entities/upstream-package.json",
+          "name": "upstream-package.json",
+          "sha256": "548526ce0e1cad9ffe904fba19067013c9fea336eafd3cd52a337ec44406c9ed",
+          "bytes": 1270,
+          "provenance": {
+            "url": "https://github.com/nodable/val-parsers/blob/ac48e7ea591da372be023a481875c747535812b3/Entity/package.json",
+            "sourceCommit": "ac48e7ea591da372be023a481875c747535812b3",
+            "qualification": "Original upstream version3.0.0 manifest retained unchanged; not publisher proof for version3.1.0."
+          }
+        }
+      ],
+      "runtimeCoverage": {
+        "kind": "exact-observed-runtime-files",
+        "files": [
+          {
+            "path": "package.json",
+            "sha256": "81fc13661f9431f9f72ae5a1723482a1bcb473af463b93ca0b27c42461a6c6c9",
+            "bytes": 1271,
+            "qualification": "Published3.1.0 metadata identity only; not attributed to upstream3.0.0 manifest."
+          },
+          {
+            "path": "src/all-entities.js",
+            "sha256": "2f1340ab32dce314f41638b7ee6d0368b974e3302983154b815a6d49a6dfb63b",
+            "bytes": 1497,
+            "upstream": {
+              "url": "https://raw.githubusercontent.com/nodable/val-parsers/ac48e7ea591da372be023a481875c747535812b3/Entity/src/all-entities.js",
+              "gitBlobSha1": "2000c46e04f81e3e81e545d65087f2b1c68e62a7"
+            }
+          },
+          {
+            "path": "src/entities.js",
+            "sha256": "96ec5d127a4e8cd77bdc678422f0d57c8ff9e37bcec999983da71a7b72ce9a0e",
+            "bytes": 18791,
+            "upstream": {
+              "url": "https://raw.githubusercontent.com/nodable/val-parsers/ac48e7ea591da372be023a481875c747535812b3/Entity/src/entities.js",
+              "gitBlobSha1": "8c5723d2a77ae09d8b3f53032e1c33ad946f2251"
+            }
+          },
+          {
+            "path": "src/EntityDecoder.js",
+            "sha256": "a56cf2bf8174e0adf94970d70e003afcfc3923a53d0cf973f92d374cfe684544",
+            "bytes": 25816,
+            "upstream": {
+              "url": "https://raw.githubusercontent.com/nodable/val-parsers/ac48e7ea591da372be023a481875c747535812b3/Entity/src/EntityDecoder.js",
+              "gitBlobSha1": "71f9180d1c9ad2d106ca376b5d734ce30e50b16a"
+            }
+          },
+          {
+            "path": "src/EntityEncoder.js",
+            "sha256": "812a2077e073564d6470b8fda8ac0d20ecaaf75ddb1594d55d28acc2da8a1a71",
+            "bytes": 8479,
+            "upstream": {
+              "url": "https://raw.githubusercontent.com/nodable/val-parsers/ac48e7ea591da372be023a481875c747535812b3/Entity/src/EntityEncoder.js",
+              "gitBlobSha1": "a9f596f1178e1a5cb297b5c4a4e67e926e4c65fd"
+            }
+          },
+          {
+            "path": "src/entityTries.js",
+            "sha256": "fa2838d141fba0e8ee5bd2197956c3f6b1d23668be2c8841a585614ea7051f99",
+            "bytes": 2359,
+            "upstream": {
+              "url": "https://raw.githubusercontent.com/nodable/val-parsers/ac48e7ea591da372be023a481875c747535812b3/Entity/src/entityTries.js",
+              "gitBlobSha1": "c8aaeff7dcfddf5908eaef4c447a3e8ab3ec1ccb"
+            }
+          },
+          {
+            "path": "src/index.js",
+            "sha256": "79a65ddeda08664d00b7b82f5a903ea437de1dff54a02ed469e9cb1067cb568b",
+            "bytes": 515,
+            "upstream": {
+              "url": "https://raw.githubusercontent.com/nodable/val-parsers/ac48e7ea591da372be023a481875c747535812b3/Entity/src/index.js",
+              "gitBlobSha1": "e2b214514adac5a446d6422ca582d143e1cfd583"
+            }
+          }
+        ],
+        "qualification": "The six runtime JavaScript files match immutable upstream source bytes. The published3.1.0 manifest is retained as a separate identity; upstream manifest3.0.0 remains a discrepancy. No missing/additional runtime package files permitted; no whole3.1.0 release provenance or legal clearance claimed.",
+        "sourceVersion": {
+          "published": "3.1.0",
+          "upstream": "3.0.0",
+          "mapping": "unverified"
+        }
+      },
+      "sourceProvenance": [
+        {
+          "packageArchive": {
+            "name": "@nodable/entities",
+            "version": "3.1.0",
+            "url": "https://registry.npmjs.org/@nodable/entities/-/entities-3.1.0.tgz",
+            "integrity": "sha512-LsS/DjHr+uDM647Gru/cA8+J3a3HfhttwCKLyuoyN7yXTFCxKBtSgMQBvrW9yNPa2/zDRUNuGPaH5QUFoa4arQ==",
+            "archiveSha256": "3b7cbfe696f570ada57df3eb6981f6c668737a2158ec88a53134f243f9f1db8e",
+            "bytes": 22363
+          }
+        },
+        {
+          "url": "https://github.com/nodable/val-parsers/tree/ac48e7ea591da372be023a481875c747535812b3/Entity/src",
+          "sourceCommit": "ac48e7ea591da372be023a481875c747535812b3",
+          "upstreamManifestVersion": "3.0.0",
+          "upstreamManifestSha256": "548526ce0e1cad9ffe904fba19067013c9fea336eafd3cd52a337ec44406c9ed",
+          "publishedManifestVersion": "3.1.0",
+          "qualification": "Per-file exact code match, not a verified3.1.0 release commit or complete publisher provenance mapping."
+        }
+      ],
+      "evidenceKind": "exact-observed-runtime-code-notice",
+      "pendingReview": [
+        "published-release-source-version-discrepancy-unresolved"
+      ],
+      "qualification": "Authentic MIT root notice associated only with the exact six observed source-identical runtime JS files and unchanged published3.1.0 manifest. Immutable upstream manifest remains3.0.0; no whole3.1.0 release provenance, unobserved file coverage or legal approval claimed."
     }
   ]
 }
