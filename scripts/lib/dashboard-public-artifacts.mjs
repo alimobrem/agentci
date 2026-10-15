@@ -2,7 +2,7 @@ import {mkdir, mkdtemp, readdir, lstat, readFile, writeFile, rename} from 'node:
 import {join, dirname} from 'node:path';
 import {createHash} from 'node:crypto';
 
-const allowed = new Set(['source.json','image.json','anonymous.json','shutdown.json','runtime-files.json','rpm-inventory.json','scan.json','scan-policy.json','scan-execution-failure.json','failure.json','cleanup.json','result.json']);
+const allowed = new Set(['source.json','image.json','anonymous.json','shutdown.json','runtime-files.json','rpm-inventory.json','scan.json','scan-policy.json','scan-execution-failure.json','scan-storage.json','failure.json','cleanup.json','result.json']);
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 export async function publishDashboardArtifacts(staging, destination, {maxBytes=32*1024*1024, maxFiles=10000, recovery}={}) {
   // Uploads see only a completed, bounded publication directory. Staging is never uploaded.

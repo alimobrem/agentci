@@ -18,7 +18,8 @@ export function dashboardScanFailure(result){
  const observedClasses=patterns.filter(([,regex])=>regex.test(text)).map(([name])=>name);
  if(result.error?.code==='ETIMEDOUT')observedClasses.push('execution-timeout');
  if(result.error?.code==='ENOBUFS')observedClasses.push('execution-output-limit');
- const receipt={schemaVersion:1,classification:'scanner-execution-failed',cause:observedClasses.length===1?observedClasses[0]:'multiple-or-unclassified',observedClasses,exitCode:Number.isSafeInteger(result.status)?result.status:null,stdoutBytes:stdout.length,stderrBytes:stderr.length,stdoutSha256:hash(stdout),stderrSha256:hash(stderr),classificationInput:'bounded-stderr-prefix',classificationPrefixBytes:limit,classificationTruncated:stderr.length>limit,rawDiagnostics:'withheld',scanPolicyResult:'not-evaluated'};
+ const affectedPathClasses=[];for(const [kind,pattern] of [['tmp',/(?:write|open|mkdir|create|copy)[^\n]{0,160}\/tmp(?:\/|:)/i],['cache',/(?:write|open|mkdir|create|copy)[^\n]{0,160}\/cache(?:\/|:)/i]])if(pattern.test(text))affectedPathClasses.push(kind);
+ const receipt={affectedPathClasses:affectedPathClasses.length?affectedPathClasses:['unknown'],schemaVersion:1,classification:'scanner-execution-failed',cause:observedClasses.length===1?observedClasses[0]:'multiple-or-unclassified',observedClasses,exitCode:Number.isSafeInteger(result.status)?result.status:null,stdoutBytes:stdout.length,stderrBytes:stderr.length,stdoutSha256:hash(stdout),stderrSha256:hash(stderr),classificationInput:'bounded-stderr-prefix',classificationPrefixBytes:limit,classificationTruncated:stderr.length>limit,rawDiagnostics:'withheld',scanPolicyResult:'not-evaluated'};
  if(Buffer.byteLength(JSON.stringify(receipt))>4096)throw Error('Bounded scan failure receipt exceeded');
  return receipt;
 }

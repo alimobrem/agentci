@@ -10,8 +10,8 @@
     },
     {
       "path": "scripts/dashboard-native-acceptance.mjs",
-      "bytes": 11545,
-      "sha256": "c6d18f4ce14af425f2f2867dba2a17b6460edf8d84f4d90ccad5a02b78e40d51"
+      "bytes": 11620,
+      "sha256": "daaf700503dd41222379816b854cd5ef89694a89ace48b0ff7f005f7066f197d"
     },
     {
       "path": "scripts/lib/dashboard-native-evidence.mjs",
@@ -35,8 +35,8 @@
     },
     {
       "path": "scripts/lib/dashboard-public-artifacts.mjs",
-      "bytes": 2941,
-      "sha256": "43c85e71f2966f9f18a5d6e1f402a5bf54e62d92512c859be1335ce016ec5702"
+      "bytes": 2961,
+      "sha256": "ce1f8bb3f5ba73cce58e3ec2c5bf621ad4d5ac5bce3cd8e6cd0b9164c748671b"
     },
     {
       "path": "tests/dashboard-public-artifacts.test.ts",
@@ -70,8 +70,8 @@
     },
     {
       "path": "scripts/lib/dashboard-scan-failure.mjs",
-      "bytes": 2509,
-      "sha256": "2cf450f864bd07bf03ee6ec9b5f4fe89220a9c0b228ec1f5527eb623d541a7cb"
+      "bytes": 2844,
+      "sha256": "d58d74c7e73369c29e9880b34cc088ddd7a528948b48f668a02a22171fef0c06"
     },
     {
       "path": "tests/dashboard-scan-failure.test.ts",
@@ -82,6 +82,16 @@
       "path": "apps/dashboard/tests/ci-receipt.test.ts",
       "bytes": 4255,
       "sha256": "ca85ecabfeea056523218500752572824e7783f5bd7d07ca8c53b87e2a920cfe"
+    },
+    {
+      "path": "scripts/lib/dashboard-scan-controls.mjs",
+      "bytes": 1172,
+      "sha256": "79b9cb663245bb1917623d9a5cd99c2cbe918c20ec4e92841ba26b0d6120f5ba"
+    },
+    {
+      "path": "tests/dashboard-scan-controls.test.ts",
+      "bytes": 1879,
+      "sha256": "626a0cd8ff2a4fb0840d8a52263e0e2ea6b2693aaed41580f2194d1161f35453"
     }
   ],
   "local": {
@@ -89,22 +99,22 @@
     "platform": "darwin",
     "arch": "arm64",
     "focused": {
-      "tests": 20,
-      "passed": 20,
+      "tests": 22,
+      "passed": 22,
       "failed": 0,
       "skipped": 0,
-      "scope": "Native/shutdown/bounded publication plus redacted scanner execution classifiers;21 dashboard unit checks including required/missing stages and invalid proof cases pass."
+      "scope": "Native/shutdown/bounded publication/diagnostics and bounded scratch/isolation/socket/mount-injection guards."
     },
     "types": "passed",
     "workflows": "passed",
     "generatedProbeSyntax": "passed",
     "fast": {
-      "tests": 608,
-      "passed": 593,
+      "tests": 610,
+      "passed": 595,
       "failed": 9,
       "skipped": 6,
       "otherStagesPassed": 9,
-      "qualification": "Existing independently reproduced Mac qualifications retained; initial new classification-overlap failure separately preserved and corrected."
+      "qualification": "Existing reproduced Mac qualifications; no waiver. Final socket-input guard additionally passed focused/type verification."
     },
     "productionFrameworkActiveDrain": {
       "sourceCommit": "36860ae5204bc448962ce02e876a1fa622fbdda0",
@@ -178,5 +188,27 @@
     "retained": "source/image/scanner identity, channel counts/hashes and fixed enum observations; unknown/multiple remain ambiguous",
     "scannerArgsNetworkMountsPermissionsDigestPolicy": "unchanged",
     "scratchSpaceLead": "unconfirmed pending actual new receipt; no scratch/security/egress change"
+  },
+  "scratchCapacityTest": {
+    "sourceTag": "Trivy v0.75.0",
+    "sourceCommit": "591e9799316a602e703f0b484f6c6d7b234ec8f3",
+    "sourcePaths": [
+      "pkg/db/db.go",
+      "pkg/oci/artifact.go",
+      "pkg/x/os/os.go"
+    ],
+    "databaseTempPath": "Go os.TempDir via xos.MkdirTemp empty parent; cache-dir does not relocate download temp",
+    "observations": "Both38666100888 architectures reported space exhaustion during database download; failing filesystem not retained",
+    "change": "Existing scanner /tmp tmpfs128MiB to explicit1GiB only",
+    "reason": "Bounded source-supported hypothesis test, not confirmed root-cause attribution",
+    "unchanged": [
+      "rw/noexec/nosuid/nodev",
+      "non-root/read-only root/capdrop/no-new-privileges",
+      "same2 archive/cache mounts and scanner/digest/timeout/network/policy",
+      "owned cleanup"
+    ],
+    "safeStorageEvidence": "Declared tmp capacity distinct from unknown observed free; numeric statfs capacity/free/usage of exact cache bind source; fixed tmp/cache/unknown failure buckets",
+    "legalClearance": "not-claimed",
+    "unresolvedNoticeReviewItems": 22
   }
 }
