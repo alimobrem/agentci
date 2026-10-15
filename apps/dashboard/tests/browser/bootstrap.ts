@@ -1,3 +1,4 @@
+import {captureIntent,INTENT_PATH} from '../../../../packages/review/intent.ts';
 import {evidenceViewsFixture} from '../helpers/evidence-views';
 import {comparisonRecord,createEvalComparison} from '../../../../packages/evals/comparison.ts';
 // TEST-ONLY process preload. Never imported by application code or copied into deployment assets.
@@ -13,12 +14,14 @@ const admission=examples.request,second=structuredClone(admission);second.id='22
 const retained=retainedFindingFixture(admission,['Unsupported authorization assertion','Independent unsupported reliability assertion']);
 const protocol=await retainedProtocol(admission);
 const views=await evidenceViewsFixture(admission);
+const intentId='77777777-7777-4777-8777-777777777777',intent=captureIntent(intentId,admission.subject,{sha:admission.subject.headSha,files:{[INTENT_PATH]:JSON.stringify({schemaVersion:'v1alpha1',summary:'Declared fixture intent: preserve café ☕. <script>window.intentExecuted=true</script>'})}})!;
 const token='read-only-fixture-token-'.repeat(3);let state='queued',reads=0,mutations=0,expired=false,findingReads=0,activeFindingReads=0,abortedFindingReads=0,activeRetainedReads=0,abortedRetainedReads=0,historyReads=0,exportReads=0;const held:any[]=[];
 const sessions=new Sessions(1800000,()=>Date.now()+(expired?1800001:0));
 const samePrincipal=(subject:string)=>({issuer:'https://id.fixture.example',subject,organizationId:admission.subject.organizationId,repositories:[admission.subject.repository]});
 const alice=sessions.create(samePrincipal('alice')),charlie=sessions.create(samePrincipal('charlie')),dana=sessions.create(samePrincipal('dana')),sameAccount=sessions.create(samePrincipal('alice')),erin=sessions.create(samePrincipal('erin'));
 const historyUser=sessions.create(samePrincipal('history')),exportUser=sessions.create(samePrincipal('export')),logoutUser=sessions.create(samePrincipal('logout')),historyLogout=sessions.create(samePrincipal('history-logout'));
 const revalidationUser=sessions.create(samePrincipal('revalidation'));
+const intentUsers=Array.from({length:9},(_,i)=>sessions.create(samePrincipal('intent-'+i)));
 const viewUsers=Array.from({length:12},(_,i)=>sessions.create(samePrincipal('views-'+i)));
 const bob=sessions.create({issuer:'https://id.fixture.example',subject:'bob',organizationId:'00000000-0000-4000-8000-000000000099',repositories:['other/repo']});
 const backend=createServer((request,response)=>{
@@ -37,6 +40,9 @@ const backend=createServer((request,response)=>{
  if(request.url==='/fixture/revoke-erin'){sessions.revoke(erin.id);response.end();return;}
  if(request.url==='/fixture/revoke-dana'){sessions.revoke(dana.id);response.end();return;}
  if(request.url==='/fixture/expire'){expired=true;response.end();return;}
+ if(request.url==='/fixture/intent-bindings'){(globalThis as any).agentciDashboardRuntime.reviews[admission.id].intent={evidenceId:intentId,digest:intent.digest};response.end();return;}
+ if(request.url==='/fixture/clear-intent-binding'){delete (globalThis as any).agentciDashboardRuntime.reviews[admission.id].intent;response.end();return;}
+ if(request.url?.startsWith('/fixture/revoke-intent/')){sessions.revoke(intentUsers[Number(request.url.split('/').pop())]!.id);response.end();return;}
  if(request.url==='/fixture/view-bindings'){Object.assign((globalThis as any).agentciDashboardRuntime.reviews[admission.id],views.binding);response.end();return;}
  if(request.url==='/fixture/clear-view-bindings'){const b=(globalThis as any).agentciDashboardRuntime.reviews[admission.id];delete b.semanticEvidenceId;delete b.comparison;delete b.reviewerComparison;response.end();return;}
  if(request.url?.startsWith('/fixture/revoke-views/')){sessions.revoke(viewUsers[Number(request.url.split('/').pop())]!.id);response.end();return;}
@@ -46,6 +52,15 @@ const backend=createServer((request,response)=>{
  const errors:Record<string,[number,string]>={unavailable:[503,'service-unavailable'],credential:[401,'unauthorized'],'not-found':[404,'not-found'],incomplete:[409,'review-not-complete'],'too-large':[413,'body-too-large']};
  if(errors[state]){const [status,code]=errors[state]!;response.writeHead(status);send({error:{code}});return;}
  if(state==='malformed'){send({...examples.statuses.queued,privateField:'forged'});return;}
+ if(state.startsWith('intent')&&!request.url?.includes(second.id)){
+  if(request.url?.endsWith('/intent')){
+   if(state==='intent-held'){activeRetainedReads++;response.once('close',()=>{activeRetainedReads--;if(!response.writableEnded)abortedRetainedReads++;});response.write(' ');held.push({response,value:intent});return;}
+   if(state==='intent-missing'){response.writeHead(404);send({error:{code:'not-found'}});return;}
+   if(state==='intent-corrupt'){send({...intent,digest:digest('wrong')});return;}
+   send(intent);return;
+  }
+  send(examples.statuses.queued);return;
+ }
  if(state.startsWith('views')){
   const hold=(raw=false,value?:unknown)=>{activeRetainedReads++;response.once('close',()=>{activeRetainedReads--;if(!response.writableEnded)abortedRetainedReads++;});held.push({response,value,raw});};
   if(request.url?.startsWith('/v1/evidence/')){const semantic=structuredClone(views.semantic);if(state==='views-cross-org')semantic.evidence.organizationId='99999999-9999-4999-8999-999999999999';if(state==='views-held-semantic'){response.write(' ');hold(false,semantic);return;}send(semantic);return;}
@@ -83,4 +98,4 @@ const backend=createServer((request,response)=>{
  send(value);
 });backend.listen(0,'127.0.0.1');await once(backend,'listening');const backendOrigin=`http://127.0.0.1:${(backend.address() as {port:number}).port}`;
 (globalThis as any).agentciDashboardRuntime={origin:process.env.UI_FIXTURE_ORIGIN,sessions,login:{begin(){throw Error('test-only-login-unavailable');},finish(){throw Error('test-only-login-unavailable');}},reviews:{[admission.id]:{admission,apiOrigin:backendOrigin,readToken:token},[second.id]:{admission:second,apiOrigin:backendOrigin,readToken:token}}};
-await writeFile(process.env.UI_FIXTURE_HANDSHAKE!,JSON.stringify({viewUsers,alice,bob,charlie,dana,sameAccount,erin,revalidationUser,historyUser,exportUser,logoutUser,historyLogout,protocolFinding:protocol.first.event.finding.id,retained:retained.records.map(r=>({id:r.event.finding.id,digest:r.digest})),reviewId:admission.id,secondReviewId:second.id,backendOrigin}),{mode:0o600});
+await writeFile(process.env.UI_FIXTURE_HANDSHAKE!,JSON.stringify({intentUsers,viewUsers,alice,bob,charlie,dana,sameAccount,erin,revalidationUser,historyUser,exportUser,logoutUser,historyLogout,protocolFinding:protocol.first.event.finding.id,retained:retained.records.map(r=>({id:r.event.finding.id,digest:r.digest})),reviewId:admission.id,secondReviewId:second.id,backendOrigin}),{mode:0o600});

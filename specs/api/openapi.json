@@ -2195,6 +2195,169 @@
           }
         }
       }
+    },
+    "/v1/evidence/{id}/intent": {
+      "get": {
+        "operationId": "getReviewIntent",
+        "security": [
+          {
+            "evidenceBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Immutable evidence in configured repository; digest hashes canonical JSON analysis with recursively sorted object keys.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntentRecord"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid evidence UUID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Evidence unavailable in repository",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method not allowed; Allow header advertises the supported method",
+            "headers": {
+              "Allow": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Persistence unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        },
+        "description": "Read separately retained v1 repository-declared intent. Exact scoped subject, source bytes/blob SHA/content digest and canonical record digest must validate. Declared/asserted intent is not independently verified truth. Missing capture returns404; no query parameters accepted. Legacy evidence and digests are unchanged."
+      }
     }
   },
   "components": {
@@ -7008,6 +7171,150 @@
         "required": [
           "error"
         ]
+      },
+      "IntentRecord": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schemaVersion",
+          "reviewId",
+          "subject",
+          "summary",
+          "classification",
+          "source",
+          "producer",
+          "digest"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "type": "string",
+            "enum": [
+              "v1alpha1"
+            ]
+          },
+          "reviewId": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+          },
+          "subject": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "organizationId",
+              "repository",
+              "pullRequest",
+              "baseSha",
+              "headSha"
+            ],
+            "properties": {
+              "organizationId": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$"
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+              },
+              "pullRequest": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "baseSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              },
+              "headSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              }
+            }
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8192
+          },
+          "classification": {
+            "type": "string",
+            "enum": [
+              "asserted"
+            ]
+          },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "path",
+              "gitSha",
+              "blobSha",
+              "contentDigest",
+              "bytes",
+              "content"
+            ],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "repository-declaration"
+                ]
+              },
+              "path": {
+                "type": "string",
+                "enum": [
+                  ".agentci/intent.json"
+                ]
+              },
+              "gitSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              },
+              "blobSha": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{40}$"
+              },
+              "contentDigest": {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              },
+              "bytes": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 12288
+              },
+              "content": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 12288
+              }
+            }
+          },
+          "producer": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "version"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "enum": [
+                  "agentci"
+                ]
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            }
+          },
+          "digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        }
       }
     },
     "responses": {

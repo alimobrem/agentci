@@ -416,6 +416,25 @@
         "Exact replay after later history; trusted reader rejects tampered/cross-scope receipts",
         "Compiled public client/CLI and production-installed failure/recovery flow"
       ]
+    },
+    {
+      "operationId": "getReviewIntent",
+      "method": "get",
+      "path": "/v1/evidence/{id}/intent",
+      "requirementIds": [
+        "SPEC-33.1-002",
+        "SPEC-40-020"
+      ],
+      "tests": [
+        "tests/intent.test.ts",
+        "tests/integration/intent-storage.test.ts"
+      ],
+      "scenarios": [
+        "exact scoped immutable declared intent and original byte/blob/content/digest binding",
+        "authorization precedes ID lookup; missing capture unavailable; query and malformed identity rejected",
+        "all identity/digest/source corruption and oversized UTF8 fail closed",
+        "genuine PostgreSQL/API/SDK roundtrip, idempotent duplicate, immutable conflict and old evidence digest unchanged"
+      ]
     }
   ]
 }

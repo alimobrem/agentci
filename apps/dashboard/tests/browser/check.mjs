@@ -1,3 +1,4 @@
+import {checkIntent} from './intent.mjs';
 import {checkEvidenceViews} from './evidence-views.mjs';
 import {chromium} from 'playwright';
 import {checkSessionRevalidation} from './session-revalidation.mjs';
@@ -25,6 +26,7 @@ try{
 
  const make=async(identity)=>{const context=await browser.newContext({viewport:{width:390,height:844}});if(identity)await context.addCookies([{name:'__Host-agentci-session',value:identity.id,domain:'127.0.0.1',path:'/',secure:true,httpOnly:true,sameSite:'Lax'}]);const page=await context.newPage();page.on('response',response=>{const url=new URL(response.url());if(url.pathname.startsWith('/api/')||url.pathname.startsWith('/auth/'))network.push({method:response.request().method(),path:url.pathname,status:response.status()});});return {context,page};};
  await checkSessionRevalidation({make,fixture,origin,checks,openExport});
+ await checkIntent({make,fixture,origin,checks,output});
  await checkEvidenceViews({make,fixture,origin,checks,output});
  const anonymous=await make();await anonymous.page.goto(origin);assert.match(await anonymous.page.textContent('main'),/Sign in to view reviews/);assert.equal((await anonymous.page.request.get(origin+'/api/reviews/'+fixture.reviewId)).status(),401);checks.push('anonymous view and direct data route denied');await anonymous.context.close();
  const alice=await make(fixture.alice);await alice.page.goto(origin+'/?review='+fixture.reviewId);await alice.page.getByRole('heading',{name:/PR 7/}).waitFor();assert.match(await alice.page.textContent('main'),/Unknown — summary unavailable/);assert.match(await alice.page.textContent('main'),/live provider validation unverified/);assert.equal(await alice.page.locator('body').evaluate(el=>el.scrollWidth>innerWidth),false);await alice.page.screenshot({path:path.join(output,'fixture-missing-evidence.png'),fullPage:true});checks.push('authenticated original-admission detail mobile/unknown evidence');

@@ -249,10 +249,55 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-dashboard-intent-contract",
+          "status": "in-progress",
+          "startedAt": "2026-10-15T14:05:55.282Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Separate immutable versioned intent contract, source binding, authenticated API/client and storage roundtrip preserve legacy digests and reject conflicting identity/content",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Dashboard renders declared intent safely even without completed summary and cancels bounded reads across session/navigation changes",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Exact committed archive reconciliation, full hosted CI and independent review pass; M3 qualifications remain open",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
-      "api": [],
-      "testReferences": [],
+      "api": [
+        {
+          "operationId": "getReviewIntent",
+          "path": "/v1/evidence/{id}/intent",
+          "map": "specs/api/operations.json",
+          "mapDigest": "55e375538965a16a073664991f7e8dff108fcc11602bcdb8f5a9a63b1a94e93f",
+          "tests": [
+            "tests/intent.test.ts",
+            "tests/integration/intent-storage.test.ts"
+          ],
+          "scenarios": [
+            "exact scoped immutable declared intent and original byte/blob/content/digest binding",
+            "authorization precedes ID lookup; missing capture unavailable; query and malformed identity rejected",
+            "all identity/digest/source corruption and oversized UTF8 fail closed",
+            "genuine PostgreSQL/API/SDK roundtrip, idempotent duplicate, immutable conflict and old evidence digest unchanged"
+          ]
+        }
+      ],
+      "testReferences": [
+        "tests/intent.test.ts",
+        "tests/integration/intent-storage.test.ts"
+      ],
       "plannedPRs": [],
       "evidence": [
         {
