@@ -3142,10 +3142,10 @@
         },
         {
           "id": "M3-07d-2-demo-activation",
-          "status": "blocked",
+          "status": "done",
           "startedAt": "2026-10-14T03:53:48.236Z",
-          "completedAt": null,
-          "blockedReason": "Dev.4 activation test correction prepared under owner approval; exact-head CI and parent independent review required before merge/rerun. Prior run38580528645 scenario acceptance and owned cleanup remain unverified; retain failed artifacts and operation-journal audit. No aggregate M3 closure inferred.",
+          "completedAt": "2026-10-15T00:04:05.767Z",
+          "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
@@ -3164,8 +3164,10 @@
             },
             {
               "text": "Actual installed-release temporary workflow retains unsupported unconfirmed claim, seeded physical reproduction, fixed non-reproduction without altering original receipt, failure/restart/cancellation/recovery and verified owned cleanup. Scoped demo Checks and temporary services only; no new credentials/access/paid/persistent services. Retain exact-source terminal results and independently validated evidence. HTTPS/OIDC and all aggregate M3 release gates remain separate.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-dev4-accepted.json"
+              ]
             }
           ]
         },
@@ -3305,26 +3307,56 @@
         },
         {
           "id": "M3-07d-staged-scope-isolation",
-          "status": "blocked",
+          "status": "done",
           "startedAt": "2026-10-14T22:55:33.886Z",
-          "completedAt": null,
-          "blockedReason": "Corrected net changes prepared on a fresh main-based branch to remove introduced static synthetic URL userinfo without scanner exceptions. Original PR104/heads and cancelled run38652682207 cleanup-unverified evidence remain preserved; active run38653505988 is untouched. Full pinned scanner, real-runtime exact-head CI and parent review are required before merge/rerun.",
+          "completedAt": "2026-10-15T00:04:06.625Z",
+          "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Same approved PR5 fixture staged cancellation uses a different owned organization and Temporal namespace; preserve primary histories, three-attempt limits and verified cleanup of both scopes.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-dev4-accepted.json"
+              ]
             },
             {
               "text": "Allowlisted diagnostic code/status excludes error bodies, credentials and arbitrary text; mandatory real PostgreSQL/Temporal installed-dev.4 regression proves same-scope fourth rejection without writes and isolated physical cancellation.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-dev4-accepted.json"
+              ]
             },
             {
               "text": "Applicable local and exact-source hosted CI plus independent review precede remote change/merge/retry; failed customer run38649564609 and immutable dev.4 remain preserved.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-dev4-accepted.json"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "M3-07d-dev4-evidence-reconciliation",
+          "status": "done",
+          "startedAt": "2026-10-15T00:29:44.629Z",
+          "completedAt": "2026-10-15T00:29:45.169Z",
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Retain source artifact references and original archive/member hashes with explicitly credential-free derived records and separate derived hashes; preserve independently reviewed source/fixture/native candidate bindings, prior failed/cancelled attempts and unresolved historical cleanup.",
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-customer-dev4-accepted.json"
+              ]
+            },
+            {
+              "text": "Update only scoped temporary customer/isolation task acceptance and docs; preserve synthetic reviewer, unverified live endpoint and all 18 pending aggregate M3 gates and original requirements.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-customer-dev4-acceptance.md"
+              ]
             }
           ]
         }
@@ -3651,6 +3683,12 @@
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
         {
+          "path": "delivery/acceptance/m3-customer-dev4-accepted.json",
+          "sha256": "2d7bcfd861bebd138fb20ab31c74a211266d2c1d55c01b41f6ca1c372d12df60",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
           "path": "delivery/acceptance/m3-customer-worker-session-env-reproduction.json",
           "sha256": "e809b7397e46f4ae4c733bfcdb15cfbc3032b87daa85716e2d760439dc613ffd",
           "availability": "present",
@@ -3703,6 +3741,12 @@
           "sha256": "ae4b79008c1de722d59c40ae6311073e2442f546324d3c9487d9b718a3331076",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-customer-dev4-acceptance.md",
+          "sha256": "af4002cfd19504f4e789c559c25cfa41fa03c11dd5dd58c9916594aa69afdf77",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
       ],
       "verification": {
@@ -3715,16 +3759,6 @@
         {
           "task": "M3-07d-1a",
           "reason": "Compiled authenticated status/findings/history/export links and advisory identity, current disposition references, installed acceptance and independent review pass locally. Actual live GitHub/customer evidence URLs and exact-new-source hosted CI/isolation remain pending; no publication or phase closure authorized.",
-          "deferral": null
-        },
-        {
-          "task": "M3-07d-2-demo-activation",
-          "reason": "Dev.4 activation test correction prepared under owner approval; exact-head CI and parent independent review required before merge/rerun. Prior run38580528645 scenario acceptance and owned cleanup remain unverified; retain failed artifacts and operation-journal audit. No aggregate M3 closure inferred.",
-          "deferral": null
-        },
-        {
-          "task": "M3-07d-staged-scope-isolation",
-          "reason": "Corrected net changes prepared on a fresh main-based branch to remove introduced static synthetic URL userinfo without scanner exceptions. Original PR104/heads and cancelled run38652682207 cleanup-unverified evidence remain preserved; active run38653505988 is untouched. Full pinned scanner, real-runtime exact-head CI and parent review are required before merge/rerun.",
           "deferral": null
         }
       ],
