@@ -75,3 +75,20 @@ all entries and distinct events from both branches; canonical output retains all
 source requirements,171 tasks and18 pending aggregate gates. Collector/runtime recipes
 and dependency versions are unchanged by this merge. Fresh exact-head CI and independent
 actual native artifact review remain required before merge.
+
+Independent review identified two required corrections before clearance: the exact
+relative parent `..` must fail containment in both helpers, and the native result summary
+must retain the full inventory's separate licensing review details. Both are corrected.
+The real module descriptor `{ "main": "../.." }` no longer borrows owner evidence;
+exact-parent runtime symlinks and source/runtime package directories are rejected. Notice
+traversal and symlink negatives each use independent fixtures and specific failure reasons.
+
+The native summary now exposes direct and associated notice counts, association count,
+metadata issue count and `licensingReviewItemCount`/list/text. `noticeCompleteness` remains
+pending when either metadata issues or licensing review items exist, including a fixture
+with zero metadata issues and native licensing review still pending. Legacy inventory
+fixtures default absent association/review fields without claiming legal clearance.
+Forty focused tests and root typecheck pass. Five exact-parent/summary regressions fail
+against preserved old source in valid owned scratch controls. Final local fast feedback
+runs625 root tests:610 pass,9 existing Mac/native-only/reporter failures,6 skip; all other
+nine stages pass. No dependency versions or publisher/isolation controls changed.

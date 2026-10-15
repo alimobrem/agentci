@@ -4,7 +4,7 @@ import{createHash}from'node:crypto';
 import{fileURLToPath}from'node:url';
 import{applyDashboardNoticeAssociations}from'./dashboard-notice-associations.mjs';
 const digest=b=>createHash('sha256').update(b).digest('hex');
-const inside=(root,path)=>{const r=relative(root,path);return r===''||!r.startsWith('../')&&!isAbsolute(r);};
+const inside=(root,path)=>{const r=relative(root,path);return r===''||r!=='..'&&!r.startsWith('../')&&!isAbsolute(r);};
 const notice=name=>/^(?:licen[sc]e|copying|copyright|notice)(?:[._-].*)?$/i.test(name)||/^.+\.LEGAL\.txt$/i.test(name);
 const descriptorKeys=new Set(['type','main','module','exports','imports','sideEffects','react-native']);
 const isModuleDescriptor=value=>value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length>0&&Object.keys(value).every(key=>descriptorKeys.has(key));

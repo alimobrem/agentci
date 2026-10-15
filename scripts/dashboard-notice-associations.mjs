@@ -3,7 +3,7 @@ import{resolve,relative,dirname,join,isAbsolute}from'node:path';
 import{createHash}from'node:crypto';
 import{fileURLToPath}from'node:url';
 const sha=b=>createHash('sha256').update(b).digest('hex');
-const owned=(root,path)=>{const r=relative(root,path);return r===''||!r.startsWith('../')&&!isAbsolute(r);};
+const owned=(root,path)=>{const r=relative(root,path);return r===''||r!=='..'&&!r.startsWith('../')&&!isAbsolute(r);};
 const child=(root,path)=>{if(typeof path!=='string'||!path||path.includes('\\')||isAbsolute(path)||path.split('/').includes('..'))throw Error('Invalid notice evidence path');const p=resolve(root,path);if(!owned(root,p))throw Error('Notice evidence escapes owner');return p;};
 async function bytes(root,path){const p=child(root,path),info=await lstat(p);if(!info.isFile()||info.isSymbolicLink()||!owned(await realpath(root),await realpath(p)))throw Error('Invalid notice evidence file');return readFile(p);}
 /** Canonical byte inventory, including manifests, never execute dependency code. */
