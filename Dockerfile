@@ -114,6 +114,8 @@ RUN test "$(node --version)" = "v26.10.0" && test "$(npm --version)" = "12.2.0" 
     node scripts/dashboard-production-trace.mjs apps/dashboard/.next/standalone
 COPY LICENSE /app/LICENSE
 COPY scripts/dashboard-license-inventory.mjs /app/scripts/dashboard-license-inventory.mjs
+COPY scripts/dashboard-notice-associations.mjs /app/scripts/dashboard-notice-associations.mjs
+COPY scripts/dashboard-notices /app/scripts/dashboard-notices
 RUN node scripts/dashboard-license-inventory.mjs --root /app --standalone /app/apps/dashboard/.next/standalone --output /app/dashboard-licenses
 
 FROM node AS dashboard

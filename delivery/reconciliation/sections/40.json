@@ -7158,6 +7158,35 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-dashboard-notice-associations",
+          "status": "in-progress",
+          "startedAt": "2026-10-15T02:37:30.040Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Retain exact-source/hash-bound package-specific notice evidence and declarations without rewriting installed manifests or blanket license inheritance.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-notice-associations.md"
+              ]
+            },
+            {
+              "text": "Regression tests reject changed source/runtime bytes, unrelated README content, incorrect versions and unresolved bundle provenance; preserve all pending legal/native and aggregate M3 gates.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-notice-associations.md"
+              ]
+            },
+            {
+              "text": "Run applicable local, hosted native packaging and independent review before merge; preserve dependency versions, previous attempts and immutable development release.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -7458,6 +7487,12 @@
         {
           "path": "docs/phases/m3-customer-dev4-acceptance.md",
           "sha256": "af4002cfd19504f4e789c559c25cfa41fa03c11dd5dd58c9916594aa69afdf77",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-dashboard-notice-associations.md",
+          "sha256": "59972f9b48a26ea1f9e2c3c20615c5225be7f05ec53e90545b20836499fe9eda",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -8614,6 +8649,35 @@
               ]
             }
           ]
+        },
+        {
+          "id": "M3-dashboard-notice-associations",
+          "status": "in-progress",
+          "startedAt": "2026-10-15T02:37:30.040Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Retain exact-source/hash-bound package-specific notice evidence and declarations without rewriting installed manifests or blanket license inheritance.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-notice-associations.md"
+              ]
+            },
+            {
+              "text": "Regression tests reject changed source/runtime bytes, unrelated README content, incorrect versions and unresolved bundle provenance; preserve all pending legal/native and aggregate M3 gates.",
+              "status": "passed",
+              "evidence": [
+                "docs/phases/m3-dashboard-notice-associations.md"
+              ]
+            },
+            {
+              "text": "Run applicable local, hosted native packaging and independent review before merge; preserve dependency versions, previous attempts and immutable development release.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -8914,6 +8978,12 @@
         {
           "path": "docs/phases/m3-customer-dev4-acceptance.md",
           "sha256": "af4002cfd19504f4e789c559c25cfa41fa03c11dd5dd58c9916594aa69afdf77",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "docs/phases/m3-dashboard-notice-associations.md",
+          "sha256": "59972f9b48a26ea1f9e2c3c20615c5225be7f05ec53e90545b20836499fe9eda",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
