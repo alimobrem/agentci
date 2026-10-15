@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2405,7 +2405,7 @@
       "completedAt": "2026-10-06T03:28:34.944Z",
       "acceptance": [
         {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0–M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
           "status": "passed",
           "evidence": [
             "docs/acceptance-reconciliation.md"
@@ -2708,7 +2708,7 @@
       "completedAt": null,
       "acceptance": [
         {
-          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0–M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
+          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0\u2013M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
           "status": "pending",
           "evidence": []
         }
@@ -4036,6 +4036,36 @@
           "evidence": [
             "docs/phases/m3-customer-dev4-acceptance.md"
           ]
+        }
+      ]
+    },
+    {
+      "id": "M3-dashboard-evidence-views",
+      "title": "Bind original PR semantic/risk and paired evaluation evidence with verified reviewer claims",
+      "requirementIds": [
+        "SPEC-33.1-003",
+        "SPEC-33.1-004",
+        "SPEC-33.1-005",
+        "SPEC-33.1-006",
+        "SPEC-33.1-007",
+        "SPEC-33.1-008",
+        "SPEC-33.1-011",
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-15T00:35:50.995Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Explicit trusted semantic/comparison/attempt bindings enforce organization and exact subject; shared actual raw network-byte/deadline/cancellation budget spans both clients and verified completed reviewer export; intent and semantic consensus remain explicitly unavailable.",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Adversarial unit, real HTTP and production browser checks cover mismatches/outcomes/gaps/inferred versus verified claims, incomplete/corrupt exports and session interruption; preserve cyberpunk history/export UI and no privileged credentials or mutations.",
+          "status": "pending",
+          "evidence": []
         }
       ]
     },

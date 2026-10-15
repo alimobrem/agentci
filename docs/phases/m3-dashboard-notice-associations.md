@@ -68,3 +68,10 @@ tracked-file hypothesis was incorrect: the generator reads evidence bytes direct
 The normal follow-up regenerates snapshots after all documentation/task edits and checks
 consistency before publication. The failed attempt remains in
 `delivery/runs/38673132335-attempt-1.json`; initial native jobs are left running.
+
+The draft normally merges independently accepted dashboard evidence views from main
+b07702dc2f48f32bbbcc3717132b8b5e9fbca6d7. Three-way task reconciliation preserves
+all entries and distinct events from both branches; canonical output retains all1346
+source requirements,171 tasks and18 pending aggregate gates. Collector/runtime recipes
+and dependency versions are unchanged by this merge. Fresh exact-head CI and independent
+actual native artifact review remain required before merge.
