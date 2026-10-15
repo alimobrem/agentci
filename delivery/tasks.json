@@ -1298,7 +1298,7 @@
       "completedAt": "2026-10-04T17:50:41.058Z",
       "acceptance": [
         {
-          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3\u2013M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
+          "text": "Document M0/M1 closure and remaining M2 PRs, then all M3–M10 PR scopes, dependencies, effort ranges, observable acceptance, release/demo gates and decisions with defaults/deadlines. Validate every future milestone inventory entry has a primary PR owner without changing implementation status; distinguish later/optional features and cross-cutting audit gaps. Link the plan from the delivery workflow.",
           "status": "passed",
           "evidence": [
             "docs/phase-pr-plan.md"
@@ -2405,7 +2405,7 @@
       "completedAt": "2026-10-06T03:28:34.944Z",
       "acceptance": [
         {
-          "text": "Preserve every source inventory ID and historical evidence; map all M0\u2013M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
+          "text": "Preserve every source inventory ID and historical evidence; map all M0–M10 build/exit clauses, record verification gaps and the sole provider exception; do not adopt proposed numerical gates",
           "status": "passed",
           "evidence": [
             "docs/acceptance-reconciliation.md"
@@ -2708,7 +2708,7 @@
       "completedAt": null,
       "acceptance": [
         {
-          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0\u2013M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
+          "text": "Regeneration preserves captured historical gate snapshots byte-for-byte in value while separate currentGateSnapshots reflect current ledger inputs. Check rejects dropped historical snapshots, source IDs, phases, deferrals or pass promotion. Original M0–M10, three adapters, phase demos and owner-observed-rate policy remain intact; unavailable/inconclusive current acceptance is not passed.",
           "status": "pending",
           "evidence": []
         }
@@ -4109,24 +4109,30 @@
         "SPEC-40-015",
         "SPEC-40-020"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-15T14:05:55.282Z",
-      "completedAt": null,
+      "completedAt": "2026-10-15T15:36:07.260Z",
       "acceptance": [
         {
           "text": "Separate immutable versioned intent contract, source binding, authenticated API/client and storage roundtrip preserve legacy digests and reject conflicting identity/content",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+          ]
         },
         {
           "text": "Dashboard renders declared intent safely even without completed summary and cancels bounded reads across session/navigation changes",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+          ]
         },
         {
           "text": "Exact committed archive reconciliation, full hosted CI and independent review pass; M3 qualifications remain open",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+          ]
         }
       ]
     },
@@ -4137,9 +4143,9 @@
         "SPEC-40-050",
         "SPEC-40-051"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-15T14:08:07.417Z",
-      "completedAt": null,
+      "completedAt": "2026-10-15T15:36:07.701Z",
       "acceptance": [
         {
           "text": "Recover only authentic exact-file observed-runtime and exact-version native root notices, bound to archive/runtime/source evidence; retain version discrepancies and all unresolved metadata, notice-completeness and source-obligation qualifications.",
@@ -4150,8 +4156,10 @@
         },
         {
           "text": "Test altered version/source/runtime/notice evidence and existing containment boundaries; pass clean committed-archive reconciliation, exact-head hosted native CI and independent review before merge.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+          ]
         }
       ]
     },
@@ -4163,19 +4171,23 @@
         "SPEC-40-051",
         "SPEC-33.1-001"
       ],
-      "status": "in-progress",
+      "status": "done",
       "startedAt": "2026-10-15T14:08:35.017Z",
-      "completedAt": null,
+      "completedAt": "2026-10-15T15:36:08.348Z",
       "acceptance": [
         {
           "text": "Actual default dashboard image on both native architectures holds production public login TLS error-path request through SIGTERM, completes expected403 after loopback socket release, and retains source/runtime/isolation/cleanup-bound proof; authenticated API200 drain remains unverified.",
-          "status": "pending",
-          "evidence": []
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+          ]
         },
         {
-          "text": "Real SIGKILL interrupts held request, unsupported abrupt143 receipts are rejected, and public proof is bounded with no certificates, trust settings, runtime hooks, credentials, host ports or release activation.",
-          "status": "pending",
-          "evidence": []
+          "text": "Real SIGKILL interrupts the held request; the explicitly unsupported abrupt143 negative command is rejected by production validation and the graceful oracle. Public proof is bounded; the production image/default command and positive process use no runtime hooks, certificates, trust changes, real/live credentials, host ports or release activation. The documented negative-only handler command is used solely to demonstrate rejection.",
+          "status": "passed",
+          "evidence": [
+            "delivery/acceptance/m3-dashboard-approved-bundle-completion.json"
+          ]
         }
       ]
     }
