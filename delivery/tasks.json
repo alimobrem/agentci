@@ -4100,6 +4100,30 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M3-dashboard-native-active-drain",
+      "title": "Retain native active public request drain proof without changing runtime trust",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SPEC-33.1-001"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-10-15T14:08:35.017Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Actual default dashboard image on both native architectures holds production public login TLS error-path request through SIGTERM, completes expected403 after loopback socket release, and retains source/runtime/isolation/cleanup-bound proof; authenticated API200 drain remains unverified.",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Real SIGKILL interrupts held request, unsupported abrupt143 receipts are rejected, and public proof is bounded with no certificates, trust settings, runtime hooks, credentials, host ports or release activation.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

@@ -1,3 +1,4 @@
+import {runNativePublicDrain,validateNativePublicDrain} from './lib/dashboard-native-drain.mjs';
 import {scannerRunArgs,SCANNER_SCRATCH_BYTES} from './lib/dashboard-scan-controls.mjs';
 import {dashboardScanFailure} from './lib/dashboard-scan-failure.mjs';
 import {dashboardShutdownMarkers} from './lib/dashboard-shutdown.mjs';
@@ -17,7 +18,7 @@ if(process.argv[2]==='source'){
  const imageRef=process.argv[3],source=await sourceIdentity();if(!/^agentci-dashboard:ci-[1-9][0-9]*-[1-9][0-9]*-(amd64|arm64)$/.test(imageRef)||imageRef!==`agentci-dashboard:ci-${source.runId}-${source.attempt}-${arch}`)throw Error('Exact owned image tag required');
  const daemon=JSON.parse(engine(['info','--format','{"os":{{json .OSType}},"arch":{{json .Architecture}}}']));if(daemon.os!=='linux'||({x86_64:'amd64',aarch64:'arm64',amd64:'amd64',arm64:'arm64'})[daemon.arch]!==arch)throw Error('Native daemon/host architecture mismatch');
  const rawImage=JSON.parse(engine(['image','inspect',imageRef]))[0],image=validateDashboardImage(rawImage,source);await save('image.json',image);
- const owner='agentci-smoke-'+randomBytes(8).toString('hex'),directory=await mkdtemp(join(process.env.RUNNER_TEMP??tmpdir(),'agentci-image-smoke-')),state=await registerImageSmokeState(directory,owner),anonymous={},shutdown=[];let runtime,rpmPackages,licenseInventory,scan,stage='prepare',receipt,summary,cancelled=false;
+ const owner='agentci-smoke-'+randomBytes(8).toString('hex'),directory=await mkdtemp(join(process.env.RUNNER_TEMP??tmpdir(),'agentci-image-smoke-')),state=await registerImageSmokeState(directory,owner),anonymous={},shutdown=[];let publicDrain,runtime,rpmPackages,licenseInventory,scan,stage='prepare',receipt,summary,cancelled=false;
  const cancel=()=>{cancelled=true;};process.on('SIGINT',cancel);process.on('SIGTERM',cancel);const docker=args=>{if(cancelled)throw Error('Native qualification cancelled');return engine(args);};
  const probe=(name,code)=>JSON.parse(docker(['exec',name,'node','--input-type=module','-e',code]));
  try{
@@ -38,7 +39,26 @@ if(process.argv[2]==='source'){
    const elapsedMs=Math.ceil(performance.now()-began),stopped=JSON.parse(engine(['inspect','--format','{"exitCode":{{json .State.ExitCode}},"oomKilled":{{json .State.OOMKilled}},"running":{{json .State.Running}}}',name])),channels=engine(['logs',name],{separateStreams:true}),shutdownLogs=dashboardShutdownMarkers(channels,sentinel);
    await save('anonymous.json',anonymous);await retainDashboardShutdown(shutdown,{mode,...stopped,source:{...source,imageId:image.id},runtime:shutdownRuntime,signal:'SIGTERM',stopSucceeded:!stopFailure,timeout:!!stopFailure?.nativeFailure?.timeout,forced:stopped.exitCode===137,elapsedMs,requestDrain:'idle-only',logs:shutdownLogs},save,{...source,imageId:image.id});
   }
-  await save('anonymous.json',anonymous);await save('shutdown.json',shutdown);stage='pinned-image-scan';
+  await save('anonymous.json',anonymous);await save('shutdown.json',shutdown);
+  // All cases use the actual image/plain production command. Only the explicitly unsupported negative control opts out of Next's signal handler.
+  const drainControls={};
+  for(const mode of ['forced','abrupt143','drain']){
+   stage='active-public-request-'+mode;const name=owner+'-'+mode,sentinel='runtime-canary-'+randomBytes(32).toString('hex'),file=join(directory,mode+'.env');
+   await writeFile(file,'AGENTCI_DASHBOARD_CONFIG='+JSON.stringify({issuer:'https://127.0.0.1:4443',clientId:'native-public-error-fixture',clientSecret:sentinel,origin:'https://dashboard.fixture.invalid',grants:{},reviews:{}})+'\n',{mode:0o600});
+   const args=['create','--name',name,'--label',SMOKE_OWNER_LABEL+'='+owner,'--label','agentci.purpose=image-smoke','--env','DEBUG=next:start-server','--env-file',file,'--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--pids-limit','128','--memory','512m','--cpus','1','--tmpfs','/tmp:rw,noexec,nosuid,nodev,size=64m'];
+   if(mode==='abrupt143')args.push('--env','NEXT_MANUAL_SIG_HANDLE=1');
+   const id=docker([...args,image.id]);if(!/^[a-f0-9]{64}$/.test(id))throw Error('Created drain container identity missing');docker(['start',name]);
+   let ready=false;for(let i=0;i<80;i++){try{if(docker(['exec',name,'node','-e',"fetch('http://127.0.0.1:3000/livez',{signal:AbortSignal.timeout(1500)}).then(r=>process.exit(r.status===200?0:1)).catch(()=>process.exit(1))"])===''){ready=true;break;}}catch{}await new Promise(r=>setTimeout(r,250));}if(!ready)throw Error('Native active-request liveness unavailable');
+   const config=JSON.parse(docker(['inspect',name]))[0];let container;
+   if(mode==='abrupt143'){
+    let rejected=false;try{validateDashboardContainer(config,image,owner);}catch{rejected=true;}if(!rejected||config.Config.Env.filter(v=>v.startsWith('NEXT_MANUAL_SIG_HANDLE=')).join()!=='NEXT_MANUAL_SIG_HANDLE=1')throw Error('Unsupported control configuration not isolated');
+    container={...validateDashboardContainer({...config,Config:{...config.Config,Env:config.Config.Env.filter(v=>!v.startsWith('NEXT_MANUAL_SIG_HANDLE='))}},image,owner),configuration:'unsupported-manual-signal-configuration',productionValidatorAccepted:false};
+   }else container=validateDashboardContainer(config,image,owner);
+   const observed=await runNativePublicDrain({name,engine,probeRuntime:()=>probe(name,dashboardShutdownSourceProbe),source:{...source,imageId:image.id},sentinel});observed.container=container;
+   if(mode==='drain'){publicDrain={...observed,forcedControl:drainControls.forced,abrupt143Control:drainControls.abrupt143};await save('public-drain.json',publicDrain);validateNativePublicDrain(publicDrain,{...source,imageId:image.id});}
+   else{drainControls[mode]=observed;await save('public-drain.json',{result:'incomplete-or-unverified',...drainControls});}
+  }
+  stage='pinned-image-scan';
   const archive=join(directory,'dashboard.tar'),cache=join(directory,'trivy-cache');await mkdir(cache,{mode:0o700});docker(['image','save','--output',archive,image.id]);await chmod(archive,0o644);
   const cacheFs=await statfs(cache);await save('scan-storage.json',{source,imageId:image.id,tmp:{pathClass:'tmp',declaredCapacityBytes:SCANNER_SCRATCH_BYTES,observedAvailableBytes:null,observation:'explicit tmpfs bound; free/used not retained'},cache:{pathClass:'cache',capacityBytes:cacheFs.blocks*cacheFs.bsize,availableBytes:cacheFs.bavail*cacheFs.bsize,usedBytes:(cacheFs.blocks-cacheFs.bfree)*cacheFs.bsize,observation:'statfs of the exact owned bind source before scan'},rawPaths:'withheld'});
   const rawScan=engine(scannerRunArgs({owner,uid:process.getuid(),gid:process.getgid(),archive,cache}),{timeout:300000,captureScanFailure:true});
@@ -49,6 +69,6 @@ if(process.argv[2]==='source'){
   try{receipt=await cleanupImageSmokeState(state);}catch{receipt={schemaVersion:1,result:'recovery-required-or-unverified',owner,privateState:'retain for owned recovery'};process.exitCode=1;}await save('cleanup.json',receipt);
  }
  await new Promise(r=>setImmediate(r));if(cancelled)process.exitCode=1;process.off('SIGINT',cancel);process.off('SIGTERM',cancel);
- if(!process.exitCode){summary=dashboardNativeSummary({source,arch,image,runtime,anonymous,shutdown,licenseInventory,rpmPackages,scan,cleanup:receipt});await save('result.json',summary);}
+ if(!process.exitCode){summary=dashboardNativeSummary({source,arch,image,runtime,anonymous,shutdown,publicDrain,licenseInventory,rpmPackages,scan,cleanup:receipt});await save('result.json',summary);}
 
 }else throw Error('Use source ARCH or qualify OWNED_IMAGE_TAG');
