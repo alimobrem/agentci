@@ -60,3 +60,11 @@ The first check attempt also exposed a new test import/type annotation error; th
 was fixed and the final type stage passes. Both attempt logs remain local evidence.
 This local feedback does not waive hosted full CI, actual native inventories or independent
 review. The task remains in progress with hosted/reviewer acceptance pending.
+
+Initial draft head3a99286 Verify38673132335 attempt1 passed hosted fast feedback, then
+failed the canonical reconciliation check. The accepted evidence document's validation
+counts changed after snapshot generation, so its stored hash was stale. The initial
+tracked-file hypothesis was incorrect: the generator reads evidence bytes directly.
+The normal follow-up regenerates snapshots after all documentation/task edits and checks
+consistency before publication. The failed attempt remains in
+`delivery/runs/38673132335-attempt-1.json`; initial native jobs are left running.
