@@ -172,7 +172,7 @@ The committed characterization summary now calls that value `responseBodySha256`
 canonical native artifacts and their oracle are unchanged. This alternate branch
 does not clear the original scan result or relabel prior artifact source identities.
 The unchanged trusted scanner must cover its complete introduced history before
-publication, and its exact new head still requires fresh CI and independent review.
+merge, and its exact new head still requires fresh CI and independent review.
 
 Success requires zero owned app/helper containers, networks and volumes, no
 orphan fixture/client processes, and independently checked removal of private
