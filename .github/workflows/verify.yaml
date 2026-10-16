@@ -108,8 +108,9 @@ jobs:
         env:
           AGENTCI_TEST_TEMPORAL_ADDRESS: 127.0.0.1:7233
       - name: Package smoke and installed PostgreSQL readers
-        run: mkdir -p releases && npm pack --pack-destination releases && node scripts/ci-database.mjs run node scripts/package-smoke.mjs --postgres-readers && node scripts/ci-database.mjs run node scripts/reproduction-client-package-smoke.mjs
+        run: npm run build && node scripts/pack-candidate.mjs --pack-destination releases && node scripts/ci-database.mjs run node scripts/package-smoke.mjs --postgres-readers && node scripts/ci-database.mjs run node scripts/reproduction-client-package-smoke.mjs
         env:
+          AGENTCI_CANDIDATE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           AGENTCI_TEST_TEMPORAL_ADDRESS: 127.0.0.1:7233
       - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
       - name: Build API image
@@ -181,8 +182,10 @@ jobs:
           if-no-files-found: error
           path: |
             releases/*.tgz
+            releases/candidate-package-manifest.json
             scan-results/*.json
             .agentci/artifacts/verification.json
+            .agentci/artifacts/candidate-package-acceptance.json
             .agentci/artifacts/delivery/fast-latest.json
             .agentci/artifacts/api-compatibility.json
             ci-database-cleanup.json
