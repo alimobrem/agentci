@@ -1,0 +1,895 @@
+{
+  "schemaVersion": 1,
+  "status": "synthetic-native-authenticated-characterization-qualified-only",
+  "runId": "38823741781",
+  "attempt": 1,
+  "runUrl": "https://github.com/alimobrem/agentci/actions/runs/38823741781",
+  "candidateCommit": "7ca53d6d645cd89476622de4de1a3a005b4eab28",
+  "sourceCommit": "3c6e2419f69946cd886b449cf1ac791d08910e19",
+  "sourceTree": "c90d2d5d8a8984415c2b30f87e867dfc9064e471",
+  "verifiedMergeParents": [
+    "bbc887e2afd1bd7f7187bf5844cd9db159d9bb38",
+    "7ca53d6d645cd89476622de4de1a3a005b4eab28"
+  ],
+  "verifiers": [
+    {
+      "path": "scripts/lib/dashboard-native-authenticated-evidence.mjs",
+      "sourceCommit": "7ca53d6d645cd89476622de4de1a3a005b4eab28",
+      "sha256": "e49d60f6ca846df4348be013fe9e33280fcfda2be6c6f34ed37434b9fe613bf8"
+    },
+    {
+      "path": "scripts/lib/dashboard-native-authenticated-fixture.mjs",
+      "sourceCommit": "7ca53d6d645cd89476622de4de1a3a005b4eab28",
+      "sha256": "cfdde9a143cd435ffd2cd7e67f09f38743e3709f45eb0af5d1626c69e89e3c40"
+    },
+    {
+      "path": "scripts/lib/dashboard-native-auth-helper.mjs",
+      "sourceCommit": "7ca53d6d645cd89476622de4de1a3a005b4eab28",
+      "sha256": "4a7818c9f522e7d5a4467a533bbda852830de645927bcc1cf0cb1f663b92f365"
+    },
+    {
+      "path": "scripts/lib/dashboard-native-evidence.mjs",
+      "sourceCommit": "7ca53d6d645cd89476622de4de1a3a005b4eab28",
+      "sha256": "8ca5eaaca940610a631bacb809b81cf01def1d9d4910b08bf7f257093b2e7d75"
+    },
+    {
+      "path": "scripts/lib/dashboard-public-artifacts.mjs",
+      "sourceCommit": "7ca53d6d645cd89476622de4de1a3a005b4eab28",
+      "sha256": "64bfbf515396f32ac98ba58e3f1113cccb87bef29c211315024e084fa2635f5e"
+    },
+    {
+      "path": "scripts/check-scan.mjs",
+      "sourceCommit": "7ca53d6d645cd89476622de4de1a3a005b4eab28",
+      "sha256": "095140472af113e1439e40e634c062455adbc875caf238bcb69f6b1b33c151d1"
+    }
+  ],
+  "architectures": [
+    {
+      "arch": "amd64",
+      "archive": {
+        "artifactId": 12013224737,
+        "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38823741781/artifacts/12013224737",
+        "zipSha256": "09bad39281668a351419b10fd33fd2193188cca7a4c3c58e226957c76f477f75",
+        "zipBytes": 1008321,
+        "manifestSha256": "e31f49731b36815004783251b4b5f751e4c51d9f642edf6ec2faad491b92aab8",
+        "verifiedIndexedMembers": 379,
+        "verifiedIndexedBytes": 4183454,
+        "publicBytesIncludingManifest": 4257572,
+        "noExtraUnindexedPayload": true,
+        "boundedPublicationLimitBytes": 33554432,
+        "syntheticMergeParentsVerified": true,
+        "result": "public-native-characterization-bytes-preserved-and-verified"
+      },
+      "source": {
+        "sourceCommit": "3c6e2419f69946cd886b449cf1ac791d08910e19",
+        "sourceTree": "c90d2d5d8a8984415c2b30f87e867dfc9064e471",
+        "candidateCommit": "7ca53d6d645cd89476622de4de1a3a005b4eab28",
+        "runId": "38823741781",
+        "attempt": "1",
+        "arch": "amd64",
+        "rootVersion": "0.4.0-m3-dev.4",
+        "dashboardVersion": "0.0.0-local-m3",
+        "rootLockSha256": "25c61ea8bd23bf690a0cabffea8c220bd657069e8bc0885d1cd09dea10022a38",
+        "dashboardLockSha256": "f53e726e0ba69f140b82a32338b5bed67fe2651e44e02210cbf48d6b629d24f3"
+      },
+      "imageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+      "result": "native-eight-case-synthetic-authenticated-characterization-qualified",
+      "qualification": {
+        "result": "synthetic-authenticated-characterization-qualified",
+        "stage": "characterization",
+        "authenticatedApiDrain": "unverified",
+        "liveOIDCAcceptance": "unverified",
+        "browserSecureCookieAcceptance": "unverified",
+        "productionDefaultEnvironmentQualification": false
+      },
+      "strictOracle": {
+        "module": "scripts/lib/dashboard-native-authenticated-evidence.mjs",
+        "sha256": "e49d60f6ca846df4348be013fe9e33280fcfda2be6c6f34ed37434b9fe613bf8",
+        "publicationAndFinalValidator": "both passed with external source identity",
+        "canonicalJsonBytes": true,
+        "progressSha256": "61f37fadb727ec3d7a04469e285d4c385341d0ee4471e26d3f4f8ff4bdec6d70",
+        "finalReportSha256": "70fc612e129cfc21bf2ed67ae858f88e43e295c8dade1ca779f1f22d809e4623",
+        "observedAtWithinNativeJobWindow": true
+      },
+      "characterizedCases": 8,
+      "positiveApi200Cases": 4,
+      "pairedFreshTlsNegativeCases": 4,
+      "cases": [
+        {
+          "id": "47252506-97dc-4bc3-ba96-1ad71dbd51cf",
+          "trustCase": "valid",
+          "pairedPositiveId": null,
+          "appImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "f71ef8d7403aa6ab044dd22cfe4737f223f1585d5ccff3de2a4b71af5726ca66",
+          "loginStatus": 303,
+          "callbackStatus": 303,
+          "sessionStatus": 200,
+          "apiStatus": 200,
+          "responseBodySha256": "64c3a873b926fd9c50993b8361b04c9c0a79c97f461958a47df766a9f38bcbfe",
+          "apiBodyBytes": 1676,
+          "issuerTlsAttempts": 3,
+          "issuerTlsFailures": 0,
+          "issuerTlsErrorCodes": [],
+          "issuerPresentedLeafDerSha256s": [
+            "90502a85057e49be061e23062b88054ea85f6dd43aae3fef4347ef3968cfb487"
+          ],
+          "issuerHttpRequests": 4,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "81a8f047-d065-4e9c-b25c-b8ba82c76a74"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "3714811c-c813-484a-9100-3050c118dfea",
+          "trustCase": "absent-ca",
+          "pairedPositiveId": "47252506-97dc-4bc3-ba96-1ad71dbd51cf",
+          "appImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": false,
+          "caSha256": "f71ef8d7403aa6ab044dd22cfe4737f223f1585d5ccff3de2a4b71af5726ca66",
+          "loginStatus": 403,
+          "callbackStatus": 0,
+          "sessionStatus": 0,
+          "apiStatus": null,
+          "responseBodySha256": null,
+          "apiBodyBytes": null,
+          "issuerTlsAttempts": 1,
+          "issuerTlsFailures": 1,
+          "issuerTlsErrorCodes": [
+            "ECONNRESET"
+          ],
+          "issuerPresentedLeafDerSha256s": [
+            "90502a85057e49be061e23062b88054ea85f6dd43aae3fef4347ef3968cfb487"
+          ],
+          "issuerHttpRequests": 0,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "32c80666-ae8a-4ec1-8a56-23a4b7346002"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "509b3b3a-f911-4416-822a-048402674fc1",
+          "trustCase": "valid",
+          "pairedPositiveId": null,
+          "appImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "f71ef8d7403aa6ab044dd22cfe4737f223f1585d5ccff3de2a4b71af5726ca66",
+          "loginStatus": 303,
+          "callbackStatus": 303,
+          "sessionStatus": 200,
+          "apiStatus": 200,
+          "responseBodySha256": "64c3a873b926fd9c50993b8361b04c9c0a79c97f461958a47df766a9f38bcbfe",
+          "apiBodyBytes": 1676,
+          "issuerTlsAttempts": 3,
+          "issuerTlsFailures": 0,
+          "issuerTlsErrorCodes": [],
+          "issuerPresentedLeafDerSha256s": [
+            "90502a85057e49be061e23062b88054ea85f6dd43aae3fef4347ef3968cfb487"
+          ],
+          "issuerHttpRequests": 4,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "e25b8f83-f462-4345-8305-8f899e483de7"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "10422758-a021-4ee2-aff1-0654b7c6619d",
+          "trustCase": "wrong-ca",
+          "pairedPositiveId": "509b3b3a-f911-4416-822a-048402674fc1",
+          "appImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "f71ef8d7403aa6ab044dd22cfe4737f223f1585d5ccff3de2a4b71af5726ca66",
+          "loginStatus": 403,
+          "callbackStatus": 0,
+          "sessionStatus": 0,
+          "apiStatus": null,
+          "responseBodySha256": null,
+          "apiBodyBytes": null,
+          "issuerTlsAttempts": 1,
+          "issuerTlsFailures": 1,
+          "issuerTlsErrorCodes": [
+            "ECONNRESET"
+          ],
+          "issuerPresentedLeafDerSha256s": [
+            "d92a7e779ade1f090377faa9e55759c805b1e12f330c0d16cf5a5005f15d0e11"
+          ],
+          "issuerHttpRequests": 0,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "5914ad2b-d512-4f52-873f-2a43544e1c4d"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "735d33d6-249b-49a4-a90d-300060b096fd",
+          "trustCase": "valid",
+          "pairedPositiveId": null,
+          "appImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "f71ef8d7403aa6ab044dd22cfe4737f223f1585d5ccff3de2a4b71af5726ca66",
+          "loginStatus": 303,
+          "callbackStatus": 303,
+          "sessionStatus": 200,
+          "apiStatus": 200,
+          "responseBodySha256": "64c3a873b926fd9c50993b8361b04c9c0a79c97f461958a47df766a9f38bcbfe",
+          "apiBodyBytes": 1676,
+          "issuerTlsAttempts": 3,
+          "issuerTlsFailures": 0,
+          "issuerTlsErrorCodes": [],
+          "issuerPresentedLeafDerSha256s": [
+            "90502a85057e49be061e23062b88054ea85f6dd43aae3fef4347ef3968cfb487"
+          ],
+          "issuerHttpRequests": 4,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "33fee14b-a8c7-4a4d-984d-8cc139268b9f"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "78c4f957-1b96-4939-b9e1-a0860dd44a17",
+          "trustCase": "wrong-hostname",
+          "pairedPositiveId": "735d33d6-249b-49a4-a90d-300060b096fd",
+          "appImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "f71ef8d7403aa6ab044dd22cfe4737f223f1585d5ccff3de2a4b71af5726ca66",
+          "loginStatus": 403,
+          "callbackStatus": 0,
+          "sessionStatus": 0,
+          "apiStatus": null,
+          "responseBodySha256": null,
+          "apiBodyBytes": null,
+          "issuerTlsAttempts": 1,
+          "issuerTlsFailures": 1,
+          "issuerTlsErrorCodes": [
+            "ECONNRESET"
+          ],
+          "issuerPresentedLeafDerSha256s": [
+            "0065b6c79bc5dcf3ad4cc611ffe4a8772ab49800db9b0db2e621f0cbf509ce2d"
+          ],
+          "issuerHttpRequests": 0,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "09333173-017a-40cb-8648-777c7dfdaa06"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "81ee768c-5f52-4d51-b8db-72e1fbe1c6ff",
+          "trustCase": "valid",
+          "pairedPositiveId": null,
+          "appImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "f71ef8d7403aa6ab044dd22cfe4737f223f1585d5ccff3de2a4b71af5726ca66",
+          "loginStatus": 303,
+          "callbackStatus": 303,
+          "sessionStatus": 200,
+          "apiStatus": 200,
+          "responseBodySha256": "64c3a873b926fd9c50993b8361b04c9c0a79c97f461958a47df766a9f38bcbfe",
+          "apiBodyBytes": 1676,
+          "issuerTlsAttempts": 3,
+          "issuerTlsFailures": 0,
+          "issuerTlsErrorCodes": [],
+          "issuerPresentedLeafDerSha256s": [
+            "90502a85057e49be061e23062b88054ea85f6dd43aae3fef4347ef3968cfb487"
+          ],
+          "issuerHttpRequests": 4,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "f91f5d00-9026-4619-9e25-35be69c5d6fc"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "180a2065-13de-4dac-81a8-142d7e03adbb",
+          "trustCase": "expired-certificate",
+          "pairedPositiveId": "81ee768c-5f52-4d51-b8db-72e1fbe1c6ff",
+          "appImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperImageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "f71ef8d7403aa6ab044dd22cfe4737f223f1585d5ccff3de2a4b71af5726ca66",
+          "loginStatus": 403,
+          "callbackStatus": 0,
+          "sessionStatus": 0,
+          "apiStatus": null,
+          "responseBodySha256": null,
+          "apiBodyBytes": null,
+          "issuerTlsAttempts": 1,
+          "issuerTlsFailures": 1,
+          "issuerTlsErrorCodes": [
+            "ECONNRESET"
+          ],
+          "issuerPresentedLeafDerSha256s": [
+            "8e4e9d3786d0bf1e7d36f5829417d8c4c39e4153d2e62ccf5311a5d826203d97"
+          ],
+          "issuerHttpRequests": 0,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "def65311-046e-4752-876b-2d902efb7913"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        }
+      ],
+      "globalCaAndLeafBindings": "Exact source oracle passed all global CA/hash/size/parsed-observation, validity/name/issuer and per-peer actual socket DER observations across eight cases; public hashes and typed observations retained, raw certificate/CA/private material not independently reparsed here.",
+      "helperLivenessAndTeardown": "all eight helpers remained running/queryable after app exit; same observer identity; natural helper close0/no signal/not forced",
+      "runtime": {
+        "node": "v26.10.0",
+        "nodeBinarySha256": "ab9c8eecf9f82d6693cdc3accced17034065c8d96213b0aa76a7e803d20ae1da",
+        "nextHandlerSha256": "af5fd02bb07111f4794f7c7123e7388953bdfb85e131024c85dbc9abbab82d6c",
+        "allCasePid1AndProbeExecutableBindingsMatch": true,
+        "legacyRuntimeAnonymousIdleShutdownAndPublicErrorDrain": "passed exact current committed oracles",
+        "publicErrorDrainQualification": "source-bound-native-active-public-error-path-drain-qualified"
+      },
+      "scan": {
+        "policy": "passed exact source JSON-only policy verifier; no scanner execution",
+        "reportSha256": "e102437d4ee48ec146facb5f99fe8e6178869103e9a998c57ff8efda3f2e5da3",
+        "imageId": "sha256:caa43f89922901d419ae0fe7d66b6e1e349f3c4567e15116c18956f810ad1e74",
+        "result": "passed-policy"
+      },
+      "summary": "result.json exactly equals source-oracle recomputation",
+      "cleanup": {
+        "ownedContainers": 0,
+        "ownedNetworks": 0,
+        "ownedVolumes": 0,
+        "privateFilesRemoved": true,
+        "recoveryReceiptMatches": true
+      },
+      "qualifications": {
+        "metadataIssues": 4,
+        "provenanceAndLicensingReviewItems": 3,
+        "nativeComponents": "partial3/28",
+        "legalClearance": "not-claimed",
+        "authenticatedApiDrain": "unverified",
+        "signalsEnabled": false,
+        "liveOIDC": "unverified",
+        "browserSecureCookie": "unverified",
+        "defaultProductionEnvironment": "not-qualified",
+        "customer": "unverified",
+        "M3Gates": "18-pending",
+        "candidateTgz": "npm-shrinkwrap omission remains; production-install smoke only; immutable dev.4 locked-root proof separate"
+      }
+    },
+    {
+      "arch": "arm64",
+      "archive": {
+        "artifactId": 12014326021,
+        "artifactUrl": "https://github.com/alimobrem/agentci/actions/runs/38823741781/artifacts/12014326021",
+        "zipSha256": "25928af466e368ccc17449ae12844713090fc7c946bd0c3d147838607be1d096",
+        "zipBytes": 1008330,
+        "manifestSha256": "147dc80c318a0d8c038b21be60d715bf3a16c31a52c29496868c9b0d448ff0fb",
+        "verifiedIndexedMembers": 379,
+        "verifiedIndexedBytes": 4184208,
+        "publicBytesIncludingManifest": 4258326,
+        "noExtraUnindexedPayload": true,
+        "boundedPublicationLimitBytes": 33554432,
+        "syntheticMergeParentsVerified": true,
+        "result": "public-native-characterization-bytes-preserved-and-verified"
+      },
+      "source": {
+        "sourceCommit": "3c6e2419f69946cd886b449cf1ac791d08910e19",
+        "sourceTree": "c90d2d5d8a8984415c2b30f87e867dfc9064e471",
+        "candidateCommit": "7ca53d6d645cd89476622de4de1a3a005b4eab28",
+        "runId": "38823741781",
+        "attempt": "1",
+        "arch": "arm64",
+        "rootVersion": "0.4.0-m3-dev.4",
+        "dashboardVersion": "0.0.0-local-m3",
+        "rootLockSha256": "25c61ea8bd23bf690a0cabffea8c220bd657069e8bc0885d1cd09dea10022a38",
+        "dashboardLockSha256": "f53e726e0ba69f140b82a32338b5bed67fe2651e44e02210cbf48d6b629d24f3"
+      },
+      "imageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+      "result": "native-eight-case-synthetic-authenticated-characterization-qualified",
+      "qualification": {
+        "result": "synthetic-authenticated-characterization-qualified",
+        "stage": "characterization",
+        "authenticatedApiDrain": "unverified",
+        "liveOIDCAcceptance": "unverified",
+        "browserSecureCookieAcceptance": "unverified",
+        "productionDefaultEnvironmentQualification": false
+      },
+      "strictOracle": {
+        "module": "scripts/lib/dashboard-native-authenticated-evidence.mjs",
+        "sha256": "e49d60f6ca846df4348be013fe9e33280fcfda2be6c6f34ed37434b9fe613bf8",
+        "publicationAndFinalValidator": "both passed with external source identity",
+        "canonicalJsonBytes": true,
+        "progressSha256": "e40db818cfaeb8a75cbebd08e4ff3434acfca1db9561b4e0b1074c6af6324d46",
+        "finalReportSha256": "41e9ce7ed5ae11eecd342a67cd78b4cd84bb5513a49d68df755c3506bfa53b65",
+        "observedAtWithinNativeJobWindow": true
+      },
+      "characterizedCases": 8,
+      "positiveApi200Cases": 4,
+      "pairedFreshTlsNegativeCases": 4,
+      "cases": [
+        {
+          "id": "243c620e-3534-4f5e-98b7-e939e50904fe",
+          "trustCase": "valid",
+          "pairedPositiveId": null,
+          "appImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "cf9e7c23fcb0e1595af0dcb0af2bdc99c4a5a3a0101cb1ce42d2635434fd52b9",
+          "loginStatus": 303,
+          "callbackStatus": 303,
+          "sessionStatus": 200,
+          "apiStatus": 200,
+          "responseBodySha256": "64c3a873b926fd9c50993b8361b04c9c0a79c97f461958a47df766a9f38bcbfe",
+          "apiBodyBytes": 1676,
+          "issuerTlsAttempts": 3,
+          "issuerTlsFailures": 0,
+          "issuerTlsErrorCodes": [],
+          "issuerPresentedLeafDerSha256s": [
+            "67679567f4abad7a8e6d33af862cddde168787dbe258ddcb43aba109c3fa69e2"
+          ],
+          "issuerHttpRequests": 4,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "d65510c5-b994-47b9-984d-bbc2d11a71e2"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "c57cf610-b087-42c6-9d5b-8740f0873f3a",
+          "trustCase": "absent-ca",
+          "pairedPositiveId": "243c620e-3534-4f5e-98b7-e939e50904fe",
+          "appImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": false,
+          "caSha256": "cf9e7c23fcb0e1595af0dcb0af2bdc99c4a5a3a0101cb1ce42d2635434fd52b9",
+          "loginStatus": 403,
+          "callbackStatus": 0,
+          "sessionStatus": 0,
+          "apiStatus": null,
+          "responseBodySha256": null,
+          "apiBodyBytes": null,
+          "issuerTlsAttempts": 1,
+          "issuerTlsFailures": 1,
+          "issuerTlsErrorCodes": [
+            "ECONNRESET"
+          ],
+          "issuerPresentedLeafDerSha256s": [
+            "67679567f4abad7a8e6d33af862cddde168787dbe258ddcb43aba109c3fa69e2"
+          ],
+          "issuerHttpRequests": 0,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "3473d9d1-1d95-4ec2-9a44-06e9b2e7e99e"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "8c5f6897-e1e3-4347-9513-c1da76b9f18d",
+          "trustCase": "valid",
+          "pairedPositiveId": null,
+          "appImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "cf9e7c23fcb0e1595af0dcb0af2bdc99c4a5a3a0101cb1ce42d2635434fd52b9",
+          "loginStatus": 303,
+          "callbackStatus": 303,
+          "sessionStatus": 200,
+          "apiStatus": 200,
+          "responseBodySha256": "64c3a873b926fd9c50993b8361b04c9c0a79c97f461958a47df766a9f38bcbfe",
+          "apiBodyBytes": 1676,
+          "issuerTlsAttempts": 3,
+          "issuerTlsFailures": 0,
+          "issuerTlsErrorCodes": [],
+          "issuerPresentedLeafDerSha256s": [
+            "67679567f4abad7a8e6d33af862cddde168787dbe258ddcb43aba109c3fa69e2"
+          ],
+          "issuerHttpRequests": 4,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "a0cc0d4c-48a4-46d6-bd3a-a1bd84937352"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "2333ece6-d717-4a4d-8883-3b791c42cb08",
+          "trustCase": "wrong-ca",
+          "pairedPositiveId": "8c5f6897-e1e3-4347-9513-c1da76b9f18d",
+          "appImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "cf9e7c23fcb0e1595af0dcb0af2bdc99c4a5a3a0101cb1ce42d2635434fd52b9",
+          "loginStatus": 403,
+          "callbackStatus": 0,
+          "sessionStatus": 0,
+          "apiStatus": null,
+          "responseBodySha256": null,
+          "apiBodyBytes": null,
+          "issuerTlsAttempts": 1,
+          "issuerTlsFailures": 1,
+          "issuerTlsErrorCodes": [
+            "ECONNRESET"
+          ],
+          "issuerPresentedLeafDerSha256s": [
+            "99c2c3843d04adf4f6aa4e2235429cfe4d15b1957e19b28c34be7de5cdc2f1da"
+          ],
+          "issuerHttpRequests": 0,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "91c28cff-6a7f-4d25-9258-5526adc1aa1c"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "e244148c-f750-496e-a6a9-5ce8a94b1b68",
+          "trustCase": "valid",
+          "pairedPositiveId": null,
+          "appImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "cf9e7c23fcb0e1595af0dcb0af2bdc99c4a5a3a0101cb1ce42d2635434fd52b9",
+          "loginStatus": 303,
+          "callbackStatus": 303,
+          "sessionStatus": 200,
+          "apiStatus": 200,
+          "responseBodySha256": "64c3a873b926fd9c50993b8361b04c9c0a79c97f461958a47df766a9f38bcbfe",
+          "apiBodyBytes": 1676,
+          "issuerTlsAttempts": 3,
+          "issuerTlsFailures": 0,
+          "issuerTlsErrorCodes": [],
+          "issuerPresentedLeafDerSha256s": [
+            "67679567f4abad7a8e6d33af862cddde168787dbe258ddcb43aba109c3fa69e2"
+          ],
+          "issuerHttpRequests": 4,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "8c5b824c-d98a-4184-a5df-29d4260ae779"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "af5ca7ec-aee5-4002-84f4-c44978c5cb5d",
+          "trustCase": "wrong-hostname",
+          "pairedPositiveId": "e244148c-f750-496e-a6a9-5ce8a94b1b68",
+          "appImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "cf9e7c23fcb0e1595af0dcb0af2bdc99c4a5a3a0101cb1ce42d2635434fd52b9",
+          "loginStatus": 403,
+          "callbackStatus": 0,
+          "sessionStatus": 0,
+          "apiStatus": null,
+          "responseBodySha256": null,
+          "apiBodyBytes": null,
+          "issuerTlsAttempts": 1,
+          "issuerTlsFailures": 1,
+          "issuerTlsErrorCodes": [
+            "ECONNRESET"
+          ],
+          "issuerPresentedLeafDerSha256s": [
+            "4e19cc283f80166908b0bca58bce5ea91e63c539dd0a8bbafd2c89a416a0b6ac"
+          ],
+          "issuerHttpRequests": 0,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "447ddd5e-17ad-4842-b259-2345766467cc"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "9634cb0d-38e6-4f42-9c33-abc0575e1bf7",
+          "trustCase": "valid",
+          "pairedPositiveId": null,
+          "appImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "cf9e7c23fcb0e1595af0dcb0af2bdc99c4a5a3a0101cb1ce42d2635434fd52b9",
+          "loginStatus": 303,
+          "callbackStatus": 303,
+          "sessionStatus": 200,
+          "apiStatus": 200,
+          "responseBodySha256": "64c3a873b926fd9c50993b8361b04c9c0a79c97f461958a47df766a9f38bcbfe",
+          "apiBodyBytes": 1676,
+          "issuerTlsAttempts": 3,
+          "issuerTlsFailures": 0,
+          "issuerTlsErrorCodes": [],
+          "issuerPresentedLeafDerSha256s": [
+            "67679567f4abad7a8e6d33af862cddde168787dbe258ddcb43aba109c3fa69e2"
+          ],
+          "issuerHttpRequests": 4,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "ace70f1c-5dab-4a0e-ad60-d8fad89154d5"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        },
+        {
+          "id": "006176dc-40a8-45bc-92a2-8c4cfe5af7a6",
+          "trustCase": "expired-certificate",
+          "pairedPositiveId": "9634cb0d-38e6-4f42-9c33-abc0575e1bf7",
+          "appImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperImageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+          "helperGlobalCaOrCredentialMounts": 0,
+          "appCaPresent": true,
+          "caSha256": "cf9e7c23fcb0e1595af0dcb0af2bdc99c4a5a3a0101cb1ce42d2635434fd52b9",
+          "loginStatus": 403,
+          "callbackStatus": 0,
+          "sessionStatus": 0,
+          "apiStatus": null,
+          "responseBodySha256": null,
+          "apiBodyBytes": null,
+          "issuerTlsAttempts": 1,
+          "issuerTlsFailures": 1,
+          "issuerTlsErrorCodes": [
+            "ECONNRESET"
+          ],
+          "issuerPresentedLeafDerSha256s": [
+            "d7ae74c4aa190fe217393cad70b6a9bfabd17c5eb815f29f1cf593b7f44fa22b"
+          ],
+          "issuerHttpRequests": 0,
+          "heldBefore": null,
+          "heldAfter": null,
+          "shutdownRequested": false,
+          "requestDrain": "idle-only",
+          "exitCode": 143,
+          "observerAfterExit": {
+            "running": true,
+            "queryable": true,
+            "observerId": "b703f1cc-9792-4a9c-b7ee-42eb4093d180"
+          },
+          "helperProcessExit": {
+            "closeObserved": true,
+            "exitCode": 0,
+            "signal": null,
+            "forced": false
+          }
+        }
+      ],
+      "globalCaAndLeafBindings": "Exact source oracle passed all global CA/hash/size/parsed-observation, validity/name/issuer and per-peer actual socket DER observations across eight cases; public hashes and typed observations retained, raw certificate/CA/private material not independently reparsed here.",
+      "helperLivenessAndTeardown": "all eight helpers remained running/queryable after app exit; same observer identity; natural helper close0/no signal/not forced",
+      "runtime": {
+        "node": "v26.10.0",
+        "nodeBinarySha256": "71b004f18a82f3ea8f26109798564a12e5e4c7989a4c35b93851830b5815dd03",
+        "nextHandlerSha256": "af5fd02bb07111f4794f7c7123e7388953bdfb85e131024c85dbc9abbab82d6c",
+        "allCasePid1AndProbeExecutableBindingsMatch": true,
+        "legacyRuntimeAnonymousIdleShutdownAndPublicErrorDrain": "passed exact current committed oracles",
+        "publicErrorDrainQualification": "source-bound-native-active-public-error-path-drain-qualified"
+      },
+      "scan": {
+        "policy": "passed exact source JSON-only policy verifier; no scanner execution",
+        "reportSha256": "0d9eb8c9c043f53eeae3b64a14f600c0769b68944706ad966ccd456c910e6ba6",
+        "imageId": "sha256:3789f8f4b307efda8b4c3e2e02304efc58f7715907d000cddf0f7452b6e7aa55",
+        "result": "passed-policy"
+      },
+      "summary": "result.json exactly equals source-oracle recomputation",
+      "cleanup": {
+        "ownedContainers": 0,
+        "ownedNetworks": 0,
+        "ownedVolumes": 0,
+        "privateFilesRemoved": true,
+        "recoveryReceiptMatches": true
+      },
+      "qualifications": {
+        "metadataIssues": 4,
+        "provenanceAndLicensingReviewItems": 3,
+        "nativeComponents": "partial3/28",
+        "legalClearance": "not-claimed",
+        "authenticatedApiDrain": "unverified",
+        "signalsEnabled": false,
+        "liveOIDC": "unverified",
+        "browserSecureCookie": "unverified",
+        "defaultProductionEnvironment": "not-qualified",
+        "customer": "unverified",
+        "M3Gates": "18-pending",
+        "candidateTgz": "npm-shrinkwrap omission remains; production-install smoke only; immutable dev.4 locked-root proof separate"
+      }
+    }
+  ],
+  "characterization": {
+    "freshCasesPerArchitecture": 8,
+    "successfulSyntheticLoginCallbackSessionAndApi200PerArchitecture": 4,
+    "pairedFreshTlsNegativeCasesPerArchitecture": 4,
+    "globalCaAndCertificateBindings": "passed exact committed oracle with independently pinned source",
+    "actualPresentedDerHashes": "passed for positive and negative issuer TLS attempts",
+    "helperLivenessAndNaturalExit": "passed all eight cases per architecture",
+    "heldRequest": "none; idle-only shutdown"
+  },
+  "authenticatedApiDrain": "unverified",
+  "signalScenariosEnabled": false,
+  "scope": {
+    "taskId": "M3-dashboard-native-authenticated-drain",
+    "taskStatus": "in-progress",
+    "taskCriteriaPending": 2,
+    "requirements": 1346,
+    "aggregateM3GatesPending": 18
+  },
+  "limitations": [
+    "This receipt qualifies synthetic Node-client service-boundary characterization only; no held authenticated-request drain or signal control ran.",
+    "Live identity providers, browser secure cookies, customer activation, default production environment and legal/release acceptance remain unverified.",
+    "Raw certificate/CA/private material was not independently reparsed by the artifact inspector; typed observations and hashes passed the exact committed source oracle.",
+    "The two earlier failed attempts remain preserved and are not retroactively cleared.",
+    "Candidate package root-lock omission and frozen dev.4 locked-root regression are separate qualifications."
+  ]
+}
