@@ -4,6 +4,8 @@ import {AUTH_HELPER_SOURCE} from '../../scripts/lib/dashboard-native-auth-helper
 // @ts-ignore Source-owned synthetic expected response, never a receipt-supplied oracle.
 import {nativeAuthenticatedExpectedResponse} from '../../scripts/lib/dashboard-native-authenticated-fixture.mjs';
 import {publicDrain} from './dashboard-native-proof.ts';
+// @ts-ignore Explicit unsupported control command; never executed by synthetic fixtures.
+import {ABRUPT143_COMMAND} from '../../scripts/lib/dashboard-native-drain.mjs';
 const hash=(v:string)=>createHash('sha256').update(v).digest('hex'),sha=(n:number)=>n.toString(16).padStart(64,'0'),uuid=(n:number)=>n.toString(16).padStart(8,'0')+'-1111-4111-8111-111111111111';
 /** Synthetic schema fixture only; this does not establish native execution. */
 export function authenticatedCharacterization(sourceOverride:any={}){
@@ -17,7 +19,7 @@ export function authenticatedCharacterization(sourceOverride:any={}){
  const cases:any[]=[];
  for(const [pair,negative]of ['absent-ca','wrong-ca','wrong-hostname','expired-certificate'].entries())for(const positive of [true,false]){
   const index=pair*2+(positive?1:2),trustCase=positive?'valid':negative,observerId=uuid(100+index),appId=sha(100+index),helperId=sha(200+index);
-  const common={imageId:source.imageId,user:'1001:0',readOnly:true,capabilitiesDropped:true,noNewPrivileges:true,pids:128,memoryBytes:536870912,nanoCpus:1000000000,tmpfs:{destination:'/tmp',bytes:67108864,noexec:true,nosuid:true,nodev:true},sharedPidOrFilesystem:false,publishedPorts:0,productionQualification:false,baseEnvironmentSha256:sha(9)};
+  const common={imageId:source.imageId,user:'1001:0',readOnly:true,capabilitiesDropped:true,noNewPrivileges:true,pids:128,memoryBytes:536870912,nanoCpus:1000000000,tmpfs:{destination:'/tmp',bytes:67108864,noexec:true,nosuid:true,nodev:true},sharedPidOrFilesystem:false,publishedPorts:0,productionQualification:false,baseEnvironmentSha256:hash(JSON.stringify(['NODE_ENV=production']))};
   const appContainer={...common,containerId:appId,configuration:positive?'synthetic-authenticated-trust-fixture':'synthetic-authenticated-tls-failure-control',network:'none',loopbackHostMapping:true,configurationSha256:sha(300+index),caPresent:trustCase!=='absent-ca',publicCa:trustCase==='absent-ca'?null:{destination:'/run/agentci-fixture-ca.pem',...ca,readOnly:true},...(!positive?{trustCase}:{})};
   const helperContainer={...common,containerId:helperId,configuration:'synthetic-authenticated-helper',network:'owned-application-namespace-only',applicationContainerId:appId,helperSourceSha256:fixtureSourceSha256,globalCaOrCredentialMounts:0};
   const peer=(n:number,certSha:string,remote=false)=>({tlsAttempts:n,tlsEstablished:n,tlsFailures:0,tlsErrorCodes:[],httpRequests:n,presentedCertificateSha256s:n?[certSha]:[],clientObservedCertificateSha256s:remote?[certSha]:[]});
@@ -26,4 +28,22 @@ export function authenticatedCharacterization(sourceOverride:any={}){
   cases.push({id:uuid(index),pairedPositiveId:positive?null:uuid(index-1),trustCase,defaultProductionValidatorAccepted:false,appContainer,helperContainer,appRuntime:structuredClone(seed.runtime),appTrust:trust(trustCase!=='absent-ca'),helperTrust:trust(false),beforeStop,afterStop:structuredClone(beforeStop),shutdown,observerAfterExit:{running:true,queryable:true,observerId},helperProcessExit:{closeObserved:true,exitCode:0,signal:null,forced:false}});
  }
  return {schemaVersion:1,stage:'characterization',result:'synthetic-authenticated-characterization-qualified',observedAtMs,source,fixtureSourceSha256,ca,certificateBindings,expectedResponse,cases,authenticatedApiDrain:'unverified'};
+}
+
+/** Synthetic full-oracle fixture only; passing it cannot establish real container execution. */
+export function authenticatedDrain(sourceOverride:any={}){
+ const characterization=authenticatedCharacterization(sourceOverride),source=characterization.source;
+ const signalCases:any[]=['graceful','sigkill','abrupt143'].map((mode,index)=>{
+  const seed=structuredClone(characterization.cases[0]),id=uuid(1000+index),observerId=uuid(1100+index),requestId=uuid(1200+index),appId=sha(1000+index),helperId=sha(1100+index),abrupt=mode==='abrupt143',graceful=mode==='graceful';
+  const baseline=structuredClone(seed.beforeStop);baseline.observerId=observerId;
+  const held=()=>{const state=structuredClone(baseline);state.peers.frontend.tlsAttempts++;state.peers.frontend.tlsEstablished++;state.peers.frontend.httpRequests++;state.proxy.requests++;state.peers.backend.tlsAttempts++;state.peers.backend.tlsEstablished++;state.peers.backend.httpRequests++;state.peers.backend.authorizedReads++;state.held={id:requestId,observerId,requestStarted:true,requestPending:true,backendObserved:true,backendPending:true,backendReadOrdinal:2,backendClientDisconnected:false,released:false,releaseReason:null,watchdogFired:false,heldAgeMs:100,backendHoldMs:null,response:null};return state;};
+  const beforeSignal=held(),whileObserver=held(),afterExit=held();whileObserver.held.heldAgeMs=500;afterExit.held.heldAgeMs=600;afterExit.held.requestPending=false;afterExit.held.backendPending=false;
+  if(graceful){afterExit.held.released=true;afterExit.held.releaseReason='explicit';afterExit.held.backendHoldMs=600;afterExit.held.response=structuredClone(baseline.authentication.baseline);}
+  else{afterExit.proxy.errors=1;afterExit.held.backendClientDisconnected=true;afterExit.held.response={complete:false,status:0,bytes:0,expectedBodyMatched:false,schemaMatched:false,privateCacheHeaders:false,cookieIssued:false,privateValueLeak:false,sha256:hash(''),failureCode:'ECONNRESET',responseOrigin:'upstream-only'};}
+  const appContainer={...seed.appContainer,containerId:appId,configuration:abrupt?'unsupported-authenticated-abrupt143-command':'synthetic-authenticated-trust-fixture',configurationSha256:sha(1200+index),...(abrupt?{negativeCommandSha256:hash(JSON.stringify(ABRUPT143_COMMAND))}:{})};
+  const helperContainer={...seed.helperContainer,containerId:helperId,applicationContainerId:appId};
+  const logs=structuredClone(seed.shutdown.logs);if(!graceful)logs.markers=[];
+  return {id,mode,requestId,source,command:abrupt?[...ABRUPT143_COMMAND]:['node','apps/dashboard/server.js'],defaultProductionValidatorAccepted:false,positiveFixtureValidatorAccepted:!abrupt,appContainer,helperContainer,appRuntime:seed.appRuntime,appTrust:seed.appTrust,helperTrust:seed.helperTrust,baseline,beforeSignal,beforeSignalRunning:true,whileHeld:graceful?{observer:whileObserver,appRunning:true,afterCleanupStartedMs:350,logs:{...structuredClone(logs),markers:[{type:'started',stream:'stderr',line:1}]}}:null,release:{requested:graceful,acknowledged:graceful,afterCleanupStartedMs:graceful?400:null},afterExit,shutdown:{signal:mode==='sigkill'?'SIGKILL':'SIGTERM',stopSucceeded:true,timeout:false,forced:mode==='sigkill',exitCode:mode==='sigkill'?137:143,running:false,oomKilled:false,elapsedMs:800,logs},signalDeliveryMs:50,signalProcessExit:{closeObserved:true,exitCode:0,signal:null,forced:false},observerAfterExit:{running:true,queryable:true,observerId},helperProcessExit:{closeObserved:true,exitCode:0,signal:null,forced:false},gracefulOracleAccepted:graceful};
+ });
+ return {schemaVersion:2,stage:'authenticated-drain',result:'synthetic-authenticated-native-active-request-drain-qualified',source,fixtureSourceSha256:characterization.fixtureSourceSha256,characterization,signalCases,authenticatedApiDrain:'source-bound-native-qualified'};
 }

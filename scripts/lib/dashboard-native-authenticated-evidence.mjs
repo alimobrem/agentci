@@ -1,10 +1,11 @@
 import {createHash} from 'node:crypto';
 import {AUTH_HELPER_SOURCE} from './dashboard-native-auth-helper.mjs';
-import {validateDashboardShutdown} from './dashboard-shutdown.mjs';
+import {NEXT_SHUTDOWN,validateDashboardShutdown} from './dashboard-shutdown.mjs';
+import {ABRUPT143_COMMAND} from './dashboard-native-drain.mjs';
 import {nativeAuthenticatedExpectedResponse} from './dashboard-native-authenticated-fixture.mjs';
 
 // Advancing this requires a new reviewed source head. A receipt or environment cannot enable drainage.
-export const AUTHENTICATED_STAGE='characterization';
+export const AUTHENTICATED_STAGE='authenticated-drain';
 const hash=value=>createHash('sha256').update(value).digest('hex');
 const fail=()=>{throw Error('Native synthetic authenticated evidence is unverified');};
 const bool={kind:'boolean'},integer=(min=0,max=1000000)=>({kind:'integer',min,max});
@@ -25,7 +26,7 @@ const protocolSchema=object({authorizations:integer(),tokenRequests:integer(),su
 const helperStateSchema=object({
  schemaVersion:choice(1),observerId:uuid,trustCase,ready:bool,caSha256:sha,certificates:certificatesSchema,
  authentication:object({started:bool,complete:bool,authenticated:bool,anonymousStatus:integer(0,599),loginStatus:integer(0,599),loginResponseComplete:bool,callbackStatus:integer(0,599),sessionStatus:integer(0,599),callbackOriginMatched:bool,transactionCookieIssued:bool,sessionCookieIssued:bool,transactionCookieAttributes:nullable(attributesSchema),sessionCookieAttributes:nullable(attributesSchema),baseline:nullable(responseSchema),failedProtectedStatus:integer(0,599),failureCode:nullable(choice('AUTHENTICATION_REJECTED'))}),
- held:nullable(object({id:uuid,observerId:uuid,requestStarted:bool,requestPending:bool,backendObserved:bool,backendPending:bool,backendReadOrdinal:integer(),backendClientDisconnected:bool,released:bool,releaseReason:nullable(choice('explicit','watchdog','shutdown')),watchdogFired:bool,response:nullable(responseSchema)})),
+ held:nullable(object({id:uuid,observerId:uuid,requestStarted:bool,requestPending:bool,backendObserved:bool,backendPending:bool,backendReadOrdinal:integer(),backendClientDisconnected:bool,released:bool,releaseReason:nullable(choice('explicit','watchdog','shutdown')),watchdogFired:bool,heldAgeMs:integer(0,30000),backendHoldMs:nullable(integer(0,30000)),response:nullable(responseSchema)})),
  peers:object({frontend:object(peerFields),issuer:object({...peerFields,discoveryRequests:integer(),authorizationRequests:integer(),tokenRequests:integer(),jwksRequests:integer()}),backend:object({...peerFields,authorizedReads:integer(),rejectedReads:integer()})}),
  proxy:object({requests:integer(),errors:integer(),timeouts:integer(),responseOrigin:choice('upstream-only')}),shutdownRequested:bool,issuerProtocol:protocolSchema
 });
@@ -41,7 +42,12 @@ const logsSchema=object({markers:array(object({type:choice('started','finished')
 const shutdownSchema=object({mode:choice('configured'),source:sourceSchema,runtime:runtimeSchema,signal:choice('SIGTERM'),stopSucceeded:bool,timeout:bool,forced:bool,exitCode:integer(0,255),running:bool,oomKilled:bool,elapsedMs:integer(0,20000),requestDrain:choice('idle-only'),logs:logsSchema});
 const caseSchema=object({id:uuid,pairedPositiveId:nullable(uuid),trustCase,defaultProductionValidatorAccepted:bool,appContainer:appContainerSchema,helperContainer:helperContainerSchema,appRuntime:runtimeSchema,appTrust:trustSchema,helperTrust:trustSchema,beforeStop:helperStateSchema,afterStop:helperStateSchema,shutdown:shutdownSchema,observerAfterExit:object({running:bool,queryable:bool,observerId:uuid}),helperProcessExit:object({closeObserved:bool,exitCode:integer(0,255),signal:choice(null),forced:bool})});
 const reportSchema=object({schemaVersion:choice(1),stage:choice('characterization'),result:choice('synthetic-authenticated-characterization-qualified'),observedAtMs:time,source:sourceSchema,fixtureSourceSha256:sha,ca:object({sha256:sha,bytes:integer(1,8192)}),certificateBindings:object(Object.fromEntries(['valid',...tlsCases].map(name=>[name,certificatesSchema]))),expectedResponse:object({sha256:sha,bytes:integer(1,262144)}),cases:array(caseSchema,8),authenticatedApiDrain:choice('unverified')});
-const progressSchema=object({schemaVersion:choice(1),stage:choice('characterization'),result:choice('partial-observations-not-qualification'),source:sourceSchema,fixtureSourceSha256:sha,checkpoints:array(object({caseId:nullable(uuid),trustCase:nullable(trustCase),step:choice('prepare','certificates-ready','created','app-ready','helper-ready','authenticated','before-stop','after-stop','complete','failed'),boundary:nullable(choice('prepare','certificates','create','liveness','configuration','helper-start','authentication','stop','observation','oracle')),authenticationComplete:optional(bool),authenticated:optional(bool),loginStatus:optional(integer(0,599)),issuerTlsAttempts:optional(integer()),helperRunning:optional(bool),helperProcessClosed:optional(bool),observerShapeValid:optional(bool),observerSnapshot:optional(helperStateSchema)}),128)});
+const processExitSchema=object({closeObserved:bool,exitCode:integer(0,255),signal:choice(null),forced:bool});
+const signalAppSchema=object({...appContainerSchema.fields,configuration:choice('synthetic-authenticated-trust-fixture','unsupported-authenticated-abrupt143-command'),negativeCommandSha256:optional(sha)});
+const signalShutdownSchema=object({signal:choice('SIGTERM','SIGKILL'),stopSucceeded:bool,timeout:bool,forced:bool,exitCode:integer(0,255),running:bool,oomKilled:bool,elapsedMs:integer(0,20000),logs:logsSchema});
+const signalCaseSchema=object({id:uuid,mode:choice('graceful','sigkill','abrupt143'),requestId:uuid,source:sourceSchema,command:array(choice('node','apps/dashboard/server.js',...ABRUPT143_COMMAND),4),defaultProductionValidatorAccepted:bool,positiveFixtureValidatorAccepted:bool,appContainer:signalAppSchema,helperContainer:helperContainerSchema,appRuntime:runtimeSchema,appTrust:trustSchema,helperTrust:trustSchema,baseline:helperStateSchema,beforeSignal:helperStateSchema,beforeSignalRunning:bool,whileHeld:nullable(object({observer:helperStateSchema,appRunning:bool,afterCleanupStartedMs:integer(0,5999),logs:logsSchema})),release:object({requested:bool,acknowledged:bool,afterCleanupStartedMs:nullable(integer(0,5999))}),afterExit:helperStateSchema,shutdown:signalShutdownSchema,signalDeliveryMs:integer(0,1500),signalProcessExit:processExitSchema,observerAfterExit:object({running:bool,queryable:bool,observerId:uuid}),helperProcessExit:processExitSchema,gracefulOracleAccepted:bool});
+const fullReportSchema=object({schemaVersion:choice(2),stage:choice('authenticated-drain'),result:choice('synthetic-authenticated-native-active-request-drain-qualified'),source:sourceSchema,fixtureSourceSha256:sha,characterization:reportSchema,signalCases:array(signalCaseSchema,3),authenticatedApiDrain:choice('source-bound-native-qualified')});
+const progressSchema=object({schemaVersion:choice(1),stage:choice('authenticated-drain'),result:choice('partial-observations-not-qualification'),source:sourceSchema,fixtureSourceSha256:sha,checkpoints:array(object({caseId:nullable(uuid),trustCase:nullable(trustCase),step:choice('prepare','certificates-ready','created','app-ready','helper-ready','authenticated','before-stop','after-stop','complete','failed','request-held','signal-delivered','held-after-signal','release-issued','exit-observed'),boundary:nullable(choice('prepare','certificates','create','liveness','configuration','helper-start','authentication','stop','observation','oracle','request-hold','signal','held-observation','release','stop-observation')),authenticationComplete:optional(bool),authenticated:optional(bool),loginStatus:optional(integer(0,599)),issuerTlsAttempts:optional(integer()),helperRunning:optional(bool),helperProcessClosed:optional(bool),signalProcessClosed:optional(bool),exitCode:optional(integer(0,255)),running:optional(bool),oomKilled:optional(bool),cleanupStarted:optional(bool),cleanupFinished:optional(bool),observerShapeValid:optional(bool),observerSnapshot:optional(helperStateSchema),signalObservationResult:optional(choice('partial-observations-not-qualification')),signalShapeValid:optional(bool),signalSnapshot:optional(signalCaseSchema),signalSnapshotOmitted:optional(choice('progress-byte-bound'))}),128)});
 
 function matches(schema,value){
  if(schema.kind==='optional')return value===undefined||matches(schema.schema,value);
@@ -70,6 +76,11 @@ export function projectAuthenticatedHelperState(raw){return project(helperStateS
 export function authenticatedFailureObservation(raw){
  const observerSnapshot=projectAuthenticatedHelperState(raw);
  return matches(helperStateSchema,observerSnapshot)?{observerShapeValid:true,observerSnapshot}:{observerShapeValid:false};
+}
+/** A completed signal record may be structurally public yet behaviorally rejected; retain it only as partial evidence. */
+export function authenticatedFailureSignalObservation(raw){
+ const signalSnapshot=project(signalCaseSchema,raw);
+ return matches(signalCaseSchema,signalSnapshot)?{signalObservationResult:'partial-observations-not-qualification',signalShapeValid:true,signalSnapshot}:{signalObservationResult:'partial-observations-not-qualification',signalShapeValid:false};
 }
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const equalObject=(a,b)=>{if(a===b)return true;if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)!==Array.isArray(b))return false;const keys=Object.keys(a).sort();return same(keys,Object.keys(b).sort())&&keys.every(key=>equalObject(a[key],b[key]));};
@@ -109,13 +120,13 @@ function checkCertificates(report){
 /** Reuse the final oracle before any app stop/next case; incomplete or failed TLS attribution must stop characterization. */
 export function validateAuthenticatedCharacterizationObservation(state,{trustCase,ca,certificateBindings,expectedResponse}){
  if(!equalObject(expectedResponse,nativeAuthenticatedExpectedResponse()))fail();
- if(AUTHENTICATED_STAGE!=='characterization'||!matches(helperStateSchema,state)||!matches(choice('valid',...tlsCases),trustCase)||!matches(object({sha256:sha,bytes:integer(1,8192)}),{sha256:ca?.sha256,bytes:ca?.bytes})||!matches(object(Object.fromEntries(['valid',...tlsCases].map(name=>[name,certificatesSchema]))),certificateBindings)||!matches(object({sha256:sha,bytes:integer(1,262144)}),expectedResponse))fail();
+ if(!matches(helperStateSchema,state)||!matches(choice('valid',...tlsCases),trustCase)||!matches(object({sha256:sha,bytes:integer(1,8192)}),{sha256:ca?.sha256,bytes:ca?.bytes})||!matches(object(Object.fromEntries(['valid',...tlsCases].map(name=>[name,certificatesSchema]))),certificateBindings)||!matches(object({sha256:sha,bytes:integer(1,262144)}),expectedResponse))fail();
  checkState(state,{trustCase},{ca,certificateBindings,expectedResponse});
  return {result:'synthetic-authenticated-characterization-observation-qualified',authenticatedApiDrain:'unverified'};
 }
-/** The first immutable source head can certify login/TLS characterization only, never held-request drainage. */
-export function validateNativeAuthenticatedEvidence(report,expected){
- if(AUTHENTICATED_STAGE!=='characterization'||!matches(reportSchema,report)||report.cases.length!==8||!equalObject(report.source,expected)||report.fixtureSourceSha256!==hash(AUTH_HELPER_SOURCE)||!equalObject(report.expectedResponse,nativeAuthenticatedExpectedResponse()))fail();
+/** Characterization remains a distinct prerequisite and never claims held-request drainage. */
+export function validateNativeAuthenticatedCharacterization(report,expected){
+ if(!matches(reportSchema,report)||report.cases.length!==8||!equalObject(report.source,expected)||report.fixtureSourceSha256!==hash(AUTH_HELPER_SOURCE)||!equalObject(report.expectedResponse,nativeAuthenticatedExpectedResponse()))fail();
  checkCertificates(report);const seen=new Set(),containers=new Set(),observers=new Set(),positives=new Map();
  for(const item of report.cases){
   if(seen.has(item.id)||item.defaultProductionValidatorAccepted!==false)fail();seen.add(item.id);
@@ -132,19 +143,86 @@ export function validateNativeAuthenticatedEvidence(report,expected){
  }
  if(positives.size!==4)fail();const pairs=new Set();
  for(const name of tlsCases){const negatives=report.cases.filter(item=>item.trustCase===name);if(negatives.length!==1)fail();const item=negatives[0];if(!positives.has(item.pairedPositiveId)||pairs.has(item.pairedPositiveId))fail();pairs.add(item.pairedPositiveId);}
- return {result:'synthetic-authenticated-characterization-qualified',stage:AUTHENTICATED_STAGE,authenticatedApiDrain:'unverified',liveOIDCAcceptance:'unverified',browserSecureCookieAcceptance:'unverified',productionDefaultEnvironmentQualification:false};
+ return {result:'synthetic-authenticated-characterization-qualified',stage:'characterization',authenticatedApiDrain:'unverified',liveOIDCAcceptance:'unverified',browserSecureCookieAcceptance:'unverified',productionDefaultEnvironmentQualification:false};
+}
+function checkProcessExit(record){if(!record.closeObserved||record.exitCode!==0||record.signal!==null||record.forced)fail();}
+function checkMarkers(logs,types){
+ if(logs.cleanupErrors||logs.canaryLeak||!same(logs.markers.map(m=>m.type),types)||logs.markers.some(m=>m.stream!=='stderr'||!Number.isSafeInteger(m.line)||m.line<0)||logs.markers.length===2&&logs.markers[1].line<=logs.markers[0].line)fail();
+}
+function checkNativeRuntime(runtime){
+ if(runtime.nextVersion!==NEXT_SHUTDOWN.version||runtime.handlerSha256!==NEXT_SHUTDOWN.handlerSha256||runtime.handlerPath!=='apps/dashboard/node_modules/next/dist/server/lib/start-server.js'||runtime.node!=='v26.10.0'||runtime.pid1Executable!=='/usr/local/bin/node'||runtime.pid1ExecutableSha256!==runtime.probeNodeExecutableSha256||!same(runtime.pid1Command,['next-server (v16.4.0)'])||runtime.pid1Uid!==1001||runtime.manualSignalOverride||runtime.nodeOptionsOverride||runtime.nodePathOverride)fail();
+}
+/** Held observations are checked directly; they are never rewritten into an idle/characterization state. */
+function checkHeldState(state,item,report,phase){
+ const baseline=item.baseline,h=state.held,p=state.peers;
+ if(!matches(helperStateSchema,state)||!state.ready||state.trustCase!=='valid'||state.observerId!==baseline.observerId||state.caSha256!==report.ca.sha256||!equalObject(state.certificates,report.certificateBindings.valid)||!equalObject(state.authentication,baseline.authentication)||!equalObject(state.issuerProtocol,baseline.issuerProtocol)||!equalObject(p.issuer,baseline.peers.issuer)||state.shutdownRequested||!h||h.id!==item.requestId||h.observerId!==baseline.observerId||!h.requestStarted||!h.backendObserved||h.backendReadOrdinal!==2||h.watchdogFired||h.heldAgeMs>=6000||state.proxy.requests!==6||state.proxy.timeouts||state.proxy.responseOrigin!=='upstream-only')fail();
+ if(p.frontend.httpRequests!==6||p.frontend.tlsAttempts!==baseline.peers.frontend.tlsAttempts+1||p.frontend.tlsEstablished!==baseline.peers.frontend.tlsEstablished+1||p.frontend.tlsFailures||p.frontend.tlsErrorCodes.length||!same(p.frontend.presentedCertificateSha256s,[report.certificateBindings.valid.frontend.sha256])||!same(p.frontend.clientObservedCertificateSha256s,[report.certificateBindings.valid.frontend.sha256]))fail();
+ if(p.backend.httpRequests!==2||p.backend.authorizedReads!==2||p.backend.rejectedReads||p.backend.tlsAttempts<baseline.peers.backend.tlsAttempts||p.backend.tlsAttempts>baseline.peers.backend.tlsAttempts+1||p.backend.tlsEstablished<baseline.peers.backend.tlsEstablished||p.backend.tlsEstablished>baseline.peers.backend.tlsEstablished+1||p.backend.tlsAttempts!==p.backend.tlsEstablished||p.backend.tlsFailures||p.backend.tlsErrorCodes.length||!same(p.backend.presentedCertificateSha256s,[report.certificateBindings.valid.backend.sha256])||!same(p.backend.clientObservedCertificateSha256s,baseline.peers.backend.clientObservedCertificateSha256s))fail();
+ if(phase==='pending'){
+  if(!h.requestPending||!h.backendPending||h.backendClientDisconnected||h.released||h.releaseReason!==null||h.backendHoldMs!==null||h.response!==null||state.proxy.errors)fail();
+ }else if(phase==='complete'){
+  if(h.requestPending||h.backendPending||h.backendClientDisconnected||!h.released||h.releaseReason!=='explicit'||h.backendHoldMs===null||h.backendHoldMs>=6000||h.heldAgeMs!==h.backendHoldMs||state.proxy.errors)fail();
+  checkResponse(h.response,report.expectedResponse);
+ }else if(phase==='interrupted'){
+  const response=h.response;
+  if(h.requestPending||h.backendPending||!h.backendClientDisconnected||h.released||h.releaseReason!==null||h.backendHoldMs!==null||state.proxy.errors!==1||!response||response.complete||response.status!==0||response.bytes!==0||response.expectedBodyMatched||response.schemaMatched||response.privateCacheHeaders||response.cookieIssued||response.privateValueLeak||response.sha256!==hash('')||!['ECONNRESET','EPIPE'].includes(response.failureCode))fail();
+ }else fail();
+}
+function checkGracefulBehavior(item,report){
+ if(!matches(helperStateSchema,item.baseline)||!matches(helperStateSchema,item.beforeSignal)||!matches(signalShutdownSchema,item.shutdown)||!matches(processExitSchema,item.helperProcessExit)||!matches(processExitSchema,item.signalProcessExit))fail();
+ checkState(item.baseline,{trustCase:'valid'},report);checkHeldState(item.beforeSignal,item,report,'pending');
+ const held=item.whileHeld,stop=item.shutdown;
+ if(item.beforeSignalRunning!==true||!held||held.appRunning!==true||!Number.isSafeInteger(held.afterCleanupStartedMs)||held.afterCleanupStartedMs<300||held.afterCleanupStartedMs>=6000||!matches(logsSchema,held.logs)||item.release?.requested!==true||item.release.acknowledged!==true||!Number.isSafeInteger(item.release.afterCleanupStartedMs)||item.release.afterCleanupStartedMs<held.afterCleanupStartedMs||item.release.afterCleanupStartedMs>=6000)fail();
+ checkMarkers(held.logs,['started']);checkHeldState(held.observer,item,report,'pending');checkHeldState(item.afterExit,item,report,'complete');
+ if(held.observer.held.heldAgeMs-item.beforeSignal.held.heldAgeMs<held.afterCleanupStartedMs||item.afterExit.held.backendHoldMs<held.observer.held.heldAgeMs||item.afterExit.held.backendHoldMs<item.release.afterCleanupStartedMs)fail();
+ if(stop.signal!=='SIGTERM'||!stop.stopSucceeded||stop.timeout||stop.forced||stop.exitCode!==143||stop.running||stop.oomKilled||stop.elapsedMs<item.release.afterCleanupStartedMs)fail();
+ checkMarkers(stop.logs,['started','finished']);
+ if(stop.logs.markers[0].line!==held.logs.markers[0].line||item.observerAfterExit?.running!==true||item.observerAfterExit.queryable!==true||item.observerAfterExit.observerId!==item.baseline.observerId)fail();
+ checkProcessExit(item.helperProcessExit);checkProcessExit(item.signalProcessExit);
+}
+/** Evaluate actual positive behavior independently of the command/isolation classification of a control. */
+export function nativeAuthenticatedGracefulBehaviorQualified(item,characterization){try{checkGracefulBehavior(item,characterization);return true;}catch{return false;}}
+export function validateNativeAuthenticatedEvidence(report,expected){
+ if(AUTHENTICATED_STAGE!=='authenticated-drain'||!matches(fullReportSchema,report)||report.signalCases.length!==3||!equalObject(report.source,expected)||report.fixtureSourceSha256!==hash(AUTH_HELPER_SOURCE))fail();
+ const characterization=report.characterization;validateNativeAuthenticatedCharacterization(characterization,expected);
+ if(characterization.fixtureSourceSha256!==report.fixtureSourceSha256)fail();
+ const identities=new Set(),containers=new Set(),modes=new Set(),baseEnvironment=characterization.cases[0].appContainer.baseEnvironmentSha256;
+ const addIdentity=id=>{if(identities.has(id))fail();identities.add(id);};
+ for(const item of characterization.cases){addIdentity(item.id);addIdentity(item.beforeStop.observerId);if(!equalObject(item.appRuntime,characterization.cases[0].appRuntime))fail();for(const c of[item.appContainer,item.helperContainer]){containers.add(c.containerId);if(c.baseEnvironmentSha256!==baseEnvironment)fail();}}
+ for(const item of report.signalCases){
+  if(modes.has(item.mode)||!equalObject(item.source,expected)||item.defaultProductionValidatorAccepted||!item.beforeSignalRunning)fail();addIdentity(item.id);addIdentity(item.requestId);addIdentity(item.baseline.observerId);modes.add(item.mode);
+  for(const c of[item.appContainer,item.helperContainer]){checkContainer(c,expected);if(containers.has(c.containerId)||c.baseEnvironmentSha256!==baseEnvironment)fail();containers.add(c.containerId);}
+  const app=item.appContainer,helper=item.helperContainer,abrupt=item.mode==='abrupt143',observer=item.baseline.observerId;
+  if(!app.caPresent||!app.loopbackHostMapping||!app.publicCa||!app.publicCa.readOnly||app.publicCa.sha256!==characterization.ca.sha256||app.publicCa.bytes!==characterization.ca.bytes||app.trustCase!==undefined||helper.applicationContainerId!==app.containerId||helper.helperSourceSha256!==report.fixtureSourceSha256||helper.baseEnvironmentSha256!==app.baseEnvironmentSha256||!same(item.command,abrupt?ABRUPT143_COMMAND:['node','apps/dashboard/server.js'])||item.positiveFixtureValidatorAccepted===abrupt||app.configuration!==(abrupt?'unsupported-authenticated-abrupt143-command':'synthetic-authenticated-trust-fixture')||(abrupt?app.negativeCommandSha256!==hash(JSON.stringify(ABRUPT143_COMMAND)):app.negativeCommandSha256!==undefined))fail();
+  checkTrust(item.appTrust,characterization.ca,true);checkTrust(item.helperTrust,characterization.ca,false);checkNativeRuntime(item.appRuntime);if(!equalObject(item.appRuntime,characterization.cases[0].appRuntime))fail();
+  checkState(item.baseline,{trustCase:'valid'},characterization);checkHeldState(item.beforeSignal,item,characterization,'pending');
+  if(!item.observerAfterExit.running||!item.observerAfterExit.queryable||item.observerAfterExit.observerId!==observer)fail();checkProcessExit(item.helperProcessExit);checkProcessExit(item.signalProcessExit);
+  const behavior=nativeAuthenticatedGracefulBehaviorQualified(item,characterization);if(item.gracefulOracleAccepted!==behavior||behavior!==(item.mode==='graceful'))fail();
+  if(item.mode!=='graceful'){
+   const stop=item.shutdown;if(item.whileHeld!==null||item.release.requested||item.release.acknowledged||item.release.afterCleanupStartedMs!==null||!stop.stopSucceeded||stop.timeout||stop.running||stop.oomKilled||stop.forced!==(item.mode==='sigkill')||stop.exitCode!==(item.mode==='sigkill'?137:143)||stop.signal!==(item.mode==='sigkill'?'SIGKILL':'SIGTERM'))fail();
+   checkMarkers(stop.logs,[]);checkHeldState(item.afterExit,item,characterization,'interrupted');if(item.afterExit.held.heldAgeMs<item.beforeSignal.held.heldAgeMs)fail();
+  }
+ }
+ if(modes.size!==3)fail();
+ return {result:'synthetic-authenticated-native-active-request-drain-qualified',stage:AUTHENTICATED_STAGE,authenticatedApiDrain:'source-bound-native-qualified',characterization:validateNativeAuthenticatedCharacterization(characterization,expected),liveOIDCAcceptance:'unverified',browserSecureCookieAcceptance:'unverified',productionDefaultEnvironmentQualification:false};
 }
 /** Publication validates exact nested shape before bytes can enter the public directory. */
 export function assertPublicAuthenticatedArtifact(name,value){
  const limit=name==='authenticated-drain-progress.json'?131072:524288;
- let bytes;try{bytes=Buffer.byteLength(JSON.stringify(value));}catch{fail();}if(bytes>limit)fail();
+ let bytes;try{bytes=Buffer.byteLength(JSON.stringify(value,null,2)+'\n');}catch{fail();}if(bytes>limit)fail();
  if(name==='authenticated-drain.json'){validateNativeAuthenticatedEvidence(value,value.source);return;}
+ if(name==='authenticated-characterization.json'){validateNativeAuthenticatedCharacterization(value,value.source);return;}
  if(name==='authenticated-drain-progress.json'){
-  if(AUTHENTICATED_STAGE!=='characterization'||!matches(progressSchema,value)||value.fixtureSourceSha256!==hash(AUTH_HELPER_SOURCE))fail();
+  if(AUTHENTICATED_STAGE!=='authenticated-drain'||!matches(progressSchema,value)||value.fixtureSourceSha256!==hash(AUTH_HELPER_SOURCE))fail();
   for(const checkpoint of value.checkpoints){
    const hasShape=Object.hasOwn(checkpoint,'observerShapeValid'),hasSnapshot=Object.hasOwn(checkpoint,'observerSnapshot');
    if((hasShape||hasSnapshot)&&(checkpoint.step!=='failed'||!hasShape||hasSnapshot!==checkpoint.observerShapeValid))fail();
    if(hasSnapshot&&(checkpoint.trustCase!==checkpoint.observerSnapshot.trustCase||checkpoint.caseId===null))fail();
+   const hasSignalShape=Object.hasOwn(checkpoint,'signalShapeValid'),hasSignalSnapshot=Object.hasOwn(checkpoint,'signalSnapshot'),omitted=Object.hasOwn(checkpoint,'signalSnapshotOmitted');
+   if(hasSignalShape||hasSignalSnapshot||omitted||Object.hasOwn(checkpoint,'signalObservationResult')){
+    if(checkpoint.signalObservationResult!=='partial-observations-not-qualification'||checkpoint.step!=='failed'||checkpoint.caseId===null||checkpoint.trustCase!=='valid'||!hasSignalShape||hasSignalSnapshot&&(!checkpoint.signalShapeValid||omitted)||!hasSignalSnapshot&&(checkpoint.signalShapeValid!==omitted))fail();
+    if(hasSignalSnapshot&&(checkpoint.signalSnapshot.id!==checkpoint.caseId||!equalObject(checkpoint.signalSnapshot.source,value.source)))fail();
+   }
   }
   return;
  }

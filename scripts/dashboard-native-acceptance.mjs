@@ -1,5 +1,5 @@
 import {ABRUPT143_COMMAND,nativeDrainFixture,nativeDrainCheckpoint,runNativePublicDrain,validateNativePublicDrain} from './lib/dashboard-native-drain.mjs';
-import {runNativeAuthenticatedCharacterization} from './lib/dashboard-native-authenticated-runner.mjs';
+import {runNativeAuthenticatedAcceptance} from './lib/dashboard-native-authenticated-runner.mjs';
 import {scannerRunArgs,SCANNER_SCRATCH_BYTES} from './lib/dashboard-scan-controls.mjs';
 import {dashboardScanFailure} from './lib/dashboard-scan-failure.mjs';
 import {dashboardShutdownMarkers} from './lib/dashboard-shutdown.mjs';
@@ -60,8 +60,8 @@ if(process.argv[2]==='source'){
    else{drainControls[mode]=observed;await save('public-drain.json',{result:'incomplete-or-unverified',...drainControls});}
    }catch(error){if(drainProgress.at(-1)?.step!=='failed')await progress(nativeDrainCheckpoint(mode,'failed',{lastObservedStep:drainProgress.at(-1)?.step,failureBoundary}));throw error;}
   }
-  stage='authenticated-characterization';
-  authenticated=await runNativeAuthenticatedCharacterization({engine:(args,options)=>{if(cancelled)throw Error('Native qualification cancelled');return engine(args,options);},image,rawImage,source,owner,directory,save});
+  stage='authenticated-active-request-drain';
+  authenticated=await runNativeAuthenticatedAcceptance({engine:(args,options)=>{if(cancelled)throw Error('Native qualification cancelled');return engine(args,options);},image,rawImage,source,owner,directory,save});
   stage='pinned-image-scan';
   const archive=join(directory,'dashboard.tar'),cache=join(directory,'trivy-cache');await mkdir(cache,{mode:0o700});docker(['image','save','--output',archive,image.id]);await chmod(archive,0o644);
   const cacheFs=await statfs(cache);await save('scan-storage.json',{source,imageId:image.id,tmp:{pathClass:'tmp',declaredCapacityBytes:SCANNER_SCRATCH_BYTES,observedAvailableBytes:null,observation:'explicit tmpfs bound; free/used not retained'},cache:{pathClass:'cache',capacityBytes:cacheFs.blocks*cacheFs.bsize,availableBytes:cacheFs.bavail*cacheFs.bsize,usedBytes:(cacheFs.blocks-cacheFs.bfree)*cacheFs.bsize,observation:'statfs of the exact owned bind source before scan'},rawPaths:'withheld'});

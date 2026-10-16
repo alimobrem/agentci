@@ -5,7 +5,7 @@ import {readFile} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
 import {EventEmitter} from 'node:events';
 // @ts-ignore Fixed source is shared verbatim with the hosted synthetic helper.
-import {AUTH_HELPER_SOURCE,createIssuerProtocol,authHelperCookie,authHelperLookup,projectAuthResponse,captureAuthCertificateHash,bindAuthEarlyCertificateCapture} from '../scripts/lib/dashboard-native-auth-helper.mjs';
+import {AUTH_HELPER_SOURCE,createIssuerProtocol,authHelperCookie,authHelperLookup,projectAuthResponse,captureAuthCertificateHash,bindAuthEarlyCertificateCapture,authHoldTiming} from '../scripts/lib/dashboard-native-auth-helper.mjs';
 
 const issuer='https://127.0.0.3:4443',origin='https://dashboard.fixture.invalid:3000';
 const clientId='synthetic-client',clientSecret='private-synthetic-client-secret',subject='synthetic-owner';
@@ -106,11 +106,26 @@ test('early event with no live socket certificate cannot manufacture a hash from
  assert.deepEqual(peer,{presentedCertificateSha256s:[],clientObservedCertificateSha256s:[]});assert.equal(hashes,0);assert.equal(touched,0);
 });
 
+test('backend hold clock starts at observed backend arrival, remains unreleased on interruption and freezes at actual release',()=>{
+ assert.deepEqual(authHoldTiming(null,null,9000),{heldAgeMs:0,backendHoldMs:null});
+ const beforeSignal=authHoldTiming(1000,null,1100),whileHeld=authHoldTiming(1000,null,1450),interrupted=authHoldTiming(1000,null,1700);
+ assert.deepEqual(beforeSignal,{heldAgeMs:100,backendHoldMs:null});assert.deepEqual(whileHeld,{heldAgeMs:450,backendHoldMs:null});assert.deepEqual(interrupted,{heldAgeMs:700,backendHoldMs:null});
+ const released=authHoldTiming(1000,1800,1800);assert.deepEqual(released,{heldAgeMs:800,backendHoldMs:800});assert.deepEqual(authHoldTiming(1000,1800,8500),released);
+ assert.ok(released.backendHoldMs>=whileHeld.heldAgeMs);assert.ok(released.backendHoldMs<6000);assert.deepEqual(Object.keys(released).sort(),['backendHoldMs','heldAgeMs']);
+});
+
+test('hold timing cannot hide late explicit release or qualify watchdog timing; invalid clock observations reject',()=>{
+ assert.equal(authHoldTiming(1000,6999,6999).backendHoldMs,5999);assert.equal(authHoldTiming(1000,6999.1,6999.1).backendHoldMs,6000);
+ assert.equal(authHoldTiming(1000,7000,7000).backendHoldMs,6000);assert.equal(authHoldTiming(1000,8000,8000).backendHoldMs,7000);assert.equal(authHoldTiming(1000,100000,100000).backendHoldMs,30000);
+ for(const [start,end,now]of [[1000,null,999],[1000,999,1100],[1000,1200,1100],[NaN,null,1000],[1000,Infinity,2000],[1000,null,NaN]])assert.throws(()=>authHoldTiming(start,end,now),/fixture-monotonic-clock-invalid/);
+});
+
 test('fixed helper source parses without execution and keeps TLS/forwarding/watchdog boundaries explicit',()=>{
  const result=spawnSync(process.execPath,['--check','--input-type=module'],{input:AUTH_HELPER_SOURCE,encoding:'utf8'});assert.equal(result.status,0,result.stderr);
- for(const text of ['rejectUnauthorized:true','ca:config.caPem','lookup:authHelperLookup',"host:'127.0.0.1',port:3000", "'x-forwarded-proto':'https'", "finishBackend('watchdog'),7000", "state.proxy.timeouts++", "state.held.backendReadOrdinal=state.peers.backend.authorizedReads",'fixture-helper-failed'])assert.equal(AUTH_HELPER_SOURCE.includes(text),true,text);
+ for(const text of ['rejectUnauthorized:true','ca:config.caPem','lookup:authHelperLookup',"host:'127.0.0.1',port:3000", "'x-forwarded-proto':'https'", "finishBackend('watchdog'),7000", "state.proxy.timeouts++", "held.backendReadOrdinal=state.peers.backend.authorizedReads",'fixture-helper-failed'])assert.equal(AUTH_HELPER_SOURCE.includes(text),true,text);
  for(const forbidden of ['rejectUnauthorized:false','checkServerIdentity:','NODE_TLS_REJECT_UNAUTHORIZED','NODE_EXTRA_CA_CERTS','agentciDashboardRuntime','process.env','writeFile','createSecureContext','process.on(\'SIGTERM\'','caPrivateKey','caKeyPem','--tls-keylog','--trace-tls','enableTrace','SSLKEYLOGFILE'])assert.equal(AUTH_HELPER_SOURCE.includes(forbidden),false,forbidden);
  assert.ok(AUTH_HELPER_SOURCE.includes("if(name==='issuer')bindAuthEarlyCertificateCapture(server,state.peers[name],crypto)"));
+ assert.ok(AUTH_HELPER_SOURCE.includes('backendHeldAt=performance.now()'));assert.ok(AUTH_HELPER_SOURCE.includes('backendReleasedAt=performance.now()'));assert.ok(AUTH_HELPER_SOURCE.includes('state.held===held&&!held.released'));
  assert.match(AUTH_HELPER_SOURCE,/https\.createServer\(\{key:config\.issuer\.keyPem,cert:config\.issuer\.certPem\}/);
  assert.ok(AUTH_HELPER_SOURCE.length<65536);
 });
