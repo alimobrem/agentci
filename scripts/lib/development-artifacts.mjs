@@ -89,7 +89,8 @@ export function validatePackageReceipt(receipt,arch,assets,verification){
 export function normalizePackOutput(value,version){
  const entries=Array.isArray(value)?value:Object.values(value??{});
  if(entries.length!==1||entries[0]?.name!=='agentci'||entries[0].version!==version||entries[0].filename!==`agentci-${version}.tgz`||!Array.isArray(entries[0].files)||!entries[0].files.length)throw Error('Pack identity mismatch');
- for(const file of entries[0].files)if(typeof file?.path!=='string'||!/^[A-Za-z0-9_.\/-]+$/.test(file.path)||file.path.startsWith('/')||file.path.split('/').some(p=>!p||p==='.'||p==='..'))throw Error('Unsafe pack output path');
+ const paths=new Set();
+ for(const file of entries[0].files){if(typeof file?.path!=='string'||!/^[A-Za-z0-9_.\/-]+$/.test(file.path)||file.path.startsWith('/')||file.path.split('/').some(p=>!p||p==='.'||p==='..')||paths.has(file.path))throw Error('Unsafe or duplicate pack output path');paths.add(file.path);}
  return entries[0];
 }
 

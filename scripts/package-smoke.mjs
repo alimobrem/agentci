@@ -1,12 +1,12 @@
-import { mkdtemp, mkdir, writeFile, rm, readFile } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
+import { mkdir, writeFile, readFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
-import { execFileSync, spawn } from 'node:child_process';
+import { execFileSync as executeFile, spawn } from 'node:child_process';
 import { createServer } from 'node:http';
 import { once } from 'node:events';
 import {pathToFileURL} from 'node:url';
 import {ComparisonAccumulator,frameExport} from '../dist/packages/evals/export.js';
 import {canonical,digest} from '../dist/packages/review/engine.js';
+import {candidatePackageIdentity,runCandidatePackageAcceptance} from './lib/candidate-package-acceptance.mjs';
 
 const expectedVersion = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8')).version;
 const arguments_ = process.argv.slice(2);
@@ -14,9 +14,8 @@ const offline = arguments_.includes('--offline');
 const postgresReaders = arguments_.includes('--postgres-readers');
 if(postgresReaders&&(!process.env.AGENTCI_TEST_DATABASE_URL||!process.env.AGENTCI_TEST_TEMPORAL_ADDRESS))throw new Error('--postgres-readers requires AGENTCI_TEST_DATABASE_URL and AGENTCI_TEST_TEMPORAL_ADDRESS for installed worker acceptance; never silently skip');
 const archive = resolve(arguments_.find(argument => !argument.startsWith('--')) ?? `releases/agentci-${expectedVersion}.tgz`);
-const root = await mkdtemp(join(tmpdir(), 'agentci-package-'));
-try {
-  execFileSync('npm', ['install', ...(offline ? ['--offline'] : []), '--omit=dev', '--no-audit', '--no-fund', '--prefix', root, archive], { stdio: 'pipe' });
+await runCandidatePackageAcceptance({archivePath:archive,expected:candidatePackageIdentity({version:expectedVersion}),offline},async({consumerRoot:root,env})=>{
+  const execFileSync=(command,args,options={})=>executeFile(command,args,{env,...options});
   const cli = join(root, 'node_modules/.bin/agentci');
   const version = execFileSync(cli, ['--version'], { encoding: 'utf8' }).trim();
   if (version !== expectedVersion) throw new Error('Unexpected packaged version');
@@ -190,13 +189,13 @@ try {
   comparisonServer.listen(0,'127.0.0.1');await once(comparisonServer,'listening');
   try{
     const code=`import {AgentCIClient} from 'agentci/client';const value=${JSON.stringify(comparison)};const c=value.comparison;const client=new AgentCIClient({url:'http://127.0.0.1:${comparisonServer.address().port}',token:'x'.repeat(32)});const identity={...c.subject,organizationId:c.organizationId.toUpperCase(),reviewId:c.reviewId.toUpperCase(),attemptId:c.attemptId.toUpperCase()};const result=await client.evalComparison(value.id.toUpperCase(),identity);if(result.digest!==value.digest||result.comparison.summary.outcome!=='failed')throw new Error('Installed comparison client failed');let units=0,complete=false;for await(const item of client.evalComparisonExport(value.id.toUpperCase(),identity)){if(item.type==='unit')units++;if(item.type==='summary'){complete=true;if(item.data.outcome!=='failed')throw new Error('Installed export outcome failed');}}if(units!==2||!complete)throw new Error('Installed export client failed');`;
-    const child=spawn(process.execPath,['--input-type=module','-e',code],{cwd:root,stdio:['ignore','pipe','pipe']});const [exit]=await once(child,'exit');if(exit!==0)throw new Error('Installed comparison client/schema smoke failed');
+    const child=spawn(process.execPath,['--input-type=module','-e',code],{cwd:root,env,stdio:['ignore','pipe','pipe']});const [exit]=await once(child,'exit');if(exit!==0)throw new Error('Installed comparison client/schema smoke failed');
   }finally{await new Promise(resolve=>comparisonServer.close(resolve));}
   if (!(await readFile(join(root, 'node_modules/agentci/LICENSE'), 'utf8')).includes('MIT License')) throw new Error('Package license missing');
   const listener = createServer(); listener.listen(0, '127.0.0.1'); await once(listener, 'listening');
   const port = listener.address().port; await new Promise(resolve => listener.close(resolve));
   const deployment = join(root, 'deployment'); await mkdir(deployment, { mode: 0o700 });
-  const setup = spawn(cli, ['setup'], { cwd: deployment, env: { ...process.env, AGENTCI_SETUP_REPOSITORY: 'customer/new-project', AGENTCI_SETUP_ACCOUNT_TYPE: 'organization', AGENTCI_SETUP_APP_NAME: 'AgentCI-customer-test', AGENTCI_SETUP_URL: 'https://customer.example.com', AGENTCI_SETUP_PORT: String(port), AGENTCI_SETUP_TEMPORAL_UI_PORT: String(port === 8233 ? 8234 : 8233) }, stdio: ['ignore', 'pipe', 'pipe'] });
+  const setup = spawn(cli, ['setup'], { cwd: deployment, env: { ...env, AGENTCI_SETUP_REPOSITORY: 'customer/new-project', AGENTCI_SETUP_ACCOUNT_TYPE: 'organization', AGENTCI_SETUP_APP_NAME: 'AgentCI-customer-test', AGENTCI_SETUP_URL: 'https://customer.example.com', AGENTCI_SETUP_PORT: String(port), AGENTCI_SETUP_TEMPORAL_UI_PORT: String(port === 8233 ? 8234 : 8233) }, stdio: ['ignore', 'pipe', 'pipe'] });
   try {
     const [output] = await once(setup.stdout, 'data', { signal: AbortSignal.timeout(15_000) });
     const setupUrl = new URL(output.toString().trim());
@@ -237,4 +236,4 @@ text: Packaged CLI validates a fresh project.
     throw new Error('Invalid project unexpectedly passed');
   } catch (error) { if (error.status !== 1) throw error; }
   console.log('Packaged CLI/client passed: production-only install, version, pinned reproduction-operator argument rejection and default-off consumer, fresh init, overwrite rejection, client entry point, installed provider schemas/migration and OpenAI/Anthropic/xAI SDK invocation, seven-role no-network reviewer runtime and read-only configuration overlay, MIT license, installed App setup/state rejection, validation and invalid input.');
-} finally { await rm(root, { recursive: true, force: true }); }
+});
