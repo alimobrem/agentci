@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 1,
+  "task": "M3-dependency-security-refresh-20261022",
+  "recordedAt": "2026-10-22T18:31:59.955165+00:00",
+  "state": "local official patched-artifact adoption with strict license/NOTICE binding; exact-head hosted acceptance pending",
+  "baseCommit": "93a12d7f9dbae913cb4596a716f7a4fbc8a26fc0",
+  "baseTree": "57f55beb43d75b25c22d5d1d98e9d46af6229dbf",
+  "binding": "This is local uncommitted source-input evidence. File hashes below identify the adopted inputs; it is not a new committed tree, image/runtime receipt or completed acceptance. Root owns final commit/reconciliation and external independent review.",
+  "ownerAuthorization": {
+    "userMessageId": "Sentinel_59a2ef0df7b08191ae096cb8656d7e64",
+    "at": "2026-10-22T18:20:00Z",
+    "scope": "User sure after explicit request to include DockerCLI remediation with Next upgrade, required checks and independent review before merging. Parent separately delegated these Docker files and narrow strict license/NOTICE verifier tests.",
+    "permissionSensitiveActionsNotPerformed": [
+      "MacDocker",
+      "candidatebinaryexecution",
+      "publication",
+      "merge",
+      "push",
+      "CI dispatch/rerun",
+      "credentials/access changes"
+    ]
+  },
+  "trigger": {
+    "runId": 39824536894,
+    "attempt": 1,
+    "artifactId": 12446617450,
+    "zipSha256": "b02791003b64908fd6b2cdbb52de4f3b2f2c9f6e1e0dd5fa6640fdd692ddbad5",
+    "role": "eval-worker",
+    "component": "usr/local/bin/docker Go stdlibv1.26.9",
+    "CVE": "CVE-2026-111943",
+    "severity": "HIGH",
+    "status": "fixed",
+    "previousRun": "failure preserved; remaining3 role scans, compiled/native/evaluator runtime and finalsummary skipped"
+  },
+  "adoptedDockerCli": {
+    "image": "docker:29.9.2-cli@sha256:5e6baf67325a79f64ed3bed6863954d5e05d0f3d4e57cbdb14809346814bbfdb",
+    "version": "29.9.2",
+    "sourceCommit": "a82e528901260c8df6073311379eac65f92db204",
+    "goVersion": "go1.26.10",
+    "binarySha256": {
+      "amd64": "6c71cfe71faff949a602946a4df4799b563232e79d0b8b6fd343d0ef081c9621",
+      "arm64": "e330afc12592c0683664b00066d50fb9f3a879ab8820df589d50b9b1fe3a3c6a"
+    },
+    "vendorManifest": {
+      "upstreamUrl": "https://raw.githubusercontent.com/docker/cli/a82e528901260c8df6073311379eac65f92db204/vendor.mod",
+      "sha256": "5b7d4db4d159f1b6c4b3c823b066506869e42aecc6a29e40c6d16fdc4c5712d9",
+      "runtimePath": "/licenses/docker-cli/go.mod",
+      "coverage": "Upstream source inventory, including tooling; not an exact compiled dependency graph."
+    },
+    "vendorModulesSha256": "f7d72777b483c4880f2423083315d3277712287c75f888772d61ce7d7186c25c",
+    "licenseSha256": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+    "notice": {
+      "path": "deploy/licenses/docker-cli-NOTICE",
+      "upstreamUrl": "https://raw.githubusercontent.com/docker/cli/a82e528901260c8df6073311379eac65f92db204/NOTICE",
+      "sha256": "a8c869fbda819afb8d80e0ac19bac52e766bc6c19cb38cf94f52d64c4be2aab6",
+      "runtimePath": "/licenses/docker-cli-NOTICE"
+    }
+  },
+  "officialImageSource": {
+    "commit": "a44773e1e79648f9fd7ebb7cb5cc00387dc05de0",
+    "Dockerfile": "https://raw.githubusercontent.com/docker-library/docker/a44773e1e79648f9fd7ebb7cb5cc00387dc05de0/29/cli/Dockerfile",
+    "cliTag": "v29.9.2",
+    "cliTagObject": "0cc0fc64632a9ee9cab5884b99fee3b43f08a3e2",
+    "cliFullSource": "a82e528901260c8df6073311379eac65f92db204",
+    "apiReportedTagSignature": "valid; no independent local signature verification"
+  },
+  "actualBinaryPlatforms": [
+    {
+      "arch": "amd64",
+      "manifestDigest": "sha256:98776017a505b6d89c0adff8c63b0d8701ca10280c41315dbb0638fe3b5cf6e5",
+      "configDigest": "sha256:7691a001d1bf70d960395ef367f9f008db5f8d7d18556b2b88303596a4384d51",
+      "binarySha256": "6c71cfe71faff949a602946a4df4799b563232e79d0b8b6fd343d0ef081c9621",
+      "binaryBytes": 44347864,
+      "goVersion": "go1.26.10",
+      "version": "29.9.2",
+      "gitCommit": "a82e528",
+      "layersVerified": 10,
+      "proofPath": "/Users/alimobrem/Documents/Codex/2026-10-14/task/dependency-remediation-20261022/docker-cli/registry/amd64/binary-proof.json",
+      "proofSha256": "97711c52155ff09bdcf37308c84c56b49da9ee6087aeadc2f2593bbf9852fd3c",
+      "binaryRetainedMode": "0644 non-executable"
+    },
+    {
+      "arch": "arm64",
+      "manifestDigest": "sha256:d54eb9ef0f4cbcd82bfb87c6f8d8951c04ce5a01daf38682f3f57ed6a03acd6d",
+      "configDigest": "sha256:91b36450843da1d4e9477dd07f20e63bfbcfaba25ca79664ac154ae82fae0f67",
+      "binarySha256": "e330afc12592c0683664b00066d50fb9f3a879ab8820df589d50b9b1fe3a3c6a",
+      "binaryBytes": 41636816,
+      "goVersion": "go1.26.10",
+      "version": "29.9.2",
+      "gitCommit": "a82e528",
+      "layersVerified": 10,
+      "proofPath": "/Users/alimobrem/Documents/Codex/2026-10-14/task/dependency-remediation-20261022/docker-cli/registry/arm64/binary-proof.json",
+      "proofSha256": "5c9c35df9f9477a40a91e86068465bcd3c4c652dbe7f03186f2d957b3d19be65",
+      "binaryRetainedMode": "0644 non-executable"
+    }
+  ],
+  "sourceVendorLicense": {
+    "vendorManifestSha256": "5b7d4db4d159f1b6c4b3c823b066506869e42aecc6a29e40c6d16fdc4c5712d9",
+    "vendorModulesSha256": "f7d72777b483c4880f2423083315d3277712287c75f888772d61ce7d7186c25c",
+    "licenseSha256": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+    "noticeSha256": "a8c869fbda819afb8d80e0ac19bac52e766bc6c19cb38cf94f52d64c4be2aab6"
+  },
+  "advisory": {
+    "id": "GO-2026-6809",
+    "cve": [
+      "CVE-2026-111943"
+    ],
+    "url": "https://pkg.go.dev/vuln/GO-2026-6809",
+    "jsonPath": "/Users/alimobrem/Documents/Codex/2026-10-14/task/dependency-remediation-20261022/docker-cli/source/GO-2026-6809.json",
+    "sha256": "67d1ae42283683c4fe26081cb174da0b945370d846ebafce11bedd14c1b99151",
+    "fixedGoVersion": "1.26.10",
+    "actualCompiledVersions": [
+      "go1.26.10",
+      "go1.26.10"
+    ]
+  },
+  "publicProof": {
+    "path": "/Users/alimobrem/Documents/Codex/2026-10-14/task/dependency-remediation-20261022/docker-cli/official-artifact-proof-20261022.json",
+    "sha256": "0cbf73baa6215e6dc9ab49af898e2192e18ae4b74dc69f1b6807b4988958cd17",
+    "sourceProofPath": "/Users/alimobrem/Documents/Codex/2026-10-14/task/dependency-remediation-20261022/docker-cli/source/official-source-proof-v29.9.2-20261022.json",
+    "sourceProofSha256": "128ef08f174ea0c5983aec683c014841efabdcc22f03a762e0d7ac6299c7d053",
+    "candidateExecuted": false,
+    "method": "Anonymous official registry TLS GETs, raw index/manifest/config/layer digest and uncompressed diffID verification, bounded tar reads without filesystem extraction, final-image target/ancestor/whiteout check, ELF machine/Go buildinfo parsing. No Docker or candidate execution. Official source API Git blob matches and raw file hashes retained."
+  },
+  "localValidation": {
+    "focusedTests": {
+      "command": "node --import tsx --test tests/docker-cli-provenance.test.ts tests/native-publication.test.ts tests/published-downloads.test.ts",
+      "exitCode": 0,
+      "counts": {
+        "tests": 22,
+        "pass": 22,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "/Users/alimobrem/Documents/Codex/2026-10-14/task/dependency-remediation-20261022/docker-cli/owner-probe-focused-tests.log",
+      "sha256": "a54f3692a3b90b9968f69fa91bb832e37e86449348244c8d71b6887b55608f8c",
+      "coverage": "Actual verifier via synthetic engine transport; alloldidentitysubstitutions, missing/tampered image/source LICENSE/NOTICE, workerwithoutDocker, Temporal mismatch, source/provenance/publication/downloadbinding negatives. No socket/image/candidatebinary used. Optional owner captures expected name/label argv with unchanged sandbox; malformed scalar/coerced/container/newline/length owners rejected before engine; tracked worker without Docker remains valid."
+    },
+    "typecheck": {
+      "command": "node node_modules/typescript/bin/tsc --noEmit",
+      "exitCode": 0,
+      "log": "/Users/alimobrem/Documents/Codex/2026-10-14/task/dependency-remediation-20261022/docker-cli/owner-probe-typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "nativeInputs": {
+      "command": "node scripts/verify-native-provenance.mjs --inputs",
+      "exitCode": 0,
+      "log": "/Users/alimobrem/Documents/Codex/2026-10-14/task/dependency-remediation-20261022/docker-cli/owner-probe-native-inputs.log",
+      "sha256": "7ec999c280bc2bd6a7325ef8005af38d9e01a38db56ce43165bbca607b3db337"
+    },
+    "diffWhitespaceCheck": {
+      "command": "git diff --check -- [Docker-owned tracked files]",
+      "exitCode": 0
+    },
+    "fullCheckFast": "Root will run after coordinated dependency/native work; not claimed by this narrow20-test receipt.",
+    "actualContainerAndNativeRuntime": "Not run; MacDocker remains unused. Both source-specific hosted native architecture/provenance/scan/runtime/ownedcleanup checks remain pending."
+  },
+  "sourceFiles": [
+    {
+      "path": "Dockerfile",
+      "sha256": "f459b13067107b75d377d79cd6788b77293df3c5024c35d4749a6abf0c51e08f",
+      "bytes": 11418
+    },
+    {
+      "path": "deploy/security/native-components.json",
+      "sha256": "5a1516fdd52a15d2bdd2643b35b0d6e6c7595808bd67f367c67f497584d5a1de",
+      "bytes": 4112
+    },
+    {
+      "path": "deploy/security/docker-cli-vendor.mod",
+      "sha256": "5b7d4db4d159f1b6c4b3c823b066506869e42aecc6a29e40c6d16fdc4c5712d9",
+      "bytes": 4682
+    },
+    {
+      "path": "deploy/licenses/docker-cli-LICENSE",
+      "sha256": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+      "bytes": 10765
+    },
+    {
+      "path": "deploy/licenses/docker-cli-NOTICE",
+      "sha256": "a8c869fbda819afb8d80e0ac19bac52e766bc6c19cb38cf94f52d64c4be2aab6",
+      "bytes": 635
+    },
+    {
+      "path": "scripts/verify-native-provenance.mjs",
+      "sha256": "bb90fd35cccb3a8297f1af1bc21207c380dc995f88b78dc49bb0a776ff3e4c06",
+      "bytes": 7283
+    },
+    {
+      "path": "tests/docker-cli-provenance.test.ts",
+      "sha256": "4f5f9c78a5e6acab22bd0cd0e6d2294d4f9d68bdfe18b571383e431c8d0284d8",
+      "bytes": 6510
+    },
+    {
+      "path": "docs/eval-worker.md",
+      "sha256": "15b2dc64d27bf861fbcce9706390143847f2bc46b3aff6910c0ff84bc17971f0",
+      "bytes": 14810
+    },
+    {
+      "path": "docs/phases/m3-docker-cli-security.md",
+      "sha256": "4f26c0b9c2dbd73fab822ff807854e1ba44305c410f9da08f640a6eaecf70249",
+      "bytes": 4032
+    }
+  ],
+  "exclusiveOwnership": {
+    "sharedRuntimeScript": "scripts/eval-worker-image-smoke.mjs belongs to next_plan_review; expected literal Docker version29.9.2,builda82e528 and strict native proof interface communicated. Not edited by this owner.",
+    "trackingGeneralPhaseReconciliation": "Root-owned; not edited by this owner.",
+    "NextPackageAndNotices": "Other owners; not edited by this owner."
+  },
+  "preserved": {
+    "TemporalPinsUnchanged": true,
+    "PodmanPinsUnchanged": true,
+    "oldBinarySourceGoVendorChecks": true,
+    "workerWithoutDocker": true,
+    "scanThresholdsAndCompatibilityBaselines": true,
+    "oldSourceAndFailureReceipts": true,
+    "immutableDev3Dev4": true,
+    "all18M3GatesPending": true
+  },
+  "qualifications": [
+    "Registry TLS/name/digest and official source/tag correspondence; no independent local signature/transparency verification or reproducible-build proof. GitHub tag signature validity is API-reported.",
+    "Binaries have no embedded module dependency graph. Vendor metadata is source inventory, not proof of exact compiled dependencies or complete license notices.",
+    "No native service/client execution or Docker daemon/API compatibility was performed here; actual source-bound hosted AMD64/ARM64 scans/runtime/isolation/cleanup remain required.",
+    "No static TGZ cross-copy equivalence claim; exactbinarybytes verified from official OCI layers, only DockerCLI\u2014not base image/plugins/daemon\u2014will be copied into UBI.",
+    "No all-vulnerabilities-free, legal, customer, publication or M3 completion claim.",
+    "The license and authentic NOTICE copied here do not establish complete third-party notice coverage or legal clearance.",
+    "This record does not grant merge/release/customer/M3 acceptance. Fresh exact-head and postmerge actual-artifact review remains required."
+  ],
+  "priorLocalValidationPreserved": {
+    "recordPath": "/Users/alimobrem/Documents/Codex/2026-10-14/task/dependency-remediation-20261022/docker-cli/local-provenance-before-owner-probe.json",
+    "recordSha256": "3ec97aad57c2f9b7dfdfa2f5991fe4a26a5a93d147aaa8bd09b6e3304f2e1cd0",
+    "focusedTests": {
+      "tests": 20,
+      "pass": 20,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "scope": "Earlier20/20 source evidence retained unchanged; required optional-owner correction produces current22/22 evidence."
+  },
+  "ownerProbeCorrection": {
+    "recordedAt": "2026-10-22T18:41:01.937383+00:00",
+    "authorization": "Root delegated concrete timeout-ownership review correction within approved nativevalidation scope; current uncommitted record refresh explicitly authorized.",
+    "interface": "verifyNativeProvenance(image,{owner}={})",
+    "validation": "Optionalowner must be a string oflength30 matching /^agentci-smoke-[a-f0-9]{16}$/ before anyengineinvocation; trailingnewline/coercion notaccepted.",
+    "trackedArgs": [
+      "--name",
+      "owner+'-provenance'",
+      "--label",
+      "'agentci.image-smoke.owner='+owner"
+    ],
+    "preservation": "Defaultargv, --rm/networknone/read-only/entrypoint, all binary/source/Go/vendor/license checks andworkerwithoutDocker retained. Nativeworkflow/harness/runtimefiles untouched.",
+    "sourceHashes": [
+      {
+        "path": "scripts/verify-native-provenance.mjs",
+        "previousSha256": "1c18071a81a5a9199fc16ab9b0ad572302d3de39b0b8432b6b7beac1e17d3f0a",
+        "newSha256": "bb90fd35cccb3a8297f1af1bc21207c380dc995f88b78dc49bb0a776ff3e4c06",
+        "bytes": 7283
+      },
+      {
+        "path": "tests/docker-cli-provenance.test.ts",
+        "previousSha256": "d5f4ac861432640164d07042f24c390035c913bc73db8164e2d1b53497ac48d1",
+        "newSha256": "4f5f9c78a5e6acab22bd0cd0e6d2294d4f9d68bdfe18b571383e431c8d0284d8",
+        "bytes": 6510
+      }
+    ],
+    "previousRecordPath": "/Users/alimobrem/Documents/Codex/2026-10-14/task/dependency-remediation-20261022/docker-cli/local-provenance-before-owner-probe.json",
+    "previousRecordSha256": "3ec97aad57c2f9b7dfdfa2f5991fe4a26a5a93d147aaa8bd09b6e3304f2e1cd0",
+    "outsideGitReports": "All previous outsideGit reports unchanged; current delta retained additively."
+  }
+}
