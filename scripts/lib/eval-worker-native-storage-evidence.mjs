@@ -1,6 +1,6 @@
 import {createHash} from 'node:crypto';
 import {EVAL_NATIVE_INPUTS,NATIVE_SCAN_IMAGE,evalNativeLabels,validateEvalNativeScan} from './eval-worker-native-evidence.mjs';
-import {nativeStorageBaselineSha256,nativeStorageScanArgs} from './eval-worker-native-storage.mjs';
+import {nativeStorageBaselineSha256,nativeStorageScanArgs,NATIVE_STORAGE_PROBE_ERRORS,NATIVE_STORAGE_PROBE_CLASSES} from './eval-worker-native-storage.mjs';
 
 export const STORAGE_KIND='native-evaluator-storage-diagnostic';
 export const STORAGE_MODE='eval-storage-diagnostic';
@@ -40,6 +40,27 @@ export function validateStorageImage(v,source){
 }
 
 const sampleKeys=['elapsedMs','blockSize','totalBlocks','freeBlocks','availableBlocks','usedBlocks','reservedBlocks','totalBytes','freeBytes','availableBytes','usedBytes','reservedBytes','totalInodes','freeInodes','usedInodes'];
+function validateProbe(row){
+ const inspect=['inspect-timeout','container-unavailable','invalid-inspect','identity-mismatch','container-not-running','baseline-mismatch'].includes(row.reason),stat=['probe-timeout','probe-output-limit','path-or-container-unavailable','invalid-counters'].includes(row.reason);
+ if(!inspect&&!stat){if(row.probe!==null||row.pathClass!=='container'||row.exitCode!==null||row.signal!==null)fail();return;}
+ const p=row.probe;object(p,['kind','errorCode','failureClass','stdoutBytes','stderrBytes','stdoutSha256','stderrSha256','capture','rawDiagnostics']);
+ if(p.kind!==(inspect?'inspect':'stat')||(inspect?row.pathClass!=='container':!['tmp','cache'].includes(row.pathClass))||!NATIVE_STORAGE_PROBE_ERRORS.includes(p.errorCode)||!NATIVE_STORAGE_PROBE_CLASSES.includes(p.failureClass)||!integer(p.stdoutBytes,0,4096)||!integer(p.stderrBytes,0,4096)||!hash(p.stdoutSha256)||!hash(p.stderrSha256)||p.capture!=='bounded-channel-buffers'||p.rawDiagnostics!=='withheld'||p.stdoutBytes===0&&p.stdoutSha256!==storageHash(Buffer.alloc(0))||p.stderrBytes===0&&p.stderrSha256!==storageHash(Buffer.alloc(0)))fail();
+ let classes;
+ if(p.errorCode==='ETIMEDOUT')classes=['timeout'];
+ else if(p.errorCode==='ENOBUFS')classes=['output-limit'];
+ else if(p.errorCode==='ABORT_ERR')classes=['cancelled'];
+ else if(['ENOENT','EACCES'].includes(p.errorCode))classes=['engine-unavailable'];
+ else if(p.errorCode)classes=['execution-error'];
+ else if(row.signal)classes=['signalled'];
+ else if(row.exitCode===0)classes=['none'];
+ else if(row.exitCode!==null)classes=inspect?['template-error','container-not-found','nonzero-exit']:['container-not-found','nonzero-exit'];
+ else classes=['execution-error'];
+ if(!classes.includes(p.failureClass)||p.errorCode==='ENOBUFS'&&Math.max(p.stdoutBytes,p.stderrBytes)!==4096)fail();
+ const timedOut=['inspect-timeout','probe-timeout'].includes(row.reason),outputLimit=row.reason==='probe-output-limit';
+ if(timedOut&&p.errorCode!=='ETIMEDOUT'||outputLimit&&p.errorCode!=='ENOBUFS')fail();
+ if(['invalid-inspect','identity-mismatch','container-not-running','baseline-mismatch','invalid-counters'].includes(row.reason)&&p.failureClass!=='none')fail();
+ if(['container-unavailable','path-or-container-unavailable'].includes(row.reason)&&p.failureClass==='none')fail();
+}
 export function validateStorageObservation(v,{source,image}={}){
  object(v,['schemaVersion','artifactKind','scope','containerId','baseline','pollIntervalMs','availabilityPollIntervalMs','probeTimeoutMs','maxSamplesPerPath','maxInspectAttempts','maxStatAttempts','attempts','boundsReached','paths','unavailable','unavailableCounts','lifecycle','hostChildren','qualification']);
  if(v.schemaVersion!==1||v.artifactKind!=='native-scanner-storage-observation'||v.scope!=='diagnostic-only'||v.containerId!==null&&!hash(v.containerId)||v.pollIntervalMs!==250||v.availabilityPollIntervalMs!==500||v.probeTimeoutMs!==500||v.maxSamplesPerPath!==32||v.maxInspectAttempts!==360||v.maxStatAttempts!==64||v.qualification!=='Sampled maximum used is a lower bound on peak; sampled minimum free bytes/inodes are upper bounds on true minima. Paths report filesystem occupancy, not directory sizes. No runtime acceptance.')fail();
@@ -58,7 +79,7 @@ export function validateStorageObservation(v,{source,image}={}){
   else if(value.minimumFreeBytes!==null||value.maximumUsedBytes!==null||value.minimumFreeInodes!==null)fail();
  }
  if(!Array.isArray(v.unavailable)||v.unavailable.length>32||!v.unavailableCounts||typeof v.unavailableCounts!=='object'||Array.isArray(v.unavailableCounts)||Object.entries(v.unavailableCounts).some(([reason,count])=>!STORAGE_REASONS.includes(reason)||!integer(count,1,10000)))fail();
- const counts={};for(const row of v.unavailable){object(row,['elapsedMs','pathClass','reason','exitCode','signal']);if(!integer(row.elapsedMs,0,180000)||!['container','tmp','cache'].includes(row.pathClass)||!STORAGE_REASONS.includes(row.reason)||row.exitCode!==null&&!integer(row.exitCode,0,255)||row.signal!==null&&!STORAGE_SIGNALS.includes(row.signal))fail();counts[row.reason]=(counts[row.reason]??0)+1;}
+ const counts={};for(const row of v.unavailable){object(row,['elapsedMs','pathClass','reason','exitCode','signal','probe']);if(!integer(row.elapsedMs,0,180000)||!['container','tmp','cache'].includes(row.pathClass)||!STORAGE_REASONS.includes(row.reason)||row.exitCode!==null&&!integer(row.exitCode,0,255)||row.signal!==null&&!STORAGE_SIGNALS.includes(row.signal))fail();validateProbe(row);counts[row.reason]=(counts[row.reason]??0)+1;}
  if(Object.entries(counts).some(([reason,count])=>!(v.unavailableCounts[reason]>=count)))fail();
  object(v.lifecycle,['before','after','termination']);if(v.lifecycle.before!=='unavailable-before-scanner-start'||v.lifecycle.after!=='unavailable-after-scanner-lifetime'||!['scanner-finished','scanner-signalled','timeout','output-limit','cancelled','spawn-failed'].includes(v.lifecycle.termination))fail();
  const valid=v.paths.tmp.validSamples+v.paths.cache.validSamples;if(valid>v.attempts.stat)fail();

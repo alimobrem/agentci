@@ -7,7 +7,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {createHash} from 'node:crypto';
 // @ts-expect-error operational ESM observer
-import {nativeStorageScanArgs,nativeStorageBaselineSha256,parseNativeStorageCounters,createNativeStorageRunner,runNativeScanWithStorage} from '../scripts/lib/eval-worker-native-storage.mjs';
+import {nativeStorageScanArgs,nativeStorageBaselineSha256,nativeStorageProbeEvidence,parseNativeStorageCounters,createNativeStorageRunner,runNativeScanWithStorage} from '../scripts/lib/eval-worker-native-storage.mjs';
 // @ts-expect-error operational ESM pin/classifier
 import {NATIVE_SCAN_IMAGE} from '../scripts/lib/eval-worker-native-evidence.mjs';
 
@@ -42,6 +42,24 @@ test('scanner argv exactly preserves existing PID1, socket, tmpfs, cache, user a
  const f=transport(()=>assert.fail('must reject before child'));return assert.rejects(f.run([...args(),'--user','root'],expected),/Invalid native scanner storage input/);
 });
 
+test('source-verified optional Mounts access uses index and preserves the original empty mount baseline',async()=>{
+ const raw={HostConfig:{ReadonlyRootfs:true,Tmpfs:{'/tmp':'rw,nosuid,nodev,size=1g'},Binds:['/var/run/docker.sock:/var/run/docker.sock'],CapAdd:null,Privileged:false}};
+ assert.equal(Object.hasOwn(raw.HostConfig,'Mounts'),false);
+ const f=transport(call=>{if(call.args[0]==='inspect'){
+  const format=call.args[2]!;assert.match(format,/"mounts":\{\{json \(index \.HostConfig "Mounts"\)\}\}/);assert.doesNotMatch(format,/json \.HostConfig\.Mounts/);
+  // The official CLI raw-map fallback treats this omitted optional key as nil
+  // through index; this fixture models that source contract, not a Go runtime.
+  call.child.stdout.end(inspected({mounts:Reflect.get(raw.HostConfig,'Mounts')??null}));call.child.close();
+ }else normalProbe(call);});const running=f.run(args(),expected);await flush();f.calls[0]!.child.close();const result=await running;assert.equal(result.storage.baseline.result,'matched');assert.deepEqual(result.storage.baseline.observed.mounts,[]);assert.equal(result.storage.paths.tmp.validSamples,1);assert.equal(result.storage.paths.cache.validSamples,1);
+});
+
+test('probe errors retain bounded captured-byte hashes and typed causes without private text',()=>{
+ const stderr=Buffer.from('template parsing error: map has no entry for key PRIVATE-CANARY https://fixture.invalid/private /private/path'),stdout=Buffer.from([255,0,65]);
+ const result={status:1,signal:null,stdout,stderr},evidence=nativeStorageProbeEvidence(result,'inspect');assert.equal(evidence.failureClass,'template-error');assert.equal(evidence.stderrBytes,stderr.length);assert.equal(evidence.stdoutBytes,stdout.length);assert.equal(evidence.stderrSha256,createHash('sha256').update(stderr).digest('hex'));assert.equal(evidence.stdoutSha256,createHash('sha256').update(stdout).digest('hex'));assert.equal(evidence.rawDiagnostics,'withheld');assert.equal(evidence.capture,'bounded-channel-buffers');
+ for(const [change,kind,wanted]of [[{stderr:Buffer.from('No such container: PRIVATE-CANARY')},'inspect','container-not-found'],[{code:'ETIMEDOUT'},'inspect','timeout'],[{code:'ENOBUFS'},'stat','output-limit'],[{code:'ABORT_ERR'},'stat','cancelled'],[{code:'ENOENT'},'inspect','engine-unavailable'],[{code:'EACCES'},'inspect','engine-unavailable'],[{code:'PRIVATE-CANARY'},'inspect','execution-error'],[{signal:'SIGBUS',code:undefined},'stat','signalled'],[{status:0,stderr:Buffer.from('PRIVATE-CANARY')},'inspect','none'],[{stderr:Buffer.from('PRIVATE-CANARY')},'stat','nonzero-exit']] as const){const value=nativeStorageProbeEvidence({...result,...change},kind);assert.equal(value.failureClass,wanted);assert.ok(!JSON.stringify(value).includes('PRIVATE-CANARY'));}
+ assert.ok(!JSON.stringify(evidence).includes('https:'));assert.ok(!JSON.stringify(evidence).includes('/private/'));assert.throws(()=>nativeStorageProbeEvidence({...result,stderr:Buffer.alloc(4097)},'inspect'));assert.throws(()=>nativeStorageProbeEvidence(result,'PRIVATE-CANARY'));
+});
+
 test('real PATH-specific fake Docker captures byte buffers and default bounds without inheriting private environment',async()=>{
  const root=await mkdtemp(join(tmpdir(),'native-storage-transport-')),previous=process.env.PATH,privateValue=process.env.AGENTCI_STORAGE_TEST_PRIVATE;
  try{
@@ -63,7 +81,7 @@ test('foreign, malformed and raced container identities never receive docker exe
 
 test('missing paths and malformed counters are explicit unavailability without changing scanner success',async()=>{
  const f=transport(call=>{if(call.args[0]==='inspect')normalProbe(call);else if(call.args[0]==='exec'){call.child.stderr.end('PRIVATE-CANARY /tmp/not-public');if(call.args.at(-1)==='/tmp')call.child.stdout.end('wrong records\n');call.child.close(call.args.at(-1)==='/tmp'?0:1);}});
- const running=f.run(args(),expected);await flush();f.calls[0]!.child.close();const result=await running;assert.equal(result.status,0);assert.equal(result.storage.paths.tmp.validSamples,0);assert.equal(result.storage.paths.cache.validSamples,0);assert.equal(result.storage.unavailableCounts['invalid-counters'],1);assert.equal(result.storage.unavailableCounts['path-or-container-unavailable'],1);assert.ok(!JSON.stringify(result.storage).includes('PRIVATE-CANARY'));for(const call of f.calls){assert.equal(call.command,'docker');assert.deepEqual(Object.keys(call.options.env),['PATH']);assert.deepEqual(call.options.stdio,['ignore','pipe','pipe']);}
+ const running=f.run(args(),expected);await flush();f.calls[0]!.child.close();const result=await running;assert.equal(result.status,0);assert.equal(result.storage.paths.tmp.validSamples,0);assert.equal(result.storage.paths.cache.validSamples,0);assert.equal(result.storage.unavailableCounts['invalid-counters'],1);assert.equal(result.storage.unavailableCounts['path-or-container-unavailable'],1);assert.equal(result.storage.unavailable[0].probe.kind,'stat');assert.equal(result.storage.unavailable[0].probe.failureClass,'none');assert.equal(result.storage.unavailable[1].probe.failureClass,'nonzero-exit');assert.equal(result.storage.unavailable[1].probe.stderrSha256,createHash('sha256').update('PRIVATE-CANARY /tmp/not-public').digest('hex'));assert.ok(!JSON.stringify(result.storage).includes('PRIVATE-CANARY'));for(const call of f.calls){assert.equal(call.command,'docker');assert.deepEqual(Object.keys(call.options.env),['PATH']);assert.deepEqual(call.options.stdio,['ignore','pipe','pipe']);}
 });
 
 test('actual baseline changes and stopped containers fail closed before any filesystem probe',async()=>{
