@@ -2366,6 +2366,26 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-candidate-locked-package",
+          "status": "in-progress",
+          "startedAt": "2026-10-16T03:58:10.727Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Shared package-only assembly preserves npm-selected content and executable modes, restores both authentic committed lock files and exact source/version provenance, rejects omitted or mismatched locks and unsafe archives, suppresses packaging lifecycle scripts, and preserves immutable development publication schema and six-role gates.",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Actual final source-bound candidate archive passes extracted-root npm ci separately from consumer production installation under pinned npm policy, with complete member/hash/source/cohort receipts, failure and cleanup regression coverage, unchanged required CI, independent review and postmerge evidence. Original requirements, immutable dev.3/dev.4 evidence, live/legal/security/customer qualifications and all eighteen M3 gates remain unchanged.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -4977,6 +4997,26 @@
             },
             {
               "text": "Relevant local/full hosted CI and independent exact head/tree and actual-artifact review precede descriptor merge/publication; preflight rejects occupied/inconclusive destinations. Preserve failures and all M3 customer/release gates.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-candidate-locked-package",
+          "status": "in-progress",
+          "startedAt": "2026-10-16T03:58:10.727Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Shared package-only assembly preserves npm-selected content and executable modes, restores both authentic committed lock files and exact source/version provenance, rejects omitted or mismatched locks and unsafe archives, suppresses packaging lifecycle scripts, and preserves immutable development publication schema and six-role gates.",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Actual final source-bound candidate archive passes extracted-root npm ci separately from consumer production installation under pinned npm policy, with complete member/hash/source/cohort receipts, failure and cleanup regression coverage, unchanged required CI, independent review and postmerge evidence. Original requirements, immutable dev.3/dev.4 evidence, live/legal/security/customer qualifications and all eighteen M3 gates remain unchanged.",
               "status": "pending",
               "evidence": []
             }

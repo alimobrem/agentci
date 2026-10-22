@@ -1,21 +1,28 @@
 {
   "schemaVersion": 1,
   "dockerCli": {
-    "image": "docker:29.9.0-cli@sha256:1a4c7cb63513f349bdad01fcc6e0f3f2f67d37b9da86f14dc0d4a0942eecda00",
-    "version": "29.9.0",
-    "sourceCommit": "f415da838bed6a0e12ca6cb86ba198fdac6beb9c",
-    "goVersion": "go1.26.9",
+    "image": "docker:29.9.2-cli@sha256:5e6baf67325a79f64ed3bed6863954d5e05d0f3d4e57cbdb14809346814bbfdb",
+    "version": "29.9.2",
+    "sourceCommit": "a82e528901260c8df6073311379eac65f92db204",
+    "goVersion": "go1.26.10",
     "binarySha256": {
-      "amd64": "a1ce7baaa61f45f51b1e3c0148f60f884df14096620f2755bfd53e8cc8bbbf77",
-      "arm64": "6b6cf853300e741aa1bfe2b1ec029ca9c3cefca0e542132fae45b730467ee683"
+      "amd64": "6c71cfe71faff949a602946a4df4799b563232e79d0b8b6fd343d0ef081c9621",
+      "arm64": "e330afc12592c0683664b00066d50fb9f3a879ab8820df589d50b9b1fe3a3c6a"
     },
     "vendorManifest": {
-      "upstreamUrl": "https://raw.githubusercontent.com/docker/cli/f415da838bed6a0e12ca6cb86ba198fdac6beb9c/vendor.mod",
-      "sha256": "5920be5f3d516844e1d4152d0ae7bbfaeaca576ef6b63fab64bda5b463f234f3",
+      "upstreamUrl": "https://raw.githubusercontent.com/docker/cli/a82e528901260c8df6073311379eac65f92db204/vendor.mod",
+      "sha256": "5b7d4db4d159f1b6c4b3c823b066506869e42aecc6a29e40c6d16fdc4c5712d9",
       "runtimePath": "/licenses/docker-cli/go.mod",
       "coverage": "Upstream source inventory, including tooling; not an exact compiled dependency graph."
     },
-    "vendorModulesSha256": "8a11f7b00b8dcf864265a19f4f153aed2ff75303c1c203cb14845ab82b74c617"
+    "vendorModulesSha256": "f7d72777b483c4880f2423083315d3277712287c75f888772d61ce7d7186c25c",
+    "licenseSha256": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+    "notice": {
+      "path": "deploy/licenses/docker-cli-NOTICE",
+      "upstreamUrl": "https://raw.githubusercontent.com/docker/cli/a82e528901260c8df6073311379eac65f92db204/NOTICE",
+      "sha256": "a8c869fbda819afb8d80e0ac19bac52e766bc6c19cb38cf94f52d64c4be2aab6",
+      "runtimePath": "/licenses/docker-cli-NOTICE"
+    }
   },
   "temporalBridge": {
     "package": "@temporalio/core-bridge",
