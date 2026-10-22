@@ -77,3 +77,12 @@ cleanup uncertainty, licensing gaps and existing service findings remain in scop
 Upstream references: [Next image-processing advisory](https://github.com/vercel/next.js/security/advisories/GHSA-2464-fhr4-w9xw),
 [Next denial-of-service advisory](https://github.com/vercel/next.js/security/advisories/GHSA-p3m5-59mp-jv5r),
 and [Go vulnerability report](https://pkg.go.dev/vuln/GO-2026-6809).
+
+## Later October 22 Python approval
+
+The earlier statement that no trust store changes describes the Next/Docker
+remedy above. The owner subsequently approved two optional Python pins and the
+limited certifi package-bundle change. The
+[separate Python refresh](m3-python-security-refresh.md) records its exact anchor,
+wheel, notice and runtime scope. It does not alter Mac or other system trust,
+rewrite historical acceptance, or close any M3 gate.

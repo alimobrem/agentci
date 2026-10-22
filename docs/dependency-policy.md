@@ -61,3 +61,10 @@ M3 updates the optional engine to stable Promptfoo 0.124.0, resolving simple-git
 The existing forge backport and unresolved scanner finding remain. Upstream
 compatibility changes, installed license notices and local image evidence are
 recorded in [the M3 evaluator security assessment](phases/m3-promptfoo-security.md).
+
+The owner-approved October 22 [optional Python security refresh](phases/m3-python-security-refresh.md)
+pins aiohttp `3.14.4` and certifi `2026.10.19` with complete official wheel hashes.
+The former is the advisory-named minimum remedy, not a latest-version claim.
+The limited certifi CA-bundle delta, unchanged authentic notices and outstanding
+fresh native/runtime/security acceptance are recorded separately from historical
+M2 and Promptfoo evidence.

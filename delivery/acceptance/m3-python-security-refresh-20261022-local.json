@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "kind": "python-security-refresh-local-implementation",
+  "recordedAt": "2026-10-22T20:36:20.265Z",
+  "task": "M3-python-security-refresh-20261022",
+  "sourceContext": {
+    "baseCommit": "16f77f564fb1b294fbdd107488efec80cc4d09de",
+    "baseTree": "74a126b7c27485808ee9fe7fc7ae2da31076b5d6",
+    "candidateCommit": null,
+    "state": "uncommitted source; not a candidate image or acceptance record"
+  },
+  "approvedScope": {
+    "aiohttp": "3.14.4",
+    "certifi": "2026.10.19",
+    "trust": "Unmodified certifi package bundle only; no Mac/system/global trust changes",
+    "nativeValidation": "bounded nonpublishing native AMD64/ARM64 engine checks required before merge"
+  },
+  "inputs": [
+    {
+      "path": "deploy/engines/deepeval/requirements.txt",
+      "bytes": 113544,
+      "sha256": "5bf120c7f9a56f1daa3dacb93bc7ed705290e93afdc321539022eaf38cf624f0"
+    },
+    {
+      "path": "deploy/security/python-engine-components.json",
+      "bytes": 25875,
+      "sha256": "edbe5b839ecf9ee14b27ac343b041a3810422a35e62bbc1bdf53c8418b7794df"
+    },
+    {
+      "path": "scripts/lib/python-engine-provenance.mjs",
+      "bytes": 11459,
+      "sha256": "b72f86a2cb28dc695dcbdf8975e192b43071968abf7e25ec9a86c0adc83cd7b9"
+    },
+    {
+      "path": "tests/python-engine-provenance.test.ts",
+      "bytes": 10884,
+      "sha256": "eb5b188ffe6d9ddf5ae13b2350a8e94cccd1f7353663ab76bd5503a32e58a8ad"
+    },
+    {
+      "path": "tests/integration/eval-engines.test.ts",
+      "bytes": 6291,
+      "sha256": "88661750d366f5e041ac3ff51175f58a3757be576eede4a9ee17739d2450e50d"
+    },
+    {
+      "path": "docs/phases/m3-python-security-refresh.md",
+      "bytes": 3297,
+      "sha256": "e90dfdda6217c85e073debf7c7409f39ece1728a8845dd3a6971a1c9c3536532"
+    },
+    {
+      "path": "docs/phases/m3-dependency-security-refresh.md",
+      "bytes": 5164,
+      "sha256": "71c3cc012339351735f2f9332c045ce61a4b5125cb3fc593d5b6b03d3a817c0b"
+    },
+    {
+      "path": "docs/dependency-policy.md",
+      "bytes": 4538,
+      "sha256": "871a232ca503e841d87e5b01216d3ebb38ae3766f8b41ffec5d144712ef8d69f"
+    }
+  ],
+  "pinChanges": {
+    "lines": 2,
+    "dependencies": 61,
+    "unchangedDependencies": 59,
+    "unchangedDependencyLinesSha256": "fe62b9e42ce1e3cee64d81f02d7805300bca3327cd5389bdc186166add89a1c3",
+    "requirementsSha256": "5bf120c7f9a56f1daa3dacb93bc7ed705290e93afdc321539022eaf38cf624f0",
+    "releaseWheelHashes": [
+      {
+        "name": "aiohttp",
+        "version": "3.14.4",
+        "count": 160,
+        "setSha256": "f8451093d626740a91a483f150d878ddf1b7802072d91126642c61d146d04058"
+      },
+      {
+        "name": "certifi",
+        "version": "2026.10.19",
+        "count": 1,
+        "setSha256": "7f3bd9e51e8b3e9329767a1bed69008e443ca68c3349e0559f4bcb9da2b63cf0"
+      }
+    ]
+  },
+  "staticEvidence": {
+    "componentRecord": "deploy/security/python-engine-components.json",
+    "selectedAiohttpWheels": [
+      {
+        "platform": "linux/amd64",
+        "sha256": "fb22c8e4b60385a9b414c70c6e8b2d0f4b23ff7fc4bb572ceb58297b228169f1",
+        "extensions": 4
+      },
+      {
+        "platform": "linux/arm64",
+        "sha256": "f8f61a9b5fa56c58e3441f9dc64137f786232d40fb89127190d0e0f84e1e5865",
+        "extensions": 4
+      }
+    ],
+    "certifiBundle": {
+      "bundleBytes": 238856,
+      "bundleSha256": "50f79f98dac192b20dbf73f35c56f0b0c557ab267ff5199d1117cc1180b70785",
+      "certificates": 120,
+      "version": "2026.10.19"
+    },
+    "removed": [
+      {
+        "derBytes": 594,
+        "derSha256": "86a1ecba089c4a8d3bbe2734c612ba341d813e043cf9e8a862cd5c57a36bbe6b",
+        "label": "emSign ECC Root CA - G3"
+      }
+    ],
+    "added": [],
+    "unchangedDerCount": 120,
+    "licenses": "Authentic existing wheel notices unchanged; not complete legal or source-obligation clearance"
+  },
+  "localChecks": [
+    {
+      "path": "focused-attempt-1.log",
+      "bytes": 5286,
+      "sha256": "29b250e66924b601bf0b56a9d7b6fede5896e035dc37357c3311e5d372b8278c",
+      "exitCode": 1,
+      "result": "3passed4failed; existing uppercase/underscore names and Mac canonical test path corrected; preserved"
+    },
+    {
+      "path": "focused-attempt-2.log",
+      "bytes": 991,
+      "sha256": "a981f4c4564fed84a72f946b563e125b5a4c97a2e00f8438b50a69f237e55ed6",
+      "exitCode": 0,
+      "result": "7passed0failed0skipped"
+    },
+    {
+      "path": "focused-attempt-3.log",
+      "bytes": 990,
+      "sha256": "593fd658db5f0dd3018883b1f967a969c2b3e123b157d0320cf821268330a0b2",
+      "exitCode": 0,
+      "result": "7passed0failed0skipped; includes reviewer UUID terminal-newline rejection"
+    },
+    {
+      "path": "typecheck-attempt-1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exitCode": 0,
+      "result": "TypeScript noEmit"
+    },
+    {
+      "path": "typecheck-attempt-2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exitCode": 0,
+      "result": "TypeScript noEmit; later unrelated native files still in progress"
+    },
+    {
+      "path": "probe-syntax.log",
+      "bytes": 71,
+      "sha256": "47e2c007f5c5cbe21b123bcba413a49709ce7bb739105116a727985120eca103",
+      "exitCode": 0,
+      "result": "Trusted Python3.12 AST parse only; no candidate import or probe execution"
+    }
+  ],
+  "integration": {
+    "path": "tests/integration/eval-engines.test.ts",
+    "retainsExistingScenarios": true,
+    "productionRunnerChanged": false,
+    "sandboxOrPolicyChanged": false,
+    "installedProbe": "existing runIsolated command adapter, python -I probe.py; report python-provenance.json",
+    "installedEvidence": "Pinned CPython3.14.8, all61installed versions, bounded default-marker dependency closure, four cp314 ELF hashes/architectures and default C parser, metadata/notices, exact certifi bundle/120anchors/removedG3absence",
+    "optionalFixtureInputs": [
+      "AGENTCI_TEST_ENGINES_UNIT_ID",
+      "AGENTCI_TEST_ENGINES_LEASE_TOKEN",
+      "AGENTCI_TEST_ENGINES_SMOKE_OWNER",
+      "AGENTCI_TEST_ENGINES_ARTIFACT_ROOT"
+    ],
+    "artifact": "existing owned real .agentci/artifacts/eval-engines-native/python-installed-provenance.json; exclusive strict public receipt",
+    "cleanup": "existing runner finally removes unit containers; named/labelled forge probe additionally cleaned with exact smoke-owner verification and selected engine"
+  },
+  "remaining": [
+    "Combined final-source check:fast deferred until parallel wrapper/workflow files freeze; focused checks are partial local feedback.",
+    "Fresh actual current-source image installation and runtime proof not executed locally.",
+    "Required full Verify/six-role scans plus bounded nonpublishing AMD64/ARM64 engine artifacts and cleanup remain pending.",
+    "Default-marker dependency closure is not complete optional-extras or all-runtime/model/provider compatibility proof.",
+    "Exact-head independent source and actual-artifact review, gated merge and postmerge verification remain required.",
+    "Historical failures/skips/cancellations, immutable dev3/dev4, legal/live/customer/source/cleanup qualifications remain; all eighteen M3 gates pending."
+  ],
+  "runtimeAcceptance": "not-performed",
+  "criterionAcceptance": false,
+  "aggregateM3Acceptance": false
+}

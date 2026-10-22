@@ -4,6 +4,16 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      qualification:
+        description: Verification cohort to run
+        type: choice
+        default: verify
+        options: [verify, python-engine-native]
+      expected_source:
+        description: Exact source SHA required for native Python engine validation
+        type: string
+        required: false
   workflow_call:
 permissions:
   contents: read
@@ -12,6 +22,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   fast-feedback:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.qualification != 'python-engine-native' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -25,6 +36,7 @@ jobs:
         if: always()
         with: { name: fast-feedback, path: .agentci/artifacts/delivery/fast-latest.json, include-hidden-files: true }
   contracts-and-runtime:
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.qualification != 'python-engine-native' }}
     # Explicit compatibility cohort; native Podman acceptance is separately required before adoption.
     env: { AGENTCI_CONTAINER_ENGINE: docker }
     runs-on: ubuntu-latest
@@ -194,3 +206,65 @@ jobs:
             .agentci/artifacts/eval-worker-image-smoke.json
             .agentci/artifacts/customer-dev4-scope-regression.json
             .agentci/artifacts/native-provenance-*.json
+  python-engine-native:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.qualification == 'python-engine-native' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { runner: ubuntu-24.04, arch: amd64 }
+          - { runner: ubuntu-24.04-arm, arch: arm64 }
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    env:
+      AGENTCI_CONTAINER_ENGINE: docker
+      AGENTCI_PYTHON_NATIVE_MODE: ${{ inputs.qualification }}
+      INPUT_EXPECTED_SOURCE: ${{ inputs.expected_source }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: { persist-credentials: false, fetch-depth: 2 }
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: { node-version: 26.10.0 }
+      - name: Bind exact native engine source and private fixture recovery
+        id: source
+        run: node scripts/python-engine-native-acceptance.mjs source '${{ matrix.arch }}'
+      - run: npm install --global npm@12.2.0
+      - run: npm ci
+      - name: Check native harness ownership and evidence controls
+        timeout-minutes: 3
+        run: node --import tsx --test tests/python-engine-native.test.ts tests/python-engine-provenance.test.ts tests/python-engine-native-workflow.test.ts
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
+      - name: Build only the updated native optional engine image without publication
+        timeout-minutes: 25
+        run: |
+          docker buildx build --load --provenance=false --platform 'linux/${{ matrix.arch }}' --target eval-engines \
+            --tag 'agentci-eval-engines:qualification-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.arch }}' \
+            --label 'org.opencontainers.image.revision=${{ steps.source.outputs.source }}' \
+            --label 'org.agentci.source-tree=${{ steps.source.outputs.tree }}' \
+            --label 'org.agentci.candidate=${{ steps.source.outputs.candidate }}' \
+            --label 'org.agentci.root-lock=${{ steps.source.outputs.root_lock }}' \
+            --label 'org.agentci.native-pins=${{ steps.source.outputs.native_pins }}' \
+            --label 'org.agentci.native-role=eval-engines' .
+      - name: Scan the exact image using the existing Verify scanner configuration
+        id: scan
+        timeout-minutes: 12
+        run: node scripts/python-engine-native-acceptance.mjs scan
+      - name: Execute actual installed provenance and isolated engine fixtures
+        id: runtime
+        timeout-minutes: 6
+        run: node scripts/python-engine-native-acceptance.mjs runtime
+      - name: Recover only journaled fixtures and retain strict native engine evidence
+        if: always()
+        timeout-minutes: 3
+        env:
+          AGENTCI_PYTHON_NATIVE_SCAN_OUTCOME: ${{ steps.scan.outcome }}
+          AGENTCI_PYTHON_NATIVE_RUNTIME_OUTCOME: ${{ steps.runtime.outcome }}
+        run: node scripts/python-engine-native-acceptance.mjs finalize
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: python-engine-native-${{ matrix.arch }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .agentci/artifacts/eval-engines-native/
+          include-hidden-files: true
+          retention-days: 7
+          if-no-files-found: error

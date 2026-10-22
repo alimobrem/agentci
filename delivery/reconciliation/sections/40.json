@@ -7437,6 +7437,26 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-python-security-refresh-20261022",
+          "status": "in-progress",
+          "startedAt": "2026-10-22T20:26:23.185Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Hash-pin aiohttp3.14.4 and certifi2026.10.19 from authenticated official release metadata, preserve all59other Python pins and Docker/runtime policy, retain exact license/trust delta and provenance records, and pass focused pin/record checks without claiming runtime acceptance.",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Pass fresh exact-source required image security/runtime checks and bounded nonpublishing native AMD64/ARM64 optional-engine validation with actual selected wheel/extension/trust-bundle identities, owned cleanup, independent artifact review and postmerge verification; preserve historical failures, immutable dev3/dev4, all1346requirements and18pending M3 gates.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -9094,6 +9114,26 @@
             },
             {
               "text": "Preserve original PR117/branch and all failures; create replacement draft PR from exact main with the final corrected snapshot only, then require unchanged full introduced-history scanner, fresh exact-head CI/native artifact review, gated merge and postmerge verification without aggregate M3 acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-python-security-refresh-20261022",
+          "status": "in-progress",
+          "startedAt": "2026-10-22T20:26:23.185Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Hash-pin aiohttp3.14.4 and certifi2026.10.19 from authenticated official release metadata, preserve all59other Python pins and Docker/runtime policy, retain exact license/trust delta and provenance records, and pass focused pin/record checks without claiming runtime acceptance.",
+              "status": "pending",
+              "evidence": []
+            },
+            {
+              "text": "Pass fresh exact-source required image security/runtime checks and bounded nonpublishing native AMD64/ARM64 optional-engine validation with actual selected wheel/extension/trust-bundle identities, owned cleanup, independent artifact review and postmerge verification; preserve historical failures, immutable dev3/dev4, all1346requirements and18pending M3 gates.",
               "status": "pending",
               "evidence": []
             }

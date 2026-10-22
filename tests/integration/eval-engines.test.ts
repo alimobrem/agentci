@@ -1,18 +1,29 @@
 import {containerEngine} from '../../packages/evals/runner.ts';
-import {randomUUID} from 'node:crypto';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
 import {evalSuite} from '../fixtures/evals.ts';
 import {runIsolated as runContainer} from '../../packages/evals/runner.ts';
 import {normalizeTrial} from '../../packages/evals/adapters.ts';
+import {readFile} from 'node:fs/promises';
+// @ts-expect-error operational ESM optional Python provenance
+import {pythonEngineProbe,validatePythonEngineProvenance,pythonEngineTestContext,retainPythonEngineProvenance} from '../../scripts/lib/python-engine-provenance.mjs';
+// @ts-expect-error existing strict smoke ownership recovery
+import {cleanupSmokeResources} from '../../scripts/lib/smoke-resources.mjs';
 const image=process.env.AGENTCI_TEST_ENGINES_IMAGE;
 test('real optional UBI engines: Promptfoo and DeepEval passing assertions, regressions and infrastructure errors',{skip:!image,timeout:120000},async()=>{
-  const cryptoProbe=execFileSync(containerEngine(),['run','--rm','--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--pids-limit','64','--memory','256m','--entrypoint','node',image!,'/opt/agentci-patches/verify-forge-backport.cjs','/opt/promptfoo/node_modules/node-forge'],{encoding:'utf8',timeout:15000});assert.match(cryptoProbe,/malformed nested DigestAlgorithm rejected/);
-  const ownership={unitId:randomUUID(),leaseToken:randomUUID()};
+  const {ownership,smokeOwner,artifactRoot}=await pythonEngineTestContext();
+  try{
+  const cryptoProbe=execFileSync(containerEngine(),['run','--rm','--name',smokeOwner+'-forge-provenance','--label','agentci.image-smoke.owner='+smokeOwner,'--network','none','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--pids-limit','64','--memory','256m','--entrypoint','node',image!,'/opt/agentci-patches/verify-forge-backport.cjs','/opt/promptfoo/node_modules/node-forge'],{encoding:'utf8',timeout:15000});assert.match(cryptoProbe,/malformed nested DigestAlgorithm rejected/);
   const runIsolated=(snapshot:Parameters<typeof runContainer>[0],suite:Parameters<typeof runContainer>[1],policy:Parameters<typeof runContainer>[2],options:NonNullable<Parameters<typeof runContainer>[3]>={})=>runContainer(snapshot,suite,policy,{...options,ownership});
   const containers=()=>execFileSync(containerEngine(),['ps','-aq','--filter','label=agentci.purpose=eval-runner','--filter',`label=agentci.eval.unit=${ownership.unitId}`],{encoding:'utf8'}).trim();
   const before=containers();
+  const pythonComponents=JSON.parse(await readFile('deploy/security/python-engine-components.json','utf8'));
+  const pythonRequirements=await readFile('deploy/engines/deepeval/requirements.txt','utf8');
+  const provenance=await runIsolated({sha:'c'.repeat(40),files:{'probe.py':pythonEngineProbe(pythonComponents,pythonRequirements)}},evalSuite({runner:{adapter:'command',command:['python','-I','probe.py'],report:'python-provenance.json',timeoutMs:15000,maxOutputBytes:65536}}),{image:image!});
+  assert.equal(provenance.status,'completed');assert.equal(provenance.exitCode,0);assert.equal(provenance.reportError,undefined);
+  const pythonInstalled=validatePythonEngineProvenance(JSON.parse(provenance.report!),pythonComponents,pythonRequirements);
+  await retainPythonEngineProvenance(pythonInstalled,pythonComponents,pythonRequirements,{artifactRoot});
   const abort=new AbortController();const pending=runIsolated({sha:'a'.repeat(40),files:{'probe.mjs':'setInterval(()=>{},1000)'}},evalSuite({runner:{adapter:'command',command:['node','probe.mjs'],timeoutMs:30000}}),{image:image!},{signal:abort.signal});
   let live=false;for(let i=0;i<200;i++){if(containers()!==before){live=true;break;}await new Promise(resolve=>setTimeout(resolve,50));}
   abort.abort();assert.equal((await pending).status,'cancelled');assert.ok(live,'the exact optional unit label must expose live owned containers');
@@ -37,4 +48,5 @@ test('real optional UBI engines: Promptfoo and DeepEval passing assertions, regr
   const broken=await runIsolated({sha:'b'.repeat(40),files:{'evals/test_example.py':'import agentci_missing_test_dependency\n'}},deepeval,{image:image!});
   assert.equal(broken.exitCode,2);assert.equal(normalizeTrial(deepeval,broken).error,'pytest-execution-error');
   assert.equal(containers(),before,'engine containers must be removed after success, regression and infrastructure error');
+  }finally{cleanupSmokeResources(smokeOwner,{command:(args:string[])=>execFileSync(containerEngine(),args,{encoding:'utf8',env:{PATH:process.env.PATH},stdio:['ignore','pipe','pipe'],timeout:30000,maxBuffer:1024*1024}).trim()});}
 });

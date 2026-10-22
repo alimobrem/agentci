@@ -4303,6 +4303,31 @@
         }
       ],
       "dependsOn": []
+    },
+    {
+      "id": "M3-python-security-refresh-20261022",
+      "title": "Refresh two optional Python runtime security pins and qualify exact native engine images",
+      "requirementIds": [
+        "SPEC-11.4-003",
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "in-progress",
+      "startedAt": "2026-10-22T20:26:23.185Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Hash-pin aiohttp3.14.4 and certifi2026.10.19 from authenticated official release metadata, preserve all59other Python pins and Docker/runtime policy, retain exact license/trust delta and provenance records, and pass focused pin/record checks without claiming runtime acceptance.",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Pass fresh exact-source required image security/runtime checks and bounded nonpublishing native AMD64/ARM64 optional-engine validation with actual selected wheel/extension/trust-bundle identities, owned cleanup, independent artifact review and postmerge verification; preserve historical failures, immutable dev3/dev4, all1346requirements and18pending M3 gates.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
