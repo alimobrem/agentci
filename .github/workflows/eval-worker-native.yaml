@@ -1,0 +1,120 @@
+name: Nonpublishing native evaluator qualification
+on:
+  pull_request:
+    paths:
+      - Dockerfile
+      - LICENSE
+      - agentci.yaml
+      - .dockerignore
+      - package.json
+      - package-lock.json
+      - npm-shrinkwrap.json
+      - tsconfig*.json
+      - apps/**
+      - cmd/**
+      - packages/**
+      - deploy/**
+      - scripts/build-assets.mjs
+      - scripts/check-scan.mjs
+      - scripts/eval-worker-*.mjs
+      - scripts/verify-native-provenance.mjs
+      - scripts/lib/eval-worker-native-*.mjs
+      - scripts/lib/image-smoke-state.mjs
+      - scripts/lib/smoke-resources.mjs
+      - scripts/lib/download-runtime-evidence.mjs
+      - scripts/lib/dashboard-scan-failure.mjs
+      - scripts/lib/eval-worker-private-config.mjs
+      - tests/eval-worker-native*.test.ts
+      - tests/eval-worker-private-config.test.ts
+      - tests/dashboard-scan-failure.test.ts
+      - .github/workflows/eval-worker-native.yaml
+  push:
+    branches: [main]
+    paths:
+      - Dockerfile
+      - LICENSE
+      - agentci.yaml
+      - .dockerignore
+      - package.json
+      - package-lock.json
+      - npm-shrinkwrap.json
+      - tsconfig*.json
+      - apps/**
+      - cmd/**
+      - packages/**
+      - deploy/**
+      - scripts/build-assets.mjs
+      - scripts/check-scan.mjs
+      - scripts/eval-worker-*.mjs
+      - scripts/verify-native-provenance.mjs
+      - scripts/lib/eval-worker-native-*.mjs
+      - scripts/lib/image-smoke-state.mjs
+      - scripts/lib/smoke-resources.mjs
+      - scripts/lib/download-runtime-evidence.mjs
+      - scripts/lib/dashboard-scan-failure.mjs
+      - scripts/lib/eval-worker-private-config.mjs
+      - tests/eval-worker-native*.test.ts
+      - tests/eval-worker-private-config.test.ts
+      - tests/dashboard-scan-failure.test.ts
+      - .github/workflows/eval-worker-native.yaml
+permissions:
+  contents: read
+env:
+  DOCKER_BUILD_RECORD_UPLOAD: 'false'
+concurrency:
+  group: eval-worker-native-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {runner: ubuntu-24.04, arch: amd64}
+          - {runner: ubuntu-24.04-arm, arch: arm64}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 45
+    env:
+      AGENTCI_CONTAINER_ENGINE: docker
+      AGENTCI_EVAL_NATIVE_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with: {persist-credentials: false, fetch-depth: 2}
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with: {node-version: 26.10.0}
+      - name: Bind native source and owned recovery state
+        id: source
+        run: node scripts/eval-worker-native-acceptance.mjs source '${{ matrix.arch }}'
+      - run: npm install --global npm@12.2.0 && npm ci && npm run build
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
+      - name: Build both local native evaluator images without publication
+        timeout-minutes: 25
+        run: |
+          for role in eval-worker eval-runner; do
+            docker buildx build --load --provenance=false --platform 'linux/${{ matrix.arch }}' --target "$role" \
+              --tag "agentci-$role:qualification-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.arch }}" \
+              --label 'org.opencontainers.image.revision=${{ steps.source.outputs.source }}' \
+              --label 'org.agentci.source-tree=${{ steps.source.outputs.tree }}' \
+              --label 'org.agentci.candidate=${{ steps.source.outputs.candidate }}' \
+              --label 'org.agentci.root-lock=${{ steps.source.outputs.root_lock }}' \
+              --label 'org.agentci.native-pins=${{ steps.source.outputs.native_pins }}' \
+              --label "org.agentci.native-role=$role" .
+          done
+      - name: Scan and exercise actual native evaluator and owned cleanup
+        id: qualify
+        timeout-minutes: 12
+        run: node scripts/eval-worker-native-acceptance.mjs qualify
+      - name: Recover owned resources and retain strict outcome and artifact hashes
+        if: always()
+        timeout-minutes: 3
+        env:
+          AGENTCI_EVAL_NATIVE_OUTCOME: ${{ steps.qualify.outcome }}
+        run: node scripts/eval-worker-native-acceptance.mjs finalize
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: eval-worker-native-${{ matrix.arch }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .agentci/artifacts/eval-worker-native/
+          include-hidden-files: true
+          retention-days: 7
+          if-no-files-found: error
