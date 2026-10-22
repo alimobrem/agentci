@@ -1,30 +1,34 @@
 import {containerEngine} from '../dist/packages/evals/runner.js';
 import {execFileSync,spawnSync} from 'node:child_process';
-import {randomUUID,createHash} from 'node:crypto';
+import {randomUUID,randomBytes,createHash} from 'node:crypto';
+import {registerImageSmokeState,cleanupImageSmokeState} from './lib/image-smoke-state.mjs';
+import {SMOKE_OWNER_LABEL} from './lib/smoke-resources.mjs';
+import {evalEngineMismatchRejected} from './lib/eval-worker-native-evidence.mjs';
 import {mkdtemp,readFile,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';import {join} from 'node:path';
 import {Pool} from 'pg';import {Client,Connection} from '@temporalio/client';
 import {stringify} from 'yaml';import {parseYaml} from '../dist/packages/project/index.js';
 import {Store} from '../dist/packages/storage/postgres.js';import {EvalStore} from '../dist/packages/storage/evals.js';
 import {analyze} from '../dist/packages/review/engine.js';
-const prefix='agentci-eval-image-'+randomUUID().slice(0,8),directory=await mkdtemp(join(tmpdir(),'agentci-eval-image-'));
+const prefix='agentci-smoke-'+randomBytes(8).toString('hex'),directory=await mkdtemp(join(tmpdir(),'agentci-image-smoke-'));
+const statePath=await registerImageSmokeState(directory,prefix);
 const engine=containerEngine(),otherEngine=engine==='docker'?'podman':'docker',socket=process.env.AGENTCI_CONTAINER_SOCKET_PATH??(engine==='docker'?'/var/run/docker.sock':`/run/user/${process.getuid()}/podman/podman.sock`);
 if(!/^\/[A-Za-z0-9_./-]+$/.test(socket))throw new Error('Invalid operator executor socket');
 const serviceNamespace=engine==='podman'?['--userns','keep-id:uid=1001,gid=0','--security-opt','label=disable']:[];
 const runtimeScratch=engine==='podman'?['--mount','type=tmpfs,destination=/opt/agentci/podman-runtime,tmpfs-size=16m,tmpfs-mode=1777,tmpcopyup=false']:[];
-const container=(...args)=>execFileSync(engine,args,{encoding:'utf8',stdio:['pipe','pipe','pipe'],timeout:60000}).trim();
+const container=(...args)=>{try{return execFileSync(engine,args[0]==='run'?['run','--label',SMOKE_OWNER_LABEL+'='+prefix,...args.slice(1)]:args,{encoding:'utf8',stdio:['pipe','pipe','pipe'],timeout:60000}).trim();}catch{throw Error('Evaluator owned engine operation failed; diagnostic content withheld');}};
 const names=[],ids=[],network=prefix;let pool,connection,sharedProvider,result;
 const pause=()=>new Promise(resolve=>setTimeout(resolve,100));
 async function wait(probe){for(let i=0;i<150;i++){try{if(await probe())return;}catch{}await pause();}throw new Error('Eval image probe did not become ready');}
-const create=(name,...args)=>{names.push(name);return container('create','--name',name,'--label','agentci.purpose=eval-image-smoke','--network',network,...args);};
+const create=(name,...args)=>{names.push(name);return container('create','--name',name,'--label','agentci.purpose=eval-image-smoke','--label',SMOKE_OWNER_LABEL+'='+prefix,'--network',network,...args);};
 const immutableImage=reference=>{const id=container('image','inspect',reference,'--format','{{.Id}}');return id.startsWith('sha256:')?id:'sha256:'+id;};
 const workerImage=immutableImage(process.argv[2]??'agentci-eval-worker:ci'),runnerImage=immutableImage(process.argv[3]??'agentci-eval-runner:ci');
 try{
   const platform=container('image','inspect',workerImage,'--format','{{.Os}}/{{.Architecture}}');
-  const check=JSON.parse(container('run','--rm','--network','none','--read-only',...runtimeScratch,'--entrypoint','node',workerImage,'-e',`const fs=require('node:fs'),assert=require('node:assert/strict'),{execFileSync}=require('node:child_process');assert.equal(process.getuid(),1001);for(const path of ['/usr/local/bin/npm','/usr/local/bin/npx','/usr/bin/microdnf','/usr/bin/rpm','/run/secrets/github-app.pem',${JSON.stringify('/usr/local/bin/'+otherEngine)}])assert.equal(fs.existsSync(path),false,path);assert.match(fs.readFileSync('/etc/os-release','utf8'),/ID="rhel"/);assert.equal(process.env.GITHUB_TOKEN,undefined);assert.equal(process.env.GITHUB_APP_ID,undefined);if(${JSON.stringify(engine)}==='podman'){fs.mkdirSync(process.env.XDG_RUNTIME_DIR,{recursive:true,mode:0o700});assert.equal(fs.statSync(process.env.XDG_RUNTIME_DIR).mode&511,448);assert.equal(fs.statSync(process.env.XDG_RUNTIME_DIR).uid,process.getuid());}const cli=execFileSync(${JSON.stringify(engine)},['--version'],{encoding:'utf8'}).trim();assert.equal(cli,${JSON.stringify(engine==='podman'?'podman version 6.1.3':'Docker version 29.9.0, build f415da8')});console.log(JSON.stringify({uid:process.getuid(),node:process.version,cli,license:require('node:crypto').createHash('sha256').update(fs.readFileSync(${JSON.stringify(engine==='podman'?'/licenses/podman-LICENSE':'/licenses/docker-cli-LICENSE')})).digest('hex')}));`));
-  const mismatch=spawnSync(engine,['run','--rm','--network','none','--read-only',...runtimeScratch,'-e','AGENTCI_CONTAINER_ENGINE='+otherEngine,'-e','AGENTCI_REPOSITORY=example/repo','-e','AGENTCI_ORGANIZATION_ID=00000000-0000-4000-8000-000000000001','-e','AGENTCI_EVAL_DATABASE_URL=postgresql://unreachable.invalid/agentci','-e','TEMPORAL_ADDRESS=unreachable.invalid:7233','-e','AGENTCI_EVAL_RUNNER_IMAGE='+runnerImage,workerImage],{encoding:'utf8',timeout:30000,maxBuffer:65536});
-  if(mismatch.status===0||!mismatch.stderr?.includes('Configured container engine client is unavailable'))throw new Error('Mismatched engine must fail before database/Temporal connection');
-  container('network','create',network);
+  const check=JSON.parse(container('run','--rm','--network','none','--read-only',...runtimeScratch,'--entrypoint','node',workerImage,'-e',`const fs=require('node:fs'),assert=require('node:assert/strict'),{execFileSync}=require('node:child_process');assert.equal(process.getuid(),1001);for(const path of ['/usr/local/bin/npm','/usr/local/bin/npx','/usr/bin/microdnf','/usr/bin/rpm','/run/secrets/github-app.pem',${JSON.stringify('/usr/local/bin/'+otherEngine)}])assert.equal(fs.existsSync(path),false,path);assert.match(fs.readFileSync('/etc/os-release','utf8'),/ID="rhel"/);assert.equal(process.env.GITHUB_TOKEN,undefined);assert.equal(process.env.GITHUB_APP_ID,undefined);if(${JSON.stringify(engine)}==='podman'){fs.mkdirSync(process.env.XDG_RUNTIME_DIR,{recursive:true,mode:0o700});assert.equal(fs.statSync(process.env.XDG_RUNTIME_DIR).mode&511,448);assert.equal(fs.statSync(process.env.XDG_RUNTIME_DIR).uid,process.getuid());}const cli=execFileSync(${JSON.stringify(engine)},['--version'],{encoding:'utf8'}).trim();assert.equal(cli,${JSON.stringify(engine==='podman'?'podman version 6.1.3':'Docker version 29.9.2, build a82e528')});console.log(JSON.stringify({uid:process.getuid(),node:process.version,cli,license:require('node:crypto').createHash('sha256').update(fs.readFileSync(${JSON.stringify(engine==='podman'?'/licenses/podman-LICENSE':'/licenses/docker-cli-LICENSE')})).digest('hex')}));`));
+  const mismatch=spawnSync(engine,['run','--label',SMOKE_OWNER_LABEL+'='+prefix,'--rm','--network','none','--read-only',...runtimeScratch,'-e','AGENTCI_CONTAINER_ENGINE='+otherEngine,'-e','AGENTCI_REPOSITORY=example/repo','-e','AGENTCI_ORGANIZATION_ID=00000000-0000-4000-8000-000000000001','-e','AGENTCI_EVAL_DATABASE_URL=postgresql://unreachable.invalid/agentci','-e','TEMPORAL_ADDRESS=unreachable.invalid:7233','-e','AGENTCI_EVAL_RUNNER_IMAGE='+runnerImage,workerImage],{encoding:'utf8',timeout:30000,maxBuffer:65536});
+  if(!evalEngineMismatchRejected(mismatch))throw new Error('Mismatched engine must fail before database/Temporal connection');
+  container('network','create','--label',SMOKE_OWNER_LABEL+'='+prefix,network);
   const postgres=prefix+'-db',temporal=prefix+'-temporal',password=randomUUID()+randomUUID();
   const pgFile=join(directory,'postgres.env');await writeFile(pgFile,`POSTGRES_PASSWORD=${password}\nPOSTGRES_DB=agentci\n`,{mode:0o600});
   create(postgres,'--network-alias','postgres','--env-file',pgFile,'-p','127.0.0.1::5432','postgres:18.6-alpine@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873');container('start',postgres);
@@ -79,7 +83,9 @@ try{
   for(const unit of ids){try{const owned=container('ps','--all','--quiet','--no-trunc','--filter',`label=agentci.eval.unit=${unit}`);if(owned)container('rm','--force','--volumes',...owned.split('\n'));if(container('ps','--all','--quiet','--filter',`label=agentci.eval.unit=${unit}`))cleanupFailed=true;}catch{cleanupFailed=true;}}
   for(const name of names.reverse()){try{if(exists(name))container('rm','--force','--volumes',name);if(exists(name))cleanupFailed=true;}catch{cleanupFailed=true;}}
   try{if(container('network','ls','--quiet','--filter',`name=^${network}$`))container('network','rm',network);}catch{cleanupFailed=true;}
-  if(sharedProvider)await rm(sharedProvider,{force:true});await rm(directory,{recursive:true,force:true});
+  if(sharedProvider)await rm(sharedProvider,{force:true});
+  let cleanup;try{cleanup=await cleanupImageSmokeState(statePath,{command:args=>container(...args)});}catch{cleanupFailed=true;}
   if(cleanupFailed)throw new Error('Evaluator acceptance cleanup incomplete; no passing artifact may be published');
+  if(result)result.cleanup={...cleanup,ownedEvalContainers:0,evalUnitsChecked:ids.length};
 }
 if(result)console.log(JSON.stringify(result,null,2));

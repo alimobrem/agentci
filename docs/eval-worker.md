@@ -70,8 +70,8 @@ configuration, restricted login provisioning and temporary local demo wiring.
 ## UBI image checkpoint
 
 The `eval-worker` Dockerfile target runs on UBI 10 with Node 26.10.0 and the
-locked production dependencies. It copies Docker CLI 29.9.0 from the pinned
-official multi-platform image, together with its upstream license. No Alpine
+locked production dependencies. It copies Docker CLI 29.9.2 from the pinned
+official multi-platform image, together with its upstream license and NOTICE. No Alpine
 filesystem or Docker daemon is shipped. npm/npx and RPM installer tooling are
 removed through the package resolver. The service runs as UID 1001; the real image
 probe uses a read-only root filesystem and bounded `/tmp`.
@@ -97,8 +97,11 @@ Child eval containers receive no socket, database credentials, App credentials o
 host mounts, and have networking disabled. `DOCKER_CONFIG` points to a private
 empty image directory so operator/host registry configuration is not inherited.
 
-The local scan detects UBI packages, Node packages, the Temporal Cargo-lock
-inventory and Docker's Go runtime with zero known findings. The official CLI
+At the historical M2 checkpoint, the local scan detected UBI packages, Node
+packages, the Temporal Cargo-lock inventory and Docker's Go runtime with zero
+known findings. The October 22 follow-up in [the Docker CLI security record](phases/m3-docker-cli-security.md#october-22-follow-up) records a later Go stdlib
+finding and the current source update; fresh hosted scans and runtime acceptance
+remain required. The official CLI
 binary exposes no bundled Go-module inventory to this scanner; that coverage
 limit remains part of release assessment. It does not close the optional engine's
 separate unpatched HIGH finding. Component pins, license checksum and native
