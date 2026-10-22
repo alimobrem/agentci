@@ -4303,6 +4303,36 @@
         }
       ],
       "dependsOn": []
+    },
+    {
+      "id": "M3-native-storage-diagnostic-20261022",
+      "title": "Measure actual native scanner filesystem capacity without changing storage or security bounds",
+      "requirementIds": [
+        "SPEC-33.1-001",
+        "SPEC-40-050",
+        "SPEC-40-051"
+      ],
+      "dependsOn": [],
+      "status": "in-progress",
+      "startedAt": "2026-10-22T19:58:58.966Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Retain source-bound numeric capacity/free/used and inode observations from the actual scanner container without changing its 1GiB tmpfs, cache path, scanner/image pins, UID/permissions, Docker socket, scan policy or original Trivy execution semantics; missing observations remain unverified and raw diagnostics stay withheld.",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Focused regression checks and independent review cover numeric parsing, source/member binding, bounded collection, original stdout/status/signal/timeout and owned cleanup. Run only authorized bounded diagnostic checks on existing AMD64/ARM64 runner types without publication, new mounts, resource/access expansion or financial commitment.",
+          "status": "pending",
+          "evidence": []
+        },
+        {
+          "text": "Preserve failed attempts and return measured cause with a concrete minimum remedy for parent decision before any security/resource change. Do not equate diagnostic completion with scan/runtime/M3 acceptance; Python pins and trust bundle remain unchanged pending approval.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
