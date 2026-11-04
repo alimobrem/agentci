@@ -70,3 +70,17 @@ place. Candidate ARM64 package proof, live provider/OIDC/customer acceptance,
 licensing/source-notice residuals, existing service findings and historical
 cleanup uncertainty remain separate. Immutable dev.3/dev.4 artifacts are unchanged;
 no release publication or customer activation occurs in this change.
+
+## Qualification evidence retention
+
+On resumption in November, the successful native artifact uploads from the
+first attempt of run `39840879953` were no longer available under the seven-day
+retention window. The logs establish failed qualification, but cannot establish
+its underlying cause. Those results remain failed/unverified. A retry of that
+unchanged source is separate execution and cannot replace the original record.
+Native dashboard and evaluator uploads now request 90-day retention, preserving
+the bounded redacted evidence, always-upload behavior and strict outcome checks.
+Retention does not establish runtime acceptance, archive expired artifacts, or
+remove the need to preserve durable phase/release evidence. The local validation
+record is `delivery/acceptance/m3-native-evidence-retention-local.json`; full Mac
+feedback still has eight failures and six skips, not a passing acceptance result.

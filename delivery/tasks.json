@@ -4303,6 +4303,25 @@
         }
       ],
       "dependsOn": []
+    },
+    {
+      "id": "M3-native-evidence-retention",
+      "title": "Keep native qualification evidence available throughout phase review",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SECTION-49"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-11-04T15:15:10.635Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Native dashboard and evaluator artifact uploads retain bounded public qualification evidence for 90 days instead of seven, preserving always-upload, redaction, read-only workflow permissions and failure outcomes. Record expired historical evidence as unavailable, retain original failed attempts and verify workflow/reconciliation checks without claiming runtime or M3 acceptance.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }

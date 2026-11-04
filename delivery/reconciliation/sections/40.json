@@ -7437,6 +7437,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-native-evidence-retention",
+          "status": "in-progress",
+          "startedAt": "2026-11-04T15:15:10.635Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Native dashboard and evaluator artifact uploads retain bounded public qualification evidence for 90 days instead of seven, preserving always-upload, redaction, read-only workflow permissions and failure outcomes. Record expired historical evidence as unavailable, retain original failed attempts and verify workflow/reconciliation checks without claiming runtime or M3 acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -9094,6 +9109,21 @@
             },
             {
               "text": "Preserve original PR117/branch and all failures; create replacement draft PR from exact main with the final corrected snapshot only, then require unchanged full introduced-history scanner, fresh exact-head CI/native artifact review, gated merge and postmerge verification without aggregate M3 acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-native-evidence-retention",
+          "status": "in-progress",
+          "startedAt": "2026-11-04T15:15:10.635Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Native dashboard and evaluator artifact uploads retain bounded public qualification evidence for 90 days instead of seven, preserving always-upload, redaction, read-only workflow permissions and failure outcomes. Record expired historical evidence as unavailable, retain original failed attempts and verify workflow/reconciliation checks without claiming runtime or M3 acceptance.",
               "status": "pending",
               "evidence": []
             }
