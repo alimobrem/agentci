@@ -1,8 +1,16 @@
 import {createHash} from 'node:crypto';
 import {EVAL_CHECKS} from './download-runtime-evidence.mjs';
 import {dashboardScanFailure} from './dashboard-scan-failure.mjs';
+import {SMOKE_OWNER_LABEL} from './smoke-resources.mjs';
 
 export const NATIVE_SCAN_IMAGE='aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa';
+// Attempt 2 of 39840879953 exhausted the original 1GiB /tmp while fetching
+// the database on both native architectures. Keep scratch bounded and ephemeral.
+export const NATIVE_SCAN_SCRATCH='4g';
+export function evalNativeScannerArgs(owner,stage,imageId){
+ if(!/^agentci-smoke-[a-f0-9]{16}$/.test(owner??'')||!['worker-scan','runner-scan'].includes(stage)||!/^sha256:[a-f0-9]{64}$/.test(imageId??''))throw Error('Invalid owned native scanner arguments');
+ return ['run','--rm','--name',owner+'-'+stage,'--label',SMOKE_OWNER_LABEL+'='+owner,'--read-only','--tmpfs','/tmp:rw,nosuid,nodev,size='+NATIVE_SCAN_SCRATCH,'-v','/var/run/docker.sock:/var/run/docker.sock',NATIVE_SCAN_IMAGE,'image','--cache-dir','/tmp/trivy-cache','--scanners','vuln','--format','json',imageId];
+}
 export const NATIVE_FILES=['source.json','daemon.json','images.json','worker-scan.json','runner-scan.json','native.json','runtime.json','attempt.json','cleanup.json'];
 export const NATIVE_SCAN_FAILURE_FILES=['worker-scan-execution-failure.json','runner-scan-execution-failure.json'];
 export const EVAL_NATIVE_INPUTS=['Dockerfile','.dockerignore','LICENSE','agentci.yaml','package.json','package-lock.json','npm-shrinkwrap.json','deploy/security/native-components.json','deploy/security/docker-cli-vendor.mod','deploy/licenses/docker-cli-LICENSE','deploy/licenses/docker-cli-NOTICE','scripts/check-scan.mjs','scripts/eval-worker-native-acceptance.mjs','scripts/eval-worker-image-smoke.mjs','scripts/verify-native-provenance.mjs','scripts/lib/eval-worker-native-evidence.mjs','scripts/lib/dashboard-scan-failure.mjs','scripts/lib/eval-worker-private-config.mjs','scripts/lib/image-smoke-state.mjs','scripts/lib/smoke-resources.mjs','scripts/lib/download-runtime-evidence.mjs','.github/workflows/eval-worker-native.yaml'];

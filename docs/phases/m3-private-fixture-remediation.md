@@ -84,3 +84,17 @@ Retention does not establish runtime acceptance, archive expired artifacts, or
 remove the need to preserve durable phase/release evidence. The local validation
 record is `delivery/acceptance/m3-native-evidence-retention-local.json`; full Mac
 feedback still has eight failures and six skips, not a passing acceptance result.
+
+The unchanged-source retry of native run `39840879953`, attempt 2, failed on
+both architectures before a scan result. Its bounded diagnostics retain
+`scratch-space-exhausted` and `database-download-failed` with affected path class
+`tmp`; they do not establish a vulnerability-policy outcome. Both owned scanner
+harnesses cleaned up, while evaluator runtime was not started. Exact artifact
+IDs, source/tree/head/run/attempt bindings and verified file-index hashes are in
+`delivery/acceptance/m3-native-scanner-scratch-local.json`.
+
+The native scanner now has bounded 4GiB ephemeral scratch instead of 1GiB.
+The pinned scanner image, socket, ownership label, read-only root, vulnerability
+command, timeout/output bounds, source checks and strict cleanup/acceptance stay
+unchanged. This resource correction requires fresh native execution; diagnostics
+and argument tests alone do not establish its effectiveness or downstream safety.

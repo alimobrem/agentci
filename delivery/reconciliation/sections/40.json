@@ -7452,6 +7452,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-native-scanner-scratch",
+          "status": "in-progress",
+          "startedAt": "2026-11-04T15:19:24.974Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Retain exact attempt2 artifact/source/hash bindings on both architectures and scanner-execution diagnostics showing scratch-space-exhausted plus database-download-failed under tmp, without inferring vulnerability/runtime pass. Increase only bounded scanner tmpfs capacity; preserve image pin, socket, source binding, command, timeout, policy, ownership and cleanup. Focused argument controls and hosted native execution must establish the changed outcome; downstream missing/skipped evidence remains unverified.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -9124,6 +9139,21 @@
           "acceptance": [
             {
               "text": "Native dashboard and evaluator artifact uploads retain bounded public qualification evidence for 90 days instead of seven, preserving always-upload, redaction, read-only workflow permissions and failure outcomes. Record expired historical evidence as unavailable, retain original failed attempts and verify workflow/reconciliation checks without claiming runtime or M3 acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-native-scanner-scratch",
+          "status": "in-progress",
+          "startedAt": "2026-11-04T15:19:24.974Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Retain exact attempt2 artifact/source/hash bindings on both architectures and scanner-execution diagnostics showing scratch-space-exhausted plus database-download-failed under tmp, without inferring vulnerability/runtime pass. Increase only bounded scanner tmpfs capacity; preserve image pin, socket, source binding, command, timeout, policy, ownership and cleanup. Focused argument controls and hosted native execution must establish the changed outcome; downstream missing/skipped evidence remains unverified.",
               "status": "pending",
               "evidence": []
             }

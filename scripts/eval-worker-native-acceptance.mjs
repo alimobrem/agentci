@@ -5,8 +5,7 @@ import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {verifyNativeInputs,verifyNativeProvenance} from './verify-native-provenance.mjs';
 import {cleanupImageSmokeState} from './lib/image-smoke-state.mjs';
-import {SMOKE_OWNER_LABEL} from './lib/smoke-resources.mjs';
-import {NATIVE_SCAN_IMAGE,NATIVE_FILES,NATIVE_SCAN_FAILURE_FILES,EVAL_NATIVE_INPUTS,nativeHash,evalNativeFailure,evalNativeScanFailure,validateEvalNativeSource,validateEvalNativeDaemon,validateEvalNativeImages,validateEvalNativeScan,validateEvalNativeProvenance,validateEvalNativeRuntime,validateEvalNativeRecords} from './lib/eval-worker-native-evidence.mjs';
+import {evalNativeScannerArgs,NATIVE_FILES,NATIVE_SCAN_FAILURE_FILES,EVAL_NATIVE_INPUTS,nativeHash,evalNativeFailure,evalNativeScanFailure,validateEvalNativeSource,validateEvalNativeDaemon,validateEvalNativeImages,validateEvalNativeScan,validateEvalNativeProvenance,validateEvalNativeRuntime,validateEvalNativeRecords} from './lib/eval-worker-native-evidence.mjs';
 
 const directory=resolve('.agentci/artifacts/eval-worker-native');
 const inputPaths=EVAL_NATIVE_INPUTS;
@@ -44,7 +43,7 @@ try{
   const state=process.env.AGENTCI_EVAL_NATIVE_STATE_FILE;if(!state)throw Error('Owned scanner state required');
   for(const [role,file]of [['eval-worker','worker-scan.json'],['eval-runner','runner-scan.json']]){
    stage=role==='eval-worker'?'worker-scan':'runner-scan';
-   let rawScan;try{rawScan=execute('docker',['run','--rm','--name',source.harnessOwner+'-'+stage,'--label',SMOKE_OWNER_LABEL+'='+source.harnessOwner,'--read-only','--tmpfs','/tmp:rw,nosuid,nodev,size=1g','-v','/var/run/docker.sock:/var/run/docker.sock',NATIVE_SCAN_IMAGE,'image','--cache-dir','/tmp/trivy-cache','--scanners','vuln','--format','json',images[role].id],{timeout:180000,encoding:null});}
+   let rawScan;try{rawScan=execute('docker',evalNativeScannerArgs(source.harnessOwner,stage,images[role].id),{timeout:180000,encoding:null});}
    catch(error){await save(stage+'-execution-failure.json',evalNativeScanFailure(error,{source,role,imageId:images[role].id}));throw error;}
    const scan=JSON.parse(rawScan);
    await save(file,scan);validateEvalNativeScan(scan,images[role].id,source);
