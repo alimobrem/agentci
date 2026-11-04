@@ -1,13 +1,13 @@
 import {publishDraftAssets,requireRetainedArtifact,requireReleaseAssets,requireCandidateReleaseAbsent,actionsDraftVisibility} from './lib/immutable-release-publication.mjs';
-import {readFile,writeFile,mkdir,copyFile,readdir,mkdtemp,rm,stat,chmod} from 'node:fs/promises';
+import {readFile,writeFile,mkdir,copyFile,readdir} from 'node:fs/promises';
 import {execFileSync} from 'node:child_process';
 import {Octokit} from '@octokit/rest';
-import {tmpdir} from 'node:os';
-import {resolve,join,dirname} from 'node:path';
+import {resolve} from 'node:path';
 import {RUNTIME_FILES,validateRuntimeEvidence} from './lib/download-runtime-evidence.mjs';
 import {validateCoverage} from './download-integration-reporter.mjs';
 import {IMAGE_ROLES,assertUnusedImageTag} from './image-publication.mjs';
-import {DEVELOPMENT_VERSION,SERVICE_REPOSITORY,candidateIdentity,hash,requireAvailableResponse,validatePackageManifest,readDevelopmentImages,validateDevelopmentAssets,validatePackageReceipt,normalizePackOutput} from './lib/development-artifacts.mjs';
+import {DEVELOPMENT_VERSION,SERVICE_REPOSITORY,candidateIdentity,hash,requireAvailableResponse,readDevelopmentImages,validateDevelopmentAssets,validatePackageReceipt} from './lib/development-artifacts.mjs';
+import {assembleSourcePackage} from './lib/source-package.mjs';
 
 let stageRecord;
 async function retainStage(){if(stageRecord){await mkdir('development-assets',{recursive:true});await writeFile('development-assets/publication-attempt.json',JSON.stringify(stageRecord,null,2)+'\n');}}
@@ -38,24 +38,11 @@ if(command==='preflight'){
  if(names.filter(n=>n.endsWith('-identity.json')).length!==6||names.filter(n=>n.endsWith('-native-acceptance.json')).length!==6)throw Error('Incomplete or duplicate role publication evidence');
  const images=await readDevelopmentImages('published',expected);
  await mkdir('development-assets',{recursive:true});
- // This package-only provenance asset binds the build to the frozen reviewed SHA.
- await writeFile('dist/release-source.json',JSON.stringify({schemaVersion:1,version,sourceCommit})+'\n');
- const pack=normalizePackOutput(JSON.parse(execFileSync('npm',['pack','--ignore-scripts','--json','--pack-destination','development-assets'],{encoding:'utf8'})),version);
- // npm12 excludes root shrinkwrap. Restore both equal source locks explicitly,
- // retaining the ordinary npm tarball layout and a locked-root install route.
- if(!Buffer.from(await readFile('package-lock.json')).equals(await readFile('npm-shrinkwrap.json')))throw Error('Source production locks differ');
- const paths=[...new Set([...pack.files.map(file=>file.path),'npm-shrinkwrap.json','package-lock.json'])].sort();
- const staging=await mkdtemp(join(tmpdir(),'agentci-source-pack-'));
- try{
-  for(const path of paths){const destination=join(staging,'package',path);await mkdir(dirname(destination),{recursive:true});await copyFile(path,destination);await chmod(destination,(await stat(path)).mode&0o777);}
-  // Explicit regular-file list: no directory entries or accidental local files.
-  execFileSync('tar',['-czf',resolve('development-assets',pack.filename),'-C',staging,'--',...paths.map(path=>'package/'+path)]);
- }finally{await rm(staging,{recursive:true,force:true});}
- const archive=await readFile('development-assets/'+pack.filename);
- const files=await Promise.all(paths.map(async path=>({path,sha256:hash(await readFile(path))})));
- const manifest=validatePackageManifest({schemaVersion:1,...expected,package:{name:pack.filename,sha256:hash(archive)},files},expected);
+ const assembled=await assembleSourcePackage({destination:'development-assets',expected});
+ const manifest=assembled.publicationManifest,pack={filename:manifest.package.name};
+ const archive=await readFile(assembled.archivePath);
  const manifestBytes=Buffer.from(JSON.stringify(manifest,null,2)+'\n');
- await writeFile('development-assets/package-manifest.json',manifestBytes);
+ await writeFile('development-assets/package-manifest.json',manifestBytes,{flag:'wx'});
  await writeFile('development-assets/images.json',JSON.stringify({schemaVersion:1,...expected,images},null,2)+'\n');
  const evidenceFiles=names.filter(n=>/\.json$/.test(n));
  await mkdir('development-assets/publication-evidence',{recursive:true});

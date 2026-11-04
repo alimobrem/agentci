@@ -13,3 +13,26 @@ test('source and runtime package directories resolving to the exact parent are o
 test('reviewed notice assets preserve exact hashes and never add blanket recipes for unresolved packages',async()=>{const base=new URL('../scripts/dashboard-notices/',import.meta.url),x=JSON.parse(await readFile(new URL('associations.json',base),'utf8'));assert.ok(x.associations.length>=17);for(const r of x.associations){assert.match(r.sourceTreeSha256,/^[a-f0-9]{64}$/);assert.ok(r.sourceProvenance.length);if(r.name.startsWith('@img/sharp-libvips-')){assert.equal(r.evidenceKind,'upstream-licensing-matrix');assert.ok(r.pendingReview.includes('native-component-copyright-and-full-license-notice-completeness-unverified'));}assert.ok(!['babel-packages','client-only','unistore'].includes(r.name));for(const n of r.notices){const b=await readFile(new URL(n.path,base));assert.equal(sha(b),n.sha256);assert.equal(b.length,n.bytes);assert.ok(n.provenance);}}const docker=await readFile(new URL('../Dockerfile',import.meta.url),'utf8'),workflow=await readFile(new URL('../.github/workflows/dashboard-native.yaml',import.meta.url),'utf8');assert.match(docker,/COPY scripts\/dashboard-notices \/app\/scripts\/dashboard-notices/);assert.match(workflow,/scripts\/dashboard-notices\/\*\*/);assert.match(workflow,/push: false/);});
 
 test('oversized source files are rejected before hashing or retaining their contents',async()=>{const f=await fixture();try{await truncate(join(f.root,dirname(f.path),'index.js'),64*1024*1024+1);await assert.rejects(applyDashboardNoticeAssociations(f,f.recipes),/source byte bound exceeded/);}finally{await rm(f.base,{recursive:true,force:true});}});
+
+test('Next notice recipes bind the current dashboard lock and immutable release source without stale build-lock pins',async()=>{
+ const base=new URL('../',import.meta.url),assets=JSON.parse(await readFile(new URL('scripts/dashboard-notices/associations.json',base),'utf8'));
+ const dashboard=JSON.parse(await readFile(new URL('apps/dashboard/package.json',base),'utf8')),lock=JSON.parse(await readFile(new URL('apps/dashboard/package-lock.json',base),'utf8'));
+ const releaseCommit='2864b1772c37242a9b40ab4d366eb7d368c2a070',upstreamLockSha='69dfbd54a513cdcd94aca9ea0c83f7ba3803518372b90184a7d6a3b7103621c6';
+ const sourcePins:Record<string,{manifestSha256:string;archiveSha256:string}>={
+  next:{manifestSha256:'e84ada0a68191fed192392bfb8ee35ad4ed8e7439f645a40dd48cf139588ddc5',archiveSha256:'44ad2c420d30f7d1a8e4c511759c57eb40ccbbc36213a1bf32b1698bcebd3a1d'},
+  '@next/env':{manifestSha256:'890f8f188a008f05020375b9ed0d499244e55a3e59cebc00f76b4047c51afb88',archiveSha256:'3689438a836af5958bea785eda04689932c819dc25b7a1e4833d4a32951bd935'}
+ };
+ assert.equal(dashboard.dependencies.next,'16.4.2');
+ const recipes=assets.associations.filter((r:any)=>r.owner.name==='next'||r.owner.name==='@next/env');assert.equal(recipes.length,14);
+ for(const recipe of recipes){
+  const expected=sourcePins[recipe.owner.name]!,locked=lock.packages[recipe.lock.key];
+  assert.equal(recipe.owner.version,'16.4.2');assert.equal(recipe.owner.manifestSha256,expected.manifestSha256);
+  assert.equal(locked.version,recipe.owner.version);assert.equal(locked.resolved,recipe.lock.resolved);assert.equal(locked.integrity,recipe.lock.integrity);
+  const archive=recipe.sourceProvenance.find((p:any)=>p.packageArchive?.name===recipe.owner.name)?.packageArchive;assert.ok(archive);
+  assert.equal(archive.version,recipe.owner.version);assert.equal(archive.url,locked.resolved);assert.equal(archive.integrity,locked.integrity);assert.equal(archive.archiveSha256,expected.archiveSha256);
+  const release=recipe.sourceProvenance.find((p:any)=>p.releaseSource)?.releaseSource;assert.ok(release);
+  assert.equal(release.tag,'v16.4.2');assert.equal(release.commit,releaseCommit);assert.match(release.binding,/npm publisher gitHead was not provided/);
+  assert.ok(!JSON.stringify(recipe).includes('16.4.0'));assert.ok(!JSON.stringify(recipe).includes('e273d5b2e869d0be06c0e86f788e1594f9dd40cf'));
+  for(const p of recipe.sourceProvenance){if(p.nextLockSha256!==undefined)assert.equal(p.nextLockSha256,upstreamLockSha);if(p.nextLock!==undefined)assert.equal(p.nextLock.sha256,upstreamLockSha);}
+ }
+});

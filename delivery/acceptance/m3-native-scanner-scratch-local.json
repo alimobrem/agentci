@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "scope": "Native scanner resource correction; no runtime or milestone acceptance",
+  "observations": [
+    {
+      "arch": "amd64",
+      "artifactId": 13337956187,
+      "artifactName": "eval-worker-native-amd64-39840879953-2",
+      "resultSha256": "13359e6f57cb5597b4d8c7ceecef91be88348e9ca574288f97f567ef81f95994",
+      "source": {
+        "sourceCommit": "6f4274fb578a75ea62e428673ad013ddf1d7d64b",
+        "sourceTree": "74a126b7c27485808ee9fe7fc7ae2da31076b5d6",
+        "candidateCommit": "16f77f564fb1b294fbdd107488efec80cc4d09de",
+        "runId": "39840879953",
+        "attempt": "2"
+      },
+      "indexedHashesVerified": 7,
+      "observedFailure": {
+        "schemaVersion": 1,
+        "result": "failed-or-unverified",
+        "stage": "worker-scan",
+        "source": {
+          "sourceCommit": "6f4274fb578a75ea62e428673ad013ddf1d7d64b",
+          "sourceTree": "74a126b7c27485808ee9fe7fc7ae2da31076b5d6",
+          "candidateCommit": "16f77f564fb1b294fbdd107488efec80cc4d09de",
+          "runId": "39840879953",
+          "attempt": "2",
+          "arch": "amd64",
+          "harnessOwner": "agentci-smoke-6499cfe1a33f4c79",
+          "rootLockSha256": "25c61ea8bd23bf690a0cabffea8c220bd657069e8bc0885d1cd09dea10022a38",
+          "nativePinsSha256": "5a1516fdd52a15d2bdd2643b35b0d6e6c7595808bd67f367c67f497584d5a1de"
+        },
+        "sourceInputsSha256": "029f89e98b5e42315e2b9b30563085917198fdd8d86f499f263e909cbc5a7112",
+        "role": "eval-worker",
+        "imageId": "sha256:a5bffa23e733c3d63a850d9d95afd7ad0238d19d165b9f562db0bac51145b29b",
+        "scanner": "aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa",
+        "rootCause": "not-established",
+        "diagnostics": {
+          "affectedPathClasses": [
+            "tmp"
+          ],
+          "schemaVersion": 1,
+          "classification": "scanner-execution-failed",
+          "cause": "multiple-or-unclassified",
+          "observedClasses": [
+            "scratch-space-exhausted",
+            "database-download-failed"
+          ],
+          "exitCode": 1,
+          "stdoutBytes": 0,
+          "stderrBytes": 2573,
+          "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSha256": "bb8865479f85aabf9421b5f0e4f0349e4995e12ff2cd19c1b178d97d8ce8c2a3",
+          "classificationInput": "bounded-stderr-prefix",
+          "classificationPrefixBytes": 131072,
+          "classificationTruncated": false,
+          "rawDiagnostics": "withheld",
+          "scanPolicyResult": "not-evaluated",
+          "signal": null
+        }
+      },
+      "cleanup": {
+        "result": "not-started-or-unverified",
+        "harness": {
+          "schemaVersion": 1,
+          "result": "passed",
+          "owner": "agentci-smoke-6499cfe1a33f4c79",
+          "ownedContainers": 0,
+          "ownedNetworks": 0,
+          "ownedVolumes": 0,
+          "privateFilesRemoved": true
+        },
+        "runtime": {
+          "schemaVersion": 1,
+          "result": "not-started"
+        }
+      }
+    },
+    {
+      "arch": "arm64",
+      "artifactId": 13338670303,
+      "artifactName": "eval-worker-native-arm64-39840879953-2",
+      "resultSha256": "1d861522aabc85853022550a0edbdbfbe9f841994436b813a36d0f37d9ae4f82",
+      "source": {
+        "sourceCommit": "6f4274fb578a75ea62e428673ad013ddf1d7d64b",
+        "sourceTree": "74a126b7c27485808ee9fe7fc7ae2da31076b5d6",
+        "candidateCommit": "16f77f564fb1b294fbdd107488efec80cc4d09de",
+        "runId": "39840879953",
+        "attempt": "2"
+      },
+      "indexedHashesVerified": 7,
+      "observedFailure": {
+        "schemaVersion": 1,
+        "result": "failed-or-unverified",
+        "stage": "worker-scan",
+        "source": {
+          "sourceCommit": "6f4274fb578a75ea62e428673ad013ddf1d7d64b",
+          "sourceTree": "74a126b7c27485808ee9fe7fc7ae2da31076b5d6",
+          "candidateCommit": "16f77f564fb1b294fbdd107488efec80cc4d09de",
+          "runId": "39840879953",
+          "attempt": "2",
+          "arch": "arm64",
+          "harnessOwner": "agentci-smoke-36648502170ffef4",
+          "rootLockSha256": "25c61ea8bd23bf690a0cabffea8c220bd657069e8bc0885d1cd09dea10022a38",
+          "nativePinsSha256": "5a1516fdd52a15d2bdd2643b35b0d6e6c7595808bd67f367c67f497584d5a1de"
+        },
+        "sourceInputsSha256": "029f89e98b5e42315e2b9b30563085917198fdd8d86f499f263e909cbc5a7112",
+        "role": "eval-worker",
+        "imageId": "sha256:c1e25696e86d1444c48d50d078060cf468f6668cba3ea5d988b5e767fcb60587",
+        "scanner": "aquasec/trivy:0.75.0@sha256:af6acf9a6b85dfe389a1941505c0ce9efef52a4719635e1a962f022a3d855daa",
+        "rootCause": "not-established",
+        "diagnostics": {
+          "affectedPathClasses": [
+            "tmp"
+          ],
+          "schemaVersion": 1,
+          "classification": "scanner-execution-failed",
+          "cause": "multiple-or-unclassified",
+          "observedClasses": [
+            "scratch-space-exhausted",
+            "database-download-failed"
+          ],
+          "exitCode": 1,
+          "stdoutBytes": 0,
+          "stderrBytes": 2373,
+          "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderrSha256": "41070bdaf73c5da0daba008cf2d92033feaa29c8da03f605b3415bf9c210c4e2",
+          "classificationInput": "bounded-stderr-prefix",
+          "classificationPrefixBytes": 131072,
+          "classificationTruncated": false,
+          "rawDiagnostics": "withheld",
+          "scanPolicyResult": "not-evaluated",
+          "signal": null
+        }
+      },
+      "cleanup": {
+        "result": "not-started-or-unverified",
+        "harness": {
+          "schemaVersion": 1,
+          "result": "passed",
+          "owner": "agentci-smoke-36648502170ffef4",
+          "ownedContainers": 0,
+          "ownedNetworks": 0,
+          "ownedVolumes": 0,
+          "privateFilesRemoved": true
+        },
+        "runtime": {
+          "schemaVersion": 1,
+          "result": "not-started"
+        }
+      }
+    }
+  ],
+  "change": "Bound scanner /tmp from 1GiB to 4GiB; other scanner arguments unchanged and input-bound.",
+  "focusedChecks": {
+    "tests": 11,
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0,
+    "typecheck": "passed-after-correction",
+    "workflowLint": "passed"
+  },
+  "logs": [
+    {
+      "path": "/private/tmp/agentci-nov-scanner-tests.log",
+      "sha256": "36d7d3697b56e0c54863bdfb1e5ad0c6762adfa83e7c5a29fa09f37ffd482736"
+    },
+    {
+      "path": "/private/tmp/agentci-nov-scanner-types.log",
+      "sha256": "2c14cf7261f9c899c69373aabfe8830ca3a79dd66a01b7d04dbdfd4f2186dad2"
+    },
+    {
+      "path": "/private/tmp/agentci-nov-scanner-workflows.log",
+      "sha256": "91b1794c4d30ae45e57007a8412647276b20fe1ac9c622c2faee40d378966565"
+    },
+    {
+      "path": "/private/tmp/agentci-nov-scanner-types-corrected.log",
+      "sha256": "6dc2f80efc67645d301412efa63a26a9ce0a29b4abc420f0d6c1e77d3a1e4726"
+    },
+    {
+      "path": "/private/tmp/agentci-nov-scanner-tests-corrected.log",
+      "sha256": "d90e472e5d69cdcfaef59bbf3d9e537e5f46928231e6c67dda542266dfe35874"
+    }
+  ],
+  "fullMacFastFeedback": {
+    "total": 783,
+    "passed": 769,
+    "failed": 8,
+    "skipped": 6,
+    "result": "failed",
+    "log": "/private/tmp/agentci-nov-scanner-fast-final-authorized.log",
+    "sha256": "fc337cbd8dcdf2c3ebcd4f488c29a71a30bed4e4fd1ed6c7b3540bfc351982fe"
+  },
+  "hostedChangedSource": "failed: Verify41856771152 types; ARM64 scanner produced full scan but found fixable vulnerabilities, runtime not started",
+  "releaseComplete": false,
+  "correction": {
+    "priorClaim": "Initial local typecheck was incorrectly recorded passed because shell commands continued after its failure",
+    "actualInitialResult": "failed: TS7016 missing test declaration for smoke-resources.mjs",
+    "preservedLog": "/private/tmp/agentci-nov-scanner-types.log",
+    "preservedSha256": "2c14cf7261f9c899c69373aabfe8830ca3a79dd66a01b7d04dbdfd4f2186dad2",
+    "fix": "Test now asserts the independent exact ownership-label contract without importing the undeclared helper module",
+    "hostedFailedRun": 41856771152
+  }
+}

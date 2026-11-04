@@ -84,7 +84,7 @@ jobs:
         if: always()
         with:
           name: dashboard-native-${{ matrix.arch }}-${{ github.run_id }}-${{ github.run_attempt }}
-          retention-days: 7
+          retention-days: 90
           include-hidden-files: true
           if-no-files-found: error
           path: .agentci/artifacts/dashboard-native-public/

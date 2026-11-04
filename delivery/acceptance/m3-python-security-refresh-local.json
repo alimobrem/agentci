@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "scope": "Optional DeepEval Python security preparation only",
+  "baseCommit": "fcbf169",
+  "changes": [
+    {
+      "name": "aiohttp",
+      "from": "3.14.3",
+      "to": "3.14.5"
+    },
+    {
+      "name": "certifi",
+      "from": "2026.7.22",
+      "to": "2026.10.23"
+    }
+  ],
+  "officialSources": [
+    {
+      "name": "aiohttp",
+      "version": "3.14.5",
+      "url": "https://pypi.org/project/aiohttp/3.14.5/",
+      "metadataSha256": "cfcf228e6b87f966a0c34e2eb65ae8fc372fe22df276ada678c266c6501ad796",
+      "requiresPython": ">=3.10",
+      "distributionHashes": 161
+    },
+    {
+      "name": "certifi",
+      "version": "2026.10.23",
+      "url": "https://pypi.org/project/certifi/2026.10.23/",
+      "metadataSha256": "08bd0534b646a844c933436e3f16632b0dbfabc2458fe7022250411f2909e1cb",
+      "requiresPython": ">=3.7",
+      "distributionHashes": 2
+    }
+  ],
+  "verifiedDistributions": [
+    {
+      "name": "aiohttp",
+      "version": "3.14.5",
+      "filename": "aiohttp-3.14.5-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "url": "https://files.pythonhosted.org/packages/19/b0/5aa186d56ce2334dabe29b70bd99dc8ae926ee44184c0de64a53d415a4f3/aiohttp-3.14.5-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl",
+      "sha256": "1eb8167961ec4dfcc8cb9dd50bd0ee72519f7ef496be95203e49e27b01618382",
+      "bytes": 1882422
+    },
+    {
+      "name": "aiohttp",
+      "version": "3.14.5",
+      "filename": "aiohttp-3.14.5-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "url": "https://files.pythonhosted.org/packages/a6/66/55a8904b3a129fafdf94f9cc0a2e4ca09a3c914650be52355db7ad0bbdb6/aiohttp-3.14.5-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "94684b879ac1d71e4238850c99b62dc1b28d9086b156a2555f082010b85a865c",
+      "bytes": 1888041
+    },
+    {
+      "name": "certifi",
+      "version": "2026.10.23",
+      "filename": "certifi-2026.10.23-py3-none-any.whl",
+      "url": "https://files.pythonhosted.org/packages/32/d1/a3652fe2c19134d0d15922177821d863cbd7e842d53a21bbe7e8e3a1b5ac/certifi-2026.10.23-py3-none-any.whl",
+      "sha256": "e9b54de76e530bb6cf0ccd036787103acb58fd42ba930ea8bf948ddbaa2f61d1",
+      "bytes": 135082
+    }
+  ],
+  "resolutions": [
+    {
+      "arch": "amd64",
+      "python": "3.14",
+      "packages": 67,
+      "path": "/private/tmp/agentci-nov-deepeval-amd64.txt",
+      "sha256": "4c7ba0d69104d3f3d9836b8826046133afbeff0eeb0b112a2405313fc95678f0",
+      "inputs": [
+        "deploy/runner-requirements.txt",
+        "deploy/engines/deepeval/requirements.txt"
+      ],
+      "scope": "Wheel-only resolution of complete inherited environment; native imports unverified"
+    },
+    {
+      "arch": "arm64",
+      "python": "3.14",
+      "packages": 67,
+      "path": "/private/tmp/agentci-nov-deepeval-arm64.txt",
+      "sha256": "46e84c2327738afdcc6bcebf734243f4259bda74f99e20a8d1fae69598a73ba5",
+      "inputs": [
+        "deploy/runner-requirements.txt",
+        "deploy/engines/deepeval/requirements.txt"
+      ],
+      "scope": "Wheel-only resolution of complete inherited environment; native imports unverified"
+    }
+  ],
+  "requirementsSha256": "ecccaa6adb286223dade4f7a361a6191f1170eb28682b822c2b1125e1aee9e69",
+  "checks": {
+    "focused": {
+      "tests": 16,
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0
+    },
+    "typecheck": "passed",
+    "nativeImports": "unverified",
+    "imageScans": "unverified",
+    "engineRuntime": "unverified",
+    "liveProviders": "not-run",
+    "fullMacFeedback": {
+      "tests": 783,
+      "pass": 769,
+      "fail": 8,
+      "skipped": 6,
+      "result": "failed",
+      "log": "/private/tmp/agentci-nov-python-fast.log",
+      "sha256": "13f61a0f21bff642e1f8afd06251fe0aa2b6a5f589f93bdad12129c87ef84da9"
+    }
+  },
+  "logs": [
+    {
+      "path": "/private/tmp/agentci-nov-python-focused.log",
+      "sha256": "c8740fcd1409710a618c1bfa14899574e8779b159c0085d16558351f24046dcc"
+    },
+    {
+      "path": "/private/tmp/agentci-nov-python-types.log",
+      "sha256": "6dc2f80efc67645d301412efa63a26a9ce0a29b4abc420f0d6c1e77d3a1e4726"
+    }
+  ],
+  "caBundle": "certifi2026.10.23 contains118 upstream CA certificates. This optional Python dependency upgrade changes its trust bundle; no custom CA, system trust override or TLS bypass is introduced. Live endpoint compatibility remains unverified.",
+  "limits": [
+    "Initial resolver comparison omitted inherited base pins; corrected validation includes runner-requirements and changes no other pins",
+    "Native worker scans separately expose undici and Cargo source-manifest zip vulnerabilities; this update does not remedy them",
+    "All18M3gates remain pending; immutable releases unchanged"
+  ],
+  "releaseComplete": false
+}

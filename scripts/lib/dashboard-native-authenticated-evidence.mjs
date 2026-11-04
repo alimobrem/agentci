@@ -30,7 +30,7 @@ const helperStateSchema=object({
  peers:object({frontend:object(peerFields),issuer:object({...peerFields,discoveryRequests:integer(),authorizationRequests:integer(),tokenRequests:integer(),jwksRequests:integer()}),backend:object({...peerFields,authorizedReads:integer(),rejectedReads:integer()})}),
  proxy:object({requests:integer(),errors:integer(),timeouts:integer(),responseOrigin:choice('upstream-only')}),shutdownRequested:bool,issuerProtocol:protocolSchema
 });
-const runtimeSchema=object({nextVersion:choice('16.4.0'),handlerPath:choice('apps/dashboard/node_modules/next/dist/server/lib/start-server.js'),handlerSha256:sha,node:choice('v26.10.0'),pid1Executable:choice('/usr/local/bin/node'),pid1ExecutableSha256:sha,probeNodeExecutableSha256:sha,pid1Command:array(choice('next-server (v16.4.0)'),1),pid1Uid:choice(1001),manualSignalOverride:bool,nodeOptionsOverride:bool,nodePathOverride:bool});
+const runtimeSchema=object({nextVersion:choice('16.4.2'),handlerPath:choice('apps/dashboard/node_modules/next/dist/server/lib/start-server.js'),handlerSha256:sha,node:choice('v26.10.0'),pid1Executable:choice('/usr/local/bin/node'),pid1ExecutableSha256:sha,probeNodeExecutableSha256:sha,pid1Command:array(choice('next-server (v16.4.2)'),1),pid1Uid:choice(1001),manualSignalOverride:bool,nodeOptionsOverride:bool,nodePathOverride:bool});
 const tmpfsSchema=object({destination:choice('/tmp'),bytes:choice(67108864),noexec:bool,nosuid:bool,nodev:bool});
 const containerFields={imageId,containerId:sha,user:choice('1001:0'),readOnly:bool,capabilitiesDropped:bool,noNewPrivileges:bool,pids:choice(128),memoryBytes:choice(536870912),nanoCpus:choice(1000000000),tmpfs:tmpfsSchema,sharedPidOrFilesystem:bool,publishedPorts:choice(0)};
 const publicCaSchema=object({destination:choice('/run/agentci-fixture-ca.pem'),sha256:sha,bytes:integer(1,8192),readOnly:bool});
@@ -150,7 +150,7 @@ function checkMarkers(logs,types){
  if(logs.cleanupErrors||logs.canaryLeak||!same(logs.markers.map(m=>m.type),types)||logs.markers.some(m=>m.stream!=='stderr'||!Number.isSafeInteger(m.line)||m.line<0)||logs.markers.length===2&&logs.markers[1].line<=logs.markers[0].line)fail();
 }
 function checkNativeRuntime(runtime){
- if(runtime.nextVersion!==NEXT_SHUTDOWN.version||runtime.handlerSha256!==NEXT_SHUTDOWN.handlerSha256||runtime.handlerPath!=='apps/dashboard/node_modules/next/dist/server/lib/start-server.js'||runtime.node!=='v26.10.0'||runtime.pid1Executable!=='/usr/local/bin/node'||runtime.pid1ExecutableSha256!==runtime.probeNodeExecutableSha256||!same(runtime.pid1Command,['next-server (v16.4.0)'])||runtime.pid1Uid!==1001||runtime.manualSignalOverride||runtime.nodeOptionsOverride||runtime.nodePathOverride)fail();
+ if(runtime.nextVersion!==NEXT_SHUTDOWN.version||runtime.handlerSha256!==NEXT_SHUTDOWN.handlerSha256||runtime.handlerPath!=='apps/dashboard/node_modules/next/dist/server/lib/start-server.js'||runtime.node!=='v26.10.0'||runtime.pid1Executable!=='/usr/local/bin/node'||runtime.pid1ExecutableSha256!==runtime.probeNodeExecutableSha256||!same(runtime.pid1Command,['next-server (v16.4.2)'])||runtime.pid1Uid!==1001||runtime.manualSignalOverride||runtime.nodeOptionsOverride||runtime.nodePathOverride)fail();
 }
 /** Held observations are checked directly; they are never rewritten into an idle/characterization state. */
 function checkHeldState(state,item,report,phase){

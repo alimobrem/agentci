@@ -41,6 +41,66 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-native-evidence-retention",
+          "status": "in-progress",
+          "startedAt": "2026-11-04T15:15:10.635Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Native dashboard and evaluator artifact uploads retain bounded public qualification evidence for 90 days instead of seven, preserving always-upload, redaction, read-only workflow permissions and failure outcomes. Record expired historical evidence as unavailable, retain original failed attempts and verify workflow/reconciliation checks without claiming runtime or M3 acceptance.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-native-scanner-scratch",
+          "status": "in-progress",
+          "startedAt": "2026-11-04T15:19:24.974Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Retain exact attempt2 artifact/source/hash bindings on both architectures and scanner-execution diagnostics showing scratch-space-exhausted plus database-download-failed under tmp, without inferring vulnerability/runtime pass. Increase only bounded scanner tmpfs capacity; preserve image pin, socket, source binding, command, timeout, policy, ownership and cleanup. Focused argument controls and hosted native execution must establish the changed outcome; downstream missing/skipped evidence remains unverified.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-python-security-refresh-20261104",
+          "status": "in-progress",
+          "startedAt": "2026-11-04T15:23:00.442Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Official PyPI current stable metadata and actual distribution hashes bind aiohttp/certifi replacements. Existing full requirement set resolves with hashes for Python3.14 LinuxAMD64 andARM64; retain upstream CA-bundle change explicitly. Exact-source six-role scans, native/runtime/adapter tests and independent review must pass before merge; no release activation, trust bypass, historical evidence rewrite or unavailable pass.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-worker-dependency-security-refresh",
+          "status": "in-progress",
+          "startedAt": "2026-11-04T17:45:28.218Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Current stable upstream Temporal SDK and compatible HTTP dependency updates preserve frozen API baselines and bind exact official native distributions. Audit, native/runtime/recovery, six-role scans, packaging and applicable hosted checks must pass on exact final source before merge. Retain failed attempts and all unresolved applicability gaps without suppressions or invented passes.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [],
