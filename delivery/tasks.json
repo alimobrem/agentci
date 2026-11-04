@@ -4341,6 +4341,25 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M3-python-security-refresh-20261104",
+      "title": "Prepare hash-pinned optional DeepEval HTTP and CA dependency security fixes",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SECTION-49"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-11-04T15:23:00.442Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Official PyPI current stable metadata and actual distribution hashes bind aiohttp/certifi replacements. Existing full requirement set resolves with hashes for Python3.14 LinuxAMD64 andARM64; retain upstream CA-bundle change explicitly. Exact-source six-role scans, native/runtime/adapter tests and independent review must pass before merge; no release activation, trust bypass, historical evidence rewrite or unavailable pass.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
