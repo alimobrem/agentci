@@ -2,12 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 // @ts-ignore Native qualification control boundary.
 import {evalNativeScannerArgs,NATIVE_SCAN_IMAGE} from '../scripts/lib/eval-worker-native-evidence.mjs';
-import {SMOKE_OWNER_LABEL} from '../scripts/lib/smoke-resources.mjs';
 test('native scanner scratch expansion preserves pinned scanner, owned cleanup and vulnerability-only command',()=>{
  const owner='agentci-smoke-0123456789abcdef',image='sha256:'+'a'.repeat(64);
  for(const stage of ['worker-scan','runner-scan']){
   const args=evalNativeScannerArgs(owner,stage,image);
-  assert.deepEqual(args,['run','--rm','--name',owner+'-'+stage,'--label',SMOKE_OWNER_LABEL+'='+owner,'--read-only','--tmpfs','/tmp:rw,nosuid,nodev,size=4g','-v','/var/run/docker.sock:/var/run/docker.sock',NATIVE_SCAN_IMAGE,'image','--cache-dir','/tmp/trivy-cache','--scanners','vuln','--format','json',image]);
+  assert.deepEqual(args,['run','--rm','--name',owner+'-'+stage,'--label','agentci.image-smoke.owner='+owner,'--read-only','--tmpfs','/tmp:rw,nosuid,nodev,size=4g','-v','/var/run/docker.sock:/var/run/docker.sock',NATIVE_SCAN_IMAGE,'image','--cache-dir','/tmp/trivy-cache','--scanners','vuln','--format','json',image]);
  }
 });
 test('native scanner refuses foreign ownership, arbitrary stage and unbound image arguments',()=>{

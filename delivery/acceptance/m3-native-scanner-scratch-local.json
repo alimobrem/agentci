@@ -157,7 +157,7 @@
     "passed": 11,
     "failed": 0,
     "skipped": 0,
-    "typecheck": "passed",
+    "typecheck": "passed-after-correction",
     "workflowLint": "passed"
   },
   "logs": [
@@ -172,9 +172,33 @@
     {
       "path": "/private/tmp/agentci-nov-scanner-workflows.log",
       "sha256": "91b1794c4d30ae45e57007a8412647276b20fe1ac9c622c2faee40d378966565"
+    },
+    {
+      "path": "/private/tmp/agentci-nov-scanner-types-corrected.log",
+      "sha256": "6dc2f80efc67645d301412efa63a26a9ce0a29b4abc420f0d6c1e77d3a1e4726"
+    },
+    {
+      "path": "/private/tmp/agentci-nov-scanner-tests-corrected.log",
+      "sha256": "d90e472e5d69cdcfaef59bbf3d9e537e5f46928231e6c67dda542266dfe35874"
     }
   ],
-  "fullMacFastFeedback": "Previously failed with eight failures and six skips; not relabeled as passing",
-  "hostedChangedSource": "pending",
-  "releaseComplete": false
+  "fullMacFastFeedback": {
+    "total": 783,
+    "passed": 769,
+    "failed": 8,
+    "skipped": 6,
+    "result": "failed",
+    "log": "/private/tmp/agentci-nov-scanner-fast-final-authorized.log",
+    "sha256": "fc337cbd8dcdf2c3ebcd4f488c29a71a30bed4e4fd1ed6c7b3540bfc351982fe"
+  },
+  "hostedChangedSource": "failed: Verify41856771152 types; ARM64 scanner produced full scan but found fixable vulnerabilities, runtime not started",
+  "releaseComplete": false,
+  "correction": {
+    "priorClaim": "Initial local typecheck was incorrectly recorded passed because shell commands continued after its failure",
+    "actualInitialResult": "failed: TS7016 missing test declaration for smoke-resources.mjs",
+    "preservedLog": "/private/tmp/agentci-nov-scanner-types.log",
+    "preservedSha256": "2c14cf7261f9c899c69373aabfe8830ca3a79dd66a01b7d04dbdfd4f2186dad2",
+    "fix": "Test now asserts the independent exact ownership-label contract without importing the undeclared helper module",
+    "hostedFailedRun": 41856771152
+  }
 }
