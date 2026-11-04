@@ -1,0 +1,165 @@
+{
+  "runId": 41856771339,
+  "attempt": 1,
+  "conclusion": "failure",
+  "cohort": "optimized",
+  "cache": "unknown",
+  "collectedAt": "2026-11-04T15:29:59.016Z",
+  "sourceCommit": "595b6195054b99214934bd80a32929620fa226ad",
+  "url": "https://github.com/alimobrem/agentci/actions/runs/41856771339",
+  "event": "pull_request",
+  "jobs": [
+    {
+      "name": "native (ubuntu-24.04, amd64)",
+      "seconds": 266,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bind native source and owned recovery state",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0 && npm ci && npm run build",
+          "seconds": 14,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 11,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build both local native evaluator images without publication",
+          "seconds": 207,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and exercise actual native evaluator and owned cleanup",
+          "seconds": 16,
+          "conclusion": "failure"
+        },
+        {
+          "name": "Recover owned resources and retain strict outcome and artifact hashes",
+          "seconds": 0,
+          "conclusion": "failure"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 5,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "name": "native (ubuntu-24.04-arm, arm64)",
+      "seconds": 168,
+      "steps": [
+        {
+          "name": "Set up job",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 4,
+          "conclusion": "success"
+        },
+        {
+          "name": "Bind native source and owned recovery state",
+          "seconds": 0,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm install --global npm@12.2.0 && npm ci && npm run build",
+          "seconds": 7,
+          "conclusion": "success"
+        },
+        {
+          "name": "Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 12,
+          "conclusion": "success"
+        },
+        {
+          "name": "Build both local native evaluator images without publication",
+          "seconds": 118,
+          "conclusion": "success"
+        },
+        {
+          "name": "Scan and exercise actual native evaluator and owned cleanup",
+          "seconds": 12,
+          "conclusion": "failure"
+        },
+        {
+          "name": "Recover owned resources and retain strict outcome and artifact hashes",
+          "seconds": 0,
+          "conclusion": "failure"
+        },
+        {
+          "name": "Run actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+          "seconds": 2,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069",
+          "seconds": 6,
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+          "seconds": 0,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "seconds": 1,
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "seconds": 0,
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}
