@@ -137,7 +137,7 @@
       "evidence": [
         {
           "path": "package.json",
-          "sha256": "7f9ce4021241de8aadc8ceac71af26fbf17b1d4e738d6fe344548bff781df397",
+          "sha256": "c7011812fd99af5d93a845602e05f0283ad85ebbbe2cdf24650374ceea87dedf",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },
@@ -7482,6 +7482,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-worker-dependency-security-refresh",
+          "status": "in-progress",
+          "startedAt": "2026-11-04T17:45:28.218Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Current stable upstream Temporal SDK and compatible HTTP dependency updates preserve frozen API baselines and bind exact official native distributions. Audit, native/runtime/recovery, six-role scans, packaging and applicable hosted checks must pass on exact final source before merge. Retain failed attempts and all unresolved applicability gaps without suppressions or invented passes.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -9184,6 +9199,21 @@
           "acceptance": [
             {
               "text": "Official PyPI current stable metadata and actual distribution hashes bind aiohttp/certifi replacements. Existing full requirement set resolves with hashes for Python3.14 LinuxAMD64 andARM64; retain upstream CA-bundle change explicitly. Exact-source six-role scans, native/runtime/adapter tests and independent review must pass before merge; no release activation, trust bypass, historical evidence rewrite or unavailable pass.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-worker-dependency-security-refresh",
+          "status": "in-progress",
+          "startedAt": "2026-11-04T17:45:28.218Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Current stable upstream Temporal SDK and compatible HTTP dependency updates preserve frozen API baselines and bind exact official native distributions. Audit, native/runtime/recovery, six-role scans, packaging and applicable hosted checks must pass on exact final source before merge. Retain failed attempts and all unresolved applicability gaps without suppressions or invented passes.",
               "status": "pending",
               "evidence": []
             }
@@ -12291,7 +12321,7 @@
       "evidence": [
         {
           "path": "package.json",
-          "sha256": "7f9ce4021241de8aadc8ceac71af26fbf17b1d4e738d6fe344548bff781df397",
+          "sha256": "c7011812fd99af5d93a845602e05f0283ad85ebbbe2cdf24650374ceea87dedf",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         },

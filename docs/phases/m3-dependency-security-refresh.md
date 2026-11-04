@@ -77,3 +77,22 @@ cleanup uncertainty, licensing gaps and existing service findings remain in scop
 Upstream references: [Next image-processing advisory](https://github.com/vercel/next.js/security/advisories/GHSA-2464-fhr4-w9xw),
 [Next denial-of-service advisory](https://github.com/vercel/next.js/security/advisories/GHSA-p3m5-59mp-jv5r),
 and [Go vulnerability report](https://pkg.go.dev/vuln/GO-2026-6809).
+
+## November merge preparation
+
+New actual native scans reached vulnerability evaluation after the scratch fix.
+They reported fixable undici findings and zip 8.5.1 in Temporal's Cargo source
+manifest. The current official Temporal SDK 1.25.0 supplies zip 9.0.5. All four
+SDK dependencies now use that release; installed Cargo metadata and both Linux
+native binaries match the SHA512-verified official core-bridge distribution.
+The source manifest still does not establish compiled dependency reachability.
+Compatible undici 8.12.3 and fast-uri updates remove the HIGH npm audit blocker.
+Root package locks remain identical. No scanner exception is introduced.
+
+Typecheck, 27 focused provenance/native tests and both frozen released API
+baselines pass. npm audit at the existing HIGH gate passes; minimatch retains a
+moderate finding with a major-version fix, not a zero-findings claim. Full
+native SDK/runtime/recovery, six-role scans, package installation and exact-source
+hosted/independent review remain pending. See
+`delivery/acceptance/m3-worker-dependency-security-local.json`. Earlier immutable
+artifacts and failed attempts remain historical evidence, not new acceptance.

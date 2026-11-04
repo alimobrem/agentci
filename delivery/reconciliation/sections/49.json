@@ -86,6 +86,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-worker-dependency-security-refresh",
+          "status": "in-progress",
+          "startedAt": "2026-11-04T17:45:28.218Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Current stable upstream Temporal SDK and compatible HTTP dependency updates preserve frozen API baselines and bind exact official native distributions. Audit, native/runtime/recovery, six-role scans, packaging and applicable hosted checks must pass on exact final source before merge. Retain failed attempts and all unresolved applicability gaps without suppressions or invented passes.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [],

@@ -4360,6 +4360,25 @@
           "evidence": []
         }
       ]
+    },
+    {
+      "id": "M3-worker-dependency-security-refresh",
+      "title": "Repair verified Node and native SDK security blockers without scanner exceptions",
+      "requirementIds": [
+        "SPEC-40-050",
+        "SPEC-40-051",
+        "SECTION-49"
+      ],
+      "status": "in-progress",
+      "startedAt": "2026-11-04T17:45:28.218Z",
+      "completedAt": null,
+      "acceptance": [
+        {
+          "text": "Current stable upstream Temporal SDK and compatible HTTP dependency updates preserve frozen API baselines and bind exact official native distributions. Audit, native/runtime/recovery, six-role scans, packaging and applicable hosted checks must pass on exact final source before merge. Retain failed attempts and all unresolved applicability gaps without suppressions or invented passes.",
+          "status": "pending",
+          "evidence": []
+        }
+      ]
     }
   ]
 }
