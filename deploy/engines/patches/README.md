@@ -1,4 +1,16 @@
-# node-forge RSA backport
+# Optional engine cryptographic remediation
+
+The current Promptfoo 0.125.1 graph removes Forge. The build and downloaded-image
+verifier bind the engine lock and inspect actual installed packages, including
+nested dependencies and aliases. Signature-test fields are explicitly null with
+`not-applicable-dependency-removed`; they are never reported passed. The legacy
+receipt validator remains available for historical source pins.
+
+The original backport metadata is preserved in `forge-backport-1.4.0.json`.
+The following account describes the October 4 implementation and its evidence;
+it does not describe the current dependency graph.
+
+## Historical node-forge RSA backport
 
 The optional engine retains Promptfoo's complete dependency tree and provider
 capabilities. `node-forge` 1.4.0 is the latest published registry version checked

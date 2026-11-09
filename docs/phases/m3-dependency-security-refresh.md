@@ -96,3 +96,27 @@ native SDK/runtime/recovery, six-role scans, package installation and exact-sour
 hosted/independent review remain pending. See
 `delivery/acceptance/m3-worker-dependency-security-local.json`. Earlier immutable
 artifacts and failed attempts remain historical evidence, not new acceptance.
+
+## Remaining optional engine tree
+
+Verify 41881056363 passed both native evaluator architectures but stopped on
+19 fixable HIGH/CRITICAL entries in eval-engines. Eval-agentci was not scanned;
+late runtime/provenance stages were not accepted. The actual retained scans
+remain historical failure evidence.
+
+Promptfoo is now pinned to official current 0.125.1, with compatible Azure
+identity/MSAL, body-parser and undici updates in its lock. Its complete installed
+graph has no Forge dependency. The old backport fixtures and metadata remain
+available; current runtime proof instead binds the exact lock and inspects the
+actual package graph for nested or aliased Forge reintroduction. Helper code is
+checksum-bound. Historical RSA fields are null with an explicit dependency-removal
+reason, not passed. Rehashed forged receipts, wrong helper hashes, source/lock
+substitution, nested/aliased packages and symbolic substitutions are rejected.
+Historical receipt validation with original source pins remains unchanged.
+
+Fourteen focused security/release tests, typecheck, workflow lint and installed
+CLI version check pass. Optional-engine npm audit has zero HIGH/CRITICAL and six
+moderate findings. Full Mac feedback remains failed (772 passed, eight failed,
+six skipped). Fresh image, runtime/adapter, six-role scan and independent artifact
+acceptance remain pending. See `delivery/acceptance/m3-promptfoo-security-local.json`.
+No scanner policy, numerical evaluation gate or immutable release is changed.

@@ -7497,6 +7497,21 @@
               "evidence": []
             }
           ]
+        },
+        {
+          "id": "M3-promptfoo-security-refresh",
+          "status": "in-progress",
+          "startedAt": "2026-11-09T00:11:56.580Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Current official Promptfoo and compatible patched dependencies clear actual fixable HIGH/CRITICAL findings. If upstream removes Forge, prove actual installed dependency absence with source/lock binding; preserve historical backport fixtures and receipts and report legacy signature checks explicitly not applicable rather than passed. Types, adapters, packaging, six-role scans and exact hosted runtime checks must pass before main merge; no vulnerability suppression or unavailable pass.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
         }
       ],
       "api": [
@@ -9214,6 +9229,21 @@
           "acceptance": [
             {
               "text": "Current stable upstream Temporal SDK and compatible HTTP dependency updates preserve frozen API baselines and bind exact official native distributions. Audit, native/runtime/recovery, six-role scans, packaging and applicable hosted checks must pass on exact final source before merge. Retain failed attempts and all unresolved applicability gaps without suppressions or invented passes.",
+              "status": "pending",
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "id": "M3-promptfoo-security-refresh",
+          "status": "in-progress",
+          "startedAt": "2026-11-09T00:11:56.580Z",
+          "completedAt": null,
+          "blockedReason": null,
+          "deferral": null,
+          "acceptance": [
+            {
+              "text": "Current official Promptfoo and compatible patched dependencies clear actual fixable HIGH/CRITICAL findings. If upstream removes Forge, prove actual installed dependency absence with source/lock binding; preserve historical backport fixtures and receipts and report legacy signature checks explicitly not applicable rather than passed. Types, adapters, packaging, six-role scans and exact hosted runtime checks must pass before main merge; no vulnerability suppression or unavailable pass.",
               "status": "pending",
               "evidence": []
             }

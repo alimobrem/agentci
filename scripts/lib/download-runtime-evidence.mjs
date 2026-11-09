@@ -23,7 +23,13 @@ export function validateRuntimeEvidence(records,identities,expected,pins){
   if(role==='eval-worker'){const cli=native.dockerCli;requireProof(cli?.Version===pins.native.dockerCli.version&&cli.GitCommit===pins.native.dockerCli.sourceCommit.slice(0,7)&&cli.GoVersion===pins.native.dockerCli.goVersion&&cli.sha256===pins.native.dockerCli.binarySha256[arch]&&cli.vendorManifestSha256===pins.native.dockerCli.vendorManifest.sha256&&!native.podmanClient);}
  }
  const forge=records[RUNTIME_FILES[4]],observed=forge.observed;
- requireProof(forge.image===image('eval-engines').localImageId&&forge.releaseImage===image('eval-engines').image&&forge.sourceCommit===expected.sourceCommit&&forge.version===expected.version&&forge.platform===expected.platform&&observed?.arch===nodeArch&&observed.rsaSha256===pins.forge.afterSha256&&same(observed.metadata,pins.forge)&&observed.verifierSha256===pins.verifierSha256&&observed.fixtureSha256===pins.fixtureSha256);
- for(const key of ['malformedRegressionRejected','validSignaturesAccepted','wrongMessagesRejected','scannerFindingRetained'])requireProof(forge[key]===true);
+ requireProof(forge.image===image('eval-engines').localImageId&&forge.releaseImage===image('eval-engines').image&&forge.sourceCommit===expected.sourceCommit&&forge.version===expected.version&&forge.platform===expected.platform&&observed?.arch===nodeArch&&same(observed.metadata,pins.forge)&&observed.verifierSha256===pins.verifierSha256&&observed.fixtureSha256===pins.fixtureSha256);
+ if(pins.forge.strategy==='dependency-removed'){
+  requireProof(observed.rsaSha256===null&&observed.absenceVerifierSha256===pins.forge.absenceVerifierSha256&&forge.remediation?.result==='dependency-removed-verified'&&forge.remediation.forgeAbsent===true&&forge.remediation.lockSha256===pins.forge.lockSha256&&Number.isSafeInteger(forge.remediation.installedPackagesChecked)&&forge.remediation.installedPackagesChecked>0&&forge.legacySignatureChecks==='not-applicable-dependency-removed');
+  for(const key of ['malformedRegressionRejected','validSignaturesAccepted','wrongMessagesRejected','scannerFindingRetained'])requireProof(forge[key]===null);
+ }else{
+  requireProof(observed.rsaSha256===pins.forge.afterSha256);
+  for(const key of ['malformedRegressionRejected','validSignaturesAccepted','wrongMessagesRejected','scannerFindingRetained'])requireProof(forge[key]===true);
+ }
  return records;
 }

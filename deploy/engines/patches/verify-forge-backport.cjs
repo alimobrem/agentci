@@ -1,6 +1,8 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const directory=process.argv[2];if(!directory)throw new Error('Expected installed forge directory');
-const forge=require(directory),metadata=require('./forge-backport.json'),fixture=require('./forge-nested-digest-fixture.json');
+const metadata=require('./forge-backport.json');
+if(metadata.strategy==='dependency-removed'){assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(__dirname,'verify-forge-absence.cjs'))).digest('hex'),metadata.absenceVerifierSha256);console.log(JSON.stringify(require('./verify-forge-absence.cjs').verifyForgeAbsence(directory,metadata)));process.exit(0);}
+const forge=require(directory),fixture=require('./forge-nested-digest-fixture.json');
 assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path.join(directory,'lib/rsa.js'))).digest('hex'),metadata.afterSha256);
 const key=forge.pki.setRsaPublicKey(new forge.jsbn.BigInteger(fixture.modulusHex,16),new forge.jsbn.BigInteger(fixture.exponent));
 const digest=forge.md.sha256.create().update(fixture.message).digest().getBytes(),signature=forge.util.hexToBytes(fixture.signatureHex);
