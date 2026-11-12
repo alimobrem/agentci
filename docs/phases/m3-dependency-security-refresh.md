@@ -132,3 +132,12 @@ reached by that failed attempt. The correction record is
 `delivery/acceptance/m3-engine-integration-contract-fix.json`. New real-image
 execution remains required before merge. Local failed toolchain/timeout attempts
 and the successful unchanged timeout retry are retained rather than discarded.
+
+Verify43152774845 passed the actual optional-engine integration after that
+contract correction, then failed two eval-engines Mongoose findings:
+CVE-2026-125117 and CVE-2026-125119 in9.10.4 (patched from9.11.4). The compatible
+current stable9.12.1 is now locked; the source-bound absence digest is refreshed
+and actual installed-graph verification passes. Four local Forge guards pass;
+the unrelated local release tag-race test timed out again and remains failed.
+No timeout or assertion was relaxed. Fresh full hosted checks remain mandatory.
+Evidence: `delivery/acceptance/m3-optional-mongoose-security-local.json`.
