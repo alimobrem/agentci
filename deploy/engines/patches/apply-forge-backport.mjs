@@ -1,8 +1,10 @@
+import absence from './verify-forge-absence.cjs';
 import {readFile,writeFile} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {join} from 'node:path';
 const metadata=JSON.parse(await readFile(new URL('./forge-backport.json',import.meta.url),'utf8'));
 const directory=process.argv[2];if(!directory)throw new Error('Expected installed forge directory');
+if(metadata.strategy==='dependency-removed'){absence.verifyForgeAbsence(directory,metadata);console.log('Verified removed Forge dependency; no cryptographic patch applied.');process.exit(0);}
 const manifest=JSON.parse(await readFile(join(directory,'package.json'),'utf8'));
 if(manifest.name!==metadata.package||manifest.version!==metadata.publishedVersion)throw new Error('Unexpected forge package; review/remove the backport before upgrading');
 const file=join(directory,'lib/rsa.js'),source=await readFile(file,'utf8'),hash=value=>createHash('sha256').update(value).digest('hex');

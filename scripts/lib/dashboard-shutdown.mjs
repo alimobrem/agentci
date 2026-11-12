@@ -1,5 +1,5 @@
 import {createHash} from 'node:crypto';
-export const NEXT_SHUTDOWN=Object.freeze({version:'16.4.0',handlerSha256:'af5fd02bb07111f4794f7c7123e7388953bdfb85e131024c85dbc9abbab82d6c',signal:'SIGTERM',exitCode:143,maxElapsedMs:20000});
+export const NEXT_SHUTDOWN=Object.freeze({version:'16.4.2',handlerSha256:'78d4d62d5bddacd7d85de2434f62ae7a58f3b78c71fa9447a3b5e96104d763ea',signal:'SIGTERM',exitCode:143,maxElapsedMs:20000});
 const hash=b=>createHash('sha256').update(b).digest('hex');
 /** Preserve only ordered marker types and channel hashes; raw diagnostics never become artifacts. */
 export function dashboardShutdownMarkers({stdout,stderr},canary){
@@ -18,7 +18,7 @@ export function validateDashboardShutdown(record,expected){
  if(!['sourceCommit','sourceTree','candidateCommit'].every(k=>typeof expected[k]==='string'&&/^[a-f0-9]{40}$/.test(expected[k]))||!['rootLockSha256','dashboardLockSha256'].every(k=>typeof expected[k]==='string'&&/^[a-f0-9]{64}$/.test(expected[k]))||!/^sha256:[a-f0-9]{64}$/.test(expected.imageId)||!['amd64','arm64'].includes(expected.arch))fail();
  for(const key of ['sourceCommit','sourceTree','candidateCommit','rootLockSha256','dashboardLockSha256','arch','imageId'])if(record.source?.[key]!==expected[key])fail();
  const p=record.runtime;
- if(p?.nextVersion!==NEXT_SHUTDOWN.version||p.handlerSha256!==NEXT_SHUTDOWN.handlerSha256||!p.handlerPath?.startsWith('apps/dashboard/node_modules/next/')||p.node!=='v26.10.0'||p.pid1Uid!==1001||JSON.stringify(p.pid1Command)!==JSON.stringify(['next-server (v16.4.0)'])||p.pid1Executable!=='/usr/local/bin/node'||!(/^[a-f0-9]{64}$/).test(p.pid1ExecutableSha256)||p.pid1ExecutableSha256!==p.probeNodeExecutableSha256||p.manualSignalOverride!==false||p.nodeOptionsOverride!==false||p.nodePathOverride!==false)fail();
+ if(p?.nextVersion!==NEXT_SHUTDOWN.version||p.handlerSha256!==NEXT_SHUTDOWN.handlerSha256||!p.handlerPath?.startsWith('apps/dashboard/node_modules/next/')||p.node!=='v26.10.0'||p.pid1Uid!==1001||JSON.stringify(p.pid1Command)!==JSON.stringify(['next-server (v16.4.2)'])||p.pid1Executable!=='/usr/local/bin/node'||!(/^[a-f0-9]{64}$/).test(p.pid1ExecutableSha256)||p.pid1ExecutableSha256!==p.probeNodeExecutableSha256||p.manualSignalOverride!==false||p.nodeOptionsOverride!==false||p.nodePathOverride!==false)fail();
  if(record.signal!==NEXT_SHUTDOWN.signal||record.stopSucceeded!==true||record.timeout!==false||record.forced!==false||record.exitCode!==NEXT_SHUTDOWN.exitCode||record.running!==false||record.oomKilled!==false||!Number.isSafeInteger(record.elapsedMs)||record.elapsedMs<0||record.elapsedMs>NEXT_SHUTDOWN.maxElapsedMs||record.requestDrain!=='idle-only')fail();
  const logs=record.logs,m=logs?.markers;
  if(!Array.isArray(m)||m.length!==2||m[0].type!=='started'||m[1].type!=='finished'||m.some(v=>v.stream!=='stderr'||!Number.isSafeInteger(v.line)||v.line<0)||m[1].line<=m[0].line||logs.cleanupErrors!==false||logs.canaryLeak!==false||![logs.stdoutSha256,logs.stderrSha256].every(v=>typeof v==='string'&&/^[a-f0-9]{64}$/.test(v)))fail();

@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "scope": "Compatible optional-engine Mongoose security patch only",
+  "failedHosted": {
+    "runId": 43152774845,
+    "artifactId": 13915041802,
+    "source": "7a6d0921975f3fff3374725550a5ef0182bbfee6",
+    "findings": [
+      "CVE-2026-125117",
+      "CVE-2026-125119"
+    ],
+    "installed": "9.10.4",
+    "fixedFrom": "9.11.4",
+    "optionalRole": "eval-engines",
+    "evalAgentci": "not-scanned"
+  },
+  "changes": [
+    {
+      "path": "node_modules/@mongodb-js/saslprep",
+      "from": "1.5.5",
+      "to": "1.6.3",
+      "resolved": "https://registry.npmjs.org/@mongodb-js/saslprep/-/saslprep-1.6.3.tgz",
+      "integrity": "sha512-aHGFvT95c82CoQ7hb6qXpz8Hcc5PJb3ZtQ+P01QDBbyQday0mjcrJPeNJOHCgWe0pGX0zKmKP+1mWi/I/BCX9Q=="
+    },
+    {
+      "path": "node_modules/bson",
+      "from": "7.3.3",
+      "to": "7.3.4",
+      "resolved": "https://registry.npmjs.org/bson/-/bson-7.3.4.tgz",
+      "integrity": "sha512-eb33j2Ha6xgygjJ8bhI3sYaI9cLAbSaopZLRJQ5/rxk32XyBSoVVcbeHIzVGJx1SyQpyyoElkoEZgQrg+RVVoA=="
+    },
+    {
+      "path": "node_modules/kareem",
+      "from": "3.4.0",
+      "to": "3.4.1",
+      "resolved": "https://registry.npmjs.org/kareem/-/kareem-3.4.1.tgz",
+      "integrity": "sha512-UlgCAFNAdk/HLSsbfkmbH8pJqpEN52Ek8RG53Ys1i3Q3gbCQruSrWpplZlgIGyDHX/LNoLW97ei3OG43s7UhUA=="
+    },
+    {
+      "path": "node_modules/mongoose",
+      "from": "9.10.4",
+      "to": "9.12.1",
+      "resolved": "https://registry.npmjs.org/mongoose/-/mongoose-9.12.1.tgz",
+      "integrity": "sha512-wPw1NKurTDShT+kr/JJvhdwPKIJkxFJv5GEbv++QahN8snPR9Fp/BFg6nQbbCyUHBB8DexwwlCQW6SfBD99QCg=="
+    },
+    {
+      "path": "node_modules/mongoose/node_modules/mongodb",
+      "from": "7.6.0",
+      "to": "7.8.0",
+      "resolved": "https://registry.npmjs.org/mongodb/-/mongodb-7.8.0.tgz",
+      "integrity": "sha512-p2NKagbQ41+daACG/ZSvhTzeAo+DoEyWE9Cmpf/SyP3pTC43+X0mwKE/44PpKtCxp5wOxnXz+t2pXEZRSkt9Yg=="
+    },
+    {
+      "path": "node_modules/mquery",
+      "from": "6.0.0",
+      "to": "6.0.1",
+      "resolved": "https://registry.npmjs.org/mquery/-/mquery-6.0.1.tgz",
+      "integrity": "sha512-/Nijmq3JcpHwDM+5CwBp5yEl6fUa6jLsIhPsoQywlGXU/ZrKIvSpBzfaGnW9BLqcne/CoUwd1ch7MRqptDgFTA=="
+    },
+    {
+      "path": "node_modules/sift",
+      "from": "17.1.3",
+      "to": "17.1.4",
+      "resolved": "https://registry.npmjs.org/sift/-/sift-17.1.4.tgz",
+      "integrity": "sha512-/OIVvj9Ts1mFwTYzW09YODMPeIOnDoigMOvKSIN44OmaCyhuCH/05UPF45XW7Ax0snmzDzCzdlSYqvqsn8+sIg=="
+    }
+  ],
+  "officialCurrentStable": "mongoose9.12.1",
+  "lockSha256": "67ff7878eac54edb8c2a02a73557231b4cd18d5ca6a9ba2202cde2b98e27a9b7",
+  "absence": {
+    "result": "dependency-removed-verified",
+    "forgeAbsent": true,
+    "lockSha256": "67ff7878eac54edb8c2a02a73557231b4cd18d5ca6a9ba2202cde2b98e27a9b7",
+    "installedPackagesChecked": 564
+  },
+  "audit": {
+    "info": 0,
+    "low": 1,
+    "moderate": 6,
+    "high": 0,
+    "critical": 0,
+    "total": 7
+  },
+  "checks": {
+    "forgeGuards": {
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0
+    },
+    "localReleaseFixtureSuite": "failed: unchanged publication tag-race test timed out; full log preserved, not passed",
+    "newSourceHostedScansAndRuntime": "pending"
+  },
+  "logs": [
+    {
+      "path": "/private/tmp/agentci-mongoose-focused.log",
+      "sha256": "d4db5d6ad85cdad380029d78a9f249fdf39d9cd4bab71ec0aef8888c930ce4c1"
+    },
+    {
+      "path": "/private/tmp/agentci-mongoose-audit.json",
+      "sha256": "d702f248747f9f874f7b69113dc56339bba57f85d2f63267b213d55f1ea822c1"
+    },
+    {
+      "path": "/private/tmp/agentci-mongoose-absence.log",
+      "sha256": "935e06728d57d4053bc551146c67e7a67e3d31e7bfbd4d522619407b6b8e4b39"
+    },
+    {
+      "path": "/private/tmp/agentci-mongoose-regressions.log",
+      "sha256": "5018d89decb0c13d8fffbb038ecef1a6cfa49ee37b119649b3ad68effeb7dd07"
+    },
+    {
+      "path": "/private/tmp/agentci-final-engine-fast-pinned.log",
+      "sha256": "f77744b34eb130ef7f70bbd5a0ba1aae5d26d858f617bd29d842341e458103bf"
+    }
+  ],
+  "releaseComplete": false
+}

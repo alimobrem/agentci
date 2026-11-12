@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "scope": "Local native artifact-retention change only",
+  "baseCommit": "16f77f564fb1b294fbdd107488efec80cc4d09de",
+  "retentionDays": {
+    "before": 7,
+    "after": 90
+  },
+  "reason": "Native attempt 39840879953 first-attempt uploads succeeded but their seven-day artifacts are no longer listed; historical native cause remains unverified.",
+  "checks": {
+    "workflowLint": "passed-after-sandbox-DNS-failure",
+    "nativeEvidenceTests": {
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0
+    },
+    "fastFeedback": {
+      "passed": 767,
+      "failed": 8,
+      "skipped": 6,
+      "total": 781,
+      "result": "failed",
+      "note": "Mac host failures remain failures; no local runtime acceptance inferred. Earlier invocation also rejected bundled npm11; pinned npm12.2.0 attempt retained."
+    }
+  },
+  "logs": {
+    "workflowSandbox": {
+      "path": "/private/tmp/agentci-nov-retention-workflows.log",
+      "sha256": "b0e818143675af62b3a9e70fa77b92e33520e0a839ec03aaff64753d4b75cf56"
+    },
+    "workflowRetry": {
+      "path": "/private/tmp/agentci-nov-retention-workflows-retry.log",
+      "sha256": "886b79dcab3f8f39030a14f0f52d41da96ac277f306ba407496e28b2048f0fac"
+    },
+    "nativeTests": {
+      "path": "/private/tmp/agentci-nov-retention-native-tests.log",
+      "sha256": "2c52e62162177ce7f2059781150056917f3d37be81b02cc2c3a94f48fb6266d5"
+    },
+    "fastWrongNpm": {
+      "path": "/private/tmp/agentci-nov-retention-fast.log",
+      "sha256": "f29bd9f61fb4c3d58a6fe010d045ac151036064c57feacd697e1ef4e9eac9905"
+    },
+    "fastPinned": {
+      "path": "/private/tmp/agentci-nov-retention-fast-pinned.log",
+      "sha256": "7d8d91374374d84d0894dd798d661217ab4a088965bdc48bf9e65df4cecc2956"
+    }
+  },
+  "hostedChecks": "pending",
+  "releaseComplete": false,
+  "limits": [
+    "No previously expired artifact is recreated",
+    "Native retry attempt2 is separate execution of unchanged parent source, not proof for this retention change",
+    "No scanner, credential, runtime, cleanup oracle or release gate change"
+  ]
+}

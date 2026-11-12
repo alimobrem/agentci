@@ -7,7 +7,7 @@ import {readFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {parse} from 'yaml';
 // @ts-expect-error operational ESM helper
-import {candidateIdentity,bindDevelopmentImages,hash,requireAvailableResponse,validatePackageManifest,sanitizedPackageEnvironment} from '../scripts/lib/development-artifacts.mjs';
+import {candidateIdentity,bindDevelopmentImages,hash,requireAvailableResponse,validatePackageManifest,sanitizedPackageEnvironment,normalizePackOutput} from '../scripts/lib/development-artifacts.mjs';
 // @ts-expect-error operational ESM helper
 import {anonymousDownload,verifyPackageFiles} from '../scripts/published-package-smoke.mjs';
 const expected={version:'0.4.0-m3-dev.4',sourceCommit:'a'.repeat(40),runId:'123',attempt:'1'};
@@ -49,6 +49,7 @@ test('package content source and hash are checked before installation and child 
   for(const [path,bytes] of Object.entries(contents)){await mkdir(join(root,path,'..'),{recursive:true});await writeFile(join(root,path),bytes as string);}
   const manifest={schemaVersion:1,...expected,package:{name:`agentci-${expected.version}.tgz`,sha256:'b'.repeat(64)},files:Object.entries(contents).map(([path,bytes])=>({path,sha256:hash(bytes)}))};
   validatePackageManifest(manifest,expected);await verifyPackageFiles(root,manifest);
+  for(const lock of ['package-lock.json','npm-shrinkwrap.json'])assert.throws(()=>validatePackageManifest({...manifest,files:manifest.files.filter(file=>file.path!==lock)},expected),/Required installed identity/);
   for(const path of ['../escape','/absolute','a/../escape'])assert.throws(()=>validatePackageManifest({...manifest,files:[...manifest.files,{path,sha256:'b'.repeat(64)}]},expected));
   assert.throws(()=>validatePackageManifest({...manifest,files:[...manifest.files,manifest.files[0]]},expected));
   await writeFile(join(root,'dist/release-source.json'),JSON.stringify({version:expected.version,sourceCommit:'c'.repeat(40)}));await assert.rejects(verifyPackageFiles(root,manifest));
@@ -57,6 +58,14 @@ test('package content source and hash are checked before installation and child 
   assert.fail(output);
  }catch(error:any){if(error.status!==undefined){assert.equal(error.status,1);assert.ok(!String(error.stderr).includes('sentinel-private-token'));assert.match(String(error.stderr),/Development publication failed/);}else throw error;}
  finally{await rm(root,{recursive:true,force:true});}
+});
+test('both npm JSON shapes reject duplicate and unsafe selected paths',()=>{
+ const pack={name:'agentci',version:expected.version,filename:`agentci-${expected.version}.tgz`,files:[{path:'package.json'},{path:'dist/cmd/agentci/main.js'}]};
+ for(const shape of [(value:any)=>[value],(value:any)=>({agentci:value})]){
+  assert.deepEqual(normalizePackOutput(shape(pack),expected.version),pack);
+  assert.throws(()=>normalizePackOutput(shape({...pack,files:[...pack.files,pack.files[0]]}),expected.version),/duplicate/);
+  for(const path of ['../escape','/absolute','dist/./bad','dist//bad'])assert.throws(()=>normalizePackOutput(shape({...pack,files:[{path}]}),expected.version),/Unsafe/);
+ }
 });
 test('publication is main-only, activation-bound, least privilege and gated on both native download types',()=>{
  const workflow=parse(readFileSync('.github/workflows/development-candidate.yaml','utf8'));

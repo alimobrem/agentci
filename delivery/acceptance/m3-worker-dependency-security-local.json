@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "scope": "Merge preparation for repair chain118/119/120; no phase acceptance",
+  "upstream": {
+    "temporalVersion": "1.25.0",
+    "registry": "https://registry.npmjs.org/@temporalio/core-bridge/1.25.0",
+    "native": {
+      "package": "@temporalio/core-bridge",
+      "version": "1.25.0",
+      "upstreamArtifact": "https://registry.npmjs.org/@temporalio/core-bridge/-/core-bridge-1.25.0.tgz",
+      "integrity": "sha512-4C7lOpBXo9nTTwuEZwlPWGEZy3dchSbEgp+HeX87EbovC4QlPf1Th9iWz7jcce0C9l/O3kaXfA34uPMGRu15DA==",
+      "artifactSha256": "e54687515cff85098580d755f385f8cdd6f6167d3b6a4967a9c5ae60ad9ce522",
+      "installedMatchesUpstream": true,
+      "files": {
+        "Cargo.lock": "a92ebd082b625ee3e76b8f91513f7a12bbbe056205a35b79bf5837a0821101a7",
+        "Cargo.toml": "161a2ff7e40a8f3f718728b04468e667d2186c97fc7fa97e3c783750810c9a12",
+        "releases/aarch64-unknown-linux-gnu/index.node": "01a164bb9c42a3dd275f0b1e23a9638b4910bddd8e8cabf74e806d80d6d2da3a",
+        "releases/x86_64-unknown-linux-gnu/index.node": "c302594f866af3ea7c4aaf572fe0f0de887f8bbd815a5aa52d7f8591da438a33"
+      }
+    },
+    "zipSourceManifestVersion": "9.0.5",
+    "sourceManifestIsNotCompiledReachabilityProof": true
+  },
+  "changes": {
+    "@temporalio/activity": "1.25.0",
+    "@temporalio/client": "1.25.0",
+    "@temporalio/worker": "1.25.0",
+    "@temporalio/workflow": "1.25.0",
+    "undici": "8.12.3",
+    "fast-uri": "3.1.9"
+  },
+  "checks": {
+    "typecheck": "passed",
+    "focusedNativeTests": {
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0
+    },
+    "immutableApiCompatibility": "M1 and M2 passed including negative controls",
+    "npmAuditHigh": "passed",
+    "remainingNpmFinding": "minimatch moderate; major-version fix requires compatibility review",
+    "nativeRuntime": "pending",
+    "sixRoleScans": "pending",
+    "hostedSourceReview": "pending",
+    "fullMacFeedback": {
+      "result": "failed",
+      "tests": 783,
+      "pass": 769,
+      "fail": 8,
+      "skipped": 6,
+      "path": "/private/tmp/agentci-merge-fast.log",
+      "sha256": "261ae36be7394d0563c3659e4558ded20b9a721b270dc3f3ae52bcd520f77d68"
+    }
+  },
+  "logs": [
+    {
+      "path": "/private/tmp/agentci-merge-types.log",
+      "sha256": "6dc2f80efc67645d301412efa63a26a9ce0a29b4abc420f0d6c1e77d3a1e4726"
+    },
+    {
+      "path": "/private/tmp/agentci-merge-native-tests.log",
+      "sha256": "7186470091eda6d67a399a21433af334ed98d8d5ba95e797ceaf5ace7a4f0a87"
+    },
+    {
+      "path": "/private/tmp/agentci-merge-audit-high.log",
+      "sha256": "ab0f53a1fd462431c20e676ac57d7f1483f2641dadb6908a2d217716c07bd316"
+    },
+    {
+      "path": "/private/tmp/agentci-merge-api.log",
+      "sha256": "fc691233e650df5db95dec42711a8ad501f78d3639aca049a1a27f156a5b0957"
+    }
+  ],
+  "rootLocksEqual": true,
+  "releaseComplete": false
+}

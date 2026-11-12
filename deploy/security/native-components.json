@@ -1,34 +1,41 @@
 {
   "schemaVersion": 1,
   "dockerCli": {
-    "image": "docker:29.9.0-cli@sha256:1a4c7cb63513f349bdad01fcc6e0f3f2f67d37b9da86f14dc0d4a0942eecda00",
-    "version": "29.9.0",
-    "sourceCommit": "f415da838bed6a0e12ca6cb86ba198fdac6beb9c",
-    "goVersion": "go1.26.9",
+    "image": "docker:29.9.2-cli@sha256:5e6baf67325a79f64ed3bed6863954d5e05d0f3d4e57cbdb14809346814bbfdb",
+    "version": "29.9.2",
+    "sourceCommit": "a82e528901260c8df6073311379eac65f92db204",
+    "goVersion": "go1.26.10",
     "binarySha256": {
-      "amd64": "a1ce7baaa61f45f51b1e3c0148f60f884df14096620f2755bfd53e8cc8bbbf77",
-      "arm64": "6b6cf853300e741aa1bfe2b1ec029ca9c3cefca0e542132fae45b730467ee683"
+      "amd64": "6c71cfe71faff949a602946a4df4799b563232e79d0b8b6fd343d0ef081c9621",
+      "arm64": "e330afc12592c0683664b00066d50fb9f3a879ab8820df589d50b9b1fe3a3c6a"
     },
     "vendorManifest": {
-      "upstreamUrl": "https://raw.githubusercontent.com/docker/cli/f415da838bed6a0e12ca6cb86ba198fdac6beb9c/vendor.mod",
-      "sha256": "5920be5f3d516844e1d4152d0ae7bbfaeaca576ef6b63fab64bda5b463f234f3",
+      "upstreamUrl": "https://raw.githubusercontent.com/docker/cli/a82e528901260c8df6073311379eac65f92db204/vendor.mod",
+      "sha256": "5b7d4db4d159f1b6c4b3c823b066506869e42aecc6a29e40c6d16fdc4c5712d9",
       "runtimePath": "/licenses/docker-cli/go.mod",
       "coverage": "Upstream source inventory, including tooling; not an exact compiled dependency graph."
     },
-    "vendorModulesSha256": "8a11f7b00b8dcf864265a19f4f153aed2ff75303c1c203cb14845ab82b74c617"
+    "vendorModulesSha256": "f7d72777b483c4880f2423083315d3277712287c75f888772d61ce7d7186c25c",
+    "licenseSha256": "2d81ea060825006fc8f3fe28aa5dc0ffeb80faf325b612c955229157b8c10dc0",
+    "notice": {
+      "path": "deploy/licenses/docker-cli-NOTICE",
+      "upstreamUrl": "https://raw.githubusercontent.com/docker/cli/a82e528901260c8df6073311379eac65f92db204/NOTICE",
+      "sha256": "a8c869fbda819afb8d80e0ac19bac52e766bc6c19cb38cf94f52d64c4be2aab6",
+      "runtimePath": "/licenses/docker-cli-NOTICE"
+    }
   },
   "temporalBridge": {
     "package": "@temporalio/core-bridge",
-    "version": "1.24.0",
-    "upstreamArtifact": "https://registry.npmjs.org/@temporalio/core-bridge/-/core-bridge-1.24.0.tgz",
-    "integrity": "sha512-6kzPB8RsHcPU6HDNUSDBFC0JG2UFrV3ThmPmJkeEafKh2DFrKARM8IzxgKeE5MzvdIXYmONFM0UmHg+TZ0/qrQ==",
-    "artifactSha256": "5f58de2e98bdc4711be3cbb06cc08bc39cb274cbbac41d02f0352bfe1630a8f7",
+    "version": "1.25.0",
+    "upstreamArtifact": "https://registry.npmjs.org/@temporalio/core-bridge/-/core-bridge-1.25.0.tgz",
+    "integrity": "sha512-4C7lOpBXo9nTTwuEZwlPWGEZy3dchSbEgp+HeX87EbovC4QlPf1Th9iWz7jcce0C9l/O3kaXfA34uPMGRu15DA==",
+    "artifactSha256": "e54687515cff85098580d755f385f8cdd6f6167d3b6a4967a9c5ae60ad9ce522",
     "installedMatchesUpstream": true,
     "files": {
-      "Cargo.lock": "71e8383f5f70ee4b5691fd818d286b905ea88b5761c67cb1d1d8618e5100294c",
-      "Cargo.toml": "6039ab4a5d3a51779f5207b29b81c337d9192caa71f5c78e4b06b119658c8f08",
-      "releases/aarch64-unknown-linux-gnu/index.node": "93d879b20ff56debd401eb54215ddd97c4ab84e218deeff3baef26474b2eaa91",
-      "releases/x86_64-unknown-linux-gnu/index.node": "a0ed7c392f0d95f0c1a0aa9a18bf7985a7ca91c78f0079cc98454186fda6e78d"
+      "Cargo.lock": "a92ebd082b625ee3e76b8f91513f7a12bbbe056205a35b79bf5837a0821101a7",
+      "Cargo.toml": "161a2ff7e40a8f3f718728b04468e667d2186c97fc7fa97e3c783750810c9a12",
+      "releases/aarch64-unknown-linux-gnu/index.node": "01a164bb9c42a3dd275f0b1e23a9638b4910bddd8e8cabf74e806d80d6d2da3a",
+      "releases/x86_64-unknown-linux-gnu/index.node": "c302594f866af3ea7c4aaf572fe0f0de887f8bbd815a5aa52d7f8591da438a33"
     }
   },
   "podmanClient": {
