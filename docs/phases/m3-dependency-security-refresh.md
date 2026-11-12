@@ -120,3 +120,15 @@ moderate findings. Full Mac feedback remains failed (772 passed, eight failed,
 six skipped). Fresh image, runtime/adapter, six-role scan and independent artifact
 acceptance remain pending. See `delivery/acceptance/m3-promptfoo-security-local.json`.
 No scanner policy, numerical evaluation gate or immutable release is changed.
+
+The next hosted Verify42539507283 failed207/208 integration tests with zero
+skips: the optional-engine test expected the historical RSA success string,
+although the real container produced the new source-bound absence receipt.
+The assertion now checks its exact fields, committed lock digest, explicit
+absence result and bounded positive installed-package count. Its old-release
+branch remains available. All following Promptfoo/DeepEval pass, regression,
+infrastructure, cancellation and cleanup checks remain mandatory; they were not
+reached by that failed attempt. The correction record is
+`delivery/acceptance/m3-engine-integration-contract-fix.json`. New real-image
+execution remains required before merge. Local failed toolchain/timeout attempts
+and the successful unchanged timeout retry are retained rather than discarded.

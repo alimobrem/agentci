@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "scope": "Correct integration assertion for source-bound Forge absence; no runtime coverage removed",
+  "failedHostedRun": {
+    "runId": 42539507283,
+    "source": "7d154506eaa30e40064e68b18aad34e660d210db",
+    "integration": {
+      "tests": 208,
+      "passed": 207,
+      "failed": 1,
+      "skipped": 0
+    },
+    "failure": "Test expected historical RSA backport text instead of actual dependency-removed receipt; remaining optional-engine assertions were not reached"
+  },
+  "change": "Validate exact absence receipt fields, expected committed lock digest and positive bounded actual package count. Preserve historical RSA check branch and all existing engine passing/regression/infrastructure/cancellation/cleanup assertions.",
+  "local": {
+    "typecheck": "passed",
+    "initialFocusedAttempt": "failed: missing temporary npm helper selected system npm10; restored pinned npm12.2.0",
+    "pinnedFocusedAttempt": {
+      "passed": 13,
+      "failed": 1,
+      "skipped": 0,
+      "remainingFailure": "unchanged release publication test timed out"
+    },
+    "singleFailureRetry": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "timeoutAndAssertionsUnchanged": true
+    },
+    "actualEngineIntegration": "pending hosted real UBI execution"
+  },
+  "logs": [
+    {
+      "path": "/private/tmp/agentci-final-verify-failure.log",
+      "sha256": "51e279cae047c47ed765db5983e16173c1c09fa89164942c3d48031a9aaf41b1"
+    },
+    {
+      "path": "/private/tmp/agentci-final-engine-types.log",
+      "sha256": "e9d8c5165b1553508be64651dd608cf07e8a368bcb9572ad8c4831b507a4f8d8"
+    },
+    {
+      "path": "/private/tmp/agentci-final-engine-regressions.log",
+      "sha256": "18aeb6c3acad064ef5b189010c55befd25d28d794224be35dc84cf4f9d2bd880"
+    },
+    {
+      "path": "/private/tmp/agentci-final-engine-regressions-pinned.log",
+      "sha256": "1a043913de0146cc22f3db91592131480d84db89427ebcd7210f0def675b7541"
+    },
+    {
+      "path": "/private/tmp/agentci-final-engine-timing-retry.log",
+      "sha256": "e745493e138ecd8718b2e46645e6205c87f4392485f005172e5878345929850d"
+    }
+  ],
+  "releaseComplete": false
+}
