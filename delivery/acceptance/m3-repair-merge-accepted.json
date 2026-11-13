@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 1,
+  "scope": "Repair implementation acceptance only; no phase release acceptance",
+  "merge": {
+    "commit": "2502269dbd315260aec9ba9d1dc75ba808acf271",
+    "tree": "0c5c3a7ee797bdff99023a278a70d372b17899e3",
+    "matchesTestedTree": true,
+    "pullRequest": 118,
+    "children": {
+      "119": "merged into repair branch; all commits now on main",
+      "120": "closed as incorporated; ancestry verified and GitHub reports no new commits against main"
+    },
+    "supersededClosed": [
+      104,
+      106,
+      115,
+      117
+    ],
+    "remainingOpen": [
+      4,
+      81,
+      84,
+      85
+    ],
+    "postMergeChecks": "passed; exact main source"
+  },
+  "premerge": {
+    "scope": "Final combined PR118 source acceptance; no M3 phase release acceptance",
+    "head": "072be1573ca309d44cd49d3c5b9f6e0b747fa1c5",
+    "testedPreview": "bb634e6801a267376fcdad6822256ce7bd946945",
+    "testedTree": "0c5c3a7ee797bdff99023a278a70d372b17899e3",
+    "runId": 43218550635,
+    "artifactId": 13946371379,
+    "hashesVerified": 13,
+    "fast": {
+      "tests": 786,
+      "pass": 786,
+      "fail": 0,
+      "skipped": 0
+    },
+    "integration": {
+      "tests": 208,
+      "pass": 208,
+      "fail": 0,
+      "skipped": 0
+    },
+    "installed": [
+      {
+        "tests": 14,
+        "pass": 14,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "skipped": 0
+      }
+    ],
+    "scans": {
+      "scan-results/api.json": {
+        "highCritical": 0
+      },
+      "scan-results/eval-agentci.json": {
+        "highCritical": 0
+      },
+      "scan-results/eval-engines.json": {
+        "highCritical": 0
+      },
+      "scan-results/eval-runner.json": {
+        "highCritical": 0
+      },
+      "scan-results/eval-worker.json": {
+        "highCritical": 0
+      },
+      "scan-results/worker.json": {
+        "highCritical": 0
+      }
+    },
+    "apiBaselines": [
+      {
+        "baseline": "specs/api/baselines/m1-0.2.1-openapi.json",
+        "baselineSha256": "28c56cc252b460ca0a496f8459b59792ceea16affb2d60c7b22a8f8a35f9174d",
+        "exitCode": 0,
+        "changes": "[]\n",
+        "diagnostics": ""
+      },
+      {
+        "baseline": "specs/api/baselines/m2-0.3.1-openapi.json",
+        "baselineSha256": "d9515b059d4240bb92b2b34c4a34e85981bfbe54141a8511d2adfbd49dadf16f",
+        "exitCode": 0,
+        "changes": "[]\n",
+        "diagnostics": ""
+      }
+    ],
+    "negativeControls": [
+      {
+        "baseline": "m1-0.2.1",
+        "endpoint": "/v1/evidence/{id}",
+        "result": "endpoint-removal rejected"
+      },
+      {
+        "baseline": "m2-0.3.1",
+        "endpoint": "/v1/eval-comparisons/{id}",
+        "result": "endpoint-removal rejected"
+      }
+    ],
+    "compiledRuntime": "passed",
+    "evalWorkerRuntime": "passed",
+    "cleanup": {
+      "schemaVersion": 1,
+      "result": "passed",
+      "owner": "agentci-smoke-8e935eaa431f6b13",
+      "ownedContainers": 0,
+      "ownedNetworks": 0,
+      "ownedVolumes": 0,
+      "privateFilesRemoved": true,
+      "ownedEvalContainers": 0,
+      "evalUnitsChecked": 3
+    },
+    "pkg": {
+      "lockedRoot": "passed",
+      "consumer": "passed",
+      "filesVerified": 574,
+      "ownedTemporaryRoots": 0
+    },
+    "customerScopeRegression": "passed",
+    "advisory": {
+      "runId": 43218546034,
+      "artifactId": 13944875729,
+      "header": {
+        "id": "c4f8e1fe-1193-4d0d-9652-ea4b3fd5aa14",
+        "reviewId": "fbb3198c-7be7-4a19-836e-7fd6e51e0cca",
+        "attemptId": "569265d9-3102-428b-8bad-289ca01257b2",
+        "organizationId": "00000000-0000-4000-8000-000000000001",
+        "subject": {
+          "repository": "alimobrem/agentci",
+          "pullRequest": 118,
+          "baseSha": "5e89f95caddfa327bf5397c3a3dbc107a67f8e32",
+          "headSha": "072be1573ca309d44cd49d3c5b9f6e0b747fa1c5"
+        },
+        "cancelRequested": false,
+        "unitCount": 8,
+        "snapshotDigest": "sha256:e663595d0e3954d150da1f2c41ee5ea4b166db3b7ccfb9b814de7f0e9171aa69",
+        "suiteChanges": [],
+        "coverageGaps": [],
+        "selectionGaps": []
+      },
+      "summary": {
+        "state": "completed",
+        "outcome": "passed",
+        "executionGaps": [],
+        "unitCount": 8,
+        "comparisonCount": 4
+      },
+      "endDigest": "sha256:7717d08e91f9c0be2482f8354799dc0ecf92b0c2424a63276f4e731a1fb2cbb9"
+    },
+    "releaseComplete": false,
+    "independentArtifacts": {
+      "nativeEvaluator": [
+        13945635884,
+        13945326087
+      ],
+      "dashboard": [
+        13945640635,
+        13945125971
+      ],
+      "evaluatorIndexedFilesPerArch": 9,
+      "evaluatorSourceInputsPerArch": 22,
+      "dashboardIndexedFilesPerArch": 380
+    }
+  },
+  "postmerge": {
+    "sourceCommit": "2502269dbd315260aec9ba9d1dc75ba808acf271",
+    "sourceTree": "0c5c3a7ee797bdff99023a278a70d372b17899e3",
+    "runId": 43258068485,
+    "artifactId": 13963983334,
+    "metadataSha256": "2207178a6f47d0bc5811f43b2a5be260c1fa6d0f0362b184d093ce349b44d6ab",
+    "hashedAssetsVerified": 13,
+    "fast": {
+      "tests": 786,
+      "pass": 786,
+      "fail": 0,
+      "skipped": 0
+    },
+    "integration": {
+      "tests": 208,
+      "pass": 208,
+      "fail": 0,
+      "skipped": 0
+    },
+    "installed": [
+      {
+        "tests": 14,
+        "pass": 14,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "skipped": 0
+      },
+      {
+        "tests": 11,
+        "pass": 11,
+        "fail": 0,
+        "skipped": 0
+      }
+    ],
+    "scannedRoles": 6,
+    "highCritical": 0,
+    "compiledRuntime": "passed",
+    "evalWorkerRuntime": "passed",
+    "ownedCleanup": "passed",
+    "candidatePackage": {
+      "lockedRoot": "passed",
+      "consumer": "passed",
+      "ownedTemporaryRoots": 0
+    },
+    "apiCompatibility": "both immutable released baselines and negative controls passed",
+    "nativeRunId": 43258068347,
+    "nativeArchitectures": [
+      "amd64",
+      "arm64"
+    ],
+    "dashboardRunId": 43258068572,
+    "advisoryRunId": 43258068692,
+    "secretScanRunId": 43258068411,
+    "nativeArtifactAudit": {
+      "artifacts": [
+        13963476074,
+        13963600813
+      ],
+      "summaries": [
+        {
+          "arch": "amd64",
+          "sourceCommit": "2502269dbd315260aec9ba9d1dc75ba808acf271",
+          "indexedFilesVerified": 9,
+          "sourceInputsVerified": 22,
+          "cleanup": "passed",
+          "runtime": "passed",
+          "nativeProvenance": "passed"
+        },
+        {
+          "arch": "arm64",
+          "sourceCommit": "2502269dbd315260aec9ba9d1dc75ba808acf271",
+          "indexedFilesVerified": 9,
+          "sourceInputsVerified": 22,
+          "cleanup": "passed",
+          "runtime": "passed",
+          "nativeProvenance": "passed"
+        }
+      ]
+    },
+    "verifyPlatform": "linux/amd64",
+    "nativeScope": "eval-worker and eval-runner; dashboard qualified separately"
+  },
+  "qualifications": {
+    "m3PhaseGates": "all18pending",
+    "phaseSourceCommit": null,
+    "providerLiveCompatibilityQualityIndependence": "deferred-unverified under owner-approved exception",
+    "liveHttpsOidcCustomerDashboard": "unverified",
+    "currentSourceReleasedDownloadsDemo": "pending",
+    "licensingAndNoticeResiduals": "preserved; no legal clearance claimed",
+    "localMacFeedback": "failed/platform qualifications retained",
+    "historicalIncidents": "unresolved classifications retained; not cleared by these results",
+    "numericalEvalProposals": "not adopted; observed-rate calibration policy unchanged",
+    "optionalEnginesArm64Runtime": "not established by evaluator-native matrix; current-source publication/download acceptance remains pending"
+  },
+  "releaseComplete": false
+}
