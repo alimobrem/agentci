@@ -1,0 +1,7 @@
+apiVersion: agentci.io/v1alpha1
+kind: PermissionManifest
+permissions:
+  - id: released-onboarding-demo
+    environment: production
+    actions: [write]
+    resources: [synthetic-demo-only]
