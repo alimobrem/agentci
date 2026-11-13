@@ -186,51 +186,63 @@
         },
         {
           "id": "M3-dependency-security-refresh-20261022",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-22T18:23:04.264Z",
-          "completedAt": null,
+          "completedAt": "2026-11-12T16:47:48.504Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Upgrade exact Next16.4.2 using authenticated release/source/lock/handler provenance; refresh strict shutdown/runtime positive fixtures and affected exact-source notice associations without changing security guards, historical artifacts or unresolved legal/live qualifications.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-repair-merge-accepted.json"
+              ]
             },
             {
               "text": "Adopt a supported officially verified Docker CLI/build remedy for CVE-2026-111943, binding exact AMD64/ARM64 image/binary/Go/source/vendor/license identities and preserving audit thresholds and runtime isolation.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-repair-merge-accepted.json"
+              ]
             },
             {
               "text": "Retain failed attempts and pass required exact-head CI, actual candidate package evidence, applicable native AMD64/ARM64 dashboard and eval-worker provenance/runtime/cleanup, independent review and exact-source postmerge verification; preserve all original requirements, immutable releases and eighteen pending M3 gates without aggregate acceptance.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-repair-merge-accepted.json"
+              ]
             }
           ]
         },
         {
           "id": "M3-private-fixture-remediation-20261022",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-22T19:04:57.477Z",
-          "completedAt": null,
+          "completedAt": "2026-11-12T16:47:49.122Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Build and use one fixture-only private configuration serializer preserving two fresh random credentials, restricted PostgreSQL roles, exact topology, mode0600, isolation, redaction and owned cleanup; exercise real construction and reject unsafe inputs without cosmetic scanner evasion.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-repair-merge-accepted.json"
+              ]
             },
             {
               "text": "Retain bounded native scanner execution categories, status/signal and channel sizes/hashes through existing privacy controls; preserve scanner command/image/policy and all mandatory success/source/cleanup checks.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-repair-merge-accepted.json"
+              ]
             },
             {
               "text": "Preserve original PR117/branch and all failures; create replacement draft PR from exact main with the final corrected snapshot only, then require unchanged full introduced-history scanner, fresh exact-head CI/native artifact review, gated merge and postmerge verification without aggregate M3 acceptance.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-repair-merge-accepted.json"
+              ]
             }
           ]
         }
@@ -242,6 +254,12 @@
         {
           "path": "delivery/acceptance/m3-dashboard-approved-bundle-completion.json",
           "sha256": "f5bd1c21f5f87d47deda57db98a92c57286616248f1e9f89f1e47fa8e8e5f746",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-repair-merge-accepted.json",
+          "sha256": "a6cd4be100dff5fc9cd13e44f6de95554c762238276e533172dfe42d59412a63",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }

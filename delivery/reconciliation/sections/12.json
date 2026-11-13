@@ -2369,21 +2369,25 @@
         },
         {
           "id": "M3-candidate-locked-package",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-16T03:58:10.727Z",
-          "completedAt": null,
+          "completedAt": "2026-11-12T16:47:47.879Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Shared package-only assembly preserves npm-selected content and executable modes, restores both authentic committed lock files and exact source/version provenance, rejects omitted or mismatched locks and unsafe archives, suppresses packaging lifecycle scripts, and preserves immutable development publication schema and six-role gates.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-repair-merge-accepted.json"
+              ]
             },
             {
               "text": "Actual final source-bound candidate archive passes extracted-root npm ci separately from consumer production installation under pinned npm policy, with complete member/hash/source/cohort receipts, failure and cleanup regression coverage, unchanged required CI, independent review and postmerge evidence. Original requirements, immutable dev.3/dev.4 evidence, live/legal/security/customer qualifications and all eighteen M3 gates remain unchanged.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-repair-merge-accepted.json"
+              ]
             }
           ]
         }
@@ -2962,6 +2966,12 @@
         {
           "path": "delivery/acceptance/m3-dev4-scanner-fixture-rework.json",
           "sha256": "56fbceca417468751446afd2cb9ac9c67baf29061040ad6c30933cc5c44936c2",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-repair-merge-accepted.json",
+          "sha256": "a6cd4be100dff5fc9cd13e44f6de95554c762238276e533172dfe42d59412a63",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
@@ -5004,21 +5014,25 @@
         },
         {
           "id": "M3-candidate-locked-package",
-          "status": "in-progress",
+          "status": "done",
           "startedAt": "2026-10-16T03:58:10.727Z",
-          "completedAt": null,
+          "completedAt": "2026-11-12T16:47:47.879Z",
           "blockedReason": null,
           "deferral": null,
           "acceptance": [
             {
               "text": "Shared package-only assembly preserves npm-selected content and executable modes, restores both authentic committed lock files and exact source/version provenance, rejects omitted or mismatched locks and unsafe archives, suppresses packaging lifecycle scripts, and preserves immutable development publication schema and six-role gates.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-repair-merge-accepted.json"
+              ]
             },
             {
               "text": "Actual final source-bound candidate archive passes extracted-root npm ci separately from consumer production installation under pinned npm policy, with complete member/hash/source/cohort receipts, failure and cleanup regression coverage, unchanged required CI, independent review and postmerge evidence. Original requirements, immutable dev.3/dev.4 evidence, live/legal/security/customer qualifications and all eighteen M3 gates remain unchanged.",
-              "status": "pending",
-              "evidence": []
+              "status": "passed",
+              "evidence": [
+                "delivery/acceptance/m3-repair-merge-accepted.json"
+              ]
             }
           ]
         }
@@ -5494,6 +5508,12 @@
         {
           "path": "delivery/acceptance/m3-dev4-preparation-local.json",
           "sha256": "3bdcea95258f228a23b13ccab0fba3284a6f22c1c515223a9a14b6666ad27ca5",
+          "availability": "present",
+          "meaning": "Source/test/record reference; presence is not execution acceptance"
+        },
+        {
+          "path": "delivery/acceptance/m3-repair-merge-accepted.json",
+          "sha256": "a6cd4be100dff5fc9cd13e44f6de95554c762238276e533172dfe42d59412a63",
           "availability": "present",
           "meaning": "Source/test/record reference; presence is not execution acceptance"
         }
